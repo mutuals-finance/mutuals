@@ -1,4 +1,4 @@
-import { graphql } from "@/lib/graphql/__generated__/gql";
+import { graphql } from "./__generated__/gql";
 
 export const SPLITS_BY_PAYEE = graphql(/* GraphQL */ `
   query SplitsByPayee($payee: Bytes = "") {

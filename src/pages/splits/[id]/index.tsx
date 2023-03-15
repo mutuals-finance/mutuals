@@ -1,5 +1,5 @@
 import React from "react";
-import { SPLIT, TRANSACTIONS_BY_SPLIT } from "@/lib/graphql/queries";
+import { SPLIT, TRANSACTIONS_BY_SPLIT } from "@/graphql/queries";
 import { useFragment } from "@/lib/graphql/__generated__";
 import {
   Balance,
@@ -13,13 +13,12 @@ import {
 import {
   splitDetailsFragment,
   transactionDetailsFragment,
-} from "@/lib/graphql/fragments";
+} from "@/graphql/fragments";
 import { NextPageWithLayout } from "#/app";
 import { ApolloClient } from "@apollo/client";
-import { initializeApollo } from "@/lib/graphql/client";
+import { initializeApollo } from "@/graphql/client";
 import { InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { isDev } from "@/lib/utils";
 import { useAccountBalance } from "ankr-react";
 import { Blockchain } from "@ankr.com/ankr.js/dist/types";
 

@@ -7,7 +7,7 @@ import {
   tokenFragment,
   transactionBaseFragment,
   transactionDetailsFragment,
-} from "@/lib/graphql/fragments";
+} from "@/graphql/fragments";
 import { formatAmount } from "@/lib/utils";
 import { EventType, SplitEvent } from "./types";
 

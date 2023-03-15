@@ -1,5 +1,5 @@
 import { FragmentType } from "@/lib/graphql/__generated__";
-import { transactionDetailsFragment } from "@/lib/graphql/fragments";
+import { transactionDetailsFragment } from "@/graphql/fragments";
 
 export enum EventType {
   ContractURIUpdate = "ContractURIUpdate",

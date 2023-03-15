@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -160,17 +159,24 @@ export enum ContractUriUpdate_OrderBy {
   Origin = 'origin',
   PreviousUri = 'previousURI',
   Split = 'split',
-  Transaction = 'transaction'
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
+  Transaction = 'transaction',
+  TransactionBlockNumber = 'transaction__blockNumber',
+  TransactionGasPrice = 'transaction__gasPrice',
+  TransactionGasUsed = 'transaction__gasUsed',
+  TransactionId = 'transaction__id',
+  TransactionTimestamp = 'transaction__timestamp'
 }
 
-/** Defines the order direction, either ascending or descending */
-export enum OrderDirection {
-  Asc = 'asc',
-  Desc = 'desc'
-}
-
-export type PaymentReceive = TokenValue & {
-  __typename?: 'PaymentReceive';
+export type Deposit = TokenValue & {
+  __typename?: 'Deposit';
   amount: Scalars['BigInt'];
   from: Scalars['Bytes'];
   id: Scalars['ID'];
@@ -182,7 +188,7 @@ export type PaymentReceive = TokenValue & {
   type: TokenValueType;
 };
 
-export type PaymentReceive_Filter = {
+export type Deposit_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   amount?: InputMaybe<Scalars['BigInt']>;
@@ -193,7 +199,7 @@ export type PaymentReceive_Filter = {
   amount_lte?: InputMaybe<Scalars['BigInt']>;
   amount_not?: InputMaybe<Scalars['BigInt']>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  and?: InputMaybe<Array<InputMaybe<PaymentReceive_Filter>>>;
+  and?: InputMaybe<Array<InputMaybe<Deposit_Filter>>>;
   from?: InputMaybe<Scalars['Bytes']>;
   from_contains?: InputMaybe<Scalars['Bytes']>;
   from_gt?: InputMaybe<Scalars['Bytes']>;
@@ -220,7 +226,7 @@ export type PaymentReceive_Filter = {
   logIndex_lte?: InputMaybe<Scalars['BigInt']>;
   logIndex_not?: InputMaybe<Scalars['BigInt']>;
   logIndex_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  or?: InputMaybe<Array<InputMaybe<PaymentReceive_Filter>>>;
+  or?: InputMaybe<Array<InputMaybe<Deposit_Filter>>>;
   origin?: InputMaybe<Scalars['Bytes']>;
   origin_contains?: InputMaybe<Scalars['Bytes']>;
   origin_gt?: InputMaybe<Scalars['Bytes']>;
@@ -300,159 +306,40 @@ export type PaymentReceive_Filter = {
   type_not_in?: InputMaybe<Array<TokenValueType>>;
 };
 
-export enum PaymentReceive_OrderBy {
+export enum Deposit_OrderBy {
   Amount = 'amount',
   From = 'from',
   Id = 'id',
   LogIndex = 'logIndex',
   Origin = 'origin',
   Split = 'split',
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
   Token = 'token',
+  TokenDecimals = 'token__decimals',
+  TokenId = 'token__id',
+  TokenName = 'token__name',
+  TokenSymbol = 'token__symbol',
+  TokenTotalSupply = 'token__totalSupply',
   Transaction = 'transaction',
+  TransactionBlockNumber = 'transaction__blockNumber',
+  TransactionGasPrice = 'transaction__gasPrice',
+  TransactionGasUsed = 'transaction__gasUsed',
+  TransactionId = 'transaction__id',
+  TransactionTimestamp = 'transaction__timestamp',
   Type = 'type'
 }
 
-export type PaymentRelease = TokenValue & {
-  __typename?: 'PaymentRelease';
-  amount: Scalars['BigInt'];
-  id: Scalars['ID'];
-  logIndex?: Maybe<Scalars['BigInt']>;
-  origin: Scalars['Bytes'];
-  split: Split;
-  to: Scalars['Bytes'];
-  token: Token;
-  transaction: Transaction;
-  type: TokenValueType;
-};
-
-export type PaymentRelease_Filter = {
-  /** Filter for the block changed event. */
-  _change_block?: InputMaybe<BlockChangedFilter>;
-  amount?: InputMaybe<Scalars['BigInt']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  amount_lt?: InputMaybe<Scalars['BigInt']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']>;
-  amount_not?: InputMaybe<Scalars['BigInt']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  and?: InputMaybe<Array<InputMaybe<PaymentRelease_Filter>>>;
-  id?: InputMaybe<Scalars['ID']>;
-  id_gt?: InputMaybe<Scalars['ID']>;
-  id_gte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_lt?: InputMaybe<Scalars['ID']>;
-  id_lte?: InputMaybe<Scalars['ID']>;
-  id_not?: InputMaybe<Scalars['ID']>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  logIndex?: InputMaybe<Scalars['BigInt']>;
-  logIndex_gt?: InputMaybe<Scalars['BigInt']>;
-  logIndex_gte?: InputMaybe<Scalars['BigInt']>;
-  logIndex_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  logIndex_lt?: InputMaybe<Scalars['BigInt']>;
-  logIndex_lte?: InputMaybe<Scalars['BigInt']>;
-  logIndex_not?: InputMaybe<Scalars['BigInt']>;
-  logIndex_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  or?: InputMaybe<Array<InputMaybe<PaymentRelease_Filter>>>;
-  origin?: InputMaybe<Scalars['Bytes']>;
-  origin_contains?: InputMaybe<Scalars['Bytes']>;
-  origin_gt?: InputMaybe<Scalars['Bytes']>;
-  origin_gte?: InputMaybe<Scalars['Bytes']>;
-  origin_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  origin_lt?: InputMaybe<Scalars['Bytes']>;
-  origin_lte?: InputMaybe<Scalars['Bytes']>;
-  origin_not?: InputMaybe<Scalars['Bytes']>;
-  origin_not_contains?: InputMaybe<Scalars['Bytes']>;
-  origin_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  split?: InputMaybe<Scalars['String']>;
-  split_?: InputMaybe<Split_Filter>;
-  split_contains?: InputMaybe<Scalars['String']>;
-  split_contains_nocase?: InputMaybe<Scalars['String']>;
-  split_ends_with?: InputMaybe<Scalars['String']>;
-  split_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  split_gt?: InputMaybe<Scalars['String']>;
-  split_gte?: InputMaybe<Scalars['String']>;
-  split_in?: InputMaybe<Array<Scalars['String']>>;
-  split_lt?: InputMaybe<Scalars['String']>;
-  split_lte?: InputMaybe<Scalars['String']>;
-  split_not?: InputMaybe<Scalars['String']>;
-  split_not_contains?: InputMaybe<Scalars['String']>;
-  split_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  split_not_ends_with?: InputMaybe<Scalars['String']>;
-  split_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  split_not_in?: InputMaybe<Array<Scalars['String']>>;
-  split_not_starts_with?: InputMaybe<Scalars['String']>;
-  split_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  split_starts_with?: InputMaybe<Scalars['String']>;
-  split_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  to?: InputMaybe<Scalars['Bytes']>;
-  to_contains?: InputMaybe<Scalars['Bytes']>;
-  to_gt?: InputMaybe<Scalars['Bytes']>;
-  to_gte?: InputMaybe<Scalars['Bytes']>;
-  to_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  to_lt?: InputMaybe<Scalars['Bytes']>;
-  to_lte?: InputMaybe<Scalars['Bytes']>;
-  to_not?: InputMaybe<Scalars['Bytes']>;
-  to_not_contains?: InputMaybe<Scalars['Bytes']>;
-  to_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  token?: InputMaybe<Scalars['String']>;
-  token_?: InputMaybe<Token_Filter>;
-  token_contains?: InputMaybe<Scalars['String']>;
-  token_contains_nocase?: InputMaybe<Scalars['String']>;
-  token_ends_with?: InputMaybe<Scalars['String']>;
-  token_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  token_gt?: InputMaybe<Scalars['String']>;
-  token_gte?: InputMaybe<Scalars['String']>;
-  token_in?: InputMaybe<Array<Scalars['String']>>;
-  token_lt?: InputMaybe<Scalars['String']>;
-  token_lte?: InputMaybe<Scalars['String']>;
-  token_not?: InputMaybe<Scalars['String']>;
-  token_not_contains?: InputMaybe<Scalars['String']>;
-  token_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  token_not_ends_with?: InputMaybe<Scalars['String']>;
-  token_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  token_not_in?: InputMaybe<Array<Scalars['String']>>;
-  token_not_starts_with?: InputMaybe<Scalars['String']>;
-  token_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  token_starts_with?: InputMaybe<Scalars['String']>;
-  token_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  transaction?: InputMaybe<Scalars['String']>;
-  transaction_?: InputMaybe<Transaction_Filter>;
-  transaction_contains?: InputMaybe<Scalars['String']>;
-  transaction_contains_nocase?: InputMaybe<Scalars['String']>;
-  transaction_ends_with?: InputMaybe<Scalars['String']>;
-  transaction_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  transaction_gt?: InputMaybe<Scalars['String']>;
-  transaction_gte?: InputMaybe<Scalars['String']>;
-  transaction_in?: InputMaybe<Array<Scalars['String']>>;
-  transaction_lt?: InputMaybe<Scalars['String']>;
-  transaction_lte?: InputMaybe<Scalars['String']>;
-  transaction_not?: InputMaybe<Scalars['String']>;
-  transaction_not_contains?: InputMaybe<Scalars['String']>;
-  transaction_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  transaction_not_ends_with?: InputMaybe<Scalars['String']>;
-  transaction_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  transaction_not_in?: InputMaybe<Array<Scalars['String']>>;
-  transaction_not_starts_with?: InputMaybe<Scalars['String']>;
-  transaction_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  transaction_starts_with?: InputMaybe<Scalars['String']>;
-  transaction_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<TokenValueType>;
-  type_in?: InputMaybe<Array<TokenValueType>>;
-  type_not?: InputMaybe<TokenValueType>;
-  type_not_in?: InputMaybe<Array<TokenValueType>>;
-};
-
-export enum PaymentRelease_OrderBy {
-  Amount = 'amount',
-  Id = 'id',
-  LogIndex = 'logIndex',
-  Origin = 'origin',
-  Split = 'split',
-  To = 'to',
-  Token = 'token',
-  Transaction = 'transaction',
-  Type = 'type'
+/** Defines the order direction, either ascending or descending */
+export enum OrderDirection {
+  Asc = 'asc',
+  Desc = 'desc'
 }
 
 export type Query = {
@@ -461,10 +348,8 @@ export type Query = {
   _meta?: Maybe<_Meta_>;
   contractURIUpdate?: Maybe<ContractUriUpdate>;
   contractURIUpdates: Array<ContractUriUpdate>;
-  paymentReceive?: Maybe<PaymentReceive>;
-  paymentReceives: Array<PaymentReceive>;
-  paymentRelease?: Maybe<PaymentRelease>;
-  paymentReleases: Array<PaymentRelease>;
+  deposit?: Maybe<Deposit>;
+  deposits: Array<Deposit>;
   share?: Maybe<Share>;
   shares: Array<Share>;
   split?: Maybe<Split>;
@@ -473,17 +358,19 @@ export type Query = {
   splitMetadata: Array<SplitMetadata>;
   splits: Array<Split>;
   token?: Maybe<Token>;
-  tokenReceived?: Maybe<TokenReceived>;
-  tokenReceiveds: Array<TokenReceived>;
-  tokenReleaseable?: Maybe<TokenReleaseable>;
-  tokenReleaseables: Array<TokenReleaseable>;
-  tokenReleased?: Maybe<TokenReleased>;
-  tokenReleaseds: Array<TokenReleased>;
+  tokenDeposit?: Maybe<TokenDeposit>;
+  tokenDeposits: Array<TokenDeposit>;
   tokenValue?: Maybe<TokenValue>;
   tokenValues: Array<TokenValue>;
+  tokenWithdrawable?: Maybe<TokenWithdrawable>;
+  tokenWithdrawables: Array<TokenWithdrawable>;
+  tokenWithdrawal?: Maybe<TokenWithdrawal>;
+  tokenWithdrawals: Array<TokenWithdrawal>;
   tokens: Array<Token>;
   transaction?: Maybe<Transaction>;
   transactions: Array<Transaction>;
+  withdrawal?: Maybe<Withdrawal>;
+  withdrawals: Array<Withdrawal>;
 };
 
 
@@ -510,39 +397,21 @@ export type QueryContractUriUpdatesArgs = {
 };
 
 
-export type QueryPaymentReceiveArgs = {
+export type QueryDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
-export type QueryPaymentReceivesArgs = {
+export type QueryDepositsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentReceive_OrderBy>;
+  orderBy?: InputMaybe<Deposit_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<PaymentReceive_Filter>;
-};
-
-
-export type QueryPaymentReleaseArgs = {
-  block?: InputMaybe<Block_Height>;
-  id: Scalars['ID'];
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QueryPaymentReleasesArgs = {
-  block?: InputMaybe<Block_Height>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentRelease_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<PaymentRelease_Filter>;
+  where?: InputMaybe<Deposit_Filter>;
 };
 
 
@@ -618,57 +487,21 @@ export type QueryTokenArgs = {
 };
 
 
-export type QueryTokenReceivedArgs = {
+export type QueryTokenDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
-export type QueryTokenReceivedsArgs = {
+export type QueryTokenDepositsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReceived_OrderBy>;
+  orderBy?: InputMaybe<TokenDeposit_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<TokenReceived_Filter>;
-};
-
-
-export type QueryTokenReleaseableArgs = {
-  block?: InputMaybe<Block_Height>;
-  id: Scalars['ID'];
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QueryTokenReleaseablesArgs = {
-  block?: InputMaybe<Block_Height>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReleaseable_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<TokenReleaseable_Filter>;
-};
-
-
-export type QueryTokenReleasedArgs = {
-  block?: InputMaybe<Block_Height>;
-  id: Scalars['ID'];
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QueryTokenReleasedsArgs = {
-  block?: InputMaybe<Block_Height>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReleased_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<TokenReleased_Filter>;
+  where?: InputMaybe<TokenDeposit_Filter>;
 };
 
 
@@ -687,6 +520,42 @@ export type QueryTokenValuesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<TokenValue_Filter>;
+};
+
+
+export type QueryTokenWithdrawableArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryTokenWithdrawablesArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenWithdrawable_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<TokenWithdrawable_Filter>;
+};
+
+
+export type QueryTokenWithdrawalArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryTokenWithdrawalsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenWithdrawal_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<TokenWithdrawal_Filter>;
 };
 
 
@@ -716,6 +585,24 @@ export type QueryTransactionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Transaction_Filter>;
+};
+
+
+export type QueryWithdrawalArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryWithdrawalsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Withdrawal_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Withdrawal_Filter>;
 };
 
 export type Share = {
@@ -803,6 +690,14 @@ export enum Share_OrderBy {
   Id = 'id',
   Payee = 'payee',
   Split = 'split',
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
   Timestamp = 'timestamp',
   Value = 'value'
 }
@@ -812,21 +707,21 @@ export type Split = {
   address: Scalars['Bytes'];
   blockNumber: Scalars['BigInt'];
   contractURIUpdates: Array<ContractUriUpdate>;
+  deposits: Array<Deposit>;
   factory: SplitFactory;
   id: Scalars['ID'];
   metaData: SplitMetadata;
   metaDataUri?: Maybe<Scalars['String']>;
-  paymentReceives: Array<PaymentReceive>;
-  paymentReleases: Array<PaymentRelease>;
-  receivedTokens: Array<TokenReceived>;
-  releasableTokens: Array<TokenReleaseable>;
-  releasedTokens: Array<TokenReleased>;
   shareCount: Scalars['BigInt'];
   shares: Array<Share>;
   timestamp: Scalars['BigInt'];
+  tokenDeposits: Array<TokenDeposit>;
+  tokenWithdrawals: Array<TokenWithdrawal>;
   totalShares: Scalars['BigInt'];
   transactions: Array<Transaction>;
   txCount: Scalars['BigInt'];
+  withdrawableTokens: Array<TokenWithdrawable>;
+  withdrawals: Array<Withdrawal>;
 };
 
 
@@ -839,48 +734,12 @@ export type SplitContractUriUpdatesArgs = {
 };
 
 
-export type SplitPaymentReceivesArgs = {
+export type SplitDepositsArgs = {
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentReceive_OrderBy>;
+  orderBy?: InputMaybe<Deposit_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<PaymentReceive_Filter>;
-};
-
-
-export type SplitPaymentReleasesArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentRelease_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<PaymentRelease_Filter>;
-};
-
-
-export type SplitReceivedTokensArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReceived_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<TokenReceived_Filter>;
-};
-
-
-export type SplitReleasableTokensArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReleaseable_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<TokenReleaseable_Filter>;
-};
-
-
-export type SplitReleasedTokensArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReleased_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<TokenReleased_Filter>;
+  where?: InputMaybe<Deposit_Filter>;
 };
 
 
@@ -893,12 +752,48 @@ export type SplitSharesArgs = {
 };
 
 
+export type SplitTokenDepositsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenDeposit_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TokenDeposit_Filter>;
+};
+
+
+export type SplitTokenWithdrawalsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenWithdrawal_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TokenWithdrawal_Filter>;
+};
+
+
 export type SplitTransactionsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Transaction_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<Transaction_Filter>;
+};
+
+
+export type SplitWithdrawableTokensArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenWithdrawable_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TokenWithdrawable_Filter>;
+};
+
+
+export type SplitWithdrawalsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Withdrawal_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<Withdrawal_Filter>;
 };
 
 export type SplitFactory = {
@@ -1084,6 +979,7 @@ export type Split_Filter = {
   blockNumber_not?: InputMaybe<Scalars['BigInt']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   contractURIUpdates_?: InputMaybe<ContractUriUpdate_Filter>;
+  deposits_?: InputMaybe<Deposit_Filter>;
   factory?: InputMaybe<Scalars['String']>;
   factory_?: InputMaybe<SplitFactory_Filter>;
   factory_contains?: InputMaybe<Scalars['String']>;
@@ -1155,11 +1051,6 @@ export type Split_Filter = {
   metaData_starts_with?: InputMaybe<Scalars['String']>;
   metaData_starts_with_nocase?: InputMaybe<Scalars['String']>;
   or?: InputMaybe<Array<InputMaybe<Split_Filter>>>;
-  paymentReceives_?: InputMaybe<PaymentReceive_Filter>;
-  paymentReleases_?: InputMaybe<PaymentRelease_Filter>;
-  receivedTokens_?: InputMaybe<TokenReceived_Filter>;
-  releasableTokens_?: InputMaybe<TokenReleaseable_Filter>;
-  releasedTokens_?: InputMaybe<TokenReleased_Filter>;
   shareCount?: InputMaybe<Scalars['BigInt']>;
   shareCount_gt?: InputMaybe<Scalars['BigInt']>;
   shareCount_gte?: InputMaybe<Scalars['BigInt']>;
@@ -1177,6 +1068,8 @@ export type Split_Filter = {
   timestamp_lte?: InputMaybe<Scalars['BigInt']>;
   timestamp_not?: InputMaybe<Scalars['BigInt']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  tokenDeposits_?: InputMaybe<TokenDeposit_Filter>;
+  tokenWithdrawals_?: InputMaybe<TokenWithdrawal_Filter>;
   totalShares?: InputMaybe<Scalars['BigInt']>;
   totalShares_gt?: InputMaybe<Scalars['BigInt']>;
   totalShares_gte?: InputMaybe<Scalars['BigInt']>;
@@ -1194,27 +1087,37 @@ export type Split_Filter = {
   txCount_lte?: InputMaybe<Scalars['BigInt']>;
   txCount_not?: InputMaybe<Scalars['BigInt']>;
   txCount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  withdrawableTokens_?: InputMaybe<TokenWithdrawable_Filter>;
+  withdrawals_?: InputMaybe<Withdrawal_Filter>;
 };
 
 export enum Split_OrderBy {
   Address = 'address',
   BlockNumber = 'blockNumber',
   ContractUriUpdates = 'contractURIUpdates',
+  Deposits = 'deposits',
   Factory = 'factory',
+  FactoryBeacon = 'factory__beacon',
+  FactoryId = 'factory__id',
+  FactoryOwner = 'factory__owner',
+  FactorySplitsCount = 'factory__splitsCount',
   Id = 'id',
   MetaData = 'metaData',
   MetaDataUri = 'metaDataUri',
-  PaymentReceives = 'paymentReceives',
-  PaymentReleases = 'paymentReleases',
-  ReceivedTokens = 'receivedTokens',
-  ReleasableTokens = 'releasableTokens',
-  ReleasedTokens = 'releasedTokens',
+  MetaDataDescription = 'metaData__description',
+  MetaDataId = 'metaData__id',
+  MetaDataImage = 'metaData__image',
+  MetaDataName = 'metaData__name',
   ShareCount = 'shareCount',
   Shares = 'shares',
   Timestamp = 'timestamp',
+  TokenDeposits = 'tokenDeposits',
+  TokenWithdrawals = 'tokenWithdrawals',
   TotalShares = 'totalShares',
   Transactions = 'transactions',
-  TxCount = 'txCount'
+  TxCount = 'txCount',
+  WithdrawableTokens = 'withdrawableTokens',
+  Withdrawals = 'withdrawals'
 }
 
 export type Subscription = {
@@ -1223,10 +1126,8 @@ export type Subscription = {
   _meta?: Maybe<_Meta_>;
   contractURIUpdate?: Maybe<ContractUriUpdate>;
   contractURIUpdates: Array<ContractUriUpdate>;
-  paymentReceive?: Maybe<PaymentReceive>;
-  paymentReceives: Array<PaymentReceive>;
-  paymentRelease?: Maybe<PaymentRelease>;
-  paymentReleases: Array<PaymentRelease>;
+  deposit?: Maybe<Deposit>;
+  deposits: Array<Deposit>;
   share?: Maybe<Share>;
   shares: Array<Share>;
   split?: Maybe<Split>;
@@ -1235,17 +1136,19 @@ export type Subscription = {
   splitMetadata: Array<SplitMetadata>;
   splits: Array<Split>;
   token?: Maybe<Token>;
-  tokenReceived?: Maybe<TokenReceived>;
-  tokenReceiveds: Array<TokenReceived>;
-  tokenReleaseable?: Maybe<TokenReleaseable>;
-  tokenReleaseables: Array<TokenReleaseable>;
-  tokenReleased?: Maybe<TokenReleased>;
-  tokenReleaseds: Array<TokenReleased>;
+  tokenDeposit?: Maybe<TokenDeposit>;
+  tokenDeposits: Array<TokenDeposit>;
   tokenValue?: Maybe<TokenValue>;
   tokenValues: Array<TokenValue>;
+  tokenWithdrawable?: Maybe<TokenWithdrawable>;
+  tokenWithdrawables: Array<TokenWithdrawable>;
+  tokenWithdrawal?: Maybe<TokenWithdrawal>;
+  tokenWithdrawals: Array<TokenWithdrawal>;
   tokens: Array<Token>;
   transaction?: Maybe<Transaction>;
   transactions: Array<Transaction>;
+  withdrawal?: Maybe<Withdrawal>;
+  withdrawals: Array<Withdrawal>;
 };
 
 
@@ -1272,39 +1175,21 @@ export type SubscriptionContractUriUpdatesArgs = {
 };
 
 
-export type SubscriptionPaymentReceiveArgs = {
+export type SubscriptionDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
-export type SubscriptionPaymentReceivesArgs = {
+export type SubscriptionDepositsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentReceive_OrderBy>;
+  orderBy?: InputMaybe<Deposit_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<PaymentReceive_Filter>;
-};
-
-
-export type SubscriptionPaymentReleaseArgs = {
-  block?: InputMaybe<Block_Height>;
-  id: Scalars['ID'];
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptionPaymentReleasesArgs = {
-  block?: InputMaybe<Block_Height>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentRelease_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<PaymentRelease_Filter>;
+  where?: InputMaybe<Deposit_Filter>;
 };
 
 
@@ -1380,57 +1265,21 @@ export type SubscriptionTokenArgs = {
 };
 
 
-export type SubscriptionTokenReceivedArgs = {
+export type SubscriptionTokenDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
-export type SubscriptionTokenReceivedsArgs = {
+export type SubscriptionTokenDepositsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReceived_OrderBy>;
+  orderBy?: InputMaybe<TokenDeposit_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<TokenReceived_Filter>;
-};
-
-
-export type SubscriptionTokenReleaseableArgs = {
-  block?: InputMaybe<Block_Height>;
-  id: Scalars['ID'];
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptionTokenReleaseablesArgs = {
-  block?: InputMaybe<Block_Height>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReleaseable_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<TokenReleaseable_Filter>;
-};
-
-
-export type SubscriptionTokenReleasedArgs = {
-  block?: InputMaybe<Block_Height>;
-  id: Scalars['ID'];
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptionTokenReleasedsArgs = {
-  block?: InputMaybe<Block_Height>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<TokenReleased_OrderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  skip?: InputMaybe<Scalars['Int']>;
-  subgraphError?: _SubgraphErrorPolicy_;
-  where?: InputMaybe<TokenReleased_Filter>;
+  where?: InputMaybe<TokenDeposit_Filter>;
 };
 
 
@@ -1449,6 +1298,42 @@ export type SubscriptionTokenValuesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<TokenValue_Filter>;
+};
+
+
+export type SubscriptionTokenWithdrawableArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionTokenWithdrawablesArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenWithdrawable_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<TokenWithdrawable_Filter>;
+};
+
+
+export type SubscriptionTokenWithdrawalArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionTokenWithdrawalsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenWithdrawal_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<TokenWithdrawal_Filter>;
 };
 
 
@@ -1480,6 +1365,24 @@ export type SubscriptionTransactionsArgs = {
   where?: InputMaybe<Transaction_Filter>;
 };
 
+
+export type SubscriptionWithdrawalArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionWithdrawalsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Withdrawal_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Withdrawal_Filter>;
+};
+
 export type Token = {
   __typename?: 'Token';
   decimals: Scalars['BigInt'];
@@ -1489,8 +1392,8 @@ export type Token = {
   totalSupply?: Maybe<Scalars['BigInt']>;
 };
 
-export type TokenReceived = TokenValue & {
-  __typename?: 'TokenReceived';
+export type TokenDeposit = TokenValue & {
+  __typename?: 'TokenDeposit';
   amount: Scalars['BigInt'];
   id: Scalars['ID'];
   split: Split;
@@ -1498,7 +1401,7 @@ export type TokenReceived = TokenValue & {
   type: TokenValueType;
 };
 
-export type TokenReceived_Filter = {
+export type TokenDeposit_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   amount?: InputMaybe<Scalars['BigInt']>;
@@ -1509,7 +1412,7 @@ export type TokenReceived_Filter = {
   amount_lte?: InputMaybe<Scalars['BigInt']>;
   amount_not?: InputMaybe<Scalars['BigInt']>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  and?: InputMaybe<Array<InputMaybe<TokenReceived_Filter>>>;
+  and?: InputMaybe<Array<InputMaybe<TokenDeposit_Filter>>>;
   id?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
@@ -1518,7 +1421,7 @@ export type TokenReceived_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  or?: InputMaybe<Array<InputMaybe<TokenReceived_Filter>>>;
+  or?: InputMaybe<Array<InputMaybe<TokenDeposit_Filter>>>;
   split?: InputMaybe<Scalars['String']>;
   split_?: InputMaybe<Split_Filter>;
   split_contains?: InputMaybe<Scalars['String']>;
@@ -1567,183 +1470,24 @@ export type TokenReceived_Filter = {
   type_not_in?: InputMaybe<Array<TokenValueType>>;
 };
 
-export enum TokenReceived_OrderBy {
+export enum TokenDeposit_OrderBy {
   Amount = 'amount',
   Id = 'id',
   Split = 'split',
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
   Token = 'token',
-  Type = 'type'
-}
-
-export type TokenReleaseable = TokenValue & {
-  __typename?: 'TokenReleaseable';
-  amount: Scalars['BigInt'];
-  id: Scalars['ID'];
-  split: Split;
-  token: Token;
-  type: TokenValueType;
-};
-
-export type TokenReleaseable_Filter = {
-  /** Filter for the block changed event. */
-  _change_block?: InputMaybe<BlockChangedFilter>;
-  amount?: InputMaybe<Scalars['BigInt']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  amount_lt?: InputMaybe<Scalars['BigInt']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']>;
-  amount_not?: InputMaybe<Scalars['BigInt']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  and?: InputMaybe<Array<InputMaybe<TokenReleaseable_Filter>>>;
-  id?: InputMaybe<Scalars['ID']>;
-  id_gt?: InputMaybe<Scalars['ID']>;
-  id_gte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_lt?: InputMaybe<Scalars['ID']>;
-  id_lte?: InputMaybe<Scalars['ID']>;
-  id_not?: InputMaybe<Scalars['ID']>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  or?: InputMaybe<Array<InputMaybe<TokenReleaseable_Filter>>>;
-  split?: InputMaybe<Scalars['String']>;
-  split_?: InputMaybe<Split_Filter>;
-  split_contains?: InputMaybe<Scalars['String']>;
-  split_contains_nocase?: InputMaybe<Scalars['String']>;
-  split_ends_with?: InputMaybe<Scalars['String']>;
-  split_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  split_gt?: InputMaybe<Scalars['String']>;
-  split_gte?: InputMaybe<Scalars['String']>;
-  split_in?: InputMaybe<Array<Scalars['String']>>;
-  split_lt?: InputMaybe<Scalars['String']>;
-  split_lte?: InputMaybe<Scalars['String']>;
-  split_not?: InputMaybe<Scalars['String']>;
-  split_not_contains?: InputMaybe<Scalars['String']>;
-  split_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  split_not_ends_with?: InputMaybe<Scalars['String']>;
-  split_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  split_not_in?: InputMaybe<Array<Scalars['String']>>;
-  split_not_starts_with?: InputMaybe<Scalars['String']>;
-  split_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  split_starts_with?: InputMaybe<Scalars['String']>;
-  split_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  token?: InputMaybe<Scalars['String']>;
-  token_?: InputMaybe<Token_Filter>;
-  token_contains?: InputMaybe<Scalars['String']>;
-  token_contains_nocase?: InputMaybe<Scalars['String']>;
-  token_ends_with?: InputMaybe<Scalars['String']>;
-  token_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  token_gt?: InputMaybe<Scalars['String']>;
-  token_gte?: InputMaybe<Scalars['String']>;
-  token_in?: InputMaybe<Array<Scalars['String']>>;
-  token_lt?: InputMaybe<Scalars['String']>;
-  token_lte?: InputMaybe<Scalars['String']>;
-  token_not?: InputMaybe<Scalars['String']>;
-  token_not_contains?: InputMaybe<Scalars['String']>;
-  token_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  token_not_ends_with?: InputMaybe<Scalars['String']>;
-  token_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  token_not_in?: InputMaybe<Array<Scalars['String']>>;
-  token_not_starts_with?: InputMaybe<Scalars['String']>;
-  token_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  token_starts_with?: InputMaybe<Scalars['String']>;
-  token_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<TokenValueType>;
-  type_in?: InputMaybe<Array<TokenValueType>>;
-  type_not?: InputMaybe<TokenValueType>;
-  type_not_in?: InputMaybe<Array<TokenValueType>>;
-};
-
-export enum TokenReleaseable_OrderBy {
-  Amount = 'amount',
-  Id = 'id',
-  Split = 'split',
-  Token = 'token',
-  Type = 'type'
-}
-
-export type TokenReleased = TokenValue & {
-  __typename?: 'TokenReleased';
-  amount: Scalars['BigInt'];
-  id: Scalars['ID'];
-  split: Split;
-  token: Token;
-  type: TokenValueType;
-};
-
-export type TokenReleased_Filter = {
-  /** Filter for the block changed event. */
-  _change_block?: InputMaybe<BlockChangedFilter>;
-  amount?: InputMaybe<Scalars['BigInt']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  amount_lt?: InputMaybe<Scalars['BigInt']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']>;
-  amount_not?: InputMaybe<Scalars['BigInt']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  and?: InputMaybe<Array<InputMaybe<TokenReleased_Filter>>>;
-  id?: InputMaybe<Scalars['ID']>;
-  id_gt?: InputMaybe<Scalars['ID']>;
-  id_gte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_lt?: InputMaybe<Scalars['ID']>;
-  id_lte?: InputMaybe<Scalars['ID']>;
-  id_not?: InputMaybe<Scalars['ID']>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  or?: InputMaybe<Array<InputMaybe<TokenReleased_Filter>>>;
-  split?: InputMaybe<Scalars['String']>;
-  split_?: InputMaybe<Split_Filter>;
-  split_contains?: InputMaybe<Scalars['String']>;
-  split_contains_nocase?: InputMaybe<Scalars['String']>;
-  split_ends_with?: InputMaybe<Scalars['String']>;
-  split_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  split_gt?: InputMaybe<Scalars['String']>;
-  split_gte?: InputMaybe<Scalars['String']>;
-  split_in?: InputMaybe<Array<Scalars['String']>>;
-  split_lt?: InputMaybe<Scalars['String']>;
-  split_lte?: InputMaybe<Scalars['String']>;
-  split_not?: InputMaybe<Scalars['String']>;
-  split_not_contains?: InputMaybe<Scalars['String']>;
-  split_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  split_not_ends_with?: InputMaybe<Scalars['String']>;
-  split_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  split_not_in?: InputMaybe<Array<Scalars['String']>>;
-  split_not_starts_with?: InputMaybe<Scalars['String']>;
-  split_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  split_starts_with?: InputMaybe<Scalars['String']>;
-  split_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  token?: InputMaybe<Scalars['String']>;
-  token_?: InputMaybe<Token_Filter>;
-  token_contains?: InputMaybe<Scalars['String']>;
-  token_contains_nocase?: InputMaybe<Scalars['String']>;
-  token_ends_with?: InputMaybe<Scalars['String']>;
-  token_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  token_gt?: InputMaybe<Scalars['String']>;
-  token_gte?: InputMaybe<Scalars['String']>;
-  token_in?: InputMaybe<Array<Scalars['String']>>;
-  token_lt?: InputMaybe<Scalars['String']>;
-  token_lte?: InputMaybe<Scalars['String']>;
-  token_not?: InputMaybe<Scalars['String']>;
-  token_not_contains?: InputMaybe<Scalars['String']>;
-  token_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  token_not_ends_with?: InputMaybe<Scalars['String']>;
-  token_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  token_not_in?: InputMaybe<Array<Scalars['String']>>;
-  token_not_starts_with?: InputMaybe<Scalars['String']>;
-  token_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  token_starts_with?: InputMaybe<Scalars['String']>;
-  token_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<TokenValueType>;
-  type_in?: InputMaybe<Array<TokenValueType>>;
-  type_not?: InputMaybe<TokenValueType>;
-  type_not_in?: InputMaybe<Array<TokenValueType>>;
-};
-
-export enum TokenReleased_OrderBy {
-  Amount = 'amount',
-  Id = 'id',
-  Split = 'split',
-  Token = 'token',
+  TokenDecimals = 'token__decimals',
+  TokenId = 'token__id',
+  TokenName = 'token__name',
+  TokenSymbol = 'token__symbol',
+  TokenTotalSupply = 'token__totalSupply',
   Type = 'type'
 }
 
@@ -1755,9 +1499,9 @@ export type TokenValue = {
 };
 
 export enum TokenValueType {
-  Received = 'Received',
-  Releaseable = 'Releaseable',
-  Released = 'Released'
+  Deposit = 'Deposit',
+  Withdrawable = 'Withdrawable',
+  Withdrawal = 'Withdrawal'
 }
 
 export type TokenValue_Filter = {
@@ -1812,6 +1556,209 @@ export enum TokenValue_OrderBy {
   Amount = 'amount',
   Id = 'id',
   Token = 'token',
+  TokenDecimals = 'token__decimals',
+  TokenId = 'token__id',
+  TokenName = 'token__name',
+  TokenSymbol = 'token__symbol',
+  TokenTotalSupply = 'token__totalSupply',
+  Type = 'type'
+}
+
+export type TokenWithdrawable = TokenValue & {
+  __typename?: 'TokenWithdrawable';
+  amount: Scalars['BigInt'];
+  id: Scalars['ID'];
+  split: Split;
+  token: Token;
+  type: TokenValueType;
+};
+
+export type TokenWithdrawable_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['BigInt']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_lt?: InputMaybe<Scalars['BigInt']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']>;
+  amount_not?: InputMaybe<Scalars['BigInt']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  and?: InputMaybe<Array<InputMaybe<TokenWithdrawable_Filter>>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<TokenWithdrawable_Filter>>>;
+  split?: InputMaybe<Scalars['String']>;
+  split_?: InputMaybe<Split_Filter>;
+  split_contains?: InputMaybe<Scalars['String']>;
+  split_contains_nocase?: InputMaybe<Scalars['String']>;
+  split_ends_with?: InputMaybe<Scalars['String']>;
+  split_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  split_gt?: InputMaybe<Scalars['String']>;
+  split_gte?: InputMaybe<Scalars['String']>;
+  split_in?: InputMaybe<Array<Scalars['String']>>;
+  split_lt?: InputMaybe<Scalars['String']>;
+  split_lte?: InputMaybe<Scalars['String']>;
+  split_not?: InputMaybe<Scalars['String']>;
+  split_not_contains?: InputMaybe<Scalars['String']>;
+  split_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  split_not_ends_with?: InputMaybe<Scalars['String']>;
+  split_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  split_not_in?: InputMaybe<Array<Scalars['String']>>;
+  split_not_starts_with?: InputMaybe<Scalars['String']>;
+  split_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  split_starts_with?: InputMaybe<Scalars['String']>;
+  split_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
+  token_?: InputMaybe<Token_Filter>;
+  token_contains?: InputMaybe<Scalars['String']>;
+  token_contains_nocase?: InputMaybe<Scalars['String']>;
+  token_ends_with?: InputMaybe<Scalars['String']>;
+  token_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  token_gt?: InputMaybe<Scalars['String']>;
+  token_gte?: InputMaybe<Scalars['String']>;
+  token_in?: InputMaybe<Array<Scalars['String']>>;
+  token_lt?: InputMaybe<Scalars['String']>;
+  token_lte?: InputMaybe<Scalars['String']>;
+  token_not?: InputMaybe<Scalars['String']>;
+  token_not_contains?: InputMaybe<Scalars['String']>;
+  token_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  token_not_ends_with?: InputMaybe<Scalars['String']>;
+  token_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  token_not_in?: InputMaybe<Array<Scalars['String']>>;
+  token_not_starts_with?: InputMaybe<Scalars['String']>;
+  token_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  token_starts_with?: InputMaybe<Scalars['String']>;
+  token_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<TokenValueType>;
+  type_in?: InputMaybe<Array<TokenValueType>>;
+  type_not?: InputMaybe<TokenValueType>;
+  type_not_in?: InputMaybe<Array<TokenValueType>>;
+};
+
+export enum TokenWithdrawable_OrderBy {
+  Amount = 'amount',
+  Id = 'id',
+  Split = 'split',
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
+  Token = 'token',
+  TokenDecimals = 'token__decimals',
+  TokenId = 'token__id',
+  TokenName = 'token__name',
+  TokenSymbol = 'token__symbol',
+  TokenTotalSupply = 'token__totalSupply',
+  Type = 'type'
+}
+
+export type TokenWithdrawal = TokenValue & {
+  __typename?: 'TokenWithdrawal';
+  amount: Scalars['BigInt'];
+  id: Scalars['ID'];
+  split: Split;
+  token: Token;
+  type: TokenValueType;
+};
+
+export type TokenWithdrawal_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['BigInt']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_lt?: InputMaybe<Scalars['BigInt']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']>;
+  amount_not?: InputMaybe<Scalars['BigInt']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  and?: InputMaybe<Array<InputMaybe<TokenWithdrawal_Filter>>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<TokenWithdrawal_Filter>>>;
+  split?: InputMaybe<Scalars['String']>;
+  split_?: InputMaybe<Split_Filter>;
+  split_contains?: InputMaybe<Scalars['String']>;
+  split_contains_nocase?: InputMaybe<Scalars['String']>;
+  split_ends_with?: InputMaybe<Scalars['String']>;
+  split_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  split_gt?: InputMaybe<Scalars['String']>;
+  split_gte?: InputMaybe<Scalars['String']>;
+  split_in?: InputMaybe<Array<Scalars['String']>>;
+  split_lt?: InputMaybe<Scalars['String']>;
+  split_lte?: InputMaybe<Scalars['String']>;
+  split_not?: InputMaybe<Scalars['String']>;
+  split_not_contains?: InputMaybe<Scalars['String']>;
+  split_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  split_not_ends_with?: InputMaybe<Scalars['String']>;
+  split_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  split_not_in?: InputMaybe<Array<Scalars['String']>>;
+  split_not_starts_with?: InputMaybe<Scalars['String']>;
+  split_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  split_starts_with?: InputMaybe<Scalars['String']>;
+  split_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
+  token_?: InputMaybe<Token_Filter>;
+  token_contains?: InputMaybe<Scalars['String']>;
+  token_contains_nocase?: InputMaybe<Scalars['String']>;
+  token_ends_with?: InputMaybe<Scalars['String']>;
+  token_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  token_gt?: InputMaybe<Scalars['String']>;
+  token_gte?: InputMaybe<Scalars['String']>;
+  token_in?: InputMaybe<Array<Scalars['String']>>;
+  token_lt?: InputMaybe<Scalars['String']>;
+  token_lte?: InputMaybe<Scalars['String']>;
+  token_not?: InputMaybe<Scalars['String']>;
+  token_not_contains?: InputMaybe<Scalars['String']>;
+  token_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  token_not_ends_with?: InputMaybe<Scalars['String']>;
+  token_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  token_not_in?: InputMaybe<Array<Scalars['String']>>;
+  token_not_starts_with?: InputMaybe<Scalars['String']>;
+  token_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  token_starts_with?: InputMaybe<Scalars['String']>;
+  token_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<TokenValueType>;
+  type_in?: InputMaybe<Array<TokenValueType>>;
+  type_not?: InputMaybe<TokenValueType>;
+  type_not_in?: InputMaybe<Array<TokenValueType>>;
+};
+
+export enum TokenWithdrawal_OrderBy {
+  Amount = 'amount',
+  Id = 'id',
+  Split = 'split',
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
+  Token = 'token',
+  TokenDecimals = 'token__decimals',
+  TokenId = 'token__id',
+  TokenName = 'token__name',
+  TokenSymbol = 'token__symbol',
+  TokenTotalSupply = 'token__totalSupply',
   Type = 'type'
 }
 
@@ -1898,13 +1845,13 @@ export type Transaction = {
   __typename?: 'Transaction';
   blockNumber: Scalars['BigInt'];
   contractURIUpdates: Array<ContractUriUpdate>;
+  deposits: Array<Deposit>;
   gasPrice: Scalars['BigInt'];
   gasUsed: Scalars['BigInt'];
   id: Scalars['ID'];
-  paymentReceives: Array<PaymentReceive>;
-  paymentReleases: Array<PaymentRelease>;
   split: Split;
   timestamp: Scalars['BigInt'];
+  withdrawals: Array<Withdrawal>;
 };
 
 
@@ -1917,21 +1864,21 @@ export type TransactionContractUriUpdatesArgs = {
 };
 
 
-export type TransactionPaymentReceivesArgs = {
+export type TransactionDepositsArgs = {
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentReceive_OrderBy>;
+  orderBy?: InputMaybe<Deposit_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<PaymentReceive_Filter>;
+  where?: InputMaybe<Deposit_Filter>;
 };
 
 
-export type TransactionPaymentReleasesArgs = {
+export type TransactionWithdrawalsArgs = {
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<PaymentRelease_OrderBy>;
+  orderBy?: InputMaybe<Withdrawal_OrderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   skip?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<PaymentRelease_Filter>;
+  where?: InputMaybe<Withdrawal_Filter>;
 };
 
 export type Transaction_Filter = {
@@ -1947,6 +1894,7 @@ export type Transaction_Filter = {
   blockNumber_not?: InputMaybe<Scalars['BigInt']>;
   blockNumber_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   contractURIUpdates_?: InputMaybe<ContractUriUpdate_Filter>;
+  deposits_?: InputMaybe<Deposit_Filter>;
   gasPrice?: InputMaybe<Scalars['BigInt']>;
   gasPrice_gt?: InputMaybe<Scalars['BigInt']>;
   gasPrice_gte?: InputMaybe<Scalars['BigInt']>;
@@ -1972,8 +1920,6 @@ export type Transaction_Filter = {
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
   or?: InputMaybe<Array<InputMaybe<Transaction_Filter>>>;
-  paymentReceives_?: InputMaybe<PaymentReceive_Filter>;
-  paymentReleases_?: InputMaybe<PaymentRelease_Filter>;
   split?: InputMaybe<Scalars['String']>;
   split_?: InputMaybe<Split_Filter>;
   split_contains?: InputMaybe<Scalars['String']>;
@@ -2003,18 +1949,188 @@ export type Transaction_Filter = {
   timestamp_lte?: InputMaybe<Scalars['BigInt']>;
   timestamp_not?: InputMaybe<Scalars['BigInt']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  withdrawals_?: InputMaybe<Withdrawal_Filter>;
 };
 
 export enum Transaction_OrderBy {
   BlockNumber = 'blockNumber',
   ContractUriUpdates = 'contractURIUpdates',
+  Deposits = 'deposits',
   GasPrice = 'gasPrice',
   GasUsed = 'gasUsed',
   Id = 'id',
-  PaymentReceives = 'paymentReceives',
-  PaymentReleases = 'paymentReleases',
   Split = 'split',
-  Timestamp = 'timestamp'
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
+  Timestamp = 'timestamp',
+  Withdrawals = 'withdrawals'
+}
+
+export type Withdrawal = TokenValue & {
+  __typename?: 'Withdrawal';
+  amount: Scalars['BigInt'];
+  id: Scalars['ID'];
+  logIndex?: Maybe<Scalars['BigInt']>;
+  origin: Scalars['Bytes'];
+  split: Split;
+  to: Scalars['Bytes'];
+  token: Token;
+  transaction: Transaction;
+  type: TokenValueType;
+};
+
+export type Withdrawal_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  amount?: InputMaybe<Scalars['BigInt']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_lt?: InputMaybe<Scalars['BigInt']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']>;
+  amount_not?: InputMaybe<Scalars['BigInt']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  and?: InputMaybe<Array<InputMaybe<Withdrawal_Filter>>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  logIndex?: InputMaybe<Scalars['BigInt']>;
+  logIndex_gt?: InputMaybe<Scalars['BigInt']>;
+  logIndex_gte?: InputMaybe<Scalars['BigInt']>;
+  logIndex_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  logIndex_lt?: InputMaybe<Scalars['BigInt']>;
+  logIndex_lte?: InputMaybe<Scalars['BigInt']>;
+  logIndex_not?: InputMaybe<Scalars['BigInt']>;
+  logIndex_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  or?: InputMaybe<Array<InputMaybe<Withdrawal_Filter>>>;
+  origin?: InputMaybe<Scalars['Bytes']>;
+  origin_contains?: InputMaybe<Scalars['Bytes']>;
+  origin_gt?: InputMaybe<Scalars['Bytes']>;
+  origin_gte?: InputMaybe<Scalars['Bytes']>;
+  origin_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  origin_lt?: InputMaybe<Scalars['Bytes']>;
+  origin_lte?: InputMaybe<Scalars['Bytes']>;
+  origin_not?: InputMaybe<Scalars['Bytes']>;
+  origin_not_contains?: InputMaybe<Scalars['Bytes']>;
+  origin_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  split?: InputMaybe<Scalars['String']>;
+  split_?: InputMaybe<Split_Filter>;
+  split_contains?: InputMaybe<Scalars['String']>;
+  split_contains_nocase?: InputMaybe<Scalars['String']>;
+  split_ends_with?: InputMaybe<Scalars['String']>;
+  split_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  split_gt?: InputMaybe<Scalars['String']>;
+  split_gte?: InputMaybe<Scalars['String']>;
+  split_in?: InputMaybe<Array<Scalars['String']>>;
+  split_lt?: InputMaybe<Scalars['String']>;
+  split_lte?: InputMaybe<Scalars['String']>;
+  split_not?: InputMaybe<Scalars['String']>;
+  split_not_contains?: InputMaybe<Scalars['String']>;
+  split_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  split_not_ends_with?: InputMaybe<Scalars['String']>;
+  split_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  split_not_in?: InputMaybe<Array<Scalars['String']>>;
+  split_not_starts_with?: InputMaybe<Scalars['String']>;
+  split_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  split_starts_with?: InputMaybe<Scalars['String']>;
+  split_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  to?: InputMaybe<Scalars['Bytes']>;
+  to_contains?: InputMaybe<Scalars['Bytes']>;
+  to_gt?: InputMaybe<Scalars['Bytes']>;
+  to_gte?: InputMaybe<Scalars['Bytes']>;
+  to_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  to_lt?: InputMaybe<Scalars['Bytes']>;
+  to_lte?: InputMaybe<Scalars['Bytes']>;
+  to_not?: InputMaybe<Scalars['Bytes']>;
+  to_not_contains?: InputMaybe<Scalars['Bytes']>;
+  to_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  token?: InputMaybe<Scalars['String']>;
+  token_?: InputMaybe<Token_Filter>;
+  token_contains?: InputMaybe<Scalars['String']>;
+  token_contains_nocase?: InputMaybe<Scalars['String']>;
+  token_ends_with?: InputMaybe<Scalars['String']>;
+  token_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  token_gt?: InputMaybe<Scalars['String']>;
+  token_gte?: InputMaybe<Scalars['String']>;
+  token_in?: InputMaybe<Array<Scalars['String']>>;
+  token_lt?: InputMaybe<Scalars['String']>;
+  token_lte?: InputMaybe<Scalars['String']>;
+  token_not?: InputMaybe<Scalars['String']>;
+  token_not_contains?: InputMaybe<Scalars['String']>;
+  token_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  token_not_ends_with?: InputMaybe<Scalars['String']>;
+  token_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  token_not_in?: InputMaybe<Array<Scalars['String']>>;
+  token_not_starts_with?: InputMaybe<Scalars['String']>;
+  token_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  token_starts_with?: InputMaybe<Scalars['String']>;
+  token_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  transaction?: InputMaybe<Scalars['String']>;
+  transaction_?: InputMaybe<Transaction_Filter>;
+  transaction_contains?: InputMaybe<Scalars['String']>;
+  transaction_contains_nocase?: InputMaybe<Scalars['String']>;
+  transaction_ends_with?: InputMaybe<Scalars['String']>;
+  transaction_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  transaction_gt?: InputMaybe<Scalars['String']>;
+  transaction_gte?: InputMaybe<Scalars['String']>;
+  transaction_in?: InputMaybe<Array<Scalars['String']>>;
+  transaction_lt?: InputMaybe<Scalars['String']>;
+  transaction_lte?: InputMaybe<Scalars['String']>;
+  transaction_not?: InputMaybe<Scalars['String']>;
+  transaction_not_contains?: InputMaybe<Scalars['String']>;
+  transaction_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  transaction_not_ends_with?: InputMaybe<Scalars['String']>;
+  transaction_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  transaction_not_in?: InputMaybe<Array<Scalars['String']>>;
+  transaction_not_starts_with?: InputMaybe<Scalars['String']>;
+  transaction_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  transaction_starts_with?: InputMaybe<Scalars['String']>;
+  transaction_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<TokenValueType>;
+  type_in?: InputMaybe<Array<TokenValueType>>;
+  type_not?: InputMaybe<TokenValueType>;
+  type_not_in?: InputMaybe<Array<TokenValueType>>;
+};
+
+export enum Withdrawal_OrderBy {
+  Amount = 'amount',
+  Id = 'id',
+  LogIndex = 'logIndex',
+  Origin = 'origin',
+  Split = 'split',
+  SplitAddress = 'split__address',
+  SplitBlockNumber = 'split__blockNumber',
+  SplitId = 'split__id',
+  SplitMetaDataUri = 'split__metaDataUri',
+  SplitShareCount = 'split__shareCount',
+  SplitTimestamp = 'split__timestamp',
+  SplitTotalShares = 'split__totalShares',
+  SplitTxCount = 'split__txCount',
+  To = 'to',
+  Token = 'token',
+  TokenDecimals = 'token__decimals',
+  TokenId = 'token__id',
+  TokenName = 'token__name',
+  TokenSymbol = 'token__symbol',
+  TokenTotalSupply = 'token__totalSupply',
+  Transaction = 'transaction',
+  TransactionBlockNumber = 'transaction__blockNumber',
+  TransactionGasPrice = 'transaction__gasPrice',
+  TransactionGasUsed = 'transaction__gasUsed',
+  TransactionId = 'transaction__id',
+  TransactionTimestamp = 'transaction__timestamp',
+  Type = 'type'
 }
 
 export type _Block_ = {
@@ -2050,143 +2166,3 @@ export enum _SubgraphErrorPolicy_ {
   /** If the subgraph has indexing errors, data will be omitted. The default. */
   Deny = 'deny'
 }
-
-export type TokenFragmentFragment = { __typename?: 'Token', id: string, symbol: string, name: string, decimals: any, totalSupply?: any | null } & { ' $fragmentName'?: 'TokenFragmentFragment' };
-
-type TokenValueFragment_PaymentReceive_Fragment = { __typename?: 'PaymentReceive', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_PaymentReceive_Fragment' };
-
-type TokenValueFragment_PaymentRelease_Fragment = { __typename?: 'PaymentRelease', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_PaymentRelease_Fragment' };
-
-type TokenValueFragment_TokenReceived_Fragment = { __typename?: 'TokenReceived', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenReceived_Fragment' };
-
-type TokenValueFragment_TokenReleaseable_Fragment = { __typename?: 'TokenReleaseable', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenReleaseable_Fragment' };
-
-type TokenValueFragment_TokenReleased_Fragment = { __typename?: 'TokenReleased', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenReleased_Fragment' };
-
-export type TokenValueFragmentFragment = TokenValueFragment_PaymentReceive_Fragment | TokenValueFragment_PaymentRelease_Fragment | TokenValueFragment_TokenReceived_Fragment | TokenValueFragment_TokenReleaseable_Fragment | TokenValueFragment_TokenReleased_Fragment;
-
-export type ShareFragmentFragment = { __typename?: 'Share', id: string, payee: any, timestamp: any, value: any } & { ' $fragmentName'?: 'ShareFragmentFragment' };
-
-export type TransactionBaseFragmentFragment = { __typename?: 'Transaction', id: string, blockNumber: any, timestamp: any, gasUsed: any, gasPrice: any, split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TransactionBaseFragmentFragment' };
-
-export type TransactionDetailsFragmentFragment = { __typename?: 'Transaction', id: string, blockNumber: any, timestamp: any, gasUsed: any, gasPrice: any, split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ), paymentReleases: Array<(
-    { __typename?: 'PaymentRelease' }
-    & { ' $fragmentRefs'?: { 'PaymentReleaseFragmentFragment': PaymentReleaseFragmentFragment } }
-  )>, paymentReceives: Array<(
-    { __typename?: 'PaymentReceive' }
-    & { ' $fragmentRefs'?: { 'PaymentReceiveFragmentFragment': PaymentReceiveFragmentFragment } }
-  )>, contractURIUpdates: Array<(
-    { __typename?: 'ContractURIUpdate' }
-    & { ' $fragmentRefs'?: { 'ContractUriUpdateFragmentFragment': ContractUriUpdateFragmentFragment } }
-  )> } & { ' $fragmentName'?: 'TransactionDetailsFragmentFragment' };
-
-export type PaymentReleaseFragmentFragment = { __typename?: 'PaymentRelease', amount: any, id: string, origin: any, logIndex?: any | null, to: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ), transaction: (
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
-  ), split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'PaymentReleaseFragmentFragment' };
-
-export type PaymentReceiveFragmentFragment = { __typename?: 'PaymentReceive', amount: any, id: string, origin: any, logIndex?: any | null, from: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ), transaction: (
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
-  ), split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'PaymentReceiveFragmentFragment' };
-
-export type ContractUriUpdateFragmentFragment = { __typename?: 'ContractURIUpdate', id: string, origin: any, logIndex?: any | null, previousURI: string, newURI: string, transaction: (
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
-  ), split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'ContractUriUpdateFragmentFragment' };
-
-export type SplitBaseFragmentFragment = { __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null } } & { ' $fragmentName'?: 'SplitBaseFragmentFragment' };
-
-export type SplitDetailsFragmentFragment = { __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null }, shares: Array<(
-    { __typename?: 'Share' }
-    & { ' $fragmentRefs'?: { 'ShareFragmentFragment': ShareFragmentFragment } }
-  )>, releasedTokens: Array<{ __typename?: 'TokenReleased', amount: any, token: (
-      { __typename?: 'Token' }
-      & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-    ) }>, receivedTokens: Array<{ __typename?: 'TokenReceived', amount: any, token: (
-      { __typename?: 'Token' }
-      & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-    ) }>, releasableTokens: Array<{ __typename?: 'TokenReleaseable', amount: any, token: (
-      { __typename?: 'Token' }
-      & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-    ) }> } & { ' $fragmentName'?: 'SplitDetailsFragmentFragment' };
-
-export type SplitsByPayeeQueryVariables = Exact<{
-  payee?: InputMaybe<Scalars['Bytes']>;
-}>;
-
-
-export type SplitsByPayeeQuery = { __typename?: 'Query', splits: Array<(
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  )> };
-
-export type SplitQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type SplitQuery = { __typename?: 'Query', split?: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitDetailsFragmentFragment': SplitDetailsFragmentFragment } }
-  ) | null };
-
-export type TransactionsBySplitQueryVariables = Exact<{
-  split: Scalars['String'];
-}>;
-
-
-export type TransactionsBySplitQuery = { __typename?: 'Query', transactions: Array<(
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionDetailsFragmentFragment': TransactionDetailsFragmentFragment } }
-  )> };
-
-export const TokenFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Token"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"decimals"}},{"kind":"Field","name":{"kind":"Name","value":"totalSupply"}}]}}]} as unknown as DocumentNode<TokenFragmentFragment, unknown>;
-export const TokenValueFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenValueFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TokenValue"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}},...TokenFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TokenValueFragmentFragment, unknown>;
-export const SplitBaseFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SplitBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Split"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}}]}}]} as unknown as DocumentNode<SplitBaseFragmentFragment, unknown>;
-export const TransactionBaseFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Transaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"gasUsed"}},{"kind":"Field","name":{"kind":"Name","value":"gasPrice"}}]}},...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionBaseFragmentFragment, unknown>;
-export const PaymentReleaseFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PaymentReleaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PaymentRelease"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"to"}}]}},...TokenFragmentFragmentDoc.definitions,...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<PaymentReleaseFragmentFragment, unknown>;
-export const PaymentReceiveFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PaymentReceiveFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PaymentReceive"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"from"}}]}},...TokenFragmentFragmentDoc.definitions,...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<PaymentReceiveFragmentFragment, unknown>;
-export const ContractUriUpdateFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ContractURIUpdateFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ContractURIUpdate"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"previousURI"}},{"kind":"Field","name":{"kind":"Name","value":"newURI"}}]}},...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<ContractUriUpdateFragmentFragment, unknown>;
-export const TransactionDetailsFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionDetailsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Transaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"gasUsed"}},{"kind":"Field","name":{"kind":"Name","value":"gasPrice"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReleases"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PaymentReleaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"paymentReceives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PaymentReceiveFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contractURIUpdates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ContractURIUpdateFragment"}}]}}]}},...SplitBaseFragmentFragmentDoc.definitions,...PaymentReleaseFragmentFragmentDoc.definitions,...PaymentReceiveFragmentFragmentDoc.definitions,...ContractUriUpdateFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionDetailsFragmentFragment, unknown>;
-export const ShareFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ShareFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Share"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]} as unknown as DocumentNode<ShareFragmentFragment, unknown>;
-export const SplitDetailsFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SplitDetailsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Split"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}},{"kind":"Field","name":{"kind":"Name","value":"shares"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ShareFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"releasedTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"receivedTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"releasableTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}}]}},...ShareFragmentFragmentDoc.definitions,...TokenFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitDetailsFragmentFragment, unknown>;
-export const SplitsByPayeeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SplitsByPayee"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payee"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Bytes"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"splits"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shares_"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"payee"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payee"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}}]}},...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitsByPayeeQuery, SplitsByPayeeQueryVariables>;
-export const SplitDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Split"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"split"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitDetailsFragment"}}]}}]}},...SplitDetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitQuery, SplitQueryVariables>;
-export const TransactionsBySplitDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TransactionsBySplit"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"split"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transactions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"split"},"value":{"kind":"Variable","name":{"kind":"Name","value":"split"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionDetailsFragment"}}]}}]}},...TransactionDetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionsBySplitQuery, TransactionsBySplitQueryVariables>;

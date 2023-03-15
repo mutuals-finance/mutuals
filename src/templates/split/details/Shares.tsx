@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@/components/Box";
 import { shortenAddress } from "@/lib/utils";
 import UserAvatar from "@/components/UserAvatar";
-import { shareFragment } from "@/lib/graphql/fragments";
+import { shareFragment } from "@/graphql/fragments";
 import { FragmentType, useFragment } from "@/lib/graphql/__generated__";
 import { ShareFragmentFragment } from "@/lib/graphql/__generated__/graphql";
 import dynamic from "next/dynamic";

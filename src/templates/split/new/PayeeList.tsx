@@ -56,23 +56,24 @@ export default function PayeeList({ value, onChange }: PayeeListProps) {
             />
           </div>
 
-          <Input
-            type={"number"}
-            className={"w-32"}
-            label={"Share"}
-            min={0}
-            max={maxShares}
-            step="any"
-            iconAfter={<AiOutlinePercentage />}
-            onChange={(event) =>
-              updateAt(index, 1, {
-                address: item.address,
-                share: parseFloat(event.target.value),
-              })
-            }
-            id={`payee-share-${index}`}
-            value={item.share}
-          />
+          <div className={"w-32"}>
+            <Input
+              type={"number"}
+              label={"Share"}
+              min={0}
+              max={maxShares}
+              step="any"
+              iconAfter={<AiOutlinePercentage />}
+              onChange={(event) =>
+                updateAt(index, 1, {
+                  address: item.address,
+                  share: parseFloat(event.target.value),
+                })
+              }
+              id={`payee-share-${index}`}
+              value={item.share}
+            />
+          </div>
         </>
       )}
     </FormList>

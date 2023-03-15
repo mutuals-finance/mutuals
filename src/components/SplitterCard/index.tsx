@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Date from "@/components/Date";
 import { FragmentType, useFragment } from "@/lib/graphql/__generated__";
-import { splitBaseFragment } from "@/lib/graphql/fragments";
+import { splitBaseFragment } from "@/graphql/fragments";
 import { SplitImage } from "@/components/SplitImage";
 import { SplitBaseFragmentFragment } from "@/lib/graphql/__generated__/graphql";
 

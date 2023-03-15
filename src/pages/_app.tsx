@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
-import { useApollo } from "@/lib/graphql/client";
+import { useApollo } from "@/graphql/client";
 import { ThemeProvider } from "next-themes";
 import { Provider as AnkrProvider } from "ankr-react";
 import { WagmiConfig } from "wagmi";

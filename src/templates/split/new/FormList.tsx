@@ -16,7 +16,7 @@ export function FormListItem({
 }: React.PropsWithChildren<FormListItemProps>) {
   return (
     <li className={"flex flex-1 items-end space-x-2"}>
-      <span className={"flex-1 flex space-x-2"}>{children}</span>
+      <div className={"flex-1 flex space-x-2"}>{children}</div>
       <ButtonOutline type={"button"} onClick={() => onAdd()} icon={<IoAdd />} />
       <ButtonOutline
         disabled={removeDisabled}

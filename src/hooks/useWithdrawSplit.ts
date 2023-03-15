@@ -36,7 +36,7 @@ export default function useWithdrawSplit(
   const prepare = usePrepareContractWrite({
     address,
     abi: Split__factory.abi,
-    functionName: "release",
+    functionName: "withdraw",
     enabled,
     args,
     ...props,

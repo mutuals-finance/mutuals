@@ -1,7 +1,7 @@
 import React from "react";
 import { SplitFragmentCard } from "@/components/SplitterCard";
 import { useQuery } from "@apollo/client";
-import { SPLITS_BY_PAYEE } from "@/lib/graphql/queries";
+import { SPLITS_BY_PAYEE } from "@/graphql/queries";
 import { useAccount } from "wagmi";
 
 export function SplitListing() {
