@@ -1,5 +1,5 @@
 import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
-import { Split__factory } from "@/typechain";
+import { Split__factory } from "@/../../types/typechain";
 import useDebounce from "@/hooks/useDebounce";
 import { useMemo } from "react";
 
