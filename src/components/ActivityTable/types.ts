@@ -3,8 +3,8 @@ import { transactionDetailsFragment } from "@/graphql/fragments";
 
 export enum EventType {
   ContractURIUpdate = "ContractURIUpdate",
-  PaymentReceive = "PaymentReceive",
-  PaymentRelease = "PaymentRelease",
+  Deposit = "Deposit",
+  Withdrawal = "Withdrawal",
 }
 
 export interface SplitEvent {

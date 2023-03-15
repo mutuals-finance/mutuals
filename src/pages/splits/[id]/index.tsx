@@ -1,6 +1,6 @@
 import React from "react";
 import { SPLIT, TRANSACTIONS_BY_SPLIT } from "@/graphql/queries";
-import { useFragment } from "@/lib/graphql/__generated__";
+import { useFragment } from "@/graphql/__generated__";
 import {
   Balance,
   Analytics,
@@ -67,7 +67,7 @@ async function fetchSplitTransactions(
 }
 
 export async function getServerSideProps(context: { params: { id: string } }) {
-  const client = initializeApollo();
+  const client = await initializeApollo();
 
   const [split, transactions] = await Promise.all([
     fetchSplitDetails(client, context.params.id),

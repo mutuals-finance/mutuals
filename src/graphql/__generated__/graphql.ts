@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -2166,3 +2167,143 @@ export enum _SubgraphErrorPolicy_ {
   /** If the subgraph has indexing errors, data will be omitted. The default. */
   Deny = 'deny'
 }
+
+export type TokenFragmentFragment = { __typename?: 'Token', id: string, symbol: string, name: string, decimals: any, totalSupply?: any | null } & { ' $fragmentName'?: 'TokenFragmentFragment' };
+
+type TokenValueFragment_Deposit_Fragment = { __typename?: 'Deposit', amount: any, token: (
+    { __typename?: 'Token' }
+    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'TokenValueFragment_Deposit_Fragment' };
+
+type TokenValueFragment_TokenDeposit_Fragment = { __typename?: 'TokenDeposit', amount: any, token: (
+    { __typename?: 'Token' }
+    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenDeposit_Fragment' };
+
+type TokenValueFragment_TokenWithdrawable_Fragment = { __typename?: 'TokenWithdrawable', amount: any, token: (
+    { __typename?: 'Token' }
+    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenWithdrawable_Fragment' };
+
+type TokenValueFragment_TokenWithdrawal_Fragment = { __typename?: 'TokenWithdrawal', amount: any, token: (
+    { __typename?: 'Token' }
+    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenWithdrawal_Fragment' };
+
+type TokenValueFragment_Withdrawal_Fragment = { __typename?: 'Withdrawal', amount: any, token: (
+    { __typename?: 'Token' }
+    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'TokenValueFragment_Withdrawal_Fragment' };
+
+export type TokenValueFragmentFragment = TokenValueFragment_Deposit_Fragment | TokenValueFragment_TokenDeposit_Fragment | TokenValueFragment_TokenWithdrawable_Fragment | TokenValueFragment_TokenWithdrawal_Fragment | TokenValueFragment_Withdrawal_Fragment;
+
+export type ShareFragmentFragment = { __typename?: 'Share', id: string, payee: any, timestamp: any, value: any } & { ' $fragmentName'?: 'ShareFragmentFragment' };
+
+export type TransactionBaseFragmentFragment = { __typename?: 'Transaction', id: string, blockNumber: any, timestamp: any, gasUsed: any, gasPrice: any, split: (
+    { __typename?: 'Split' }
+    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'TransactionBaseFragmentFragment' };
+
+export type TransactionDetailsFragmentFragment = { __typename?: 'Transaction', id: string, blockNumber: any, timestamp: any, gasUsed: any, gasPrice: any, split: (
+    { __typename?: 'Split' }
+    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
+  ), withdrawals: Array<(
+    { __typename?: 'Withdrawal' }
+    & { ' $fragmentRefs'?: { 'WithdrawalFragmentFragment': WithdrawalFragmentFragment } }
+  )>, deposits: Array<(
+    { __typename?: 'Deposit' }
+    & { ' $fragmentRefs'?: { 'DepositFragmentFragment': DepositFragmentFragment } }
+  )>, contractURIUpdates: Array<(
+    { __typename?: 'ContractURIUpdate' }
+    & { ' $fragmentRefs'?: { 'ContractUriUpdateFragmentFragment': ContractUriUpdateFragmentFragment } }
+  )> } & { ' $fragmentName'?: 'TransactionDetailsFragmentFragment' };
+
+export type WithdrawalFragmentFragment = { __typename?: 'Withdrawal', amount: any, id: string, origin: any, logIndex?: any | null, to: any, token: (
+    { __typename?: 'Token' }
+    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+  ), transaction: (
+    { __typename?: 'Transaction' }
+    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
+  ), split: (
+    { __typename?: 'Split' }
+    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'WithdrawalFragmentFragment' };
+
+export type DepositFragmentFragment = { __typename?: 'Deposit', amount: any, id: string, origin: any, logIndex?: any | null, from: any, token: (
+    { __typename?: 'Token' }
+    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+  ), transaction: (
+    { __typename?: 'Transaction' }
+    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
+  ), split: (
+    { __typename?: 'Split' }
+    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'DepositFragmentFragment' };
+
+export type ContractUriUpdateFragmentFragment = { __typename?: 'ContractURIUpdate', id: string, origin: any, logIndex?: any | null, previousURI: string, newURI: string, transaction: (
+    { __typename?: 'Transaction' }
+    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
+  ), split: (
+    { __typename?: 'Split' }
+    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
+  ) } & { ' $fragmentName'?: 'ContractUriUpdateFragmentFragment' };
+
+export type SplitBaseFragmentFragment = { __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null } } & { ' $fragmentName'?: 'SplitBaseFragmentFragment' };
+
+export type SplitDetailsFragmentFragment = { __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null }, shares: Array<(
+    { __typename?: 'Share' }
+    & { ' $fragmentRefs'?: { 'ShareFragmentFragment': ShareFragmentFragment } }
+  )>, tokenWithdrawals: Array<{ __typename?: 'TokenWithdrawal', amount: any, token: (
+      { __typename?: 'Token' }
+      & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+    ) }>, tokenDeposits: Array<{ __typename?: 'TokenDeposit', amount: any, token: (
+      { __typename?: 'Token' }
+      & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+    ) }>, withdrawableTokens: Array<{ __typename?: 'TokenWithdrawable', amount: any, token: (
+      { __typename?: 'Token' }
+      & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
+    ) }> } & { ' $fragmentName'?: 'SplitDetailsFragmentFragment' };
+
+export type SplitsByPayeeQueryVariables = Exact<{
+  payee?: InputMaybe<Scalars['Bytes']>;
+}>;
+
+
+export type SplitsByPayeeQuery = { __typename?: 'Query', splits: Array<(
+    { __typename?: 'Split' }
+    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
+  )> };
+
+export type SplitQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type SplitQuery = { __typename?: 'Query', split?: (
+    { __typename?: 'Split' }
+    & { ' $fragmentRefs'?: { 'SplitDetailsFragmentFragment': SplitDetailsFragmentFragment } }
+  ) | null };
+
+export type TransactionsBySplitQueryVariables = Exact<{
+  split: Scalars['String'];
+}>;
+
+
+export type TransactionsBySplitQuery = { __typename?: 'Query', transactions: Array<(
+    { __typename?: 'Transaction' }
+    & { ' $fragmentRefs'?: { 'TransactionDetailsFragmentFragment': TransactionDetailsFragmentFragment } }
+  )> };
+
+export const TokenFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Token"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"decimals"}},{"kind":"Field","name":{"kind":"Name","value":"totalSupply"}}]}}]} as unknown as DocumentNode<TokenFragmentFragment, unknown>;
+export const TokenValueFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenValueFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TokenValue"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}},...TokenFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TokenValueFragmentFragment, unknown>;
+export const SplitBaseFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SplitBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Split"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}}]}}]} as unknown as DocumentNode<SplitBaseFragmentFragment, unknown>;
+export const TransactionBaseFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Transaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"gasUsed"}},{"kind":"Field","name":{"kind":"Name","value":"gasPrice"}}]}},...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionBaseFragmentFragment, unknown>;
+export const WithdrawalFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WithdrawalFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Withdrawal"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"to"}}]}},...TokenFragmentFragmentDoc.definitions,...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<WithdrawalFragmentFragment, unknown>;
+export const DepositFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DepositFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Deposit"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"from"}}]}},...TokenFragmentFragmentDoc.definitions,...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<DepositFragmentFragment, unknown>;
+export const ContractUriUpdateFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ContractURIUpdateFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ContractURIUpdate"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"previousURI"}},{"kind":"Field","name":{"kind":"Name","value":"newURI"}}]}},...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<ContractUriUpdateFragmentFragment, unknown>;
+export const TransactionDetailsFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionDetailsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Transaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"gasUsed"}},{"kind":"Field","name":{"kind":"Name","value":"gasPrice"}},{"kind":"Field","name":{"kind":"Name","value":"withdrawals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"WithdrawalFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"deposits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DepositFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contractURIUpdates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ContractURIUpdateFragment"}}]}}]}},...SplitBaseFragmentFragmentDoc.definitions,...WithdrawalFragmentFragmentDoc.definitions,...DepositFragmentFragmentDoc.definitions,...ContractUriUpdateFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionDetailsFragmentFragment, unknown>;
+export const ShareFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ShareFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Share"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]} as unknown as DocumentNode<ShareFragmentFragment, unknown>;
+export const SplitDetailsFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SplitDetailsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Split"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}},{"kind":"Field","name":{"kind":"Name","value":"shares"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ShareFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tokenWithdrawals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"tokenDeposits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"withdrawableTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}}]}},...ShareFragmentFragmentDoc.definitions,...TokenFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitDetailsFragmentFragment, unknown>;
+export const SplitsByPayeeDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SplitsByPayee"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payee"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Bytes"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"splits"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shares_"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"payee"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payee"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}}]}},...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitsByPayeeQuery, SplitsByPayeeQueryVariables>;
+export const SplitDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Split"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"split"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitDetailsFragment"}}]}}]}},...SplitDetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitQuery, SplitQueryVariables>;
+export const TransactionsBySplitDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TransactionsBySplit"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"split"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transactions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"split"},"value":{"kind":"Variable","name":{"kind":"Name","value":"split"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionDetailsFragment"}}]}}]}},...TransactionDetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionsBySplitQuery, TransactionsBySplitQueryVariables>;

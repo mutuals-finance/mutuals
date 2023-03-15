@@ -1,8 +1,8 @@
-import { FragmentType, useFragment } from "@/lib/graphql/__generated__";
+import { FragmentType, useFragment } from "@/graphql/__generated__";
 import {
   contractURIUpdateFragment,
-  paymentReceiveFragment,
-  paymentReleaseFragment,
+  depositFragment,
+  withdrawalFragment,
   splitBaseFragment,
   tokenFragment,
   transactionBaseFragment,
@@ -26,16 +26,16 @@ function useEventContractURIUpdate(
   } as SplitEvent;
 }
 
-function useEventPaymentReceive(
-  fragment: FragmentType<typeof paymentReceiveFragment>
+function useEventDeposit(
+  fragment: FragmentType<typeof depositFragment>
 ) {
-  const event = useFragment(paymentReceiveFragment, fragment);
+  const event = useFragment(depositFragment, fragment);
   const tx = useFragment(transactionBaseFragment, event.transaction);
   const split = useFragment(splitBaseFragment, event.split);
   const token = useFragment(tokenFragment, event.token);
 
   return {
-    event: EventType.PaymentReceive,
+    event: EventType.Deposit,
     price: `+ ${formatAmount(event.amount, token.decimals)} ${token.symbol}`,
     by: event.from,
     to: split.address,
@@ -43,16 +43,16 @@ function useEventPaymentReceive(
   } as SplitEvent;
 }
 
-function useEventPaymentRelease(
-  fragment: FragmentType<typeof paymentReleaseFragment>
+function useEventWithdrawal(
+  fragment: FragmentType<typeof withdrawalFragment>
 ) {
-  const event = useFragment(paymentReleaseFragment, fragment);
+  const event = useFragment(withdrawalFragment, fragment);
   const tx = useFragment(transactionBaseFragment, event.transaction);
   const split = useFragment(splitBaseFragment, event.split);
   const token = useFragment(tokenFragment, event.token);
 
   return {
-    event: EventType.PaymentRelease,
+    event: EventType.Withdrawal,
     price: `- ${formatAmount(event.amount, token.decimals)} ${token.symbol}`,
     by: split.address,
     to: event.origin,
@@ -65,8 +65,8 @@ export function useActivityEvents(
 ) {
   const tx = useFragment(transactionDetailsFragment, fragment);
   const updates = tx.contractURIUpdates.map(useEventContractURIUpdate);
-  const receives = tx.paymentReceives.map(useEventPaymentReceive);
-  const releases = tx.paymentReleases.map(useEventPaymentRelease);
+  const receives = tx.deposits.map(useEventDeposit);
+  const releases = tx.withdrawals.map(useEventWithdrawal);
 
   return [...updates, ...receives, ...releases] as SplitEvent[];
 }

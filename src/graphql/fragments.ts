@@ -51,11 +51,11 @@ export const transactionDetailsFragment = graphql(/* GraphQL */ `
     timestamp
     gasUsed
     gasPrice
-    paymentReleases {
-      ...PaymentReleaseFragment
+    withdrawals {
+      ...WithdrawalFragment
     }
-    paymentReceives {
-      ...PaymentReceiveFragment
+    deposits {
+      ...DepositFragment
     }
     contractURIUpdates {
       ...ContractURIUpdateFragment
@@ -63,8 +63,8 @@ export const transactionDetailsFragment = graphql(/* GraphQL */ `
   }
 `);
 
-export const paymentReleaseFragment = graphql(/* GraphQL */ `
-  fragment PaymentReleaseFragment on PaymentRelease {
+export const withdrawalFragment = graphql(/* GraphQL */ `
+  fragment WithdrawalFragment on Withdrawal {
     amount
     token {
       ...TokenFragment
@@ -82,8 +82,8 @@ export const paymentReleaseFragment = graphql(/* GraphQL */ `
   }
 `);
 
-export const paymentReceiveFragment = graphql(/* GraphQL */ `
-  fragment PaymentReceiveFragment on PaymentReceive {
+export const depositFragment = graphql(/* GraphQL */ `
+  fragment DepositFragment on Deposit {
     amount
     token {
       ...TokenFragment
@@ -151,19 +151,19 @@ export const splitDetailsFragment = graphql(/* GraphQL */ `
     shares {
       ...ShareFragment
     }
-    releasedTokens {
+    tokenWithdrawals {
       amount
       token {
         ...TokenFragment
       }
     }
-    receivedTokens {
+    tokenDeposits {
       amount
       token {
         ...TokenFragment
       }
     }
-    releasableTokens {
+    withdrawableTokens {
       amount
       token {
         ...TokenFragment

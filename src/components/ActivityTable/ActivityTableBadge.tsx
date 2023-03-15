@@ -9,10 +9,10 @@ import { EventType } from "./types";
 export default function ActivityTableBadge({ type }: { type: EventType }) {
   let Icon;
   switch (type) {
-    case EventType.PaymentReceive:
+    case EventType.Deposit:
       Icon = IoArrowDownOutline;
       break;
-    case EventType.PaymentRelease:
+    case EventType.Withdrawal:
       Icon = IoArrowUpOutline;
       break;
     default:
@@ -20,8 +20,8 @@ export default function ActivityTableBadge({ type }: { type: EventType }) {
   }
 
   const colorClasses = {
-    [EventType.PaymentRelease]: "border-red-500 text-red-500",
-    [EventType.PaymentReceive]: "border-green-500 text-green-500",
+    [EventType.Withdrawal]: "border-red-500 text-red-500",
+    [EventType.Deposit]: "border-green-500 text-green-500",
     [EventType.ContractURIUpdate]: "border-purple-500 text-purple-500",
   }[type];
 
