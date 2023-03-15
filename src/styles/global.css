@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply 2xl:text-[0.8vw];
+  }
+
+  section:not(:first-of-type, :last-of-type) {
+    @apply py-6 lg:py-12;
+  }
+
+  section:first-of-type {
+    @apply pb-6 lg:pb-12;
+  }
+
+  section:last-of-type {
+    @apply pt-6 lg:pt-12;
+  }
+
+  .title {
+    @apply text-6xl font-semibold;
+  }
+
+  .title-2 {
+    @apply text-4xl font-semibold;
+  }
+
+  .title-3 {
+    @apply text-xl font-semibold;
+  }
+
+  .link,
+  .link-1 {
+    @apply font-semibold opacity-60 hover:opacity-100 transition duration-200;
+  }
+
+  .link-2 {
+    @apply font-semibold opacity-100 hover:opacity-60 transition duration-200;
+  }
+
+  .label {
+    @apply inline-block font-normal text-xs leading-relaxed text-neutral-500 dark:text-neutral-400;
+  }
+
+  .label ~ input,
+  .label ~ .input,
+  .label ~ textarea,
+  .label ~ .textarea {
+    @apply mt-1;
+  }
+
+  .input-default {
+    @apply w-full text-default px-6 py-3 m-0 placeholder:text-neutral-400 flex justify-start text-left outline-0 border border-default ring-0 focus:ring-1 ring-neutral-900 dark:ring-neutral-50 bg-default rounded-default;
+  }
+
+  input,
+  .input {
+    @apply input-default h-10 items-center;
+  }
+
+  textarea,
+  .textarea {
+    @apply input-default min-h-[6rem] items-start;
+  }
+
+  .label-error {
+    @apply block mt-1 text-xs text-error;
+  }
+
+  .error .input-default {
+    @apply ring ring-error;
+  }
+
+  .error .label {
+    @apply text-error;
+  }
+
+  .bg-default,
+  .bg-default-0 {
+    @apply bg-white dark:bg-[#101010];
+  }
+
+  .bg-default-1 {
+    @apply bg-neutral-50 dark:bg-neutral-900;
+  }
+
+  .bg-default-2 {
+    @apply bg-zinc-100 dark:bg-zinc-900;
+  }
+
+  .text-default {
+    @apply text-neutral-900 dark:text-neutral-50;
+  }
+
+  .rounded-default {
+    @apply rounded-xl;
+  }
+
+  .bg-border-default {
+    @apply bg-zinc-200 dark:bg-zinc-800;
+  }
+
+  .border-default {
+    @apply border-zinc-200 dark:border-zinc-800;
+  }
+
+  .divide-default {
+    @apply divide-zinc-200 dark:divide-zinc-800;
+  }
+
+  .shadow-default {
+    @apply shadow-xl;
+  }
+}
+
+@layer components {
+  .container {
+    @apply 2xl:max-w-[90rem];
+  }
+}
+
+/* chrome and chromium based */
+.react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
