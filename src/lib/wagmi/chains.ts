@@ -7,9 +7,9 @@ import {
   optimismGoerli,
   hardhat,
   localhost,
-} from "wagmi/chains";
-import { NODE_ENV } from "@/lib/constants";
-import { Chain } from "wagmi";
+} from 'wagmi/chains';
+import { NODE_ENV } from '@/lib/constants';
+import { Chain } from 'wagmi';
 
 const defaultChains = [mainnet, polygon];
 const devChains = [polygonMumbai, goerli, arbitrumGoerli, optimismGoerli];

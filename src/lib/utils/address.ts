@@ -1,4 +1,4 @@
-import { getAddress } from "ethers/lib/utils";
+import { getAddress } from 'ethers/lib/utils';
 
 export function isAddress(value: string): string {
   return getAddress(value.toLowerCase());

@@ -1,3 +1,3 @@
 export default function SettingsPlaceholder() {
-    return <div>Settings Placeholder</div>
+  return <div>Settings Placeholder</div>;
 }

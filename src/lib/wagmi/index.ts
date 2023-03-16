@@ -1,14 +1,14 @@
-import { createClient, configureChains, type Client } from "wagmi";
+import { createClient, configureChains, type Client } from 'wagmi';
 
-import { publicProvider } from "wagmi/providers/public";
-import { infuraProvider } from "wagmi/providers/infura";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { BaseProvider, WebSocketProvider } from "@ethersproject/providers";
-import { availableChains } from "./chains";
-import { INFURA_KEY } from "@/lib/constants";
+import { publicProvider } from 'wagmi/providers/public';
+import { infuraProvider } from 'wagmi/providers/infura';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { BaseProvider, WebSocketProvider } from '@ethersproject/providers';
+import { availableChains } from './chains';
+import { INFURA_KEY } from '@/lib/constants';
 
 const { chains, provider, webSocketProvider } = configureChains(
   availableChains,
@@ -26,7 +26,7 @@ export function useWagmi() {
       new CoinbaseWalletConnector({
         chains,
         options: {
-          appName: "SplitFi",
+          appName: 'SplitFi',
         },
       }),
       new WalletConnectConnector({
@@ -38,7 +38,7 @@ export function useWagmi() {
       new InjectedConnector({
         chains,
         options: {
-          name: "Injected",
+          name: 'Injected',
           shimDisconnect: true,
         },
       }),

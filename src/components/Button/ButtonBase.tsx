@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import React, { ReactNode } from 'react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export interface ButtonBaseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,10 +8,10 @@ export interface ButtonBaseProps
   children?: ReactNode;
   disabled?: boolean;
   loading?: boolean;
-  rounded?: "base" | "none" | "full";
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  justify?: "between" | "center" | "around";
-  color?: "primary" | "secondary" | "outline" | "link-1" | "link-2";
+  rounded?: 'base' | 'none' | 'full';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  justify?: 'between' | 'center' | 'around';
+  color?: 'primary' | 'secondary' | 'outline' | 'link-1' | 'link-2';
   dense?: boolean;
   fullWidth?: boolean;
 }
@@ -21,7 +21,7 @@ export default function ButtonBase({
   className,
   icon,
   iconAfter,
-  rounded = "base",
+  rounded = 'base',
   size = `md`,
   justify = `center`,
   color = `primary`,
@@ -41,11 +41,11 @@ export default function ButtonBase({
   }[rounded];
 
   const widthClass = {
-    xs: fullWidth ? "w-full" : "w-6",
-    sm: fullWidth ? "w-full" : "w-8",
-    md: fullWidth ? "w-full" : "w-10",
-    lg: fullWidth ? "w-full" : "w-14",
-    xl: fullWidth ? "w-full" : "w-16",
+    xs: fullWidth ? 'w-full' : 'w-6',
+    sm: fullWidth ? 'w-full' : 'w-8',
+    md: fullWidth ? 'w-full' : 'w-10',
+    lg: fullWidth ? 'w-full' : 'w-14',
+    xl: fullWidth ? 'w-full' : 'w-16',
   }[size];
 
   const textClass = {
@@ -91,8 +91,8 @@ export default function ButtonBase({
     primary: `text-white bg-carlo hover:bg-carlo-400 disabled:hover:bg-carlo border-transparent`,
     secondary: `bg-neutral-900 hover:bg-neutral-700 disabled:hover:bg-neutral-900 text-neutral-50 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-100 dark:disabled:hover:bg-neutral-100`,
     outline: `bg-default-2 text-default border-transparent hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:hover:bg-zinc-100 dark:disabled:hover:bg-zinc-900`,
-    "link-1": `link-1 border-transparent`,
-    "link-2": `link-2 border-transparent`,
+    'link-1': `link-1 border-transparent`,
+    'link-2': `link-2 border-transparent`,
   }[color];
 
   const buttonClass = [
@@ -102,10 +102,10 @@ export default function ButtonBase({
     baseClass,
     heightClass,
     textClass,
-    !fullWidth && (dense || !onlyIcon) ? "" : fullWidth ? "w-full" : widthClass,
-    dense || onlyIcon ? "" : heightClass,
-    dense || onlyIcon ? "" : sizeClass,
-    onlyIcon ? "" : spaceClass,
+    !fullWidth && (dense || !onlyIcon) ? '' : fullWidth ? 'w-full' : widthClass,
+    dense || onlyIcon ? '' : heightClass,
+    dense || onlyIcon ? '' : sizeClass,
+    onlyIcon ? '' : spaceClass,
     className,
   ].join(` `);
 
@@ -113,7 +113,7 @@ export default function ButtonBase({
     <button className={buttonClass} disabled={disabled || loading} {...props}>
       {loading && (
         <div
-          className={`absolute top-0 left-0 w-full h-full block flex items-center justify-center ${roundedClass}`}
+          className={`absolute top-0 left-0 block flex h-full w-full items-center justify-center ${roundedClass}`}
         >
           <LoadingSpinner size={size} color={color} />
         </div>

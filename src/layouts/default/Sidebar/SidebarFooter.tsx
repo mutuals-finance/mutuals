@@ -1,7 +1,7 @@
-import React from "react";
-import { IoChevronBack, IoChevronForward, IoSettings } from "react-icons/io5";
-import { ButtonOutline } from "@/components/Button";
-import SidebarLink from "@/layouts/default/Sidebar/SidebarLink";
+import React from 'react';
+import { IoChevronBack, IoChevronForward, IoSettings } from 'react-icons/io5';
+import { ButtonOutline } from '@/components/Button';
+import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
 
 interface AppSidebarFooterProps {
   onToggle: () => void;
@@ -13,19 +13,15 @@ export default function SidebarFooter({
   collapsed,
 }: AppSidebarFooterProps) {
   return (
-    <div className={"flex-shrink-0 flex flex-col p-2 lg:pb-6 space-y-2"}>
-      <div className={"ml-auto translate-x-7"}>
+    <div className={'flex flex-shrink-0 flex-col space-y-2 p-2 lg:pb-6'}>
+      <div className={'ml-auto translate-x-7'}>
         <ButtonOutline
           icon={collapsed ? <IoChevronForward /> : <IoChevronBack />}
           onClick={onToggle}
         />
       </div>
 
-      <SidebarLink
-        dense={collapsed}
-        href={"/settings"}
-        icon={<IoSettings />}
-      >
+      <SidebarLink dense={collapsed} href={'/settings'} icon={<IoSettings />}>
         Settings
       </SidebarLink>
     </div>

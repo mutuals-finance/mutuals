@@ -1,15 +1,15 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 interface BreadcrumbItemInnerProps extends React.PropsWithChildren {
   icon?: React.ReactNode;
 }
 
 function BreadcrumbItemInner({ icon, children }: BreadcrumbItemInnerProps) {
-  const label = <span className={"block"}>{children}</span>;
+  const label = <span className={'block'}>{children}</span>;
   return !!icon ? (
     <>
-      <span className={"block"}>{icon}</span>
+      <span className={'block'}>{icon}</span>
       {label}
     </>
   ) : (
@@ -27,10 +27,12 @@ export default function BreadcrumbItem({
   href,
   ...props
 }: BreadcrumbItemProps) {
-  const createBreadcrumbItem = ({ children }: React.PropsWithChildren<unknown>) => (
+  const createBreadcrumbItem = ({
+    children,
+  }: React.PropsWithChildren<unknown>) => (
     <>
       {!!href && <li>/</li>}
-      <li className={"titlecase truncate"}>{children}</li>
+      <li className={'titlecase truncate'}>{children}</li>
     </>
   );
 
@@ -44,7 +46,7 @@ export default function BreadcrumbItem({
 
   return createBreadcrumbItem({
     children: (
-      <Link href={href} className={"block link font-normal"}>
+      <Link href={href} className={'link block font-normal'}>
         {breadcrumbInner}
       </Link>
     ),

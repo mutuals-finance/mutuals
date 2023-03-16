@@ -1,9 +1,9 @@
-import {TransactionDetailsFragmentFragment} from "@/graphql/__generated__/graphql";
+import { TransactionDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
 
 export enum EventType {
-  ContractURIUpdate = "ContractURIUpdate",
-  Deposit = "Deposit",
-  Withdrawal = "Withdrawal",
+  ContractURIUpdate = 'ContractURIUpdate',
+  Deposit = 'Deposit',
+  Withdrawal = 'Withdrawal',
 }
 
 export interface SplitEvent {

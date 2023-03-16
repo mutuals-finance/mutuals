@@ -1,6 +1,6 @@
-import { Combobox } from "@headlessui/react";
+import { Combobox } from '@headlessui/react';
 
-import React from "react";
+import React from 'react';
 
 interface InputComboboxProps<T> {
   label?: string;
@@ -26,7 +26,7 @@ function InputCombobox<T>({
   const keyOf = (item: T) => item[by] as string;
 
   const filteredItems =
-    keyOf(value) === ""
+    keyOf(value) === ''
       ? items
       : items.filter((item) => {
           return keyOf(item).includes(keyOf(value));
@@ -34,16 +34,16 @@ function InputCombobox<T>({
 
   return (
     <Combobox
-      as={"div"}
+      as={'div'}
       className={`relative ${className}`}
       value={value}
       onChange={onChange}
       {...props}
     >
       {!!label && (
-        <Combobox.Label className="label mb-1">{label}</Combobox.Label>
+        <Combobox.Label className='label mb-1'>{label}</Combobox.Label>
       )}
-      <Combobox.Button as="div">
+      <Combobox.Button as='div'>
         <Combobox.Input
           onChange={(event) => {
             onChange?.({ ...value, [by]: event.target.value });
@@ -53,8 +53,8 @@ function InputCombobox<T>({
       </Combobox.Button>
 
       <Combobox.Options
-        className={`absolute top-full z-10 left-0 w-full h-auto max-h-60 py-2 overflow-y-auto bg-white shadow rounded ${
-          filteredItems.length <= 0 ? "hidden" : "flex flex-col"
+        className={`absolute top-full left-0 z-10 h-auto max-h-60 w-full overflow-y-auto rounded bg-white py-2 shadow ${
+          filteredItems.length <= 0 ? 'hidden' : 'flex flex-col'
         }`}
       >
         {filteredItems.map((item, index) => children({ item, index }))}

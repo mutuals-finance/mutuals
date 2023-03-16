@@ -1,1 +1,1 @@
-export * from "./SettingsPlaceholder";
+export * from './SettingsPlaceholder';

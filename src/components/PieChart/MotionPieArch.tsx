@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import React, { useCallback } from "react";
+import { motion } from 'framer-motion';
+import React, { useCallback } from 'react';
 
 export type ArchData = {
   id: string;
@@ -39,12 +39,12 @@ export default function MotionPieArch({
   return (
     <motion.path
       className={
-        "cursor-pointer duration-200 ease-in-out stroke-0 hover:stroke-[2%]"
+        'cursor-pointer stroke-0 duration-200 ease-in-out hover:stroke-[2%]'
       }
       stroke={fill}
       onMouseMove={handleOnHover}
       onMouseOut={onMouseOut}
-      d={path || ""}
+      d={path || ''}
       fill={fill}
     />
   );

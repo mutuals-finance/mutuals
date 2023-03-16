@@ -1,5 +1,5 @@
-import React, { HTMLAttributes } from "react";
-import { Jazzicon } from "@ukstv/jazzicon-react";
+import React, { HTMLAttributes } from 'react';
+import { Jazzicon } from '@ukstv/jazzicon-react';
 
 interface UserAvatarProps extends HTMLAttributes<HTMLSpanElement> {
   address: string;
@@ -11,9 +11,9 @@ export default function UserAvatar({
   ...props
 }: UserAvatarProps) {
   return (
-    <span className={`flex w-6 h-6 rounded-full ${className}`} {...props}>
+    <span className={`flex h-6 w-6 rounded-full ${className}`} {...props}>
       <Jazzicon
-        className={"flex flex-1 items-center justify-center"}
+        className={'flex flex-1 items-center justify-center'}
         address={address}
       />
     </span>

@@ -1,5 +1,5 @@
-import { format, fromUnixTime } from "date-fns";
-import { HTMLAttributes } from "react";
+import { format, fromUnixTime } from 'date-fns';
+import { HTMLAttributes } from 'react';
 
 interface DateProps extends HTMLAttributes<HTMLTimeElement> {
   timestamp: string;
@@ -14,7 +14,7 @@ interface DateProps extends HTMLAttributes<HTMLTimeElement> {
 }
 export default function Date({
   timestamp,
-  formatString = "LLLL d, yyyy",
+  formatString = 'LLLL d, yyyy',
   options,
   ...props
 }: DateProps) {

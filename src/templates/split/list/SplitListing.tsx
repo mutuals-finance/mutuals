@@ -1,8 +1,8 @@
-import React from "react";
-import { SplitFragmentCard } from "@/components/SplitterCard";
-import { useQuery } from "@apollo/client";
-import { SPLITS_BY_PAYEE } from "@/graphql/queries";
-import { useAccount } from "wagmi";
+import React from 'react';
+import { SplitFragmentCard } from '@/components/SplitterCard';
+import { useQuery } from '@apollo/client';
+import { SPLITS_BY_PAYEE } from '@/graphql/queries';
+import { useAccount } from 'wagmi';
 
 export function SplitListing() {
   const { address, isConnected } = useAccount();
@@ -14,8 +14,8 @@ export function SplitListing() {
 
   return (
     <section>
-      <div className="container">
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 lg:gap-6">
+      <div className='container'>
+        <ul className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 lg:gap-6 2xl:grid-cols-4'>
           {data?.splits.map((fragment, index) => {
             return (
               <li key={index}>

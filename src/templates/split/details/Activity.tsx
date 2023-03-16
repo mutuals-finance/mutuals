@@ -1,19 +1,19 @@
-import React from "react";
-import Box from "@/components/Box";
-import ActivityTable from "@/components/ActivityTable";
-import { ActivityTableProps } from "@/components/ActivityTable/types";
+import React from 'react';
+import Box from '@/components/Box';
+import ActivityTable from '@/components/ActivityTable';
+import { ActivityTableProps } from '@/components/ActivityTable/types';
 
 type ActivityProps = ActivityTableProps;
 
 export function Activity(props: ActivityProps) {
   return (
-    <Box className={"lg:col-span-3"} title={"Activity"}>
+    <Box className={'lg:col-span-3'} title={'Activity'}>
       <div
         className={
-          "-ml-3 -my-3 lg:-my-6 lg:-ml-6 w-[calc(100%_+_1.5rem)] lg:w-[calc(100%_+_3rem)] flex flex-1 relative overflow-y-auto"
+          'relative -my-3 -ml-3 flex w-[calc(100%_+_1.5rem)] flex-1 overflow-y-auto lg:-my-6 lg:-ml-6 lg:w-[calc(100%_+_3rem)]'
         }
       >
-        <div className={"absolute top-0 left-0 w-full h-full"}>
+        <div className={'absolute top-0 left-0 h-full w-full'}>
           <ActivityTable {...props} />
         </div>
       </div>

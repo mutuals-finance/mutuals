@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type FormProps = React.FormHTMLAttributes<HTMLFormElement>;
 
@@ -8,7 +8,7 @@ export default function Form({
   ...props
 }: React.PropsWithChildren<FormProps>) {
   return (
-    <form className={`w-full flex flex-col ${className}`} {...props}>
+    <form className={`flex w-full flex-col ${className}`} {...props}>
       {children}
     </form>
   );

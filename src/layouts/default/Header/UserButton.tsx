@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { IoChevronDown, IoPersonCircle } from "react-icons/io5";
-import { ButtonOutline } from "@/components/Button";
-import { shortenAddress } from "@/lib/utils";
-import UserAvatar from "@/components/UserAvatar";
+import React, { useEffect, useState } from 'react';
+import { IoChevronDown, IoPersonCircle } from 'react-icons/io5';
+import { ButtonOutline } from '@/components/Button';
+import { shortenAddress } from '@/lib/utils';
+import UserAvatar from '@/components/UserAvatar';
 
 type AppHeaderUserButtonProps = {
   isConnected: boolean;
@@ -13,18 +13,18 @@ type AppHeaderUserButtonProps = {
 export default function UserButton({
   isConnected,
   isConnecting,
-  address = "0x",
+  address = '0x',
 }: AppHeaderUserButtonProps) {
-  const [displayName, setDisplayName] = useState<string>("");
+  const [displayName, setDisplayName] = useState<string>('');
 
   useEffect(() => {
-    setDisplayName(isConnected ? shortenAddress(address) : "Login");
+    setDisplayName(isConnected ? shortenAddress(address) : 'Login');
   }, [address]);
 
   return (
     <ButtonOutline
       icon={
-        <span className="flex items-center justify-center rounded-full w-6 h-6">
+        <span className='flex h-6 w-6 items-center justify-center rounded-full'>
           {isConnected ? (
             <UserAvatar address={address} />
           ) : (
@@ -33,10 +33,10 @@ export default function UserButton({
         </span>
       }
       iconAfter={
-        <IoChevronDown className="ui-open:rotate-180 ui-open:transform ease-out-expo duration-100" />
+        <IoChevronDown className='ease-out-expo duration-100 ui-open:rotate-180 ui-open:transform' />
       }
     >
-      {isConnecting ? "Connecting..." : displayName}
+      {isConnecting ? 'Connecting...' : displayName}
     </ButtonOutline>
   );
 }

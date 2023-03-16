@@ -1,7 +1,7 @@
-import Input from "@/components/Form/Input";
-import React, { useEffect, useState } from "react";
-import { AiOutlinePercentage } from "react-icons/ai";
-import FormList from "./FormList";
+import Input from '@/components/Form/Input';
+import React, { useEffect, useState } from 'react';
+import { AiOutlinePercentage } from 'react-icons/ai';
+import FormList from './FormList';
 
 export interface Payee {
   address: string;
@@ -14,7 +14,7 @@ interface PayeeListProps {
 }
 
 export const initialPayee: Payee = {
-  address: "",
+  address: '',
   share: 100.0,
 };
 
@@ -37,12 +37,12 @@ export default function PayeeList({ value, onChange }: PayeeListProps) {
   return (
     <FormList<Payee>
       value={value}
-      onAdd={(index) => updateAt(index, 0, { address: "", share: maxShare })}
+      onAdd={(index) => updateAt(index, 0, { address: '', share: maxShare })}
       onRemove={(index) => updateAt(index, 1)}
     >
       {({ item, index }) => (
         <>
-          <div className={"flex-1"}>
+          <div className={'flex-1'}>
             <Input
               value={item.address}
               onChange={(event) =>
@@ -52,17 +52,17 @@ export default function PayeeList({ value, onChange }: PayeeListProps) {
                 })
               }
               id={`payee-address-${index}`}
-              label={"Wallet Address or ENS Name"}
+              label={'Wallet Address or ENS Name'}
             />
           </div>
 
-          <div className={"w-32"}>
+          <div className={'w-32'}>
             <Input
-              type={"number"}
-              label={"Share"}
+              type={'number'}
+              label={'Share'}
               min={0}
               max={maxShares}
-              step="any"
+              step='any'
               iconAfter={<AiOutlinePercentage />}
               onChange={(event) =>
                 updateAt(index, 1, {

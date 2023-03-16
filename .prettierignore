@@ -13,6 +13,10 @@
 /.next/
 /out/
 
+# auto generated
+/types/typechain/
+/graphql/__generated__/
+
 # production
 /build
 

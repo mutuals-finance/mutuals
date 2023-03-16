@@ -1,8 +1,8 @@
-import { Tab } from "@headlessui/react";
+import { Tab } from '@headlessui/react';
 
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import React from "react";
-import {PropsOf} from "@headlessui/react/dist/types";
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
+import React from 'react';
+import { PropsOf } from '@headlessui/react/dist/types';
 
 export interface TabsProps {
   disabled?: boolean;
@@ -18,14 +18,19 @@ function Title({
 }: { className?: string } & React.PropsWithChildren) {
   return (
     <Tab
-      className={`relative ui-selected:border-b-4 rounded-t-xl flex items-center justify-center text-center flex-1 py-3 outline-0 ring-0 border-white -mb-px  ${className}`}
+      className={`relative -mb-px flex flex-1 items-center justify-center rounded-t-xl border-white py-3 text-center outline-0 ring-0 ui-selected:border-b-4  ${className}`}
     >
       {children}
     </Tab>
   );
 }
 
-function Titles({children, wrapperClassName, scrollContainerClassName,...props}: PropsOf<typeof ScrollMenu>) {
+function Titles({
+  children,
+  wrapperClassName,
+  scrollContainerClassName,
+  ...props
+}: PropsOf<typeof ScrollMenu>) {
   return (
     <Tab.List
       as={() => (

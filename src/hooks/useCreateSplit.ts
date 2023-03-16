@@ -1,9 +1,9 @@
-import { FACTORY_ADDRESS } from "@/lib/constants";
-import { BigNumber, utils } from "ethers";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import { SplitFactory__factory } from "@/../../types/typechain";
-import useDebounce from "@/hooks/useDebounce";
-import { useMemo } from "react";
+import { FACTORY_ADDRESS } from '@/lib/constants';
+import { BigNumber, utils } from 'ethers';
+import { useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { SplitFactory__factory } from '@/../../types/typechain';
+import useDebounce from '@/hooks/useDebounce';
+import { useMemo } from 'react';
 
 export type CreateSplitArgs = [
   `0x{string}`[],
@@ -17,13 +17,13 @@ export type CreateSplitResult = Omit<
   ReturnType<
     typeof usePrepareContractWrite<
       typeof SplitFactory__factory.abi,
-      "createSplit"
+      'createSplit'
     >
   >,
-  "error"
+  'error'
 > &
   ReturnType<
-    typeof useContractWrite<typeof SplitFactory__factory.abi, "createSplit">
+    typeof useContractWrite<typeof SplitFactory__factory.abi, 'createSplit'>
   >;
 
 export type CreateSplitProps = {
@@ -34,14 +34,14 @@ export type CreateSplitProps = {
 } & Parameters<
   typeof usePrepareContractWrite<
     typeof SplitFactory__factory.abi,
-    "createSplit"
+    'createSplit'
   >
 >[0];
 
 export default function useCreateSplit({
   payees = [],
   shares = [],
-  uri = "",
+  uri = '',
   metadataLocked,
   ...props
 }: CreateSplitProps) {
@@ -59,12 +59,12 @@ export default function useCreateSplit({
 
   const [...args] = useDebounce(argsMemo, 500);
 
-  const enabled = args[0].length > 0 && args[1].length > 0 && args[2] !== "";
+  const enabled = args[0].length > 0 && args[1].length > 0 && args[2] !== '';
 
   const prepare = usePrepareContractWrite({
     address: FACTORY_ADDRESS,
     abi: SplitFactory__factory.abi,
-    functionName: "createSplit",
+    functionName: 'createSplit',
     enabled,
     args,
     ...props,

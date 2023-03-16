@@ -1,9 +1,9 @@
-import Modal from "@/components/Modal";
-import React from "react";
+import Modal from '@/components/Modal';
+import React from 'react';
 import StepperItem, {
   StepperModalStep,
-} from "@/components/StepperModal/StepperItem";
-import { ButtonOutline, ButtonPrimary } from "@/components/Button";
+} from '@/components/StepperModal/StepperItem';
+import { ButtonOutline, ButtonPrimary } from '@/components/Button';
 
 interface StepperModalProps {
   open: boolean;
@@ -28,7 +28,7 @@ export default function StepperModal({
   return (
     <Modal
       header={
-        <span className={"block text-lg font-semibold truncate"}>
+        <span className={'block truncate text-lg font-semibold'}>
           {current?.title}
         </span>
       }
@@ -36,12 +36,12 @@ export default function StepperModal({
       open={open}
       dense={true}
     >
-      <div className="flex flex-col w-96 space-y-6">
+      <div className='flex w-96 flex-col space-y-6'>
         <div>
-          <ul className="flex flex-col">
+          <ul className='flex flex-col'>
             {steps.map(({ children, ...item }, index) => {
               return (
-                <li key={item.id} className={"block"}>
+                <li key={item.id} className={'block'}>
                   <StepperItem
                     {...item}
                     isActive={index === currentIndex}
@@ -55,9 +55,9 @@ export default function StepperModal({
           </ul>
         </div>
 
-        <div className={"flex items-center justify-center space-x-6"}>
+        <div className={'flex items-center justify-center space-x-6'}>
           <ButtonOutline
-            className={"flex-1"}
+            className={'flex-1'}
             fullWidth={true}
             onClick={() => onClose()}
           >
@@ -65,7 +65,7 @@ export default function StepperModal({
           </ButtonOutline>
 
           <ButtonPrimary
-            className={"flex-1"}
+            className={'flex-1'}
             fullWidth={true}
             disabled={current?.disabled}
             onClick={() => !!current && onNext(current, currentIndex)}

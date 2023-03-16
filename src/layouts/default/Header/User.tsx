@@ -1,6 +1,6 @@
-import Popover from "@/components/Popover";
-import React, { useState } from "react";
-import WalletModal from "@/components/WalletModal";
+import Popover from '@/components/Popover';
+import React, { useState } from 'react';
+import WalletModal from '@/components/WalletModal';
 import {
   IoHelpOutline,
   IoLogInOutline,
@@ -8,11 +8,11 @@ import {
   IoMegaphoneOutline,
   IoMoonOutline,
   IoSunnyOutline,
-} from "react-icons/io5";
-import { useTheme } from "next-themes";
-import { useAccount } from "wagmi";
-import PopoverItem from "@/components/Popover/PopoverItem";
-import UserButton from "@/layouts/default/Header/UserButton";
+} from 'react-icons/io5';
+import { useTheme } from 'next-themes';
+import { useAccount } from 'wagmi';
+import PopoverItem from '@/components/Popover/PopoverItem';
+import UserButton from '@/layouts/default/Header/UserButton';
 
 export default function User() {
   const { address, isConnected, isConnecting } = useAccount();
@@ -37,12 +37,12 @@ export default function User() {
       <Popover
         button={<UserButton {...{ isConnecting, isConnected, address }} />}
       >
-        <div className="w-screen max-w-xs bg-default rounded-default shadow-default divide-y">
-          <div className="flex flex-col p-2">
+        <div className='bg-default rounded-default shadow-default w-screen max-w-xs divide-y'>
+          <div className='flex flex-col p-2'>
             <PopoverItem icon={<IoMegaphoneOutline />}>Feedback</PopoverItem>
             <PopoverItem icon={<IoHelpOutline />}>Help</PopoverItem>
           </div>
-          <div className="flex flex-col p-2">
+          <div className='flex flex-col p-2'>
             <PopoverItem
               onClick={toggleTheme}
               highlight={true}

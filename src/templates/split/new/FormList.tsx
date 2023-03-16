@@ -1,6 +1,6 @@
-import { ButtonOutline } from "@/components/Button";
-import { IoAdd, IoTrash } from "react-icons/io5";
-import React from "react";
+import { ButtonOutline } from '@/components/Button';
+import { IoAdd, IoTrash } from 'react-icons/io5';
+import React from 'react';
 
 interface FormListItemProps {
   removeDisabled: boolean;
@@ -15,12 +15,12 @@ export function FormListItem({
   onRemove,
 }: React.PropsWithChildren<FormListItemProps>) {
   return (
-    <li className={"flex flex-1 items-end space-x-2"}>
-      <div className={"flex-1 flex space-x-2"}>{children}</div>
-      <ButtonOutline type={"button"} onClick={() => onAdd()} icon={<IoAdd />} />
+    <li className={'flex flex-1 items-end space-x-2'}>
+      <div className={'flex flex-1 space-x-2'}>{children}</div>
+      <ButtonOutline type={'button'} onClick={() => onAdd()} icon={<IoAdd />} />
       <ButtonOutline
         disabled={removeDisabled}
-        type={"button"}
+        type={'button'}
         onClick={() => onRemove()}
         icon={<IoTrash />}
       />
@@ -43,7 +43,7 @@ export default function FormList<T>({
   children,
 }: FormListProps<T>) {
   return (
-    <ul className={"flex flex-col space-y-2"}>
+    <ul className={'flex flex-col space-y-2'}>
       {value.map((item, index) => (
         <FormListItem
           key={index}

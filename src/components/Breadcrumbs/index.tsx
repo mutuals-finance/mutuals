@@ -1,8 +1,8 @@
-import React from "react";
-import BreadcrumbItem from "@/components/Breadcrumbs/BreadcrumbItem";
+import React from 'react';
+import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem';
 
 function slugToTitle(slug: string) {
-  return slug.replace(/-/g, " ").replace(/\b[a-z]/g, function (...args) {
+  return slug.replace(/-/g, ' ').replace(/\b[a-z]/g, function (...args) {
     return args[0].toUpperCase();
   });
 }
@@ -10,8 +10,8 @@ function slugToTitle(slug: string) {
 function BreadcrumbList({ children }: React.PropsWithChildren<unknown>) {
   return (
     <ul
-      className={"flex items-center justify-start space-x-2 py-4 text-sm"}
-      aria-label="breadcrumb"
+      className={'flex items-center justify-start space-x-2 py-4 text-sm'}
+      aria-label='breadcrumb'
     >
       {children}
     </ul>
@@ -20,7 +20,7 @@ function BreadcrumbList({ children }: React.PropsWithChildren<unknown>) {
 
 export default function Breadcrumbs() {
   //const { pathname } = useRouter();
-  const segments = [""];
+  const segments = [''];
 
   return (
     <BreadcrumbList>
@@ -28,7 +28,7 @@ export default function Breadcrumbs() {
         <BreadcrumbItem
           isLast={i >= segments.length - 1}
           key={i}
-          href={segments.slice(0, i + 1).join("/")}
+          href={segments.slice(0, i + 1).join('/')}
         >
           {slugToTitle(segment)}
         </BreadcrumbItem>

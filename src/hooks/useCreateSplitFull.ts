@@ -1,10 +1,8 @@
-import useCreateSplit, {
-  CreateSplitProps,
-} from "@/hooks/useCreateSplit";
-import { Metadata, useMetadata } from "@/hooks/useMetadata";
-import { useUpdateEffect } from "react-use";
+import useCreateSplit, { CreateSplitProps } from '@/hooks/useCreateSplit';
+import { Metadata, useMetadata } from '@/hooks/useMetadata';
+import { useUpdateEffect } from 'react-use';
 
-type CreateSplitFullProps = Omit<CreateSplitProps, "uri"> & Metadata;
+type CreateSplitFullProps = Omit<CreateSplitProps, 'uri'> & Metadata;
 
 export default function useCreateSplitFull(props: CreateSplitFullProps) {
   const storage = useMetadata();

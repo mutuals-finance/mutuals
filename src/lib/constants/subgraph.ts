@@ -1,5 +1,5 @@
-import { DEFAULT_SUBGRAPH } from "@/lib/constants/env";
-import { allChains } from "@/lib/wagmi/chains";
+import { DEFAULT_SUBGRAPH } from '@/lib/constants/env';
+import { allChains } from '@/lib/wagmi/chains';
 
 export const defaultSubgraph = DEFAULT_SUBGRAPH;
 

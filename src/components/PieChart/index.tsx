@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { Group } from "@visx/group";
-import { Pie } from "@visx/shape";
+import { Group } from '@visx/group';
+import { Pie } from '@visx/shape';
 
-import MotionPieArch, { ArchData } from "./MotionPieArch";
-import usePieChart from "./usePieChart";
-import { ParentSize } from "@visx/responsive";
+import MotionPieArch, { ArchData } from './MotionPieArch';
+import usePieChart from './usePieChart';
+import { ParentSize } from '@visx/responsive';
 
 interface PieChartProps {
   data: ArchData[];
@@ -22,15 +22,15 @@ function PieChartInner({ size, data }: PieChartInnerProps) {
   );
 
   function handleMouseOut() {
-    console.log("handleMouseOut");
+    console.log('handleMouseOut');
   }
 
   function handleMouseMove() {
-    console.log("handleMouseMove");
+    console.log('handleMouseMove');
   }
 
   return (
-    <svg width={size} height={size} className={"overflow-visible"}>
+    <svg width={size} height={size} className={'overflow-visible'}>
       <Group left={size >> 1} top={size >> 1}>
         <Pie
           data={data}
@@ -43,15 +43,15 @@ function PieChartInner({ size, data }: PieChartInnerProps) {
             return (
               <>
                 <text
-                  x={"50%"}
-                  y={"50%"}
-                  dx="-50%"
-                  dy="-50%"
-                  fontSize={"1rem"}
-                  className={"font-semibold fill-current"}
-                  textAnchor="middle"
+                  x={'50%'}
+                  y={'50%'}
+                  dx='-50%'
+                  dy='-50%'
+                  fontSize={'1rem'}
+                  className={'fill-current font-semibold'}
+                  textAnchor='middle'
                 >
-                  {arcs.length} Payee{arcs.length > 1 ? "s" : ""}
+                  {arcs.length} Payee{arcs.length > 1 ? 's' : ''}
                 </text>
 
                 {arcs.map((arch, i) => {
@@ -79,7 +79,7 @@ function PieChartInner({ size, data }: PieChartInnerProps) {
 
 export default function PieChart({ data }: PieChartProps) {
   return (
-    <ParentSize className={"w-full"}>
+    <ParentSize className={'w-full'}>
       {({ width }) => width > 0 && <PieChartInner size={width} data={data} />}
     </ParentSize>
   );

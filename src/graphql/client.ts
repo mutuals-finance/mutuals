@@ -4,16 +4,16 @@ import {
   InMemoryCache,
   DefaultOptions,
   from,
-} from "@apollo/client";
-import { subgraphByChainId } from "@/lib/constants";
-import { isSSR } from "@/lib/utils";
-import { useMemo } from "react";
-import { mainnet } from "wagmi/chains";
-import { AppProps } from "next/app";
-import { isEqual, merge } from "lodash";
-import { onError } from "@apollo/client/link/error";
+} from '@apollo/client';
+import { subgraphByChainId } from '@/lib/constants';
+import { isSSR } from '@/lib/utils';
+import { useMemo } from 'react';
+import { mainnet } from 'wagmi/chains';
+import { AppProps } from 'next/app';
+import { isEqual, merge } from 'lodash';
+import { onError } from '@apollo/client/link/error';
 
-export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
+export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient: ApolloClient<unknown>;
 
@@ -29,7 +29,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const httpLink = new HttpLink({
   uri: subgraphByChainId[mainnet.id],
-  credentials: "same-origin",
+  credentials: 'same-origin',
 });
 
 function createApolloClient() {
@@ -38,16 +38,16 @@ function createApolloClient() {
     //We don't want any cache to be stored server side
     defaultOptions = {
       query: {
-        fetchPolicy: "no-cache",
-        errorPolicy: "all",
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
       },
     };
   } else {
     //We immediately show results, but check in the background if any changes occured, and eventually update the view
     defaultOptions = {
       query: {
-        fetchPolicy: "cache-first",
-        errorPolicy: "all",
+        fetchPolicy: 'cache-first',
+        errorPolicy: 'all',
       },
     };
   }
@@ -108,7 +108,7 @@ export function initializeApollo(initialState = null) {
   return _apolloClient;
 }
 
-export function useApollo(pageProps: AppProps["pageProps"]) {
+export function useApollo(pageProps: AppProps['pageProps']) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeApollo(state), [state]);
   return store;
@@ -116,7 +116,7 @@ export function useApollo(pageProps: AppProps["pageProps"]) {
 
 export function addApolloState(
   client: ApolloClient<unknown>,
-  pageProps: AppProps["pageProps"]
+  pageProps: AppProps['pageProps']
 ) {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();

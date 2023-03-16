@@ -1,1 +1,1 @@
-declare module "@davatar/react"
+declare module '@davatar/react';

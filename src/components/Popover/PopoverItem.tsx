@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface PopoverItemProps {
   icon: React.ReactNode;
@@ -18,7 +18,7 @@ export default function PopoverItem({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center justify-start rounded-xl space-x-2 px-4 py-2 w-full text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-color ease-out-expo duration-200 active:scale-95 ${
+      className={`transition-color ease-out-expo flex w-full items-center justify-start space-x-2 rounded-xl px-4 py-2 text-left text-sm duration-200 hover:bg-gray-100 active:scale-95 dark:hover:bg-gray-800 ${
         highlight && `font-semibold`
       } ${className}`}
     >

@@ -1,14 +1,14 @@
-import React from "react";
-import SidebarBody from "@/layouts/default/Sidebar/SidebarBody";
-import SidebarFooter from "@/layouts/default/Sidebar/SidebarFooter";
-import { useToggle } from "react-use";
+import React from 'react';
+import SidebarBody from '@/layouts/default/Sidebar/SidebarBody';
+import SidebarFooter from '@/layouts/default/Sidebar/SidebarFooter';
+import { useToggle } from 'react-use';
 
 export default function Sidebar() {
   const [collapsed, toggle] = useToggle(false);
 
   return (
     <div
-      className={`hidden md:sticky top-0 pt-32 left-0 md:flex flex-col flex-shrink-0 bg-default h-screen duration-200`}
+      className={`bg-default top-0 left-0 hidden h-screen flex-shrink-0 flex-col pt-32 duration-200 md:sticky md:flex`}
     >
       <SidebarBody collapsed={collapsed} />
       <SidebarFooter collapsed={collapsed} onToggle={() => toggle()} />

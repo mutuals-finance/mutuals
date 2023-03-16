@@ -1,26 +1,22 @@
-import React from "react";
-import { IoAnalytics, IoGitNetwork } from "react-icons/io5";
-import SidebarLink from "@/layouts/default/Sidebar/SidebarLink";
+import React from 'react';
+import { IoAnalytics, IoGitNetwork } from 'react-icons/io5';
+import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
 
 interface AppSidebarBodyNavProps {
   collapsed: boolean;
 }
 function AppSidebarBodyNav({ collapsed }: AppSidebarBodyNavProps) {
   return (
-    <ul className={"flex flex-col space-y-3 p-3"}>
+    <ul className={'flex flex-col space-y-3 p-3'}>
       <li>
-        <SidebarLink
-          dense={collapsed}
-          href={"/splits"}
-          icon={<IoGitNetwork />}
-        >
+        <SidebarLink dense={collapsed} href={'/splits'} icon={<IoGitNetwork />}>
           Splits
         </SidebarLink>
       </li>
       <li>
         <SidebarLink
           dense={collapsed}
-          href={"/settings"}
+          href={'/settings'}
           icon={<IoAnalytics />}
         >
           Activity

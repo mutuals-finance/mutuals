@@ -1,4 +1,4 @@
-import React, { ForwardedRef } from "react";
+import React, { ForwardedRef } from 'react';
 
 interface InputTextProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -11,12 +11,12 @@ const InputText = React.forwardRef(
     { label, cols = 4, className, error, ...props }: InputTextProps,
     ref: ForwardedRef<HTMLTextAreaElement>
   ) => {
-    const baseClasses = "textarea";
+    const baseClasses = 'textarea';
 
     return (
-      <div className={!!error ? "error" : ""}>
+      <div className={!!error ? 'error' : ''}>
         {!!label && (
-          <label className={"label"} htmlFor={props.id}>
+          <label className={'label'} htmlFor={props.id}>
             {label}
           </label>
         )}
@@ -28,12 +28,12 @@ const InputText = React.forwardRef(
           className={`${baseClasses} ${className}`}
         />
 
-        {!!error && <span className={"label-error"}>{error}</span>}
+        {!!error && <span className={'label-error'}>{error}</span>}
       </div>
     );
   }
 );
 
-InputText.displayName = "InputText";
+InputText.displayName = 'InputText';
 
 export default InputText;

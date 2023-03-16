@@ -1,4 +1,4 @@
-import { FragmentType, useFragment } from "@/graphql/__generated__";
+import { FragmentType, useFragment } from '@/graphql/__generated__';
 import {
   contractURIUpdateFragment,
   depositFragment,
@@ -7,10 +7,10 @@ import {
   tokenFragment,
   transactionBaseFragment,
   transactionDetailsFragment,
-} from "@/graphql/fragments";
-import { formatAmount } from "@/lib/utils";
-import { EventType, SplitEvent } from "./types";
-import {TransactionDetailsFragmentFragment} from "@/graphql/__generated__/graphql";
+} from '@/graphql/fragments';
+import { formatAmount } from '@/lib/utils';
+import { EventType, SplitEvent } from './types';
+import { TransactionDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
 
 function useEventContractURIUpdate(
   fragment: FragmentType<typeof contractURIUpdateFragment>
@@ -20,16 +20,14 @@ function useEventContractURIUpdate(
 
   return {
     event: EventType.ContractURIUpdate,
-    price: "",
+    price: '',
     by: event.origin,
-    to: "",
+    to: '',
     timestamp: tx.timestamp,
   } as SplitEvent;
 }
 
-function useEventDeposit(
-  fragment: FragmentType<typeof depositFragment>
-) {
+function useEventDeposit(fragment: FragmentType<typeof depositFragment>) {
   const event = useFragment(depositFragment, fragment);
   const tx = useFragment(transactionBaseFragment, event.transaction);
   const split = useFragment(splitBaseFragment, event.split);
@@ -44,9 +42,7 @@ function useEventDeposit(
   } as SplitEvent;
 }
 
-function useEventWithdrawal(
-  fragment: FragmentType<typeof withdrawalFragment>
-) {
+function useEventWithdrawal(fragment: FragmentType<typeof withdrawalFragment>) {
   const event = useFragment(withdrawalFragment, fragment);
   const tx = useFragment(transactionBaseFragment, event.transaction);
   const split = useFragment(splitBaseFragment, event.split);
@@ -64,7 +60,10 @@ function useEventWithdrawal(
 export function useActivityEvents(
   fragment: TransactionDetailsFragmentFragment
 ) {
-  const tx = useFragment(transactionDetailsFragment, fragment as FragmentType<typeof transactionDetailsFragment>);
+  const tx = useFragment(
+    transactionDetailsFragment,
+    fragment as FragmentType<typeof transactionDetailsFragment>
+  );
   const updates = tx.contractURIUpdates.map(useEventContractURIUpdate);
   const receives = tx.deposits.map(useEventDeposit);
   const releases = tx.withdrawals.map(useEventWithdrawal);

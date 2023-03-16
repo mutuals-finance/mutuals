@@ -1,23 +1,23 @@
-import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
-import { Split__factory } from "@/../../types/typechain";
-import useDebounce from "@/hooks/useDebounce";
-import { useMemo } from "react";
+import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { Split__factory } from '@/../../types/typechain';
+import useDebounce from '@/hooks/useDebounce';
+import { useMemo } from 'react';
 
 export type WithdrawSplitArgs = [`0x{string}`, `0x{string}`[]];
 
 export type WithdrawSplitResult = Omit<
   ReturnType<
-    typeof usePrepareContractWrite<typeof Split__factory.abi, "release">
+    typeof usePrepareContractWrite<typeof Split__factory.abi, 'release'>
   >,
-  "error"
+  'error'
 > &
-  ReturnType<typeof useContractWrite<typeof Split__factory.abi, "release">>;
+  ReturnType<typeof useContractWrite<typeof Split__factory.abi, 'release'>>;
 
 export type WithdrawSplitProps = {
   split: string;
   tokens: string[] | null;
 } & Parameters<
-  typeof usePrepareContractWrite<typeof Split__factory.abi, "release">
+  typeof usePrepareContractWrite<typeof Split__factory.abi, 'release'>
 >[0];
 
 export default function useWithdrawSplit(
@@ -36,7 +36,7 @@ export default function useWithdrawSplit(
   const prepare = usePrepareContractWrite({
     address,
     abi: Split__factory.abi,
-    functionName: "withdraw",
+    functionName: 'withdraw',
     enabled,
     args,
     ...props,

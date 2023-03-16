@@ -1,10 +1,10 @@
-import Chain from "@/layouts/default/Header/Chain";
+import Chain from '@/layouts/default/Header/Chain';
 
-import Breadcrumbs from "@/components/Breadcrumbs";
-import Logo from "@/layouts/default/Header/Logo";
-import User from "@/layouts/default/Header/User";
-import { useMount } from "react-use";
-import { useState } from "react";
+import Breadcrumbs from '@/components/Breadcrumbs';
+import Logo from '@/layouts/default/Header/Logo';
+import User from '@/layouts/default/Header/User';
+import { useMount } from 'react-use';
+import { useState } from 'react';
 
 export default function Header() {
   const [isReady, setIsReady] = useState(false);
@@ -12,15 +12,15 @@ export default function Header() {
 
   return (
     <>
-      <div className={"h-14"} />
-      <header className="fixed top-0 left-0 w-full h-14 right-0 bg-default flex z-10">
-        <div className={"flex items-center flex-1 px-6 space-x-6"}>
+      <div className={'h-14'} />
+      <header className='bg-default fixed top-0 left-0 right-0 z-10 flex h-14 w-full'>
+        <div className={'flex flex-1 items-center space-x-6 px-6'}>
           <Logo />
           <Breadcrumbs />
 
-          <nav className="flex items-center justify-end flex-1">
+          <nav className='flex flex-1 items-center justify-end'>
             <ul
-              className={"hidden md:flex md:items-center md:space-x-8 text-sm"}
+              className={'hidden text-sm md:flex md:items-center md:space-x-8'}
             >
               <li>{isReady && <Chain />}</li>
               <li>{isReady && <User />}</li>

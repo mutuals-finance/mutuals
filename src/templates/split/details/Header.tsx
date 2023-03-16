@@ -1,9 +1,9 @@
-import React from "react";
-import PageHeader from "@/components/PageHeader";
-import { ButtonOutline } from "@/components/Button";
-import { IoCopyOutline, IoShareOutline } from "react-icons/io5";
-import { shortenAddress } from "@/lib/utils";
-import { SplitImage } from "@/components/SplitImage";
+import React from 'react';
+import PageHeader from '@/components/PageHeader';
+import { ButtonOutline } from '@/components/Button';
+import { IoCopyOutline, IoShareOutline } from 'react-icons/io5';
+import { shortenAddress } from '@/lib/utils';
+import { SplitImage } from '@/components/SplitImage';
 
 interface HeaderProps {
   title: string;
@@ -13,17 +13,17 @@ interface HeaderProps {
 }
 export function Header({ title, image, description, address }: HeaderProps) {
   return (
-    <div className={"relative "}>
-      <div className={"relative space-y-3"}>
+    <div className={'relative '}>
+      <div className={'relative space-y-3'}>
         <PageHeader
-          title={title === "" ? "Unknown" : title}
+          title={title === '' ? 'Unknown' : title}
           titleBefore={
             image && (
-              <SplitImage src={image} alt={title === "" ? "Unknown" : title} />
+              <SplitImage src={image} alt={title === '' ? 'Unknown' : title} />
             )
           }
           titleAfter={
-            <div className={"space-x-4 flex items-center justify-center"}>
+            <div className={'flex items-center justify-center space-x-4'}>
               <ButtonOutline iconAfter={<IoCopyOutline />}>
                 {shortenAddress(address)}
               </ButtonOutline>
@@ -33,14 +33,14 @@ export function Header({ title, image, description, address }: HeaderProps) {
             </div>
           }
         />
-        <div className={"container"}>
-          <div className={"w-full max-w-lg flex space-x-3 p-3"}>
+        <div className={'container'}>
+          <div className={'flex w-full max-w-lg space-x-3 p-3'}>
             <span
               className={
-                "block bg-border-default self-stretch w-px flex-shrink-0"
+                'bg-border-default block w-px flex-shrink-0 self-stretch'
               }
             />
-            <p className={"text-sm line-clamp-2"}>{description}</p>
+            <p className={'text-sm line-clamp-2'}>{description}</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
-import ButtonBase, { ButtonBaseProps } from "@/components/Button/ButtonBase";
+import ButtonBase, { ButtonBaseProps } from '@/components/Button/ButtonBase';
 
-type ChipProps = Omit<ButtonBaseProps, "justify">;
+type ChipProps = Omit<ButtonBaseProps, 'justify'>;
 
 export default function Chip({
   color = `outline`,

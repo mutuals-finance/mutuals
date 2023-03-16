@@ -1,6 +1,6 @@
-import React from "react";
-import { SPLIT, TRANSACTIONS_BY_SPLIT } from "@/graphql/queries";
-import { useFragment } from "@/graphql/__generated__";
+import React from 'react';
+import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/graphql/queries';
+import { useFragment } from '@/graphql/__generated__';
 import {
   Balance,
   Analytics,
@@ -9,18 +9,18 @@ import {
   Details,
   Header,
   WithdrawModal,
-} from "@/templates/split/details";
+} from '@/templates/split/details';
 import {
   splitDetailsFragment,
   transactionDetailsFragment,
-} from "@/graphql/fragments";
-import { NextPageWithLayout } from "#/app";
-import { ApolloClient } from "@apollo/client";
-import { initializeApollo } from "@/graphql/client";
-import { InferGetServerSidePropsType } from "next";
-import { useRouter } from "next/router";
-import { useAccountBalance } from "ankr-react";
-import { Blockchain } from "@ankr.com/ankr.js/dist/types";
+} from '@/graphql/fragments';
+import { NextPageWithLayout } from '#/app';
+import { ApolloClient } from '@apollo/client';
+import { initializeApollo } from '@/graphql/client';
+import { InferGetServerSidePropsType } from 'next';
+import { useRouter } from 'next/router';
+import { useAccountBalance } from 'ankr-react';
+import { Blockchain } from '@ankr.com/ankr.js/dist/types';
 
 async function fetchSplitDetails(client: ApolloClient<unknown>, id: string) {
   const { data } = await client.query({
@@ -90,8 +90,8 @@ const SplitDetailPage: NextPageWithLayout<
   );
 
   const { data: splitBalance } = useAccountBalance({
-    walletAddress: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-    blockchain: ["eth" as Blockchain],
+    walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    blockchain: ['eth' as Blockchain],
     onlyWhitelisted: true,
   });
 
@@ -102,9 +102,9 @@ const SplitDetailPage: NextPageWithLayout<
   return (
     <>
       <Header
-        title={split.metaData.name || "Unknown"}
+        title={split.metaData.name || 'Unknown'}
         image={split.metaData.image}
-        description={split.metaData.description || ""}
+        description={split.metaData.description || ''}
         address={split.address}
       />
 
@@ -119,7 +119,7 @@ const SplitDetailPage: NextPageWithLayout<
       />
 
       <section>
-        <div className={"container grid lg:grid-cols-6 gap-3 lg:gap-6"}>
+        <div className={'container grid gap-3 lg:grid-cols-6 lg:gap-6'}>
           <Balance {...splitBalance} />
           <Shares shares={split.shares} />
           <Activity transactions={transactions} />

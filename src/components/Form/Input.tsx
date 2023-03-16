@@ -1,4 +1,4 @@
-import React, { ForwardedRef } from "react";
+import React, { ForwardedRef } from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -13,7 +13,7 @@ function InputIcon({
 }: React.PropsWithChildren<React.HTMLAttributes<HTMLSpanElement>>) {
   return (
     <span
-      className={`block absolute top-1/2 -translate-y-1/2 text-neutral-400 ${className}`}
+      className={`absolute top-1/2 block -translate-y-1/2 text-neutral-400 ${className}`}
     >
       {children}
     </span>
@@ -28,29 +28,29 @@ const Input = React.forwardRef(
       icon,
       iconAfter,
       error,
-      type = "text",
+      type = 'text',
       ...props
     }: InputProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
-    const baseClasses = "input flex-1";
-    const iconClasses = !icon ? "" : "pl-9";
-    const iconAfterClasses = !iconAfter ? "" : "pr-9";
+    const baseClasses = 'input flex-1';
+    const iconClasses = !icon ? '' : 'pl-9';
+    const iconAfterClasses = !iconAfter ? '' : 'pr-9';
 
     return (
       <div
-        className={`flex flex-col w-full ${!!error ? "error" : ""} ${
-          className || ""
+        className={`flex w-full flex-col ${!!error ? 'error' : ''} ${
+          className || ''
         }`}
       >
         {!!label && (
-          <label className={"label"} htmlFor={props.id}>
+          <label className={'label'} htmlFor={props.id}>
             {label}
           </label>
         )}
 
-        <div className={"relative flex flex-1"}>
-          {!!icon && <InputIcon className={"left-3"}>{icon}</InputIcon>}
+        <div className={'relative flex flex-1'}>
+          {!!icon && <InputIcon className={'left-3'}>{icon}</InputIcon>}
           <input
             {...props}
             name={props.name || props.id}
@@ -59,16 +59,16 @@ const Input = React.forwardRef(
             className={`${baseClasses} ${iconClasses} ${iconAfterClasses}`}
           />
           {!!iconAfter && (
-            <InputIcon className={"right-3"}>{iconAfter}</InputIcon>
+            <InputIcon className={'right-3'}>{iconAfter}</InputIcon>
           )}
         </div>
 
-        {!!error && <span className={"label-error"}>{error}</span>}
+        {!!error && <span className={'label-error'}>{error}</span>}
       </div>
     );
   }
 );
 
-Input.displayName = "Input";
+Input.displayName = 'Input';
 
 export default Input;
