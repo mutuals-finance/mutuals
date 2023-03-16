@@ -1,5 +1,4 @@
-import { FragmentType } from "@/lib/graphql/__generated__";
-import { transactionDetailsFragment } from "@/graphql/fragments";
+import {TransactionDetailsFragmentFragment} from "@/graphql/__generated__/graphql";
 
 export enum EventType {
   ContractURIUpdate = "ContractURIUpdate",
@@ -16,5 +15,5 @@ export interface SplitEvent {
 }
 
 export interface ActivityTableProps {
-  transactions: FragmentType<typeof transactionDetailsFragment>[];
+  transactions: readonly TransactionDetailsFragmentFragment[];
 }

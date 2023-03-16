@@ -10,7 +10,7 @@ interface WalletModalProps {
 export default function WalletModal({ onClose, open }: WalletModalProps) {
   const { connect, connectors, isLoading, pendingConnector } = useConnect({
     onSuccess() {
-      onClose(false);
+      onClose?.(false);
     },
   });
 

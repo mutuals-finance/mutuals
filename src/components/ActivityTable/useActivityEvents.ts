@@ -10,6 +10,7 @@ import {
 } from "@/graphql/fragments";
 import { formatAmount } from "@/lib/utils";
 import { EventType, SplitEvent } from "./types";
+import {TransactionDetailsFragmentFragment} from "@/graphql/__generated__/graphql";
 
 function useEventContractURIUpdate(
   fragment: FragmentType<typeof contractURIUpdateFragment>
@@ -61,9 +62,9 @@ function useEventWithdrawal(
 }
 
 export function useActivityEvents(
-  fragment: FragmentType<typeof transactionDetailsFragment>
+  fragment: TransactionDetailsFragmentFragment
 ) {
-  const tx = useFragment(transactionDetailsFragment, fragment);
+  const tx = useFragment(transactionDetailsFragment, fragment as FragmentType<typeof transactionDetailsFragment>);
   const updates = tx.contractURIUpdates.map(useEventContractURIUpdate);
   const receives = tx.deposits.map(useEventDeposit);
   const releases = tx.withdrawals.map(useEventWithdrawal);

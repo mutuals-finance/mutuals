@@ -1,6 +1,5 @@
 import React from "react";
 import BreadcrumbItem from "@/components/Breadcrumbs/BreadcrumbItem";
-import { useRouter } from "next/router";
 
 function slugToTitle(slug: string) {
   return slug.replace(/-/g, " ").replace(/\b[a-z]/g, function (...args) {
@@ -8,7 +7,7 @@ function slugToTitle(slug: string) {
   });
 }
 
-function BreadcrumbList({ children }: React.PropsWithChildren<any>) {
+function BreadcrumbList({ children }: React.PropsWithChildren<unknown>) {
   return (
     <ul
       className={"flex items-center justify-start space-x-2 py-4 text-sm"}

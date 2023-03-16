@@ -15,7 +15,7 @@ import "@/styles/global.css";
 import Head from "next/head";
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextComponentType<NextPageContext, any, any> & {
+  Component: NextComponentType<NextPageContext, unknown, unknown> & {
     Layout: LayoutKeys;
   };
 };

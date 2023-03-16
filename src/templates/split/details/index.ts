@@ -4,5 +4,4 @@ export * from "./Balance";
 export * from "./Details";
 export * from "./Header";
 export * from "./Shares";
-export * from "./TokenBalance";
 export * from "./WithdrawModal";

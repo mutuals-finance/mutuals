@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { IoImage } from "react-icons/io5";
 import Image from "next/image";
 import { StaticImageData } from "next/dist/client/image";

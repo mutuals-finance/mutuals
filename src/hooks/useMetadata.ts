@@ -41,9 +41,9 @@ export function useMetadata() {
     setValue(value);
   }
 
-  function onError(e: Error) {
+  function onError(e: unknown) {
     setIsError(true);
-    setError(e);
+    setError(e instanceof Error ? e : new Error("Unexpected error"));
   }
 
   const save = useCallback(
@@ -75,7 +75,7 @@ export function useMetadata() {
         const uri = `ipfs://${res}`;
         onSuccess(uri);
         return uri;
-      } catch (e: any) {
+      } catch (e: unknown) {
         onError(e);
         return null;
       } finally {

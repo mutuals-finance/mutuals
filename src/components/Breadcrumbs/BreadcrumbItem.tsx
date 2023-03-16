@@ -27,7 +27,7 @@ export default function BreadcrumbItem({
   href,
   ...props
 }: BreadcrumbItemProps) {
-  const createBreadcrumbItem = ({ children }: React.PropsWithChildren<any>) => (
+  const createBreadcrumbItem = ({ children }: React.PropsWithChildren<unknown>) => (
     <>
       {!!href && <li>/</li>}
       <li className={"titlecase truncate"}>{children}</li>

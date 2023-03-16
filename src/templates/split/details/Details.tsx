@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@/components/Box";
 import Statistic from "@/components/Statistic";
-import { SplitDetailsFragmentFragment } from "@/lib/graphql/__generated__/graphql";
+import { SplitDetailsFragmentFragment } from "@/graphql/__generated__/graphql";
 import { shortenAddress } from "@/lib/utils";
 import Date from "@/components/Date";
 

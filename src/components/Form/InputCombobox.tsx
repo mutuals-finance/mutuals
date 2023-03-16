@@ -63,7 +63,7 @@ function InputCombobox<T>({
   );
 }
 
-interface InputComboboxOptionProps<T> extends React.PropsWithChildren<any> {
+interface InputComboboxOptionProps<T> extends React.PropsWithChildren<unknown> {
   value: T;
   disabled?: boolean;
 }

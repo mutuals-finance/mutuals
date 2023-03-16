@@ -4,11 +4,9 @@ import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
 import AppBody from "./AppBody";
 import AppSidebar from "./AppSidebar";
-import AppAuth from "@/layouts/app/AppAuth";
 
 export default function AppLayout({ children }: React.PropsWithChildren) {
   return (
-    <AppAuth>
       <div className={"flex min-h-screen w-full"}>
         <AppSidebar />
 
@@ -18,6 +16,5 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
           <AppFooter />
         </div>
       </div>
-    </AppAuth>
   );
 }

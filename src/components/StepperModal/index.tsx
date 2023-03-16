@@ -1,5 +1,5 @@
 import Modal from "@/components/Modal";
-import React, { HTMLAttributes } from "react";
+import React from "react";
 import StepperItem, {
   StepperModalStep,
 } from "@/components/StepperModal/StepperItem";

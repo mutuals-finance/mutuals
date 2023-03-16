@@ -8,6 +8,8 @@ export interface StepperItemState {
     current: StepperModalStep,
     currentIndex: number
   ) => Promise<void> | void;
+  isError?: boolean;
+  error?: Error;
 }
 
 export interface StepperModalStep extends StepperItemState {

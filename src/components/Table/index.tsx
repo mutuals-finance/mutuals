@@ -8,7 +8,7 @@ enum ActivityColumnHeaders {
   Time = "Time",
 }
 
-function ActivityHeaderCell({ children }: React.PropsWithChildren<any>) {
+function ActivityHeaderCell({ children }: React.PropsWithChildren<unknown>) {
   return <th className={"pb-2 label"}>{children}</th>;
 }
 
@@ -24,7 +24,7 @@ function ActivityHeaderRow() {
   );
 }
 
-function ActivityBodyCell({ children }: React.PropsWithChildren<any>) {
+function ActivityBodyCell({ children }: React.PropsWithChildren<unknown>) {
   return <td className={"py-2"}>{children}</td>;
 }
 function ActivityBodyRow() {

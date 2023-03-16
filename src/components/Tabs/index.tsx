@@ -1,6 +1,8 @@
 import { Tab } from "@headlessui/react";
 
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import React from "react";
+import {PropsOf} from "@headlessui/react/dist/types";
 
 export interface TabsProps {
   disabled?: boolean;
@@ -13,7 +15,7 @@ function Tabs({ children }: React.PropsWithChildren & TabsProps) {
 function Title({
   className,
   children,
-}: { className?: string } & React.PropsWithChildren<any>) {
+}: { className?: string } & React.PropsWithChildren) {
   return (
     <Tab
       className={`relative ui-selected:border-b-4 rounded-t-xl flex items-center justify-center text-center flex-1 py-3 outline-0 ring-0 border-white -mb-px  ${className}`}
@@ -23,15 +25,14 @@ function Title({
   );
 }
 
-function Titles({ children }: React.PropsWithChildren<any>) {
+function Titles({children, wrapperClassName, scrollContainerClassName,...props}: PropsOf<typeof ScrollMenu>) {
   return (
     <Tab.List
       as={() => (
         <ScrollMenu
-          wrapperClassName={"border-b border-default"}
-          scrollContainerClassName={
-            "flex justify-start whitespace-nowrap space-x-6 w-full"
-          }
+          wrapperClassName={`border-b border-default ${wrapperClassName}`}
+          scrollContainerClassName={`flex justify-start whitespace-nowrap space-x-6 w-full ${scrollContainerClassName}`}
+          {...props}
         >
           {children}
         </ScrollMenu>
@@ -40,10 +41,10 @@ function Titles({ children }: React.PropsWithChildren<any>) {
   );
 }
 
-function Panel({ children }: React.PropsWithChildren<any>) {
+function Panel({ children }: React.PropsWithChildren) {
   return <Tab.Panel>{children}</Tab.Panel>;
 }
-function Panels({ children }: React.PropsWithChildren<any>) {
+function Panels({ children }: React.PropsWithChildren) {
   return <Tab.Panels>{children}</Tab.Panels>;
 }
 

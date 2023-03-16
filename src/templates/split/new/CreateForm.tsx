@@ -6,8 +6,7 @@ import InputImage from "@/components/Form/InputImage";
 import { ButtonPrimary } from "@/components/Button";
 import { Controller, useForm } from "react-hook-form";
 import InputSwitch from "@/components/Form/InputSwitch";
-import PayeeList, { initialPayee } from "./PayeeList";
-import { Payee } from "@/app/(app)/splits/new/PayeeList";
+import PayeeList, {initialPayee, Payee} from "./PayeeList";
 import CreateFormGroup from "./CreateFormGroup";
 import CreateSplitModal from "@/components/CreateSplitModal";
 

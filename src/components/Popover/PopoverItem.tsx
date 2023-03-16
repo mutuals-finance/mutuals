@@ -4,7 +4,7 @@ interface PopoverItemProps {
   icon: React.ReactNode;
   children: React.ReactNode;
   highlight?: boolean;
-  onClick?: (...args: any[]) => void;
+  onClick?: (...args: unknown[]) => void;
   className?: string;
 }
 

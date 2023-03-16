@@ -1,10 +1,10 @@
 import StepperModal from "@/components/StepperModal";
 import useCreateSplitFull from "@/hooks/useCreateSplitFull";
 import { useWaitForTransaction } from "wagmi";
-import { CreateFormData } from "@/app/(app)/splits/new/CreateForm";
 import React, { useState } from "react";
 import { ReviewStep, SuccessStep, LoadingStep } from "./steps";
 import { useUpdateEffect } from "react-use";
+import {CreateFormData} from "@/templates/split/new";
 
 interface CreateSplitModalProps {
   onClose: () => void;

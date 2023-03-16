@@ -1,21 +1,13 @@
-import { CreateFormData } from "@/app/(app)/splits/new/CreateForm";
-import { SplitImage } from "@/components/SplitImage";
-import {
-  createColumnHelper,
-  flexRender,
-  useReactTable,
-  getCoreRowModel,
-} from "@tanstack/react-table";
-import { Payee } from "@/app/(app)/splits/new/PayeeList";
-import { shortenAddress } from "@/lib/utils";
 import SplitCard from "@/components/SplitterCard";
+import {CreateFormData} from "@/templates/split/new";
 
 interface ReviewStepProps {
   data: CreateFormData;
 }
 
-type PayeeTableProps = ReviewStepProps;
+// type PayeeTableProps = ReviewStepProps;
 
+/*
 function PayeeTable({ data }: PayeeTableProps) {
   const columnHelper = createColumnHelper<Payee>();
   const columns = [
@@ -68,6 +60,7 @@ function PayeeTable({ data }: PayeeTableProps) {
     </div>
   );
 }
+*/
 
 function SplitReviewCard({ image, name, description }: CreateFormData) {
   return (

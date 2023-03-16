@@ -14,7 +14,6 @@ export default function Modal({
   children,
   header,
   footer,
-  dense = false,
   open,
   onClose,
 }: React.PropsWithChildren & ModalProps) {
