@@ -1,10 +1,8 @@
-import DefaultLayout from "@/layouts/default";
-import AppLayout from "@/layouts/app";
+import AppLayout from "@/layouts/default";
 import React from "react";
 
 export const Layouts = {
-  Default: DefaultLayout,
-  App: AppLayout,
+  Default: AppLayout,
   None: ({ children }: React.PropsWithChildren) => <>{children}</>,
 };
 

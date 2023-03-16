@@ -44,6 +44,4 @@ const SplitsPage: NextPageWithLayout = function () {
   );
 };
 
-SplitsPage.Layout = "App";
-
 export default SplitsPage;

@@ -4,7 +4,7 @@ import PopoverItem from "@/components/Popover/PopoverItem";
 import { Chain as WagmiChain, useNetwork, useSwitchNetwork } from "wagmi";
 import Image from "next/image";
 import { getLogoByChainId } from "@/lib/utils/chainLogo";
-import ChainButton from "@/layouts/app/AppHeader/ChainButton";
+import ChainButton from "@/layouts/default/Header/ChainButton";
 
 interface ChainSelectorItemProps extends WagmiChain {
   isSwitching: boolean;

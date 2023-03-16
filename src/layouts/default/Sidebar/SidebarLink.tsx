@@ -6,7 +6,7 @@ interface AppSidebarLinkProps extends LinkProps {
   icon?: React.ReactNode;
 }
 
-export default function AppSidebarLink({
+export default function SidebarLink({
   children,
   icon,
   dense = false,

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AppBody({ children }: React.PropsWithChildren) {
+export default function Body({ children }: React.PropsWithChildren) {
   return (
     <div
       className={

@@ -131,6 +131,4 @@ const SplitDetailPage: NextPageWithLayout<
   );
 };
 
-SplitDetailPage.Layout = "App";
-
 export default SplitDetailPage;

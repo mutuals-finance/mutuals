@@ -1,12 +1,12 @@
-import Chain from "@/layouts/app/AppHeader/Chain";
+import Chain from "@/layouts/default/Header/Chain";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
-import Logo from "@/layouts/app/AppHeader/Logo";
-import User from "@/layouts/app/AppHeader/User";
+import Logo from "@/layouts/default/Header/Logo";
+import User from "@/layouts/default/Header/User";
 import { useMount } from "react-use";
 import { useState } from "react";
 
-export default function AppHeader() {
+export default function Header() {
   const [isReady, setIsReady] = useState(false);
   useMount(() => setIsReady(true));
 

@@ -12,7 +12,7 @@ import {
 import { useTheme } from "next-themes";
 import { useAccount } from "wagmi";
 import PopoverItem from "@/components/Popover/PopoverItem";
-import UserButton from "@/layouts/app/AppHeader/UserButton";
+import UserButton from "@/layouts/default/Header/UserButton";
 
 export default function User() {
   const { address, isConnected, isConnecting } = useAccount();

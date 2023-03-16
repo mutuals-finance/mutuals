@@ -5,7 +5,6 @@ import { ThemeProvider } from "next-themes";
 import { Provider as AnkrProvider } from "ankr-react";
 import { WagmiConfig } from "wagmi";
 import { useWagmi } from "@/lib/wagmi";
-import RootLayout from "@/layouts/root";
 import { LayoutKeys, Layouts } from "@/layouts";
 import { NextComponentType, NextPageContext } from "next";
 import React from "react";
@@ -21,7 +20,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const PageLayout = Layouts[Component.Layout ?? "Default"];
+  const Layout = Layouts[Component.Layout ?? "Default"];
   const apolloClient = useApollo(pageProps);
   const wagmiClient = useWagmi();
 
@@ -39,11 +38,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <ThemeProvider attribute="class">
           <AnkrProvider>
             <WagmiConfig client={wagmiClient}>
-              <RootLayout>
-                <PageLayout>
+                <Layout>
                   <Component {...pageProps} />
-                </PageLayout>
-              </RootLayout>
+                </Layout>
             </WagmiConfig>
           </AnkrProvider>
         </ThemeProvider>

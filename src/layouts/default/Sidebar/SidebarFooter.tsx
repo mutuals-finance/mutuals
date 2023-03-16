@@ -1,14 +1,14 @@
 import React from "react";
 import { IoChevronBack, IoChevronForward, IoSettings } from "react-icons/io5";
 import { ButtonOutline } from "@/components/Button";
-import AppSidebarLink from "@/layouts/app/AppSidebar/AppSidebarLink";
+import SidebarLink from "@/layouts/default/Sidebar/SidebarLink";
 
 interface AppSidebarFooterProps {
   onToggle: () => void;
   collapsed: boolean;
 }
 
-export default function AppSidebarFooter({
+export default function SidebarFooter({
   onToggle,
   collapsed,
 }: AppSidebarFooterProps) {
@@ -21,13 +21,13 @@ export default function AppSidebarFooter({
         />
       </div>
 
-      <AppSidebarLink
+      <SidebarLink
         dense={collapsed}
         href={"/settings"}
         icon={<IoSettings />}
       >
         Settings
-      </AppSidebarLink>
+      </SidebarLink>
     </div>
   );
 }

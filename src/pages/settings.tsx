@@ -18,6 +18,4 @@ const SettingsPage: NextPageWithLayout = function SettingsPage() {
   );
 };
 
-SettingsPage.Layout = "App";
-
 export default SettingsPage;

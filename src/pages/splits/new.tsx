@@ -20,6 +20,4 @@ const SplitNewPage: NextPageWithLayout = function () {
   );
 };
 
-SplitNewPage.Layout = "App";
-
 export default SplitNewPage;

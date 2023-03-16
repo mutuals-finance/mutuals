@@ -1,18 +1,6 @@
 import React from "react";
-import {
-  HomeHero,
-  HomeCta,
-  HomeFeatures,
-  HomeAnalytics,
-} from "@/templates/home";
+import SplitsPage from "@/pages/splits";
 
 export default function HomePage() {
-  return (
-    <>
-      <HomeHero />
-      <HomeCta />
-      <HomeFeatures />
-      <HomeAnalytics />
-    </>
-  );
+  return (<SplitsPage/>);
 }
