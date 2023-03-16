@@ -15,7 +15,7 @@
 
 # auto generated
 /types/typechain/
-/graphql/__generated__/
+src/graphql/__generated__/
 
 # production
 /build
