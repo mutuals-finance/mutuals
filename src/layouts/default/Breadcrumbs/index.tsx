@@ -1,5 +1,5 @@
 import React from 'react';
-import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem';
+import BreadcrumbItem from '@/layouts/default/Breadcrumbs/BreadcrumbItem';
 
 function slugToTitle(slug: string) {
   return slug.replace(/-/g, ' ').replace(/\b[a-z]/g, function (...args) {

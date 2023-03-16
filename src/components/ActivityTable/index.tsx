@@ -10,6 +10,7 @@ import Date from '@/components/Date';
 import { ActivityTableProps, SplitEvent } from './types';
 import ActivityTableBadge from './ActivityTableBadge';
 import { useActivityEvents } from '@/components/ActivityTable/useActivityEvents';
+import clsxm from '@/lib/utils/clsxm';
 
 const columnHelper = createColumnHelper<SplitEvent>();
 
@@ -42,20 +43,18 @@ export default function ActivityTable({ transactions }: ActivityTableProps) {
   });
 
   return (
-    <table className='w-full table-auto whitespace-nowrap text-left'>
+    <table className={'w-full table-auto whitespace-nowrap text-left'}>
       <thead className={'bg-default-2 sticky top-0 left-0'}>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, i) => (
               <th
                 key={header.id}
-                className={`label border-default !table-cell border-b p-3 capitalize ${
-                  i <= 0
-                    ? 'lg:pl-6'
-                    : i >= headerGroup.headers.length - 1
-                    ? 'lg:pr-6'
-                    : ''
-                }`}
+                className={clsxm(
+                  `label border-default !table-cell border-b p-3 capitalize`,
+                  i <= 0 && 'lg:pl-6',
+                  i >= headerGroup.headers.length - 1 && 'lg:pr-6'
+                )}
               >
                 {header.isPlaceholder
                   ? null
@@ -74,13 +73,11 @@ export default function ActivityTable({ transactions }: ActivityTableProps) {
             {row.getVisibleCells().map((cell, i) => (
               <td
                 key={cell.id}
-                className={`border-default border-b p-3 align-top ${
-                  i <= 0
-                    ? 'lg:pl-6'
-                    : i >= row.getVisibleCells().length - 1
-                    ? 'lg:pr-6'
-                    : ''
-                }`}
+                className={clsxm(
+                  `border-default border-b p-3 align-top`,
+                  i <= 0 && 'lg:pl-6',
+                  i >= row.getVisibleCells().length - 1 && 'lg:pr-6'
+                )}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>

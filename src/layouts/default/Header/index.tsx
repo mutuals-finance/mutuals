@@ -1,10 +1,10 @@
-import Chain from '@/layouts/default/Header/Chain';
+import { useState } from 'react';
+import { useMount } from 'react-use';
 
-import Breadcrumbs from '@/components/Breadcrumbs';
+import Breadcrumbs from '@/layouts/default/Breadcrumbs';
+import Chain from '@/layouts/default/Header/Chain';
 import Logo from '@/layouts/default/Header/Logo';
 import User from '@/layouts/default/Header/User';
-import { useMount } from 'react-use';
-import { useState } from 'react';
 
 export default function Header() {
   const [isReady, setIsReady] = useState(false);

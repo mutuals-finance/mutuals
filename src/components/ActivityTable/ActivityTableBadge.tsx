@@ -3,8 +3,9 @@ import {
   IoArrowUpOutline,
   IoLinkOutline,
 } from 'react-icons/io5';
-import React from 'react';
 import { EventType } from './types';
+import React from 'react';
+import clsxm from '@/lib/utils/clsxm';
 
 export default function ActivityTableBadge({ type }: { type: EventType }) {
   let Icon;
@@ -20,14 +21,17 @@ export default function ActivityTableBadge({ type }: { type: EventType }) {
   }
 
   const colorClasses = {
-    [EventType.Withdrawal]: 'border-red-500 text-red-500',
-    [EventType.Deposit]: 'border-green-500 text-green-500',
-    [EventType.ContractURIUpdate]: 'border-purple-500 text-purple-500',
+    [EventType.Withdrawal]: ['border-red-500', ' text-red-500'],
+    [EventType.Deposit]: ['border-green-500', 'text-green-500'],
+    [EventType.ContractURIUpdate]: ['border-purple-500', 'text-purple-500'],
   }[type];
 
   return (
     <span
-      className={`block inline-flex items-center justify-center space-x-1 rounded-full border px-2  py-1 text-xs font-semibold ${colorClasses}`}
+      className={clsxm(
+        `block inline-flex items-center justify-center space-x-1 rounded-full border px-2  py-1 text-xs font-semibold`,
+        colorClasses
+      )}
     >
       <Icon className={'block'} />
       <span className={'block'}>{type}</span>

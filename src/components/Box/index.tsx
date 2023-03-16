@@ -1,4 +1,5 @@
 import React, { HTMLAttributes } from 'react';
+import clsxm from '@/lib/utils/clsxm';
 
 interface BoxProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   title?: string;
@@ -14,7 +15,10 @@ export default function Box({
 }: React.PropsWithChildren<BoxProps>) {
   return (
     <article
-      className={`bg-default border-default rounded-default flex flex-1 flex-col overflow-hidden border ${className}`}
+      className={clsxm(
+        `bg-default border-default rounded-default flex flex-1 flex-col overflow-hidden border`,
+        className
+      )}
       {...props}
     >
       {(!!title || !!titleAfter) && (
