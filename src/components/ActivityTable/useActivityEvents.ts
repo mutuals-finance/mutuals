@@ -1,16 +1,18 @@
+import { formatAmount } from '@/lib/utils';
+
 import { FragmentType, useFragment } from '@/graphql/__generated__';
+import { TransactionDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
 import {
   contractURIUpdateFragment,
   depositFragment,
-  withdrawalFragment,
   splitBaseFragment,
   tokenFragment,
   transactionBaseFragment,
   transactionDetailsFragment,
+  withdrawalFragment,
 } from '@/graphql/fragments';
-import { formatAmount } from '@/lib/utils';
+
 import { EventType, SplitEvent } from './types';
-import { TransactionDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
 
 function useEventContractURIUpdate(
   fragment: FragmentType<typeof contractURIUpdateFragment>

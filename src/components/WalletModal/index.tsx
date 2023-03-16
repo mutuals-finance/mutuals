@@ -1,6 +1,7 @@
+import { useConnect } from 'wagmi';
+
 import Modal, { ModalProps } from '@/components/Modal';
 import ConnectorItem from '@/components/WalletModal/ConnectorItem';
-import { useConnect } from 'wagmi';
 
 interface WalletModalProps {
   onClose: ModalProps['onClose'];

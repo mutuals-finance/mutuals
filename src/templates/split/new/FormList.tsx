@@ -1,6 +1,7 @@
-import { ButtonOutline } from '@/components/Button';
-import { IoAdd, IoTrash } from 'react-icons/io5';
 import React from 'react';
+import { IoAdd, IoTrash } from 'react-icons/io5';
+
+import { ButtonOutline } from '@/components/Button';
 
 interface FormListItemProps {
   removeDisabled: boolean;

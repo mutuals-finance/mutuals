@@ -1,8 +1,10 @@
 import React from 'react';
-import PageHeader from '@/components/PageHeader';
-import { ButtonOutline } from '@/components/Button';
 import { IoCopyOutline, IoShareOutline } from 'react-icons/io5';
+
 import { shortenAddress } from '@/lib/utils';
+
+import { ButtonOutline } from '@/components/Button';
+import PageHeader from '@/components/PageHeader';
 import { SplitImage } from '@/components/SplitImage';
 
 interface HeaderProps {

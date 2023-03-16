@@ -1,5 +1,6 @@
-import LoadingSpinner from '@/components/LoadingSpinner';
 import { IoAlertCircle, IoCheckmarkCircle } from 'react-icons/io5';
+
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface LoadingStepProps {
   description?: string;

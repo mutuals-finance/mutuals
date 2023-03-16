@@ -1,6 +1,7 @@
+import { useUpdateEffect } from 'react-use';
+
 import useCreateSplit, { CreateSplitProps } from '@/hooks/useCreateSplit';
 import { Metadata, useMetadata } from '@/hooks/useMetadata';
-import { useUpdateEffect } from 'react-use';
 
 type CreateSplitFullProps = Omit<CreateSplitProps, 'uri'> & Metadata;
 

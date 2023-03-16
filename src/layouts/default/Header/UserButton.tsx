@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { IoChevronDown, IoPersonCircle } from 'react-icons/io5';
-import { ButtonOutline } from '@/components/Button';
+
 import { shortenAddress } from '@/lib/utils';
+
+import { ButtonOutline } from '@/components/Button';
 import UserAvatar from '@/components/UserAvatar';
 
 type AppHeaderUserButtonProps = {

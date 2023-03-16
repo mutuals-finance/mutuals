@@ -1,4 +1,5 @@
 import React, { HTMLAttributes } from 'react';
+
 import clsxm from '@/lib/utils/clsxm';
 
 interface BoxProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {

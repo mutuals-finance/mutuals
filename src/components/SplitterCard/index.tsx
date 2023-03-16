@@ -1,9 +1,11 @@
 import Link from 'next/link';
+
 import Date from '@/components/Date';
-import { FragmentType, useFragment } from '@/graphql/__generated__';
-import { splitBaseFragment } from '@/graphql/fragments';
 import { SplitImage } from '@/components/SplitImage';
+
+import { FragmentType, useFragment } from '@/graphql/__generated__';
 import { SplitBaseFragmentFragment } from '@/graphql/__generated__/graphql';
+import { splitBaseFragment } from '@/graphql/fragments';
 
 interface SplitFragmentCardProps {
   fragment: FragmentType<typeof splitBaseFragment>;

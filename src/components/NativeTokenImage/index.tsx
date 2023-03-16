@@ -1,8 +1,9 @@
+import Image, { ImageProps } from 'next/image';
 import { useMemo, useState } from 'react';
 import { useNetwork } from 'wagmi';
-import { getDefaultTokenLogoURI } from '@/lib/utils';
+
 import { ETH_TOKEN } from '@/lib/constants';
-import Image, { ImageProps } from 'next/image';
+import { getDefaultTokenLogoURI } from '@/lib/utils';
 
 type NativeTokenImage = Omit<ImageProps, 'src' | 'alt'>;
 

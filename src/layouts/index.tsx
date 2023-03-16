@@ -1,5 +1,6 @@
-import AppLayout from '@/layouts/default';
 import React from 'react';
+
+import AppLayout from '@/layouts/default';
 
 export const Layouts = {
   Default: AppLayout,

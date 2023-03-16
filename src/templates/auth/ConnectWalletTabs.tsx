@@ -1,8 +1,10 @@
+import Image from 'next/image';
 import React from 'react';
 import { useSwitchNetwork } from 'wagmi';
-import Tabs from '@/components/Tabs';
-import Image from 'next/image';
+
 import { getLogoByChainId } from '@/lib/utils/chainLogo';
+
+import Tabs from '@/components/Tabs';
 
 export function ConnectWalletTabs() {
   const { chains } = useSwitchNetwork();

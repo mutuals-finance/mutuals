@@ -1,7 +1,8 @@
-import React from 'react';
-import { ButtonPrimary, ButtonSecondary } from '@/components/Button';
 import Link from 'next/link';
+import React from 'react';
 import { IoArrowForward } from 'react-icons/io5';
+
+import { ButtonPrimary, ButtonSecondary } from '@/components/Button';
 
 export function HomeHero() {
   return (

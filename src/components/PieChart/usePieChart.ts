@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
-
 import { scaleLinear } from '@visx/scale';
+import { useMemo } from 'react';
 
 import { ArchData } from './MotionPieArch';
 

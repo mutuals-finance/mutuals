@@ -1,7 +1,8 @@
+import Image, { ImageProps } from 'next/image';
 import React from 'react';
 import { IoChevronDown } from 'react-icons/io5';
+
 import { ButtonLink } from '@/components/Button';
-import Image, { ImageProps } from 'next/image';
 
 interface ChainButtonProps {
   src: ImageProps['src'];

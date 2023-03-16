@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import Input from '@/components/Form/Input';
-import InputText from '@/components/Form/InputText';
-import Form from '@/components/Form';
-import InputImage from '@/components/Form/InputImage';
-import { ButtonPrimary } from '@/components/Button';
 import { Controller, useForm } from 'react-hook-form';
-import InputSwitch from '@/components/Form/InputSwitch';
-import PayeeList, { initialPayee, Payee } from './PayeeList';
-import CreateFormGroup from './CreateFormGroup';
+
+import { ButtonPrimary } from '@/components/Button';
 import CreateSplitModal from '@/components/CreateSplitModal';
+import Form from '@/components/Form';
+import Input from '@/components/Form/Input';
+import InputImage from '@/components/Form/InputImage';
+import InputSwitch from '@/components/Form/InputSwitch';
+import InputText from '@/components/Form/InputText';
+
+import CreateFormGroup from './CreateFormGroup';
+import PayeeList, { initialPayee, Payee } from './PayeeList';
 
 export interface CreateFormData {
   image: File;

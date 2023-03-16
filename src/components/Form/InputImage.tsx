@@ -1,12 +1,12 @@
+import Image from 'next/image';
 import React, {
   ForwardedRef,
   PropsWithChildren,
   useEffect,
   useState,
 } from 'react';
-import { IoImage } from 'react-icons/io5';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
-import Image from 'next/image';
+import { IoImage } from 'react-icons/io5';
 
 interface InputImagePreviewProps {
   value?: File;

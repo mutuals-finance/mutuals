@@ -1,4 +1,4 @@
-import { Transition, Dialog } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import React from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 

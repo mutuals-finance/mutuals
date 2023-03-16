@@ -1,6 +1,8 @@
-import Input from '@/components/Form/Input';
 import React, { useEffect, useState } from 'react';
 import { AiOutlinePercentage } from 'react-icons/ai';
+
+import Input from '@/components/Form/Input';
+
 import FormList from './FormList';
 
 export interface Payee {

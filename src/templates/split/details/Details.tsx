@@ -1,9 +1,12 @@
 import React from 'react';
-import Box from '@/components/Box';
-import Statistic from '@/components/Statistic';
-import { SplitDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
+
 import { shortenAddress } from '@/lib/utils';
+
+import Box from '@/components/Box';
 import Date from '@/components/Date';
+import Statistic from '@/components/Statistic';
+
+import { SplitDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
 
 type DetailsProps = SplitDetailsFragmentFragment;
 export function Details({ ...split }: DetailsProps) {

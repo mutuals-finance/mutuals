@@ -1,9 +1,10 @@
-import Modal from '@/components/Modal';
 import React from 'react';
+
+import { ButtonOutline, ButtonPrimary } from '@/components/Button';
+import Modal from '@/components/Modal';
 import StepperItem, {
   StepperModalStep,
 } from '@/components/StepperModal/StepperItem';
-import { ButtonOutline, ButtonPrimary } from '@/components/Button';
 
 interface StepperModalProps {
   open: boolean;

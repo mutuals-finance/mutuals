@@ -1,9 +1,11 @@
-import { FACTORY_ADDRESS } from '@/lib/constants';
 import { BigNumber, utils } from 'ethers';
-import { useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { SplitFactory__factory } from '@/../../types/typechain';
-import useDebounce from '@/hooks/useDebounce';
 import { useMemo } from 'react';
+import { useContractWrite, usePrepareContractWrite } from 'wagmi';
+
+import { FACTORY_ADDRESS } from '@/lib/constants';
+import useDebounce from '@/hooks/useDebounce';
+
+import { SplitFactory__factory } from '@/../../types/typechain';
 
 export type CreateSplitArgs = [
   `0x{string}`[],

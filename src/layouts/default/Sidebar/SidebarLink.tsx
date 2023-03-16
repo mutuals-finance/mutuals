@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import Link, { LinkProps } from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 interface AppSidebarLinkProps extends LinkProps {
   dense?: boolean;

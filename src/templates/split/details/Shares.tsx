@@ -1,11 +1,14 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
-import Box from '@/components/Box';
+
 import { shortenAddress } from '@/lib/utils';
+
+import Box from '@/components/Box';
 import UserAvatar from '@/components/UserAvatar';
-import { shareFragment } from '@/graphql/fragments';
+
 import { FragmentType, useFragment } from '@/graphql/__generated__';
 import { ShareFragmentFragment } from '@/graphql/__generated__/graphql';
-import dynamic from 'next/dynamic';
+import { shareFragment } from '@/graphql/fragments';
 
 const PieChart = dynamic(() => import('@/components/PieChart'), { ssr: false });
 type ShareFragment = FragmentType<typeof shareFragment>;

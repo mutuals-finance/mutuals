@@ -1,17 +1,19 @@
-import type { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
-import { useApollo } from '@/graphql/client';
-import { ThemeProvider } from 'next-themes';
 import { Provider as AnkrProvider } from 'ankr-react';
-import { WagmiConfig } from 'wagmi';
-import { useWagmi } from '@/lib/wagmi';
-import { LayoutKeys, Layouts } from '@/layouts';
 import { NextComponentType, NextPageContext } from 'next';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { ThemeProvider } from 'next-themes';
 import React from 'react';
+import { WagmiConfig } from 'wagmi';
 
 import '@/styles/font.css';
 import '@/styles/global.css';
-import Head from 'next/head';
+
+import { useWagmi } from '@/lib/wagmi';
+
+import { useApollo } from '@/graphql/client';
+import { LayoutKeys, Layouts } from '@/layouts';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextComponentType<NextPageContext, unknown, unknown> & {

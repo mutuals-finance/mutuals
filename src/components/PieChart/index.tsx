@@ -1,11 +1,10 @@
-import React from 'react';
-
 import { Group } from '@visx/group';
+import { ParentSize } from '@visx/responsive';
 import { Pie } from '@visx/shape';
+import React from 'react';
 
 import MotionPieArch, { ArchData } from './MotionPieArch';
 import usePieChart from './usePieChart';
-import { ParentSize } from '@visx/responsive';
 
 interface PieChartProps {
   data: ArchData[];

@@ -1,7 +1,9 @@
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { Split__factory } from '@/../../types/typechain';
-import useDebounce from '@/hooks/useDebounce';
 import { useMemo } from 'react';
+import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+
+import useDebounce from '@/hooks/useDebounce';
+
+import { Split__factory } from '@/../../types/typechain';
 
 export type WithdrawSplitArgs = [`0x{string}`, `0x{string}`[]];
 

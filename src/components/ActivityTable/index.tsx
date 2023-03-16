@@ -1,16 +1,19 @@
-import React from 'react';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import React from 'react';
+
 import { shortenAddress } from '@/lib/utils';
-import Date from '@/components/Date';
-import { ActivityTableProps, SplitEvent } from './types';
-import ActivityTableBadge from './ActivityTableBadge';
-import { useActivityEvents } from '@/components/ActivityTable/useActivityEvents';
 import clsxm from '@/lib/utils/clsxm';
+
+import { useActivityEvents } from '@/components/ActivityTable/useActivityEvents';
+import Date from '@/components/Date';
+
+import ActivityTableBadge from './ActivityTableBadge';
+import { ActivityTableProps, SplitEvent } from './types';
 
 const columnHelper = createColumnHelper<SplitEvent>();
 

@@ -1,5 +1,5 @@
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
 
 interface BreadcrumbItemInnerProps extends React.PropsWithChildren {
   icon?: React.ReactNode;

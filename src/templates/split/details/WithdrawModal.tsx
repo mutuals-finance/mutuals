@@ -1,13 +1,15 @@
-import React from 'react';
-import Sidebar, { SidebarProps } from '@/components/Sidebar';
-import { ButtonPrimary } from '@/components/Button';
 import { Balance } from '@ankr.com/ankr.js/dist/types';
-import { IoHelp } from 'react-icons/io5';
-import { formatBalance, formatCurrency } from '@/lib/utils';
 import Image from 'next/image';
-import InputCheckbox from '@/components/Form/InputCheckbox';
-import Statistic from '@/components/Statistic';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { IoHelp } from 'react-icons/io5';
+
+import { formatBalance, formatCurrency } from '@/lib/utils';
+
+import { ButtonPrimary } from '@/components/Button';
+import InputCheckbox from '@/components/Form/InputCheckbox';
+import Sidebar, { SidebarProps } from '@/components/Sidebar';
+import Statistic from '@/components/Statistic';
 
 type WithdrawModalProps = Omit<SidebarProps, 'header' | 'footer'> & {
   assets?: Balance[];

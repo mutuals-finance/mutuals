@@ -1,8 +1,7 @@
 import { Tab } from '@headlessui/react';
-
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
-import React from 'react';
 import { PropsOf } from '@headlessui/react/dist/types';
+import React from 'react';
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
 export interface TabsProps {
   disabled?: boolean;

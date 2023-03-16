@@ -1,8 +1,9 @@
+import { getAccountBalance } from 'ankr-react/dist/api';
 import Image from 'next/image';
 import React from 'react';
-import { getAccountBalance } from 'ankr-react/dist/api';
-import { formatBalance, formatCurrency } from '@/lib/utils';
 import { IoHelp } from 'react-icons/io5';
+
+import { formatBalance, formatCurrency } from '@/lib/utils';
 
 type TokenCardProps = Awaited<
   ReturnType<typeof getAccountBalance>

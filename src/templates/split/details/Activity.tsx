@@ -1,7 +1,8 @@
 import React from 'react';
-import Box from '@/components/Box';
+
 import ActivityTable from '@/components/ActivityTable';
 import { ActivityTableProps } from '@/components/ActivityTable/types';
+import Box from '@/components/Box';
 
 type ActivityProps = ActivityTableProps;
 

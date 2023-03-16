@@ -1,17 +1,18 @@
 import {
   ApolloClient,
-  HttpLink,
-  InMemoryCache,
   DefaultOptions,
   from,
+  HttpLink,
+  InMemoryCache,
 } from '@apollo/client';
-import { subgraphByChainId } from '@/lib/constants';
-import { isSSR } from '@/lib/utils';
+import { onError } from '@apollo/client/link/error';
+import { isEqual, merge } from 'lodash';
+import { AppProps } from 'next/app';
 import { useMemo } from 'react';
 import { mainnet } from 'wagmi/chains';
-import { AppProps } from 'next/app';
-import { isEqual, merge } from 'lodash';
-import { onError } from '@apollo/client/link/error';
+
+import { subgraphByChainId } from '@/lib/constants';
+import { isSSR } from '@/lib/utils';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 

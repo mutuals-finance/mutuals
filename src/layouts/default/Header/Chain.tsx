@@ -1,9 +1,12 @@
+import Image from 'next/image';
 import React from 'react';
+import { Chain as WagmiChain, useNetwork, useSwitchNetwork } from 'wagmi';
+
+import { getLogoByChainId } from '@/lib/utils/chainLogo';
+
 import Popover from '@/components/Popover';
 import PopoverItem from '@/components/Popover/PopoverItem';
-import { Chain as WagmiChain, useNetwork, useSwitchNetwork } from 'wagmi';
-import Image from 'next/image';
-import { getLogoByChainId } from '@/lib/utils/chainLogo';
+
 import ChainButton from '@/layouts/default/Header/ChainButton';
 
 interface ChainSelectorItemProps extends WagmiChain {

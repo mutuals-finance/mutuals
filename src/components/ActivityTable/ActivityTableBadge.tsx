@@ -1,11 +1,13 @@
+import React from 'react';
 import {
   IoArrowDownOutline,
   IoArrowUpOutline,
   IoLinkOutline,
 } from 'react-icons/io5';
-import { EventType } from './types';
-import React from 'react';
+
 import clsxm from '@/lib/utils/clsxm';
+
+import { EventType } from './types';
 
 export default function ActivityTableBadge({ type }: { type: EventType }) {
   let Icon;

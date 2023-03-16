@@ -1,6 +1,7 @@
 import { CIDString, NFTStorage } from 'nft.storage';
-import { NFT_STORAGE_TOKEN } from '@/lib/constants';
 import { useCallback, useMemo, useRef, useState } from 'react';
+
+import { NFT_STORAGE_TOKEN } from '@/lib/constants';
 
 export interface Metadata {
   name?: string;

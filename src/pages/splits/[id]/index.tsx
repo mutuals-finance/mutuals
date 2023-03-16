@@ -1,26 +1,28 @@
+import { Blockchain } from '@ankr.com/ankr.js/dist/types';
+import { ApolloClient } from '@apollo/client';
+import { useAccountBalance } from 'ankr-react';
+import { InferGetServerSidePropsType } from 'next';
+import { useRouter } from 'next/router';
 import React from 'react';
-import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/graphql/queries';
+
 import { useFragment } from '@/graphql/__generated__';
-import {
-  Balance,
-  Analytics,
-  Activity,
-  Shares,
-  Details,
-  Header,
-  WithdrawModal,
-} from '@/templates/split/details';
+import { initializeApollo } from '@/graphql/client';
 import {
   splitDetailsFragment,
   transactionDetailsFragment,
 } from '@/graphql/fragments';
+import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/graphql/queries';
+import {
+  Activity,
+  Analytics,
+  Balance,
+  Details,
+  Header,
+  Shares,
+  WithdrawModal,
+} from '@/templates/split/details';
+
 import { NextPageWithLayout } from '#/app';
-import { ApolloClient } from '@apollo/client';
-import { initializeApollo } from '@/graphql/client';
-import { InferGetServerSidePropsType } from 'next';
-import { useRouter } from 'next/router';
-import { useAccountBalance } from 'ankr-react';
-import { Blockchain } from '@ankr.com/ankr.js/dist/types';
 
 async function fetchSplitDetails(client: ApolloClient<unknown>, id: string) {
   const { data } = await client.query({

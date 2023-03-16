@@ -1,5 +1,4 @@
 import { Combobox } from '@headlessui/react';
-
 import React from 'react';
 
 interface InputComboboxProps<T> {

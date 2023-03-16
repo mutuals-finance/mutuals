@@ -1,7 +1,9 @@
-import React from 'react';
 import Image from 'next/image';
+import React from 'react';
+
 import bgImage from '@/assets/images/login-bg.png';
 import { ConnectWalletTabs } from '@/templates/auth';
+
 import { NextPageWithLayout } from '#/app';
 
 const LoginPage: NextPageWithLayout = function () {

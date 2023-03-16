@@ -1,13 +1,15 @@
-import React from 'react';
-import { ButtonPrimary } from '@/components/Button';
-import Box from '@/components/Box';
-import Statistic from '@/components/Statistic';
-import TokenCard from '@/components/TokenCard';
-import { formatCurrency } from '@/lib/utils';
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
+import { Balance, GetAccountBalanceReply } from '@ankr.com/ankr.js/dist/types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Balance, GetAccountBalanceReply } from '@ankr.com/ankr.js/dist/types';
+import React from 'react';
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
+
+import { formatCurrency } from '@/lib/utils';
+
+import Box from '@/components/Box';
+import { ButtonPrimary } from '@/components/Button';
+import Statistic from '@/components/Statistic';
+import TokenCard from '@/components/TokenCard';
 
 function BalanceTokenCards({ assets = [] }: { assets?: Balance[] }) {
   return (

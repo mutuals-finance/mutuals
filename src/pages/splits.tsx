@@ -1,10 +1,13 @@
-import React from 'react';
-import PageHeader from '@/components/PageHeader';
-import { ButtonSecondary } from '@/components/Button';
-import { IoAdd } from 'react-icons/io5';
 import Link from 'next/link';
+import React from 'react';
+import { IoAdd } from 'react-icons/io5';
+
+import { ButtonSecondary } from '@/components/Button';
 import Input from '@/components/Form/Input';
+import PageHeader from '@/components/PageHeader';
+
 import { SplitListing } from '@/templates/split/list';
+
 import { NextPageWithLayout } from '#/app';
 
 function SplitsPageHeader() {

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import BreadcrumbItem from '@/layouts/default/Breadcrumbs/BreadcrumbItem';
 
 function slugToTitle(slug: string) {

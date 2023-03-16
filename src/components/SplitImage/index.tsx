@@ -1,7 +1,7 @@
+import { StaticImageData } from 'next/dist/client/image';
+import Image from 'next/image';
 import React from 'react';
 import { IoImage } from 'react-icons/io5';
-import Image from 'next/image';
-import { StaticImageData } from 'next/dist/client/image';
 
 interface SplitImageInnerProps {
   alt?: string;

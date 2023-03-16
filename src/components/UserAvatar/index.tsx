@@ -1,5 +1,5 @@
-import React, { HTMLAttributes } from 'react';
 import { Jazzicon } from '@ukstv/jazzicon-react';
+import React, { HTMLAttributes } from 'react';
 
 interface UserAvatarProps extends HTMLAttributes<HTMLSpanElement> {
   address: string;

@@ -1,6 +1,5 @@
-import Popover from '@/components/Popover';
+import { useTheme } from 'next-themes';
 import React, { useState } from 'react';
-import WalletModal from '@/components/WalletModal';
 import {
   IoHelpOutline,
   IoLogInOutline,
@@ -9,9 +8,12 @@ import {
   IoMoonOutline,
   IoSunnyOutline,
 } from 'react-icons/io5';
-import { useTheme } from 'next-themes';
 import { useAccount } from 'wagmi';
+
+import Popover from '@/components/Popover';
 import PopoverItem from '@/components/Popover/PopoverItem';
+import WalletModal from '@/components/WalletModal';
+
 import UserButton from '@/layouts/default/Header/UserButton';
 
 export default function User() {
