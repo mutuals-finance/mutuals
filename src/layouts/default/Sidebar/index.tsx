@@ -1,8 +1,8 @@
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import SidebarBody from '@/layouts/default/Sidebar/SidebarBody';
-import SidebarFooter from '@/layouts/default/Sidebar/SidebarFooter';
+import SidebarBody from './SidebarBody';
+import SidebarFooter from './SidebarFooter';
 
 export default function Sidebar() {
   const [collapsed, toggle] = useToggle(false);

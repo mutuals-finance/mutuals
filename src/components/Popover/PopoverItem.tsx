@@ -1,5 +1,7 @@
 import React from 'react';
 
+import clsxm from '@/lib/utils/clsxm';
+
 interface PopoverItemProps {
   icon: React.ReactNode;
   children: React.ReactNode;
@@ -18,9 +20,11 @@ export default function PopoverItem({
   return (
     <button
       onClick={onClick}
-      className={`transition-color ease-out-expo flex w-full items-center justify-start space-x-2 rounded-xl px-4 py-2 text-left text-sm duration-200 hover:bg-gray-100 active:scale-95 dark:hover:bg-gray-800 ${
+      className={clsxm(
+        `transition-color ease-out-expo rounded-default hover:bg-default-2 flex w-full items-center justify-start space-x-2 px-4 py-2 text-left text-sm duration-200 active:scale-95`,
+        className,
         highlight && `font-semibold`
-      } ${className}`}
+      )}
     >
       {icon}
       <span className={`block`}>{children}</span>

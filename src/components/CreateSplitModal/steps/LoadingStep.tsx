@@ -1,5 +1,7 @@
 import { IoAlertCircle, IoCheckmarkCircle } from 'react-icons/io5';
 
+import clsxm from '@/lib/utils/clsxm';
+
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface LoadingStepProps {
@@ -45,9 +47,11 @@ function LoadingStepStatus({
     <div className={'flex items-center justify-between border-y py-3'}>
       <span className={'label block'}>Status</span>
       <span
-        className={`block text-xs font-semibold ${
-          isError ? 'text-error' : ''
-        } ${isSuccess ? 'text-green-500' : ''}`}
+        className={clsxm(
+          `block text-xs font-semibold`,
+          isError && 'text-error',
+          isSuccess && 'text-green-500'
+        )}
       >
         {status}
       </span>

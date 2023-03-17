@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import clsxm from '@/lib/utils/clsxm';
+
 import Date from '@/components/Date';
 import { SplitImage } from '@/components/SplitImage';
 
@@ -43,7 +45,7 @@ export default function SplitCard({ id, metaData, timestamp }: SplitCardProps) {
       <div className={'mt-auto py-2'}>
         <p className={'line-clamp-3'}>{metaData?.description}</p>
       </div>
-      <div className={''}>
+      <div>
         <Date className={'text-xs'} timestamp={timestamp} />
       </div>
     </>
@@ -53,7 +55,10 @@ export default function SplitCard({ id, metaData, timestamp }: SplitCardProps) {
     <article>
       {!!id ? (
         <Link
-          className={`${wrapperClass} hover:bg-default-2 hover:-translate-y-2 hover:!pb-8`}
+          className={clsxm(
+            wrapperClass,
+            `hover:bg-default-2 hover:-translate-y-2 hover:!pb-8`
+          )}
           href={`/splits/${id}`}
         >
           {splitCardContent}

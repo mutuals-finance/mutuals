@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
 
+import clsxm from '@/lib/utils/clsxm';
+
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 export interface ButtonBaseProps
@@ -52,7 +54,7 @@ export default function ButtonBase({
   const textClass = {
     xs: `text-xs`,
     sm: `text-sm`,
-    md: `text-default`,
+    md: `text-base`,
     lg: `text-lg`,
     xl: `text-xl`,
   }[size];
@@ -96,7 +98,7 @@ export default function ButtonBase({
     'link-2': `link-2 border-transparent`,
   }[color];
 
-  const buttonClass = [
+  const buttonClass = clsxm(
     roundedClass,
     justifyClass,
     colorClass,
@@ -107,14 +109,17 @@ export default function ButtonBase({
     dense || onlyIcon ? '' : heightClass,
     dense || onlyIcon ? '' : sizeClass,
     onlyIcon ? '' : spaceClass,
-    className,
-  ].join(` `);
+    className
+  );
 
   return (
     <button className={buttonClass} disabled={disabled || loading} {...props}>
       {loading && (
         <div
-          className={`absolute top-0 left-0 block flex h-full w-full items-center justify-center ${roundedClass}`}
+          className={clsxm(
+            `absolute top-0 left-0 block flex h-full w-full items-center justify-center`,
+            roundedClass
+          )}
         >
           <LoadingSpinner size={size} color={color} />
         </div>

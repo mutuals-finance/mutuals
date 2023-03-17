@@ -1,5 +1,7 @@
 import React from 'react';
 
+import clsxm from '@/lib/utils/clsxm';
+
 export interface LoadingSpinnerProps
   extends React.ButtonHTMLAttributes<HTMLDivElement> {
   enabled?: boolean;
@@ -37,19 +39,17 @@ export default function LoadingSpinner({
     'link-2': `text-neutral-900 dark:text-neutral-50`,
   }[color];
 
-  const wrapperClass = ['inline-block', colorClass, roundedClass].join(` `);
-
   return enabled ? (
     <div
       aria-label='Loading...'
       role='status'
-      className={wrapperClass}
+      className={clsxm('inline-block', colorClass, roundedClass)}
       {...props}
     >
       <span className='sr-only'>Loading...</span>
 
       <svg
-        className={`block animate-spin text-current ${sizeClass}`}
+        className={clsxm(`block animate-spin text-current`, sizeClass)}
         viewBox='3 3 18 18'
       >
         <path
