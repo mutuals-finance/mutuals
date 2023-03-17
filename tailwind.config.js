@@ -15,7 +15,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        sans: ['Celebes', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         error: '#ff3333',

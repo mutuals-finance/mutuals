@@ -1,4 +1,129 @@
-/* inter var - latin */
+@font-face {
+  font-family: 'Celebes';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-Regular.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-Italic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-Thin.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-ThinItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-Light.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-LightItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-SemiBold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-SemiBoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-Bold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-BoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-ExtraBold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-ExtraBoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-Black.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Celebes';
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../assets/font/Celebes/Celebes-BlackItalic.woff') format('woff');
+}
+/*
+!* inter var - latin *!
 @font-face {
   font-family: 'Inter';
   font-style:  normal;
@@ -152,7 +277,7 @@
   url("../assets/font/Inter/Inter-BlackItalic.woff?v=3.19") format("woff");
 }
 
-/* -------------------------------------------------------
+!* -------------------------------------------------------
 Variable font.
 Usage:
 
@@ -160,7 +285,7 @@ Usage:
   @supports (font-variation-settings: normal) {
     html { font-family: 'Inter var', sans-serif; }
   }
-*/
+*!
 @font-face {
   font-family: 'Inter var';
   font-weight: 100 900;
@@ -179,7 +304,7 @@ Usage:
 }
 
 
-/* --------------------------------------------------------------------------
+!* --------------------------------------------------------------------------
 [EXPERIMENTAL] Multi-axis, single variable font.
 
 Slant axis is not yet widely supported (as of February 2019) and thus this
@@ -191,7 +316,7 @@ explicitly, e.g.
   * { font-variation-settings: "slnt" 0deg }
   .italic { font-variation-settings: "slnt" 10deg }
 
-*/
+*!
 @font-face {
   font-family: 'Inter var experimental';
   font-weight: 100 900;
@@ -199,6 +324,7 @@ explicitly, e.g.
   font-style: oblique 0deg 10deg;
   src: url("../assets/font/Inter/Inter.var.woff2?v=3.19") format("woff2");
 }
+*/
 
 /*
 @font-face {
