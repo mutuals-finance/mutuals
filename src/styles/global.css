@@ -60,6 +60,10 @@
     @apply input-default h-10 items-center;
   }
 
+  .input-readonly {
+    @apply cursor-default focus:ring-0 border-opacity-50 bg-opacity-50
+  }
+
   textarea,
   .textarea {
     @apply input-default min-h-[6rem] items-start;

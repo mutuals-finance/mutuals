@@ -1,10 +1,36 @@
 import React, { ForwardedRef } from 'react';
+import { RegisterOptions, useFormContext } from 'react-hook-form';
+import { register } from 'tsconfig-paths';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+import clsxm from '@/lib/utils/clsxm';
+
+export interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
+  /** Input label */
   label?: string;
+  /**
+   * id to be initialized with React Hook Form,
+   * must be the same with the pre-defined types.
+   */
+  id: string;
+  /** Input placeholder */
+  placeholder?: string;
+  /** Small text below input, useful for additional information */
+  helperText?: string;
+  /** Icon before input */
   icon?: React.ReactNode;
+  /** Icon after input */
   iconAfter?: React.ReactNode;
-  error?: string;
+  /**
+   * Input type
+   * @example text, email, password
+   */
+  type?: React.HTMLInputTypeAttribute;
+  /** Disables the input and shows defaultValue (can be set from React Hook Form) */
+  readOnly?: boolean;
+  /** Disable error style (not disabling error validation) */
+  hideError?: boolean;
+  /** Manual validation using RHF, it is encouraged to use yup resolver instead */
+  validation?: RegisterOptions;
 }
 
 function InputIcon({
@@ -24,46 +50,86 @@ const Input = React.forwardRef(
   (
     {
       label,
+      placeholder = '',
+      helperText,
+      id,
+      type = 'text',
+      readOnly = false,
+      hideError = false,
+      validation,
       className,
       icon,
       iconAfter,
-      error,
-      type = 'text',
-      ...props
+      ...rest
     }: InputProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
+    const {
+      register,
+      formState: { errors },
+    } = useFormContext();
+
     const baseClasses = 'input flex-1';
     const iconClasses = !icon ? '' : 'pl-9';
     const iconAfterClasses = !iconAfter ? '' : 'pr-9';
+    const readonlyClasses = 'input-readonly';
+    const errorClasses =
+      'border-red-500 focus:border-red-500 focus:ring-red-500';
 
     return (
-      <div
-        className={`flex w-full flex-col ${!!error ? 'error' : ''} ${
-          className || ''
-        }`}
-      >
+      <div>
         {!!label && (
-          <label className={'label'} htmlFor={props.id}>
+          <label className={'label'} htmlFor={id}>
             {label}
           </label>
         )}
-
         <div className={'relative flex flex-1'}>
           {!!icon && <InputIcon className={'left-3'}>{icon}</InputIcon>}
           <input
-            {...props}
-            name={props.name || props.id}
-            ref={ref}
+            {...register(id, validation)}
+            {...rest}
             type={type}
-            className={`${baseClasses} ${iconClasses} ${iconAfterClasses}`}
+            name={id}
+            id={id}
+            readOnly={readOnly}
+            className={clsxm(
+              baseClasses,
+              readOnly && readonlyClasses,
+              errors[id] && errorClasses,
+              iconClasses,
+              iconAfterClasses
+            )}
+            placeholder={placeholder}
+            aria-describedby={id}
+            ref={ref}
           />
           {!!iconAfter && (
             <InputIcon className={'right-3'}>{iconAfter}</InputIcon>
           )}
+          {/*
+            {!hideError && errors[id] && (
+                <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
+                    <HiExclamationCircle className='text-xl text-red-500' />
+                </div>
+            )}
+*/}
         </div>
 
-        {!!error && <span className={'label-error'}>{error}</span>}
+        {/*
+            <div className='mt-1'>
+                {helperText && <p className='text-xs text-gray-500'>{helperText}</p>}
+                {!hideError && errors[id] && (
+                    <span className='text-sm text-red-500'>
+            {errors[id]?.message as unknown as string}
+          </span>
+                )}
+            </div>
+*/}
+
+        {/*
+
+            {!!error && <span className={'label-error'}>{error}</span>}
+*/}
       </div>
     );
   }

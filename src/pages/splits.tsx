@@ -3,6 +3,7 @@ import React from 'react';
 import { IoAdd } from 'react-icons/io5';
 
 import { ButtonSecondary } from '@/components/Button';
+import Form from '@/components/Form';
 import Input from '@/components/Form/Input';
 import PageHeader from '@/components/PageHeader';
 
@@ -19,11 +20,14 @@ function SplitListingHeader() {
     <section className={'!pb-0'}>
       <div className='container'>
         <div className={'flex w-full max-w-4xl space-x-4 pt-8 lg:pt-12'}>
-          <Input
-            placeholder={'Search...'}
-            className={'flex-1'}
-            id={'split-search'}
-          />
+          <Form>
+            <Input
+              id='search'
+              validation={{ required: 'Please enter a name' }}
+              placeholder={'Search...'}
+              className={'flex-1'}
+            />
+          </Form>
           <div className={'flex-shrink-0'}>
             <Link href={'/splits/new'} passHref>
               <ButtonSecondary icon={<IoAdd />} rounded={'base'}>
