@@ -31,7 +31,7 @@ export function CreateForm() {
       mode={'onTouched'}
       defaultValues={{ payees: [initialPayee], metadataLocked: false }}
     >
-      {({ control, register, watch, formState: { errors } }) => (
+      {({ control, watch }) => (
         <>
           <CreateSplitModal
             data={watch()}
@@ -53,20 +53,7 @@ export function CreateForm() {
 
               <TextArea label='Description' id='description' />
 
-              <Controller
-                name='metadataLocked'
-                control={control}
-                rules={{ required: false }}
-                render={({ field }) => (
-                  <InputSwitch
-                    label={'Metadata Locked'}
-                    checked={field.value}
-                    onChange={(value) => {
-                      field.onChange(value);
-                    }}
-                  />
-                )}
-              />
+              <InputSwitch label={'Metadata Locked'} id={'metadataLocked'} />
             </div>
           </CreateFormGroup>
 

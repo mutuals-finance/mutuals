@@ -1,45 +1,80 @@
-import { Switch } from '@headlessui/react';
+import { Switch, SwitchProps } from '@headlessui/react';
 import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { IoCheckmark, IoClose } from 'react-icons/io5';
 
-type InputSwitchProps = {
-  label?: string;
-  className?: string;
-} & {
-  checked?: boolean | undefined;
-  defaultChecked?: boolean | undefined;
-  onChange?(checked: boolean): void;
-  name?: string | undefined;
-  value?: string | undefined;
-};
+import clsxm from '@/lib/utils/clsxm';
+
+import FormItemHintAndError from '@/components/Form/FormItem/FormItemHintAndError';
+import FormItemLabel from '@/components/Form/FormItem/FormItemLabel';
+import { InputDefaultProps } from '@/components/Form/types';
+
+interface InputSwitchProps
+  extends Omit<SwitchProps<'button'>, 'id' | 'placeholder'>,
+    InputDefaultProps {}
 
 export default function InputSwitch({
   label,
-  className = '',
+  placeholder,
+  helperText,
+  id,
+  readOnly = false,
+  hideError = false,
+  validation,
+  className,
   checked,
   ...props
 }: InputSwitchProps) {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <Switch.Group>
-      <div className={`flex flex-col ${className}`}>
-        {!!label && <Switch.Label className='label mb-1'>{label}</Switch.Label>}
-        <Switch
-          checked={checked}
-          className={`${
-            checked ? '!bg-carlo' : 'border-default border'
-          } relative inline-flex h-6 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-0`}
-          {...props}
-        >
-          <span
-            className={`${
-              checked
-                ? 'translate-x-7 bg-white text-neutral-900'
-                : 'translate-x-1 bg-neutral-900 text-neutral-50'
-            } inline-flex h-4 w-4 transform items-center justify-center rounded-full text-xs transition-transform`}
-          >
-            {checked ? <IoCheckmark /> : <IoClose />}
-          </span>
-        </Switch>
+      <div className={clsxm('flex flex-col', className)}>
+        <FormItemLabel {...{ id, label, validation }} />
+
+        <Controller
+          control={control}
+          name={id}
+          rules={validation}
+          render={({ field }) => (
+            <>
+              <Switch
+                {...props}
+                {...field}
+                id={id}
+                placeholder={!!placeholder ? placeholder : undefined}
+                checked={field.value}
+                className={clsxm(
+                  'border-default relative inline-flex h-6 w-12 items-center rounded-full border transition-colors focus:outline-none focus:ring-0',
+                  field.value ? 'bg-carlo' : 'bg-default',
+                  !!label && 'mt-1'
+                )}
+              >
+                <span
+                  className={clsxm(
+                    'inline-flex h-4 w-4 transform items-center justify-center rounded-full text-xs transition-transform',
+                    field.value
+                      ? 'translate-x-7 bg-white text-neutral-900'
+                      : 'translate-x-1 bg-neutral-900 text-neutral-50'
+                  )}
+                >
+                  {field.value ? (
+                    <IoCheckmark className={'block'} />
+                  ) : (
+                    <IoClose className={'block'} />
+                  )}
+                </span>
+              </Switch>
+
+              <FormItemHintAndError
+                {...{ helperText, hideError, error: errors[id] }}
+              />
+            </>
+          )}
+        />
       </div>
     </Switch.Group>
   );
