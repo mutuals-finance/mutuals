@@ -5,14 +5,15 @@ import { Controller, get, useFormContext } from 'react-hook-form';
 import { formatBytes, formatStringItems } from '@/lib/utils';
 import clsxm from '@/lib/utils/clsxm';
 
-import InputHintAndError from '@/components/Form/InputHintAndError';
+import FormItemHintAndError from '@/components/Form/FormItem/FormItemHintAndError';
+import FormItemLabel from '@/components/Form/FormItem/FormItemLabel';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
 import { InputDefaultProps } from '@/components/Form/types';
 
 import { FileWithPreview } from '../types';
 
-export interface InputImageProps extends Omit<InputDefaultProps, 'type'> {
+export interface InputImageProps extends InputDefaultProps {
   maxFiles?: number;
   maxSize?: number;
   acceptedImageExtensions?: string[];
@@ -125,11 +126,7 @@ const InputImage = React.forwardRef(
 
     return (
       <div className={clsxm(!!error && 'error')}>
-        {!!label && (
-          <label className={'label'} htmlFor={id}>
-            {label}
-          </label>
-        )}
+        <FormItemLabel {...{ id, label, validation }} />
 
         <Controller
           control={control}
@@ -142,7 +139,7 @@ const InputImage = React.forwardRef(
                 ref={dropzoneRef}
                 className={clsxm(
                   'input-default',
-                  'relative flex h-52 w-52 cursor-pointer overflow-hidden border-dashed p-0 hover:border-neutral-400 dark:hover:border-neutral-500',
+                  'relative flex h-60 w-60 cursor-pointer overflow-hidden border-dashed p-0 hover:border-neutral-400  dark:hover:border-neutral-500',
                   isDragActive && 'border-neutral-400 dark:border-neutral-500',
                   error && 'hover:border-error dark:hover:border-error'
                 )}
@@ -163,7 +160,7 @@ const InputImage = React.forwardRef(
                 )}
               </div>
 
-              <InputHintAndError {...{ helperText, hideError, error }} />
+              <FormItemHintAndError {...{ helperText, hideError, error }} />
             </>
           )}
         />

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import React from 'react';
+import { Controller } from 'react-hook-form';
 import { useToggle } from 'react-use';
 
 import { ButtonPrimary } from '@/components/Button';
@@ -8,7 +8,7 @@ import Form from '@/components/Form';
 import Input from '@/components/Form/Input';
 import InputDropzone from '@/components/Form/InputImage';
 import InputSwitch from '@/components/Form/InputSwitch';
-import InputText from '@/components/Form/InputText';
+import TextArea from '@/components/Form/TextArea';
 
 import CreateFormGroup from './CreateFormGroup';
 import PayeeList, { initialPayee, Payee } from './PayeeList';
@@ -40,7 +40,7 @@ export function CreateForm() {
           />
 
           <CreateFormGroup
-            description={`Please enter a unique name for your split and define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
+            description={`Please enter a unique name for your split and define each recipient’s wallet address and split amount. The overall split amount must total 100. Fields marked with * are mandatory.`}
           >
             <div className={'flex flex-col space-y-4'}>
               <InputDropzone id='image' label='Image' />
@@ -51,14 +51,8 @@ export function CreateForm() {
                 validation={{ required: 'Please enter a name' }}
               />
 
-              <InputText
-                label={'Description'}
-                id={'description'}
-                error={errors.description && errors.description.message}
-                {...register('description', {
-                  required: 'Please enter a description',
-                })}
-              />
+              <TextArea label='Description' id='description' />
+
               <Controller
                 name='metadataLocked'
                 control={control}

@@ -3,13 +3,19 @@ import { useFormContext } from 'react-hook-form';
 
 import clsxm from '@/lib/utils/clsxm';
 
-import InputHintAndError from '@/components/Form/InputHintAndError';
+import FormItemHintAndError from '@/components/Form/FormItem/FormItemHintAndError';
+import FormItemLabel from '@/components/Form/FormItem/FormItemLabel';
 
 import { InputDefaultProps } from './types';
 
 export interface InputProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'id' | 'placeholder'>,
     InputDefaultProps {
+  /**
+   * Input type
+   * @example text, email, password
+   */
+  type?: React.HTMLInputTypeAttribute;
   /** Icon before input */
   icon?: React.ReactNode;
   /** Icon after input */
@@ -59,11 +65,8 @@ const Input = React.forwardRef(
 
     return (
       <div className={clsxm(!!errors[id] && 'error')}>
-        {!!label && (
-          <label className={'label'} htmlFor={id}>
-            {label}
-          </label>
-        )}
+        <FormItemLabel {...{ id, label, validation }} />
+
         <div className={clsxm('relative flex flex-1', !!label && 'mt-1')}>
           {!!icon && <InputIcon className={'left-3'}>{icon}</InputIcon>}
           <input
@@ -89,7 +92,9 @@ const Input = React.forwardRef(
           )}
         </div>
 
-        <InputHintAndError {...{ helperText, hideError, error: errors[id] }} />
+        <FormItemHintAndError
+          {...{ helperText, hideError, error: errors[id] }}
+        />
       </div>
     );
   }

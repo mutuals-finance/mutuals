@@ -13,11 +13,6 @@ export interface InputDefaultProps {
   placeholder?: string | false;
   /** Small text below input, useful for additional information */
   helperText?: string | false;
-  /**
-   * Input type
-   * @example text, email, password
-   */
-  type?: React.HTMLInputTypeAttribute;
   /** Disables the input and shows defaultValue (can be set from React Hook Form) */
   readOnly?: boolean;
   /** Disable error style (not disabling error validation) */

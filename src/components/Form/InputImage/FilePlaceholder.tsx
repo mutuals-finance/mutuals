@@ -19,7 +19,7 @@ export default function FilePlaceholder({ placeholder }: FilePlaceholderProps) {
       </div>
 
       {!!placeholder && (
-        <div className={'text-xs'}>
+        <div className={'text-neutral-400 dark:text-neutral-500'}>
           <p>{placeholder}</p>
         </div>
       )}

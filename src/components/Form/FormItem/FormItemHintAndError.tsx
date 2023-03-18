@@ -2,16 +2,16 @@ import React from 'react';
 
 import { InputDefaultProps } from '@/components/Form/types';
 
-export interface InputHintAndErrorProps
+export interface FormItemHintAndErrorProps
   extends Pick<InputDefaultProps, 'helperText' | 'hideError'> {
   error?: any;
 }
 
-export default function InputHintAndError({
+export default function FormItemHintAndError({
   helperText,
   hideError,
   error,
-}: InputHintAndErrorProps) {
+}: FormItemHintAndErrorProps) {
   return (
     <>
       {!!helperText && (
