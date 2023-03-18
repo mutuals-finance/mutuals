@@ -43,12 +43,7 @@ export function CreateForm() {
             description={`Please enter a unique name for your split and define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
           >
             <div className={'flex flex-col space-y-4'}>
-              <InputDropzone
-                id='image'
-                label='Image'
-                accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
-                helperText='You can upload files with .png, .jpg and .jpeg extension.'
-              />
+              <InputDropzone id='image' label='Image' />
 
               <Input
                 label='Name'

@@ -3,26 +3,16 @@ import { IoClose } from 'react-icons/io5';
 
 import { ButtonOutline } from '@/components/Button';
 
-import { FileWithPreview } from './types';
+import { FileWithPreview } from '../types';
 
-type FilePreviewProps = {
+interface FilePreviewProps {
   file: FileWithPreview;
-} & (
-  | {
-      onDeleteFile?: (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        file: FileWithPreview
-      ) => void;
-      readOnly?: true;
-    }
-  | {
-      onDeleteFile: (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        file: FileWithPreview
-      ) => void;
-      readOnly?: false;
-    }
-);
+  onDeleteFile?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    file: FileWithPreview
+  ) => void;
+  readOnly?: boolean;
+}
 
 export default function FilePreview({
   onDeleteFile,
@@ -41,15 +31,15 @@ export default function FilePreview({
         alt={file.name}
         className='flex w-full flex-1 object-cover'
       />
-      <div className='absolute top-3 right-3'>
-        {!readOnly && (
+      {!readOnly && (
+        <div className='absolute top-3 right-3'>
           <ButtonOutline
             size={'sm'}
             onClick={handleDelete}
             icon={<IoClose />}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

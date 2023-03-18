@@ -14,6 +14,9 @@ module.exports = {
       },
     },
     extend: {
+      fontSize: {
+        xxs: ['0.6rem', '0.75rem'],
+      },
       fontFamily: {
         sans: ['Manrope', ...defaultTheme.fontFamily.sans],
       },

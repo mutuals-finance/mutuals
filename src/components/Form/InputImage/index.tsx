@@ -1,34 +1,37 @@
 import React, { ForwardedRef } from 'react';
-import { Accept, FileRejection, useDropzone } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { Controller, get, useFormContext } from 'react-hook-form';
-import { IoImage } from 'react-icons/io5';
 
 import clsxm from '@/lib/utils/clsxm';
 
+import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
+import { InputDefaultProps } from '@/components/Form/types';
 
-import { FileWithPreview } from './types';
+import { FileWithPreview } from '../types';
 
-interface InputImageProps {
-  accept?: Accept;
-  helperText?: string;
-  id: string;
-  label?: string;
+export interface InputImageProps extends Omit<InputDefaultProps, 'type'> {
   maxFiles?: number;
-  readOnly?: boolean;
-  validation?: Record<string, unknown>;
+  maxSize?: number;
+  acceptedImageExtensions?: string[];
 }
 
 const InputImage = React.forwardRef(
   (
     {
-      accept,
-      helperText = '',
-      id,
       label,
-      maxFiles = 1,
+      placeholder = 'Drag and drop your file here, or click to choose an image.',
+      id,
+      readOnly = false,
+      hideError = false,
       validation,
-      readOnly,
+      maxFiles = 1,
+      maxSize = 1000000,
+      acceptedImageExtensions = ['.png', '.jpg', '.jpeg'],
+      helperText = `You can upload files with ${acceptedImageExtensions.map(
+        (ext, i) =>
+          (i >= acceptedImageExtensions.length - 1 ? 'and ' : ', ') + ext
+      )} extension.`,
     }: InputImageProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
@@ -97,21 +100,12 @@ const InputImage = React.forwardRef(
 
       newFiles.splice(newFiles.indexOf(file), 1);
 
-      if (newFiles.length > 0) {
-        setFiles(newFiles);
-        setValue(id, newFiles, {
-          shouldValidate: true,
-          shouldDirty: true,
-          shouldTouch: true,
-        });
-      } else {
-        setFiles([]);
-        setValue(id, null, {
-          shouldValidate: true,
-          shouldDirty: true,
-          shouldTouch: true,
-        });
-      }
+      setFiles(newFiles);
+      setValue(id, newFiles.length > 0 ? newFiles : null, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
     };
 
     React.useEffect(() => {
@@ -122,10 +116,10 @@ const InputImage = React.forwardRef(
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
-      accept,
+      accept: { 'image/*': acceptedImageExtensions },
       maxFiles,
       multiple: maxFiles > 1,
-      maxSize: 1000000,
+      maxSize,
     });
 
     return (
@@ -147,38 +141,17 @@ const InputImage = React.forwardRef(
                 ref={dropzoneRef}
                 className={clsxm(
                   'input-default',
-                  'group relative z-50 flex h-52 w-52 cursor-pointer overflow-hidden p-0 hover:ring-1',
+                  'group relative flex h-52 w-52 cursor-pointer overflow-hidden p-0 hover:ring-1',
                   isDragActive && 'ring-1',
                   error
                     ? 'border-red-500 group-focus:border-red-500'
                     : 'group-focus:border-primary-500'
                 )}
               >
-                <input {...getInputProps(field)} ref={ref} />
+                <input id={id} {...getInputProps(field)} ref={ref} />
 
                 {!files?.length || files?.length < 1 ? (
-                  <div
-                    className={
-                      'flex w-full flex-1 flex-col items-center justify-center space-y-3 p-6 text-center'
-                    }
-                  >
-                    <div>
-                      <IoImage
-                        className={
-                          'text-2xl text-neutral-500 dark:text-neutral-400'
-                        }
-                      />
-                    </div>
-                    <div
-                      className={
-                        'text-xs text-neutral-500 dark:text-neutral-400'
-                      }
-                    >
-                      <p>
-                        Drag and drop your file here, or click to choose a file.
-                      </p>
-                    </div>
-                  </div>
+                  <FilePlaceholder placeholder={placeholder} />
                 ) : (
                   files.map((file, index) => (
                     <FilePreview
@@ -190,23 +163,26 @@ const InputImage = React.forwardRef(
                   ))
                 )}
               </div>
-              {helperText !== '' && (
-                <p
-                  className={
-                    'mt-1 text-xs text-neutral-500 dark:text-neutral-400'
-                  }
-                >
-                  {helperText}
-                </p>
+
+              {!!helperText && (
+                <div className='mt-1'>
+                  <p
+                    className={
+                      'text-xxs text-neutral-500 dark:text-neutral-400'
+                    }
+                  >
+                    {helperText}
+                  </p>
+                </div>
               )}
 
-              <div className='mt-1'>
-                {error && (
+              {!(hideError || !error) && (
+                <div className='mt-1'>
                   <p className='text-sm text-red-500'>
                     {error.message?.toString()}
                   </p>
-                )}
-              </div>
+                </div>
+              )}
             </>
           )}
         />

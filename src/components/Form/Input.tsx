@@ -1,36 +1,17 @@
 import React, { ForwardedRef } from 'react';
-import { RegisterOptions, useFormContext } from 'react-hook-form';
-import { register } from 'tsconfig-paths';
+import { useFormContext } from 'react-hook-form';
 
 import clsxm from '@/lib/utils/clsxm';
 
-export interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
-  /** Input label */
-  label?: string;
-  /**
-   * id to be initialized with React Hook Form,
-   * must be the same with the pre-defined types.
-   */
-  id: string;
-  /** Input placeholder */
-  placeholder?: string;
-  /** Small text below input, useful for additional information */
-  helperText?: string;
+import { InputDefaultProps } from './types';
+
+export interface InputProps
+  extends Omit<React.ComponentPropsWithoutRef<'input'>, 'id'>,
+    InputDefaultProps {
   /** Icon before input */
   icon?: React.ReactNode;
   /** Icon after input */
   iconAfter?: React.ReactNode;
-  /**
-   * Input type
-   * @example text, email, password
-   */
-  type?: React.HTMLInputTypeAttribute;
-  /** Disables the input and shows defaultValue (can be set from React Hook Form) */
-  readOnly?: boolean;
-  /** Disable error style (not disabling error validation) */
-  hideError?: boolean;
-  /** Manual validation using RHF, it is encouraged to use yup resolver instead */
-  validation?: RegisterOptions;
 }
 
 function InputIcon({
