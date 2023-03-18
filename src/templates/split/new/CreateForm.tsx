@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { useToggle } from 'react-use';
 
 import { ButtonPrimary } from '@/components/Button';
 import CreateSplitModal from '@/components/CreateSplitModal';
 import Form from '@/components/Form';
 import Input from '@/components/Form/Input';
-import InputImage from '@/components/Form/InputImage';
+import InputDropzone from '@/components/Form/InputImage';
 import InputSwitch from '@/components/Form/InputSwitch';
 import InputText from '@/components/Form/InputText';
 
@@ -21,12 +22,12 @@ export interface CreateFormData {
 }
 
 export function CreateForm() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, toggleIsModalOpen] = useToggle(false);
 
   return (
     <Form<CreateFormData>
       className={'max-w-2xl space-y-8'}
-      onSubmit={() => setIsModalOpen(true)}
+      onSubmit={() => toggleIsModalOpen()}
       mode={'onTouched'}
       defaultValues={{ payees: [initialPayee], metadataLocked: false }}
     >
@@ -35,29 +36,18 @@ export function CreateForm() {
           <CreateSplitModal
             data={watch()}
             open={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            onClose={() => toggleIsModalOpen()}
           />
 
           <CreateFormGroup
             description={`Please enter a unique name for your split and define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
           >
             <div className={'flex flex-col space-y-4'}>
-              <Controller
-                name='image'
-                control={control}
-                rules={{ required: false }}
-                render={({ field }) => (
-                  <InputImage
-                    id={'image'}
-                    label={'Image'}
-                    onDrop={(value) => {
-                      if (value.length > 0) {
-                        field.onChange(value[0]);
-                      }
-                    }}
-                    {...field}
-                  />
-                )}
+              <InputDropzone
+                id='image'
+                label='Image'
+                accept={{ 'image/*': ['.png', '.jpg', '.jpeg'] }}
+                helperText='You can upload files with .png, .jpg and .jpeg extension.'
               />
 
               <Input
