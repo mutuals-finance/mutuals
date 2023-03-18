@@ -364,3 +364,32 @@ export function formatUSDPrice(
 ) {
   return formatNumberOrString(price, type);
 }
+
+export function formatBytes(bytes: string | number, decimals = 2) {
+  const bytesNum = Number(bytes);
+  if (!bytesNum) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = [
+    'Bytes',
+    'KiB',
+    'MiB',
+    'GiB',
+    'TiB',
+    'PiB',
+    'EiB',
+    'ZiB',
+    'YiB',
+  ];
+
+  const i = Math.floor(Math.log(bytesNum) / Math.log(k));
+
+  return `${parseFloat((bytesNum / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}
+
+export function formatStringItems(accepted: string[]) {
+  return accepted.length > 1
+    ? `${accepted.slice(0, -1).join(', ')} and ${accepted.slice(-1)}`
+    : { 0: '', 1: accepted[0] }[accepted.length];
+}

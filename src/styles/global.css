@@ -53,7 +53,7 @@
   }
 
   .input-default {
-    @apply text-default border-default bg-default rounded-default m-0 flex w-full justify-start border px-6 py-3 text-left outline-0 ring-0 ring-neutral-900 placeholder:text-neutral-400 focus:ring-1 dark:ring-neutral-50;
+    @apply text-default border-default bg-default rounded-default m-0 flex w-full justify-start border px-4 py-3 text-left outline-0 ring-0 focus:ring-0 placeholder:text-neutral-400 focus:border-neutral-400 dark:focus:border-neutral-500;
   }
 
   input,
@@ -62,20 +62,20 @@
   }
 
   .input-readonly {
-    @apply cursor-default focus:ring-0 border-opacity-50 bg-opacity-50
+    @apply cursor-default focus:border-default border-opacity-50 bg-opacity-50
   }
 
   textarea,
   .textarea {
-    @apply input-default min-h-[6rem] items-start;
+    @apply input-default min-h-[8rem] items-start;
   }
 
   .label-error {
-    @apply mt-1 block text-xs text-error;
+    @apply text-xs text-error;
   }
 
   .error .input-default {
-    @apply ring ring-error;
+    @apply border-error dark:border-error;
   }
 
   .error .label {

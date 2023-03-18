@@ -3,10 +3,12 @@ import { useFormContext } from 'react-hook-form';
 
 import clsxm from '@/lib/utils/clsxm';
 
+import InputHintAndError from '@/components/Form/InputHintAndError';
+
 import { InputDefaultProps } from './types';
 
 export interface InputProps
-  extends Omit<React.ComponentPropsWithoutRef<'input'>, 'id'>,
+  extends Omit<React.ComponentPropsWithoutRef<'input'>, 'id' | 'placeholder'>,
     InputDefaultProps {
   /** Icon before input */
   icon?: React.ReactNode;
@@ -54,17 +56,15 @@ const Input = React.forwardRef(
     const iconClasses = !icon ? '' : 'pl-9';
     const iconAfterClasses = !iconAfter ? '' : 'pr-9';
     const readonlyClasses = 'input-readonly';
-    const errorClasses =
-      'border-red-500 focus:border-red-500 focus:ring-red-500';
 
     return (
-      <div>
+      <div className={clsxm(!!errors[id] && 'error')}>
         {!!label && (
           <label className={'label'} htmlFor={id}>
             {label}
           </label>
         )}
-        <div className={'relative flex flex-1'}>
+        <div className={clsxm('relative flex flex-1', !!label && 'mt-1')}>
           {!!icon && <InputIcon className={'left-3'}>{icon}</InputIcon>}
           <input
             {...register(id, validation)}
@@ -76,41 +76,20 @@ const Input = React.forwardRef(
             className={clsxm(
               baseClasses,
               readOnly && readonlyClasses,
-              errors[id] && errorClasses,
               iconClasses,
-              iconAfterClasses
+              iconAfterClasses,
+              className
             )}
-            placeholder={placeholder}
+            placeholder={!!placeholder ? placeholder : undefined}
             aria-describedby={id}
             ref={ref}
           />
           {!!iconAfter && (
             <InputIcon className={'right-3'}>{iconAfter}</InputIcon>
           )}
-          {/*
-            {!hideError && errors[id] && (
-                <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
-                    <HiExclamationCircle className='text-xl text-red-500' />
-                </div>
-            )}
-*/}
         </div>
 
-        {/*
-            <div className='mt-1'>
-                {helperText && <p className='text-xs text-gray-500'>{helperText}</p>}
-                {!hideError && errors[id] && (
-                    <span className='text-sm text-red-500'>
-            {errors[id]?.message as unknown as string}
-          </span>
-                )}
-            </div>
-*/}
-
-        {/*
-
-            {!!error && <span className={'label-error'}>{error}</span>}
-*/}
+        <InputHintAndError {...{ helperText, hideError, error: errors[id] }} />
       </div>
     );
   }

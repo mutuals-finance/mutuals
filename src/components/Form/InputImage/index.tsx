@@ -2,8 +2,10 @@ import React, { ForwardedRef } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { Controller, get, useFormContext } from 'react-hook-form';
 
+import { formatBytes, formatStringItems } from '@/lib/utils';
 import clsxm from '@/lib/utils/clsxm';
 
+import InputHintAndError from '@/components/Form/InputHintAndError';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
 import { InputDefaultProps } from '@/components/Form/types';
@@ -26,12 +28,11 @@ const InputImage = React.forwardRef(
       hideError = false,
       validation,
       maxFiles = 1,
-      maxSize = 1000000,
+      maxSize = 5242880, // 5 MiB
       acceptedImageExtensions = ['.png', '.jpg', '.jpeg'],
-      helperText = `You can upload files with ${acceptedImageExtensions.map(
-        (ext, i) =>
-          (i >= acceptedImageExtensions.length - 1 ? 'and ' : ', ') + ext
-      )} extension.`,
+      helperText = `You can upload files with ${formatStringItems(
+        acceptedImageExtensions
+      )} extension and a maximum size of ${formatBytes(maxSize)}.`,
     }: InputImageProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
@@ -123,7 +124,7 @@ const InputImage = React.forwardRef(
     });
 
     return (
-      <div>
+      <div className={clsxm(!!error && 'error')}>
         {!!label && (
           <label className={'label'} htmlFor={id}>
             {label}
@@ -141,11 +142,9 @@ const InputImage = React.forwardRef(
                 ref={dropzoneRef}
                 className={clsxm(
                   'input-default',
-                  'group relative flex h-52 w-52 cursor-pointer overflow-hidden p-0 hover:ring-1',
-                  isDragActive && 'ring-1',
-                  error
-                    ? 'border-red-500 group-focus:border-red-500'
-                    : 'group-focus:border-primary-500'
+                  'relative flex h-52 w-52 cursor-pointer overflow-hidden border-dashed p-0 hover:border-neutral-400 dark:hover:border-neutral-500',
+                  isDragActive && 'border-neutral-400 dark:border-neutral-500',
+                  error && 'hover:border-error dark:hover:border-error'
                 )}
               >
                 <input id={id} {...getInputProps(field)} ref={ref} />
@@ -164,25 +163,7 @@ const InputImage = React.forwardRef(
                 )}
               </div>
 
-              {!!helperText && (
-                <div className='mt-1'>
-                  <p
-                    className={
-                      'text-xxs text-neutral-500 dark:text-neutral-400'
-                    }
-                  >
-                    {helperText}
-                  </p>
-                </div>
-              )}
-
-              {!(hideError || !error) && (
-                <div className='mt-1'>
-                  <p className='text-sm text-red-500'>
-                    {error.message?.toString()}
-                  </p>
-                </div>
-              )}
+              <InputHintAndError {...{ helperText, hideError, error }} />
             </>
           )}
         />
