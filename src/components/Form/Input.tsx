@@ -35,71 +35,58 @@ function InputIcon({
   );
 }
 
-const Input = React.forwardRef(
-  (
-    {
-      label,
-      placeholder = '',
-      helperText,
-      id,
-      type = 'text',
-      readOnly = false,
-      hideError = false,
-      validation,
-      className,
-      icon,
-      iconAfter,
-      ...rest
-    }: InputProps,
-    ref: ForwardedRef<HTMLInputElement>
-  ) => {
-    const {
-      register,
-      formState: { errors },
-    } = useFormContext();
+export default function Input({
+  label,
+  placeholder = '',
+  helperText,
+  id,
+  type = 'text',
+  readOnly = false,
+  hideError = false,
+  validation,
+  className,
+  icon,
+  iconAfter,
+  ...rest
+}: InputProps) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
-    const baseClasses = 'input flex-1';
-    const iconClasses = !icon ? '' : 'pl-9';
-    const iconAfterClasses = !iconAfter ? '' : 'pr-9';
-    const readonlyClasses = 'input-readonly';
+  const baseClasses = 'input flex-1';
+  const iconClasses = !icon ? '' : 'pl-9';
+  const iconAfterClasses = !iconAfter ? '' : 'pr-9';
+  const readonlyClasses = 'input-readonly';
 
-    return (
-      <div className={clsxm(!!errors[id] && 'error')}>
-        <FormItemLabel {...{ id, label, validation }} />
+  return (
+    <div className={clsxm(!!errors[id] && 'error')}>
+      <FormItemLabel {...{ id, label, validation }} />
 
-        <div className={clsxm('relative flex flex-1', !!label && 'mt-1')}>
-          {!!icon && <InputIcon className={'left-3'}>{icon}</InputIcon>}
-          <input
-            {...register(id, validation)}
-            {...rest}
-            type={type}
-            name={id}
-            id={id}
-            readOnly={readOnly}
-            className={clsxm(
-              baseClasses,
-              readOnly && readonlyClasses,
-              iconClasses,
-              iconAfterClasses,
-              className
-            )}
-            placeholder={!!placeholder ? placeholder : undefined}
-            aria-describedby={id}
-            ref={ref}
-          />
-          {!!iconAfter && (
-            <InputIcon className={'right-3'}>{iconAfter}</InputIcon>
+      <div className={clsxm('relative flex flex-1', !!label && 'mt-1')}>
+        {!!icon && <InputIcon className={'left-3'}>{icon}</InputIcon>}
+        <input
+          {...rest}
+          type={type}
+          id={id}
+          readOnly={readOnly}
+          className={clsxm(
+            baseClasses,
+            readOnly && readonlyClasses,
+            iconClasses,
+            iconAfterClasses,
+            className
           )}
-        </div>
-
-        <FormItemHintAndError
-          {...{ helperText, hideError, error: errors[id] }}
+          placeholder={!!placeholder ? placeholder : undefined}
+          aria-describedby={id}
+          {...register(id, validation)}
         />
+        {!!iconAfter && (
+          <InputIcon className={'right-3'}>{iconAfter}</InputIcon>
+        )}
       </div>
-    );
-  }
-);
 
-Input.displayName = 'Input';
-
-export default Input;
+      <FormItemHintAndError {...{ helperText, hideError, error: errors[id] }} />
+    </div>
+  );
+}

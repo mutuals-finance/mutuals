@@ -11,7 +11,7 @@ export interface ButtonBaseProps
   children?: ReactNode;
   disabled?: boolean;
   loading?: boolean;
-  rounded?: 'base' | 'none' | 'full';
+  rounded?: 'base' | 'small' | 'none' | 'full';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   justify?: 'between' | 'center' | 'around';
   color?: 'primary' | 'secondary' | 'outline' | 'link-1' | 'link-2';
@@ -39,6 +39,7 @@ export default function ButtonBase({
 
   const roundedClass = {
     full: `rounded-full`,
+    small: `rounded-md`,
     base: `rounded-default`,
     none: ``,
   }[rounded];
@@ -68,7 +69,7 @@ export default function ButtonBase({
   }[size];
 
   const sizeClass = {
-    xs: `py-0.25 px-1`,
+    xs: `py-0.25 px-2`,
     sm: `py-0.5 px-3`,
     md: `py-1 px-4`,
     lg: `py-2 px-6`,
@@ -93,7 +94,7 @@ export default function ButtonBase({
   const colorClass = {
     primary: `text-white bg-carlo hover:bg-carlo-400 disabled:hover:bg-carlo border-transparent`,
     secondary: `bg-neutral-900 hover:bg-neutral-700 disabled:hover:bg-neutral-900 text-neutral-50 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-100 dark:disabled:hover:bg-neutral-100`,
-    outline: `bg-default-2 text-default border-transparent hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:hover:bg-zinc-100 dark:disabled:hover:bg-zinc-900`,
+    outline: `bg-default-2 text-default border-default hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:hover:bg-zinc-100 dark:disabled:hover:bg-zinc-900`,
     'link-1': `link-1 border-transparent`,
     'link-2': `link-2 border-transparent`,
   }[color];

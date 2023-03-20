@@ -58,7 +58,7 @@ export default function InputSwitch({
                     'inline-flex h-4 w-4 transform items-center justify-center rounded-full text-xs transition-transform',
                     field.value
                       ? 'translate-x-7 bg-white text-neutral-900'
-                      : 'translate-x-1 bg-neutral-900 text-neutral-50'
+                      : 'translate-x-1 bg-black text-neutral-50 dark:bg-white dark:text-neutral-900'
                   )}
                 >
                   {field.value ? (

@@ -2,7 +2,7 @@ import React from 'react';
 
 import PageHeader from '@/components/PageHeader';
 
-import { CreateForm } from '@/templates/split/new';
+import { NewSplitForm } from '@/templates/split/new';
 
 import { NextPageWithLayout } from '#/app';
 
@@ -16,7 +16,7 @@ const SplitNewPage: NextPageWithLayout = function () {
       <CreateHeader />
       <section>
         <div className={'container'}>
-          <CreateForm />
+          <NewSplitForm />
         </div>
       </section>
     </>
