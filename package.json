@@ -45,6 +45,7 @@
     "react-hook-form": "^7.43.4",
     "react-horizontal-scrolling-menu": "^3.2.5",
     "react-icons": "^4.8.0",
+    "react-number-format": "^5.1.4",
     "react-use": "^17.4.0",
     "wagmi": "^0.9.6"
   },

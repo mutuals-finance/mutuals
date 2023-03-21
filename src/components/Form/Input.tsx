@@ -41,78 +41,73 @@ function InputIcon({
   );
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      label,
-      placeholder = '',
-      helperText,
-      id,
-      type = 'text',
-      readOnly = false,
-      hideError = false,
-      validation,
-      className,
-      icon,
-      iconAfter,
-      contentBefore,
-      contentAfter,
-      inputClassName,
-      ...rest
-    },
-    ref
-  ) => {
-    const { control } = useFormContext();
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const {
+    label,
+    placeholder = '',
+    helperText,
+    id,
+    type = 'text',
+    readOnly = false,
+    hideError = false,
+    validation,
+    className,
+    icon,
+    iconAfter,
+    contentBefore,
+    contentAfter,
+    inputClassName,
+    ...rest
+  } = props;
 
-    const baseClasses = 'input flex-1';
-    const iconClasses = !icon ? '' : 'pl-9';
-    const iconAfterClasses = !iconAfter ? '' : 'pr-9';
-    const readonlyClasses = 'input-readonly';
+  const { control } = useFormContext();
 
-    const inputClasses = clsxm(
-      baseClasses,
-      readOnly && readonlyClasses,
-      iconClasses,
-      iconAfterClasses,
-      inputClassName
-    );
+  const baseClasses = 'input flex-1';
+  const iconClasses = !icon ? '' : 'pl-9';
+  const iconAfterClasses = !iconAfter ? '' : 'pr-9';
+  const readonlyClasses = 'input-readonly';
 
-    return (
-      <Controller
-        control={control}
-        name={id}
-        rules={validation}
-        render={({ field, fieldState: { error } }) => (
-          <div className={clsxm(className, !!error && 'error')}>
-            <FormItemLabel {...{ id, label, validation }} />
+  const inputClasses = clsxm(
+    baseClasses,
+    readOnly && readonlyClasses,
+    iconClasses,
+    iconAfterClasses,
+    inputClassName
+  );
 
-            <div
-              className={clsxm('flex flex-1 items-center', !!label && 'mt-1')}
-            >
-              {contentBefore}
-              <div className={'relative flex flex-1'}>
-                {!!icon && <InputIcon className={'left-1'}>{icon}</InputIcon>}
+  return (
+    <Controller
+      control={control}
+      name={id}
+      rules={validation}
+      render={({ field, fieldState: { error } }) => (
+        <div className={clsxm(className, !!error && 'error')}>
+          <FormItemLabel {...{ id, label, validation }} />
 
-                <input
-                  className={inputClasses}
-                  placeholder={!!placeholder ? placeholder : undefined}
-                  aria-describedby={id}
-                  {...{ type, id, readOnly, ...rest, ...field, ref }}
-                />
-                {!!iconAfter && (
-                  <InputIcon className={'right-1'}>{iconAfter}</InputIcon>
-                )}
-              </div>
-              {contentAfter}
+          <div className={clsxm('flex flex-1 items-center', !!label && 'mt-1')}>
+            {contentBefore}
+            <div className={'relative flex flex-1'}>
+              {!!icon && <InputIcon className={'left-1'}>{icon}</InputIcon>}
+
+              <input
+                className={inputClasses}
+                placeholder={!!placeholder ? placeholder : undefined}
+                aria-describedby={id}
+                {...{ type, id, readOnly, ...rest, ...field, ref }}
+              />
+              {!!iconAfter && (
+                <InputIcon className={'right-1'}>{iconAfter}</InputIcon>
+              )}
             </div>
-
-            <FormItemHintAndError {...{ helperText, hideError, error }} />
+            {contentAfter}
           </div>
-        )}
-      />
-    );
-  }
-);
+
+          <FormItemHintAndError {...{ helperText, hideError, error }} />
+        </div>
+      )}
+    />
+  );
+});
 
 Input.displayName = 'Input';
 export default Input;
