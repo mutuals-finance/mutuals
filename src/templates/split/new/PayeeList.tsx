@@ -11,7 +11,7 @@ import PayeeListFooter from '@/templates/split/new/PayeeListFooter';
 
 export interface Payee {
   id: string;
-  value: string;
+  value: number;
 }
 
 interface PayeeListProps {
@@ -20,11 +20,11 @@ interface PayeeListProps {
 
 export const defaultPayee: Payee = {
   id: '',
-  value: '',
+  value: 0,
 };
 
 export default function PayeeList({ id }: PayeeListProps) {
-  const maxShares = 100.0;
+  const maxShares = 10000;
 
   const { watch, setValue } = useFormContext();
 
@@ -33,28 +33,29 @@ export default function PayeeList({ id }: PayeeListProps) {
   const totalShares = payees.reduce((total, p) => total + Number(p.value), 0);
   const totalPayees = payees.length;
 
+  function _setValues(total: number, indices: number[]) {
+    const value = Math.floor(total / indices.length);
+    let diff = total - value * indices.length;
+    indices.forEach((index) =>
+      setValue(`${id}.${index}.value`, diff > 0 ? diff-- && value + 1 : value)
+    );
+  }
+
   function onSetValuesRemaining() {
-    const shouldSet = (p: Payee) => Number(p.value) <= 0.0;
-    const y = payees.reduce((total, p) => total + (shouldSet(p) ? 1 : 0), 0.0);
-    const x = maxShares - totalShares;
-    const value = Math.ceil((x / y) * 100) / 100;
-    const remainder = Math.ceil((x % value) * 100) / 100;
-    const first = payees.find(shouldSet) || 0;
-    payees.forEach((p, i) => {
-      if (shouldSet(p)) {
-        const factor = i <= first && remainder > 0 ? 1 : 0;
-        setValue(`${id}.${i}.value`, factor * remainder + value);
-      }
-    });
+    _setValues(
+      maxShares - totalShares,
+      payees
+        .map((p, index) => ({ index, ...p }))
+        .filter((p: Payee) => Number(p.value) <= 0)
+        .map((p) => p.index)
+    );
   }
 
   function onSetValuesEvenly() {
-    const value = Math.ceil((maxShares / payees.length) * 100) / 100;
-    const remainder = Math.ceil((maxShares % value) * 100) / 100;
-    payees.forEach((_, i) => {
-      const factor = i <= 0 && remainder > 0 ? 1 : 0;
-      setValue(`${id}.${i}.value`, factor * remainder + value);
-    });
+    _setValues(
+      maxShares,
+      payees.map((_, index) => index)
+    );
   }
 
   return (
@@ -105,13 +106,10 @@ export default function PayeeList({ id }: PayeeListProps) {
                 label={'% Share'}
                 validation={{
                   min: 0,
-                  max: 100,
+                  max: maxShares,
                 }}
                 addDisabled={totalShares >= maxShares}
                 removeDisabled={totalShares <= 0}
-                max={maxShares}
-                placeholder={'0.00'}
-                step={0.01}
                 id={`${itemId}.value`}
               />
             </div>

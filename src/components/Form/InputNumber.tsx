@@ -76,9 +76,9 @@ export default function InputNumber(props: InputNumberProps) {
     ...rest
   } = props;
 
-  const isAllowed = ({ floatValue }: NumberFormatValues) => {
-    const value = floatValue || 0.0;
-    return value <= 100.0 && value >= 0.0;
+  const isAllowed = ({ value }: NumberFormatValues) => {
+    const numValue = Number(value);
+    return !validation?.max || (numValue <= validation.max && numValue >= 0);
   };
 
   const { control } = useFormContext();
@@ -88,11 +88,11 @@ export default function InputNumber(props: InputNumberProps) {
 
   const inputClasses = clsxm(baseClasses, readOnly && readonlyClasses);
 
-  function getFormats(floatValue: number) {
-    const value = floatValue.toFixed(2);
+  function getFormats(value: number) {
+    const floatValue = parseFloat(value.toFixed(2));
     const formats = {
-      value,
-      formattedValue: value,
+      value: value.toString(),
+      formattedValue: floatValue.toString(),
       floatValue,
     };
     return formats;
@@ -113,14 +113,10 @@ export default function InputNumber(props: InputNumberProps) {
                 className={'left-1'}
                 icon={<IoRemove />}
                 disabled={
-                  removeDisabled ||
-                  !isAllowed(
-                    getFormats(parseFloat(field.value || '0.00') - step)
-                  )
+                  removeDisabled //|| !isAllowed(getFormats(field.value - step))
                 }
                 onLongPress={() => {
-                  const floatValue = parseFloat(field.value || '0.00') - step;
-                  const formats = getFormats(floatValue);
+                  const formats = getFormats(Number(field.value) - step);
                   isAllowed(formats) && field.onChange(formats.value);
                 }}
               />
@@ -130,26 +126,20 @@ export default function InputNumber(props: InputNumberProps) {
                 {...field}
                 placeholder={!!placeholder ? placeholder : undefined}
                 aria-describedby={id}
-                decimalScale={2}
                 allowNegative={false}
-                fixedDecimalScale={true}
                 isAllowed={isAllowed}
                 {...{ id, readOnly, ...rest }}
-                defaultValue={0.0}
+                defaultValue={0}
               />
 
               <InputNumberButton
                 className={'right-1'}
                 icon={<IoAdd />}
                 disabled={
-                  addDisabled ||
-                  !isAllowed(
-                    getFormats(parseFloat(field.value || '0.00') + step)
-                  )
+                  addDisabled //|| !isAllowed(getFormats(field.value + step))
                 }
                 onLongPress={() => {
-                  const floatValue = parseFloat(field.value || '0.00') + step;
-                  const formats = getFormats(floatValue);
+                  const formats = getFormats(Number(field.value) + step);
                   isAllowed(formats) && field.onChange(formats.value);
                 }}
               />
