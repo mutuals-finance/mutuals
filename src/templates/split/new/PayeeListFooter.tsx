@@ -1,6 +1,5 @@
 import React from 'react';
 import { AiOutlinePercentage } from 'react-icons/ai';
-import { IoEllipsisHorizontal } from 'react-icons/io5';
 
 import clsxm from '@/lib/utils/clsxm';
 
@@ -17,7 +16,6 @@ interface PayeeListFooterProps {
 
 export default function PayeeListFooter({
   totalShares,
-  totalPayees,
   maxShares,
   onSetValuesRemaining,
   onSetValuesEvenly,
@@ -43,14 +41,11 @@ export default function PayeeListFooter({
         />
       </div>
 
-      <div className={'grid w-full grid-cols-2 gap-3 md:grid-cols-5'}>
-        <Statistic title={'Allocated'} suffix={<AiOutlinePercentage />}>
-          <span className={'inline-block min-w-[1.75rem]'}>{totalShares}</span>
-          <span className={'mx-0.5 inline-block'}>/</span>
-          <span className={'inline-block min-w-[1.75rem]'}>{maxShares}</span>
+      <div className={'grid w-full grid-cols-2 gap-3 md:grid-cols-4'}>
+        <Statistic title={'Allocated'}>
+          {totalShares.toFixed(2)} / {maxShares.toFixed(2)}{' '}
+          <AiOutlinePercentage className={'inline'} />
         </Statistic>
-
-        <Statistic title={'Total Payees'}>{totalPayees}</Statistic>
 
         <ul className={'flex justify-end space-x-3 md:col-span-3'}>
           <li>

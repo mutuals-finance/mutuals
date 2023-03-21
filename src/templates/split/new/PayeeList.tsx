@@ -1,6 +1,5 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { AiOutlinePercentage } from 'react-icons/ai';
 import { IoAdd } from 'react-icons/io5';
 
 import { ButtonOutline } from '@/components/Button';
@@ -36,20 +35,26 @@ export default function PayeeList({ id }: PayeeListProps) {
 
   function onSetValuesRemaining() {
     const shouldSet = (p: Payee) => Number(p.value) <= 0.0;
-    const count = payees.reduce(
-      (total, p) => total + (shouldSet(p) ? 1 : 0),
-      0.0
-    );
-    const value = (maxShares - totalShares) / count;
-    payees.forEach(
-      (p, i) => shouldSet(p) && setValue(`${id}.${i}.value`, value)
-    );
+    const y = payees.reduce((total, p) => total + (shouldSet(p) ? 1 : 0), 0.0);
+    const x = maxShares - totalShares;
+    const value = Math.ceil((x / y) * 100) / 100;
+    const remainder = Math.ceil((x % value) * 100) / 100;
+    const first = payees.find(shouldSet) || 0;
+    payees.forEach((p, i) => {
+      if (shouldSet(p)) {
+        const factor = i <= first && remainder > 0 ? 1 : 0;
+        setValue(`${id}.${i}.value`, factor * remainder + value);
+      }
+    });
   }
 
   function onSetValuesEvenly() {
-    const count = payees.length;
-    const value = maxShares / count;
-    payees.forEach((_, i) => setValue(`${id}.${i}.value`, value));
+    const value = Math.ceil((maxShares / payees.length) * 100) / 100;
+    const remainder = Math.ceil((maxShares % value) * 100) / 100;
+    payees.forEach((_, i) => {
+      const factor = i <= 0 && remainder > 0 ? 1 : 0;
+      setValue(`${id}.${i}.value`, factor * remainder + value);
+    });
   }
 
   return (
@@ -102,8 +107,11 @@ export default function PayeeList({ id }: PayeeListProps) {
                   min: 0,
                   max: 100,
                 }}
+                addDisabled={totalShares >= maxShares}
+                removeDisabled={totalShares <= 0}
                 max={maxShares}
                 placeholder={'0.00'}
+                step={0.01}
                 id={`${itemId}.value`}
               />
             </div>
