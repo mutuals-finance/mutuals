@@ -77,14 +77,6 @@ export default function PayeeListFooter({
               Split Evenly
             </ButtonOutline>
           </li>
-          <li>
-            <ButtonOutline
-              icon={<IoEllipsisHorizontal />}
-              rounded={'small'}
-              size={'xs'}
-              onClick={(e) => e.preventDefault()}
-            />
-          </li>
         </ul>
       </div>
     </div>

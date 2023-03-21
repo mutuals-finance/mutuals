@@ -1,8 +1,11 @@
 import React from 'react';
-import { IoAdd, IoTrash } from 'react-icons/io5';
+import { IoAdd, IoClose, IoTrash } from 'react-icons/io5';
 
-import { ButtonOutline } from '@/components/Button';
-
+import {
+  ButtonLink,
+  ButtonOutline,
+  ButtonSecondary,
+} from '@/components/Button';
 interface InputFieldArrayItemProps {
   removeDisabled: boolean;
   onAdd?(): void;
@@ -16,8 +19,8 @@ export function InputFieldArrayItem({
   onRemove,
 }: React.PropsWithChildren<InputFieldArrayItemProps>) {
   return (
-    <li className={'flex flex-1 items-end space-x-2'}>
-      <div className={'flex flex-1 space-x-2'}>{children}</div>
+    <li className={'flex flex-1 items-end space-x-3'}>
+      <div className={'flex flex-1 space-x-3'}>{children}</div>
       {!!onAdd && (
         <ButtonOutline
           type={'button'}
@@ -29,7 +32,7 @@ export function InputFieldArrayItem({
         disabled={removeDisabled}
         type={'button'}
         onClick={() => onRemove()}
-        icon={<IoTrash />}
+        icon={<IoClose />}
       />
     </li>
   );

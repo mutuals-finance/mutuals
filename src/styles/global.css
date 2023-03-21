@@ -61,6 +61,17 @@
     @apply input-default h-10 items-center;
   }
 
+  input[type="number"].input-number::-webkit-outer-spin-button,
+  input[type="number"].input-number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"].input-number {
+    -moz-appearance: textfield;
+  }
+
+
   .input-readonly {
     @apply cursor-default focus:border-default border-opacity-50 bg-opacity-50
   }

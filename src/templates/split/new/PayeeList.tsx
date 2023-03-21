@@ -1,16 +1,18 @@
-import { replace } from 'lodash';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePercentage } from 'react-icons/ai';
+import { IoAdd } from 'react-icons/io5';
 
+import { ButtonOutline } from '@/components/Button';
 import Input from '@/components/Form/Input';
 import InputFieldArray from '@/components/Form/InputFieldArray';
+import InputNumber from '@/components/Form/InputNumber';
 
 import PayeeListFooter from '@/templates/split/new/PayeeListFooter';
 
 export interface Payee {
   id: string;
-  value: number | null;
+  value: string;
 }
 
 interface PayeeListProps {
@@ -19,7 +21,7 @@ interface PayeeListProps {
 
 export const defaultPayee: Payee = {
   id: '',
-  value: null,
+  value: '',
 };
 
 export default function PayeeList({ id }: PayeeListProps) {
@@ -47,7 +49,7 @@ export default function PayeeList({ id }: PayeeListProps) {
   function onSetValuesEvenly() {
     const count = payees.length;
     const value = maxShares / count;
-    payees.forEach((p, i) => setValue(`${id}.${i}.value`, value));
+    payees.forEach((_, i) => setValue(`${id}.${i}.value`, value));
   }
 
   return (
@@ -55,7 +57,33 @@ export default function PayeeList({ id }: PayeeListProps) {
       <InputFieldArray<Payee>
         id={id}
         defaultItem={defaultPayee}
+        hideAdd={true}
         validation={{ minLength: 2 }}
+        contentAfter={({ append }) => (
+          <>
+            <div>
+              <ButtonOutline
+                icon={<IoAdd />}
+                onClick={(e) => {
+                  e.preventDefault();
+                  append(defaultPayee);
+                }}
+              >
+                Add Recipient
+              </ButtonOutline>
+            </div>
+
+            <PayeeListFooter
+              {...{
+                totalShares,
+                maxShares,
+                totalPayees,
+                onSetValuesRemaining,
+                onSetValuesEvenly,
+              }}
+            />
+          </>
+        )}
       >
         {(itemId) => (
           <>
@@ -67,31 +95,21 @@ export default function PayeeList({ id }: PayeeListProps) {
               />
             </div>
 
-            <div className={'w-28'}>
-              <Input
-                type={'number'}
-                label={'Share'}
-                min={0}
+            <div className={'w-32'}>
+              <InputNumber
+                label={'% Share'}
+                validation={{
+                  min: 0,
+                  max: 100,
+                }}
                 max={maxShares}
-                step='0.01'
                 placeholder={'0.00'}
-                iconAfter={<AiOutlinePercentage />}
                 id={`${itemId}.value`}
               />
             </div>
           </>
         )}
       </InputFieldArray>
-
-      <PayeeListFooter
-        {...{
-          totalShares,
-          maxShares,
-          totalPayees,
-          onSetValuesRemaining,
-          onSetValuesEvenly,
-        }}
-      />
     </div>
   );
 }
