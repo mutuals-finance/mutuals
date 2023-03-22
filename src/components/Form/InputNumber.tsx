@@ -117,7 +117,7 @@ export default function InputNumber(props: InputNumberProps) {
                 }
                 onLongPress={() => {
                   const formats = getFormats(Number(field.value) - step);
-                  isAllowed(formats) && field.onChange(formats.value);
+                  isAllowed(formats) && field.onChange(formats.floatValue);
                 }}
               />
 
@@ -129,7 +129,9 @@ export default function InputNumber(props: InputNumberProps) {
                 allowNegative={false}
                 isAllowed={isAllowed}
                 {...{ id, readOnly, ...rest }}
-                defaultValue={0}
+                decimalScale={2}
+                defaultValue={0.0}
+                fixedDecimalScale={true}
               />
 
               <InputNumberButton
@@ -140,7 +142,7 @@ export default function InputNumber(props: InputNumberProps) {
                 }
                 onLongPress={() => {
                   const formats = getFormats(Number(field.value) + step);
-                  isAllowed(formats) && field.onChange(formats.value);
+                  isAllowed(formats) && field.onChange(formats.floatValue);
                 }}
               />
             </div>

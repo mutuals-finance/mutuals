@@ -1,11 +1,12 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { IoAdd } from 'react-icons/io5';
+import { IoPersonAdd, IoWallet, IoWalletOutline } from 'react-icons/io5';
 
 import { ButtonOutline } from '@/components/Button';
 import Input from '@/components/Form/Input';
 import InputFieldArray from '@/components/Form/InputFieldArray';
 import InputNumber from '@/components/Form/InputNumber';
+import Statistic from '@/components/Statistic';
 
 import PayeeListFooter from '@/templates/split/new/PayeeListFooter';
 
@@ -20,24 +21,36 @@ interface PayeeListProps {
 
 export const defaultPayee: Payee = {
   id: '',
-  value: 0,
+  value: 0.0,
 };
 
 export default function PayeeList({ id }: PayeeListProps) {
-  const maxShares = 10000;
+  const maxShares = 100.0;
 
   const { watch, setValue } = useFormContext();
 
   const payees = watch(id) as Payee[];
 
-  const totalShares = payees.reduce((total, p) => total + Number(p.value), 0);
+  const totalShares = payees.reduce(
+    (total, p) => (total * 100 + Number(p.value) * 100) / 100,
+    0.0
+  );
   const totalPayees = payees.length;
 
+  function round(x: number, alg = Math.round, decimal = 2) {
+    const pow = Math.pow(10, decimal);
+    return alg((x + Number.EPSILON) * pow) / pow;
+  }
+
   function _setValues(total: number, indices: number[]) {
-    const value = Math.floor(total / indices.length);
-    let diff = total - value * indices.length;
+    const value = round(total / indices.length, Math.floor);
+    const diff = round(total % (value * indices.length));
+    let steps = diff * 100;
     indices.forEach((index) =>
-      setValue(`${id}.${index}.value`, diff > 0 ? diff-- && value + 1 : value)
+      setValue(
+        `${id}.${index}.value`,
+        round(steps > 0 ? steps-- && value + 0.01 : value)
+      )
     );
   }
 
@@ -69,7 +82,8 @@ export default function PayeeList({ id }: PayeeListProps) {
           <>
             <div>
               <ButtonOutline
-                icon={<IoAdd />}
+                fullWidth
+                size={'sm'}
                 onClick={(e) => {
                   e.preventDefault();
                   append(defaultPayee);
@@ -105,11 +119,12 @@ export default function PayeeList({ id }: PayeeListProps) {
               <InputNumber
                 label={'% Share'}
                 validation={{
-                  min: 0,
+                  min: 0.0,
                   max: maxShares,
                 }}
+                step={0.01}
                 addDisabled={totalShares >= maxShares}
-                removeDisabled={totalShares <= 0}
+                removeDisabled={totalShares <= 0.0}
                 id={`${itemId}.value`}
               />
             </div>

@@ -1,5 +1,18 @@
 import React from 'react';
-import { IoAdd, IoClose, IoTrash } from 'react-icons/io5';
+import {
+  IoAdd,
+  IoAddCircle,
+  IoAddCircleOutline,
+  IoClose,
+  IoPersonAdd,
+  IoPersonAddOutline,
+  IoPersonRemove,
+  IoPersonRemoveOutline,
+  IoRemoveCircleOutline,
+  IoTrash,
+  IoTrashOutline,
+  IoTrashSharp,
+} from 'react-icons/io5';
 
 import {
   ButtonLink,
@@ -21,19 +34,21 @@ export function InputFieldArrayItem({
   return (
     <li className={'flex flex-1 items-end space-x-3'}>
       <div className={'flex flex-1 space-x-3'}>{children}</div>
-      {!!onAdd && (
+      <div className={'flex items-center space-x-1.5'}>
+        {!!onAdd && (
+          <ButtonOutline
+            type={'button'}
+            onClick={() => onAdd()}
+            icon={<IoAdd />}
+          />
+        )}
         <ButtonOutline
+          disabled={removeDisabled}
           type={'button'}
-          onClick={() => onAdd()}
-          icon={<IoAdd />}
+          onClick={() => onRemove()}
+          icon={<IoTrashOutline />}
         />
-      )}
-      <ButtonOutline
-        disabled={removeDisabled}
-        type={'button'}
-        onClick={() => onRemove()}
-        icon={<IoClose />}
-      />
+      </div>
     </li>
   );
 }

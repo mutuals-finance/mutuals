@@ -37,13 +37,13 @@ export default function PayeeListFooter({
             totalShares == maxShares && 'bg-green-500',
             totalShares > maxShares && 'bg-error'
           )}
-          style={{ width: (totalShares / 100).toFixed(2) + '%' }}
+          style={{ width: totalShares + '%' }}
         />
       </div>
 
       <div className={'grid w-full grid-cols-2 gap-3 md:grid-cols-4'}>
         <Statistic title={'Allocated'}>
-          {(totalShares / 100).toFixed(2)} / {(maxShares / 100).toFixed(2)}{' '}
+          {totalShares} / {maxShares}{' '}
           <AiOutlinePercentage className={'inline'} />
         </Statistic>
 
