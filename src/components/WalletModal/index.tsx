@@ -36,7 +36,7 @@ export default function WalletModal({ onClose, open }: WalletModalProps) {
           <ul className='flex flex-col space-y-3'>{getItems()}</ul>
         </div>
         <div>
-          <p className='text-xs text-neutral-400 dark:text-neutral-500'>
+          <p className='text-light text-xs'>
             By connecting a wallet, you agree to SplitFi’s Terms of Service and
             acknowledge that you have read and understand the Azqira Disclaimer.
           </p>

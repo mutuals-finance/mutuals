@@ -34,7 +34,7 @@ function InputIcon({
 }: React.PropsWithChildren<React.HTMLAttributes<HTMLSpanElement>>) {
   return (
     <span
-      className={`absolute top-1/2 block -translate-y-1/2 text-neutral-400 ${className}`}
+      className={`text-light absolute top-1/2 block -translate-y-1/2 ${className}`}
     >
       {children}
     </span>

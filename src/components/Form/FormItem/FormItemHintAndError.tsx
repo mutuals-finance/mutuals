@@ -16,9 +16,7 @@ export default function FormItemHintAndError({
     <>
       {!!helperText && (
         <div className='mt-1'>
-          <p className={'text-xxs text-neutral-500 dark:text-neutral-400'}>
-            {helperText}
-          </p>
+          <p className={'text-light text-xxs'}>{helperText}</p>
         </div>
       )}
 
