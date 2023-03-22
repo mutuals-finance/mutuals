@@ -1,16 +1,12 @@
-import React, { useRef } from 'react';
-import {
-  Controller,
-  ControllerRenderProps,
-  useFormContext,
-} from 'react-hook-form';
+import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { IoAdd, IoRemove } from 'react-icons/io5';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import {
   InputAttributes,
   NumericFormatProps,
 } from 'react-number-format/types/types';
-import { useLongPress, useRafLoop } from 'react-use';
+import { useLongPress } from 'react-use';
 
 import clsxm from '@/lib/utils/clsxm';
 
@@ -23,10 +19,10 @@ import { InputDefaultProps } from './types';
 export interface InputNumberProps
   extends Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
-      'id' | 'placeholder'
+      'value' | 'id' | 'placeholder' | 'type' | 'defaultValue'
     >,
-    InputDefaultProps,
-    NumericFormatProps<InputAttributes> {
+    Omit<InputDefaultProps, 'value' | 'defaultValue'>,
+    Omit<NumericFormatProps<InputAttributes>, 'id' | 'placeholder'> {
   inputClassName?: string;
   step?: number;
   addDisabled?: boolean;
@@ -73,12 +69,13 @@ export default function InputNumber(props: InputNumberProps) {
     step = 1,
     addDisabled,
     removeDisabled,
+    decimalScale,
     ...rest
   } = props;
 
-  const isAllowed = ({ value }: NumberFormatValues) => {
-    const numValue = Number(value);
-    return !validation?.max || (numValue <= validation.max && numValue >= 0);
+  const isAllowed = ({ floatValue, value }: NumberFormatValues) => {
+    const num = floatValue || Number(value);
+    return !validation?.max || (num <= validation.max && num >= 0);
   };
 
   const { control } = useFormContext();
@@ -89,13 +86,11 @@ export default function InputNumber(props: InputNumberProps) {
   const inputClasses = clsxm(baseClasses, readOnly && readonlyClasses);
 
   function getFormats(value: number) {
-    const floatValue = parseFloat(value.toFixed(2));
-    const formats = {
+    return {
       value: value.toString(),
-      formattedValue: floatValue.toString(),
-      floatValue,
+      formattedValue: '',
+      floatValue: parseFloat(value.toFixed(decimalScale)),
     };
-    return formats;
   }
 
   return (
@@ -113,7 +108,8 @@ export default function InputNumber(props: InputNumberProps) {
                 className={'left-1'}
                 icon={<IoRemove />}
                 disabled={
-                  removeDisabled //|| !isAllowed(getFormats(field.value - step))
+                  removeDisabled ||
+                  !isAllowed(getFormats(Number(field.value) - step))
                 }
                 onLongPress={() => {
                   const formats = getFormats(Number(field.value) - step);
@@ -126,19 +122,17 @@ export default function InputNumber(props: InputNumberProps) {
                 {...field}
                 placeholder={!!placeholder ? placeholder : undefined}
                 aria-describedby={id}
-                allowNegative={false}
                 isAllowed={isAllowed}
+                decimalScale={decimalScale}
                 {...{ id, readOnly, ...rest }}
-                decimalScale={2}
-                defaultValue={0.0}
-                fixedDecimalScale={true}
               />
 
               <InputNumberButton
                 className={'right-1'}
                 icon={<IoAdd />}
                 disabled={
-                  addDisabled //|| !isAllowed(getFormats(field.value + step))
+                  addDisabled ||
+                  !isAllowed(getFormats(Number(field.value) + step))
                 }
                 onLongPress={() => {
                   const formats = getFormats(Number(field.value) + step);

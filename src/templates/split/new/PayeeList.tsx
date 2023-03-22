@@ -117,6 +117,7 @@ export default function PayeeList({ id }: PayeeListProps) {
 
             <div className={'w-32'}>
               <InputNumber
+                id={`${itemId}.value`}
                 label={'% Share'}
                 validation={{
                   min: 0.0,
@@ -125,7 +126,10 @@ export default function PayeeList({ id }: PayeeListProps) {
                 step={0.01}
                 addDisabled={totalShares >= maxShares}
                 removeDisabled={totalShares <= 0.0}
-                id={`${itemId}.value`}
+                allowNegative={false}
+                decimalScale={2}
+                defaultValue={0.0}
+                fixedDecimalScale={true}
               />
             </div>
           </>
