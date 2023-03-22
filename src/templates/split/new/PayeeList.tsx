@@ -1,12 +1,13 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { IoPersonAdd, IoWallet, IoWalletOutline } from 'react-icons/io5';
+import { NumberFormatValues } from 'react-number-format';
+
+import { formatRoundNumber } from '@/lib/utils';
 
 import { ButtonOutline } from '@/components/Button';
 import Input from '@/components/Form/Input';
 import InputFieldArray from '@/components/Form/InputFieldArray';
-import InputNumber from '@/components/Form/InputNumber';
-import Statistic from '@/components/Statistic';
+import InputNumber from '@/components/Form/InputNumber/';
 
 import PayeeListFooter from '@/templates/split/new/PayeeListFooter';
 
@@ -37,19 +38,16 @@ export default function PayeeList({ id }: PayeeListProps) {
   );
   const totalPayees = payees.length;
 
-  function round(x: number, alg = Math.round, decimal = 2) {
-    const pow = Math.pow(10, decimal);
-    return alg((x + Number.EPSILON) * pow) / pow;
-  }
-
   function _setValues(total: number, indices: number[]) {
-    const value = round(total / indices.length, Math.floor);
-    const diff = round(total % (value * indices.length));
+    const value = formatRoundNumber(total / indices.length, {
+      round: Math.floor,
+    });
+    const diff = formatRoundNumber(total % (value * indices.length));
     let steps = diff * 100;
     indices.forEach((index) =>
       setValue(
         `${id}.${index}.value`,
-        round(steps > 0 ? steps-- && value + 0.01 : value)
+        formatRoundNumber(steps > 0 ? steps-- && value + 0.01 : value)
       )
     );
   }
@@ -71,6 +69,11 @@ export default function PayeeList({ id }: PayeeListProps) {
     );
   }
 
+  function isAllowed({ floatValue, value }: NumberFormatValues) {
+    const numValue = parseFloat(floatValue?.toFixed(2) || value);
+    return numValue <= maxShares && numValue >= 0.0;
+  }
+
   return (
     <div className={'flex flex-col space-y-6'}>
       <InputFieldArray<Payee>
@@ -79,30 +82,14 @@ export default function PayeeList({ id }: PayeeListProps) {
         hideAdd={true}
         validation={{ minLength: 2 }}
         contentAfter={({ append }) => (
-          <>
-            <div>
-              <ButtonOutline
-                fullWidth
-                size={'sm'}
-                onClick={(e) => {
-                  e.preventDefault();
-                  append(defaultPayee);
-                }}
-              >
-                Add Recipient
-              </ButtonOutline>
-            </div>
-
-            <PayeeListFooter
-              {...{
-                totalShares,
-                maxShares,
-                totalPayees,
-                onSetValuesRemaining,
-                onSetValuesEvenly,
-              }}
-            />
-          </>
+          <PayeeListFooter
+            totalShares={totalShares}
+            maxShares={maxShares}
+            totalPayees={totalPayees}
+            onAppendRecipient={() => append(defaultPayee)}
+            onSetValuesRemaining={onSetValuesRemaining}
+            onSetValuesEvenly={onSetValuesEvenly}
+          />
         )}
       >
         {(itemId) => (
@@ -110,12 +97,12 @@ export default function PayeeList({ id }: PayeeListProps) {
             <div className={'flex-1'}>
               <Input
                 label={'Wallet Address or ENS Name'}
-                placeholder={'0x000...000'}
+                placeholder={'0x0000...0000'}
                 id={`${itemId}.id`}
               />
             </div>
 
-            <div className={'w-32'}>
+            <div className={'w-36'}>
               <InputNumber
                 id={`${itemId}.value`}
                 label={'% Share'}
@@ -130,6 +117,7 @@ export default function PayeeList({ id }: PayeeListProps) {
                 decimalScale={2}
                 defaultValue={0.0}
                 fixedDecimalScale={true}
+                isAllowed={isAllowed}
               />
             </div>
           </>

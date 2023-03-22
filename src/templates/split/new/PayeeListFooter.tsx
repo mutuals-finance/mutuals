@@ -10,6 +10,7 @@ interface PayeeListFooterProps {
   totalShares: number;
   totalPayees: number;
   maxShares: number;
+  onAppendRecipient(): void;
   onSetValuesRemaining(): void;
   onSetValuesEvenly(): void;
 }
@@ -17,63 +18,73 @@ interface PayeeListFooterProps {
 export default function PayeeListFooter({
   totalShares,
   maxShares,
+  onAppendRecipient,
   onSetValuesRemaining,
   onSetValuesEvenly,
 }: PayeeListFooterProps) {
   return (
-    <div
-      className={
-        'border-default bg-default rounded-default flex flex-col space-y-3 border p-6'
-      }
-    >
+    <>
+      <div>
+        <ButtonOutline
+          fullWidth
+          type='button'
+          size={'sm'}
+          onClick={() => onAppendRecipient()}
+        >
+          Add Recipient
+        </ButtonOutline>
+      </div>
+
       <div
         className={
-          'relative block h-1 w-full overflow-hidden rounded bg-carlo/10'
+          'border-default bg-default rounded-default flex flex-col space-y-3 border p-6'
         }
       >
-        <span
-          className={clsxm(
-            'absolute top-0 left-0 h-full bg-carlo transition-all',
-            totalShares == maxShares && 'bg-green-500',
-            totalShares > maxShares && 'bg-error'
-          )}
-          style={{ width: totalShares + '%' }}
-        />
-      </div>
+        <div
+          className={
+            'relative block h-1 w-full overflow-hidden rounded bg-carlo/10'
+          }
+        >
+          <span
+            className={clsxm(
+              'absolute top-0 left-0 h-full bg-carlo transition-all',
+              totalShares == maxShares && 'bg-green-500',
+              totalShares > maxShares && 'bg-error'
+            )}
+            style={{ width: totalShares + '%' }}
+          />
+        </div>
 
-      <div className={'grid w-full grid-cols-2 gap-3 md:grid-cols-4'}>
-        <Statistic title={'Allocated'}>
-          {totalShares} / {maxShares}{' '}
-          <AiOutlinePercentage className={'inline'} />
-        </Statistic>
+        <div className={'grid w-full grid-cols-2 gap-3 md:grid-cols-4'}>
+          <Statistic title={'Allocated'}>
+            {totalShares} / {maxShares}{' '}
+            <AiOutlinePercentage className={'inline'} />
+          </Statistic>
 
-        <ul className={'flex justify-end space-x-3 md:col-span-3'}>
-          <li>
-            <ButtonOutline
-              rounded={'small'}
-              size={'xs'}
-              onClick={(e) => {
-                e.preventDefault();
-                onSetValuesRemaining();
-              }}
-            >
-              Split Remaining
-            </ButtonOutline>
-          </li>
-          <li>
-            <ButtonOutline
-              rounded={'small'}
-              size={'xs'}
-              onClick={(e) => {
-                e.preventDefault();
-                onSetValuesEvenly();
-              }}
-            >
-              Split Evenly
-            </ButtonOutline>
-          </li>
-        </ul>
+          <ul className={'flex justify-end space-x-3 md:col-span-3'}>
+            <li>
+              <ButtonOutline
+                rounded={'small'}
+                type='button'
+                size={'xs'}
+                onClick={() => onSetValuesRemaining()}
+              >
+                Split Remaining
+              </ButtonOutline>
+            </li>
+            <li>
+              <ButtonOutline
+                rounded={'small'}
+                size={'xs'}
+                type='button'
+                onClick={() => onSetValuesEvenly()}
+              >
+                Split Evenly
+              </ButtonOutline>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

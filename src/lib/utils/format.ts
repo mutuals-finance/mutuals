@@ -393,3 +393,20 @@ export function formatStringItems(accepted: string[]) {
     ? `${accepted.slice(0, -1).join(', ')} and ${accepted.slice(-1)}`
     : { 0: '', 1: accepted[0] }[accepted.length];
 }
+
+export function formatRoundNumber(
+  x: number,
+  {
+    round = Math.round,
+    decimal = 2,
+  }: {
+    round?: (x: number) => number;
+    decimal?: number;
+  } = {
+    round: Math.round,
+    decimal: 2,
+  }
+) {
+  const pow = Math.pow(10, decimal);
+  return round((x + Number.EPSILON) * pow) / pow;
+}
