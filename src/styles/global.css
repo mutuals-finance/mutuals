@@ -20,24 +20,24 @@
   }
 
   .title {
-    @apply text-6xl font-semibold;
+    @apply text-6xl font-medium;
   }
 
   .title-2 {
-    @apply text-4xl font-semibold;
+    @apply text-4xl font-medium;
   }
 
   .title-3 {
-    @apply text-xl font-semibold;
+    @apply text-xl font-medium;
   }
 
   .link,
   .link-1 {
-    @apply font-semibold opacity-60 transition duration-200 hover:opacity-100;
+    @apply font-medium opacity-60 transition duration-200 hover:opacity-100;
   }
 
   .link-2 {
-    @apply font-semibold opacity-100 transition duration-200 hover:opacity-60;
+    @apply font-medium opacity-100 transition duration-200 hover:opacity-60;
   }
 
   .label {
