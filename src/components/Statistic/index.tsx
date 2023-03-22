@@ -22,7 +22,7 @@ export default function Statistic({
       {!!title && <span className='label block'>{title}</span>}
 
       <div
-        className={`flex items-center justify-start space-x-2 font-semibold leading-relaxed ${className}`}
+        className={`flex items-center justify-start space-x-2 font-medium leading-relaxed ${className}`}
         {...props}
       >
         {!!prefix && <div>{prefix}</div>}

@@ -35,7 +35,7 @@ export default function ButtonBase({
   ...props
 }: React.PropsWithChildren<ButtonBaseProps>) {
   const onlyIcon = (icon || (iconAfter && !icon)) && !children;
-  const baseClass = `relative inline-flex items-center text-center font-semibold border transition-color ease-in-out duration-200 active:scale-95 disabled:active:scale-100 disabled:cursor-default`;
+  const baseClass = `relative inline-flex items-center text-center font-medium border transition-color ease-in-out duration-200 active:scale-95 disabled:active:scale-100 disabled:cursor-default`;
 
   const roundedClass = {
     full: `rounded-full`,

@@ -380,51 +380,6 @@ explicitly, e.g.
 }
 */
 
-/**
-* This is a variable font
-* You can controll variable axes as shown below:
-* font-variation-settings: 'wght' 600.0;
-*
-* available axes:
-
-* 'wght' (range from 100.0 to 900.0)
-
-*/
-
-@font-face {
-  font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Variable.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Variable.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Variable.ttf') format('truetype');
-  font-weight: 100 900;
-  font-display: swap;
-  font-style: normal;
-}
-
-
-/**
-* This is a variable font
-* You can controll variable axes as shown below:
-* font-variation-settings: 'wght' 600.0;
-*
-* available axes:
-
-* 'wght' (range from 100.0 to 900.0)
-
-*/
-/*
-
-@font-face {
-  font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-VariableItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-VariableItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-VariableItalic.ttf') format('truetype');
-  font-weight: 100 900;
-  font-display: swap;
-  font-style: italic;
-}
-
-
 @font-face {
   font-family: 'Archivo';
   src: url('../assets/font/Archivo/Archivo-Thin.woff2') format('woff2'),
@@ -622,7 +577,8 @@ explicitly, e.g.
   font-style: italic;
 }
 
-*/
+
+/*
 
 @font-face {
   font-family: 'GeneralSans';
@@ -717,7 +673,7 @@ explicitly, e.g.
   src: url('../assets/font/GeneralSans/GeneralSans-Semibold.woff2') format('woff2'),
   url('../assets/font/GeneralSans/GeneralSans-Semibold.woff') format('woff'),
   url('../assets/font/GeneralSans/GeneralSans-Semibold.ttf') format('truetype');
-  font-weight: 700;
+  font-weight: 600;
   font-display: swap;
   font-style: normal;
 }
@@ -728,11 +684,10 @@ explicitly, e.g.
   src: url('../assets/font/GeneralSans/GeneralSans-SemiboldItalic.woff2') format('woff2'),
   url('../assets/font/GeneralSans/GeneralSans-SemiboldItalic.woff') format('woff'),
   url('../assets/font/GeneralSans/GeneralSans-SemiboldItalic.ttf') format('truetype');
-  font-weight: 700;
+  font-weight: 600;
   font-display: swap;
   font-style: italic;
 }
-/*
 
 
 @font-face {

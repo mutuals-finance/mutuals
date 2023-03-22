@@ -110,6 +110,7 @@ const SplitDetailPage: NextPageWithLayout<
         address={split.address}
       />
 
+      {/*
       <WithdrawModal
         onClose={() =>
           router.replace({ pathname, query: { id: query.id } }, undefined, {
@@ -119,6 +120,7 @@ const SplitDetailPage: NextPageWithLayout<
         open={Boolean(query.withdraw)}
         assets={splitBalance?.assets}
       />
+*/}
 
       <section>
         <div className={'container grid gap-3 lg:grid-cols-6 lg:gap-6'}>

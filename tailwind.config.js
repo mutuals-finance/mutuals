@@ -18,7 +18,7 @@ module.exports = {
         xxs: ['0.6rem', '0.75rem'],
       },
       fontFamily: {
-        sans: ['GeneralSans', ...defaultTheme.fontFamily.sans],
+        sans: ['Archivo', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         error: '#ff3333',
