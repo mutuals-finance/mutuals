@@ -14,7 +14,7 @@ import { FileWithPreview } from '@/components/Form/types';
 import PayeeList, { defaultPayee, Payee } from './PayeeList';
 
 export interface CreateFormData {
-  image: FileWithPreview[];
+  image: FileWithPreview;
   name: string;
   description: string;
   metadataLocked: boolean;
@@ -28,6 +28,7 @@ export function NewSplitForm() {
     <Form<CreateFormData>
       className={'max-w-2xl space-y-8'}
       onSubmit={() => toggleIsModalOpen()}
+      onSubmitInvalid={(errors, data) => console.log('INVALID', errors, data)}
       defaultValues={{
         payees: [defaultPayee, defaultPayee],
       }}

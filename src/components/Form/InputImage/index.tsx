@@ -56,7 +56,7 @@ export default function InputImage({
   const onDrop = React.useCallback(
     <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles && rejectedFiles.length > 0) {
-        setValue(id, files ? [...files] : null);
+        setValue(id, files?.length > 0 ? files[0] : null);
         setError(id, {
           type: 'manual',
           message: rejectedFiles && rejectedFiles[0]?.errors[0]?.message,
@@ -76,9 +76,9 @@ export default function InputImage({
 
         setValue(
           id,
-          files
+          (files
             ? [...files, ...acceptedFiles].slice(0, maxFiles)
-            : acceptedFiles,
+            : acceptedFiles)[0],
           {
             shouldValidate: true,
           }
@@ -95,7 +95,7 @@ export default function InputImage({
     newFiles.splice(newFiles.indexOf(file), 1);
 
     setFiles(newFiles);
-    setValue(id, newFiles.length > 0 ? newFiles : null, {
+    setValue(id, newFiles.length > 0 ? newFiles[0] : null, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,

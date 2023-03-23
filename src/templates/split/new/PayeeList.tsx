@@ -4,7 +4,6 @@ import { NumberFormatValues } from 'react-number-format';
 
 import { formatRoundNumber } from '@/lib/utils';
 
-import { ButtonOutline } from '@/components/Button';
 import Input from '@/components/Form/Input';
 import InputFieldArray from '@/components/Form/InputFieldArray';
 import InputNumber from '@/components/Form/InputNumber/';
@@ -13,7 +12,7 @@ import PayeeListFooter from '@/templates/split/new/PayeeListFooter';
 
 export interface Payee {
   id: string;
-  value: number;
+  value: string;
 }
 
 interface PayeeListProps {
@@ -22,7 +21,7 @@ interface PayeeListProps {
 
 export const defaultPayee: Payee = {
   id: '',
-  value: 0.0,
+  value: '0.0',
 };
 
 export default function PayeeList({ id }: PayeeListProps) {

@@ -57,7 +57,7 @@ export default function PayeeListFooter({
 
         <div className={'grid w-full grid-cols-2 gap-3 md:grid-cols-4'}>
           <Statistic title={'Allocated'}>
-            {totalShares} / {maxShares}{' '}
+            {totalShares.toFixed(2)} / {maxShares.toFixed(2)}{' '}
             <AiOutlinePercentage className={'inline'} />
           </Statistic>
 

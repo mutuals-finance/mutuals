@@ -52,7 +52,7 @@ export default function useCreateSplit({
   const argsMemo = useMemo(() => {
     return [
       payees,
-      shares.map((s) => BigNumber.from(s)),
+      shares.map((s) => BigNumber.from(s || 0)),
       uri,
       !metadataLocked,
       salt,
@@ -61,7 +61,7 @@ export default function useCreateSplit({
 
   const [...args] = useDebounce(argsMemo, 500);
 
-  const enabled = args[0].length > 0 && args[1].length > 0 && args[2] !== '';
+  const enabled = args[0].length > 2 && args[1].length > 2 && args[2] !== '';
 
   const prepare = usePrepareContractWrite({
     address: FACTORY_ADDRESS,

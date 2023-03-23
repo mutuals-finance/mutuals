@@ -3,10 +3,12 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { NFT_STORAGE_TOKEN } from '@/lib/constants';
 
+import { FileWithPreview } from '@/components/Form/types';
+
 export interface Metadata {
   name?: string;
   description?: string;
-  image?: File;
+  image?: FileWithPreview;
 }
 
 type MetadataValue = CIDString;

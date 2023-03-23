@@ -21,12 +21,12 @@ export default function CreateSplitModal({
   onClose,
   data,
 }: CreateSplitModalProps) {
-  const getPayees = data.payees.filter((p) => p.id !== '' && !!p.value);
+  const payees = data.payees.filter((p) => p.id !== '' && !!p.value);
 
   const { execute, tx, storage } = useCreateSplitFull({
     ...data,
-    payees: getPayees.map((p) => p.id),
-    shares: getPayees.map((p) => p.value as number),
+    payees: payees.map((p) => p.id),
+    shares: payees.map((p) => Number(p.value)),
   });
 
   const receipt = useWaitForTransaction({ hash: tx.data?.hash });
