@@ -1,6 +1,5 @@
-import { get } from 'lodash';
 import React from 'react';
-import { FieldError, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import InputBase from './InputBase';
 import { InputBaseProps } from './types';
@@ -10,7 +9,13 @@ export default function Input({
   validation,
   ...props
 }: InputBaseProps) {
-  const { register } = useFormContext();
-
-  return <InputBase id={id} {...props} {...register(id, validation)} />;
+  const { control } = useFormContext();
+  return (
+    <Controller
+      control={control}
+      name={id}
+      rules={validation}
+      render={({ field }) => <InputBase id={id} {...props} {...field} />}
+    />
+  );
 }

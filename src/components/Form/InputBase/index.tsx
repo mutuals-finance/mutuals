@@ -27,7 +27,6 @@ export default function InputBase({
   return (
     <BaseWrapper id={id} {...rest}>
       {!!icon && <InputIcon className={'left-1'}>{icon}</InputIcon>}
-
       <input
         id={id}
         aria-describedby={id}
@@ -41,7 +40,6 @@ export default function InputBase({
         )}
         {...rest}
       />
-
       {!!iconAfter && <InputIcon className={'right-1'}>{iconAfter}</InputIcon>}
     </BaseWrapper>
   );
