@@ -18,13 +18,12 @@ export default function InputNumberButton({
   const longPressEvent = useLongPress(onLongPress, { delay: 0 });
 
   return (
-    <span
-      className={`text-light absolute top-1/2 block -translate-y-1/2 ${className}`}
-    >
+    <span className={`text-light ${className}`}>
       <ButtonOutline
         size='sm'
         disabled={disabled}
         icon={icon}
+        type={'button'}
         {...longPressEvent}
       />
     </span>
