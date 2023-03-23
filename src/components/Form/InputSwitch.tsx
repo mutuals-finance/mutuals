@@ -5,8 +5,8 @@ import { IoCheckmark, IoClose } from 'react-icons/io5';
 
 import clsxm from '@/lib/utils/clsxm';
 
-import FormItemHintAndError from '@/components/Form/FormItem/FormItemHintAndError';
-import FormItemLabel from '@/components/Form/FormItem/FormItemLabel';
+import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
+import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 import { InputDefaultProps } from '@/components/Form/types';
 
 interface InputSwitchProps
@@ -33,7 +33,7 @@ export default function InputSwitch({
   return (
     <Switch.Group>
       <div className={clsxm('flex flex-col', className)}>
-        <FormItemLabel {...{ id, label, validation }} />
+        <BaseLabel {...{ id, label, validation }} />
 
         <Controller
           control={control}
@@ -69,9 +69,7 @@ export default function InputSwitch({
                 </span>
               </Switch>
 
-              <FormItemHintAndError
-                {...{ helperText, hideError, error: errors[id] }}
-              />
+              <BaseFeedback {...{ helperText, hideError, error: errors[id] }} />
             </>
           )}
         />

@@ -3,8 +3,8 @@ import { useFormContext } from 'react-hook-form';
 
 import clsxm from '@/lib/utils/clsxm';
 
-import FormItemHintAndError from '@/components/Form/FormItem/FormItemHintAndError';
-import FormItemLabel from '@/components/Form/FormItem/FormItemLabel';
+import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
+import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 
 import { InputDefaultProps } from './types';
 
@@ -41,7 +41,7 @@ const TextArea = React.forwardRef(
 
     return (
       <div className={clsxm(!!errors[id] && 'error')}>
-        <FormItemLabel {...{ id, label, validation }} />
+        <BaseLabel {...{ id, label, validation }} />
 
         <textarea
           {...register(id, validation)}
@@ -56,9 +56,7 @@ const TextArea = React.forwardRef(
           ref={ref}
         />
 
-        <FormItemHintAndError
-          {...{ helperText, hideError, error: errors[id] }}
-        />
+        <BaseFeedback {...{ helperText, hideError, error: errors[id] }} />
       </div>
     );
   }

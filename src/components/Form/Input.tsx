@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import FormItem from './FormItem';
+import FormItem from './InputBase';
 import { InputDefaultProps } from './types';
 
 export interface InputProps

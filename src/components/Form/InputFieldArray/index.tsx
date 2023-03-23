@@ -9,7 +9,7 @@ import {
 import { IoAdd } from 'react-icons/io5';
 
 import { ButtonLink, ButtonSecondary } from '@/components/Button';
-import FormItemHintAndError from '@/components/Form/FormItem/FormItemHintAndError';
+import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
 import { InputDefaultProps } from '@/components/Form/types';
 
 import { InputFieldArrayItem } from './InputFieldArrayItem';
@@ -74,7 +74,7 @@ export default function InputFieldArray<TFieldValue>({
           ))}
         </ul>
 
-        <FormItemHintAndError {...{ error, hideError, helperText }} />
+        <BaseFeedback {...{ error, hideError, helperText }} />
 
         {contentAfter?.(method)}
       </>

@@ -5,8 +5,8 @@ import { Controller, get, useFormContext } from 'react-hook-form';
 import { formatBytes, formatStringItems } from '@/lib/utils';
 import clsxm from '@/lib/utils/clsxm';
 
-import FormItemHintAndError from '@/components/Form/FormItem/FormItemHintAndError';
-import FormItemLabel from '@/components/Form/FormItem/FormItemLabel';
+import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
+import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
 import { InputDefaultProps } from '@/components/Form/types';
@@ -122,7 +122,7 @@ export default function InputImage({
 
   return (
     <div className={clsxm(!!error && 'error')}>
-      <FormItemLabel {...{ id, label, validation }} />
+      <BaseLabel {...{ id, label, validation }} />
 
       <Controller
         control={control}
@@ -156,7 +156,7 @@ export default function InputImage({
               )}
             </div>
 
-            <FormItemHintAndError {...{ helperText, hideError, error }} />
+            <BaseFeedback {...{ helperText, hideError, error }} />
           </>
         )}
       />
