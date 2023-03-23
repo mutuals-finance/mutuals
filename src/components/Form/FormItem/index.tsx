@@ -9,10 +9,7 @@ import FormItemLabel from '@/components/Form/FormItem/FormItemLabel';
 import { InputDefaultProps } from '../types';
 
 interface FormItemBaseInputProps
-  extends Omit<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      'id' | 'placeholder'
-    >,
+  extends React.InputHTMLAttributes<HTMLInputElement>,
     InputDefaultProps {
   /**
    * Input type

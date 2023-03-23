@@ -1,42 +1,40 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import {
+  Controller,
+  ControllerRenderProps,
+  useFormContext,
+} from 'react-hook-form';
 import { IoAdd, IoRemove } from 'react-icons/io5';
 import { NumericFormat, type NumericFormatProps } from 'react-number-format';
 
-import clsxm from '@/lib/utils/clsxm';
-
-import Input from '@/components/Form/Input';
+import FormItem from '@/components/Form/FormItem';
 import InputNumberButton from '@/components/Form/InputNumber/InputNumberButton';
 import useFormatValues from '@/components/Form/InputNumber/useFormatValues';
 
 import { InputDefaultProps } from '../types';
 
 type DefaultProps = Omit<InputDefaultProps, 'value' | 'defaultValue'>;
-type FormatProps = Omit<NumericFormatProps, 'id' | 'placeholder'>;
 
-export interface InputNumberProps extends DefaultProps, FormatProps {
+export interface InputNumberProps extends DefaultProps, NumericFormatProps {
   step?: number;
   addDisabled?: boolean;
   removeDisabled?: boolean;
 }
 
-export default function InputNumber({
-  id,
-  readOnly = false,
-  className,
+interface InputNumberInnerProps extends InputNumberProps {
+  field: ControllerRenderProps;
+}
+
+function InputNumberInner({
+  field,
   step = 1,
-  decimalScale = 1,
+  decimalScale = 0,
   isAllowed,
   removeDisabled,
   addDisabled,
-  placeholder,
-  ...rest
-}: InputNumberProps) {
-  const { getValues, setValue } = useFormContext();
-  const fieldValue = getValues(id);
-  const setFieldValue = (...args: any) => setValue(id, args);
-
-  const { formatValues, setFormatValues } = useFormatValues(fieldValue, {
+  ...props
+}: InputNumberInnerProps) {
+  const { formatValues, setFormatValues } = useFormatValues(field.value, {
     step,
     decimalScale,
   });
@@ -46,38 +44,52 @@ export default function InputNumber({
 
   return (
     <NumericFormat
-      customInput={(props) => (
-        <Input
-          {...props}
-          id={id}
-          placeholder={placeholder}
-          className={clsxm(className)}
-          inputClassName={'text-center'}
-          icon={
-            <InputNumberButton
-              icon={<IoRemove />}
-              disabled={removeDisabled || !isPrevAllowed}
-              onLongPress={() => {
-                isPrevAllowed && setFieldValue(formatValues.prev.value);
-              }}
-            />
-          }
-          iconAfter={
-            <InputNumberButton
-              icon={<IoAdd />}
-              disabled={addDisabled || !isNextAllowed}
-              onLongPress={() => {
-                isNextAllowed && setFieldValue(formatValues.next.value);
-              }}
-            />
-          }
-        />
-      )}
-      id={id}
+      customInput={FormItem}
+      {...field}
+      {...{
+        inputClassName: 'text-center',
+        icon: (
+          <InputNumberButton
+            icon={<IoRemove />}
+            disabled={removeDisabled || !isPrevAllowed}
+            onLongPress={() => {
+              isPrevAllowed && field.onChange(formatValues.prev.value);
+            }}
+          />
+        ),
+        iconAfter: (
+          <InputNumberButton
+            icon={<IoAdd />}
+            disabled={addDisabled || !isNextAllowed}
+            onLongPress={() => {
+              isNextAllowed && field.onChange(formatValues.next.value);
+            }}
+          />
+        ),
+        ...props,
+      }}
       decimalScale={decimalScale}
       isAllowed={isAllowed}
       onValueChange={(values) => setFormatValues?.(values)}
-      {...rest}
+    />
+  );
+}
+
+export default function InputNumber({
+  id = '',
+  validation,
+  ...rest
+}: InputNumberProps) {
+  const { control } = useFormContext();
+
+  return (
+    <Controller
+      control={control}
+      name={id}
+      rules={validation}
+      render={({ field }) => (
+        <InputNumberInner id={id} field={field} {...rest} />
+      )}
     />
   );
 }
