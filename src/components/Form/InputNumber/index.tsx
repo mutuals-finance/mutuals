@@ -12,28 +12,26 @@ import InputNumberButton from '@/components/Form/InputNumber/InputNumberButton';
 import useFormatValues from '@/components/Form/InputNumber/useFormatValues';
 import { InputBaseProps } from '@/components/Form/types';
 
-type BaseProps = Omit<InputBaseProps, 'defaultValue' | 'type' | 'value'>;
-type FormatProps = Omit<NumericFormatProps, 'onChange'>;
+type InputNumberBaseProps = InputBaseProps &
+  NumericFormatProps & {
+    addDisabled?: boolean;
+    removeDisabled?: boolean;
+  };
 
-interface InputNumberInnerProps extends BaseProps, FormatProps {
-  addDisabled?: boolean;
-  removeDisabled?: boolean;
-  step?: number;
-  field: ControllerRenderProps;
-}
-
-export type InputNumberProps = InputNumberInnerProps;
+type InputNumberInnerProps = InputNumberBaseProps & ControllerRenderProps;
+type InputNumberProps = InputNumberBaseProps;
 
 function InputNumberInner({
-  field,
   isAllowed,
   removeDisabled,
   addDisabled,
   step = 1,
   decimalScale = 0,
+  onChange,
+  value,
   ...props
 }: InputNumberInnerProps) {
-  const { formatValues, setFormatValues } = useFormatValues(field.value, {
+  const { formatValues, setFormatValues } = useFormatValues(value, {
     step,
     decimalScale,
   });
@@ -46,7 +44,7 @@ function InputNumberInner({
       icon={<IoRemove />}
       disabled={removeDisabled || !isPrevAllowed}
       onLongPress={() => {
-        isPrevAllowed && field.onChange(formatValues.prev.value);
+        isPrevAllowed && onChange(formatValues.prev.value);
       }}
     />
   );
@@ -56,7 +54,7 @@ function InputNumberInner({
       icon={<IoAdd />}
       disabled={addDisabled || !isNextAllowed}
       onLongPress={() => {
-        isNextAllowed && field.onChange(formatValues.next.value);
+        isNextAllowed && onChange(formatValues.next.value);
       }}
     />
   );
@@ -68,13 +66,14 @@ function InputNumberInner({
     iconAfter,
     decimalScale,
     isAllowed,
+    value,
+    onChange,
     ...props,
   };
 
   return (
     <NumericFormat
       {...innerProps}
-      {...field}
       onValueChange={(values) => setFormatValues?.(values)}
     />
   );
@@ -83,7 +82,7 @@ function InputNumberInner({
 export default function InputNumber({
   id = '',
   validation,
-  ...rest
+  ...props
 }: InputNumberProps) {
   const { control } = useFormContext();
 
@@ -92,9 +91,7 @@ export default function InputNumber({
       control={control}
       name={id}
       rules={validation}
-      render={({ field }) => (
-        <InputNumberInner id={id} {...rest} field={field} />
-      )}
+      render={({ field }) => <InputNumberInner id={id} {...props} {...field} />}
     />
   );
 }

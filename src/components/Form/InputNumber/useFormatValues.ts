@@ -11,14 +11,14 @@ const DEFAULT_FORMAT_VALUES = {
 
 export default function useFormatValues(
   value: string,
-  { decimalScale, step }: { decimalScale: number; step: number }
+  { decimalScale, step }: { decimalScale: number; step: string | number }
 ) {
   const [current, setFormatValues] = useState<NumberFormatValues>(
     DEFAULT_FORMAT_VALUES
   );
 
   const merge = (s: number) => {
-    const floatValue = formatRoundNumber(Number(value) + s * step, {
+    const floatValue = formatRoundNumber(Number(value) + s * Number(step), {
       decimal: decimalScale,
     });
     return {
