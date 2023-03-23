@@ -1,4 +1,4 @@
-import React, { HTMLProps } from 'react';
+import React, { forwardRef, HTMLProps } from 'react';
 
 import clsxm from '@/lib/utils/clsxm';
 
@@ -16,14 +16,10 @@ function InputIcon({ children, className }: HTMLProps<HTMLSpanElement>) {
   );
 }
 
-export default function InputBase({
-  id = '',
-  readOnly,
-  icon,
-  iconAfter,
-  inputClassName,
-  ...rest
-}: InputBaseProps) {
+const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(function (
+  { id = '', readOnly, icon, iconAfter, inputClassName, ...rest },
+  ref
+) {
   return (
     <BaseWrapper id={id} {...rest}>
       {!!icon && <InputIcon className={'left-1'}>{icon}</InputIcon>}
@@ -39,8 +35,12 @@ export default function InputBase({
           inputClassName
         )}
         {...rest}
+        ref={ref}
       />
       {!!iconAfter && <InputIcon className={'right-1'}>{iconAfter}</InputIcon>}
     </BaseWrapper>
   );
-}
+});
+
+InputBase.displayName = 'InputBase';
+export default InputBase;

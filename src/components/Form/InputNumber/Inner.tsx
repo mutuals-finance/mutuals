@@ -10,16 +10,19 @@ import { InputNumberBaseProps } from '@/components/Form/types';
 
 type InnerProps = InputNumberBaseProps & ControllerRenderProps;
 
-export default function Inner({
-  isAllowed,
-  removeDisabled,
-  addDisabled,
-  step = 1,
-  decimalScale = 0,
-  onChange,
-  value,
-  ...props
-}: InnerProps) {
+const Inner = React.forwardRef<HTMLInputElement, InnerProps>(function (
+  {
+    isAllowed,
+    removeDisabled,
+    addDisabled,
+    step = 1,
+    decimalScale = 0,
+    onChange,
+    value,
+    ...props
+  },
+  ref
+) {
   const { formatValues, setFormatValues } = useFormatValues(value, {
     step,
     decimalScale,
@@ -56,7 +59,11 @@ export default function Inner({
   return (
     <NumericFormat
       {...allProps}
+      getInputRef={ref}
       onValueChange={(values) => setFormatValues?.(values)}
     />
   );
-}
+});
+
+Inner.displayName = 'Inner';
+export default Inner;
