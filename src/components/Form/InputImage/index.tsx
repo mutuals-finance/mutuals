@@ -7,6 +7,7 @@ import clsxm from '@/lib/utils/clsxm';
 
 import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
 import BaseLabel from '@/components/Form/InputBase/BaseLabel';
+import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
 import { BaseFieldProps } from '@/components/Form/types';
@@ -20,11 +21,9 @@ export interface InputImageProps extends BaseFieldProps {
 }
 
 export default function InputImage({
-  label,
   placeholder = 'Drag and drop your file here, or click to choose an image.',
   id = '',
   readOnly = false,
-  hideError = false,
   validation,
   maxFiles = 1,
   maxSize = 5242880, // 5 MiB
@@ -32,6 +31,7 @@ export default function InputImage({
   helperText = `You can upload files with ${formatStringItems(
     acceptedImageExtensions
   )} extension and a maximum size of ${formatBytes(maxSize)}.`,
+  ...props
 }: InputImageProps) {
   const {
     control,
@@ -117,9 +117,7 @@ export default function InputImage({
   });
 
   return (
-    <div className={clsxm(!!error && 'error')}>
-      <BaseLabel {...{ id, label, validation }} />
-
+    <BaseWrapper id={id} helperText={helperText} {...props}>
       <Controller
         control={control}
         name={id}
@@ -151,11 +149,9 @@ export default function InputImage({
                 ))
               )}
             </div>
-
-            <BaseFeedback {...{ helperText, hideError, error }} />
           </>
         )}
       />
-    </div>
+    </BaseWrapper>
   );
 }
