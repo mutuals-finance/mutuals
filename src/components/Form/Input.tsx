@@ -10,13 +10,7 @@ export default function Input({
   validation,
   ...props
 }: InputBaseProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
-  const error = get(errors, id) as FieldError;
+  const { register } = useFormContext();
 
-  return (
-    <InputBase error={error} id={id} {...props} {...register(id, validation)} />
-  );
+  return <InputBase id={id} {...props} {...register(id, validation)} />;
 }

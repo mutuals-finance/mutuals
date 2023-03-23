@@ -10,13 +10,13 @@ export default function BaseFeedback({
   return (
     <>
       {!!helperText && (
-        <div className='mt-1'>
+        <div>
           <p className={'text-light text-xxs'}>{helperText}</p>
         </div>
       )}
 
       {!(hideError || !error) && (
-        <div className='mt-1'>
+        <div>
           {!!error && (
             <p className='label-error'>{error.message?.toString()}</p>
           )}
