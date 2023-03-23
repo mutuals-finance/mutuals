@@ -7,10 +7,7 @@ import { FileWithPreview } from '../types';
 
 interface FilePreviewProps {
   file: FileWithPreview;
-  onDeleteFile?: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    file: FileWithPreview
-  ) => void;
+  onDeleteFile?: (file: FileWithPreview) => void;
   readOnly?: boolean;
 }
 
@@ -19,11 +16,6 @@ export default function FilePreview({
   file,
   readOnly,
 }: FilePreviewProps): React.ReactElement {
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    onDeleteFile?.(e, file);
-  };
-
   return (
     <div className='relative flex w-full flex-1'>
       <img
@@ -35,7 +27,8 @@ export default function FilePreview({
         <div className='absolute top-3 right-3'>
           <ButtonOutline
             size={'sm'}
-            onClick={handleDelete}
+            type={'button'}
+            onClick={() => onDeleteFile?.(file)}
             icon={<IoClose />}
           />
         </div>

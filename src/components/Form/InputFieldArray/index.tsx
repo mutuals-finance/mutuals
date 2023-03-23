@@ -6,16 +6,18 @@ import {
   UseFieldArrayReturn,
   useFormContext,
 } from 'react-hook-form';
-import { IoAdd } from 'react-icons/io5';
 
-import { ButtonLink, ButtonSecondary } from '@/components/Button';
 import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
-import { InputDefaultProps } from '@/components/Form/types';
+import { BaseFieldProps } from '@/components/Form/types';
 
 import { InputFieldArrayItem } from './InputFieldArrayItem';
 
-interface InputFieldArrayProps<TFieldValue>
-  extends Omit<InputDefaultProps, 'label' | 'placeholder' | 'readOnly'> {
+type FieldArrayBaseFieldProps = Pick<
+  BaseFieldProps,
+  'id' | 'validation' | 'helperText' | 'hideError'
+>;
+
+interface InputFieldArrayProps<TFieldValue> extends FieldArrayBaseFieldProps {
   defaultItem: TFieldValue;
   removeDisabled?: boolean;
   hideAdd?: boolean;
@@ -29,7 +31,7 @@ interface InputFieldArrayProps<TFieldValue>
 }
 
 export default function InputFieldArray<TFieldValue>({
-  id,
+  id = '',
   validation,
   children,
   defaultItem,

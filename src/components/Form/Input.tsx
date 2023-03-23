@@ -1,42 +1,22 @@
+import { get } from 'lodash';
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { FieldError, useFormContext } from 'react-hook-form';
 
-import FormItem from './InputBase';
-import { InputDefaultProps } from './types';
+import InputBase from './InputBase';
+import { InputBaseProps } from './types';
 
-export interface InputProps
-  extends Omit<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      'id' | 'placeholder'
-    >,
-    InputDefaultProps {
-  /**
-   * Input type
-   * @example text, email, password
-   */
-  type?: React.HTMLInputTypeAttribute;
-  /** Icon before input */
-  icon?: React.ReactNode;
-  /** Icon after input */
-  iconAfter?: React.ReactNode;
-  contentBefore?: React.ReactNode;
-  contentAfter?: React.ReactNode;
-  inputClassName?: string;
-}
-
-export default function Input(props: InputProps) {
-  const { id, validation, ...rest } = props;
-
-  const { control } = useFormContext();
+export default function Input({
+  id = '',
+  validation,
+  ...props
+}: InputBaseProps) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const error = get(errors, id) as FieldError;
 
   return (
-    <Controller
-      control={control}
-      name={id}
-      rules={validation}
-      render={({ field, fieldState: { error } }) => (
-        <FormItem error={error} id={id} {...rest} {...field} />
-      )}
-    />
+    <InputBase error={error} id={id} {...props} {...register(id, validation)} />
   );
 }

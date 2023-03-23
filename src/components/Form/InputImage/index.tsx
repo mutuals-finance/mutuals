@@ -1,4 +1,4 @@
-import React, { ForwardedRef } from 'react';
+import React from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { Controller, get, useFormContext } from 'react-hook-form';
 
@@ -9,11 +9,11 @@ import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
 import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
-import { InputDefaultProps } from '@/components/Form/types';
+import { BaseFieldProps } from '@/components/Form/types';
 
 import { FileWithPreview } from '../types';
 
-export interface InputImageProps extends InputDefaultProps {
+export interface InputImageProps extends BaseFieldProps {
   maxFiles?: number;
   maxSize?: number;
   acceptedImageExtensions?: string[];
@@ -22,7 +22,7 @@ export interface InputImageProps extends InputDefaultProps {
 export default function InputImage({
   label,
   placeholder = 'Drag and drop your file here, or click to choose an image.',
-  id,
+  id = '',
   readOnly = false,
   hideError = false,
   validation,
@@ -89,11 +89,7 @@ export default function InputImage({
     [clearErrors, files, id, maxFiles, setError, setValue]
   );
 
-  const onDeleteFile = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    file: FileWithPreview
-  ) => {
-    e.preventDefault();
+  const onDeleteFile = (file: FileWithPreview) => {
     const newFiles = [...files];
 
     newFiles.splice(newFiles.indexOf(file), 1);
@@ -128,7 +124,7 @@ export default function InputImage({
         control={control}
         name={id}
         rules={validation}
-        render={({ field: { value, ...field } }) => (
+        render={({ field: { value: _, ...field } }) => (
           <>
             <div
               {...getRootProps()}

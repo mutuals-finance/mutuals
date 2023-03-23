@@ -4,18 +4,20 @@ import { useLongPress } from 'react-use';
 import { ButtonOutline } from '@/components/Button';
 
 interface InputNumberButtonProps extends React.HTMLAttributes<HTMLSpanElement> {
-  onLongPress: () => void;
+  onLongPress: Parameters<typeof useLongPress>[0];
   icon: React.ReactNode;
   disabled?: boolean;
 }
 
-export default function InputNumberButton({
+export default function NumberButton({
   className,
   onLongPress,
   icon,
   disabled,
 }: InputNumberButtonProps) {
-  const longPressEvent = useLongPress(onLongPress, { delay: 0 });
+  const longPressEvent = useLongPress((e) => !disabled && onLongPress(e), {
+    delay: 0,
+  });
 
   return (
     <span className={`text-light ${className}`}>

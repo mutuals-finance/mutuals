@@ -1,67 +1,53 @@
-import React, { ForwardedRef } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { get } from 'lodash';
+import React, { HTMLProps } from 'react';
+import { FieldError, useFormContext } from 'react-hook-form';
 
 import clsxm from '@/lib/utils/clsxm';
 
 import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
 import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 
-import { InputDefaultProps } from './types';
+import { BaseFieldProps } from './types';
 
-export interface TextAreaProps
-  extends Omit<
-      React.ComponentPropsWithoutRef<'textarea'>,
-      'id' | 'placeholder'
-    >,
-    InputDefaultProps {}
+type TextAreaProps = HTMLProps<HTMLTextAreaElement> & BaseFieldProps;
 
-const TextArea = React.forwardRef(
-  (
-    {
-      label,
-      placeholder = '',
-      helperText,
-      id,
-      readOnly = false,
-      hideError = false,
-      validation,
-      className,
-      rows = 4,
-      ...rest
-    }: TextAreaProps,
-    ref: ForwardedRef<HTMLTextAreaElement>
-  ) => {
-    const {
-      register,
-      formState: { errors },
-    } = useFormContext();
+export default function TextArea({
+  id = '',
+  label,
+  readOnly,
+  validation,
+  className,
+  rows = 4,
+  ...rest
+}: TextAreaProps) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
-    const baseClasses = 'textarea flex-1';
-    const readonlyClasses = 'input-readonly';
+  const baseClasses = 'textarea flex-1';
+  const readonlyClasses = 'input-readonly';
+  const error = get(errors, id) as FieldError;
 
-    return (
-      <div className={clsxm(!!errors[id] && 'error')}>
-        <BaseLabel {...{ id, label, validation }} />
+  return (
+    <div className={clsxm(!!error && 'error')}>
+      <BaseLabel
+        label={label}
+        isRequired={!!validation?.required}
+        htmlFor={id}
+      />
 
-        <textarea
-          {...register(id, validation)}
-          {...rest}
-          rows={rows}
-          name={id}
-          id={id}
-          readOnly={readOnly}
-          className={clsxm(baseClasses, readOnly && readonlyClasses, className)}
-          placeholder={!!placeholder ? placeholder : undefined}
-          aria-describedby={id}
-          ref={ref}
-        />
+      <textarea
+        id={id}
+        aria-describedby={id}
+        rows={rows}
+        readOnly={readOnly}
+        className={clsxm(baseClasses, readOnly && readonlyClasses, className)}
+        {...register(id, validation)}
+        {...rest}
+      />
 
-        <BaseFeedback {...{ helperText, hideError, error: errors[id] }} />
-      </div>
-    );
-  }
-);
-
-TextArea.displayName = 'TextArea';
-
-export default TextArea;
+      <BaseFeedback error={error} {...rest} />
+    </div>
+  );
+}

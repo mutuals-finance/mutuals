@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { IoImage } from 'react-icons/io5';
 
-import { InputDefaultProps } from '../types';
+import { BaseFieldProps } from '../types';
 
 type FilePlaceholderProps = {
-  placeholder: InputDefaultProps['placeholder'];
+  placeholder: BaseFieldProps['placeholder'];
 };
 
 export default function FilePlaceholder({ placeholder }: FilePlaceholderProps) {

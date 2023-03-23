@@ -1,24 +1,7 @@
 import React from 'react';
-import {
-  IoAdd,
-  IoAddCircle,
-  IoAddCircleOutline,
-  IoClose,
-  IoPersonAdd,
-  IoPersonAddOutline,
-  IoPersonRemove,
-  IoPersonRemoveOutline,
-  IoRemoveCircleOutline,
-  IoTrash,
-  IoTrashOutline,
-  IoTrashSharp,
-} from 'react-icons/io5';
+import { IoAdd, IoTrashOutline } from 'react-icons/io5';
 
-import {
-  ButtonLink,
-  ButtonOutline,
-  ButtonSecondary,
-} from '@/components/Button';
+import { ButtonOutline } from '@/components/Button';
 interface InputFieldArrayItemProps {
   removeDisabled: boolean;
   onAdd?(): void;
