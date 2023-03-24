@@ -12,7 +12,7 @@ function SplitReviewCard({ image, name, description }: CreateFormData) {
       timestamp={new Date().getTime()}
       metaData={{
         name: name,
-        image: URL.createObjectURL(image),
+        image: image?.preview,
         description: description,
       }}
     />

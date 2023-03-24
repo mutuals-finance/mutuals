@@ -33,10 +33,10 @@ export function NewSplitForm() {
         payees: [defaultPayee, defaultPayee],
       }}
     >
-      {({ watch }) => (
+      {({ getValues }) => (
         <>
           <CreateSplitModal
-            data={watch()}
+            data={getValues()}
             open={isModalOpen}
             onClose={() => toggleIsModalOpen()}
           />

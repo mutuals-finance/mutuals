@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useUpdateEffect } from 'react-use';
 
 import useCreateSplit, { CreateSplitProps } from '@/hooks/useCreateSplit';
@@ -7,14 +8,16 @@ type CreateSplitFullProps = Omit<CreateSplitProps, 'uri'> & Metadata;
 
 export default function useCreateSplitFull(props: CreateSplitFullProps) {
   const storage = useMetadata();
+
   const { write, ...tx } = useCreateSplit({
     uri: storage.value,
     ...props,
   });
 
   useUpdateEffect(() => {
-    if (write && tx.isIdle && storage.isSuccess) {
-      write();
+    if (tx.isIdle && storage.isSuccess) {
+      console.log('write createSplit', tx);
+      write?.();
     }
   }, [write, tx.isIdle, storage.isSuccess]);
 

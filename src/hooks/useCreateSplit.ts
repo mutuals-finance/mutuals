@@ -1,5 +1,6 @@
 import { BigNumber, utils } from 'ethers';
-import { useMemo } from 'react';
+import ethers from 'ethers';
+import { useEffect, useMemo } from 'react';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 import { FACTORY_ADDRESS } from '@/lib/constants';
@@ -52,16 +53,16 @@ export default function useCreateSplit({
   const argsMemo = useMemo(() => {
     return [
       payees,
-      shares.map((s) => BigNumber.from(s || 0)),
+      shares.map((s = 0) => BigNumber.from(s)),
       uri,
-      !metadataLocked,
+      !!metadataLocked,
       salt,
     ];
   }, [payees, shares, uri, metadataLocked, salt]) as CreateSplitArgs;
 
   const [...args] = useDebounce(argsMemo, 500);
 
-  const enabled = args[0].length > 2 && args[1].length > 2 && args[2] !== '';
+  const enabled = args[0].length > 1 && args[1].length > 1 && args[2] !== '';
 
   const prepare = usePrepareContractWrite({
     address: FACTORY_ADDRESS,

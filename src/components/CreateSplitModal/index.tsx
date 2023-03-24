@@ -1,3 +1,4 @@
+import ethers from 'ethers';
 import React, { useState } from 'react';
 import { useUpdateEffect } from 'react-use';
 import { useWaitForTransaction } from 'wagmi';
@@ -26,7 +27,7 @@ export default function CreateSplitModal({
   const { execute, tx, storage } = useCreateSplitFull({
     ...data,
     payees: payees.map((p) => p.id),
-    shares: payees.map((p) => Number(p.value)),
+    shares: payees.map((p) => Number(p.value) * 100),
   });
 
   const receipt = useWaitForTransaction({ hash: tx.data?.hash });
