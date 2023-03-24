@@ -1,20 +1,10 @@
-import Document, {
-  DocumentContext,
-  Head,
-  Html,
-  Main,
-  NextScript,
-} from "next/document";
-import React from "react";
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import React from 'react';
 
-class SFDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
-    return Document.getInitialProps(ctx);
-  }
-
+export default class SplitFi extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang='en'>
         <Head />
         <body>
           <Main />
@@ -24,5 +14,3 @@ class SFDocument extends Document {
     );
   }
 }
-
-export default SFDocument;

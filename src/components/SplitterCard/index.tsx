@@ -1,9 +1,13 @@
-import Link from "next/link";
-import Date from "@/components/Date";
-import { FragmentType, useFragment } from "@/lib/graphql/__generated__";
-import { splitBaseFragment } from "@/lib/graphql/fragments";
-import { SplitImage } from "@/components/SplitImage";
-import { SplitBaseFragmentFragment } from "@/lib/graphql/__generated__/graphql";
+import Link from 'next/link';
+
+import clsxm from '@/lib/utils/clsxm';
+
+import Date from '@/components/Date';
+import { SplitImage } from '@/components/SplitImage';
+
+import { FragmentType, useFragment } from '@/graphql/__generated__';
+import { SplitBaseFragmentFragment } from '@/graphql/__generated__/graphql';
+import { splitBaseFragment } from '@/graphql/fragments';
 
 interface SplitFragmentCardProps {
   fragment: FragmentType<typeof splitBaseFragment>;
@@ -19,30 +23,30 @@ type SplitCardProps = Partial<SplitBaseFragmentFragment>;
 
 export default function SplitCard({ id, metaData, timestamp }: SplitCardProps) {
   const wrapperClass =
-    "rounded-default bg-default border border-default flex flex-col w-full p-6 h-52 transition";
+    'rounded-default bg-default border border-default flex flex-col w-full p-6 h-52 transition';
 
   const splitCardContent = (
     <>
-      <div className="flex items-center justify-start space-x-2">
-        <div className={"flex-shrink-0"}>
+      <div className='flex items-center justify-start space-x-2'>
+        <div className={'flex-shrink-0'}>
           {!!metaData?.image && (
             <SplitImage
               src={metaData.image}
-              alt={metaData?.name || "UNKNOWN"}
+              alt={metaData?.name || 'UNKNOWN'}
             />
           )}
         </div>
-        <div className={"flex-1 overflow-hidden"}>
-          <h3 className={"block text-default font-semibold truncate"}>
-            {metaData?.name === "" ? "Unknown" : metaData?.name}
+        <div className={'flex-1 overflow-hidden'}>
+          <h3 className={'text-default block truncate font-semibold'}>
+            {metaData?.name === '' ? 'Unknown' : metaData?.name}
           </h3>
         </div>
       </div>
-      <div className={"mt-auto py-2"}>
-        <p className={"line-clamp-3"}>{metaData?.description}</p>
+      <div className={'mt-auto py-2'}>
+        <p className={'line-clamp-3'}>{metaData?.description}</p>
       </div>
-      <div className={""}>
-        <Date className={"text-xs"} timestamp={timestamp} />
+      <div>
+        <Date className={'text-xs'} timestamp={timestamp} />
       </div>
     </>
   );
@@ -51,7 +55,10 @@ export default function SplitCard({ id, metaData, timestamp }: SplitCardProps) {
     <article>
       {!!id ? (
         <Link
-          className={`${wrapperClass} hover:bg-default-2 hover:-translate-y-2 hover:!pb-8`}
+          className={clsxm(
+            wrapperClass,
+            `hover:bg-default-2 hover:-translate-y-2 hover:!pb-8`
+          )}
           href={`/splits/${id}`}
         >
           {splitCardContent}

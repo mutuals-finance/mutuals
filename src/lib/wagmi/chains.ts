@@ -1,15 +1,16 @@
+import { Chain } from 'wagmi';
 import {
-  mainnet,
-  polygon,
-  polygonMumbai,
-  goerli,
   arbitrumGoerli,
-  optimismGoerli,
+  goerli,
   hardhat,
   localhost,
-} from "wagmi/chains";
-import { NODE_ENV } from "@/lib/constants";
-import { Chain } from "wagmi";
+  mainnet,
+  optimismGoerli,
+  polygon,
+  polygonMumbai,
+} from 'wagmi/chains';
+
+import { NODE_ENV } from '@/lib/constants';
 
 const defaultChains = [mainnet, polygon];
 const devChains = [polygonMumbai, goerli, arbitrumGoerli, optimismGoerli];

@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 
 enum ActivityColumnHeaders {
-  Event = "Event",
-  Price = "Price",
-  By = "By",
-  To = "To",
-  Time = "Time",
+  Event = 'Event',
+  Price = 'Price',
+  By = 'By',
+  To = 'To',
+  Time = 'Time',
 }
 
-function ActivityHeaderCell({ children }: React.PropsWithChildren<any>) {
-  return <th className={"pb-2 label"}>{children}</th>;
+function ActivityHeaderCell({ children }: React.PropsWithChildren<unknown>) {
+  return <th className={'label pb-2'}>{children}</th>;
 }
 
 function ActivityHeaderRow() {
   return (
-    <tr className={"text-left"}>
+    <tr className={'text-left'}>
       <ActivityHeaderCell>{ActivityColumnHeaders.Event}</ActivityHeaderCell>
       <ActivityHeaderCell>{ActivityColumnHeaders.Price}</ActivityHeaderCell>
       <ActivityHeaderCell>{ActivityColumnHeaders.By}</ActivityHeaderCell>
@@ -24,20 +24,20 @@ function ActivityHeaderRow() {
   );
 }
 
-function ActivityBodyCell({ children }: React.PropsWithChildren<any>) {
-  return <td className={"py-2"}>{children}</td>;
+function ActivityBodyCell({ children }: React.PropsWithChildren<unknown>) {
+  return <td className={'py-2'}>{children}</td>;
 }
 function ActivityBodyRow() {
   const tx = {
-    Event: "Receive",
-    Price: "1.4",
-    By: "0x1234...5678",
-    To: "0x1234...5678",
-    Time: "6 hours ago",
+    Event: 'Receive',
+    Price: '1.4',
+    By: '0x1234...5678',
+    To: '0x1234...5678',
+    Time: '6 hours ago',
   };
 
   return (
-    <tr className={"border-t"}>
+    <tr className={'border-t'}>
       <ActivityBodyCell>{tx[ActivityColumnHeaders.Event]}</ActivityBodyCell>
       <ActivityBodyCell>{tx[ActivityColumnHeaders.Price]}</ActivityBodyCell>
       <ActivityBodyCell>{tx[ActivityColumnHeaders.By]}</ActivityBodyCell>
@@ -54,8 +54,8 @@ function ActivityBodyRow() {
 
 export default function Activity({}) {
   return (
-    <div className={"flex-1 w-full relative overflow-y-auto"}>
-      <table className="absolute top-0 left-0 w-full h-full table-auto ">
+    <div className={'relative w-full flex-1 overflow-y-auto'}>
+      <table className='absolute top-0 left-0 h-full w-full table-auto '>
         <thead>
           <ActivityHeaderRow />
         </thead>

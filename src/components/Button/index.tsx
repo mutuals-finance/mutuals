@@ -1,8 +1,9 @@
-import React from "react";
-import ButtonBase, { ButtonBaseProps } from "@/components/Button/ButtonBase";
+import React from 'react';
+
+import ButtonBase, { ButtonBaseProps } from '@/components/Button/ButtonBase';
 
 type ButtonProps = ButtonBaseProps;
-type ButtonColoredProps = Omit<ButtonProps, "color">;
+type ButtonColoredProps = Omit<ButtonProps, 'color'>;
 
 function ButtonRoot(props: ButtonProps) {
   return <ButtonBase {...props} />;
@@ -33,12 +34,12 @@ export function ButtonOutline({ children, ...props }: ButtonColoredProps) {
 }
 
 interface ButtonLinkProps extends ButtonColoredProps {
-  link?: "1" | "2";
+  link?: '1' | '2';
 }
 
 export function ButtonLink({
   children,
-  link = "2",
+  link = '2',
   dense = true,
   ...props
 }: ButtonLinkProps) {

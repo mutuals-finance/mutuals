@@ -1,1 +1,1 @@
-export * from "./SplitListing";
+export * from './SplitListing';

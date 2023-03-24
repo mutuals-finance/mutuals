@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface StepperItemState {
   id: string;
@@ -8,6 +8,8 @@ export interface StepperItemState {
     current: StepperModalStep,
     currentIndex: number
   ) => Promise<void> | void;
+  isError?: boolean;
+  error?: Error;
 }
 
 export interface StepperModalStep extends StepperItemState {
@@ -27,11 +29,11 @@ export default function StepperItem({ children, ...props }: StepperItemProps) {
   const { isActive, isError, error } = props;
 
   return (
-    <div className={"flex flex-col w-full"}>
+    <div className={'flex w-full flex-col'}>
       {isActive && (
         <>
           {children(props)}
-          {isError && <p>{error?.message || "Unknown Error"}</p>}
+          {isError && <p>{error?.message || 'Unknown Error'}</p>}
         </>
       )}
     </div>

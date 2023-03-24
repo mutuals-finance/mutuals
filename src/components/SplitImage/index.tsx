@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
-import { IoImage } from "react-icons/io5";
-import Image from "next/image";
-import { StaticImageData } from "next/dist/client/image";
+import { StaticImageData } from 'next/dist/client/image';
+import Image from 'next/image';
+import React from 'react';
+import { IoImage } from 'react-icons/io5';
 
 interface SplitImageInnerProps {
   alt?: string;
@@ -13,33 +13,33 @@ interface SplitImageProps extends SplitImageInnerProps {
 }
 
 function ipfsUrlFromUri(uri: string) {
-  return uri.replace("ipfs://", "https://cloudflare-ipfs.com/ipfs/");
+  return uri.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
 }
 
 function SplitImageInner({ src, alt }: SplitImageInnerProps) {
   return !!src ? (
     <Image
-      className={"object-cover w-12 h-12 rounded-full"}
+      className={'h-12 w-12 rounded-full object-cover'}
       src={src}
-      alt={alt || "Unknown Split"}
+      alt={alt || 'Unknown Split'}
       width={48}
       height={48}
     />
   ) : (
-    <IoImage className={"block text-neutral-900"} />
+    <IoImage className={'block text-neutral-900'} />
   );
 }
 export function SplitImage({ file, src, alt }: SplitImageProps) {
   const srcOrFile = !!file
     ? URL.createObjectURL(file)
-    : typeof src === "string"
+    : typeof src === 'string'
     ? ipfsUrlFromUri(src)
     : src;
 
   return (
     <div
       className={
-        "relative flex flex-1 items-center justify-center rounded-full w-12 h-12 bg-default-2"
+        'bg-default-2 relative flex h-12 w-12 flex-1 items-center justify-center rounded-full'
       }
     >
       <SplitImageInner src={srcOrFile} alt={alt} />

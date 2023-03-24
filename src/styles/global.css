@@ -24,7 +24,7 @@
   }
 
   .title-2 {
-    @apply text-4xl font-semibold;
+    @apply text-4xl font-medium;
   }
 
   .title-3 {
@@ -33,26 +33,27 @@
 
   .link,
   .link-1 {
-    @apply font-semibold opacity-60 hover:opacity-100 transition duration-200;
+    @apply font-medium opacity-60 transition duration-200 hover:opacity-100;
   }
 
   .link-2 {
-    @apply font-semibold opacity-100 hover:opacity-60 transition duration-200;
+    @apply font-medium opacity-100 transition duration-200 hover:opacity-60;
   }
 
   .label {
-    @apply inline-block font-normal text-xs leading-relaxed text-neutral-500 dark:text-neutral-400;
+    @apply inline-block text-xs leading-relaxed text-light font-normal;
   }
 
-  .label ~ input,
-  .label ~ .input,
-  .label ~ textarea,
-  .label ~ .textarea {
+  .label + input,
+  .label + .input,
+  .label + .input-default,
+  .label + textarea,
+  .label + .textarea {
     @apply mt-1;
   }
 
   .input-default {
-    @apply w-full text-default px-6 py-3 m-0 placeholder:text-neutral-400 flex justify-start text-left outline-0 border border-default ring-0 focus:ring-1 ring-neutral-900 dark:ring-neutral-50 bg-default rounded-default;
+    @apply text-default border-default bg-default rounded-default m-0 flex w-full justify-start border px-4 py-3 text-left outline-0 ring-0 focus:ring-0 placeholder:text-neutral-400 focus:border-neutral-400 dark:focus:border-neutral-500;
   }
 
   input,
@@ -60,17 +61,32 @@
     @apply input-default h-10 items-center;
   }
 
+  input[type="number"].input-number::-webkit-outer-spin-button,
+  input[type="number"].input-number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"].input-number {
+    -moz-appearance: textfield;
+  }
+
+
+  .input-readonly {
+    @apply cursor-default focus:border-default border-opacity-50 bg-opacity-50
+  }
+
   textarea,
   .textarea {
-    @apply input-default min-h-[6rem] items-start;
+    @apply input-default min-h-[8rem] items-start;
   }
 
   .label-error {
-    @apply block mt-1 text-xs text-error;
+    @apply text-xs text-error;
   }
 
   .error .input-default {
-    @apply ring ring-error;
+    @apply border-error dark:border-error;
   }
 
   .error .label {
@@ -92,6 +108,10 @@
 
   .text-default {
     @apply text-neutral-900 dark:text-neutral-50;
+  }
+
+  .text-light {
+    @apply text-neutral-600 dark:text-neutral-300;
   }
 
   .rounded-default {

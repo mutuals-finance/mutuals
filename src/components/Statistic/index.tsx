@@ -1,8 +1,8 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from 'react';
 
 interface StatisticProps
   extends React.PropsWithChildren<
-    Omit<HTMLAttributes<HTMLDivElement>, "title" | "prefix">
+    Omit<HTMLAttributes<HTMLDivElement>, 'title' | 'prefix'>
   > {
   title?: string | ReactNode;
   prefix?: string | number | ReactNode;
@@ -18,11 +18,11 @@ export default function Statistic({
   ...props
 }: StatisticProps) {
   return (
-    <div className="flex flex-col">
-      {!!title && <span className="block label">{title}</span>}
+    <div className='flex flex-col'>
+      {!!title && <span className='label block'>{title}</span>}
 
       <div
-        className={`flex items-center justify-start space-x-2 font-semibold leading-relaxed ${className}`}
+        className={`flex items-center justify-start space-x-2 font-medium leading-relaxed ${className}`}
         {...props}
       >
         {!!prefix && <div>{prefix}</div>}

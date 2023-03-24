@@ -1,8 +1,10 @@
-import React from "react";
-import { useSwitchNetwork } from "wagmi";
-import Tabs from "@/components/Tabs";
-import Image from "next/image";
-import { getLogoByChainId } from "@/lib/utils/chainLogo";
+import Image from 'next/image';
+import React from 'react';
+import { useSwitchNetwork } from 'wagmi';
+
+import { getLogoByChainId } from '@/lib/utils/chainLogo';
+
+import Tabs from '@/components/Tabs';
 
 export function ConnectWalletTabs() {
   const { chains } = useSwitchNetwork();
@@ -11,15 +13,15 @@ export function ConnectWalletTabs() {
     <Tabs>
       <Tabs.Titles>
         {chains.map((chain) => (
-          <Tabs.Title key={chain.id} className={"flex items-center space-x-3"}>
+          <Tabs.Title key={chain.id} className={'flex items-center space-x-3'}>
             <Image
-              className={"w-4 h-4"}
-              objectFit="contain"
+              className={'h-4 w-4'}
+              objectFit='contain'
               height={4}
               src={getLogoByChainId(chain.id)}
               alt={chain.name}
             />
-            <span className={"block text-lg font-semibold"}>{chain.name}</span>
+            <span className={'block text-lg font-semibold'}>{chain.name}</span>
           </Tabs.Title>
         ))}
       </Tabs.Titles>

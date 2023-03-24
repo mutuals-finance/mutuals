@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
-import { useNetwork } from "wagmi";
-import { getDefaultTokenLogoURI } from "@/lib/utils";
-import { ETH_TOKEN } from "@/lib/constants";
-import Image, { ImageProps } from "next/image";
+import Image, { ImageProps } from 'next/image';
+import { useMemo, useState } from 'react';
+import { useNetwork } from 'wagmi';
 
-type NativeTokenImage = Omit<ImageProps, "src" | "alt">;
+import { ETH_TOKEN } from '@/lib/constants';
+import { getDefaultTokenLogoURI } from '@/lib/utils';
+
+type NativeTokenImage = Omit<ImageProps, 'src' | 'alt'>;
 
 export default function NativeTokenImage(props: NativeTokenImage) {
   const { chain } = useNetwork();
@@ -17,5 +18,5 @@ export default function NativeTokenImage(props: NativeTokenImage) {
     }
   }, [chain]);
 
-  return <Image src={src} alt={"Native Token"} {...props} />;
+  return <Image src={src} alt={'Native Token'} {...props} />;
 }

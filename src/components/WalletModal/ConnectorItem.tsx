@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ConnectorItemProps {
   name: string;
@@ -8,7 +8,7 @@ interface ConnectorItemProps {
 }
 
 const ConnectorItemName = ({ children }: React.PropsWithChildren) => {
-  return <span className="block text-default font-semibold">{children}</span>;
+  return <span className='text-default block font-semibold'>{children}</span>;
 };
 
 export default function ConnectorItem({
@@ -20,11 +20,11 @@ export default function ConnectorItem({
   return (
     <button
       onClick={onClick}
-      className="flex items-center justify-between w-full h-14 p-4 bg-neutral-100 dark:bg-neutral-800 border border border-default hover:border-stone-400 dark:hover:border-stone-500 rounded-xl transition-color ease-in-out duration-200"
+      className='border-default transition-color flex h-14 w-full items-center justify-between rounded-xl border border bg-neutral-100 p-4 duration-200 ease-in-out hover:border-stone-400 dark:bg-neutral-800 dark:hover:border-stone-500'
     >
       <ConnectorItemName>
-        {name} {!ready && "(unsupported)"}
-        {isPending && "(connecting)"}
+        {name} {!ready && '(unsupported)'}
+        {isPending && '(connecting)'}
       </ConnectorItemName>
     </button>
   );

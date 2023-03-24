@@ -1,15 +1,17 @@
-import React from "react";
-import Sidebar, { SidebarProps } from "@/components/Sidebar";
-import { ButtonPrimary } from "@/components/Button";
-import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { IoHelp } from "react-icons/io5";
-import { formatBalance, formatCurrency } from "@/lib/utils";
-import Image from "next/image";
-import InputCheckbox from "@/components/Form/InputCheckbox";
-import Statistic from "@/components/Statistic";
-import { Controller, useForm } from "react-hook-form";
+import { Balance } from '@ankr.com/ankr.js/dist/types';
+import Image from 'next/image';
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { IoHelp } from 'react-icons/io5';
 
-type WithdrawModalProps = Omit<SidebarProps, "header" | "footer"> & {
+import { formatBalance, formatCurrency } from '@/lib/utils';
+
+import { ButtonPrimary } from '@/components/Button';
+import InputCheckbox from '@/components/Form/InputCheckbox';
+import Sidebar, { SidebarProps } from '@/components/Sidebar';
+import Statistic from '@/components/Statistic';
+
+type WithdrawModalProps = Omit<SidebarProps, 'header' | 'footer'> & {
   assets?: Balance[];
 };
 
@@ -25,47 +27,47 @@ function AssetCardHorizontal({
 }: AssetCardHorizontalProps) {
   return (
     <div
-      className={`flex w-full overflow-hidden items-center justify-between space-x-3 rounded-default p-3 ${className}`}
+      className={`rounded-default flex w-full items-center justify-between space-x-3 overflow-hidden p-3 ${className}`}
     >
-      <div className={"flex flex-1 items-center space-x-3"}>
-        <div className={"w-6 h-6 flex items-center bg-transparent"}>
-          {thumbnail !== "" ? (
+      <div className={'flex flex-1 items-center space-x-3'}>
+        <div className={'flex h-6 w-6 items-center bg-transparent'}>
+          {thumbnail !== '' ? (
             <Image
               src={thumbnail}
               alt={tokenName}
               width={48}
               height={48}
-              className={"w-full flex-1 object-contain self-stretch"}
+              className={'w-full flex-1 self-stretch object-contain'}
             />
           ) : (
             <span
               className={
-                "flex w-full items-center justify-center self-stretch bg-default-2 rounded-full"
+                'bg-default-2 flex w-full items-center justify-center self-stretch rounded-full'
               }
             >
-              <IoHelp className={"block"} />
+              <IoHelp className={'block'} />
             </span>
           )}
         </div>
 
-        <div className={"flex flex-col"}>
-          <h3 className={"block font-semibold whitespace-nowrap truncate"}>
-            {tokenName !== "" ? tokenName : "Unknown Token"}
+        <div className={'flex flex-col'}>
+          <h3 className={'block truncate whitespace-nowrap font-semibold'}>
+            {tokenName !== '' ? tokenName : 'Unknown Token'}
           </h3>
           <span
-            className={"block label leading-none whitespace-nowrap truncate"}
+            className={'label block truncate whitespace-nowrap leading-none'}
           >
-            {tokenSymbol !== "" ? tokenSymbol : "UNKNOWN"}
+            {tokenSymbol !== '' ? tokenSymbol : 'UNKNOWN'}
           </span>
         </div>
       </div>
 
-      <div className={"flex flex-col flex-shrink-0 overflow-hidden text-right"}>
-        <span className={"font-semibold truncate"}>
-          {formatBalance(balance)}{" "}
-          {tokenSymbol !== "" ? tokenSymbol : "UNKNOWN"}
+      <div className={'flex flex-shrink-0 flex-col overflow-hidden text-right'}>
+        <span className={'truncate font-semibold'}>
+          {formatBalance(balance)}{' '}
+          {tokenSymbol !== '' ? tokenSymbol : 'UNKNOWN'}
         </span>
-        <span className={"block label leading-none truncate"}>
+        <span className={'label block truncate leading-none'}>
           {formatCurrency(balanceUsd)}
         </span>
       </div>
@@ -83,8 +85,8 @@ export function WithdrawModal({ assets, ...props }: WithdrawModalProps) {
     },
   });
 
-  const withdrawBalance = (watch("assets") || []).reduce(
-    (total, asset) => total + Number(asset?.balanceUsd || "0"),
+  const withdrawBalance = (watch('assets') || []).reduce(
+    (total, asset) => total + Number(asset?.balanceUsd || '0'),
     0
   );
 
@@ -92,18 +94,18 @@ export function WithdrawModal({ assets, ...props }: WithdrawModalProps) {
     <Sidebar
       {...props}
       header={
-        <div className={"p-6"}>
-          <h2 className={"font-semibold"}>Request Withdraw</h2>
+        <div className={'p-6'}>
+          <h2 className={'font-semibold'}>Request Withdraw</h2>
         </div>
       }
       footer={
-        <div className="flex flex-col p-6 space-y-6">
-          <Statistic title={"Withdraw Balance"}>
+        <div className='flex flex-col space-y-6 p-6'>
+          <Statistic title={'Withdraw Balance'}>
             {formatCurrency(withdrawBalance)}
           </Statistic>
 
           <ButtonPrimary
-            onClick={handleSubmit((data) => console.log("submit", data))}
+            onClick={handleSubmit((data) => console.log('submit', data))}
           >
             Withdraw
           </ButtonPrimary>
@@ -111,21 +113,21 @@ export function WithdrawModal({ assets, ...props }: WithdrawModalProps) {
       }
     >
       <form
-        className={"w-full max-w-[32rem] flex flex-col flex-1 overflow-hidden"}
+        className={'flex w-full max-w-[32rem] flex-1 flex-col overflow-hidden'}
       >
-        <div className={"flex-shrink-0 p-6"}>
+        <div className={'flex-shrink-0 p-6'}>
           <p>
             Please select the tokens you want to withdraw and confirm your
             selection.
           </p>
         </div>
 
-        <div className={"flex flex-col flex-1 overflow-y-auto px-6"}>
-          <ul className={"flex flex-col divide-y divide-default"}>
+        <div className={'flex flex-1 flex-col overflow-y-auto px-6'}>
+          <ul className={'divide-default flex flex-col divide-y'}>
             {assets?.map((asset, index) => (
               <li
                 key={asset.tokenSymbol}
-                className={"flex space-x-3 items-center"}
+                className={'flex items-center space-x-3'}
               >
                 <Controller
                   name={`assets.${index}`}
@@ -140,7 +142,7 @@ export function WithdrawModal({ assets, ...props }: WithdrawModalProps) {
                       />
                       <AssetCardHorizontal
                         {...asset}
-                        className={!value ? "bg-transparent" : "bg-transparent"}
+                        className={!value ? 'bg-transparent' : 'bg-transparent'}
                       />
                     </>
                   )}

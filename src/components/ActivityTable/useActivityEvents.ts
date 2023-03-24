@@ -1,15 +1,18 @@
-import { FragmentType, useFragment } from "@/lib/graphql/__generated__";
+import { formatAmount } from '@/lib/utils';
+
+import { FragmentType, useFragment } from '@/graphql/__generated__';
+import { TransactionDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
 import {
   contractURIUpdateFragment,
-  paymentReceiveFragment,
-  paymentReleaseFragment,
+  depositFragment,
   splitBaseFragment,
   tokenFragment,
   transactionBaseFragment,
   transactionDetailsFragment,
-} from "@/lib/graphql/fragments";
-import { formatAmount } from "@/lib/utils";
-import { EventType, SplitEvent } from "./types";
+  withdrawalFragment,
+} from '@/graphql/fragments';
+
+import { EventType, SplitEvent } from './types';
 
 function useEventContractURIUpdate(
   fragment: FragmentType<typeof contractURIUpdateFragment>
@@ -19,23 +22,21 @@ function useEventContractURIUpdate(
 
   return {
     event: EventType.ContractURIUpdate,
-    price: "",
+    price: '',
     by: event.origin,
-    to: "",
+    to: '',
     timestamp: tx.timestamp,
   } as SplitEvent;
 }
 
-function useEventPaymentReceive(
-  fragment: FragmentType<typeof paymentReceiveFragment>
-) {
-  const event = useFragment(paymentReceiveFragment, fragment);
+function useEventDeposit(fragment: FragmentType<typeof depositFragment>) {
+  const event = useFragment(depositFragment, fragment);
   const tx = useFragment(transactionBaseFragment, event.transaction);
   const split = useFragment(splitBaseFragment, event.split);
   const token = useFragment(tokenFragment, event.token);
 
   return {
-    event: EventType.PaymentReceive,
+    event: EventType.Deposit,
     price: `+ ${formatAmount(event.amount, token.decimals)} ${token.symbol}`,
     by: event.from,
     to: split.address,
@@ -43,16 +44,14 @@ function useEventPaymentReceive(
   } as SplitEvent;
 }
 
-function useEventPaymentRelease(
-  fragment: FragmentType<typeof paymentReleaseFragment>
-) {
-  const event = useFragment(paymentReleaseFragment, fragment);
+function useEventWithdrawal(fragment: FragmentType<typeof withdrawalFragment>) {
+  const event = useFragment(withdrawalFragment, fragment);
   const tx = useFragment(transactionBaseFragment, event.transaction);
   const split = useFragment(splitBaseFragment, event.split);
   const token = useFragment(tokenFragment, event.token);
 
   return {
-    event: EventType.PaymentRelease,
+    event: EventType.Withdrawal,
     price: `- ${formatAmount(event.amount, token.decimals)} ${token.symbol}`,
     by: split.address,
     to: event.origin,
@@ -61,12 +60,15 @@ function useEventPaymentRelease(
 }
 
 export function useActivityEvents(
-  fragment: FragmentType<typeof transactionDetailsFragment>
+  fragment: TransactionDetailsFragmentFragment
 ) {
-  const tx = useFragment(transactionDetailsFragment, fragment);
+  const tx = useFragment(
+    transactionDetailsFragment,
+    fragment as FragmentType<typeof transactionDetailsFragment>
+  );
   const updates = tx.contractURIUpdates.map(useEventContractURIUpdate);
-  const receives = tx.paymentReceives.map(useEventPaymentReceive);
-  const releases = tx.paymentReleases.map(useEventPaymentRelease);
+  const receives = tx.deposits.map(useEventDeposit);
+  const releases = tx.withdrawals.map(useEventWithdrawal);
 
   return [...updates, ...receives, ...releases] as SplitEvent[];
 }

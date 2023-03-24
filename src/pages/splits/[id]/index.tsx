@@ -1,27 +1,28 @@
-import React from "react";
-import { SPLIT, TRANSACTIONS_BY_SPLIT } from "@/lib/graphql/queries";
-import { useFragment } from "@/lib/graphql/__generated__";
-import {
-  Balance,
-  Analytics,
-  Activity,
-  Shares,
-  Details,
-  Header,
-  WithdrawModal,
-} from "@/templates/split/details";
+import { Blockchain } from '@ankr.com/ankr.js/dist/types';
+import { ApolloClient } from '@apollo/client';
+import { useAccountBalance } from 'ankr-react';
+import { InferGetServerSidePropsType } from 'next';
+import { useRouter } from 'next/router';
+import React from 'react';
+
+import { useFragment } from '@/graphql/__generated__';
+import { initializeApollo } from '@/graphql/client';
 import {
   splitDetailsFragment,
   transactionDetailsFragment,
-} from "@/lib/graphql/fragments";
-import { NextPageWithLayout } from "#/app";
-import { ApolloClient } from "@apollo/client";
-import { initializeApollo } from "@/lib/graphql/client";
-import { InferGetServerSidePropsType } from "next";
-import { useRouter } from "next/router";
-import { isDev } from "@/lib/utils";
-import { useAccountBalance } from "ankr-react";
-import { Blockchain } from "@ankr.com/ankr.js/dist/types";
+} from '@/graphql/fragments';
+import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/graphql/queries';
+import {
+  Activity,
+  Analytics,
+  Balance,
+  Details,
+  Header,
+  Shares,
+  WithdrawModal,
+} from '@/templates/split/details';
+
+import { NextPageWithLayout } from '#/app';
 
 async function fetchSplitDetails(client: ApolloClient<unknown>, id: string) {
   const { data } = await client.query({
@@ -68,7 +69,7 @@ async function fetchSplitTransactions(
 }
 
 export async function getServerSideProps(context: { params: { id: string } }) {
-  const client = initializeApollo();
+  const client = await initializeApollo();
 
   const [split, transactions] = await Promise.all([
     fetchSplitDetails(client, context.params.id),
@@ -91,8 +92,8 @@ const SplitDetailPage: NextPageWithLayout<
   );
 
   const { data: splitBalance } = useAccountBalance({
-    walletAddress: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-    blockchain: ["eth" as Blockchain],
+    walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    blockchain: ['eth' as Blockchain],
     onlyWhitelisted: true,
   });
 
@@ -103,12 +104,13 @@ const SplitDetailPage: NextPageWithLayout<
   return (
     <>
       <Header
-        title={split.metaData.name || "Unknown"}
+        title={split.metaData.name || 'Unknown'}
         image={split.metaData.image}
-        description={split.metaData.description || ""}
+        description={split.metaData.description || ''}
         address={split.address}
       />
 
+      {/*
       <WithdrawModal
         onClose={() =>
           router.replace({ pathname, query: { id: query.id } }, undefined, {
@@ -118,9 +120,10 @@ const SplitDetailPage: NextPageWithLayout<
         open={Boolean(query.withdraw)}
         assets={splitBalance?.assets}
       />
+*/}
 
       <section>
-        <div className={"container grid lg:grid-cols-6 gap-3 lg:gap-6"}>
+        <div className={'container grid gap-3 lg:grid-cols-6 lg:gap-6'}>
           <Balance {...splitBalance} />
           <Shares shares={split.shares} />
           <Activity transactions={transactions} />
@@ -131,7 +134,5 @@ const SplitDetailPage: NextPageWithLayout<
     </>
   );
 };
-
-SplitDetailPage.Layout = "App";
 
 export default SplitDetailPage;

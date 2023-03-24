@@ -1,11 +1,14 @@
-import { CIDString, NFTStorage } from "nft.storage";
-import { NFT_STORAGE_TOKEN } from "@/lib/constants";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { CIDString, NFTStorage } from 'nft.storage';
+import { useCallback, useMemo, useRef, useState } from 'react';
+
+import { NFT_STORAGE_TOKEN } from '@/lib/constants';
+
+import { FileWithPreview } from '@/components/Form/types';
 
 export interface Metadata {
   name?: string;
   description?: string;
-  image?: File;
+  image?: FileWithPreview;
 }
 
 type MetadataValue = CIDString;
@@ -41,13 +44,13 @@ export function useMetadata() {
     setValue(value);
   }
 
-  function onError(e: Error) {
+  function onError(e: unknown) {
     setIsError(true);
-    setError(e);
+    setError(e instanceof Error ? e : new Error('Unexpected error'));
   }
 
   const save = useCallback(
-    async ({ image, name = "", description = "" }: Metadata) => {
+    async ({ image, name = '', description = '' }: Metadata) => {
       onReset();
       controllerRef.current = new AbortController();
       try {
@@ -75,7 +78,7 @@ export function useMetadata() {
         const uri = `ipfs://${res}`;
         onSuccess(uri);
         return uri;
-      } catch (e: any) {
+      } catch (e: unknown) {
         onError(e);
         return null;
       } finally {

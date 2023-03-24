@@ -1,5 +1,8 @@
-import LoadingSpinner from "@/components/LoadingSpinner";
-import { IoAlertCircle, IoCheckmarkCircle } from "react-icons/io5";
+import { IoAlertCircle, IoCheckmarkCircle } from 'react-icons/io5';
+
+import clsxm from '@/lib/utils/clsxm';
+
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface LoadingStepProps {
   description?: string;
@@ -10,25 +13,25 @@ interface LoadingStepProps {
   isSuccess?: boolean;
 }
 
-type LoadingStepStatusProps = Omit<LoadingStepProps, "description">;
+type LoadingStepStatusProps = Omit<LoadingStepProps, 'description'>;
 
-type LoadingStepIndicatorProps = Omit<LoadingStepStatusProps, "status">;
+type LoadingStepIndicatorProps = Omit<LoadingStepStatusProps, 'status'>;
 
 function LoadingStepIndicator({
   isError,
   isSuccess,
 }: LoadingStepIndicatorProps) {
   return (
-    <div className={"pb-6"}>
+    <div className={'pb-6'}>
       <div
-        className={"inline-flex w-8 h-8 items-center justify-center text-3xl"}
+        className={'inline-flex h-8 w-8 items-center justify-center text-3xl'}
       >
         {isError ? (
-          <IoAlertCircle className={"block text-error"} />
+          <IoAlertCircle className={'block text-error'} />
         ) : isSuccess ? (
-          <IoCheckmarkCircle className={"block text-green-500"} />
+          <IoCheckmarkCircle className={'block text-green-500'} />
         ) : (
-          <LoadingSpinner color={"outline"} size={"xl"} />
+          <LoadingSpinner color={'outline'} size={'xl'} />
         )}
       </div>
     </div>
@@ -41,12 +44,14 @@ function LoadingStepStatus({
   isSuccess,
 }: LoadingStepStatusProps) {
   return (
-    <div className={"flex items-center justify-between py-3 border-y"}>
-      <span className={"block label"}>Status</span>
+    <div className={'flex items-center justify-between border-y py-3'}>
+      <span className={'label block'}>Status</span>
       <span
-        className={`block font-semibold text-xs ${
-          isError ? "text-error" : ""
-        } ${isSuccess ? "text-green-500" : ""}`}
+        className={clsxm(
+          `block text-xs font-semibold`,
+          isError && 'text-error',
+          isSuccess && 'text-green-500'
+        )}
       >
         {status}
       </span>
@@ -60,12 +65,12 @@ export function LoadingStep({
   ...props
 }: LoadingStepProps) {
   return (
-    <div className={"flex flex-col space-y-6"}>
+    <div className={'flex flex-col space-y-6'}>
       <LoadingStepIndicator {...props} />
       <div>
         {!!error && (
-          <div className={"text-error text-xs pt-1"}>
-            <p>{error?.message || "Unknown Error"}</p>{" "}
+          <div className={'pt-1 text-xs text-error'}>
+            <p>{error?.message || 'Unknown Error'}</p>{' '}
           </div>
         )}
         <p>{description}</p>

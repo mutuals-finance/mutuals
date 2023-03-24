@@ -1,80 +1,127 @@
-import Input from "@/components/Form/Input";
-import React, { useEffect, useState } from "react";
-import { AiOutlinePercentage } from "react-icons/ai";
-import FormList from "./FormList";
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { NumberFormatValues } from 'react-number-format';
+
+import { formatRoundNumber } from '@/lib/utils';
+
+import Input from '@/components/Form/Input';
+import InputFieldArray from '@/components/Form/InputFieldArray';
+import InputNumber from '@/components/Form/InputNumber/';
+
+import PayeeListFooter from '@/templates/split/new/PayeeListFooter';
 
 export interface Payee {
-  address: string;
-  share: number;
+  id: string;
+  value: string;
 }
 
 interface PayeeListProps {
-  value: Payee[];
-  onChange: (value: Payee[]) => void;
+  id: string;
 }
 
-export const initialPayee: Payee = {
-  address: "",
-  share: 100.0,
+export const defaultPayee: Payee = {
+  id: '',
+  value: '0.0',
 };
 
-export default function PayeeList({ value, onChange }: PayeeListProps) {
+export default function PayeeList({ id }: PayeeListProps) {
   const maxShares = 100.0;
 
-  const [maxShare, setMaxShares] = useState<number>(maxShares);
+  const { watch, setValue } = useFormContext();
 
-  useEffect(() => {
-    setMaxShares(
-      () => maxShares - value.reduce((total, p) => total + p.share, 0)
+  const payees = watch(id) as Payee[];
+
+  const totalShares = payees.reduce(
+    (total, p) => (total * 100 + Number(p.value) * 100) / 100,
+    0.0
+  );
+  const totalPayees = payees.length;
+
+  function _setValues(total: number, indices: number[]) {
+    const value = formatRoundNumber(total / indices.length, {
+      round: Math.floor,
+    });
+    const diff = formatRoundNumber(total % (value * indices.length));
+    let steps = diff * 100;
+    indices.forEach((index) =>
+      setValue(
+        `${id}.${index}.value`,
+        formatRoundNumber(steps > 0 ? steps-- && value + 0.01 : value)
+      )
     );
-  }, [value]);
+  }
 
-  function updateAt(start: number, deleteCount: number, ...items: Payee[]) {
-    value.splice(start, deleteCount, ...items);
-    onChange(value);
+  function onSetValuesRemaining() {
+    _setValues(
+      maxShares - totalShares,
+      payees
+        .map((p, index) => ({ index, ...p }))
+        .filter((p: Payee) => Number(p.value) <= 0)
+        .map((p) => p.index)
+    );
+  }
+
+  function onSetValuesEvenly() {
+    _setValues(
+      maxShares,
+      payees.map((_, index) => index)
+    );
+  }
+
+  function isAllowed({ floatValue, value }: NumberFormatValues) {
+    const numValue = parseFloat(floatValue?.toFixed(2) || value);
+    return numValue <= maxShares && numValue >= 0.0;
   }
 
   return (
-    <FormList<Payee>
-      value={value}
-      onAdd={(index) => updateAt(index, 0, { address: "", share: maxShare })}
-      onRemove={(index) => updateAt(index, 1)}
-    >
-      {({ item, index }) => (
-        <>
-          <div className={"flex-1"}>
-            <Input
-              value={item.address}
-              onChange={(event) =>
-                updateAt(index, 1, {
-                  address: event.target.value,
-                  share: item.share,
-                })
-              }
-              id={`payee-address-${index}`}
-              label={"Wallet Address or ENS Name"}
-            />
-          </div>
-
-          <Input
-            type={"number"}
-            className={"w-32"}
-            label={"Share"}
-            min={0}
-            max={maxShares}
-            step="any"
-            iconAfter={<AiOutlinePercentage />}
-            onChange={(event) =>
-              updateAt(index, 1, {
-                address: item.address,
-                share: parseFloat(event.target.value),
-              })
-            }
-            id={`payee-share-${index}`}
-            value={item.share}
+    <div className={'flex flex-col space-y-6'}>
+      <InputFieldArray<Payee>
+        id={id}
+        defaultItem={defaultPayee}
+        hideAdd={true}
+        validation={{ minLength: 2 }}
+        contentAfter={({ append }) => (
+          <PayeeListFooter
+            totalShares={totalShares}
+            maxShares={maxShares}
+            totalPayees={totalPayees}
+            onAppendRecipient={() => append(defaultPayee)}
+            onSetValuesRemaining={onSetValuesRemaining}
+            onSetValuesEvenly={onSetValuesEvenly}
           />
-        </>
-      )}
-    </FormList>
+        )}
+      >
+        {(itemId) => (
+          <>
+            <div className={'flex-1'}>
+              <Input
+                label={'Wallet Address or ENS Name'}
+                placeholder={'0x0000...0000'}
+                id={`${itemId}.id`}
+              />
+            </div>
+
+            <div className={'w-36'}>
+              <InputNumber
+                id={`${itemId}.value`}
+                label={'% Share'}
+                validation={{
+                  min: 0.0,
+                  max: maxShares,
+                }}
+                step={0.01}
+                addDisabled={totalShares >= maxShares}
+                removeDisabled={totalShares <= 0.0}
+                allowNegative={false}
+                decimalScale={2}
+                defaultValue={0.0}
+                fixedDecimalScale={true}
+                isAllowed={isAllowed}
+              />
+            </div>
+          </>
+        )}
+      </InputFieldArray>
+    </div>
   );
 }
