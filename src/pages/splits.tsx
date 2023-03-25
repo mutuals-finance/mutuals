@@ -6,6 +6,7 @@ import { ButtonSecondary } from '@/components/Button';
 import Form from '@/components/Form';
 import Input from '@/components/Form/Input';
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
 
 import { SplitListing } from '@/templates/split/list';
 
@@ -44,6 +45,7 @@ function SplitListingHeader() {
 const SplitsPage: NextPageWithLayout = function () {
   return (
     <>
+      <Seo />
       <SplitsPageHeader />
       <SplitListingHeader />
       <SplitListing />

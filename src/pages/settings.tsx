@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
 
 import { NextPageWithLayout } from '#/app';
 
@@ -10,6 +11,7 @@ function SettingsHeader() {
 const SettingsPage: NextPageWithLayout = function SettingsPage() {
   return (
     <>
+      <Seo />
       <SettingsHeader />
       <section>
         <div className={'container grid gap-4 lg:grid-cols-6 lg:gap-8'}>

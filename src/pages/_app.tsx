@@ -28,14 +28,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <Head>
-        <title>SplitFi — Trustless blockchain revenue distribution</title>
-        <meta
-          name='description'
-          content='SplitFi — Trustless Multiparty Payment Distribution'
-        />
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
-      </Head>
       <ApolloProvider client={apolloClient}>
         <ThemeProvider attribute='class'>
           <AnkrProvider>

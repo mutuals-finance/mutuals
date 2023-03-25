@@ -5,6 +5,8 @@ import { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import Seo from '@/components/Seo';
+
 import { useFragment } from '@/graphql/__generated__';
 import { initializeApollo } from '@/graphql/client';
 import {
@@ -103,6 +105,7 @@ const SplitDetailPage: NextPageWithLayout<
 
   return (
     <>
+      <Seo />
       <Header
         title={split.metaData.name || 'Unknown'}
         image={split.metaData.image}
