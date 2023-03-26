@@ -1,48 +1,33 @@
-import Link, { LinkProps } from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-interface AppSidebarLinkProps extends LinkProps {
-  dense?: boolean;
-  icon?: React.ReactNode;
-}
+import clsxm from '@/lib/utils/clsxm';
+
+import { LinkProps, LinkUnstyled } from '@/components/Link';
+
+type AppSidebarLinkProps = Omit<LinkProps, 'fullWidth'>;
 
 export default function SidebarLink({
-  children,
-  icon,
-  dense = false,
+  activeClassName,
+  className,
+  size,
   ...props
 }: React.PropsWithChildren<AppSidebarLinkProps>) {
-  const className = `px-4 space-x-6 justify-start relative font-semibold text-sm flex h-12 items-center hover:bg-default-2 whitespace-nowrap truncate transition-color duration-200 rounded-default ${
-    dense ? 'w-12' : 'w-52'
-  }`;
-  const activeClassName = 'bg-default-1';
-
-  // const { pathname } = useRouter();
-  const segments = [''];
-  const [computedClassName, setComputedClassName] = useState(className);
-
-  useEffect(() => {
-    const linkURL = new URL((props.as || props.href) as string, location.href);
-    const segment = linkURL.pathname.replace('/', '');
-    const newClassName = segments.includes(segment)
-      ? `${className} ${activeClassName}`
-      : className;
-
-    if (newClassName !== computedClassName) {
-      setComputedClassName(newClassName);
-    }
-  }, [segments, props.as, props.href, computedClassName, className]);
+  const isSmall = size === 'sm';
+  const heightClass = isSmall ? 'h-10' : 'h-11';
+  const sizeClass = isSmall ? 'space-x-3 px-3' : 'space-x-6 px-4';
 
   return (
-    <Link {...props} className={computedClassName}>
-      {!!icon ? (
-        <>
-          <span className={'block'}>{icon}</span>
-          <span className={'block'}>{children}</span>
-        </>
-      ) : (
-        children
+    <LinkUnstyled
+      {...props}
+      className={clsxm(
+        className,
+        heightClass,
+        sizeClass,
+        'rounded-default hover:border-default flex items-center justify-start truncate whitespace-nowrap border border-transparent font-medium'
       )}
-    </Link>
+      fullWidth={true}
+      activeClassName={clsxm(activeClassName, 'bg-default-1')}
+      size={size}
+    />
   );
 }

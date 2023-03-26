@@ -1,5 +1,10 @@
 import React from 'react';
-import { IoChevronBack, IoChevronForward, IoSettings } from 'react-icons/io5';
+import {
+  IoChevronBack,
+  IoChevronForward,
+  IoHelp,
+  IoSettings,
+} from 'react-icons/io5';
 
 import { ButtonOutline } from '@/components/Button';
 
@@ -15,7 +20,7 @@ export default function SidebarFooter({
   collapsed,
 }: AppSidebarFooterProps) {
   return (
-    <div className={'flex flex-shrink-0 flex-col space-y-2 p-2 lg:pb-6'}>
+    <div className={'flex flex-shrink-0 flex-col space-y-3 p-3 lg:pb-6'}>
       <div className={'ml-auto translate-x-7'}>
         <ButtonOutline
           icon={collapsed ? <IoChevronForward /> : <IoChevronBack />}
@@ -23,7 +28,7 @@ export default function SidebarFooter({
         />
       </div>
 
-      <SidebarLink dense={collapsed} href={'/settings'} icon={<IoSettings />}>
+      <SidebarLink href={'/settings'} icon={<IoSettings />}>
         Settings
       </SidebarLink>
     </div>

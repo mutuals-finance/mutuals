@@ -2,7 +2,6 @@ import { ApolloProvider } from '@apollo/client';
 import { Provider as AnkrProvider } from 'ankr-react';
 import { NextComponentType, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 import { ThemeProvider } from 'next-themes';
 import React from 'react';
 import { WagmiConfig } from 'wagmi';

@@ -1,36 +1,38 @@
 import React from 'react';
-import { IoAnalytics, IoGitNetwork } from 'react-icons/io5';
+import {
+  IoAnalytics,
+  IoGitNetwork,
+  IoGrid,
+  IoPeople,
+  IoSwapHorizontal,
+  IoWallet,
+} from 'react-icons/io5';
 
 import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
+import SidebarSplitMenu from '@/layouts/default/Sidebar/SidebarSplitMenu';
 
-interface AppSidebarBodyNavProps {
-  collapsed: boolean;
-}
-function AppSidebarBodyNav({ collapsed }: AppSidebarBodyNavProps) {
+function AppSidebarBodyNav() {
   return (
     <ul className={'flex flex-col space-y-3 p-3'}>
       <li>
-        <SidebarLink dense={collapsed} href={'/splits'} icon={<IoGitNetwork />}>
+        <SidebarLink href={'/splits'} icon={<IoGrid />}>
           Splits
         </SidebarLink>
+        <SidebarSplitMenu />
       </li>
       <li>
-        <SidebarLink
-          dense={collapsed}
-          href={'/settings'}
-          icon={<IoAnalytics />}
-        >
-          Activity
+        <SidebarLink href={'/address-book'} icon={<IoPeople />}>
+          Address-book
         </SidebarLink>
       </li>
     </ul>
   );
 }
 
-export default function SidebarBody(props: AppSidebarBodyNavProps) {
+export default function SidebarBody() {
   return (
     <div className={`flex-1 overflow-y-auto`}>
-      <AppSidebarBodyNav {...props} />
+      <AppSidebarBodyNav />
     </div>
   );
 }

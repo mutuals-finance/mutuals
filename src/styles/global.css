@@ -31,6 +31,10 @@
     @apply text-xl font-semibold;
   }
 
+  .title-4{
+    @apply text-lg font-semibold
+  }
+
   .link,
   .link-1 {
     @apply font-medium opacity-60 transition duration-200 hover:opacity-100;
