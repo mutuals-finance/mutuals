@@ -5,7 +5,7 @@ import { shortenAddress } from '@/lib/utils';
 
 import { ButtonOutline } from '@/components/Button';
 import PageHeader from '@/components/PageHeader';
-import { SplitImage } from '@/components/SplitImage';
+import { SplitImage } from '@/components/Split/Image';
 
 interface HeaderProps {
   title: string;

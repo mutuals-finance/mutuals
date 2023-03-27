@@ -6,9 +6,9 @@ import { formatRoundNumber } from '@/lib/utils';
 
 import Input from '@/components/Form/Input';
 import InputFieldArray from '@/components/Form/InputFieldArray';
-import InputNumber from '@/components/Form/InputNumber/';
+import InputNumber from '@/components/Form/InputNumber';
 
-import PayeeListFooter from '@/templates/split/new/PayeeListFooter';
+import PayeeListFooter from '@/templates/split/new/PayeeList/PayeeListFooter';
 
 export interface Payee {
   id: string;

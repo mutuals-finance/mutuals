@@ -1,4 +1,3 @@
-import ethers from 'ethers';
 import React, { useState } from 'react';
 import { useUpdateEffect } from 'react-use';
 import { useWaitForTransaction } from 'wagmi';
@@ -11,17 +10,17 @@ import { CreateFormData } from '@/templates/split/new';
 
 import { LoadingStep, ReviewStep, SuccessStep } from './steps';
 
-interface CreateSplitModalProps {
+interface NewSplitModalProps {
   onClose: () => void;
   open: boolean;
   data: CreateFormData;
 }
 
-export default function CreateSplitModal({
+export default function NewSplitModal({
   open,
   onClose,
   data,
-}: CreateSplitModalProps) {
+}: NewSplitModalProps) {
   const payees = data.payees.filter((p) => p.id !== '' && !!p.value);
 
   const { execute, tx, storage } = useCreateSplitFull({

@@ -6,7 +6,7 @@ import {
   IoWallet,
 } from 'react-icons/io5';
 
-import { SplitImage } from '@/components/SplitImage';
+import { SplitImage } from '@/components/Split/Image';
 
 import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
 

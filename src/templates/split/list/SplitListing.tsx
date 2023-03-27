@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import { useAccount } from 'wagmi';
 
-import { SplitFragmentCard } from '@/components/SplitterCard';
+import { SplitFragmentCard } from '@/components/Split/Card';
 
 import { SPLITS_BY_PAYEE } from '@/graphql/queries';
 

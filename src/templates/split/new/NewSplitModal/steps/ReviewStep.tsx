@@ -1,4 +1,4 @@
-import SplitCard from '@/components/SplitterCard';
+import SplitCard from '@/components/Split/Card';
 
 import { CreateFormData } from '@/templates/split/new';
 
