@@ -114,8 +114,16 @@
     @apply text-neutral-900 dark:text-neutral-50;
   }
 
+  .text-inverse {
+    @apply text-neutral-50 dark:text-neutral-900;
+  }
+
   .text-light {
     @apply text-neutral-600 dark:text-neutral-300;
+  }
+
+  .text-lighter {
+    @apply text-neutral-500 dark:text-neutral-400
   }
 
   .rounded-default {

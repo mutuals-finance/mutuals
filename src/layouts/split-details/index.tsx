@@ -1,11 +1,44 @@
 import React from 'react';
 
+import { SplitImage } from '@/components/Split/Image';
+
+import { Header } from '@/layouts/split-details/Header';
+import SplitDetailsMenu from '@/layouts/split-details/Menu';
+
+/*
+<div className={'flex items-center space-x-1.5'}>
+    <SplitImage
+        className={'w-8'}
+        src={
+            'ipfs://bafkreigqqcndcju2dgbagrwq5ste3f4tfw2427kttacbhjz6zokzm4k2fe'
+        }
+        alt={'Example'}
+    />
+    <h4 className={'title-4'}>Secchi</h4>
+</div>
+*/
+
 export default function SplitDetailsLayout({
   children,
 }: React.PropsWithChildren) {
   return (
-    <div className={'flex flex-col'}>
+    <>
+      <div>
+        <Header
+          title={'SplitFi'}
+          description={
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+          }
+          address={'0x8bc7ccfac818a5f5ed0c7b327024b8075e4f1407'}
+          image={
+            'ipfs://bafybeign5hlhm67okrhpcc6p5yj754kjgltn2u7bfflwkdmmbdkrtbywte'
+          }
+        >
+          <SplitDetailsMenu />
+        </Header>
+      </div>
+
       <div>{children}</div>
-    </div>
+    </>
   );
 }

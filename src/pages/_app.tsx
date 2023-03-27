@@ -22,7 +22,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const NestedLayout = Layouts[Component.Layout ?? 'None'];
+  const NestedLayout = Layouts[Component.Layout ?? 'Nullish'];
   const apolloClient = useApollo(pageProps);
   const wagmiClient = useWagmi();
 

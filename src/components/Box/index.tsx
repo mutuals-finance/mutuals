@@ -17,7 +17,7 @@ export default function Box({
   return (
     <article
       className={clsxm(
-        `bg-default border-default rounded-default flex flex-1 flex-col overflow-hidden border`,
+        `bg-default-1 border-default rounded-default flex flex-1 flex-col overflow-hidden border`,
         className
       )}
       {...props}
@@ -26,11 +26,11 @@ export default function Box({
         <>
           <div
             className={
-              'border-default bg-default-2 flex items-center justify-between border-b p-2 lg:py-4 lg:px-6'
+              'border-default bg-default-2 flex items-center justify-between border-b p-3 lg:px-6'
             }
           >
             <div>
-              {!!title && <h2 className={'text-lg font-semibold'}>{title}</h2>}
+              {!!title && <h2 className={'text-lg font-medium'}>{title}</h2>}
             </div>
             <div>{titleAfter}</div>
           </div>

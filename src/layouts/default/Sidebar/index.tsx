@@ -12,7 +12,7 @@ export default function Sidebar() {
   return (
     <div
       className={clsxm(
-        `bg-default top-0 left-0 hidden h-screen flex-shrink-0 flex-col pt-32 duration-200 md:sticky md:flex`,
+        `bg-default-1 top-0 left-0 hidden h-screen flex-shrink-0 flex-col pt-32 duration-200 md:sticky md:flex`,
         collapsed ? 'w-[4.5rem]' : 'w-64'
       )}
     >

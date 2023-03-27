@@ -4,7 +4,7 @@ import SplitDetailsLayout from '@/layouts/split-details';
 
 export const Layouts = {
   SplitDetails: SplitDetailsLayout,
-  None: ({ children }: React.PropsWithChildren) => <>{children}</>,
+  Nullish: ({ children }: React.PropsWithChildren) => <>{children}</>,
 };
 
 export type LayoutKeys = keyof typeof Layouts;

@@ -3,6 +3,7 @@ import Image, { type ImageProps } from 'next/image';
 import React, { HTMLProps } from 'react';
 import { IoImage } from 'react-icons/io5';
 
+import { ipfsResolveData, ipfsUrlFromUri } from '@/lib/utils';
 import clsxm from '@/lib/utils/clsxm';
 
 type SplitImageInnerProps = ImageProps & {
@@ -10,10 +11,6 @@ type SplitImageInnerProps = ImageProps & {
 };
 
 type SplitImageProps = HTMLProps<HTMLDivElement> & SplitImageInnerProps;
-
-function ipfsUrlFromUri(uri: string) {
-  return uri.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
-}
 
 function SplitImageInner({
   src,
@@ -39,12 +36,12 @@ function SplitImageInner({
   );
 }
 export function SplitImage({ src, className, ...props }: SplitImageProps) {
-  const _src = typeof src === 'string' ? ipfsUrlFromUri(src) : src;
+  const _src = ipfsResolveData(src);
 
   return (
     <div
       className={clsxm(
-        'bg-default-2 rounded-default border-default relative flex w-10 border ',
+        'bg-default-2 rounded-default relative flex w-10 ',
         className
       )}
     >

@@ -13,9 +13,10 @@ interface HeaderProps {
   description: string;
   address: string;
 }
+
 export function Header({ title, image, description, address }: HeaderProps) {
   return (
-    <div className={'relative '}>
+    <div className={'relative'}>
       <div className={'relative space-y-3'}>
         <PageHeader
           title={title === '' ? 'Unknown' : title}

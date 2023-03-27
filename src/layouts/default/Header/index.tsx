@@ -13,7 +13,7 @@ export default function Header() {
   return (
     <>
       <div className={'h-14'} />
-      <header className='bg-default fixed top-0 left-0 right-0 z-10 flex h-14 w-full'>
+      <header className='bg-default-1 fixed top-0 left-0 right-0 z-10 flex h-14 w-full'>
         <div className={'flex flex-1 items-center space-x-6 px-6'}>
           <Logo />
           <Breadcrumbs />

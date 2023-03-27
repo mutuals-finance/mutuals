@@ -26,7 +26,9 @@ import {
 
 import { NextPageWithLayout } from '#/app';
 
-async function fetchSplitDetails(client: ApolloClient<unknown>, id: string) {
+async function fetchSplitDetails(id: string) {
+  const client = await initializeApollo();
+
   const { data } = await client.query({
     query: SPLIT,
     variables: { id },
@@ -71,15 +73,10 @@ async function fetchSplitTransactions(
 }
 
 export async function getServerSideProps(context: { params: { id: string } }) {
-  const client = await initializeApollo();
-
-  const [split, transactions] = await Promise.all([
-    fetchSplitDetails(client, context.params.id),
-    fetchSplitTransactions(client, context.params.id),
-  ]);
+  // const split = await fetchSplitDetails(context.params.id);
 
   // Will be passed to the page component as props
-  return { props: { split, transactions } };
+  return { props: { split: null, transactions: [] } };
 }
 
 const SplitDetailPage: NextPageWithLayout<
@@ -88,10 +85,7 @@ const SplitDetailPage: NextPageWithLayout<
   const { pathname, query, ...router } = useRouter();
 
   const split = useFragment(splitDetailsFragment, props.split);
-  const transactions = useFragment(
-    transactionDetailsFragment,
-    props.transactions
-  );
+  const transactions = props.transactions;
 
   const { data: splitBalance } = useAccountBalance({
     walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
@@ -106,12 +100,14 @@ const SplitDetailPage: NextPageWithLayout<
   return (
     <>
       <Seo />
+      {/*
       <Header
         title={split.metaData.name || 'Unknown'}
         image={split.metaData.image}
         description={split.metaData.description || ''}
         address={split.address}
       />
+*/}
 
       <WithdrawModal
         onClose={() =>
