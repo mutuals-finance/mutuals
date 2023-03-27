@@ -1,9 +1,9 @@
 import React from 'react';
 
-import AppLayout from '@/layouts/default';
+import SplitDetailsLayout from '@/layouts/split-details';
 
 export const Layouts = {
-  Default: AppLayout,
+  SplitDetails: SplitDetailsLayout,
   None: ({ children }: React.PropsWithChildren) => <>{children}</>,
 };
 

@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  IoAnalytics,
-  IoGitNetwork,
-  IoGrid,
-  IoPeople,
-  IoSwapHorizontal,
-  IoWallet,
-} from 'react-icons/io5';
+import { IoGrid, IoPeople } from 'react-icons/io5';
 
 import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
-import SidebarSplitMenu from '@/layouts/default/Sidebar/SidebarSplitMenu';
 
 function AppSidebarBodyNav() {
   return (
@@ -18,7 +10,6 @@ function AppSidebarBodyNav() {
         <SidebarLink href={'/splits'} icon={<IoGrid />}>
           Splits
         </SidebarLink>
-        <SidebarSplitMenu />
       </li>
       <li>
         <SidebarLink href={'/address-book'} icon={<IoPeople />}>

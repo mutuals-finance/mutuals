@@ -13,6 +13,7 @@ import { useWagmi } from '@/lib/wagmi';
 
 import { useApollo } from '@/graphql/client';
 import { LayoutKeys, Layouts } from '@/layouts';
+import DefaultLayout from '@/layouts/default';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextComponentType<NextPageContext, unknown, unknown> & {
@@ -21,7 +22,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const Layout = Layouts[Component.Layout ?? 'Default'];
+  const NestedLayout = Layouts[Component.Layout ?? 'None'];
   const apolloClient = useApollo(pageProps);
   const wagmiClient = useWagmi();
 
@@ -31,9 +32,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <ThemeProvider attribute='class'>
           <AnkrProvider>
             <WagmiConfig client={wagmiClient}>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <DefaultLayout>
+                <NestedLayout>
+                  <Component {...pageProps} />
+                </NestedLayout>
+              </DefaultLayout>
             </WagmiConfig>
           </AnkrProvider>
         </ThemeProvider>

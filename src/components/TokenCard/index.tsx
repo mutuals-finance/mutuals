@@ -3,7 +3,12 @@ import Image from 'next/image';
 import React from 'react';
 import { IoHelp } from 'react-icons/io5';
 
-import { formatBalance, formatCurrency } from '@/lib/utils';
+import {
+  formatBalance,
+  formatCurrency,
+  formatCurrencyAmount,
+  formatPrice,
+} from '@/lib/utils';
 
 type TokenCardProps = Awaited<
   ReturnType<typeof getAccountBalance>
@@ -19,10 +24,14 @@ export default function TokenCard({
   return (
     <div
       className={
-        'rounded-default bg-default-2 flex flex-shrink-0 items-center space-x-3 overflow-hidden p-3'
+        'rounded-default bg-default-2 flex flex-shrink-0 items-center space-x-3 p-3'
       }
     >
-      <div className={'flex h-6 w-6 flex-shrink-0 items-center bg-transparent'}>
+      <div
+        className={
+          'bg-default rounded-default border-default flex h-8 w-8 flex-shrink-0 items-center border p-1'
+        }
+      >
         {thumbnail !== '' ? (
           <Image
             src={thumbnail}
@@ -33,9 +42,7 @@ export default function TokenCard({
           />
         ) : (
           <span
-            className={
-              'bg-default-2 flex w-full items-center justify-center self-stretch rounded-full'
-            }
+            className={'flex w-full items-center justify-center self-stretch'}
           >
             <IoHelp className={'block'} />
           </span>
@@ -48,10 +55,10 @@ export default function TokenCard({
 
         <div className={'flex items-center space-x-3 '}>
           <span className={'label text-default font-medium leading-none'}>
-            {formatBalance(balance)}
+            {formatCurrencyAmount(balance)}
           </span>
           <span className={'label leading-none'}>
-            {formatCurrency(balanceUsd)}
+            {formatPrice(balanceUsd)}
           </span>
         </div>
       </div>

@@ -126,8 +126,7 @@ const SplitDetailPage: NextPageWithLayout<
       <section>
         <div className={'container grid gap-3 lg:grid-cols-6 lg:gap-6'}>
           <Balance {...splitBalance} />
-          {/*<Shares shares={split.shares} />*/}
-          <div className={'aspect-square lg:col-span-3'} />
+          <Shares shares={split.shares} />
           <Activity transactions={transactions} />
           <Details {...split} />
           <Analytics />
@@ -137,4 +136,5 @@ const SplitDetailPage: NextPageWithLayout<
   );
 };
 
+SplitDetailPage.Layout = 'SplitDetails';
 export default SplitDetailPage;

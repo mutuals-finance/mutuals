@@ -26,7 +26,7 @@ function MenuLink({
     </li>
   );
 }
-export default function SidebarSplitMenu({}: SidebarSplitMenuProps) {
+export default function SplitMenu({}: SidebarSplitMenuProps) {
   return (
     <div className={'pt-3'}>
       <div
