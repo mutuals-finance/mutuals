@@ -1,48 +1,61 @@
 import { StaticImageData } from 'next/dist/client/image';
-import Image from 'next/image';
-import React from 'react';
+import Image, { type ImageProps } from 'next/image';
+import React, { HTMLProps } from 'react';
 import { IoImage } from 'react-icons/io5';
 
-interface SplitImageInnerProps {
-  alt?: string;
-  src?: StaticImageData | string;
-}
+import clsxm from '@/lib/utils/clsxm';
 
-interface SplitImageProps extends SplitImageInnerProps {
-  file?: File;
-}
+type SplitImageInnerProps = ImageProps & {
+  src?: StaticImageData | string;
+};
+
+type SplitImageProps = HTMLProps<HTMLDivElement> & SplitImageInnerProps;
 
 function ipfsUrlFromUri(uri: string) {
   return uri.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
 }
 
-function SplitImageInner({ src, alt }: SplitImageInnerProps) {
+function SplitImageInner({
+  src,
+  alt = 'Unknown Split',
+  width = 128,
+  height = 128,
+  className,
+  ...props
+}: SplitImageInnerProps) {
+  const classes = clsxm('block w-full object-cover', className);
+
   return !!src ? (
     <Image
-      className={'h-12 w-12 rounded-full object-cover'}
+      className={classes}
       src={src}
       alt={alt || 'Unknown Split'}
-      width={48}
-      height={48}
+      width={width}
+      height={height}
+      {...props}
     />
   ) : (
-    <IoImage className={'block text-neutral-900'} />
+    <IoImage className={classes} />
   );
 }
-export function SplitImage({ file, src, alt }: SplitImageProps) {
-  const srcOrFile = !!file
-    ? URL.createObjectURL(file)
-    : typeof src === 'string'
-    ? ipfsUrlFromUri(src)
-    : src;
+export function SplitImage({ src, className, ...props }: SplitImageProps) {
+  const _src = typeof src === 'string' ? ipfsUrlFromUri(src) : src;
 
   return (
     <div
-      className={
-        'bg-default-2 relative flex h-12 w-12 flex-1 items-center justify-center rounded-full'
-      }
+      className={clsxm(
+        'bg-default-2 rounded-default border-default relative flex w-10 border ',
+        className
+      )}
     >
-      <SplitImageInner src={srcOrFile} alt={alt} />
+      <span className={'block aspect-square w-full'} />
+      <span className={'absolute top-0 left-0 block flex h-full w-full'}>
+        <SplitImageInner
+          src={_src}
+          className={'rounded-default flex-1 overflow-hidden'}
+          {...props}
+        />
+      </span>
     </div>
   );
 }

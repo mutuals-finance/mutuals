@@ -13,7 +13,7 @@ export interface ButtonBaseProps
   loading?: boolean;
   rounded?: 'base' | 'small' | 'none' | 'full';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  justify?: 'between' | 'center' | 'around';
+  justify?: 'start' | 'between' | 'center' | 'around';
   color?: 'primary' | 'secondary' | 'outline' | 'link-1' | 'link-2';
   dense?: boolean;
   fullWidth?: boolean;

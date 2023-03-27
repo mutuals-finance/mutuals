@@ -23,7 +23,7 @@ export default function SidebarLink({
         className,
         heightClass,
         sizeClass,
-        'rounded-default hover:border-default flex items-center justify-start truncate whitespace-nowrap border border-transparent font-medium'
+        'rounded-default hover:bg-default-2 flex items-center justify-start truncate whitespace-nowrap border border-transparent font-medium'
       )}
       fullWidth={true}
       activeClassName={clsxm(activeClassName, 'bg-default-1')}

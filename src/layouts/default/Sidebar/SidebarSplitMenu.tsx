@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import {
   IoArrowRedo,
@@ -6,6 +5,8 @@ import {
   IoSwapHorizontal,
   IoWallet,
 } from 'react-icons/io5';
+
+import { SplitImage } from '@/components/SplitImage';
 
 import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
 
@@ -25,25 +26,21 @@ function MenuLink({
     </li>
   );
 }
-export default function SidebarSplitMenu({ collapsed }: SidebarSplitMenuProps) {
+export default function SidebarSplitMenu({}: SidebarSplitMenuProps) {
   return (
-    <div className={'pt-3 pl-3'}>
+    <div className={'pt-3'}>
       <div
         className={
-          'bg-default-1 rounded-default flex w-full flex-col space-y-3 p-3'
+          'border-default rounded-default flex w-full flex-col space-y-3 border p-3'
         }
       >
-        <div className={'flex items-center space-x-3'}>
-          <Image
+        <div className={'flex items-center space-x-1.5'}>
+          <SplitImage
+            className={'w-8'}
             src={
-              'https://cloudflare-ipfs.com/ipfs/bafkreigqqcndcju2dgbagrwq5ste3f4tfw2427kttacbhjz6zokzm4k2fe'
+              'ipfs://bafkreigqqcndcju2dgbagrwq5ste3f4tfw2427kttacbhjz6zokzm4k2fe'
             }
-            width={128}
-            height={128}
-            alt={'Image plc'}
-            className={
-              'border-default rounded-default h-10 w-10 overflow-hidden border object-cover'
-            }
+            alt={'Example'}
           />
           <h4 className={'title-4'}>Secchi</h4>
         </div>

@@ -32,7 +32,7 @@
   }
 
   .title-4{
-    @apply text-lg font-semibold
+    @apply text-base font-semibold
   }
 
   .link,

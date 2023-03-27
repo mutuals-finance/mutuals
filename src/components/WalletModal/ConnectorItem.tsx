@@ -1,15 +1,13 @@
 import React from 'react';
 
+import { ButtonOutline } from '@/components/Button';
+
 interface ConnectorItemProps {
   name: string;
   ready: boolean;
   isPending: boolean;
   onClick: () => void;
 }
-
-const ConnectorItemName = ({ children }: React.PropsWithChildren) => {
-  return <span className='text-default block font-semibold'>{children}</span>;
-};
 
 export default function ConnectorItem({
   name,
@@ -18,14 +16,14 @@ export default function ConnectorItem({
   onClick,
 }: ConnectorItemProps) {
   return (
-    <button
+    <ButtonOutline
+      className={'h-14 px-6'}
       onClick={onClick}
-      className='border-default transition-color flex h-14 w-full items-center justify-between rounded-xl border border bg-neutral-100 p-4 duration-200 ease-in-out hover:border-stone-400 dark:bg-neutral-800 dark:hover:border-stone-500'
+      fullWidth={true}
+      justify={'start'}
     >
-      <ConnectorItemName>
-        {name} {!ready && '(unsupported)'}
-        {isPending && '(connecting)'}
-      </ConnectorItemName>
-    </button>
+      {name} {!ready && '(unsupported)'}
+      {isPending && '(connecting)'}
+    </ButtonOutline>
   );
 }
