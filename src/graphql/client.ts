@@ -18,46 +18,23 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient: ApolloClient<unknown>;
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    );
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
-
-const httpLink = new HttpLink({
-  uri: subgraphByChainId[mainnet.id],
-  credentials: 'same-origin',
-});
-
 function createApolloClient() {
-  let defaultOptions: DefaultOptions;
-  if (isSSR()) {
-    //We don't want any cache to be stored server side
-    defaultOptions = {
-      query: {
-        fetchPolicy: 'no-cache',
-        errorPolicy: 'all',
-      },
-    };
-  } else {
-    //We immediately show results, but check in the background if any changes occured, and eventually update the view
-    defaultOptions = {
-      query: {
-        fetchPolicy: 'cache-first',
-        errorPolicy: 'all',
-      },
-    };
-  }
-
   return new ApolloClient({
     ssrMode: isSSR(),
-    link: from([errorLink, httpLink]),
-    cache: new InMemoryCache({}),
-    defaultOptions,
+    link: new HttpLink({
+      uri: subgraphByChainId[mainnet.id],
+      credentials: 'same-origin',
+    }),
+    cache: new InMemoryCache({
+      // typePolicies is not required to use Apollo with Next.js - only for doing pagination.
+      // typePolicies: {
+      //   Query: {
+      //     fields: {
+      //       posts: relayStylePagination(),
+      //     },
+      //   },
+      // },
+    }),
   });
 }
 

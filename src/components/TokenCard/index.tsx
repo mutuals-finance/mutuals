@@ -54,10 +54,14 @@ export default function TokenCard({
         </h3>
 
         <div className={'flex items-center space-x-3 '}>
-          <span className={'label text-default font-medium leading-none'}>
+          <span
+            className={
+              'label text-default font-medium slashed-zero leading-none'
+            }
+          >
             {formatCurrencyAmount(balance)}
           </span>
-          <span className={'label leading-none'}>
+          <span className={'label slashed-zero leading-none'}>
             {formatPrice(balanceUsd)}
           </span>
         </div>

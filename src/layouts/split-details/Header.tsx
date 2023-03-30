@@ -12,14 +12,12 @@ import { SplitImage } from '@/components/Split/Image';
 interface HeaderProps extends HTMLProps<HTMLDivElement> {
   title: string;
   image?: string | null;
-  description: string;
   address: string;
 }
 
 export function Header({
   title,
   image,
-  description,
   address,
   className,
   children,
@@ -43,7 +41,7 @@ export function Header({
           />
           <span
             className={
-              'absolute top-0 left-0 block h-full w-full bg-gradient-to-tr from-white via-white/90 to-white/70 dark:from-black dark:via-black/90 dark:to-black/70'
+              'absolute top-0 left-0 block h-full w-full bg-gradient-to-tr from-white via-white/90 to-white/60 dark:from-black dark:via-black/80 dark:to-black/60'
             }
           />
         </div>

@@ -8,13 +8,9 @@ import Sidebar from './Sidebar';
 export default function DefaultLayout({ children }: React.PropsWithChildren) {
   return (
     <>
-      <div className={'flex min-h-screen w-full'}>
-        <Sidebar />
-
-        <div className={'flex w-full flex-col overflow-hidden'}>
-          <Header />
-          <Body>{children}</Body>
-        </div>
+      <div className={'flex min-h-screen w-full flex-col'}>
+        <Header />
+        <Body>{children}</Body>
       </div>
       <Footer />
     </>

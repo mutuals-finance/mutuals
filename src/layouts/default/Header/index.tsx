@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useMount } from 'react-use';
 
+import { LinkPrimary, LinkSecondary, LinkUnstyled } from '@/components/Link';
+
 import Breadcrumbs from '@/layouts/default/Breadcrumbs';
 import Chain from '@/layouts/default/Header/Chain';
 import Logo from '@/layouts/default/Header/Logo';
@@ -12,15 +14,24 @@ export default function Header() {
 
   return (
     <>
-      <div className={'h-14'} />
-      <header className='bg-default-1 fixed top-0 left-0 right-0 z-10 flex h-14 w-full'>
-        <div className={'flex flex-1 items-center space-x-6 px-6'}>
+      <header className='bg-default sticky top-0 left-0 z-10 flex h-16 w-full'>
+        <div className={'flex flex-1 items-center space-x-12 px-6'}>
           <Logo />
-          <Breadcrumbs />
 
-          <nav className='flex flex-1 items-center justify-end'>
+          <ul
+            className={'hidden text-sm md:flex md:items-center md:space-x-12'}
+          >
+            <li>
+              <LinkPrimary href={'/splits'}>Splits</LinkPrimary>
+            </li>
+            <li>
+              <LinkSecondary href={'/address-book'}>Address Book</LinkSecondary>
+            </li>
+          </ul>
+
+          <nav className='flex flex-1 items-center justify-end space-x-12'>
             <ul
-              className={'hidden text-sm md:flex md:items-center md:space-x-8'}
+              className={'hidden text-sm md:flex md:items-center md:space-x-6'}
             >
               <li>{isReady && <Chain />}</li>
               <li>{isReady && <User />}</li>

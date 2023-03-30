@@ -17,7 +17,7 @@ export default function Box({
   return (
     <article
       className={clsxm(
-        `bg-default-1 border-default rounded-default flex flex-1 flex-col overflow-hidden border`,
+        `bg-default border-default rounded-default flex flex-1 flex-col overflow-hidden border`,
         className
       )}
       {...props}
@@ -26,7 +26,7 @@ export default function Box({
         <>
           <div
             className={
-              'border-default bg-default-2 flex items-center justify-between border-b p-3 lg:px-6'
+              'border-default bg-default-2 flex items-center justify-between border-b p-3 lg:px-6 lg:py-4'
             }
           >
             <div>

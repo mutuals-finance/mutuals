@@ -15,7 +15,7 @@ export function Activity(props: ActivityProps) {
         }
       >
         <div className={'absolute top-0 left-0 h-full w-full'}>
-          <ActivityTable {...props} />
+          {/*<ActivityTable {...props} />*/}
         </div>
       </div>
     </Box>

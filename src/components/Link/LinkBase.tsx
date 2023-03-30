@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo } from 'react';
 
 import clsxm from '@/lib/utils/clsxm';
 
@@ -18,6 +18,7 @@ export interface LinkBaseProps extends AllNextLinkProps {
   dense?: boolean;
   fullWidth?: boolean;
   activeClassName?: string;
+  exactActiveClassName?: string;
 }
 
 export default function LinkBase({
@@ -30,11 +31,19 @@ export default function LinkBase({
   fullWidth = false,
   loading = false,
   activeClassName,
+  exactActiveClassName,
   ...props
 }: React.PropsWithChildren<LinkBaseProps>) {
   const router = useRouter();
 
-  const isActive = router.pathname.includes(props.href.toString());
+  const normalize = (s: string) => s.replace(/\/+$/, '');
+
+  const path = normalize(router.asPath);
+  const href = normalize(props.href.toString());
+
+  const isActive = path.includes(href);
+  const isExactActive = path === href;
+
   const onlyIcon = (icon || (iconAfter && !icon)) && !children;
   const baseClass = `disabled:cursor-default`;
 
@@ -68,8 +77,9 @@ export default function LinkBase({
     textClass,
     widthClass,
     !onlyIcon && spaceClass,
+    className,
     isActive && activeClassName,
-    className
+    isExactActive && exactActiveClassName
   );
 
   return (

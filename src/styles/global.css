@@ -45,7 +45,7 @@
   }
 
   .label {
-    @apply inline-block text-xs leading-relaxed text-light font-normal;
+    @apply inline-block text-xs leading-relaxed text-lighter font-normal;
   }
 
   .label + input,

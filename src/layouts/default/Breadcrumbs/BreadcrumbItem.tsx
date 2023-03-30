@@ -32,7 +32,7 @@ export default function BreadcrumbItem({
   }: React.PropsWithChildren<unknown>) => (
     <>
       {!!href && <li>/</li>}
-      <li className={'titlecase truncate'}>{children}</li>
+      <li className={'truncate capitalize'}>{children}</li>
     </>
   );
 
@@ -46,7 +46,7 @@ export default function BreadcrumbItem({
 
   return createBreadcrumbItem({
     children: (
-      <Link href={href} className={'link block font-normal'}>
+      <Link href={href} className={'link block font-normal capitalize'}>
         {breadcrumbInner}
       </Link>
     ),

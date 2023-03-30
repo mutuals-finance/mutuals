@@ -1,5 +1,5 @@
 import { Blockchain } from '@ankr.com/ankr.js/dist/types';
-import { ApolloClient } from '@apollo/client';
+import { ApolloClient, useQuery } from '@apollo/client';
 import { useAccountBalance } from 'ankr-react';
 import { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
@@ -8,7 +8,7 @@ import React from 'react';
 import Seo from '@/components/Seo';
 
 import { useFragment } from '@/graphql/__generated__';
-import { initializeApollo } from '@/graphql/client';
+import { addApolloState, initializeApollo } from '@/graphql/client';
 import {
   splitDetailsFragment,
   transactionDetailsFragment,
@@ -23,6 +23,7 @@ import {
   Shares,
   WithdrawModal,
 } from '@/templates/split/details';
+import { About } from '@/templates/split/details/About';
 
 import { NextPageWithLayout } from '#/app';
 
@@ -73,19 +74,26 @@ async function fetchSplitTransactions(
 }
 
 export async function getServerSideProps(context: { params: { id: string } }) {
-  // const split = await fetchSplitDetails(context.params.id);
+  const client = await initializeApollo();
 
-  // Will be passed to the page component as props
-  return { props: { split: null, transactions: [] } };
+  await client.query({
+    query: SPLIT,
+    variables: { id: context.params.id },
+  });
+
+  return addApolloState(client, {
+    props: {},
+  });
 }
 
-const SplitDetailPage: NextPageWithLayout<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = function (props) {
+const SplitDetailPage: NextPageWithLayout = function (props) {
   const { pathname, query, ...router } = useRouter();
+  const { data } = useQuery(SPLIT, {
+    variables: { id: query.id as string },
+  });
 
-  const split = useFragment(splitDetailsFragment, props.split);
-  const transactions = props.transactions;
+  const split = useFragment(splitDetailsFragment, data?.split);
+  const transactions = [];
 
   const { data: splitBalance } = useAccountBalance({
     walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',

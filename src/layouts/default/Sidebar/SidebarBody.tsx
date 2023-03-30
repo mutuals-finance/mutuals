@@ -22,7 +22,7 @@ function AppSidebarBodyNav() {
 
 export default function SidebarBody() {
   return (
-    <div className={`flex-1 overflow-y-auto`}>
+    <div className={`mt-32 flex-1 overflow-y-auto`}>
       <AppSidebarBodyNav />
     </div>
   );
