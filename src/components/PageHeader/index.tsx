@@ -1,10 +1,6 @@
-import { useRouter } from 'next/navigation';
 import { HTMLProps } from 'react';
-import { IoArrowBack } from 'react-icons/io5';
 
 import clsxm from '@/lib/utils/clsxm';
-
-import { ButtonLink } from '@/components/Button';
 
 interface PageHeaderProps extends HTMLProps<HTMLHeadElement> {
   title: string;
@@ -22,14 +18,9 @@ export default function PageHeader({
   children,
   ...props
 }: PageHeaderProps) {
-  const router = useRouter();
-
   return (
-    <header
-      className={clsxm('space-y-6 py-6 lg:col-span-6', className)}
-      {...props}
-    >
-      <div className={'container pt-24'}>
+    <header className={clsxm('space-y-6 py-6', className)} {...props}>
+      <div className={'container relative pt-12'}>
         <div className={'flex items-center justify-between space-x-6'}>
           <div
             className={

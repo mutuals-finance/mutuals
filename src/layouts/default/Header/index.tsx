@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <>
-      <header className='bg-default sticky top-0 left-0 z-10 flex h-16 w-full'>
+      <header className='bg-default sticky top-0 left-0 z-20 flex h-16 w-full'>
         <div className={'flex flex-1 items-center space-x-12 px-6'}>
           <Logo />
 
