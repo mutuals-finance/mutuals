@@ -1,10 +1,7 @@
 import React from 'react';
-import { IoMenu } from 'react-icons/all';
 import { useToggle } from 'react-use';
 
 import clsxm from '@/lib/utils/clsxm';
-
-import { ButtonOutline } from '@/components/Button';
 
 import SidebarBody from './SidebarBody';
 import SidebarFooter from './SidebarFooter';
@@ -19,7 +16,7 @@ export default function Sidebar() {
   return (
     <div
       className={clsxm(
-        `bg-default relative top-0 left-0 z-10 hidden h-screen flex-shrink-0 flex-col duration-200 md:sticky md:flex`,
+        `bg-default relative left-0 top-0 z-10 hidden h-screen flex-shrink-0 flex-col duration-200 md:sticky md:flex`,
         collapsed ? 'w-[4.5rem]' : 'w-64'
       )}
     >

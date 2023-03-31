@@ -10,6 +10,8 @@ import { ButtonPrimary } from '@/components/Button';
 import InputCheckbox from '@/components/Form/InputCheckbox';
 import Statistic from '@/components/Statistic';
 
+import { SplitTemplateTabProps } from '#/split';
+
 type WithdrawTabProps = {
   assets?: Balance[];
 };
@@ -76,7 +78,9 @@ function AssetCardHorizontal({
   );
 }
 
-export function WithdrawTab({ assets }: WithdrawTabProps) {
+export function WithdrawTab({
+  balance: { assets } = { totalBalanceUsd: '0.00', assets: [] },
+}: SplitTemplateTabProps) {
   const { control, handleSubmit, setValue, watch } = useForm<{
     assets?: (Balance | null)[];
   }>({

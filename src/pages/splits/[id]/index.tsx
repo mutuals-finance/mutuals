@@ -1,131 +1,14 @@
-import { Blockchain } from '@ankr.com/ankr.js/dist/types';
-import { ApolloClient, useQuery } from '@apollo/client';
-import { useAccountBalance } from 'ankr-react';
-import { InferGetServerSidePropsType } from 'next';
-import { useRouter } from 'next/router';
-import React from 'react';
+export async function getServerSideProps(context: { params: { id?: string } }) {
+  const id = context?.params?.id;
 
-import Seo from '@/components/Seo';
-
-import { addApolloState, initializeApollo } from '@/graphql/client';
-import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/graphql/queries';
-import {
-  Activity,
-  Analytics,
-  Balance,
-  Details,
-  Shares,
-  WithdrawModal,
-} from '@/templates/split/details';
-
-import { NextPageWithLayout } from '#/app';
-
-async function fetchSplitDetails(id: string) {
-  const client = await initializeApollo();
-
-  const { data } = await client.query({
-    query: SPLIT,
-    variables: { id },
-  });
-
-  return data?.split;
-}
-
-async function fetchSplitTransactions(
-  client: ApolloClient<unknown>,
-  split: string
-) {
-  /*
-  const transfers = await fetch("https://rpc.ankr.com/multichain", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return {
+    redirect: {
+      permanent: false,
+      destination: !id ? '/404' : `/splits/${id}/overview`,
     },
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      method: "ankr_getTokenTransfers",
-      params: {
-        address: split,
-        blockchain: ["polygon_mumbai"],
-        fromTimestamp: 1655197483,
-        toTimestamp: 1671974699,
-      },
-      id: 1,
-    }),
-  })
-    .then((res) => res.json())
-    .then(({ result }) => result.transfers);
-  console.log("ankr_getTokenTransfers transfers", transfers);
-*/
-
-  const { data } = await client.query({
-    query: TRANSACTIONS_BY_SPLIT,
-    variables: { split },
-  });
-
-  return data.transactions;
+  };
 }
 
-export async function getServerSideProps(context: { params: { id: string } }) {
-  const client = await initializeApollo();
-
-  const { data } = await client.query({
-    query: SPLIT,
-    variables: { id: context.params.id },
-  });
-
-  return addApolloState(client, {
-    props: { data },
-  });
+export default function SplitDetailsEmpty() {
+  return <></>;
 }
-
-const SplitDetailPage: NextPageWithLayout = function ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { pathname, query, ...router } = useRouter();
-  const { split } = data;
-  const transactions = [];
-
-  const { data: balance } = useAccountBalance({
-    walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    blockchain: ['eth' as Blockchain],
-    onlyWhitelisted: true,
-  });
-
-  return (
-    <>
-      <Seo />
-      {/*
-      <Header
-        title={split.metaData.name || 'Unknown'}
-        image={split.metaData.image}
-        description={split.metaData.description || ''}
-        address={split.address}
-      />
-*/}
-
-      <WithdrawModal
-        onClose={() =>
-          router.replace({ pathname, query: { id: query.id } }, undefined, {
-            shallow: true,
-          })
-        }
-        open={Boolean(query.withdraw)}
-        assets={balance?.assets}
-      />
-
-      <section>
-        <div className={'container grid gap-3 lg:grid-cols-6 lg:gap-6'}>
-          <Balance {...balance} />
-          <Shares shares={split.shares} />
-          <Activity transactions={transactions} />
-          <Details {...split} />
-          <Analytics />
-        </div>
-      </section>
-    </>
-  );
-};
-
-SplitDetailPage.Layout = 'SplitDetails';
-export default SplitDetailPage;

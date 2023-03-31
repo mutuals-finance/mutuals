@@ -1,6 +1,8 @@
 import React from 'react';
 
-export function AssetsTab() {
+import { SplitTemplateTabProps } from '#/split';
+
+export function AssetsTab(props: SplitTemplateTabProps) {
   return (
     <section>
       <div className={'container'}>

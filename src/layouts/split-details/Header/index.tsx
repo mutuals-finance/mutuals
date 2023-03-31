@@ -8,20 +8,20 @@ import { ButtonOutline } from '@/components/Button';
 import PageHeader from '@/components/PageHeader';
 import { SplitImage } from '@/components/Split/Image';
 
-import SplitDetailsLayoutMenu from '@/layouts/split-details/Header/Menu';
+import Menu from '@/layouts/split-details/Header/Menu';
 
 interface SplitDetailsLayoutHeaderProps {
   image: string;
   name: string;
   description?: string | null;
-  address: string;
+  id: string;
 }
 
-export default function SplitDetailsLayoutHeader({
+export default function Header({
   name,
   image,
   description,
-  address,
+  id,
 }: SplitDetailsLayoutHeaderProps) {
   return (
     <PageHeader
@@ -31,22 +31,22 @@ export default function SplitDetailsLayoutHeader({
       titleAfter={
         <div className={'flex items-center justify-center space-x-3'}>
           <ButtonOutline iconAfter={<IoCopyOutline />}>
-            {shortenAddress(address)}
+            {shortenAddress(id)}
           </ButtonOutline>
           <ButtonOutline iconAfter={<IoShareOutline />}>Share</ButtonOutline>
         </div>
       }
     >
-      {!!description && (
-        <div className={'container relative py-3'}>
+      <div className={'container relative py-3'}>
+        {!!description && (
           <div className={'text-lighter line-clamp-2 w-full max-w-lg'}>
             <p>{description}</p>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className={'relative'}>
-        <SplitDetailsLayoutMenu />
+        <Menu id={id} />
       </div>
 
       <div

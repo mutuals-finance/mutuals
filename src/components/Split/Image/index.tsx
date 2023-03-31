@@ -6,7 +6,7 @@ import { IoImage } from 'react-icons/io5';
 import { ipfsResolveData, ipfsUrlFromUri } from '@/lib/utils';
 import clsxm from '@/lib/utils/clsxm';
 
-type SplitImageInnerProps = ImageProps & {
+type SplitImageInnerProps = Omit<ImageProps, 'src'> & {
   src?: StaticImageData | string;
 };
 
@@ -36,19 +36,17 @@ function SplitImageInner({
   );
 }
 export function SplitImage({ src, className, ...props }: SplitImageProps) {
-  const _src = ipfsResolveData(src);
-
   return (
     <div
       className={clsxm(
-        'bg-default-2 rounded-default relative flex w-10 ',
+        'bg-default-2 rounded-default border-default relative flex w-10 border ',
         className
       )}
     >
       <span className={'block aspect-square w-full'} />
-      <span className={'absolute top-0 left-0 block flex h-full w-full'}>
+      <span className={'absolute left-0 top-0 block flex h-full w-full'}>
         <SplitImageInner
-          src={_src}
+          src={ipfsResolveData(src)}
           className={'rounded-default flex-1 overflow-hidden'}
           {...props}
         />

@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
-import { IoWarning } from 'react-icons/all';
-import { IoCopyOutline } from 'react-icons/io5';
+import { IoCopyOutline, IoWarning } from 'react-icons/io5';
 
 import Chip from '@/components/Chip';
 
 import qrCode from '@/assets/images/qrcode.png';
 
-export function DepositTab() {
+import { SplitTemplateTabProps } from '#/split';
+
+export function DepositTab(props: SplitTemplateTabProps) {
   return (
     <section>
       <div className={'container'}>
