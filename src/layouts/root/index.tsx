@@ -4,7 +4,7 @@ import Body from './Body';
 import Footer from './Footer';
 import Header from './Header';
 
-export default function DefaultLayout({ children }: React.PropsWithChildren) {
+export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <>
       <div className={'flex w-full flex-col'}>

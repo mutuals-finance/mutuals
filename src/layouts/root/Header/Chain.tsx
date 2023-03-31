@@ -7,7 +7,7 @@ import { getLogoByChainId } from '@/lib/utils/chainLogo';
 import Popover from '@/components/Popover';
 import PopoverItem from '@/components/Popover/PopoverItem';
 
-import ChainButton from '@/layouts/default/Header/ChainButton';
+import ChainButton from '@/layouts/root/Header/ChainButton';
 
 interface ChainSelectorItemProps extends WagmiChain {
   isSwitching: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoGrid, IoPeople } from 'react-icons/io5';
 
-import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
+import SidebarLink from '@/layouts/root/Sidebar/SidebarLink';
 
 function AppSidebarBodyNav() {
   return (

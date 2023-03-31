@@ -8,7 +8,7 @@ import {
 
 import { ButtonOutline } from '@/components/Button';
 
-import SidebarLink from '@/layouts/default/Sidebar/SidebarLink';
+import SidebarLink from '@/layouts/root/Sidebar/SidebarLink';
 
 interface AppSidebarFooterProps {
   onToggle: () => void;

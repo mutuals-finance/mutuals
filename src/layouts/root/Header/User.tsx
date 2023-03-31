@@ -14,7 +14,7 @@ import Popover from '@/components/Popover';
 import PopoverItem from '@/components/Popover/PopoverItem';
 import WalletModal from '@/components/WalletModal';
 
-import UserButton from '@/layouts/default/Header/UserButton';
+import UserButton from '@/layouts/root/Header/UserButton';
 
 export default function User() {
   const { address, isConnected, isConnecting } = useAccount();

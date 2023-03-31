@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useMount } from 'react-use';
 
-import { LinkPrimary, LinkSecondary, LinkUnstyled } from '@/components/Link';
+import { LinkPrimary, LinkSecondary } from '@/components/Link';
 
-import Breadcrumbs from '@/layouts/default/Breadcrumbs';
-import Chain from '@/layouts/default/Header/Chain';
-import Logo from '@/layouts/default/Header/Logo';
-import User from '@/layouts/default/Header/User';
+import Chain from '@/layouts/root/Header/Chain';
+import Logo from '@/layouts/root/Header/Logo';
+import User from '@/layouts/root/Header/User';
 
 export default function Header() {
   const [isReady, setIsReady] = useState(false);
@@ -14,7 +13,7 @@ export default function Header() {
 
   return (
     <>
-      <header className='bg-default sticky top-0 left-0 z-20 flex h-16 w-full'>
+      <header className='bg-default sticky left-0 top-0 z-20 flex h-16 w-full'>
         <div className={'flex flex-1 items-center space-x-12 px-6'}>
           <Logo />
 

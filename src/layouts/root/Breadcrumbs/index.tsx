@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
-import BreadcrumbItem from '@/layouts/default/Breadcrumbs/BreadcrumbItem';
+import BreadcrumbItem from '@/layouts/root/Breadcrumbs/BreadcrumbItem';
 
 const _defaultGetTextGenerator = (param?: string, query: ParsedUrlQuery) =>
   null;
