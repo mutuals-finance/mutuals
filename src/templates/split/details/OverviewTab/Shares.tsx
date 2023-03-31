@@ -1,14 +1,13 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
 
+import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
+import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import { shareFragment } from '@/lib/graphql/fragments';
 import { shortenAddress } from '@/lib/utils';
 
 import Box from '@/components/Box';
 import UserAvatar from '@/components/UserAvatar';
-
-import { FragmentType, useFragment } from '@/graphql/__generated__';
-import { ShareFragmentFragment } from '@/graphql/__generated__/graphql';
-import { shareFragment } from '@/graphql/fragments';
 
 const PieChart = dynamic(() => import('@/components/PieChart'), { ssr: false });
 type ShareFragment = FragmentType<typeof shareFragment>;
@@ -50,7 +49,7 @@ export function Shares(props: { shares: ShareFragment[] }) {
         <div className={'relative w-full flex-1'}>
           <ul
             className={
-              'divide-default absolute top-0 left-0 flex h-full w-full flex-col divide-y overflow-y-auto'
+              'divide-default absolute left-0 top-0 flex h-full w-full flex-col divide-y overflow-y-auto'
             }
           >
             {shares.map((share, index) => (

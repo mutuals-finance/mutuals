@@ -1,6 +1,6 @@
 import { GetAccountBalanceReply } from '@ankr.com/ankr.js/dist/types';
 
-import { SplitDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
+import { SplitDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 
 export interface SplitTemplateTabProps extends SplitDetailsFragmentFragment {
   balance?: GetAccountBalanceReply;

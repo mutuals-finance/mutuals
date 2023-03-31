@@ -1,17 +1,27 @@
-import { Blockchain } from '@ankr.com/ankr.js/dist/types';
+import AnkrProvider from '@ankr.com/ankr.js';
+import {
+  Blockchain,
+  GetAccountBalanceRequest,
+} from '@ankr.com/ankr.js/dist/types';
 import { ApolloClient } from '@apollo/client';
 import { useAccountBalance } from 'ankr-react';
+import { getAccountBalance } from 'ankr-react/src/api';
+import { AnkrGlobalContext } from 'ankr-react/src/components';
 import { InferGetServerSidePropsType } from 'next';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useContext } from 'react';
+import { useQuery } from 'react-query';
+import { useAccount, useNetwork } from 'wagmi';
+
+import { useTransfers } from '@/lib/covalent';
+import { useFragment } from '@/lib/graphql/__generated__';
+import { addApolloState, initializeApollo } from '@/lib/graphql/client';
+import { splitDetailsFragment } from '@/lib/graphql/fragments';
+import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/lib/graphql/queries';
 
 import Seo from '@/components/Seo';
 
-import { useFragment } from '@/graphql/__generated__';
-import { addApolloState, initializeApollo } from '@/graphql/client';
-import { splitDetailsFragment } from '@/graphql/fragments';
-import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/graphql/queries';
 import routes from '@/templates/split/details';
 
 import { NextPageWithLayout } from '#/app';
@@ -115,10 +125,19 @@ const SplitDetailPage: NextPageWithLayout = function ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { ...router } = useRouter();
 
+  const { chain } = useNetwork();
+
+  const address = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
   const { data: balance } = useAccountBalance({
-    walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    walletAddress: address,
     blockchain: ['eth' as Blockchain],
     onlyWhitelisted: true,
+  });
+
+  const { data: transfers } = useTransfers({
+    chainId: 1,
+    address,
+    onSuccess: (data) => console.log('success', data),
   });
 
   const path = router.asPath;

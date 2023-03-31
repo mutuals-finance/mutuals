@@ -1,4 +1,4 @@
-import { TransactionDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
+import { TransactionDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 
 export enum EventType {
   ContractURIUpdate = 'ContractURIUpdate',

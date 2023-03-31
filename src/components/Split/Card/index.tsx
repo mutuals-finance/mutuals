@@ -1,13 +1,12 @@
 import Link from 'next/link';
 
+import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
+import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import { splitBaseFragment } from '@/lib/graphql/fragments';
 import clsxm from '@/lib/utils/clsxm';
 
 import Date from '@/components/Date';
 import { SplitImage } from '@/components/Split/Image';
-
-import { FragmentType, useFragment } from '@/graphql/__generated__';
-import { SplitBaseFragmentFragment } from '@/graphql/__generated__/graphql';
-import { splitBaseFragment } from '@/graphql/fragments';
 
 interface SplitFragmentCardProps {
   fragment: FragmentType<typeof splitBaseFragment>;
@@ -46,7 +45,7 @@ export default function SplitCard({ id, metaData, timestamp }: SplitCardProps) {
 
       <div className={'space-y-3'}>
         <div>
-          <p className={'text-sm line-clamp-2'}>{metaData?.description}</p>
+          <p className={'line-clamp-2 text-sm'}>{metaData?.description}</p>
         </div>
         <div>
           <Date className={'text-light text-xxs'} timestamp={timestamp} />

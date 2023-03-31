@@ -9,9 +9,9 @@ import { WagmiConfig } from 'wagmi';
 import '@/styles/font.css';
 import '@/styles/global.css';
 
+import { useApollo } from '@/lib/graphql/client';
 import { useWagmi } from '@/lib/wagmi';
 
-import { useApollo } from '@/graphql/client';
 import { LayoutKeys, Layouts } from '@/layouts';
 import DefaultLayout from '@/layouts/root';
 

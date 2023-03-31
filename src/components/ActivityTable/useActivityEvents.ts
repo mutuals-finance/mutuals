@@ -1,7 +1,5 @@
-import { formatAmount } from '@/lib/utils';
-
-import { FragmentType, useFragment } from '@/graphql/__generated__';
-import { TransactionDetailsFragmentFragment } from '@/graphql/__generated__/graphql';
+import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
+import { TransactionDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 import {
   contractURIUpdateFragment,
   depositFragment,
@@ -10,7 +8,8 @@ import {
   transactionBaseFragment,
   transactionDetailsFragment,
   withdrawalFragment,
-} from '@/graphql/fragments';
+} from '@/lib/graphql/fragments';
+import { formatAmount } from '@/lib/utils';
 
 import { EventType, SplitEvent } from './types';
 
