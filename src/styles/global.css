@@ -45,7 +45,7 @@
   }
 
   .label {
-    @apply inline-block text-xs leading-relaxed text-lighter font-normal;
+    @apply inline-block text-xs leading-relaxed text-light font-normal;
   }
 
   .label + input,
@@ -119,11 +119,11 @@
   }
 
   .text-light {
-    @apply text-neutral-600 dark:text-neutral-300;
+    @apply text-neutral-500 dark:text-neutral-400;
   }
 
   .text-lighter {
-    @apply text-neutral-500 dark:text-neutral-400
+    @apply text-neutral-400 dark:text-neutral-500
   }
 
   .rounded-default {

@@ -1,24 +1,16 @@
-import AnkrProvider from '@ankr.com/ankr.js';
-import {
-  Blockchain,
-  GetAccountBalanceRequest,
-} from '@ankr.com/ankr.js/dist/types';
-import { ApolloClient } from '@apollo/client';
+import { AnkrProvider, type GetTransfersRequest } from '@ankr.com/ankr.js';
 import { useAccountBalance } from 'ankr-react';
-import { getAccountBalance } from 'ankr-react/src/api';
-import { AnkrGlobalContext } from 'ankr-react/src/components';
 import { InferGetServerSidePropsType } from 'next';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
-import { useQuery } from 'react-query';
-import { useAccount, useNetwork } from 'wagmi';
+import React from 'react';
+import { useAsync } from 'react-use';
+import { useNetwork } from 'wagmi';
 
-import { useTransfers } from '@/lib/covalent';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { addApolloState, initializeApollo } from '@/lib/graphql/client';
 import { splitDetailsFragment } from '@/lib/graphql/fragments';
-import { SPLIT, TRANSACTIONS_BY_SPLIT } from '@/lib/graphql/queries';
+import { SPLIT } from '@/lib/graphql/queries';
 
 import Seo from '@/components/Seo';
 
@@ -38,10 +30,37 @@ async function fetchSplitDetails(id: string) {
   return data?.split;
 }
 
-async function fetchSplitTransactions(
-  client: ApolloClient<unknown>,
-  split: string
-) {
+function useTokenTransfers(params: GetTransfersRequest) {
+  /*
+  const { url } = ankrjsProvider;
+
+  const body = {
+    jsonrpc: '2.0',
+    method: 'ankr_getTokenTransfers',
+    params: {
+      address,
+      blockchain,
+      ...params,
+    },
+    id: 1,
+  };
+*/
+
+  const ankrjsProvider = new AnkrProvider();
+
+  return useAsync(async () => {
+    const transfers = await ankrjsProvider.getTokenTransfers(params);
+
+    // const response = await fetch(url, {
+    //   method: 'POST',
+    //   body: JSON.stringify(body),
+    // });
+    // const result = await response.json();
+    // const { transfers } = result;
+    console.log('got transfers', transfers);
+    return transfers;
+  });
+
   /*
   const transfers = await fetch("https://rpc.ankr.com/multichain", {
     method: "POST",
@@ -64,13 +83,6 @@ async function fetchSplitTransactions(
     .then(({ result }) => result.transfers);
   console.log("ankr_getTokenTransfers transfers", transfers);
 */
-
-  const { data } = await client.query({
-    query: TRANSACTIONS_BY_SPLIT,
-    variables: { split },
-  });
-
-  return data.transactions;
 }
 
 export async function getServerSideProps({
@@ -127,17 +139,19 @@ const SplitDetailPage: NextPageWithLayout = function ({
 
   const { chain } = useNetwork();
 
+  const blockchain = 'eth';
   const address = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
   const { data: balance } = useAccountBalance({
     walletAddress: address,
-    blockchain: ['eth' as Blockchain],
+    blockchain,
     onlyWhitelisted: true,
   });
 
-  const { data: transfers } = useTransfers({
-    chainId: 1,
-    address,
-    onSuccess: (data) => console.log('success', data),
+  const { value: txRes } = useTokenTransfers({
+    address: [address],
+    blockchain,
+    descOrder: true,
+    pageSize: 20,
   });
 
   const path = router.asPath;
@@ -150,8 +164,13 @@ const SplitDetailPage: NextPageWithLayout = function ({
 
   return (
     <>
-      <Seo templateTitle={`${split.metaData.name} » ${currentTab?.label}`} />
-      <Template {...split} balance={balance} />
+      <Seo templateTitle={`${split.name} » ${currentTab?.label}`} />
+      <Template
+        {...split}
+        balance={balance}
+        transfers={txRes?.transfers}
+        address={address}
+      />
     </>
   );
 };

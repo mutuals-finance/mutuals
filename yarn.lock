@@ -18,6 +18,14 @@
     axios "^0.26.1"
     typescript "^4.6.2"
 
+"@ankr.com/ankr.js@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@ankr.com/ankr.js/-/ankr.js-0.3.1.tgz#48732e81c09efe7bfcfdcc6862e8f31fdf69bde0"
+  integrity sha512-C2jWmfiEmnVAJNUSM6eUfjNRNTzWvC8xdG7lcdNcu60FmngxmN2CKYrAxg//ykcNWPdNg22rRvWaM0OUvn27oQ==
+  dependencies:
+    axios "^0.26.1"
+    typescript "^4.6.2"
+
 "@apollo/client@^3.7.10":
   version "3.7.10"
   resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.10.tgz#addc5fcebaf016981d9476268a06d529be83f568"

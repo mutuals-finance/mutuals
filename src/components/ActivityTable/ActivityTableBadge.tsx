@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-  IoArrowDownOutline,
-  IoArrowUpOutline,
-  IoLinkOutline,
-} from 'react-icons/io5';
+import { HiArrowDownTray, HiArrowUpTray } from 'react-icons/hi2';
+import { IoLinkOutline } from 'react-icons/io5';
 
 import clsxm from '@/lib/utils/clsxm';
 
@@ -11,32 +8,31 @@ import { EventType } from './types';
 
 export default function ActivityTableBadge({ type }: { type: EventType }) {
   let Icon;
+
   switch (type) {
     case EventType.Deposit:
-      Icon = IoArrowDownOutline;
+      Icon = HiArrowDownTray;
       break;
     case EventType.Withdrawal:
-      Icon = IoArrowUpOutline;
+      Icon = HiArrowUpTray;
       break;
     default:
       Icon = IoLinkOutline;
   }
 
   const colorClasses = {
-    [EventType.Withdrawal]: ['border-red-500', ' text-red-500'],
-    [EventType.Deposit]: ['border-green-500', 'text-green-500'],
-    [EventType.ContractURIUpdate]: ['border-purple-500', 'text-purple-500'],
+    [EventType.Withdrawal]: ['text-red-600', 'bg-red-400/25'],
+    [EventType.Deposit]: ['text-green-600', 'bg-green-400/25'],
   }[type];
 
   return (
     <span
       className={clsxm(
-        `block inline-flex items-center justify-center space-x-1 rounded-full border px-2  py-1 text-xs font-semibold`,
+        `block inline-flex h-8 w-8 items-center justify-center rounded-full text-base`,
         colorClasses
       )}
     >
       <Icon className={'block'} />
-      <span className={'block'}>{type}</span>
     </span>
   );
 }

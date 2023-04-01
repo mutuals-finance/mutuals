@@ -49,14 +49,6 @@ export default function LinkBase({
 
   const widthClass = fullWidth && 'w-full';
 
-  const textClass = {
-    xs: `text-xs`,
-    sm: `text-sm`,
-    md: `text-base`,
-    lg: `text-lg`,
-    xl: `text-xl`,
-  }[size];
-
   const spaceClass = {
     xs: `space-x-0.5`,
     sm: `space-x-1`,
@@ -72,9 +64,9 @@ export default function LinkBase({
   }[color];
 
   const linkClass = clsxm(
+    'inline-flex items-center',
     colorClass,
     baseClass,
-    textClass,
     widthClass,
     !onlyIcon && spaceClass,
     className,
@@ -87,7 +79,7 @@ export default function LinkBase({
       {loading && (
         <div
           className={clsxm(
-            `absolute top-0 left-0 block flex h-full w-full items-center justify-center`
+            `absolute left-0 top-0 block flex h-full w-full items-center justify-center`
           )}
         >
           <LoadingSpinner size={size} />

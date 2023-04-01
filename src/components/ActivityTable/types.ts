@@ -1,7 +1,8 @@
-import { TransactionDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
+
+import { SplitDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 
 export enum EventType {
-  ContractURIUpdate = 'ContractURIUpdate',
   Deposit = 'Deposit',
   Withdrawal = 'Withdrawal',
 }
@@ -14,6 +15,6 @@ export interface SplitEvent {
   timestamp: string;
 }
 
-export interface ActivityTableProps {
-  transactions: readonly TransactionDetailsFragmentFragment[];
+export interface ActivityTableProps extends SplitDetailsFragmentFragment {
+  transfers?: TokenTransfer[];
 }
