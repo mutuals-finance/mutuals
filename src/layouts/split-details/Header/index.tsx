@@ -39,7 +39,7 @@ export default function Header({
     >
       <div className={'container relative py-3'}>
         {!!description && (
-          <div className={'text-lighter line-clamp-2 w-full max-w-lg'}>
+          <div className={'text-light line-clamp-2 w-full max-w-lg'}>
             <p>{description}</p>
           </div>
         )}

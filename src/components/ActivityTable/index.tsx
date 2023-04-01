@@ -7,81 +7,47 @@ import {
 } from '@tanstack/react-table';
 import React from 'react';
 
-import { formatCurrencyAmount } from '@/lib/utils';
 import clsxm from '@/lib/utils/clsxm';
 
-import AddressCell from '@/components/ActivityTable/AddressCell';
-import Date from '@/components/Date';
+import {
+  AddressCell,
+  AmountCell,
+  EventDescriptionCell,
+  EventIconCell,
+} from '@/components/ActivityTable/cells/';
 
-import ActivityTableBadge from './ActivityTableBadge';
-import { ActivityTableProps, EventType } from './types';
+import { ActivityTableProps } from './types';
 
 const columnHelper = createColumnHelper<TokenTransfer>();
 
 export default function ActivityTable({
   transfers: data = [],
-  address = '',
-  metaData,
+  address,
 }: ActivityTableProps) {
-  function getEventType(fromAddress?: string) {
-    return fromAddress === address ? EventType.Withdrawal : EventType.Deposit;
-  }
-
   const columns = [
     columnHelper.display({
       id: 'eventIcon',
       header: 'Event',
-      cell: ({ row }) => {
-        const type = getEventType(row.original.fromAddress);
-        return <ActivityTableBadge type={type} />;
-      },
+      cell: (context) => <EventIconCell {...context} address={address} />,
     }),
     columnHelper.display({
       id: 'eventDescription',
       header: '',
-      cell: ({ row }) => {
-        const type = getEventType(row.original.fromAddress);
-        return (
-          <>
-            <span className={'block'}>{type}</span>
-            <Date
-              className='text-lighter block'
-              timestamp={row.original.timestamp.toString()}
-            />
-          </>
-        );
-      },
+      cell: (context) => (
+        <EventDescriptionCell {...context} address={address} />
+      ),
     }),
     columnHelper.accessor('fromAddress', {
       header: 'From',
-      cell: (info) => (
-        <AddressCell info={info} address={address} {...metaData} />
-      ),
+      cell: (context) => <AddressCell {...context} address={address} />,
     }),
     columnHelper.accessor('toAddress', {
       header: 'To',
-      cell: (info) => (
-        <AddressCell info={info} address={address} {...metaData} />
-      ),
+      cell: (context) => <AddressCell {...context} address={address} />,
     }),
     columnHelper.accessor('value', {
       header: 'Amount',
-      cell: ({ getValue, row }) => {
-        const type = getEventType(row.original.fromAddress);
-        const isDeposit = type === EventType.Deposit;
-        const text = `${formatCurrencyAmount(getValue())} ${
-          row.original.tokenSymbol
-        }`;
-
-        return (
-          <span
-            className={clsxm('slashed-zero', isDeposit && 'text-green-600')}
-          >
-            {isDeposit && '+ '}
-            {text}
-          </span>
-        );
-      },
+      cell: (context) => <AmountCell {...context} address={address} />,
     }),
   ];
 

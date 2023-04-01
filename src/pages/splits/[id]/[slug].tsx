@@ -140,7 +140,7 @@ const SplitDetailPage: NextPageWithLayout = function ({
   const { chain } = useNetwork();
 
   const blockchain = 'eth';
-  const address = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
+  const address = '0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5';
   const { data: balance } = useAccountBalance({
     walletAddress: address,
     blockchain,
@@ -164,7 +164,7 @@ const SplitDetailPage: NextPageWithLayout = function ({
 
   return (
     <>
-      <Seo templateTitle={`${split.name} » ${currentTab?.label}`} />
+      <Seo title={`${split.metaData.name} » ${currentTab?.label}`} />
       <Template
         {...split}
         balance={balance}

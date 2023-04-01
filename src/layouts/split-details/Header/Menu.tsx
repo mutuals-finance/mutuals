@@ -16,7 +16,7 @@ export default function Menu({ id }: MenuProps) {
             <LinkUnstyled
               href={`/splits/${id}/${route.slug}`}
               className={
-                'text-lighter hover:text-default -mb-px flex h-14 w-full items-center justify-center border-b-2 border-transparent px-4 text-center font-medium transition-all duration-200 hover:border-neutral-900 dark:hover:border-neutral-50'
+                'text-light hover:text-default -mb-px flex h-14 w-full items-center justify-center border-b-2 border-transparent px-4 text-center font-medium transition-all duration-200 hover:border-neutral-900 dark:hover:border-neutral-50'
               }
               exactActiveClassName={
                 'text-default border-carlo dark:border-carlo'
