@@ -5,6 +5,7 @@ import clsxm from '@/lib/utils/clsxm';
 interface BoxProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   title?: string;
   titleAfter?: React.ReactNode;
+  innerClassName?: string;
 }
 
 export default function Box({
@@ -12,6 +13,7 @@ export default function Box({
   titleAfter,
   className,
   children,
+  innerClassName,
   ...props
 }: React.PropsWithChildren<BoxProps>) {
   return (
@@ -36,7 +38,11 @@ export default function Box({
           </div>
         </>
       )}
-      <div className={'flex flex-1 flex-col p-3 lg:p-6'}>{children}</div>
+      <div
+        className={clsxm('flex flex-1 flex-col', 'p-3 lg:p-6', innerClassName)}
+      >
+        {children}
+      </div>
     </article>
   );
 }

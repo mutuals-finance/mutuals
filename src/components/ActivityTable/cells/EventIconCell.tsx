@@ -36,7 +36,7 @@ export function EventIconCell({ address = '', row }: EventIconCellProps) {
   return (
     <span
       className={clsxm(
-        `inline-flex h-8 w-8 items-center justify-center rounded-full text-base`,
+        `rounded-default inline-flex h-8 w-8 items-center justify-center text-base`,
         colorClasses
       )}
     >

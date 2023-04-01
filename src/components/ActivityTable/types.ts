@@ -15,6 +15,7 @@ export interface SplitEvent {
   timestamp: string;
 }
 
-export interface ActivityTableProps extends SplitDetailsFragmentFragment {
+export interface ActivityTableProps
+  extends Pick<SplitDetailsFragmentFragment, 'address'> {
   transfers?: TokenTransfer[];
 }

@@ -1,59 +1,81 @@
-import { Balance, GetAccountBalanceReply } from '@ankr.com/ankr.js/dist/types';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { GetAccountBalanceReply } from '@ankr.com/ankr.js/dist/types';
 import React from 'react';
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
+import {
+  IoCalendarOutline,
+  IoGlobe,
+  IoGlobeOutline,
+  IoHammerOutline,
+} from 'react-icons/io5';
 
-import { formatCurrency } from '@/lib/utils';
+import { SplitDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import { formatUSDPrice, shortenAddress } from '@/lib/utils';
 
 import Box from '@/components/Box';
-import { ButtonPrimary } from '@/components/Button';
+import Date from '@/components/Date';
 import Statistic from '@/components/Statistic';
-import TokenCard from '@/components/TokenCard';
 
-function BalanceTokenCards({ assets = [] }: { assets?: Balance[] }) {
+type BalanceProps = Partial<GetAccountBalanceReply> &
+  SplitDetailsFragmentFragment;
+
+export function Balance({
+  totalBalanceUsd = '0',
+  assets,
+  ...split
+}: BalanceProps) {
   return (
-    <ScrollMenu scrollContainerClassName={'space-x-3 px-3 lg:px-6'}>
-      {assets.map((token, index) => (
-        <TokenCard key={index} {...token} />
-      ))}
-    </ScrollMenu>
-  );
-}
-type BalanceProps = Partial<GetAccountBalanceReply>;
-
-export function Balance({ totalBalanceUsd = '0', assets = [] }: BalanceProps) {
-  const { pathname, query } = useRouter();
-
-  return (
-    <Box className={'relative overflow-hidden lg:col-span-6'}>
-      <div className={'space-y-6'}>
-        <div
-          className={'flex items-center justify-between space-x-3 lg:space-x-6'}
-        >
-          <Statistic title={'Total Balance'} className={'text-4xl'}>
-            {formatCurrency(totalBalanceUsd)}
-          </Statistic>
-          <Link
-            href={{
-              pathname,
-              query: { id: query.id, withdraw: true },
-            }}
-            shallow={true}
-            replace={true}
-            passHref={true}
+    <div className={'grid grid-cols-6 gap-3 lg:col-span-6 lg:gap-6'}>
+      <Box className={'lg:col-span-3'}>
+        <div className={'flex flex-1 flex-col space-y-3'}>
+          <Statistic
+            title={'Total Balance'}
+            className={'text-5xl slashed-zero'}
           >
-            <ButtonPrimary>Request Withdrawal</ButtonPrimary>
-          </Link>
+            {formatUSDPrice(totalBalanceUsd)}
+          </Statistic>
+
+          <p className={'text-light text-right '}>
+            {assets
+              ?.sort(({ balanceRawInteger }) => Number(balanceRawInteger))
+              .slice(0, 2)
+              .map(({ tokenName }, i) => (
+                <span key={i}>
+                  <span>{tokenName}</span>
+                  {i < 1 ? ', ' : ' '}
+                </span>
+              ))}
+            and {(assets?.length || 0) - 2} more
+          </p>
         </div>
-        <div
-          className={
-            '-ml-3 w-[calc(100%_+_1.5rem)] lg:-ml-6 lg:w-[calc(100%_+_3rem)]'
-          }
-        >
-          <BalanceTokenCards assets={assets} />
+      </Box>
+      <Box className={'lg:col-span-1'}>
+        <div className={'flex flex-1 flex-col'}>
+          <IoCalendarOutline
+            className={'text-lighter mb-auto block self-end text-4xl'}
+          />
+
+          <Statistic title={'Created At'}>
+            <Date timestamp={split.timestamp} />
+          </Statistic>
         </div>
-      </div>
-    </Box>
+      </Box>
+      <Box className={'flex-col justify-end lg:col-span-1'}>
+        <div className={'flex flex-1 flex-col'}>
+          <IoGlobeOutline
+            className={'text-lighter mb-auto block self-end text-4xl'}
+          />
+          <Statistic title={'Chain'}>Ethereum</Statistic>
+        </div>
+      </Box>
+      <Box className={'flex-col justify-end lg:col-span-1'}>
+        <div className={'flex flex-1 flex-col '}>
+          <IoHammerOutline
+            className={'text-lighter mb-auto block self-end text-4xl'}
+          />
+          <Statistic title={'Creator'} className={'slashed-zero'}>
+            {shortenAddress(split.address)}
+          </Statistic>
+        </div>
+      </Box>
+    </div>
   );
 }

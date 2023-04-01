@@ -17,18 +17,21 @@ interface ShareItemProps {
 }
 function ShareItem({ share }: ShareItemProps) {
   return (
-    <li className={`block p-1`}>
+    <li className={`border-default block border-b p-1`}>
       <div
-        className={`flex flex-col p-2 ${
+        className={`flex items-center justify-between space-x-3 p-2 ${
           false ? 'bg-default-2 rounded-default' : ''
         }`}
       >
-        <div className={`flex items-center space-x-2`}>
+        <div className={'flex items-center space-x-3'}>
           <UserAvatar address={share.payee} className={`h-6 w-6`} />
-          <h4 className={'font-semibold'}>{shortenAddress(share.payee)}</h4>
+
+          <h4 className={'font-medium slashed-zero'}>
+            {shortenAddress(share.payee)}
+          </h4>
         </div>
 
-        <span className={'label ml-8 block leading-none'}>{share.value} %</span>
+        <span className={'block text-right leading-none'}>{share.value} %</span>
       </div>
     </li>
   );
@@ -41,12 +44,17 @@ export function Shares(props: { shares: ShareFragment[] }) {
   });
 
   return (
-    <Box className={'lg:col-span-3'} title={'Shares'}>
-      <div className={'grid grid-cols-2 gap-3 lg:gap-6'}>
-        <div className={'aspect-square'}>
+    <Box
+      className={'lg:col-span-3'}
+      innerClassName={'flex-row'}
+      title={'Shares'}
+    >
+      <div className={'grid flex-1 grid-cols-5 items-center gap-3 lg:gap-6'}>
+        <div className={'col-span-2 aspect-square'}>
           <PieChart data={shares} />
         </div>
-        <div className={'relative w-full flex-1'}>
+
+        <div className={'relative col-span-3 flex-1 self-stretch'}>
           <ul
             className={
               'divide-default absolute left-0 top-0 flex h-full w-full flex-col divide-y overflow-y-auto'

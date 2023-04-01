@@ -3,21 +3,19 @@ import React from 'react';
 import ActivityTable from '@/components/ActivityTable';
 import { ActivityTableProps } from '@/components/ActivityTable/types';
 import Box from '@/components/Box';
+import { ButtonOutline } from '@/components/Button';
 
 type ActivityProps = ActivityTableProps;
 
-export function Activity(props: ActivityProps) {
+export function Activity({ transfers, address }: ActivityProps) {
   return (
-    <Box className={'lg:col-span-3'} title={'Activity'}>
-      <div
-        className={
-          'relative -my-3 -ml-3 flex w-[calc(100%_+_1.5rem)] flex-1 overflow-y-auto lg:-my-6 lg:-ml-6 lg:w-[calc(100%_+_3rem)]'
-        }
-      >
-        <div className={'absolute left-0 top-0 h-full w-full'}>
-          <ActivityTable {...props} />
-        </div>
-      </div>
+    <Box
+      title={'Activity'}
+      titleAfter={<ButtonOutline size={'sm'}>Full Activity</ButtonOutline>}
+      className={'lg:col-span-3'}
+      innerClassName={'p-0 lg:p-0 overflow-y-auto max-h-72'}
+    >
+      <ActivityTable transfers={transfers} address={address} />
     </Box>
   );
 }

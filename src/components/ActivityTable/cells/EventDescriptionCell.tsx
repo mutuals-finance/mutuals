@@ -19,8 +19,11 @@ export function EventDescriptionCell({
 
   return (
     <>
-      <span className={'block'}>{type}</span>
-      <Date className='text-lighter block' timestamp={timestamp.toString()} />
+      <span className={'block leading-snug'}>{type}</span>
+      <Date
+        className='text-lighter block leading-snug'
+        timestamp={timestamp.toString()}
+      />
     </>
   );
 }
