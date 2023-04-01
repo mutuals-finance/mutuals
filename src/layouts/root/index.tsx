@@ -7,7 +7,7 @@ import Header from './Header';
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <>
-      <div className={'flex w-full flex-col'}>
+      <div className={'flex min-h-screen w-full flex-col'}>
         <Header />
         <Body>{children}</Body>
       </div>
