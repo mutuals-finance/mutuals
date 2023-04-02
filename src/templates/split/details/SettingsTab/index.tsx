@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { SplitTemplateTabProps } from '#/split';
-
-export function SettingsTab(props: SplitTemplateTabProps) {
+export function SettingsTab() {
   return (
     <section>
       <div className={'container'}>

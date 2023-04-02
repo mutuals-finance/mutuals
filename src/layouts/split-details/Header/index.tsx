@@ -2,12 +2,13 @@ import Image from 'next/image';
 import React from 'react';
 import { IoCopyOutline, IoShareOutline } from 'react-icons/io5';
 
-import { shortenAddress } from '@/lib/utils';
+import { ipfsResolveData, shortenAddress } from '@/lib/utils';
 
 import { ButtonOutline } from '@/components/Button';
 import PageHeader from '@/components/PageHeader';
 import { SplitImage } from '@/components/Split/Image';
 
+import { useSplit } from '@/context/SplitContext';
 import Menu from '@/layouts/split-details/Header/Menu';
 
 interface SplitDetailsLayoutHeaderProps {
@@ -17,12 +18,11 @@ interface SplitDetailsLayoutHeaderProps {
   id: string;
 }
 
-export default function Header({
-  name,
-  image,
-  description,
-  id,
-}: SplitDetailsLayoutHeaderProps) {
+export default function Header() {
+  const { split } = useSplit();
+  const image = ipfsResolveData(split.metaData.image);
+  const name = split.metaData.name || '';
+
   return (
     <PageHeader
       className={'relative overflow-hidden'}
@@ -31,22 +31,22 @@ export default function Header({
       titleAfter={
         <div className={'flex items-center justify-center space-x-3'}>
           <ButtonOutline iconAfter={<IoCopyOutline />}>
-            {shortenAddress(id)}
+            {shortenAddress(split.address)}
           </ButtonOutline>
           <ButtonOutline iconAfter={<IoShareOutline />}>Share</ButtonOutline>
         </div>
       }
     >
       <div className={'container relative py-3'}>
-        {!!description && (
+        {!!split.metaData.description && (
           <div className={'text-light line-clamp-2 w-full max-w-lg'}>
-            <p>{description}</p>
+            <p>{split.metaData.description}</p>
           </div>
         )}
       </div>
 
       <div className={'relative'}>
-        <Menu id={id} />
+        <Menu id={split.id} />
       </div>
 
       <div
@@ -54,12 +54,14 @@ export default function Header({
           'absolute left-1/2 top-1/2 -z-10 flex h-[calc(100%_+_4rem)] w-[calc(100%_+_4rem)] -translate-x-1/2 -translate-y-1/2 blur-2xl'
         }
       >
-        <Image
-          fill
-          src={image}
-          alt={name + ' Background'}
-          className={'w-full flex-1 object-cover'}
-        />
+        {!!image && (
+          <Image
+            fill
+            src={image}
+            alt={name + ' Background'}
+            className={'w-full flex-1 object-cover'}
+          />
+        )}
         <span
           className={
             'absolute left-0 top-0 block h-full w-full bg-gradient-to-tr from-white via-white/90 to-white/60 dark:from-black dark:via-black/80 dark:to-black/60'

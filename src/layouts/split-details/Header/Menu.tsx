@@ -7,6 +7,7 @@ import routes from '@/templates/split/details';
 interface MenuProps {
   id: string;
 }
+
 export default function Menu({ id }: MenuProps) {
   return (
     <div className={'container'}>

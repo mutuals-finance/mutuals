@@ -1,8 +1,7 @@
 import { InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
-import { ipfsResolveData } from '@/lib/utils';
-
+import { SplitProvider } from '@/context/SplitContext';
 import Header from '@/layouts/split-details/Header';
 import { getServerSideProps } from '@/pages/splits/[id]/[slug]';
 
@@ -13,13 +12,9 @@ export default function SplitDetailsLayout({
   InferGetServerSidePropsType<typeof getServerSideProps>
 >) {
   return (
-    <>
-      <Header
-        id={split.id}
-        {...split.metaData}
-        image={ipfsResolveData(split.metaData.image)}
-      />
+    <SplitProvider split={split}>
+      <Header />
       {children}
-    </>
+    </SplitProvider>
   );
 }

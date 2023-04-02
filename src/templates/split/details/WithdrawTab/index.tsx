@@ -10,11 +10,7 @@ import { ButtonPrimary } from '@/components/Button';
 import InputCheckbox from '@/components/Form/InputCheckbox';
 import Statistic from '@/components/Statistic';
 
-import { SplitTemplateTabProps } from '#/split';
-
-type WithdrawTabProps = {
-  assets?: Balance[];
-};
+import { useSplit } from '@/context/SplitContext';
 
 type AssetCardHorizontalProps = Balance & HTMLProps<HTMLDivElement>;
 
@@ -78,15 +74,15 @@ function AssetCardHorizontal({
   );
 }
 
-export function WithdrawTab({
-  balance: { assets } = { totalBalanceUsd: '0.00', assets: [] },
-}: SplitTemplateTabProps) {
+export function WithdrawTab() {
+  const { balance } = useSplit();
+
   const { control, handleSubmit, setValue, watch } = useForm<{
     assets?: (Balance | null)[];
   }>({
-    defaultValues: { assets },
+    defaultValues: { assets: balance?.assets },
     values: {
-      assets,
+      assets: balance?.assets,
     },
   });
 
@@ -109,7 +105,7 @@ export function WithdrawTab({
         <form>
           <div className={'flex w-full flex-col'}>
             <ul className={'divide-default flex flex-col divide-y'}>
-              {assets?.map((asset, index) => (
+              {balance?.assets?.map((asset, index) => (
                 <li
                   key={asset.tokenSymbol}
                   className={'flex items-center space-x-3'}
