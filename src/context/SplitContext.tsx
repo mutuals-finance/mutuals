@@ -41,11 +41,6 @@ export const SplitProvider = ({
   children,
   split,
 }: React.PropsWithChildren<SplitProviderProps>) => {
-  /*
-    balance?: GetAccountBalanceReply;
-    transfers?: TokenTransfer[];
-*/
-
   const { data: balance } = useAccountBalance({
     walletAddress: address,
     blockchain,

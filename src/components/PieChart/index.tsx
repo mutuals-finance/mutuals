@@ -8,25 +8,24 @@ import usePieChart from './usePieChart';
 
 interface PieChartProps {
   data: ArchData[];
+  onMouseMove?: (data: ArchData, index: number) => void;
+  onMouseOut?: (data: ArchData, index: number) => void;
 }
 
 interface PieChartInnerProps extends PieChartProps {
   size: number;
 }
 
-function PieChartInner({ size, data }: PieChartInnerProps) {
+function PieChartInner({
+  size,
+  data,
+  onMouseOut,
+  onMouseMove,
+}: PieChartInnerProps) {
   const { colorScale, innerRadius, outerRadius, x, y } = usePieChart(
     data,
     size
   );
-
-  function handleMouseOut() {
-    console.log('handleMouseOut');
-  }
-
-  function handleMouseMove() {
-    console.log('handleMouseMove');
-  }
 
   return (
     <svg width={size} height={size} className={'overflow-visible'}>
@@ -47,7 +46,7 @@ function PieChartInner({ size, data }: PieChartInnerProps) {
                   dx='-50%'
                   dy='-50%'
                   fontSize={'1rem'}
-                  className={'fill-current font-semibold'}
+                  className={'fill-current font-medium'}
                   textAnchor='middle'
                 >
                   {arcs.length} Payee{arcs.length > 1 ? 's' : ''}
@@ -58,8 +57,8 @@ function PieChartInner({ size, data }: PieChartInnerProps) {
 
                   return (
                     <MotionPieArch
-                      onMouseMove={handleMouseMove}
-                      onMouseOut={handleMouseOut}
+                      onMouseMove={() => onMouseMove?.(arch.data, i)}
+                      onMouseOut={() => onMouseOut?.(arch.data, i)}
                       key={x(data)}
                       fill={colorScale(i)}
                       path={path(arch)}
@@ -76,10 +75,12 @@ function PieChartInner({ size, data }: PieChartInnerProps) {
   );
 }
 
-export default function PieChart({ data }: PieChartProps) {
+export default function PieChart({ data, ...props }: PieChartProps) {
   return (
     <ParentSize className={'w-full'}>
-      {({ width }) => width > 0 && <PieChartInner size={width} data={data} />}
+      {({ width }) =>
+        width > 0 && <PieChartInner size={width} data={data} {...props} />
+      }
     </ParentSize>
   );
 }

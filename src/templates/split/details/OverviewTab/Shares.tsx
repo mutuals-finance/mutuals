@@ -1,47 +1,66 @@
 import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { HTMLProps, useState } from 'react';
+import { useList } from 'react-use';
 
-import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
+import { useFragment as fragment } from '@/lib/graphql/__generated__';
 import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 import { shareFragment } from '@/lib/graphql/fragments';
-import { shortenAddress } from '@/lib/utils';
+import clsxm from '@/lib/utils/clsxm';
 
 import Box from '@/components/Box';
+import { LinkChainExplorer } from '@/components/Link';
 import UserAvatar from '@/components/UserAvatar';
 
-const PieChart = dynamic(() => import('@/components/PieChart'), { ssr: false });
-type ShareFragment = FragmentType<typeof shareFragment>;
+import { useSplit } from '@/context/SplitContext';
 
-interface ShareItemProps {
-  share: ShareFragmentFragment;
+const PieChart = dynamic(() => import('@/components/PieChart'), {
+  ssr: false,
+});
+
+type ActiveShare = ShareFragmentFragment & { isActive?: boolean };
+
+interface ShareItemProps extends HTMLProps<HTMLDivElement> {
+  share: ActiveShare;
+  isActive?: boolean;
 }
-function ShareItem({ share }: ShareItemProps) {
+
+function ShareItem({ share, className, isActive, ...props }: ShareItemProps) {
   return (
-    <li className={`border-default block border-b p-1`}>
-      <div
-        className={`flex items-center justify-between space-x-3 p-2 ${
-          false ? 'bg-default-2 rounded-default' : ''
-        }`}
-      >
-        <div className={'flex items-center space-x-3'}>
-          <UserAvatar address={share.payee} className={`h-6 w-6`} />
+    <div
+      className={clsxm(
+        `rounded-default flex items-center justify-between space-x-3 border border-transparent p-3 transition-all`,
+        isActive && 'bg-default-2  border-default ',
+        className
+      )}
+      {...props}
+    >
+      <div className={'flex items-center space-x-3'}>
+        <UserAvatar address={share.payee} className={`h-6 w-6`} />
 
-          <h4 className={'font-medium slashed-zero'}>
-            {shortenAddress(share.payee)}
-          </h4>
-        </div>
-
-        <span className={'block text-right leading-none'}>{share.value} %</span>
+        <LinkChainExplorer address={share.payee} color={'secondary'} />
       </div>
-    </li>
+
+      <span className={'block text-right leading-none'}>{share.value} %</span>
+    </div>
   );
 }
 
-export function Shares(props: { shares: ShareFragment[] }) {
-  const shares = props.shares.map((share) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useFragment(shareFragment, share);
-  });
+export function Shares() {
+  const { split } = useSplit();
+  const [shares, { updateAt }] = useList<ActiveShare>(
+    split.shares.map((s) => ({
+      ...fragment(shareFragment, s),
+      isActive: false,
+    }))
+  );
+
+  function setActive(index: number) {
+    updateAt(index, { ...(shares[index] as ActiveShare), isActive: true });
+  }
+
+  function setInactive(index: number) {
+    updateAt(index, { ...(shares[index] as ActiveShare), isActive: false });
+  }
 
   return (
     <Box
@@ -51,7 +70,11 @@ export function Shares(props: { shares: ShareFragment[] }) {
     >
       <div className={'grid flex-1 grid-cols-5 items-center gap-3 lg:gap-6'}>
         <div className={'col-span-2 aspect-square'}>
-          <PieChart data={shares} />
+          <PieChart
+            data={shares}
+            onMouseOut={(_, i) => setInactive(i)}
+            onMouseMove={(_, i) => setActive(i)}
+          />
         </div>
 
         <div className={'relative col-span-3 flex-1 self-stretch'}>
@@ -61,7 +84,14 @@ export function Shares(props: { shares: ShareFragment[] }) {
             }
           >
             {shares.map((share, index) => (
-              <ShareItem key={index} share={share} />
+              <li className={`border-default block border-b p-1`} key={index}>
+                <ShareItem
+                  onMouseOut={() => setInactive(index)}
+                  onMouseMove={() => setActive(index)}
+                  share={share}
+                  isActive={share.isActive}
+                />
+              </li>
             ))}
           </ul>
         </div>

@@ -1,4 +1,3 @@
-import { GetAccountBalanceReply } from '@ankr.com/ankr.js/dist/types';
 import React from 'react';
 import {
   IoCalendarOutline,
@@ -6,21 +5,17 @@ import {
   IoHammerOutline,
 } from 'react-icons/io5';
 
-import { SplitDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 import { formatUSDPrice, shortenAddress } from '@/lib/utils';
 
 import Box from '@/components/Box';
 import Date from '@/components/Date';
 import Statistic from '@/components/Statistic';
 
-type BalanceProps = Partial<GetAccountBalanceReply> &
-  SplitDetailsFragmentFragment;
+import { useSplit } from '@/context/SplitContext';
 
-export function Details({
-  totalBalanceUsd = '0',
-  assets,
-  ...split
-}: BalanceProps) {
+export function Details() {
+  const { split, balance } = useSplit();
+
   return (
     <div className={'grid grid-cols-6 gap-3 lg:col-span-6 lg:gap-6'}>
       <Box className={'lg:col-span-3'}>
@@ -29,11 +24,11 @@ export function Details({
             title={'Total Balance'}
             className={'text-5xl slashed-zero'}
           >
-            {formatUSDPrice(totalBalanceUsd)}
+            {formatUSDPrice(balance?.totalBalanceUsd || '0')}
           </Statistic>
 
           <p className={'text-light text-right '}>
-            {assets
+            {balance?.assets
               ?.sort(({ balanceRawInteger }) => Number(balanceRawInteger))
               .slice(0, 2)
               .map(({ tokenName }, i) => (
@@ -42,7 +37,7 @@ export function Details({
                   {i < 1 ? ', ' : ' '}
                 </span>
               ))}
-            and {(assets?.length || 0) - 2} more
+            and {(balance?.assets?.length || 0) - 2} more
           </p>
         </div>
       </Box>
