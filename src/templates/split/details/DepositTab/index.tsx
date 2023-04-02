@@ -3,12 +3,13 @@ import React from 'react';
 import { IoCopyOutline, IoWarning } from 'react-icons/io5';
 
 import Chip from '@/components/Chip';
+import QRCode from '@/components/QRCode';
 
 import qrCode from '@/assets/images/qrcode.png';
 
 import { SplitTemplateTabProps } from '#/split';
 
-export function DepositTab(props: SplitTemplateTabProps) {
+export function DepositTab({ address }: SplitTemplateTabProps) {
   return (
     <section>
       <div className={'container'}>
@@ -35,22 +36,10 @@ export function DepositTab(props: SplitTemplateTabProps) {
 
           <div
             className={
-              'border-default bg-default-2 rounded-default inline-flex flex-col space-y-6 border p-6 text-center'
+              'border-default bg-default-2 rounded-default inline-flex flex-col items-center space-y-6 border p-6 text-center'
             }
           >
-            <div
-              className={
-                'bg-default rounded-default mx-auto w-full p-6 lg:w-64 '
-              }
-            >
-              <Image
-                src={qrCode}
-                alt={'qr sample'}
-                width={128}
-                height={128}
-                className={'w-full'}
-              />
-            </div>
+            <QRCode text={address} />
 
             <span
               className={
@@ -63,7 +52,7 @@ export function DepositTab(props: SplitTemplateTabProps) {
                 className={'slashed-zero'}
                 iconAfter={<IoCopyOutline />}
               >
-                0x8bc7ccfac818a5f5ed0c7b327024b8075e4f1407
+                {address}
               </Chip>
             </span>
           </div>

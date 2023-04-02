@@ -3,7 +3,6 @@ import React from 'react';
 import AssetTable from '@/components/AssetTable';
 import { AssetTableProps } from '@/components/AssetTable/types';
 import Box from '@/components/Box';
-import { ButtonOutline } from '@/components/Button';
 
 type AssetsProps = AssetTableProps;
 
@@ -11,7 +10,6 @@ export function Assets({ assets }: AssetsProps) {
   return (
     <Box
       title={'Assets'}
-      titleAfter={<ButtonOutline size={'sm'}>All Assets</ButtonOutline>}
       className={'lg:col-span-3'}
       innerClassName={'p-0 lg:p-0 overflow-y-auto max-h-72'}
     >

@@ -1,5 +1,4 @@
-import { ActivityTab } from '@/templates/split/details/ActivityTab';
-import { AssetsTab } from '@/templates/split/details/AssetsTab';
+import { AboutTab } from '@/templates/split/details/AboutTab';
 import { DepositTab } from '@/templates/split/details/DepositTab';
 import { OverviewTab } from '@/templates/split/details/OverviewTab';
 import { SettingsTab } from '@/templates/split/details/SettingsTab';
@@ -11,8 +10,7 @@ const routes: SplitTemplateTab[] = [
   { label: 'Overview', slug: 'overview', component: OverviewTab },
   { label: 'Withdraw', slug: 'withdraw', component: WithdrawTab },
   { label: 'Deposit', slug: 'deposit', component: DepositTab },
-  { label: 'Assets', slug: 'assets', component: AssetsTab },
-  { label: 'Activity', slug: 'activity', component: ActivityTab },
+  { label: 'About', slug: 'about', component: AboutTab },
   { label: 'Settings', slug: 'settings', component: SettingsTab },
 ];
 
