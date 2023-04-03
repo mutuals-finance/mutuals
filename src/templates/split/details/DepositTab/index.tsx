@@ -1,8 +1,16 @@
 import React from 'react';
-import { IoCopyOutline, IoWarning } from 'react-icons/io5';
+import {
+  IoCopyOutline,
+  IoEllipsisHorizontal,
+  IoEllipsisVertical,
+  IoGlobeOutline,
+  IoWarning,
+} from 'react-icons/io5';
 
+import { ButtonOutline, ButtonSecondary } from '@/components/Button';
 import Chip from '@/components/Chip';
 import QRCode from '@/components/QRCode';
+import Statistic from '@/components/Statistic';
 
 import { useSplit } from '@/context/SplitContext';
 
@@ -14,7 +22,7 @@ export function DepositTab() {
     <section>
       <div className={'container'}>
         <article className={'w-full max-w-2xl space-y-6'}>
-          <h2 className={'title-3'}>Deposit tokens</h2>
+          <h2 className={'title-3'}>Deposit</h2>
           <div
             className={
               'rounded-default bg-default relative inline-flex overflow-hidden border border-orange-400'
@@ -32,29 +40,42 @@ export function DepositTab() {
             </div>
           </div>
 
-          <p>Use the address below to receive funds on the Ethereum network:</p>
+          <p>Use the address below to receive funds to your split</p>
 
           <div
             className={
-              'border-default bg-default-2 rounded-default inline-flex flex-col items-center space-y-6 border p-6 text-center'
+              'rounded-default border-default inline-flex flex-col items-center border  px-6'
             }
           >
-            <QRCode text={address} />
-
-            <span
+            <div
               className={
-                'block whitespace-nowrap text-xs font-medium slashed-zero'
+                'flex items-center justify-between space-x-3 self-stretch pt-6'
               }
             >
-              <Chip
-                color={'link-2'}
-                size={'sm'}
-                className={'slashed-zero'}
-                iconAfter={<IoCopyOutline />}
+              <div className={'inline-flex items-center space-x-1 text-xs'}>
+                <IoGlobeOutline className={'text-light'} />
+                <span>Ethereum Chain</span>
+              </div>
+
+              <div>
+                <ButtonOutline size={'sm'} icon={<IoEllipsisHorizontal />} />
+              </div>
+            </div>
+
+            <div className={'py-6'}>
+              <div className={'rounded-default overflow-hidden'}>
+                <QRCode text={address} />
+              </div>
+            </div>
+
+            <div className={'border-default self-start border-t py-6'}>
+              <Statistic
+                title={'Split address'}
+                className={'whitespace-nowrap slashed-zero'}
               >
                 {address}
-              </Chip>
-            </span>
+              </Statistic>
+            </div>
           </div>
         </article>
       </div>

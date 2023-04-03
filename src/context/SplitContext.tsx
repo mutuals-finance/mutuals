@@ -16,7 +16,7 @@ function useTokenTransfers(params: GetTransfersRequest) {
 }
 
 const blockchain = 'eth';
-const address = '0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5';
+const address = '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1';
 
 interface SplitContextType {
   split: SplitDetailsFragmentFragment;
@@ -57,7 +57,7 @@ export const SplitProvider = ({
   return (
     <SplitContext.Provider
       value={{
-        split,
+        split: { ...split, address },
         balance,
         transfers,
       }}

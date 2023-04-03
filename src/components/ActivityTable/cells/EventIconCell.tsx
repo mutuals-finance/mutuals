@@ -15,7 +15,7 @@ type EventIconCellProps = CellContext<TokenTransfer, unknown> & {
 export function EventIconCell({ address = '', row }: EventIconCellProps) {
   const { getEventType } = useActivityEvent({ address });
 
-  const type = getEventType(row.original.fromAddress);
+  const type = getEventType(row.original);
 
   const Icon = {
     [EventType.Deposit]: HiArrowDownTray,

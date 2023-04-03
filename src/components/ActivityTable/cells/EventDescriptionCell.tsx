@@ -14,15 +14,14 @@ export function EventDescriptionCell({
   row,
 }: EventDescriptionCellProps) {
   const { getEventType } = useActivityEvent({ address });
-  const { timestamp, fromAddress } = row.original;
-  const type = getEventType(fromAddress);
+  const type = getEventType(row.original);
 
   return (
     <>
       <span className={'block leading-snug'}>{type}</span>
       <Date
         className='text-lighter block leading-snug'
-        timestamp={timestamp.toString()}
+        timestamp={row.original.timestamp.toString()}
       />
     </>
   );

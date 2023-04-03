@@ -15,7 +15,7 @@ type AmountCellProps = CellContext<TokenTransfer, string> & {
 export function AmountCell({ address = '', row, getValue }: AmountCellProps) {
   const { getEventType } = useActivityEvent({ address });
 
-  const type = getEventType(row.original.fromAddress);
+  const type = getEventType(row.original);
   const isDeposit = type === EventType.Deposit;
   const text = `${formatCurrencyAmount(getValue())} ${
     row.original.tokenSymbol

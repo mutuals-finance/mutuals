@@ -18,7 +18,7 @@ export default function QRCode({ text, options, ...props }: QRCodeProps) {
         level: 'H',
         margin: 2,
         scale: 5,
-        width: 200,
+        width: 250,
         ...options,
         color: {
           dark: '#000000',
@@ -26,12 +26,14 @@ export default function QRCode({ text, options, ...props }: QRCodeProps) {
           ...options?.color,
         },
       }}
+      /*
       logo={{
         src: logo.src,
         options: {
           width: 35,
         },
       }}
+*/
       {...props}
     />
   );
