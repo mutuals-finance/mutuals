@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PageHeader from '@/components/PageHeader';
+import Seo from '@/components/Seo';
 
 import { NewSplitForm } from '@/templates/split/new';
 
@@ -13,6 +14,7 @@ function CreateHeader() {
 const SplitNewPage: NextPageWithLayout = function () {
   return (
     <>
+      <Seo />
       <CreateHeader />
       <section>
         <div className={'container'}>

@@ -31,14 +31,15 @@ export default function WalletModal({ onClose, open }: WalletModalProps) {
 
   return (
     <Modal header={`Connect a Wallet`} onClose={onClose} open={open}>
-      <div className='flex w-full flex-col space-y-6'>
+      <div className='flex w-full max-w-md flex-col space-y-6'>
         <div>
           <ul className='flex flex-col space-y-3'>{getItems()}</ul>
         </div>
         <div>
-          <p className='text-light text-xs'>
+          <p className='text-light text-xxs'>
             By connecting a wallet, you agree to SplitFi’s Terms of Service and
-            acknowledge that you have read and understand the Azqira Disclaimer.
+            acknowledge that you have read and understand the SplitFi
+            Disclaimer.
           </p>
         </div>
       </div>

@@ -16,7 +16,6 @@ export default function useCreateSplitFull(props: CreateSplitFullProps) {
 
   useUpdateEffect(() => {
     if (tx.isIdle && storage.isSuccess) {
-      console.log('write createSplit', tx);
       write?.();
     }
   }, [write, tx.isIdle, storage.isSuccess]);

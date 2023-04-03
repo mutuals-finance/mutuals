@@ -1,9 +1,8 @@
-import { useRouter } from 'next/navigation';
-import { IoArrowBack } from 'react-icons/io5';
+import { HTMLProps } from 'react';
 
-import { ButtonLink } from '@/components/Button';
+import clsxm from '@/lib/utils/clsxm';
 
-interface PageHeaderProps {
+interface PageHeaderProps extends HTMLProps<HTMLHeadElement> {
   title: string;
   titleBefore?: React.ReactNode;
   titleAfter?: React.ReactNode;
@@ -15,20 +14,13 @@ export default function PageHeader({
   titleBefore,
   titleAfter,
   showBack = true,
+  className,
+  children,
+  ...props
 }: PageHeaderProps) {
-  const router = useRouter();
-
   return (
-    <header className={'pt-6 lg:col-span-6'}>
-      <div className={'container flex h-32 flex-col justify-end'}>
-        {showBack && (
-          <div className={'mb-auto'}>
-            <ButtonLink icon={<IoArrowBack />} onClick={() => router.back()}>
-              Back
-            </ButtonLink>
-          </div>
-        )}
-
+    <header className={clsxm('space-y-6 py-6', className)} {...props}>
+      <div className={'container relative pt-12'}>
         <div className={'flex items-center justify-between space-x-6'}>
           <div
             className={
@@ -41,6 +33,7 @@ export default function PageHeader({
           {titleAfter}
         </div>
       </div>
+      {children}
     </header>
   );
 }

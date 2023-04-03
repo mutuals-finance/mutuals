@@ -1,79 +1,46 @@
-import React from 'react';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { RowData, TableOptions } from '@tanstack/table-core';
+import React, { HTMLProps } from 'react';
 
-enum ActivityColumnHeaders {
-  Event = 'Event',
-  Price = 'Price',
-  By = 'By',
-  To = 'To',
-  Time = 'Time',
-}
+import clsxm from '@/lib/utils/clsxm';
 
-function ActivityHeaderCell({ children }: React.PropsWithChildren<unknown>) {
-  return <th className={'label pb-2'}>{children}</th>;
-}
+import BodyRow from '@/components/Table/BodyRow';
+import HeaderRow from '@/components/Table/HeaderRow';
 
-function ActivityHeaderRow() {
-  return (
-    <tr className={'text-left'}>
-      <ActivityHeaderCell>{ActivityColumnHeaders.Event}</ActivityHeaderCell>
-      <ActivityHeaderCell>{ActivityColumnHeaders.Price}</ActivityHeaderCell>
-      <ActivityHeaderCell>{ActivityColumnHeaders.By}</ActivityHeaderCell>
-      <ActivityHeaderCell>{ActivityColumnHeaders.To}</ActivityHeaderCell>
-      <ActivityHeaderCell>{ActivityColumnHeaders.Time}</ActivityHeaderCell>
-    </tr>
-  );
-}
+interface TableProps<TData extends RowData>
+  extends Pick<TableOptions<TData>, 'data' | 'columns'>,
+    Omit<HTMLProps<HTMLTableElement>, 'data'> {}
 
-function ActivityBodyCell({ children }: React.PropsWithChildren<unknown>) {
-  return <td className={'py-2'}>{children}</td>;
-}
-function ActivityBodyRow() {
-  const tx = {
-    Event: 'Receive',
-    Price: '1.4',
-    By: '0x1234...5678',
-    To: '0x1234...5678',
-    Time: '6 hours ago',
-  };
+export default function Table<TData extends RowData>({
+  data,
+  columns,
+  className,
+  ...props
+}: TableProps<TData>) {
+  const table = useReactTable<TData>({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
-    <tr className={'border-t'}>
-      <ActivityBodyCell>{tx[ActivityColumnHeaders.Event]}</ActivityBodyCell>
-      <ActivityBodyCell>{tx[ActivityColumnHeaders.Price]}</ActivityBodyCell>
-      <ActivityBodyCell>{tx[ActivityColumnHeaders.By]}</ActivityBodyCell>
-      <ActivityBodyCell>{tx[ActivityColumnHeaders.To]}</ActivityBodyCell>
-      <ActivityBodyCell>{tx[ActivityColumnHeaders.Time]}</ActivityBodyCell>
-    </tr>
-  );
-}
-
-// interface ActivityProps {
-//   contractAddress: string;
-//   chainId?: number;
-// }
-
-export default function Activity({}) {
-  return (
-    <div className={'relative w-full flex-1 overflow-y-auto'}>
-      <table className='absolute top-0 left-0 h-full w-full table-auto '>
-        <thead>
-          <ActivityHeaderRow />
-        </thead>
-        <tbody>
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-          <ActivityBodyRow />
-        </tbody>
-      </table>
-    </div>
+    <table
+      className={clsxm(
+        'w-full table-auto whitespace-nowrap text-left',
+        className
+      )}
+      {...props}
+    >
+      <thead className={'bg-default-2 sticky left-0 top-0 z-10'}>
+        {table?.getHeaderGroups()?.map((headerGroup) => (
+          <HeaderRow<TData> {...headerGroup} key={headerGroup.id} />
+        ))}
+      </thead>
+      <tbody>
+        {table?.getRowModel()?.rows?.map((row) => (
+          <BodyRow<TData> {...row} key={row.id} />
+        ))}
+      </tbody>
+    </table>
   );
 }

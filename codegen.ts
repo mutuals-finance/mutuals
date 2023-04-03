@@ -3,10 +3,13 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   overwrite: true,
   schema: 'https://api.thegraph.com/subgraphs/name/fapiper/splitfi-test-2',
-  documents: ['./src/graphql/**/*.ts', '!./src/graphql/__generated__/**/*'],
+  documents: [
+    './src/lib/graphql/**/*.ts',
+    '!./src/lib/graphql/__generated__/**/*',
+  ],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    './src/graphql/__generated__/': {
+    './src/lib/graphql/__generated__/': {
       preset: 'client',
       plugins: [],
       config: {

@@ -13,3 +13,6 @@ if (NFT_STORAGE_TOKEN === '') {
 export const NODE_ENV = process.env.NODE_ENV || '';
 
 export const DEFAULT_SUBGRAPH = process.env.NEXT_PUBLIC_DEFAULT_SUBGRAPH || '';
+export const COVALENT_KEY = process.env.NEXT_PUBLIC_COVALENT_KEY || '';
+export const WALLETCONNECT_PROJECT_ID =
+  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '';

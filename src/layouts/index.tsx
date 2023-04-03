@@ -1,10 +1,10 @@
 import React from 'react';
 
-import AppLayout from '@/layouts/default';
+import SplitDetailsLayout from '@/layouts/split-details';
 
 export const Layouts = {
-  Default: AppLayout,
-  None: ({ children }: React.PropsWithChildren) => <>{children}</>,
+  SplitDetails: SplitDetailsLayout,
+  Default: ({ children }: React.PropsWithChildren) => <>{children}</>,
 };
 
 export type LayoutKeys = keyof typeof Layouts;

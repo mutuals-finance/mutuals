@@ -7,7 +7,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 
-import { INFURA_KEY } from '@/lib/constants';
+import { INFURA_KEY, WALLETCONNECT_PROJECT_ID } from '@/lib/constants';
 
 import { availableChains } from './chains';
 
@@ -33,7 +33,7 @@ export function useWagmi() {
       new WalletConnectConnector({
         chains,
         options: {
-          qrcode: true,
+          projectId: WALLETCONNECT_PROJECT_ID,
         },
       }),
       new InjectedConnector({

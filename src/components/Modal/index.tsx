@@ -48,7 +48,7 @@ export default function Modal({
               }
             >
               {(!!header || !!onClose) && (
-                <div className='bg-default-2 flex w-full flex-shrink-0 items-center justify-between rounded-t-2xl p-6'>
+                <div className='bg-default-2 flex w-full flex-shrink-0 items-center justify-between rounded-t-2xl p-6 font-medium'>
                   {!!header && header}
 
                   {!!onClose && (
