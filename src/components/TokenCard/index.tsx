@@ -3,12 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 import { IoHelp } from 'react-icons/io5';
 
-import {
-  formatBalance,
-  formatCurrency,
-  formatCurrencyAmount,
-  formatPrice,
-} from '@/lib/utils';
+import { formatCurrencyAmount, formatPrice } from '@/lib/utils';
 
 type TokenCardProps = Awaited<
   ReturnType<typeof getAccountBalance>

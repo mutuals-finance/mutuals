@@ -67,7 +67,11 @@ export const withdrawalFragment = graphql(/* GraphQL */ `
   fragment WithdrawalFragment on Withdrawal {
     amount
     token {
-      ...TokenFragment
+      id
+      symbol
+      name
+      decimals
+      totalSupply
     }
     id
     transaction {
@@ -149,24 +153,39 @@ export const splitDetailsFragment = graphql(/* GraphQL */ `
     totalShares
     txCount
     shares {
-      ...ShareFragment
+      id
+      payee
+      timestamp
+      value
     }
     tokenWithdrawals {
       amount
       token {
-        ...TokenFragment
+        id
+        symbol
+        name
+        decimals
+        totalSupply
       }
     }
     tokenDeposits {
       amount
       token {
-        ...TokenFragment
+        id
+        symbol
+        name
+        decimals
+        totalSupply
       }
     }
     withdrawableTokens {
       amount
       token {
-        ...TokenFragment
+        id
+        symbol
+        name
+        decimals
+        totalSupply
       }
     }
   }

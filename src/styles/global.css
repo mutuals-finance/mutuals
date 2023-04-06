@@ -28,10 +28,14 @@
   }
 
   .title-3 {
-    @apply text-xl font-semibold;
+    @apply text-2xl font-medium;
   }
 
-  .title-4{
+  .title-4 {
+    @apply text-lg font-semibold
+  }
+
+  .title-5 {
     @apply text-base font-semibold
   }
 
