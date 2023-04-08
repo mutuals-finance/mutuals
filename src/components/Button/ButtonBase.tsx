@@ -1,8 +1,11 @@
+import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 import clsxm from '@/lib/utils/clsxm';
 
 import LoadingSpinner from '@/components/LoadingSpinner';
+
+type LinkProps = React.ComponentProps<typeof Link>;
 
 export interface ButtonBaseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,6 +20,8 @@ export interface ButtonBaseProps
   color?: 'primary' | 'secondary' | 'outline' | 'link-1' | 'link-2';
   dense?: boolean;
   fullWidth?: boolean;
+  href?: LinkProps['href'];
+  target?: LinkProps['target'];
 }
 
 export default function ButtonBase({
@@ -93,8 +98,8 @@ export default function ButtonBase({
 
   const colorClass = {
     primary: `text-white bg-carlo hover:bg-carlo-400 disabled:hover:bg-carlo border-transparent`,
-    secondary: `bg-neutral-900 hover:bg-neutral-700 disabled:hover:bg-neutral-900 text-neutral-50 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-100 dark:disabled:hover:bg-neutral-100`,
-    outline: `bg-default-2 text-default border-default hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:hover:bg-zinc-100 dark:disabled:hover:bg-zinc-900`,
+    secondary: `bg-default-2 text-default  `,
+    outline: `text-default  `,
     'link-1': `link-1 border-transparent`,
     'link-2': `link-2 border-transparent`,
   }[color];
@@ -118,7 +123,7 @@ export default function ButtonBase({
       {loading && (
         <div
           className={clsxm(
-            `absolute top-0 left-0 block flex h-full w-full items-center justify-center`,
+            `absolute left-0 top-0 block flex h-full w-full items-center justify-center`,
             roundedClass
           )}
         >

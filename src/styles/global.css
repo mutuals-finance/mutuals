@@ -19,8 +19,8 @@
     @apply pt-6 lg:pt-12;
   }
 
-  .title {
-    @apply text-6xl font-semibold;
+  .title-1 {
+    @apply text-5xl font-medium;
   }
 
   .title-2 {
@@ -81,7 +81,7 @@
 
 
   .input-readonly {
-    @apply cursor-default focus:border-default border-opacity-50 bg-opacity-50
+    @apply cursor-default bg-opacity-50
   }
 
   textarea,
@@ -132,10 +132,6 @@
 
   .rounded-default {
     @apply rounded-xl;
-  }
-
-  .bg-border-default {
-    @apply bg-zinc-200 dark:bg-zinc-800;
   }
 
   .border-default {

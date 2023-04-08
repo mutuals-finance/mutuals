@@ -49,7 +49,7 @@ export default function InputListbox<TType = string>({
               <Listbox.Button
                 as={'button'}
                 className={
-                  'input input-readonly cursor-pointer hover:border-black dark:hover:border-neutral-50'
+                  'input cursor-pointer hover:border-black dark:hover:border-neutral-50'
                 }
               >
                 {displayFn?.({ items: field.value })}

@@ -22,7 +22,7 @@ export function DepositTab() {
     <section>
       <div className={'container'}>
         <article className={'w-full max-w-2xl space-y-6'}>
-          <h2 className={'title-3'}>Deposit</h2>
+          <h2 className={'title-1'}>Deposit</h2>
           <div
             className={
               'rounded-default bg-default relative inline-flex overflow-hidden border border-orange-400'

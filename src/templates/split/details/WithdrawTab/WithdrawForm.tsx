@@ -48,7 +48,10 @@ function WithdrawFormInner() {
 
   return (
     <>
-      <FormGroup>
+      <FormGroup
+        title={'Select Assets'}
+        description={'Specify the tokens you want to withdraw.'}
+      >
         <InputListbox<Balance>
           label='Assets'
           id='assets'
@@ -81,7 +84,7 @@ function WithdrawFormInner() {
         <InputSwitch id={'distribute'} label={'Enable Distribution'} />
       </FormGroup>
 
-      <div className='border-default rounded-default border p-6'>
+      <div className='pt-12'>
         <table className={'w-full table-fixed'}>
           <tbody>
             {Object.keys(summary).map((name) => (
@@ -98,11 +101,11 @@ function WithdrawFormInner() {
               <td className={'border-default table-cell border-b pt-1.5'} />
             </tr>
 
-            <tr className={'font-medium'}>
+            <tr className={'font-semibold'}>
               <td className={'table-cell pt-1.5'}>You Receive</td>
               <td className={'table-cell pt-1.5'}>
-                {formatCurrencyAmount(total.assetCount.toString())} tokens (
-                {formatCurrency(userWithdrawal)})
+                {formatCurrency(userWithdrawal)} (
+                {formatCurrencyAmount(total.assetCount.toString())} tokens)
               </td>
             </tr>
           </tfoot>
@@ -120,7 +123,10 @@ export function WithdrawForm() {
   const assets = balance?.assets || [];
 
   return (
-    <Form<WithdrawData> defaultValues={{ assets }} className={'space-y-6'}>
+    <Form<WithdrawData>
+      defaultValues={{ assets }}
+      className={'rounded-default border-default space-y-6 border p-6'}
+    >
       {() => <WithdrawFormInner />}
     </Form>
   );

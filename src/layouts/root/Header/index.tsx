@@ -18,7 +18,7 @@ export default function Header() {
           <Logo />
 
           <ul
-            className={'hidden text-sm md:flex md:items-center md:space-x-12'}
+            className={'hidden text-base md:flex md:items-center md:space-x-12'}
           >
             <li>
               <LinkPrimary href={'/splits'}>Splits</LinkPrimary>

@@ -1,14 +1,15 @@
-import React from 'react';
+import { IconType } from 'react-icons';
 
-export interface RouteChild {
-  label: string;
-  slug: string;
-  component: () => JSX.Element;
+import { TemplatedRouteChild } from '@/hooks/useRouterTemplate';
+
+export type SplitTemplateTab = TemplatedRouteChild;
+
+export enum SplitSettingsSection {
+  SPLIT = 'Split',
+  PERSONAL = 'Personal',
 }
 
-export type SplitTemplateTab = RouteChild;
-
-export type SplitSettingsTemplateTab = RouteChild & {
-  icon: React.ReactNode;
+export type SplitSettingsTemplateTab = TemplatedRouteChild & {
+  icon: IconType;
   description: string;
 };

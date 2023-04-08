@@ -7,10 +7,10 @@ export function WithdrawTab() {
     <section>
       <div className={'container'}>
         <div className={'w-full max-w-2xl space-y-6'}>
-          <h2 className={'title-3'}>Withdraw</h2>
+          <h2 className={'title-1'}>Withdraw</h2>
           <p>
-            Please select the tokens you want to withdraw and confirm your
-            selection.
+            Withdraw funds from your split. You may either withdraw for your own
+            or distribute to all other recipients.
           </p>
           <WithdrawForm />
         </div>
