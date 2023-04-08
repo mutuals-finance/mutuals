@@ -5,8 +5,6 @@ import { Controller, get, useFormContext } from 'react-hook-form';
 import { formatBytes, formatStringItems } from '@/lib/utils';
 import clsxm from '@/lib/utils/clsxm';
 
-import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
-import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
@@ -15,7 +13,6 @@ import { BaseFieldProps } from '@/components/Form/types';
 import { FileWithPreview } from '../types';
 
 export interface InputImageProps extends BaseFieldProps {
-  maxFiles?: number;
   maxSize?: number;
   acceptedImageExtensions?: string[];
 }
@@ -25,7 +22,6 @@ export default function InputImage({
   id = '',
   readOnly = false,
   validation,
-  maxFiles = 1,
   maxSize = 5242880, // 5 MiB
   acceptedImageExtensions = ['.png', '.jpg', '.jpeg'],
   helperText = `You can upload files with ${formatStringItems(
@@ -45,57 +41,43 @@ export default function InputImage({
 
   const dropzoneRef = React.useRef<HTMLDivElement>(null);
 
+  const maxFiles = 1;
+
   React.useEffect(() => {
     error && dropzoneRef.current?.focus();
   }, [error]);
 
-  const [files, setFiles] = React.useState<FileWithPreview[]>(
-    getValues(id) || []
-  );
+  const [file, setFile] = React.useState<FileWithPreview | null>(getValues(id));
 
   const onDrop = React.useCallback(
     <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles && rejectedFiles.length > 0) {
-        setValue(id, files?.length > 0 ? files[0] : null);
+        // setValue(id, file);
         setError(id, {
           type: 'manual',
           message: rejectedFiles && rejectedFiles[0]?.errors[0]?.message,
         });
       } else {
-        const acceptedFilesPreview = acceptedFiles.map((file: T) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
+        const newFile = acceptedFiles[0] as T;
+        const newFilePreview = Object.assign(newFile, {
+          preview: URL.createObjectURL(newFile),
+        });
 
-        setFiles(
-          files
-            ? [...files, ...acceptedFilesPreview].slice(0, maxFiles)
-            : acceptedFilesPreview
-        );
+        setFile(newFilePreview);
 
-        setValue(
-          id,
-          (files
-            ? [...files, ...acceptedFiles].slice(0, maxFiles)
-            : acceptedFiles)[0],
-          {
-            shouldValidate: true,
-          }
-        );
+        setValue(id, newFilePreview, {
+          shouldValidate: true,
+        });
+
         clearErrors(id);
       }
     },
-    [clearErrors, files, id, maxFiles, setError, setValue]
+    [clearErrors, file, id, maxFiles, setError, setValue]
   );
 
-  const onDeleteFile = (file: FileWithPreview) => {
-    const newFiles = [...files];
-
-    newFiles.splice(newFiles.indexOf(file), 1);
-
-    setFiles(newFiles);
-    setValue(id, newFiles.length > 0 ? newFiles[0] : null, {
+  const onDeleteFile = () => {
+    setFile(null);
+    setValue(id, null, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
@@ -104,9 +86,9 @@ export default function InputImage({
 
   React.useEffect(() => {
     return () => {
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+      !!file && URL.revokeObjectURL(file.preview);
     };
-  }, [files]);
+  }, [file]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -136,17 +118,14 @@ export default function InputImage({
             >
               <input id={id} {...getInputProps(field)} />
 
-              {!files?.length || files?.length < 1 ? (
-                <FilePlaceholder placeholder={placeholder} />
+              {!!file ? (
+                <FilePreview
+                  readOnly={readOnly}
+                  file={file}
+                  onDeleteFile={onDeleteFile}
+                />
               ) : (
-                files.map((file, index) => (
-                  <FilePreview
-                    key={index}
-                    readOnly={readOnly}
-                    file={file}
-                    onDeleteFile={onDeleteFile}
-                  />
-                ))
+                <FilePlaceholder placeholder={placeholder} />
               )}
             </div>
           </>

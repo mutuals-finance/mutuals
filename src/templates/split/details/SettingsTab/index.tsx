@@ -12,6 +12,8 @@ import { useRouterTemplate } from '@/hooks/useRouterTemplate';
 import { ButtonOutline } from '@/components/Button';
 import SidebarLayout from '@/components/SidebarLayout';
 
+import { useSplit } from '@/context/SplitContext';
+
 import { MetadataTab } from './MetadataTab';
 
 import { SplitSettingsSection, SplitSettingsTemplateTab } from '#/split';
@@ -54,6 +56,8 @@ const sections: Record<SplitSettingsSection, SplitSettingsTemplateTab[]> = {
 };
 
 function SidebarBody() {
+  const { split } = useSplit();
+
   return (
     <div className={'space-y-6'}>
       {Object.keys(sections).map((label) => (
@@ -62,23 +66,18 @@ function SidebarBody() {
           <ul className={'space-y-3'}>
             {sections[label as SplitSettingsSection].map((route) => (
               <li key={label + '-' + route.slug}>
-                <Link
-                  href={
-                    'splits/0x8bc7ccfac818a5f5ed0c7b327024b8075e4f1407/settings/' +
-                    route.slug
-                  }
-                  legacyBehavior={true}
-                  passHref={true}
+                <ButtonOutline
+                  href={{
+                    pathname: 'settings/[slug]',
+                    query: { id: split.id, slug: route.slug },
+                  }}
+                  icon={<route.icon />}
+                  justify={'start'}
+                  size={'md'}
+                  fullWidth={true}
                 >
-                  <ButtonOutline
-                    icon={<route.icon />}
-                    justify={'start'}
-                    size={'md'}
-                    fullWidth={true}
-                  >
-                    {route.label}
-                  </ButtonOutline>
-                </Link>
+                  {route.label}
+                </ButtonOutline>
               </li>
             ))}
           </ul>
@@ -96,7 +95,11 @@ export function SettingsTab() {
 
   return (
     <section>
-      <SidebarLayout title={'Settings'} body={<SidebarBody />}>
+      <div className={'container'}>
+        <h2 className={'title-1 mb-6'}>Settings</h2>
+      </div>
+
+      <SidebarLayout body={<SidebarBody />}>
         <template.component />
       </SidebarLayout>
     </section>

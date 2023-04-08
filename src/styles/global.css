@@ -81,7 +81,7 @@
 
 
   .input-readonly {
-    @apply cursor-default bg-opacity-50
+    @apply cursor-default border-default bg-opacity-50
   }
 
   textarea,

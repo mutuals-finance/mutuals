@@ -76,19 +76,7 @@ export default function LinkBase({
 
   return (
     <NextLink className={linkClass} {...props}>
-      {loading && (
-        <div
-          className={clsxm(
-            `absolute left-0 top-0 block flex h-full w-full items-center justify-center`
-          )}
-        >
-          <LoadingSpinner size={size} />
-        </div>
-      )}
-
-      {icon && <span className={`block`}>{icon}</span>}
-      {children && <span className={`block`}>{children}</span>}
-      {iconAfter && <span className={`block`}>{iconAfter}</span>}
+      {children}
     </NextLink>
   );
 }
