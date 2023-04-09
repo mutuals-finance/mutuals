@@ -1,20 +1,11 @@
-import { InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
-import { SplitProvider } from '@/context/SplitContext';
-import Header from '@/layouts/split-details/Header';
-import { getServerSideProps } from '@/pages/splits/[id]/[...slug]';
+import SidebarLayout from '@/components/SidebarLayout';
 
-export default function SplitDetailsLayout({
+import Body from './Body';
+
+export default function SplitSettingsLayout({
   children,
-  split,
-}: React.PropsWithChildren<
-  InferGetServerSidePropsType<typeof getServerSideProps>
->) {
-  return (
-    <SplitProvider split={split}>
-      <Header />
-      {children}
-    </SplitProvider>
-  );
+}: React.PropsWithChildren) {
+  return <SidebarLayout body={<Body />}>{children}</SidebarLayout>;
 }
