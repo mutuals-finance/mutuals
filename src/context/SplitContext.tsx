@@ -7,8 +7,13 @@ import {
 import { useAccountBalance } from 'ankr-react';
 import { createContext, useContext } from 'react';
 import { useAsync } from 'react-use';
+import { useAccount } from 'wagmi';
 
-import { SplitDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import {
+  ShareFragmentFragment,
+  SplitDetailsFragmentFragment,
+} from '@/lib/graphql/__generated__/graphql';
+import { formatRoundNumber } from '@/lib/utils';
 
 function useTokenTransfers(params: GetTransfersRequest) {
   const ankrjsProvider = new AnkrProvider();
@@ -16,10 +21,11 @@ function useTokenTransfers(params: GetTransfersRequest) {
 }
 
 const blockchain = 'eth';
-const address = '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1';
+const address = '0x388c818ca8b9251b393131c08a736a67ccb19297';
 
 interface SplitContextType {
   split: SplitDetailsFragmentFragment;
+  accountShare?: ShareFragmentFragment;
   balance?: GetAccountBalanceReply;
   transfers?: GetTokenTransfersReply;
 }
@@ -54,12 +60,19 @@ export const SplitProvider = ({
     pageSize: 20,
   });
 
+  const { address: accountAddress } = useAccount();
+
+  const accountShare = split.shares.find(
+    (share) => share.payee.toLowerCase() === accountAddress?.toLowerCase()
+  );
+
   return (
     <SplitContext.Provider
       value={{
         split: { ...split, address },
         balance,
         transfers,
+        accountShare,
       }}
     >
       {children}

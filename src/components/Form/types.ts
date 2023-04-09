@@ -41,6 +41,6 @@ export type InputNumberBaseProps = InputBaseProps &
     removeDisabled?: boolean;
   };
 
-export interface FileWithPreview extends File {
+export interface FileWithPreview extends Partial<File> {
   preview: string;
 }

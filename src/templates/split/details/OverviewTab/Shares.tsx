@@ -1,10 +1,8 @@
 import dynamic from 'next/dynamic';
-import React, { HTMLProps, useState } from 'react';
+import React, { HTMLProps } from 'react';
 import { useList } from 'react-use';
 
-import { useFragment as fragment } from '@/lib/graphql/__generated__';
 import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
-import { shareFragment } from '@/lib/graphql/fragments';
 import clsxm from '@/lib/utils/clsxm';
 
 import Box from '@/components/Box';
@@ -40,7 +38,9 @@ function ShareItem({ share, className, isActive, ...props }: ShareItemProps) {
         <LinkChainExplorer address={share.payee} color={'secondary'} />
       </div>
 
-      <span className={'block text-right leading-none'}>{share.value} %</span>
+      <span className={'block text-right leading-none'}>
+        {share.value * 100} %
+      </span>
     </div>
   );
 }
@@ -49,7 +49,7 @@ export function Shares() {
   const { split } = useSplit();
   const [shares, { updateAt }] = useList<ActiveShare>(
     split.shares.map((s) => ({
-      ...fragment(shareFragment, s),
+      ...s,
       isActive: false,
     }))
   );

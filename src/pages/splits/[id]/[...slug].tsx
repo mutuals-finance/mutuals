@@ -1,20 +1,18 @@
 import { InferGetServerSidePropsType } from 'next';
 import { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
 import React from 'react';
-import { useNetwork } from 'wagmi';
 
 import { useFragment } from '@/lib/graphql/__generated__';
 import { addApolloState, initializeApollo } from '@/lib/graphql/client';
 import { splitDetailsFragment } from '@/lib/graphql/fragments';
 import { SPLIT } from '@/lib/graphql/queries';
+import { useRouterTemplate } from '@/hooks/useRouterTemplate';
 
 import Seo from '@/components/Seo';
 
 import routes from '@/templates/split/details';
 
 import { NextPageWithLayout } from '#/app';
-import { SplitTemplateTab } from '#/split';
 
 export async function getServerSideProps({
   params: { id, slug },
@@ -66,20 +64,15 @@ export async function getServerSideProps({
 const SplitDetailPage: NextPageWithLayout = function ({
   split,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { ...router } = useRouter();
-
-  const path = router.asPath;
-  const currentSlug = path.substring(path.lastIndexOf('/') + 1);
-
-  const currentTab = (routes.find((route) => route.slug === currentSlug) ||
-    routes[0]) as SplitTemplateTab;
-
-  const Template = currentTab.component;
+  const template = useRouterTemplate(
+    routes,
+    ({ asPath }) => asPath.split('/')[3]
+  );
 
   return (
     <>
-      <Seo title={`${split.metaData.name} » ${currentTab?.label}`} />
-      <Template />
+      <Seo title={`${split.metaData.name} » ${template?.label}`} />
+      <template.component />
     </>
   );
 };

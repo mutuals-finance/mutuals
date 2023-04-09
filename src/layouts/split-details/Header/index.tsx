@@ -11,13 +11,6 @@ import { SplitImage } from '@/components/Split/Image';
 import { useSplit } from '@/context/SplitContext';
 import Menu from '@/layouts/split-details/Header/Menu';
 
-interface SplitDetailsLayoutHeaderProps {
-  image: string;
-  name: string;
-  description?: string | null;
-  id: string;
-}
-
 export default function Header() {
   const { split } = useSplit();
   const image = ipfsResolveData(split.metaData.image);

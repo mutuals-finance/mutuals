@@ -17,7 +17,7 @@ export default function FormGroup({
   return (
     <div {...props} className={clsxm('flex flex-col space-y-6', className)}>
       <div className={'flex flex-col space-y-3'}>
-        {title && <h2 className={'title-3'}>{title}</h2>}
+        {title && <h2 className={'title-4'}>{title}</h2>}
         {!!description &&
           (React.isValidElement(description) ? (
             description

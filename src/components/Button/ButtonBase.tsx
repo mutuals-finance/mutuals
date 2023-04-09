@@ -1,14 +1,16 @@
+import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 import clsxm from '@/lib/utils/clsxm';
 
+import { LinkUnstyled } from '@/components/Link';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
-export interface ButtonBaseProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type LinkProps = React.ComponentProps<typeof Link>;
+
+export interface ButtonBaseProps extends React.PropsWithChildren {
   icon?: ReactNode;
   iconAfter?: ReactNode;
-  children?: ReactNode;
   disabled?: boolean;
   loading?: boolean;
   rounded?: 'base' | 'small' | 'none' | 'full';
@@ -17,6 +19,21 @@ export interface ButtonBaseProps
   color?: 'primary' | 'secondary' | 'outline' | 'link-1' | 'link-2';
   dense?: boolean;
   fullWidth?: boolean;
+  href?: LinkProps['href'];
+  target?: LinkProps['target'];
+  className?: string;
+  activeClassName?: string;
+  exactActiveClassName?: string;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+}
+
+function LinkOrButton({ href, type, ...props }: ButtonBaseProps) {
+  const isLink = !!href;
+  return isLink ? (
+    <LinkUnstyled href={href as URL} {...props} />
+  ) : (
+    <button type={type} {...props} />
+  );
 }
 
 export default function ButtonBase({
@@ -33,7 +50,7 @@ export default function ButtonBase({
   loading = false,
   disabled = false,
   ...props
-}: React.PropsWithChildren<ButtonBaseProps>) {
+}: ButtonBaseProps) {
   const onlyIcon = (icon || (iconAfter && !icon)) && !children;
   const baseClass = `relative inline-flex items-center text-center font-medium border transition-color ease-in-out duration-200 active:scale-95 disabled:active:scale-100 disabled:cursor-default`;
 
@@ -93,8 +110,8 @@ export default function ButtonBase({
 
   const colorClass = {
     primary: `text-white bg-carlo hover:bg-carlo-400 disabled:hover:bg-carlo border-transparent`,
-    secondary: `bg-neutral-900 hover:bg-neutral-700 disabled:hover:bg-neutral-900 text-neutral-50 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-100 dark:disabled:hover:bg-neutral-100`,
-    outline: `bg-default-2 text-default border-default hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:hover:bg-zinc-100 dark:disabled:hover:bg-zinc-900`,
+    secondary: `bg-default-2 text-default border-transparent hover:bg-default disabled:hover:bg-default-2`,
+    outline: `text-default bg-default hover:bg-default-2 border-default disabled:hover:bg-default`,
     'link-1': `link-1 border-transparent`,
     'link-2': `link-2 border-transparent`,
   }[color];
@@ -114,11 +131,15 @@ export default function ButtonBase({
   );
 
   return (
-    <button className={buttonClass} disabled={disabled || loading} {...props}>
+    <LinkOrButton
+      className={buttonClass}
+      disabled={disabled || loading}
+      {...props}
+    >
       {loading && (
         <div
           className={clsxm(
-            `absolute top-0 left-0 block flex h-full w-full items-center justify-center`,
+            `absolute left-0 top-0 block flex h-full w-full items-center justify-center`,
             roundedClass
           )}
         >
@@ -129,6 +150,6 @@ export default function ButtonBase({
       {icon && <span className={`block`}>{icon}</span>}
       {children && <span className={`block`}>{children}</span>}
       {iconAfter && <span className={`block`}>{iconAfter}</span>}
-    </button>
+    </LinkOrButton>
   );
 }
