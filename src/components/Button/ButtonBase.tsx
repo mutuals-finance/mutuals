@@ -25,14 +25,15 @@ export interface ButtonBaseProps extends React.PropsWithChildren {
   activeClassName?: string;
   exactActiveClassName?: string;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  onClick?: React.ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
 }
 
-function LinkOrButton({ href, type, ...props }: ButtonBaseProps) {
+function LinkOrButton({ href, type, onClick, ...props }: ButtonBaseProps) {
   const isLink = !!href;
   return isLink ? (
     <LinkUnstyled href={href as URL} {...props} />
   ) : (
-    <button type={type} {...props} />
+    <button type={type} onClick={onClick} {...props} />
   );
 }
 
@@ -65,7 +66,7 @@ export default function ButtonBase({
     xs: fullWidth ? 'w-full' : 'w-6',
     sm: fullWidth ? 'w-full' : 'w-8',
     md: fullWidth ? 'w-full' : 'w-10',
-    lg: fullWidth ? 'w-full' : 'w-14',
+    lg: fullWidth ? 'w-full' : 'w-12',
     xl: fullWidth ? 'w-full' : 'w-16',
   }[size];
 
@@ -81,15 +82,15 @@ export default function ButtonBase({
     xs: `h-6`,
     sm: `h-8`,
     md: `h-10`,
-    lg: `h-14`,
+    lg: `h-12`,
     xl: `h-16`,
   }[size];
 
   const sizeClass = {
     xs: `py-0.25 px-2`,
     sm: `py-0.5 px-3`,
-    md: `py-1 px-4`,
-    lg: `py-2 px-6`,
+    md: `py-1 px-3`,
+    lg: `py-2 px-3`,
     xl: `py-3 px-8`,
   }[size];
 

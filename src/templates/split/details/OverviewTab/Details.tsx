@@ -17,17 +17,19 @@ export function Details() {
   const { split, balance } = useSplit();
 
   return (
-    <div className={'grid grid-cols-6 gap-3 lg:col-span-6 lg:gap-6'}>
-      <Box className={'lg:col-span-3'}>
-        <div className={'flex flex-1 flex-col space-y-3'}>
+    <div
+      className={'grid grid-cols-2 gap-3 lg:col-span-6 lg:grid-cols-6 lg:gap-6'}
+    >
+      <Box className={'col-span-2 lg:col-span-3'}>
+        <div className={'flex flex-1 flex-col space-y-6'}>
           <Statistic
             title={'Total Balance'}
-            className={'text-5xl slashed-zero'}
+            className={'text-4xl slashed-zero leading-snug lg:text-5xl'}
           >
             {formatUSDPrice(balance?.totalBalanceUsd || '0')}
           </Statistic>
 
-          <p className={'text-light text-right '}>
+          <p className={'text-lighter text-right text-sm lg:text-base'}>
             {balance?.assets
               ?.sort(({ balanceRawInteger }) => Number(balanceRawInteger))
               .slice(0, 2)

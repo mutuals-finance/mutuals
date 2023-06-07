@@ -17,8 +17,6 @@ export default function AssetCardHorizontal({
   tokenSymbol,
   className,
   selected,
-  active,
-  ...props
 }: AssetCardHorizontalProps) {
   return (
     <div
@@ -26,7 +24,6 @@ export default function AssetCardHorizontal({
         `hover:bg-default-2 group flex w-full items-center justify-between space-x-3 overflow-hidden px-6 py-1.5 text-sm`,
         className
       )}
-      {...props}
     >
       <div className={'flex flex-1 items-center space-x-3'}>
         <div

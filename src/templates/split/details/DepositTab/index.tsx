@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  IoCopyOutline,
   IoEllipsisHorizontal,
-  IoEllipsisVertical,
   IoGlobeOutline,
   IoWarning,
+  IoWarningOutline,
 } from 'react-icons/io5';
 
-import { ButtonOutline, ButtonSecondary } from '@/components/Button';
-import Chip from '@/components/Chip';
+import Alert from '@/components/Alert';
+import { ButtonOutline } from '@/components/Button';
 import QRCode from '@/components/QRCode';
 import Statistic from '@/components/Statistic';
 
@@ -23,28 +22,24 @@ export function DepositTab() {
       <div className={'container'}>
         <article className={'w-full max-w-2xl space-y-6'}>
           <h2 className={'title-1'}>Deposit</h2>
-          <div
-            className={
-              'rounded-default bg-default relative inline-flex overflow-hidden border border-orange-400'
-            }
-          >
-            <span className={'block w-2 bg-orange-400'} />
-            <span className={'block self-center pl-3 text-2xl text-orange-400'}>
-              <IoWarning />
-            </span>
-            <div className={'p-3 text-sm'}>
-              <p>
+
+          <Alert severity={'warning'}>
+            <ul>
+              <li>
                 Only ETH and ERC-20 tokens can be deposited. Do not send NFTs to
                 a Split.
-              </p>
-            </div>
-          </div>
-
+              </li>
+              <li>
+                Please make sure to operate on the Ethereum chain. Other
+                networks are not supported for this address.
+              </li>
+            </ul>
+          </Alert>
           <p>Use the address below to receive funds to your split</p>
 
           <div
             className={
-              'rounded-default border-default inline-flex flex-col items-center border  px-6'
+              'rounded-default border-default inline-flex flex-col items-center border px-6'
             }
           >
             <div

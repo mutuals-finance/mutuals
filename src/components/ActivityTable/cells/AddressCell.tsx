@@ -15,6 +15,6 @@ export function AddressCell({ getValue, address: parent }: AddressCellProps) {
   return !equals ? (
     <LinkChainExplorer address={address} size={'sm'} color={'secondary'} />
   ) : (
-    <></>
+    <LinkChainExplorer address={address} size={'sm'} color={'secondary'} />
   );
 }

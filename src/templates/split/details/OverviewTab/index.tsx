@@ -9,16 +9,13 @@ import { Details } from './Details';
 import { Shares } from './Shares';
 
 export function OverviewTab() {
-  const { split, transfers, balance } = useSplit();
-
   return (
     <section>
       <div className={'container grid gap-3 lg:grid-cols-6 lg:gap-6'}>
-        <Details {...balance} {...split} />
-        <Assets {...balance} />
-        <Shares shares={split.shares} />
-        <Activity transfers={transfers?.transfers} {...split} />
-        <Analytics />
+        <Details />
+        <Assets />
+        <Shares />
+        <Activity />
       </div>
     </section>
   );

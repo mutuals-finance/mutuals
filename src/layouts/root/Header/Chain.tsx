@@ -1,15 +1,17 @@
 import Image from 'next/image';
 import React from 'react';
-import { Chain as WagmiChain, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 
-import { getLogoByChainId } from '@/lib/utils/chainLogo';
+import { getAvailableChains, getLogoByChainId } from '@/lib/utils';
 
 import Popover from '@/components/Popover';
 import PopoverItem from '@/components/Popover/PopoverItem';
 
 import ChainButton from '@/layouts/root/Header/ChainButton';
 
-interface ChainSelectorItemProps extends WagmiChain {
+import type { Chain } from '#/chain';
+
+interface ChainSelectorItemProps extends Chain {
   isSwitching: boolean;
   onSelectChain: (chainId: number) => void;
 }
@@ -17,6 +19,7 @@ interface ChainSelectorItemProps extends WagmiChain {
 function ChainSelectorItem({
   id,
   name,
+  logo,
   isSwitching,
   onSelectChain,
 }: ChainSelectorItemProps) {
@@ -27,7 +30,7 @@ function ChainSelectorItem({
           className={'h-4 w-4'}
           objectFit='contain'
           height={8}
-          src={getLogoByChainId(id)}
+          src={logo}
           alt={name}
         />
       } /*
@@ -37,13 +40,12 @@ disabled={isSwitching}
       onClick={() => onSelectChain(id)}
     >
       {name}
-      {isSwitching && ' (switching)'}
+      {isSwitching && ' (...)'}
     </PopoverItem>
   );
 }
 export default function Chain() {
-  const { chains, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork();
+  const { isLoading, pendingChainId, switchNetwork } = useSwitchNetwork();
   const { chain: currentChain } = useNetwork();
 
   function onSelectChain(chainId: number) {
@@ -56,14 +58,15 @@ export default function Chain() {
     <Popover
       button={
         <ChainButton
-          src={getLogoByChainId(currentChain?.id || 1)}
+          src={getLogoByChainId(currentChain?.id)}
           alt={currentChain?.name || 'UNKNOWN'}
         />
       }
     >
       <div className='rounded-default border-default shadow-default w-60 divide-y border bg-white dark:bg-neutral-900'>
-        <div className='flex flex-col p-2'>
-          {chains.map(
+        <div className='flex flex-col p-3'>
+          <span className={'label mb-1 block pb-1'}>Choose Your Network</span>
+          {getAvailableChains().map(
             (chain) =>
               chain.id !== currentChain?.id && (
                 <ChainSelectorItem

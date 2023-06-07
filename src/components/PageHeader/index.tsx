@@ -20,7 +20,7 @@ export default function PageHeader({
 }: PageHeaderProps) {
   return (
     <header className={clsxm('space-y-6 py-6', className)} {...props}>
-      <div className={'container relative pt-12'}>
+      <div className={'container relative pt-24'}>
         <div className={'flex items-center justify-between space-x-6'}>
           <div
             className={

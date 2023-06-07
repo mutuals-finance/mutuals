@@ -1,6 +1,6 @@
 import { Listbox, ListboxProps } from '@headlessui/react';
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 
 import clsxm from '@/lib/utils/clsxm';
 
@@ -30,7 +30,7 @@ export default function InputListbox<TType = string>({
   optionsWrapperClassNames,
   ...rest
 }: InputListboxProps<TType>) {
-  const { control } = useFormContext();
+  const { control, trigger } = useFormContext();
 
   return (
     <BaseWrapper
@@ -43,9 +43,18 @@ export default function InputListbox<TType = string>({
         control={control}
         name={id}
         rules={validation}
-        render={({ field: { ...field } }) => (
+        render={({ field: { onChange, ...field }, fieldState, formState }) => (
           <>
-            <Listbox {...rest} {...field} as={'div'} className={'w-full'}>
+            <Listbox
+              {...rest}
+              {...field}
+              onChange={(value) => {
+                onChange(value);
+                void trigger(id);
+              }}
+              as={'div'}
+              className={'w-full'}
+            >
               <Listbox.Button
                 as={'button'}
                 className={
