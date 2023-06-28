@@ -40,6 +40,8 @@ module.exports = {
       'wallet-asset.matic.network',
       'www.ankr.com',
       'cloudflare-ipfs.com',
+      'www.datocms-assets.com',
+      'logos.covalenthq.com',
     ],
   },
 };
