@@ -36,6 +36,7 @@
     "@visx/tooltip": "^3.0.0",
     "@walletconnect/ethereum-provider": "^2.4.7",
     "ankr-react": "^0.3.0",
+    "chakra-react-select": "^4.6.0",
     "date-fns": "^2.29.3",
     "deepmerge": "^4.3.0",
     "ethers": "^5.7.2",

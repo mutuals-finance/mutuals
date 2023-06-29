@@ -1,8 +1,9 @@
+import { Input as ChakraInput } from '@chakra-ui/react';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import InputBase from './InputBase';
-import { InputBaseProps } from './types';
+import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import { InputBaseProps } from '@/components/Form/types';
 
 export default function Input({
   id = '',
@@ -15,7 +16,11 @@ export default function Input({
       control={control}
       name={id}
       rules={validation}
-      render={({ field }) => <InputBase id={id} {...props} {...field} />}
+      render={({ field }) => (
+        <BaseWrapper id={id} {...props}>
+          <ChakraInput id={id} {...props} {...field} />
+        </BaseWrapper>
+      )}
     />
   );
 }

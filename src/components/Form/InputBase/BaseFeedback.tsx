@@ -1,3 +1,4 @@
+import { FormErrorMessage, FormHelperText } from '@chakra-ui/react';
 import React from 'react';
 
 import { BaseFeedbackProps } from '@/components/Form/types';
@@ -9,16 +10,12 @@ export default function BaseFeedback({
 }: BaseFeedbackProps) {
   return (
     <>
-      {!!helperText && (
-        <div>
-          <p className={'text-light text-xxs'}>{helperText}</p>
-        </div>
-      )}
+      {!!helperText && <FormHelperText>{helperText}</FormHelperText>}
 
       {!(hideError || !error) && (
         <div>
           {!!error && (
-            <p className='label-error'>{error.message?.toString()}</p>
+            <FormErrorMessage>{error.message?.toString()}</FormErrorMessage>
           )}
         </div>
       )}

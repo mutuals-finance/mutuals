@@ -1,13 +1,31 @@
 import { Balance } from '@ankr.com/ankr.js/dist/types';
-import React, { useEffect } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Tfoot,
+  Tr,
+  VStack,
+} from '@chakra-ui/react';
+import {
+  components,
+  GroupBase,
+  MultiValueGenericProps,
+  OptionProps,
+} from 'chakra-react-select';
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useToggle } from 'react-use';
 
 import { formatCurrency, formatCurrencyAmount } from '@/lib/utils';
-import clsxm from '@/lib/utils/clsxm';
 import useWithdrawSplit from '@/hooks/useWithdrawSplit';
 
-import { ButtonPrimary } from '@/components/Button';
 import Form from '@/components/Form';
 import FormGroup from '@/components/Form/FormGroup';
 import InputListbox from '@/components/Form/InputListbox';
@@ -17,11 +35,34 @@ import { useSplit } from '@/context/SplitContext';
 import WithdrawModal from '@/templates/split/details/WithdrawTab/WithdrawModal';
 
 import AssetCardHorizontal from './AssetCardHorizontal';
-import WithdrawListboxDisplay from './WithdrawListboxDisplay';
 
 interface WithdrawData {
   assets?: Balance[];
   distribute: boolean;
+}
+
+function TokenSelectOption({
+  ...props
+}: OptionProps<Balance, true, GroupBase<Balance>>) {
+  return (
+    <components.Option {...props}>
+      <AssetCardHorizontal
+        {...props.data}
+        selected={props.isSelected}
+        active={props.isSelected}
+      />
+    </components.Option>
+  );
+}
+
+function TokenSelectLabel({
+  ...props
+}: MultiValueGenericProps<Balance, true, GroupBase<Balance>>) {
+  return (
+    <components.MultiValueLabel {...props}>
+      {props.data.tokenSymbol}
+    </components.MultiValueLabel>
+  );
 }
 
 function WithdrawFormInner() {
@@ -56,13 +97,11 @@ function WithdrawFormInner() {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
 
   return (
-    <>
-      <FormGroup
-        title={'Select Assets'}
-        description={'Specify the tokens you want to withdraw.'}
-      >
-        <InputListbox<Balance>
+    <VStack spacing={'6'} alignItems={'grow'}>
+      <FormGroup>
+        <InputListbox<Balance, true>
           label='Assets'
+          helperText={'Specify the tokens you want to withdraw.'}
           id='assets'
           validation={{
             validate: (v) => v.length > 0 || 'Please select at least one Asset',
@@ -71,64 +110,54 @@ function WithdrawFormInner() {
               message: 'Please select at least one Asset',
             },
           }}
-          options={balance?.assets}
-          multiple={true}
-          by={'contractAddress'}
-          displayFn={WithdrawListboxDisplay}
-        >
-          {({ item, selected, active }) => (
-            <button
-              type={'button'}
-              className={clsxm('flex w-full items-center text-left transition')}
-            >
-              <AssetCardHorizontal
-                {...item}
-                selected={selected}
-                active={active}
-              />
-            </button>
-          )}
-        </InputListbox>
+          isMulti={true}
+          options={balance?.assets || []}
+          components={{
+            Option: TokenSelectOption,
+            MultiValueLabel: TokenSelectLabel,
+          }}
+        />
       </FormGroup>
-
-      <FormGroup
-        title={'Distribute'}
-        description={
-          'Specify whether you want to distribute assets to all the recipients of this split.'
-        }
-      >
-        <InputSwitch id={'distribute'} label={'Enable Distribution'} />
-      </FormGroup>
-
-      <div className='pt-6'>
-        <table className={'w-full table-fixed '}>
-          <tbody>
-            {Object.keys(summary).map((name) => (
-              <tr key={name}>
-                <td className={'table-cell'}>{name}</td>
-                <td className={'table-cell'}>{summary[name]}</td>
-              </tr>
-            ))}
-          </tbody>
-
-          <tfoot>
-            <tr>
-              <td className={'border-default border-b pt-2'} />
-              <td className={'border-default border-b pt-2'} />
-            </tr>
-            <tr className={'font-semibold'}>
-              <td className={'table-cell pt-2'}>You Receive</td>
-              <td className={'table-cell pt-2'}>
-                {formatCurrency(userWithdrawal)} (
-                {formatCurrencyAmount(total.assetCount.toString())} tokens)
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
 
       <FormGroup>
-        <ButtonPrimary
+        <InputSwitch
+          label={'Distribute'}
+          id={'distribute'}
+          helperText={
+            'Specify whether you want to distribute assets to all the recipients of this split.'
+          }
+        />
+      </FormGroup>
+
+      <TableContainer>
+        <Table size='sm'>
+          <Tbody>
+            {Object.keys(summary).map((name) => (
+              <Tr key={name}>
+                <Td>{name}</Td>
+                <Td isNumeric>{summary[name]}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+          <Tfoot>
+            <Tr>
+              <Td>
+                <Text as='b'>You Receive</Text>
+              </Td>
+              <Td isNumeric>
+                <Text as='b'>
+                  {formatCurrency(userWithdrawal)} (
+                  {formatCurrencyAmount(total.assetCount.toString())} tokens)
+                </Text>
+              </Td>
+            </Tr>
+          </Tfoot>
+        </Table>
+      </TableContainer>
+
+      <Box>
+        <Button
+          colorScheme='blue'
           disabled={!isValid || tx.isError || tx.isLoading}
           type={'button'}
           onClick={() => {
@@ -137,15 +166,15 @@ function WithdrawFormInner() {
           }}
         >
           Withdraw
-        </ButtonPrimary>
-      </FormGroup>
+        </Button>
+      </Box>
 
       <WithdrawModal
         {...tx}
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-    </>
+    </VStack>
   );
 }
 
@@ -155,11 +184,12 @@ export function WithdrawForm() {
   const assets = balance?.assets || [];
 
   return (
-    <Form<WithdrawData>
-      values={{ assets, distribute: false }}
-      className={'rounded-default border-default space-y-6 border p-6'}
-    >
-      <WithdrawFormInner />
+    <Form<WithdrawData> values={{ assets, distribute: false }}>
+      <Card maxW='xl' variant='outline'>
+        <CardBody>
+          <WithdrawFormInner />
+        </CardBody>
+      </Card>
     </Form>
   );
 }

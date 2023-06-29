@@ -1,15 +1,13 @@
-import React, { HTMLProps, useEffect } from 'react';
+import { FormControl, FormControlProps, FormLabel } from '@chakra-ui/react';
+import React from 'react';
 import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 
-import clsxm from '@/lib/utils/clsxm';
-
 import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
-import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 import { BaseFeedbackProps, BaseLabelProps } from '@/components/Form/types';
 
 type BaseWrapperProps = BaseFeedbackProps &
   BaseLabelProps &
-  HTMLProps<HTMLDivElement> & {
+  FormControlProps & {
     id?: string;
     /** Manual validation using RHF, it is encouraged to use yup resolver instead */
     validation?: RegisterOptions;
@@ -17,10 +15,11 @@ type BaseWrapperProps = BaseFeedbackProps &
 
 export default function BaseWrapper({
   id,
-  className,
   label,
   children,
   validation,
+  helperText,
+  hideError,
   ...props
 }: BaseWrapperProps) {
   const {
@@ -30,18 +29,21 @@ export default function BaseWrapper({
   const error = get(errors, id);
 
   return (
-    <div className={clsxm('space-y-1', className, !!error && 'error')}>
-      <BaseLabel
-        label={label}
-        htmlFor={id}
-        isRequired={!!validation?.required}
+    <FormControl {...props}>
+      {label && (
+        <FormLabel htmlFor={id}>
+          {label}
+          {!!validation?.required && <span>*</span>}
+        </FormLabel>
+      )}
+
+      {children}
+
+      <BaseFeedback
+        error={error}
+        helperText={helperText}
+        hideError={hideError}
       />
-
-      <div className={clsxm('relative flex w-full items-center')}>
-        {children}
-      </div>
-
-      <BaseFeedback error={error} {...props} />
-    </div>
+    </FormControl>
   );
 }

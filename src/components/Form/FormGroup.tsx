@@ -1,8 +1,19 @@
+import {
+  Box,
+  BoxProps,
+  FormControl,
+  FormControlProps,
+  FormHelperText,
+  FormLabel,
+  Heading,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import React from 'react';
 
 import clsxm from '@/lib/utils/clsxm';
 
-interface FormGroupProps extends React.ComponentPropsWithoutRef<'div'> {
+interface FormGroupProps extends BoxProps {
   title?: string;
   description?: React.ReactNode | string;
 }
@@ -11,22 +22,24 @@ export default function FormGroup({
   title,
   description,
   children,
-  className,
   ...props
 }: React.PropsWithChildren<FormGroupProps>) {
   return (
-    <div {...props} className={clsxm('flex flex-col space-y-6', className)}>
-      <div className={'flex flex-col space-y-3'}>
-        {title && <h2 className={'title-4'}>{title}</h2>}
+    <Box {...props}>
+      <VStack spacing={'6'}>
+        {!!title && (
+          <Heading as={'h3'} size={'sm'}>
+            {title}
+          </Heading>
+        )}
         {!!description &&
           (React.isValidElement(description) ? (
             description
           ) : (
-            <p>{description}</p>
+            <Text>{description}</Text>
           ))}
-      </div>
-
-      {children}
-    </div>
+        {children}
+      </VStack>
+    </Box>
   );
 }

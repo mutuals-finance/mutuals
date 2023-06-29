@@ -10,7 +10,10 @@ const styles = {
 };
 
 export default extendTheme({
-  config: {},
+  config: {
+    initialColorMode: 'system',
+    useSystemColorMode: true,
+  },
   styles,
   fontSizes,
   components,

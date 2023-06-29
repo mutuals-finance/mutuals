@@ -1,4 +1,5 @@
-import React, { HTMLProps } from 'react';
+import { InputProps as ChakraInputProps } from '@chakra-ui/input/dist/input';
+import { HTMLProps } from 'react';
 import { FieldError, RegisterOptions } from 'react-hook-form';
 import { NumericFormatProps } from 'react-number-format';
 
@@ -26,14 +27,7 @@ export interface BaseFieldProps
   validation?: RegisterOptions;
 }
 
-export interface InputBaseProps extends BaseFieldProps {
-  /** Icon before input */
-  icon?: React.ReactNode;
-  /** Icon after input */
-  iconAfter?: React.ReactNode;
-  /** Class of input */
-  inputClassName?: string;
-}
+export type InputBaseProps = ChakraInputProps & BaseFieldProps;
 
 export type InputNumberBaseProps = InputBaseProps &
   NumericFormatProps & {

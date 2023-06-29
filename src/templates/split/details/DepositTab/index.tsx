@@ -1,7 +1,6 @@
 import {
   Alert,
   AlertIcon,
-  Box,
   Button,
   ButtonGroup,
   Card,
@@ -9,10 +8,8 @@ import {
   CardFooter,
   CardHeader,
   Center,
-  Container,
   Divider,
   Flex,
-  Heading,
   IconButton,
   ListItem,
   Stack,
@@ -31,6 +28,7 @@ import {
 } from 'react-icons/io5';
 
 import QRCode from '@/components/QRCode';
+import TabPage from '@/components/TabPage';
 
 import { useSplit } from '@/context/SplitContext';
 
@@ -39,77 +37,76 @@ export function DepositTab() {
   const { address } = split;
 
   return (
-    <Container as={'section'} maxWidth={'container.xl'}>
-      <Box maxW='2xl'>
-        <Stack spacing='6'>
-          <Heading as='h2' size='2xl'>
-            Deposit
-          </Heading>
-          <Alert status='warning'>
-            <AlertIcon />
-            <UnorderedList>
-              <ListItem>
-                Only ETH and ERC-20 tokens can be deposited. Do not send NFTs to
-                a Split.
-              </ListItem>
-              <ListItem>
-                Please make sure to operate on the Ethereum chain. Other
-                networks are not supported for this address.
-              </ListItem>
-            </UnorderedList>
-          </Alert>
+    <TabPage
+      title={'Deposit'}
+      as={'section'}
+      contentProps={{ maxWidth: '4xl' }}
+    >
+      <>
+        <Alert status='warning'>
+          <AlertIcon />
+          <UnorderedList>
+            <ListItem>
+              Only ETH and ERC-20 tokens can be deposited. Do not send NFTs to a
+              Split.
+            </ListItem>
+            <ListItem>
+              Please make sure to operate on the Ethereum chain. Other networks
+              are not supported for this address.
+            </ListItem>
+          </UnorderedList>
+        </Alert>
 
-          <Text>Use the address below to receive funds to your split.</Text>
+        <Text>Use the address below to receive funds to your split.</Text>
 
-          <Card maxW='md' variant='outline'>
-            <CardHeader>
-              <Flex gap='3' alignItems={'center'}>
-                <Flex flex='1'>
-                  <Tag size={'sm'}>
-                    <TagLeftIcon as={IoGlobeOutline} />
-                    <TagLabel>Ethereum Chain</TagLabel>
-                  </Tag>
-                </Flex>
-
-                <IconButton
-                  variant='ghost'
-                  colorScheme='gray'
-                  aria-label='See menu'
-                  icon={<IoEllipsisHorizontal />}
-                />
+        <Card maxW='md' variant='outline'>
+          <CardHeader>
+            <Flex gap='3' alignItems={'center'}>
+              <Flex flex='1'>
+                <Tag size={'sm'}>
+                  <TagLeftIcon as={IoGlobeOutline} />
+                  <TagLabel>Ethereum Chain</TagLabel>
+                </Tag>
               </Flex>
-            </CardHeader>
 
-            <CardBody>
-              <Center>
-                <div className={'rounded-default overflow-hidden'}>
-                  <QRCode text={address} />
-                </div>
-              </Center>
-            </CardBody>
+              <IconButton
+                variant='ghost'
+                colorScheme='gray'
+                aria-label='See menu'
+                icon={<IoEllipsisHorizontal />}
+              />
+            </Flex>
+          </CardHeader>
 
-            <Divider />
+          <CardBody>
+            <Center>
+              <div className={'rounded-default overflow-hidden'}>
+                <QRCode text={address} />
+              </div>
+            </Center>
+          </CardBody>
 
-            <CardFooter>
-              <Stack>
-                <Text>Split address</Text>
-                <ButtonGroup variant='outline' size='sm' isAttached>
-                  <Button
-                    rightIcon={<IoCopyOutline />}
-                    aria-label='Copy split address to clipboard'
-                  >
-                    {address}
-                  </Button>
-                  <IconButton
-                    aria-label='View on Etherscan'
-                    icon={<IoOpenOutline />}
-                  />
-                </ButtonGroup>
-              </Stack>
-            </CardFooter>
-          </Card>
-        </Stack>
-      </Box>
-    </Container>
+          <Divider />
+
+          <CardFooter>
+            <Stack>
+              <Text>Split address</Text>
+              <ButtonGroup variant='outline' size='sm' isAttached>
+                <Button
+                  rightIcon={<IoCopyOutline />}
+                  aria-label='Copy split address to clipboard'
+                >
+                  {address}
+                </Button>
+                <IconButton
+                  aria-label='View on Etherscan'
+                  icon={<IoOpenOutline />}
+                />
+              </ButtonGroup>
+            </Stack>
+          </CardFooter>
+        </Card>
+      </>
+    </TabPage>
   );
 }
