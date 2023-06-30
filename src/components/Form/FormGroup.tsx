@@ -26,7 +26,7 @@ export default function FormGroup({
 }: React.PropsWithChildren<FormGroupProps>) {
   return (
     <Box {...props}>
-      <VStack spacing={'6'}>
+      <VStack spacing={'6'} alignItems={'start'}>
         {!!title && (
           <Heading as={'h3'} size={'sm'}>
             {title}

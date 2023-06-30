@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ActivityTable from '@/components/ActivityTable';
-import Box from '@/components/Box';
+import Box from '@/components/ContentCard';
 
 import { useSplit } from '@/context/SplitContext';
 
@@ -11,8 +11,7 @@ export function Activity() {
   return (
     <Box
       title={'Activity'}
-      className={'lg:col-span-6'}
-      innerClassName={'p-0 lg:p-0 overflow-y-auto max-h-72'}
+      bodyProps={{ p: '0', maxHeight: 'sm', overflowY: 'auto' }}
     >
       <ActivityTable transfers={transfers?.transfers} address={split.address} />
     </Box>

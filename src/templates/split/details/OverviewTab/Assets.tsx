@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AssetTable from '@/components/AssetTable';
-import Box from '@/components/Box';
+import Box from '@/components/ContentCard';
 
 import { useSplit } from '@/context/SplitContext';
 
@@ -10,8 +10,7 @@ export function Assets() {
   return (
     <Box
       title={'Assets'}
-      className={'lg:col-span-3'}
-      innerClassName={'p-0 lg:p-0 overflow-y-auto max-h-72'}
+      bodyProps={{ p: '0', maxHeight: 'sm', overflowY: 'auto' }}
     >
       <AssetTable assets={balance?.assets} />
     </Box>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Box from '@/components/Box';
+import Box from '@/components/ContentCard';
 
 export function Analytics() {
   return (

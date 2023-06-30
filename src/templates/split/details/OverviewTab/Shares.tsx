@@ -1,3 +1,18 @@
+import {
+  AspectRatio,
+  Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Flex,
+  FlexProps,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Tr,
+  VStack,
+} from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import React, { HTMLProps } from 'react';
 import { useList } from 'react-use';
@@ -5,7 +20,7 @@ import { useList } from 'react-use';
 import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 import clsxm from '@/lib/utils/clsxm';
 
-import Box from '@/components/Box';
+import ContentCard from '@/components/ContentCard';
 import { LinkChainExplorer } from '@/components/Link';
 import UserAvatar from '@/components/UserAvatar';
 
@@ -17,31 +32,24 @@ const PieChart = dynamic(() => import('@/components/PieChart'), {
 
 type ActiveShare = ShareFragmentFragment & { isActive?: boolean };
 
-interface ShareItemProps extends HTMLProps<HTMLDivElement> {
+interface ShareItemProps extends FlexProps {
   share: ActiveShare;
   isActive?: boolean;
 }
 
-function ShareItem({ share, className, isActive, ...props }: ShareItemProps) {
+function ShareItem({ share, isActive, ...props }: ShareItemProps) {
   return (
-    <div
-      className={clsxm(
-        `rounded-default flex items-center justify-between space-x-3 border border-transparent p-3 transition-all`,
-        isActive && 'bg-default-2  border-default ',
-        className
-      )}
-      {...props}
-    >
-      <div className={'flex items-center space-x-3'}>
-        <UserAvatar address={share.payee} className={`h-6 w-6`} />
+    <Tr bg={isActive ? 'gray.100' : 'white'} {...props}>
+      <Td>
+        <Flex gap={'3'}>
+          <UserAvatar address={share.payee} className={`h-6 w-6`} />
 
-        <LinkChainExplorer address={share.payee} color={'secondary'} />
-      </div>
+          <LinkChainExplorer address={share.payee} color={'secondary'} />
+        </Flex>
+      </Td>
 
-      <span className={'block text-right leading-none'}>
-        {share.value * 100} %
-      </span>
-    </div>
+      <Td isNumeric>{share.value * 100} %</Td>
+    </Tr>
   );
 }
 
@@ -63,39 +71,35 @@ export function Shares() {
   }
 
   return (
-    <Box
-      className={'lg:col-span-3'}
-      innerClassName={'flex-row'}
+    <ContentCard
       title={'Shares'}
+      flex='1'
+      bodyProps={{ flex: '1', overflowY: 'auto' }}
     >
-      <div className={'grid flex-1 grid-cols-5 items-center gap-3 lg:gap-6'}>
-        <div className={'col-span-2 aspect-square'}>
+      <Flex gap={'6'}>
+        <AspectRatio flex={'1'} maxWidth={'33%'} ratio={1}>
           <PieChart
             data={shares}
             onMouseOut={(_, i) => setInactive(i)}
             onMouseMove={(_, i) => setActive(i)}
           />
-        </div>
-
-        <div className={'relative col-span-3 flex-1 self-stretch'}>
-          <ul
-            className={
-              'divide-default absolute left-0 top-0 flex h-full w-full flex-col divide-y overflow-y-auto'
-            }
-          >
-            {shares.map((share, index) => (
-              <li className={`border-default block border-b p-1`} key={index}>
+        </AspectRatio>
+        <TableContainer flex={'1'}>
+          <Table size={'sm'}>
+            <Tbody>
+              {shares.map((share, index) => (
                 <ShareItem
+                  key={index}
                   onMouseOut={() => setInactive(index)}
                   onMouseMove={() => setActive(index)}
                   share={share}
                   isActive={share.isActive}
                 />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </Box>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Flex>
+    </ContentCard>
   );
 }

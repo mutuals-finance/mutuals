@@ -1,61 +1,85 @@
+import { Link } from '@chakra-ui/next-js';
+import { Box, Button, Flex, Stack, useColorModeValue } from '@chakra-ui/react';
 import { useMotionValueEvent, useScroll } from 'framer-motion';
 import { useState } from 'react';
 import { useMount } from 'react-use';
-
-import clsxm from '@/lib/utils/clsxm';
-
-import { LinkPrimary, LinkSecondary } from '@/components/Link';
 
 import Chain from '@/layouts/root/Header/Chain';
 import Logo from '@/layouts/root/Header/Logo';
 import User from '@/layouts/root/Header/User';
 
-export default function Header() {
-  const { scrollY } = useScroll();
+interface NavItem {
+  label: string;
+  href: string;
+}
 
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: 'Splits',
+    href: '/splits',
+  },
+  {
+    label: 'Address Book',
+    href: '/address-book',
+  },
+];
+
+export default function Header() {
   const [isReady, setIsReady] = useState(false);
-  const [isTransparent, setTransparent] = useState(true);
+  const linkColor = useColorModeValue('gray.600', 'gray.200');
+  const linkHoverColor = useColorModeValue('black', 'white');
 
   useMount(() => setIsReady(true));
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    isTransparent !== latest <= 0 && setTransparent(latest <= 0);
-  });
-
   return (
     <>
-      <div
-        className={clsxm(
-          'transition-color fixed left-0 top-0 z-20 flex h-16 w-full border-b duration-200',
-          isTransparent
-            ? 'border-transparent bg-transparent'
-            : 'bg-default border-default bg-opacity-60 backdrop-blur-md dark:bg-opacity-20'
-        )}
-      >
-        <div className={'flex flex-1 items-center space-x-12 px-6'}>
+      <Box>
+        <Flex
+          as='header'
+          position='fixed'
+          color={useColorModeValue('black', 'white')}
+          h={'72px'}
+          px={'12'}
+          zIndex={'50'}
+          top={'0'}
+          left={'0'}
+          w={'100%'}
+          align={'center'}
+          gap={'12'}
+          _before={{
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            zIndex: '-1',
+            bg: useColorModeValue('white', 'black'),
+          }}
+        >
           <Logo />
 
-          <ul
-            className={'hidden text-base md:flex md:items-center md:space-x-12'}
-          >
-            <li>
-              <LinkPrimary href={'/splits'}>Splits</LinkPrimary>
-            </li>
-            <li>
-              <LinkSecondary href={'/address-book'}>Address Book</LinkSecondary>
-            </li>
-          </ul>
+          <Stack direction={'row'} align={'center'} spacing={6} flex={'1'}>
+            {NAV_ITEMS.map((navItem) => (
+              <Box key={navItem.label}>
+                <Link
+                  href={navItem.href}
+                  fontWeight={500}
+                  color={linkColor}
+                  p={'3'}
+                  _hover={{
+                    color: linkHoverColor,
+                  }}
+                >
+                  {navItem.label}
+                </Link>
+              </Box>
+            ))}
+          </Stack>
 
-          <nav className='flex flex-1 items-center justify-end space-x-12'>
-            <ul
-              className={'hidden text-sm md:flex md:items-center md:space-x-6'}
-            >
-              <li>{isReady && <Chain />}</li>
-              <li>{isReady && <User />}</li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+          <Stack justify={'flex-end'} direction={'row'} spacing={6}>
+            {isReady && <Chain />}
+            {isReady && <User />}
+          </Stack>
+        </Flex>
+      </Box>
     </>
   );
 }

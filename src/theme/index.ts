@@ -1,7 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 
 import components from './components';
-import { fontSizes } from './foundations/typography';
+import { fonts, fontSizes } from './foundations/typography';
 
 const styles = {
   global: () => ({
@@ -16,5 +16,6 @@ export default extendTheme({
   },
   styles,
   fontSizes,
+  fonts,
   components,
 });

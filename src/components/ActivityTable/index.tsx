@@ -1,4 +1,5 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
+import { TableProps } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import React, { HTMLProps } from 'react';
 
@@ -18,7 +19,7 @@ export default function ActivityTable({
   transfers: data = [],
   address,
   ...props
-}: ActivityTableProps & Omit<HTMLProps<HTMLTableElement>, 'data'>) {
+}: ActivityTableProps & TableProps) {
   const columns = [
     columnHelper.display({
       id: 'eventIcon',

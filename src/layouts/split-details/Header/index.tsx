@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react';
 import Image from 'next/image';
 import React from 'react';
 import { IoCopyOutline, IoShareOutline } from 'react-icons/io5';
@@ -23,10 +24,12 @@ export default function Header() {
       titleBefore={<SplitImage src={image} alt={name} className={'w-16'} />}
       titleAfter={
         <div className={'flex items-center justify-center space-x-3'}>
-          <ButtonOutline iconAfter={<IoCopyOutline />}>
+          <Button variant={'outline'} rightIcon={<IoCopyOutline />}>
             {shortenAddress(split.address)}
-          </ButtonOutline>
-          <ButtonOutline iconAfter={<IoShareOutline />}>Share</ButtonOutline>
+          </Button>
+          <Button variant={'outline'} rightIcon={<IoShareOutline />}>
+            Share
+          </Button>
         </div>
       }
     >

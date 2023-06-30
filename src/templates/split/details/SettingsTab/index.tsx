@@ -1,7 +1,14 @@
 import React from 'react';
-import { IoDocumentTextOutline } from 'react-icons/io5';
+import {
+  IoDocumentTextOutline,
+  IoNotificationsOutline,
+  IoPeopleOutline,
+  IoShieldOutline,
+} from 'react-icons/io5';
 
 import { useRouterTemplate } from '@/hooks/useRouterTemplate';
+
+import TabPage from '@/components/TabPage';
 
 import SplitSettingsLayout from '@/layouts/split-settings';
 
@@ -15,7 +22,6 @@ export const routes = [
     description: 'Modify the metadata of your split contract',
     component: MetadataTab,
   },
-  /*
   {
     label: 'Recipients',
     slug: 'recipients',
@@ -38,7 +44,6 @@ export const routes = [
       'Modify your notifications for updates on withdrawals, deposits, and more.',
     component: MetadataTab,
   },
-*/
 ];
 
 export function SettingsTab() {
@@ -48,13 +53,10 @@ export function SettingsTab() {
   );
 
   return (
-    <section>
-      <div className={'container'}>
-        <h2 className={'title-1'}>Settings</h2>
-      </div>
+    <TabPage title={'Settings'}>
       <SplitSettingsLayout>
         <template.component />
       </SplitSettingsLayout>
-    </section>
+    </TabPage>
   );
 }

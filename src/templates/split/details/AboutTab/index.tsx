@@ -1,72 +1,35 @@
+import { Grid, GridItem, Text } from '@chakra-ui/react';
 import React from 'react';
-import {
-  IoCalendarOutline,
-  IoGlobeOutline,
-  IoHammer,
-  IoHammerOutline,
-  IoPerson,
-  IoPersonOutline,
-} from 'react-icons/io5';
 
-import { shortenAddress } from '@/lib/utils';
-
-import Box from '@/components/Box';
-import Date from '@/components/Date';
-import { LinkChainExplorer } from '@/components/Link';
-import Statistic from '@/components/Statistic';
+import ContentCard from '@/components/ContentCard';
+import TabPage from '@/components/TabPage';
 
 import { useSplit } from '@/context/SplitContext';
+import { ChainInfo } from '@/templates/split/details/OverviewTab/ChainInfo';
+import { CreationDate } from '@/templates/split/details/OverviewTab/CreationDate';
+import { Creator } from '@/templates/split/details/OverviewTab/Creator';
 
 export function AboutTab() {
   const { split } = useSplit();
 
-  const items: Record<string, React.ReactNode | string> = {
-    Chain: 'Ethereum',
-    'Metadata Uri': split.metaDataUri,
-  };
-
   return (
-    <section>
-      <div className={'container'}>
-        <h2 className={'title-1 mb-6'}>About</h2>
-        <div className={'mt-6 grid gap-6 lg:grid-cols-5 lg:grid-rows-2'}>
-          <div className={'lg:col-span-3 lg:row-span-2'}>
-            <div className={'w-full max-w-2xl'}>
-              <p>{split.metaData.description}</p>
-            </div>
-          </div>
-
-          <Box>
-            <div className={'space-y-6'}>
-              <IoCalendarOutline className={'text-xl'} />
-
-              <Statistic title={'Created At'}>
-                <Date timestamp={split.timestamp} />
-              </Statistic>
-            </div>
-          </Box>
-
-          <Box>
-            <div className={'space-y-6'}>
-              <IoGlobeOutline className={'text-xl'} />
-              <Statistic title={'Chain'}>Ethereum</Statistic>
-            </div>
-          </Box>
-
-          <Box>
-            <div className={'space-y-6'}>
-              <IoPersonOutline className={'text-xl'} />
-              <Statistic title={'Creator'}>
-                <LinkChainExplorer
-                  color={'secondary'}
-                  className={'slashed-zero'}
-                  address={split.address}
-                />
-              </Statistic>
-            </div>
-          </Box>
-        </div>
-      </div>
-    </section>
+    <TabPage title={'About'} as={'section'}>
+      <Grid templateColumns={'repeat(6, 1fr)'} gap={'6'}>
+        <GridItem colSpan={3}>
+          <ContentCard variant={'unstyled'}>
+            <Text>{split.metaData.description}</Text>
+          </ContentCard>
+        </GridItem>
+        <GridItem>
+          <CreationDate />
+        </GridItem>
+        <GridItem>
+          <ChainInfo />
+        </GridItem>
+        <GridItem>
+          <Creator />
+        </GridItem>
+      </Grid>
+    </TabPage>
   );
 }
