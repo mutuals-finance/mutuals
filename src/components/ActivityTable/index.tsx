@@ -1,7 +1,7 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
-import { TableProps } from '@chakra-ui/react';
+import { Flex, TableProps } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import React, { HTMLProps } from 'react';
+import React from 'react';
 
 import {
   AddressCell,
@@ -24,13 +24,11 @@ export default function ActivityTable({
     columnHelper.display({
       id: 'eventIcon',
       header: 'Event',
-      cell: (context) => <EventIconCell {...context} address={address} />,
-    }),
-    columnHelper.display({
-      id: 'eventDescription',
-      header: '',
       cell: (context) => (
-        <EventDescriptionCell {...context} address={address} />
+        <Flex alignItems={'center'} gap={'6'}>
+          <EventIconCell {...context} address={address} />
+          <EventDescriptionCell {...context} address={address} />
+        </Flex>
       ),
     }),
     columnHelper.accessor('fromAddress', {

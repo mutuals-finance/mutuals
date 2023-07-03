@@ -1,4 +1,16 @@
-import React from 'react';
+import {
+  Box,
+  Container,
+  Divider,
+  Tab,
+  TabIndicator,
+  TabList,
+  Tabs,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { LinkUnstyled } from '@/components/Link';
 
@@ -9,27 +21,49 @@ interface MenuProps {
 }
 
 export default function Menu({ id }: MenuProps) {
+  const router = useRouter();
+
+  const tabIndex = useMemo(() => {
+    if (router.query.slug) {
+      const slug = router.query.slug as string;
+      return routes.findIndex((route) => route.slug.includes(slug));
+    }
+    return 0;
+  }, [router.query.slug]);
+
+  const tabColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600');
+  const tabColorActive = useColorModeValue('black', 'white');
+
   return (
-    <div className={'container'}>
-      <ul className={'border-default flex border-b'}>
-        {routes.map((route) => (
-          <li className={'block'} key={route.slug}>
-            <LinkUnstyled
+    <Box>
+      <Tabs position='relative' variant='unstyled' index={tabIndex}>
+        <TabList>
+          {routes.map((route, i) => (
+            <Tab
+              _hover={{ color: tabColorActive }}
+              _focus={{ outline: '0', boxShadow: 'none' }}
+              fontSize={'md'}
+              fontWeight={'600'}
+              p={'4'}
+              color={i === tabIndex ? tabColorActive : tabColor}
+              as={Link}
               scroll={false}
-              replace={true}
               href={`/splits/${'maticmum'}:${id}/${route.slug}`}
-              className={
-                'text-light hover:text-default -mb-px flex h-14 w-full items-center justify-center border-b-2 border-transparent px-4 text-center font-medium transition-all duration-200 hover:border-neutral-900 dark:hover:border-neutral-50'
-              }
-              exactActiveClassName={
-                'text-default border-carlo dark:border-carlo'
-              }
+              key={route.slug}
             >
               {route.label}
-            </LinkUnstyled>
-          </li>
-        ))}
-      </ul>
-    </div>
+            </Tab>
+          ))}
+        </TabList>
+        <TabIndicator
+          mt='-1.5px'
+          height='2px'
+          bg='blue.500'
+          borderRadius='1px'
+        />
+      </Tabs>
+
+      <Divider />
+    </Box>
   );
 }

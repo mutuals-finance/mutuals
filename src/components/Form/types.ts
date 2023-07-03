@@ -1,4 +1,8 @@
-import { InputProps as ChakraInputProps } from '@chakra-ui/input/dist/input';
+import {
+  InputProps as ChakraInputProps,
+  NumberInputProps as ChakraNumberInputProps,
+  UseNumberInputProps,
+} from '@chakra-ui/react';
 import { HTMLProps } from 'react';
 import { FieldError, RegisterOptions } from 'react-hook-form';
 import { NumericFormatProps } from 'react-number-format';
@@ -18,7 +22,7 @@ export interface BaseFeedbackProps {
 }
 
 export interface BaseFieldProps
-  extends HTMLProps<HTMLInputElement>,
+  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'size'>,
     BaseLabelProps,
     BaseFeedbackProps {
   /** Disables the input and shows defaultValue (can be set from React Hook Form) */
@@ -27,10 +31,11 @@ export interface BaseFieldProps
   validation?: RegisterOptions;
 }
 
-export type InputBaseProps = ChakraInputProps & BaseFieldProps;
+export type InputBaseProps = ChakraInputProps &
+  BaseFieldProps & { hideWrapper?: boolean };
 
 export type InputNumberBaseProps = InputBaseProps &
-  NumericFormatProps & {
+  UseNumberInputProps & {
     addDisabled?: boolean;
     removeDisabled?: boolean;
   };

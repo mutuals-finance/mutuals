@@ -14,7 +14,6 @@ import {
   ShareFragmentFragment,
   SplitDetailsFragmentFragment,
 } from '@/lib/graphql/__generated__/graphql';
-import { formatRoundNumber } from '@/lib/utils';
 
 function useTokenTransfers(params: GetTransfersRequest) {
   const ankrjsProvider = new AnkrProvider(ANKR_API_KEY);
@@ -22,7 +21,7 @@ function useTokenTransfers(params: GetTransfersRequest) {
 }
 
 const blockchain = 'eth';
-const address = '0x0ED6Cec17F860fb54E21D154b49DAEFd9Ca04106';
+const address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
 
 interface SplitContextType {
   split: SplitDetailsFragmentFragment;

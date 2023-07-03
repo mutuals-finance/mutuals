@@ -1,24 +1,18 @@
 import {
   AspectRatio,
-  Box,
-  CircularProgress,
-  CircularProgressLabel,
   Flex,
   FlexProps,
   Table,
   TableContainer,
   Tbody,
   Td,
-  Text,
   Tr,
-  VStack,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import React, { HTMLProps } from 'react';
+import React from 'react';
 import { useList } from 'react-use';
 
 import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
-import clsxm from '@/lib/utils/clsxm';
 
 import ContentCard from '@/components/ContentCard';
 import { LinkChainExplorer } from '@/components/Link';
@@ -41,8 +35,8 @@ function ShareItem({ share, isActive, ...props }: ShareItemProps) {
   return (
     <Tr bg={isActive ? 'gray.100' : 'white'} {...props}>
       <Td>
-        <Flex gap={'3'}>
-          <UserAvatar address={share.payee} className={`h-6 w-6`} />
+        <Flex gap={'3'} alignItems={'center'}>
+          <UserAvatar address={share.payee} />
 
           <LinkChainExplorer address={share.payee} color={'secondary'} />
         </Flex>
@@ -85,7 +79,7 @@ export function Shares() {
           />
         </AspectRatio>
         <TableContainer flex={'1'}>
-          <Table size={'sm'}>
+          <Table>
             <Tbody>
               {shares.map((share, index) => (
                 <ShareItem

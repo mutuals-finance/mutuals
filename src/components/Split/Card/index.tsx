@@ -1,5 +1,29 @@
-import Link from 'next/link';
-import { IoEllipsisHorizontal } from 'react-icons/io5';
+import {
+  Box,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Flex,
+  Heading,
+  IconButton,
+  LinkBox,
+  LinkOverlay,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
+import React from 'react';
+import {
+  IoEllipsisHorizontal,
+  IoEyeOffOutline,
+  IoOpenOutline,
+  IoSettingsOutline,
+} from 'react-icons/io5';
 
 import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
 import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
@@ -9,10 +33,9 @@ import {
   getShortNameByChainId,
   shortenAddress,
 } from '@/lib/utils';
-import clsxm from '@/lib/utils/clsxm';
 
-import { ButtonOutline } from '@/components/Button';
 import Date from '@/components/Date';
+import SplitBlurBg from '@/components/Split/BlurBg';
 import { SplitImage } from '@/components/Split/Image';
 
 interface SplitFragmentCardProps {
@@ -22,136 +45,86 @@ interface SplitFragmentCardProps {
 export function SplitFragmentCard(props: SplitFragmentCardProps) {
   const split = useFragment(splitBaseFragment, props.fragment);
 
-  return <HorizontalSplitCard {...split} />;
+  return <SplitCard {...split} />;
 }
 
 type SplitCardProps = Partial<SplitBaseFragmentFragment>;
 
-function HorizontalSplitCard({ id = '', metaData, timestamp }: SplitCardProps) {
-  const wrapperClass =
-    'flex flex-col justify-end rounded-default w-full p-3 transition';
+export default function SplitCard({
+  id,
+  metaData,
+  address,
+  timestamp,
+}: SplitCardProps) {
+  return (
+    <LinkBox
+      as='article'
+      rounded={'md'}
+      position={'relative'}
+      overflow={'hidden'}
+      display={'flex'}
+    >
+      <SplitBlurBg src={metaData?.image} alt={metaData?.name} />
+      <Card
+        flex={1}
+        size={'sm'}
+        p={'3'}
+        rounded={'md'}
+        variant={'outline'}
+        bg={useColorModeValue('whiteAlpha.200', 'blackAlpha.200')}
+      >
+        <CardHeader as={Flex} alignItems={'center'} gap={'3'}>
+          <Box flexShrink={0}>
+            {!!metaData?.image && (
+              <SplitImage
+                src={metaData.image}
+                alt={metaData?.name || 'UNKNOWN'}
+              />
+            )}
+          </Box>
 
-  const splitCardContent = (
-    <>
-      <div className='flex items-start justify-between space-x-3'>
-        <div>
-          <div className={'flex items-start space-x-3'}>
-            <div className={'flex-shrink-0'}>
-              {!!metaData?.image && (
-                <SplitImage
-                  className={'w-8'}
-                  src={metaData.image}
-                  alt={metaData?.name || 'UNKNOWN'}
-                />
-              )}
-            </div>
+          <Box flex='1'>
+            <Heading size='md' as={'h3'}>
+              {metaData?.name === '' ? 'Unknown' : metaData?.name}
+            </Heading>
 
-            <div className={'flex-1 overflow-hidden'}>
-              <h3 className={'title-4 mt-1 truncate leading-normal'}>
-                {metaData?.name === '' ? 'Unknown' : metaData?.name}
-              </h3>
-              <span
-                className={'text-light block text-xs slashed-zero leading-none'}
-              >
-                {shortenAddress(id)}
-              </span>
-            </div>
-          </div>
-        </div>
+            <Text fontSize='xs' fontWeight={'500'}>
+              {shortenAddress(address)}
+            </Text>
+          </Box>
 
-        <div
-          className={
-            'flex flex-col items-end justify-between space-y-3 self-stretch'
-          }
-        >
-          <div className={'flex items-center space-x-3'}>
-            <Date className={'text-xs'} timestamp={timestamp} />
-            <ButtonOutline
-              size={'xs'}
-              rounded={'full'}
+          <Menu size={'sm'}>
+            <MenuButton
+              zIndex={10}
+              flexShrink={'0'}
+              as={IconButton}
+              aria-label='Split Options'
               icon={<IoEllipsisHorizontal />}
+              variant='ghost'
             />
-          </div>
-
-          {/*
-          <IoArrowForward className={'-rotate-45 text-2xl'} />
-*/}
-        </div>
-      </div>
-    </>
-  );
-
-  return (
-    <article>
-      {!!id ? (
-        <Link
-          className={clsxm(wrapperClass, `hover:bg-default-2`)}
+            <MenuList>
+              <MenuItem icon={<IoSettingsOutline />}>Settings</MenuItem>
+              <MenuItem icon={<IoOpenOutline />}>Etherscan</MenuItem>
+              <MenuItem icon={<IoEyeOffOutline />}>Hide</MenuItem>
+            </MenuList>
+          </Menu>
+        </CardHeader>
+        <CardBody>
+          <Text noOfLines={2}>{metaData?.description}</Text>
+        </CardBody>
+        <CardFooter>
+          <Date timestamp={timestamp} />
+        </CardFooter>
+      </Card>
+      {!!id && (
+        <LinkOverlay
+          as={NextLink}
           href={`/splits/${formatPrefixedAddress(
             id,
             getShortNameByChainId(80001)
           )}`}
-        >
-          {splitCardContent}
-        </Link>
-      ) : (
-        <div className={wrapperClass}>{splitCardContent}</div>
+        />
       )}
-    </article>
-  );
-}
-
-export default function SplitCard({ id, metaData, timestamp }: SplitCardProps) {
-  const wrapperClass =
-    'rounded-default bg-default border border-default flex flex-col justify-end w-full p-6 h-52 space-y-3 transition';
-
-  const splitCardContent = (
-    <>
-      <div className='mb-auto flex items-center justify-start space-x-1.5'>
-        <div className={'flex-shrink-0'}>
-          {!!metaData?.image && (
-            <SplitImage
-              className={'w-8'}
-              src={metaData.image}
-              alt={metaData?.name || 'UNKNOWN'}
-            />
-          )}
-        </div>
-        <div className={'flex-1 overflow-hidden'}>
-          <h3 className={'title-4 truncate'}>
-            {metaData?.name === '' ? 'Unknown' : metaData?.name}
-          </h3>
-        </div>
-      </div>
-
-      <div className={'space-y-3'}>
-        <div>
-          <p className={'line-clamp-2 text-sm'}>{metaData?.description}</p>
-        </div>
-        <div>
-          <Date className={'text-light text-xxs'} timestamp={timestamp} />
-        </div>
-      </div>
-    </>
-  );
-
-  return (
-    <article>
-      {!!id ? (
-        <Link
-          className={clsxm(
-            wrapperClass,
-            `hover:bg-default-2 hover:-translate-y-2`
-          )}
-          href={`/splits/${formatPrefixedAddress(
-            id,
-            getShortNameByChainId(80001)
-          )}`}
-        >
-          {splitCardContent}
-        </Link>
-      ) : (
-        <div className={wrapperClass}>{splitCardContent}</div>
-      )}
-    </article>
+    </LinkBox>
   );
 }

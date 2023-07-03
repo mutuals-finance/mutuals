@@ -14,10 +14,7 @@ const SplitsPage: NextPageWithLayout = function () {
   return (
     <>
       <Seo />
-      <SplitListWrapper>
-        <SplitListList />
-        <SplitListBanner />
-      </SplitListWrapper>
+      <SplitListWrapper />
     </>
   );
 };

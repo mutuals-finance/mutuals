@@ -1,24 +1,45 @@
+import { HStack, IconButton, useNumberInput } from '@chakra-ui/react';
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { IoAdd, IoRemove } from 'react-icons/io5';
 
-import Inner from '@/components/Form/InputNumber/Inner';
+import Input from '@/components/Form/Input';
 import { InputNumberBaseProps } from '@/components/Form/types';
 
-type InputNumberProps = InputNumberBaseProps;
+export default function InputNumber({ ...props }: InputNumberBaseProps) {
+  const { setValue, getValues } = useFormContext();
 
-export default function InputNumber({
-  id = '',
-  validation,
-  ...props
-}: InputNumberProps) {
-  const { control } = useFormContext();
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      min: Number(props.validation?.min),
+      max: Number(props.validation?.max),
+      allowMouseWheel: true,
+      onChange: (_, valueAsNumber) => {
+        setValue(props.id || '', valueAsNumber);
+      },
+      value: getValues(props.id || ''),
+      ...props,
+    });
+
+  const inc = getIncrementButtonProps();
+  const dec = getDecrementButtonProps();
+  const input = getInputProps();
 
   return (
-    <Controller
-      control={control}
-      name={id}
-      rules={validation}
-      render={({ field }) => <Inner id={id} {...props} {...field} />}
-    />
+    <HStack>
+      <IconButton
+        aria-label='Decrease value'
+        icon={<IoRemove />}
+        type={'button'}
+        {...dec}
+      />
+      <Input hideWrapper={true} textAlign={'center'} {...input} />
+      <IconButton
+        aria-label='Increase value'
+        icon={<IoAdd />}
+        type={'button'}
+        {...inc}
+      />
+    </HStack>
   );
 }

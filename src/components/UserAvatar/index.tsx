@@ -1,23 +1,23 @@
-import { Jazzicon } from '@ukstv/jazzicon-react';
-import React, { HTMLAttributes } from 'react';
+import { Avatar, type AvatarProps } from '@chakra-ui/react';
+import { Jazzicon as JazzIcon } from '@ukstv/jazzicon-react';
+import React from 'react';
 
-import clsxm from '@/lib/utils/clsxm';
-
-interface UserAvatarProps extends HTMLAttributes<HTMLSpanElement> {
-  address: string;
+interface UserAvatarProps extends AvatarProps {
+  address?: string;
 }
 
 export default function UserAvatar({
-  className,
-  address,
+  address = '',
+  size = 'xs',
   ...props
 }: UserAvatarProps) {
   return (
-    <span className={clsxm(`flex h-6 w-6 rounded-full`, className)} {...props}>
-      <Jazzicon
-        className={'flex flex-1 items-center justify-center'}
-        address={address}
-      />
-    </span>
+    <Avatar
+      as={JazzIcon}
+      address={address}
+      name={address}
+      size={size}
+      {...props}
+    />
   );
 }

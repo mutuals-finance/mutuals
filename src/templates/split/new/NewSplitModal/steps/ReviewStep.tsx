@@ -1,3 +1,5 @@
+import { Box, Text } from '@chakra-ui/react';
+
 import SplitCard from '@/components/Split/Card';
 
 import { CreateFormData } from '@/templates/split/new';
@@ -21,10 +23,10 @@ function SplitReviewCard({ image, name, description }: CreateFormData) {
 
 export function ReviewStep({ data }: ReviewStepProps) {
   return (
-    <div className={'flex w-full flex-col space-y-6'}>
-      <p>You are about to create the following Split:</p>
+    <Box>
+      <Text mb={'6'}>You are about to create the following Split:</Text>
 
       <SplitReviewCard {...data} />
-    </div>
+    </Box>
   );
 }

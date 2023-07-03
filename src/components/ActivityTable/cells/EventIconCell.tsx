@@ -1,4 +1,6 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
+import { Icon } from '@chakra-ui/icon';
+import { Box, Center, Flex, useColorModeValue } from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 import { HiArrowDownTray, HiArrowUpTray } from 'react-icons/hi2';
@@ -17,30 +19,27 @@ export function EventIconCell({ address = '', row }: EventIconCellProps) {
 
   const type = getEventType(row.original);
 
-  const Icon = {
-    [EventType.Deposit]: HiArrowDownTray,
-    [EventType.Withdrawal]: HiArrowUpTray,
-  }[type];
-
-  const colorClasses = {
-    [EventType.Withdrawal]: [
-      'text-red-600 dark:text-red-400',
-      'bg-red-400/25 dark:bg-red-400/25',
-    ],
-    [EventType.Deposit]: [
-      'text-green-600 dark:text-green-400',
-      'bg-green-400/25 dark:bg-green-400/25',
-    ],
+  const theme = {
+    [EventType.Withdrawal]: {
+      color: useColorModeValue('red.600', 'red.400'),
+      bg: useColorModeValue('red.100', 'red.100'),
+    },
+    [EventType.Deposit]: {
+      color: useColorModeValue('green.600', 'green.400'),
+      bg: useColorModeValue('green.100', 'green.100'),
+    },
   }[type];
 
   return (
-    <span
-      className={clsxm(
-        `rounded-default inline-flex h-8 w-8 items-center justify-center text-base`,
-        colorClasses
-      )}
+    <Flex
+      borderRadius={'md'}
+      w={'8'}
+      h={'8'}
+      {...theme}
+      alignItems={'center'}
+      justifyContent={'center'}
     >
-      <Icon className={'block'} />
-    </span>
+      <Icon as={type === EventType.Deposit ? HiArrowDownTray : HiArrowUpTray} />
+    </Flex>
   );
 }

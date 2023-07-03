@@ -2,12 +2,10 @@ import { NextComponentType, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 import React from 'react';
 
-import '@/styles/font.css';
-import '@/styles/global.css';
+import AppProviders from '@/components/AppProviders';
 
 import { LayoutKeys, Layouts } from '@/layouts';
 import DefaultLayout from '@/layouts/root';
-import AppProviders from '@/components/AppProviders';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextComponentType<NextPageContext, unknown, unknown> & {

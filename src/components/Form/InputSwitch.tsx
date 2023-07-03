@@ -13,18 +13,12 @@ type InputSwitchProps = SwitchProps & BaseFieldProps;
 export default function InputSwitch({
   id = '',
   validation,
-  className,
   ...rest
 }: InputSwitchProps) {
   const { control } = useFormContext();
 
   return (
-    <BaseWrapper
-      id={id}
-      validation={validation}
-      className={clsxm('flex flex-col', className)}
-      {...rest}
-    >
+    <BaseWrapper id={id} validation={validation} {...rest}>
       <Controller
         control={control}
         name={id}

@@ -1,30 +1,43 @@
-import { useTheme } from 'next-themes';
-import React, { useState } from 'react';
 import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  useColorMode,
+} from '@chakra-ui/react';
+import { useTheme } from 'next-themes';
+import React, { useEffect, useState } from 'react';
+import {
+  IoChevronDown,
+  IoChevronUp,
   IoHelpOutline,
   IoLogInOutline,
   IoLogOutOutline,
   IoMegaphoneOutline,
   IoMoonOutline,
+  IoPersonCircle,
   IoSunnyOutline,
 } from 'react-icons/io5';
 import { useAccount } from 'wagmi';
 
-import Popover from '@/components/Popover';
-import PopoverItem from '@/components/Popover/PopoverItem';
-import WalletModal from '@/components/WalletModal';
+import { shortenAddress } from '@/lib/utils';
 
-import UserButton from '@/layouts/root/Header/UserButton';
+import UserAvatar from '@/components/UserAvatar';
+import WalletModal from '@/components/WalletModal';
 
 export default function User() {
   const { address, isConnected, isConnecting } = useAccount();
 
   const [walletModalOpen, setWalletModalOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [displayName, setDisplayName] = useState<string>('');
 
-  function toggleTheme() {
-    setTheme(theme === `light` ? `dark` : `light`);
-  }
+  useEffect(() => {
+    setDisplayName(isConnected ? shortenAddress(address) : 'Login');
+  }, [isConnected, address]);
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   function closeWalletModal() {
     setWalletModalOpen(false);
@@ -36,32 +49,48 @@ export default function User() {
 
   return (
     <>
-      <Popover
-        button={<UserButton {...{ isConnecting, isConnected, address }} />}
-      >
-        <div className='bg-default rounded-default shadow-default w-screen max-w-xs divide-y'>
-          <div className='flex flex-col p-2'>
-            <PopoverItem icon={<IoMegaphoneOutline />}>Feedback</PopoverItem>
-            <PopoverItem icon={<IoHelpOutline />}>Help</PopoverItem>
-          </div>
-          <div className='flex flex-col p-2'>
-            <PopoverItem
-              onClick={toggleTheme}
-              highlight={true}
-              icon={theme === `light` ? <IoMoonOutline /> : <IoSunnyOutline />}
+      <Menu closeOnSelect={false}>
+        {({ isOpen }) => (
+          <>
+            <MenuButton
+              as={Button}
+              leftIcon={
+                isConnected ? (
+                  <UserAvatar address={address} />
+                ) : (
+                  <IoPersonCircle />
+                )
+              }
+              rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
+              variant={'outline'}
+              isLoading={isConnecting}
             >
-              {theme === `light` ? `Dark Mode` : `Light Mode`}
-            </PopoverItem>
-            <PopoverItem
-              icon={isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
-              highlight={true}
-              onClick={openWalletModal}
-            >
-              {isConnected ? `Logout` : `Login`}
-            </PopoverItem>
-          </div>
-        </div>
-      </Popover>
+              {displayName}
+            </MenuButton>
+            <MenuList>
+              <MenuItem icon={<IoMegaphoneOutline />}>Feedback</MenuItem>
+              <MenuItem icon={<IoHelpOutline />}>Help</MenuItem>
+              <MenuDivider />
+              <MenuItem
+                fontWeight={'600'}
+                icon={
+                  colorMode === `light` ? <IoMoonOutline /> : <IoSunnyOutline />
+                }
+                onClick={toggleColorMode}
+              >
+                {colorMode === `light` ? `Dark Mode` : `Light Mode`}
+              </MenuItem>
+              <MenuItem
+                icon={isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
+                onClick={openWalletModal}
+                fontWeight={'600'}
+              >
+                {isConnected ? `Logout` : `Login`}
+              </MenuItem>
+            </MenuList>
+          </>
+        )}
+      </Menu>
 
       <WalletModal open={walletModalOpen} onClose={closeWalletModal} />
     </>

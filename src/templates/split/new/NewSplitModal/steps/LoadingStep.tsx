@@ -1,8 +1,13 @@
+import { Icon } from '@chakra-ui/icon';
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  Flex,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import { IoAlertCircle, IoCheckmarkCircle } from 'react-icons/io5';
-
-import clsxm from '@/lib/utils/clsxm';
-
-import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface LoadingStepProps {
   description?: string;
@@ -22,19 +27,15 @@ function LoadingStepIndicator({
   isSuccess,
 }: LoadingStepIndicatorProps) {
   return (
-    <div className={'pb-6'}>
-      <div
-        className={'inline-flex h-8 w-8 items-center justify-center text-3xl'}
-      >
-        {isError ? (
-          <IoAlertCircle className={'block text-error'} />
-        ) : isSuccess ? (
-          <IoCheckmarkCircle className={'block text-green-500'} />
-        ) : (
-          <LoadingSpinner color={'outline'} size={'xl'} />
-        )}
-      </div>
-    </div>
+    <Box pb={'6'}>
+      {isError ? (
+        <Icon as={IoAlertCircle} color={'red'} />
+      ) : isSuccess ? (
+        <Icon as={IoCheckmarkCircle} color={'green'} />
+      ) : (
+        <CircularProgress isIndeterminate color={'gray.900'} />
+      )}
+    </Box>
   );
 }
 
@@ -44,18 +45,24 @@ function LoadingStepStatus({
   isSuccess,
 }: LoadingStepStatusProps) {
   return (
-    <div className={'flex items-center justify-between border-y py-3'}>
-      <span className={'label block'}>Status</span>
-      <span
-        className={clsxm(
-          `block text-xs font-semibold`,
-          isError && 'text-error',
-          isSuccess && 'text-green-500'
-        )}
-      >
-        {status}
-      </span>
-    </div>
+    <Box>
+      <Divider />
+      <Flex alignItems={'center'} justifyContent={'space-between'} py='3'>
+        <Text display={'block'} fontSize={'sm'}>
+          Status
+        </Text>
+        <Text
+          display={'block'}
+          color={isError ? 'red' : isSuccess ? 'green' : 'inherit'}
+          fontWeight={'500'}
+          fontSize={'sm'}
+        >
+          {status}
+        </Text>
+      </Flex>
+
+      <Divider />
+    </Box>
   );
 }
 
@@ -65,17 +72,19 @@ export function LoadingStep({
   ...props
 }: LoadingStepProps) {
   return (
-    <div className={'flex flex-col space-y-6'}>
+    <VStack spacing={'6'} alignItems={'stretch'}>
       <LoadingStepIndicator {...props} />
-      <div>
+      <Box>
         {!!error && (
-          <div className={'pt-1 text-xs text-error'}>
-            <p>{error?.message || 'Unknown Error'}</p>{' '}
-          </div>
+          <Box>
+            <Text color={'red'} pt={'1'} fontSize={'xs'}>
+              {error?.message || 'Unknown Error'}
+            </Text>
+          </Box>
         )}
-        <p>{description}</p>
-      </div>
+        <Text>{description}</Text>
+      </Box>
       <LoadingStepStatus {...props} />
-    </div>
+    </VStack>
   );
 }

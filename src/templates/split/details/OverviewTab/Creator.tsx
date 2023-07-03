@@ -1,15 +1,12 @@
+import { Icon } from '@chakra-ui/icon';
+import { useColorModeValue } from '@chakra-ui/react';
+import { Stat, StatLabel, StatNumber } from '@chakra-ui/stat';
 import React from 'react';
-import {
-  IoCalendarOutline,
-  IoGlobeOutline,
-  IoHammerOutline,
-} from 'react-icons/io5';
+import { IoHammerOutline } from 'react-icons/io5';
 
-import { formatUSDPrice, shortenAddress } from '@/lib/utils';
+import { shortenAddress } from '@/lib/utils';
 
-import Box from '@/components/ContentCard';
-import Date from '@/components/Date';
-import Statistic from '@/components/Statistic';
+import ContentCard from '@/components/ContentCard';
 
 import { useSplit } from '@/context/SplitContext';
 
@@ -17,15 +14,17 @@ export function Creator() {
   const { split } = useSplit();
 
   return (
-    <Box>
-      <div className={'flex flex-1 flex-col '}>
-        <IoHammerOutline
-          className={'text-lighter mb-auto block self-end text-4xl'}
-        />
-        <Statistic title={'Creator'} className={'slashed-zero'}>
-          {shortenAddress(split.address)}
-        </Statistic>
-      </div>
-    </Box>
+    <ContentCard>
+      <Icon
+        as={IoHammerOutline}
+        fontSize={'2xl'}
+        mb={'auto'}
+        color={useColorModeValue('gray.500', 'gray.400')}
+      />
+      <Stat mt={'3'}>
+        <StatLabel>Creator</StatLabel>
+        <StatNumber fontSize={'lg'}>{shortenAddress(split.address)}</StatNumber>
+      </Stat>
+    </ContentCard>
   );
 }

@@ -8,6 +8,7 @@ import { InputBaseProps } from '@/components/Form/types';
 export default function Input({
   id = '',
   validation,
+  hideWrapper = false,
   ...props
 }: InputBaseProps) {
   const { control } = useFormContext();
@@ -17,9 +18,15 @@ export default function Input({
       name={id}
       rules={validation}
       render={({ field }) => (
-        <BaseWrapper id={id} {...props}>
-          <ChakraInput id={id} {...props} {...field} />
-        </BaseWrapper>
+        <>
+          {!hideWrapper ? (
+            <BaseWrapper id={id} {...props}>
+              <ChakraInput id={id} {...props} {...field} />
+            </BaseWrapper>
+          ) : (
+            <ChakraInput id={id} {...props} {...field} />
+          )}
+        </>
       )}
     />
   );

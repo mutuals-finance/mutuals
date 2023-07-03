@@ -3,21 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply 2xl:text-[0.8vw];
-  }
-
-  section:not(:first-of-type, :last-of-type) {
-    @apply py-6 lg:py-12;
-  }
-
-  section:first-of-type {
-    @apply pb-6 lg:pb-12;
-  }
-
-  section:last-of-type {
-    @apply pt-6 lg:pt-12;
-  }
 
   .title-1 {
     @apply text-5xl font-semibold;
@@ -130,11 +115,6 @@
   }
 }
 
-@layer components {
-  .container {
-    @apply 2xl:max-w-[90rem];
-  }
-}
 
 /* chrome and chromium based */
 .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {

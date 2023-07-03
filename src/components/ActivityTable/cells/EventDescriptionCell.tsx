@@ -1,4 +1,5 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
+import { Box, Text } from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 
@@ -17,12 +18,12 @@ export function EventDescriptionCell({
   const type = getEventType(row.original);
 
   return (
-    <>
-      <span className={'block leading-snug'}>{type}</span>
+    <Box>
+      <Text>{type}</Text>
       <Date
         className='text-lighter block leading-snug'
         timestamp={row.original.timestamp.toString()}
       />
-    </>
+    </Box>
   );
 }

@@ -1,4 +1,9 @@
-import { FormControl, FormControlProps, FormLabel } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormControlProps,
+  FormLabel,
+} from '@chakra-ui/react';
 import React from 'react';
 import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 
@@ -31,10 +36,12 @@ export default function BaseWrapper({
   return (
     <FormControl {...props}>
       {label && (
-        <FormLabel htmlFor={id}>
-          {label}
-          {!!validation?.required && <span>*</span>}
-        </FormLabel>
+        <Box mb={'1'}>
+          <FormLabel htmlFor={id} display={'inline'}>
+            {label}
+            {!!validation?.required && <span>*</span>}
+          </FormLabel>
+        </Box>
       )}
 
       {children}

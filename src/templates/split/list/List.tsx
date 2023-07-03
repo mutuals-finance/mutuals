@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import Image from 'next/image';
+import { SimpleGrid } from '@chakra-ui/react';
 import React from 'react';
 import { useAccount } from 'wagmi';
 
@@ -16,24 +16,10 @@ export function SplitListList() {
   });
 
   return (
-    <section
-      className={'bg-default relative p-3 !pt-32 lg:col-span-2 lg:px-12'}
-    >
-      <div>
-        <h1 className={'title-2 mb-6'}>My Splits</h1>
-      </div>
-
-      <div className={'border-default rounded-default border p-3'}>
-        <ul className='divide-default flex flex-col divide-y'>
-          {data?.splits.map((fragment, index) => {
-            return (
-              <li key={index} className={'py-3'}>
-                <SplitFragmentCard fragment={fragment} />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
+    <SimpleGrid columns={2} spacing={6}>
+      {data?.splits.map((fragment, index) => {
+        return <SplitFragmentCard fragment={fragment} key={index} />;
+      })}
+    </SimpleGrid>
   );
 }

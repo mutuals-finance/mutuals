@@ -1,9 +1,9 @@
+import { Box, useMultiStyleConfig } from '@chakra-ui/react';
 import React from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { Controller, get, useFormContext } from 'react-hook-form';
 
 import { formatBytes, formatStringItems } from '@/lib/utils';
-import clsxm from '@/lib/utils/clsxm';
 
 import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
@@ -52,7 +52,6 @@ export default function InputImage({
   const onDrop = React.useCallback(
     <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles && rejectedFiles.length > 0) {
-        // setValue(id, file);
         setError(id, {
           type: 'manual',
           message: rejectedFiles && rejectedFiles[0]?.errors[0]?.message,
@@ -98,6 +97,12 @@ export default function InputImage({
     maxSize,
   });
 
+  const { field: fieldStyles } = useMultiStyleConfig('Input');
+
+  const dragActiveStyles = isDragActive
+    ? (fieldStyles as { _focusVisible: object })?._focusVisible
+    : {};
+
   return (
     <BaseWrapper id={id} helperText={helperText} {...props}>
       <Controller
@@ -105,30 +110,29 @@ export default function InputImage({
         name={id}
         rules={validation}
         render={({ field: { value: _, ...field } }) => (
-          <>
-            <div
-              {...getRootProps()}
-              ref={dropzoneRef}
-              className={clsxm(
-                'input-default',
-                'relative flex h-60 w-60 cursor-pointer overflow-hidden border-dashed p-0 hover:border-neutral-400  dark:hover:border-neutral-500',
-                isDragActive && 'border-neutral-400 dark:border-neutral-500',
-                error && 'hover:border-error dark:hover:border-error'
-              )}
-            >
-              <input id={id} {...getInputProps(field)} />
+          <Box
+            {...getRootProps()}
+            ref={dropzoneRef}
+            __css={fieldStyles}
+            {...dragActiveStyles}
+            p={'0'}
+            w={'48'}
+            h={'48'}
+            cursor={'pointer'}
+            display={'flex'}
+          >
+            <input id={id} {...getInputProps(field)} />
 
-              {!!file ? (
-                <FilePreview
-                  readOnly={readOnly}
-                  file={file}
-                  onDeleteFile={onDeleteFile}
-                />
-              ) : (
-                <FilePlaceholder placeholder={placeholder} />
-              )}
-            </div>
-          </>
+            {!!file ? (
+              <FilePreview
+                readOnly={readOnly}
+                file={file}
+                onDeleteFile={onDeleteFile}
+              />
+            ) : (
+              <FilePlaceholder placeholder={placeholder} />
+            )}
+          </Box>
         )}
       />
     </BaseWrapper>

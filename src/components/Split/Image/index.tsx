@@ -1,56 +1,38 @@
-import { StaticImageData } from 'next/dist/client/image';
-import Image, { type ImageProps } from 'next/image';
-import React, { HTMLProps } from 'react';
+import { Image, type ImageProps } from '@chakra-ui/next-js';
+import { Box, useColorModeValue } from '@chakra-ui/react';
+import React from 'react';
 import { IoImage } from 'react-icons/io5';
 
-import { ipfsResolveData, ipfsUrlFromUri } from '@/lib/utils';
-import clsxm from '@/lib/utils/clsxm';
+import { ipfsResolveData } from '@/lib/utils';
 
-type SplitImageInnerProps = Omit<ImageProps, 'src'> & {
-  src?: StaticImageData | string;
-};
-
-type SplitImageProps = HTMLProps<HTMLDivElement> & SplitImageInnerProps;
-
-function SplitImageInner({
-  src,
+export function SplitImage({
+  src = '',
   alt = 'Unknown Split',
-  width = 128,
-  height = 128,
-  className,
+  boxSize = '3rem',
+  fill = true,
+  objectFit = 'cover',
+  borderRadius = 12,
   ...props
-}: SplitImageInnerProps) {
-  const classes = clsxm('block w-full object-cover', className);
-
-  return !!src ? (
-    <Image
-      className={classes}
-      src={src}
-      alt={alt || 'Unknown Split'}
-      width={width}
-      height={height}
-      {...props}
-    />
-  ) : (
-    <IoImage className={classes} />
-  );
-}
-export function SplitImage({ src, className, ...props }: SplitImageProps) {
+}: ImageProps) {
   return (
-    <div
-      className={clsxm(
-        'bg-default-2 rounded-default border-default relative flex w-10 border ',
-        className
-      )}
+    <Box
+      position={'relative'}
+      borderRadius={borderRadius}
+      boxSize={boxSize}
+      borderWidth={'1px'}
     >
-      <span className={'block aspect-square w-full'} />
-      <span className={'absolute left-0 top-0 block flex h-full w-full'}>
-        <SplitImageInner
+      {!src || src === '' ? (
+        <IoImage />
+      ) : (
+        <Image
           src={ipfsResolveData(src)}
-          className={'rounded-default flex-1 overflow-hidden'}
+          alt={alt || 'Unknown Split'}
+          fill={fill}
+          borderRadius={borderRadius}
+          objectFit={objectFit}
           {...props}
         />
-      </span>
-    </div>
+      )}
+    </Box>
   );
 }

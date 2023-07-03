@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useSteps } from '@chakra-ui/react';
+import React from 'react';
 import { useUpdateEffect } from 'react-use';
 import { useWaitForTransaction } from 'wagmi';
 
@@ -88,24 +89,28 @@ export default function NewSplitModal({
     {
       id: 'success',
       title: 'Congratulations',
-      children: SuccessStep,
+      disabled: true,
+      children: () =>
+        SuccessStep({ contractAddress: receipt.data?.contractAddress }),
     },
   ];
+  const { activeStep, setActiveStep, goToNext } = useSteps({
+    count: steps.length,
+  });
 
-  const [currentIndex, setCurrentIndex] = useState(0);
   const deps = [storage.isSuccess, tx.isSuccess, receipt.isSuccess];
 
   function reset() {
     setTimeout(() => {
       storage.reset();
       tx.reset();
-      setCurrentIndex(0);
+      setActiveStep(0);
     }, 200);
   }
 
   useUpdateEffect(() => {
     if (deps.includes(true)) {
-      setCurrentIndex((prev) => prev + 1);
+      goToNext();
     }
   }, deps);
 
@@ -114,13 +119,13 @@ export default function NewSplitModal({
       steps={steps}
       onNext={() => {
         execute();
-        setCurrentIndex((prev) => prev + 1);
+        goToNext();
       }}
       onClose={() => {
         onClose();
         reset();
       }}
-      currentIndex={currentIndex}
+      activeStep={activeStep}
       open={open}
     />
   );
