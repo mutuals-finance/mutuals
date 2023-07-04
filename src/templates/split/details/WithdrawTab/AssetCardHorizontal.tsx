@@ -1,10 +1,9 @@
 import { Balance } from '@ankr.com/ankr.js/dist/types';
 import Image from 'next/image';
 import React, { HTMLProps } from 'react';
-import { IoCheckmark, IoClose, IoExit, IoHelp } from 'react-icons/io5';
+import { IoCheckmark, IoClose, IoHelp } from 'react-icons/io5';
 
 import { formatCurrencyAmount, formatUSDPrice } from '@/lib/utils';
-import clsxm from '@/lib/utils/clsxm';
 
 type AssetCardHorizontalProps = Balance &
   HTMLProps<HTMLDivElement> & { selected?: boolean; active?: boolean };
@@ -17,16 +16,13 @@ export default function AssetCardHorizontal({
   tokenSymbol,
   className,
   selected,
-  active,
-  ...props
 }: AssetCardHorizontalProps) {
   return (
     <div
-      className={clsxm(
-        `hover:bg-default-2 group flex w-full items-center justify-between space-x-3 overflow-hidden px-6 py-1.5 text-sm`,
+      className={
+        `hover:bg-default-2 group flex w-full items-center justify-between space-x-3 overflow-hidden px-6 py-1.5 text-sm` +
         className
-      )}
-      {...props}
+      }
     >
       <div className={'flex flex-1 items-center space-x-3'}>
         <div
@@ -36,15 +32,15 @@ export default function AssetCardHorizontal({
         >
           {selected && (
             <button
-              className={clsxm(
+              className={
                 'absolute left-0 top-0 flex h-full w-full items-center justify-center bg-white/80 text-lg dark:bg-black/80'
-              )}
+              }
               type={'button'}
             >
-              <span className={clsxm('hidden group-hover:block')}>
+              <span className={'hidden group-hover:block'}>
                 <IoClose />
               </span>
-              <span className={clsxm('block group-hover:hidden')}>
+              <span className={'block group-hover:hidden'}>
                 <IoCheckmark />
               </span>
             </button>

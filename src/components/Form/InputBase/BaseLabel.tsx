@@ -1,26 +1,19 @@
-import clsx from 'clsx';
-import React, { HTMLProps } from 'react';
+import { Box, FormLabel } from '@chakra-ui/react';
+import React from 'react';
 
 import { BaseLabelProps } from '@/components/Form/types';
 
-interface FormItemLabelProps
-  extends BaseLabelProps,
-    HTMLProps<HTMLLabelElement> {
-  isRequired?: boolean;
-}
-
-export default function BaseLabel({
-  label,
-  isRequired,
-  className,
-  ...props
-}: FormItemLabelProps) {
-  return !!label ? (
-    <label className={clsx('label', className)} {...props}>
-      {label}
-      {!!isRequired && <span>*</span>}
-    </label>
-  ) : (
-    <></>
+export default function BaseLabel({ id, validation, label }: BaseLabelProps) {
+  return (
+    <>
+      {label && (
+        <Box mb={'1'}>
+          <FormLabel htmlFor={id} display={'inline'}>
+            {label}
+            {!!validation?.required && <span>*</span>}
+          </FormLabel>
+        </Box>
+      )}
+    </>
   );
 }

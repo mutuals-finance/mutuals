@@ -1,38 +1,34 @@
-import React, { HTMLProps } from 'react';
-import { useFormContext } from 'react-hook-form';
+import {
+  Textarea as ChakraTextarea,
+  TextareaProps as ChakraTextareaProps,
+} from '@chakra-ui/react';
+import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import clsxm from '@/lib/utils/clsxm';
-
-import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import InputBase from '@/components/Form/InputBase';
 
 import { BaseFieldProps } from './types';
 
-type TextAreaProps = HTMLProps<HTMLTextAreaElement> & BaseFieldProps;
+type TextAreaProps = ChakraTextareaProps & BaseFieldProps;
 
 export default function TextArea({
   id = '',
-  readOnly,
   validation,
-  className,
-  rows = 4,
+  rows = 6,
   ...rest
 }: TextAreaProps) {
-  const { register } = useFormContext();
-
-  const baseClasses = 'textarea flex-1';
-  const readonlyClasses = 'input-readonly';
+  const { control } = useFormContext();
 
   return (
-    <BaseWrapper id={id} validation={validation} {...rest}>
-      <textarea
-        id={id}
-        aria-describedby={id}
-        rows={rows}
-        readOnly={readOnly}
-        className={clsxm(baseClasses, readOnly && readonlyClasses, className)}
-        {...register(id, validation)}
-        {...rest}
-      />
-    </BaseWrapper>
+    <Controller
+      control={control}
+      name={id}
+      rules={validation}
+      render={({ field }) => (
+        <InputBase id={id} validation={validation} {...rest}>
+          <ChakraTextarea id={id} rows={rows} {...rest} {...field} />
+        </InputBase>
+      )}
+    />
   );
 }

@@ -1,11 +1,11 @@
 import { BigNumber, BigNumberish, utils } from 'ethers';
+import { isAddress } from 'ethers/lib/utils';
 
 import {
   ETH_TOKEN,
   NATIVE_TOKEN_ADDRESS,
   NATIVE_TOKEN_LOGO_URI,
 } from '@/lib/constants';
-import { isAddress } from '@/lib/utils/address';
 
 export function formatAmount(
   amount: string | BigNumber,
@@ -22,12 +22,11 @@ export function getDefaultTokenLogoURI(chainId = 1) {
 }
 
 export function isNativeTokenAddress(address: string) {
-  const parsed = isAddress(address);
-  if (!parsed) {
+  if (!isAddress(address)) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
 
-  return parsed === NATIVE_TOKEN_ADDRESS;
+  return address.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase();
 }
 
 export function formatBalance(balance: string | number) {

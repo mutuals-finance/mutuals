@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { IoImage } from 'react-icons/io5';
+import { Icon } from '@chakra-ui/icon';
+import { Center, Text, VStack } from '@chakra-ui/react';
+import { IoImage, IoImageOutline } from 'react-icons/io5';
 
 import { BaseFieldProps } from '../types';
 
@@ -9,20 +10,17 @@ type FilePlaceholderProps = {
 
 export default function FilePlaceholder({ placeholder }: FilePlaceholderProps) {
   return (
-    <div
-      className={
-        'pointer-events-none relative flex w-full flex-1 flex-col items-center justify-center p-6 text-center'
-      }
-    >
-      <div className={'absolute bottom-0 right-0 p-3 opacity-50'}>
-        <IoImage className={'text-light text-xl'} />
-      </div>
-
-      {!!placeholder && (
-        <div className={'text-light'}>
-          <p>{placeholder}</p>
-        </div>
-      )}
-    </div>
+    <>
+      <Center pointerEvents={'none'} textAlign={'center'} p={'3'}>
+        <Icon
+          position={'absolute'}
+          opacity={'0.5'}
+          right={'3'}
+          bottom='3'
+          as={IoImage}
+        />
+        {!!placeholder && <Text>{placeholder}</Text>}
+      </Center>
+    </>
   );
 }

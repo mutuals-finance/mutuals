@@ -1,46 +1,40 @@
-import React, { forwardRef, HTMLProps } from 'react';
+import { FormControl, FormControlProps } from '@chakra-ui/react';
+import React from 'react';
+import { get, useFormContext } from 'react-hook-form';
 
-import clsxm from '@/lib/utils/clsxm';
-
+import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
+import BaseLabel from '@/components/Form/InputBase/BaseLabel';
 import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import { BaseFeedbackProps, BaseLabelProps } from '@/components/Form/types';
 
-import { InputBaseProps } from '../types';
+type BaseWrapperProps = BaseFeedbackProps & BaseLabelProps & FormControlProps;
 
-function InputIcon({ children, className }: HTMLProps<HTMLSpanElement>) {
+export default function InputBase({
+  id,
+  label,
+  children,
+  validation,
+  helperText,
+  hideError,
+  ...props
+}: BaseWrapperProps) {
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  const error = get(errors, id);
+
   return (
-    <span
-      className={`text-light absolute top-1/2 block -translate-y-1/2 ${className}`}
-    >
+    <BaseWrapper {...props}>
+      <BaseLabel label={label} validation={validation} id={id} />
+
       {children}
-    </span>
-  );
-}
 
-const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(function (
-  { id = '', readOnly, icon, iconAfter, inputClassName, ...rest },
-  ref
-) {
-  return (
-    <BaseWrapper id={id} {...rest}>
-      {!!icon && <InputIcon className={'left-1'}>{icon}</InputIcon>}
-      <input
-        id={id}
-        aria-describedby={id}
-        readOnly={readOnly}
-        className={clsxm(
-          'input flex-1',
-          !!readOnly && 'input-readonly',
-          !!icon && 'pl-9',
-          !!iconAfter && 'pr-9',
-          inputClassName
-        )}
-        {...rest}
-        ref={ref}
+      <BaseFeedback
+        error={error}
+        helperText={helperText}
+        hideError={hideError}
       />
-      {!!iconAfter && <InputIcon className={'right-1'}>{iconAfter}</InputIcon>}
     </BaseWrapper>
   );
-});
-
-InputBase.displayName = 'InputBase';
-export default InputBase;
+}

@@ -1,3 +1,4 @@
+import { VStack } from '@chakra-ui/react';
 import React from 'react';
 import {
   FieldValues,
@@ -49,37 +50,34 @@ export default function InputFieldArray<TFieldValue>({
   const error = get(errors, id);
 
   const method = useFieldArray({
-    name: id, // unique name for your Field Array
+    name: id,
     rules: validation,
   });
 
   const { fields, append, remove } = method;
   return (
-    <div className={'flex flex-col space-y-6'}>
-      <>
-        {contentBefore?.(method)}
+    <VStack spacing={'6'} flex={'1'} w={'100%'} alignItems={'stretch'}>
+      {contentBefore?.(method)}
 
-        <ul className={'flex flex-col space-y-3'}>
-          {fields.map((field, index) => (
-            <InputFieldArrayItem
-              key={field.id}
-              removeDisabled={
-                removeDisabled ||
-                (!!validation?.minLength &&
-                  fields.length <= validation.minLength)
-              }
-              onAdd={!hideAdd ? () => append(defaultItem) : undefined}
-              onRemove={() => remove(index)}
-            >
-              {children(`${id}.${index}`)}
-            </InputFieldArrayItem>
-          ))}
-        </ul>
+      <VStack spacing={'3'} alignItems={'stretch'}>
+        {fields.map((field, index) => (
+          <InputFieldArrayItem
+            key={field.id}
+            removeDisabled={
+              removeDisabled ||
+              (!!validation?.minLength && fields.length <= validation.minLength)
+            }
+            onAdd={!hideAdd ? () => append(defaultItem) : undefined}
+            onRemove={() => remove(index)}
+          >
+            {children(`${id}.${index}`)}
+          </InputFieldArrayItem>
+        ))}
+      </VStack>
 
-        <BaseFeedback {...{ error, hideError, helperText }} />
+      <BaseFeedback {...{ error, hideError, helperText }} />
 
-        {contentAfter?.(method)}
-      </>
-    </div>
+      {contentAfter?.(method)}
+    </VStack>
   );
 }

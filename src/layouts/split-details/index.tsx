@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import { InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
@@ -14,7 +15,7 @@ export default function SplitDetailsLayout({
   return (
     <SplitProvider split={split}>
       <Header />
-      {children}
+      <Box pt={'6'}>{children}</Box>
     </SplitProvider>
   );
 }

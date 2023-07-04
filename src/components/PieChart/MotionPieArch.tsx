@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import React, { useCallback } from 'react';
 
-import clsxm from '@/lib/utils/clsxm';
-
 export type ArchData = {
   id: string;
   value: number;
@@ -43,10 +41,8 @@ export default function MotionPieArch({
 
   return (
     <motion.path
-      className={clsxm(
-        'cursor-pointer stroke-0 duration-200 ease-in-out hover:stroke-[2%]',
-        isActive && 'stroke-[2%]'
-      )}
+      cursor={'pointer'}
+      strokeWidth={isActive ? '2%' : '0'}
       stroke={fill}
       onMouseMove={handleOnHover}
       onMouseOut={onMouseOut}

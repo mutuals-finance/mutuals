@@ -6,6 +6,7 @@ import { useFragment } from '@/lib/graphql/__generated__';
 import { addApolloState, initializeApollo } from '@/lib/graphql/client';
 import { splitDetailsFragment } from '@/lib/graphql/fragments';
 import { SPLIT } from '@/lib/graphql/queries';
+import { parsePrefixedAddress } from '@/lib/utils';
 import { useRouterTemplate } from '@/hooks/useRouterTemplate';
 
 import Seo from '@/components/Seo';
@@ -22,29 +23,24 @@ export async function getServerSideProps({
   if (!id) {
     // no split id and no tab
     return {
-      redirect: {
-        permanent: false,
-        destination: '/404',
-      },
+      notFound: true,
     };
   }
 
   const client = await initializeApollo();
-
+  const { address } = parsePrefixedAddress(id);
   const { data } = await client.query({
     query: SPLIT,
-    variables: { id },
+    variables: { id: address.toLowerCase() },
   });
+  console.log('data', data);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const split = useFragment(splitDetailsFragment, data.split);
 
   if (!split?.id) {
     return {
-      redirect: {
-        permanent: false,
-        destination: '/404',
-      },
+      notFound: true,
     };
   }
 

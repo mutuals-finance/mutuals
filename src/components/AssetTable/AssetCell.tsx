@@ -1,6 +1,7 @@
 import { Balance } from '@ankr.com/ankr.js/dist/types';
+import { Image } from '@chakra-ui/next-js';
+import { Box, Flex, HStack } from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
-import Image from 'next/image';
 import React from 'react';
 import { IoHelp } from 'react-icons/io5';
 
@@ -9,11 +10,16 @@ type AssetCellProps = CellContext<Balance, string | undefined>;
 export default function AssetCell({ row }: AssetCellProps) {
   const { thumbnail, tokenName, tokenSymbol } = row.original;
   return (
-    <div className={'flex items-center space-x-3'}>
-      <span
-        className={
-          'bg-default rounded-default border-default flex h-8 w-8 flex-shrink-0 items-center border p-1'
-        }
+    <HStack alignItems={'center'} spacing={'3'}>
+      <Flex
+        w={'8'}
+        h={'8'}
+        flexShrink={'0'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        borderWidth={'1px'}
+        borderRadius={'md'}
+        p={'1'}
       >
         {thumbnail !== '' ? (
           <Image
@@ -21,7 +27,9 @@ export default function AssetCell({ row }: AssetCellProps) {
             alt={tokenName}
             width={48}
             height={48}
-            className={'w-full flex-1 self-stretch object-contain'}
+            w={'100%'}
+            flex={'1'}
+            objectFit={'contain'}
           />
         ) : (
           <span
@@ -30,16 +38,12 @@ export default function AssetCell({ row }: AssetCellProps) {
             <IoHelp className={'block'} />
           </span>
         )}
-      </span>
+      </Flex>
 
-      <div>
-        <span className={'block leading-snug'}>
-          {tokenName !== '' ? tokenName : 'UNKNOWN'}
-        </span>
-        <span className={'text-lighter block leading-snug'}>
-          {tokenSymbol !== '' ? tokenSymbol : ' '}
-        </span>
-      </div>
-    </div>
+      <Box>
+        <Box>{tokenName !== '' ? tokenName : 'UNKNOWN'}</Box>
+        <Box>{tokenSymbol !== '' ? tokenSymbol : ' '}</Box>
+      </Box>
+    </HStack>
   );
 }

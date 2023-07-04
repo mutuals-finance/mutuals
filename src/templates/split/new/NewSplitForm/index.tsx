@@ -21,7 +21,6 @@ export function NewSplitForm() {
 
   return (
     <Form<CreateFormData>
-      className={'max-w-2xl space-y-8'}
       onSubmit={() => toggleIsModalOpen()}
       onSubmitInvalid={(errors, data) => console.log('INVALID', errors, data)}
       defaultValues={{

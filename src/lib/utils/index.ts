@@ -1,4 +1,5 @@
 export * from './address';
+export * from './chains';
 export * from './env';
 export * from './format';
 export * from './image';

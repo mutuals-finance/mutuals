@@ -1,21 +1,19 @@
+import { Container, Heading } from '@chakra-ui/react';
 import React from 'react';
 
-import PageHeader from '@/components/PageHeader';
 import Seo from '@/components/Seo';
-
-import AddressBookPlaceholder from '@/templates/address-book/AddressBookPlaceholder';
 
 import { NextPageWithLayout } from '#/app';
 
-function AddressBookHeader() {
-  return <PageHeader title={'Address-book'} showBack={false} />;
-}
 const SettingsPage: NextPageWithLayout = function SettingsPage() {
   return (
     <>
       <Seo />
-      <AddressBookHeader />
-      <AddressBookPlaceholder />
+      <Container maxW='container.xl'>
+        <Heading as={'h1'} size={'2xl'} my={'12'}>
+          Address book
+        </Heading>
+      </Container>
     </>
   );
 };

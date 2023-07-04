@@ -1,13 +1,13 @@
-import { StaticImageData } from 'next/dist/client/image';
+import { ImageProps } from '@chakra-ui/next-js';
 
-export function ipfsResolveData(data?: StaticImageData | string | null) {
+export function ipfsResolveData(data?: ImageProps['src'] | null) {
   switch (typeof data) {
     case 'string':
       return ipfsUrlFromUri(data);
     case 'object':
-      return data?.src;
+      return data || '';
     default:
-      return undefined;
+      return '';
   }
 }
 

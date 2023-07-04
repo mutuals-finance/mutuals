@@ -1,9 +1,9 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
+import { Text, useColorModeValue } from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 
 import { formatCurrencyAmount } from '@/lib/utils';
-import clsxm from '@/lib/utils/clsxm';
 
 import { EventType } from '@/components/ActivityTable/types';
 import useActivityEvent from '@/components/ActivityTable/useActivityEvent';
@@ -23,17 +23,15 @@ export function AmountCell({ address = '', row, getValue }: AmountCellProps) {
 
   return (
     <>
-      <span
-        className={clsxm(
-          'slashed-zero',
-          isDeposit
-            ? 'text-green-600 dark:text-green-400'
-            : 'text-red-600 dark:text-red-400'
+      <Text
+        color={useColorModeValue(
+          isDeposit ? 'green.600' : 'red.600',
+          isDeposit ? 'green.400' : 'red.400'
         )}
       >
         {isDeposit ? '+ ' : '- '}
         {text}
-      </span>
+      </Text>
     </>
   );
 }

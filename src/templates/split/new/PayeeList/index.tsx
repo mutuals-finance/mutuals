@@ -1,6 +1,6 @@
+import { HStack } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { NumberFormatValues } from 'react-number-format';
 
 import { formatRoundNumber } from '@/lib/utils';
 
@@ -43,12 +43,12 @@ export default function PayeeList({ id }: PayeeListProps) {
     });
     const diff = formatRoundNumber(total % (value * indices.length));
     let steps = diff * 100;
-    indices.forEach((index) =>
+    indices.forEach((index) => {
       setValue(
         `${id}.${index}.value`,
         formatRoundNumber(steps > 0 ? steps-- && value + 0.01 : value)
-      )
-    );
+      );
+    });
   }
 
   function onSetValuesRemaining() {
@@ -68,60 +68,49 @@ export default function PayeeList({ id }: PayeeListProps) {
     );
   }
 
-  function isAllowed({ floatValue, value }: NumberFormatValues) {
-    const numValue = parseFloat(floatValue?.toFixed(2) || value);
-    return numValue <= maxShares && numValue >= 0.0;
-  }
-
   return (
-    <div className={'flex flex-col space-y-6'}>
-      <InputFieldArray<Payee>
-        id={id}
-        defaultItem={defaultPayee}
-        hideAdd={true}
-        validation={{ minLength: 2 }}
-        contentAfter={({ append }) => (
-          <PayeeListFooter
-            totalShares={totalShares}
-            maxShares={maxShares}
-            totalPayees={totalPayees}
-            onAppendRecipient={() => append(defaultPayee)}
-            onSetValuesRemaining={onSetValuesRemaining}
-            onSetValuesEvenly={onSetValuesEvenly}
+    <InputFieldArray<Payee>
+      id={id}
+      defaultItem={defaultPayee}
+      hideAdd={true}
+      validation={{ minLength: 2 }}
+      contentAfter={({ append }) => (
+        <PayeeListFooter
+          totalShares={totalShares}
+          maxShares={maxShares}
+          totalPayees={totalPayees}
+          onAppendRecipient={() => append(defaultPayee)}
+          onSetValuesRemaining={onSetValuesRemaining}
+          onSetValuesEvenly={onSetValuesEvenly}
+        />
+      )}
+    >
+      {(itemId) => (
+        <>
+          <Input
+            flex={'1'}
+            label={'Wallet Address or ENS Name'}
+            placeholder={'0x0000...0000'}
+            id={`${itemId}.id`}
           />
-        )}
-      >
-        {(itemId) => (
-          <>
-            <div className={'flex-1'}>
-              <Input
-                label={'Wallet Address or ENS Name'}
-                placeholder={'0x0000...0000'}
-                id={`${itemId}.id`}
-              />
-            </div>
 
-            <div className={'w-36'}>
-              <InputNumber
-                id={`${itemId}.value`}
-                label={'% Share'}
-                validation={{
-                  min: 0.0,
-                  max: maxShares,
-                }}
-                step={0.01}
-                addDisabled={totalShares >= maxShares}
-                removeDisabled={totalShares <= 0.0}
-                allowNegative={false}
-                decimalScale={2}
-                defaultValue={0.0}
-                fixedDecimalScale={true}
-                isAllowed={isAllowed}
-              />
-            </div>
-          </>
-        )}
-      </InputFieldArray>
-    </div>
+          <HStack maxW='48'>
+            <InputNumber
+              id={`${itemId}.value`}
+              label={'% Share'}
+              validation={{
+                min: 0.0,
+                max: maxShares,
+              }}
+              step={0.01}
+              addDisabled={totalShares >= maxShares}
+              removeDisabled={totalShares <= 0.0}
+              precision={2}
+              defaultValue={0.0}
+            />
+          </HStack>
+        </>
+      )}
+    </InputFieldArray>
   );
 }

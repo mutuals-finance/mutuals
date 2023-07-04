@@ -1,6 +1,14 @@
+import {
+  Box,
+  Flex,
+  Heading,
+  LinkBox,
+  LinkOverlay,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
 import React from 'react';
-
-import { ButtonOutline } from '@/components/Button';
 
 import { useSplit } from '@/context/SplitContext';
 import { routes } from '@/templates/split/details/SettingsTab';
@@ -18,27 +26,37 @@ export default function SettingsSidebarBody() {
   const { split } = useSplit();
 
   return (
-    <div className={'space-y-6'}>
+    <VStack spacing={'6'} alignItems={'stretch'}>
       {Object.keys(sections).map((label) => (
-        <div key={label}>
-          <span className={'label my-1'}>{label}</span>
-          <ul className={'space-y-3'}>
+        <Box key={label}>
+          <Heading as={'span'} size={'xs'} display='block' mb={'3'}>
+            {label}
+          </Heading>
+          <VStack alignItems={'stretch'} spacing={'3'}>
             {sections[label as SplitSettingsSection]?.map((route) => (
-              <li key={label + '-' + route.slug}>
-                <ButtonOutline
-                  href={`/splits/${split.id}/settings/${route.slug}`}
-                  icon={<route.icon />}
-                  justify={'start'}
-                  size={'md'}
-                  fullWidth={true}
-                >
-                  {route.label}
-                </ButtonOutline>
-              </li>
+              <LinkBox
+                p='3'
+                fontWeight={'500'}
+                fontSize={'lg'}
+                rounded='md'
+                key={label + '-' + route.slug}
+                bg={'gray.100'}
+              >
+                <Flex alignItems={'center'} gap={'3'}>
+                  <route.icon />
+
+                  <LinkOverlay
+                    as={NextLink}
+                    href={`/splits/${split.id}/settings/${route.slug}`}
+                  >
+                    {route.label}
+                  </LinkOverlay>
+                </Flex>
+              </LinkBox>
             ))}
-          </ul>
-        </div>
+          </VStack>
+        </Box>
       ))}
-    </div>
+    </VStack>
   );
 }

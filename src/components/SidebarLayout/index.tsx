@@ -1,3 +1,4 @@
+import { Box, Divider, Flex, Grid, GridItem, Heading } from '@chakra-ui/react';
 import React from 'react';
 
 interface SidebarLayoutProps {
@@ -8,36 +9,37 @@ interface SidebarLayoutProps {
 }
 
 export default function SidebarLayout({
-  title,
-  titleTag: TitleComponent = 'h2',
   children,
   body,
   footer,
 }: React.PropsWithChildren<SidebarLayoutProps>) {
   return (
-    <div className={'container'}>
-      <div className={'grid grid-cols-7 gap-24'}>
-        <div
-          className={
-            'sticky left-0 top-16 col-span-2 flex h-[calc(100vh_-_4rem)]'
-          }
-        >
-          <div className={'flex flex-1 flex-col'}>
-            {title && (
-              <TitleComponent className={'title-1 flex-shrink-0'}>
-                {title}
-              </TitleComponent>
-            )}
-            {body && (
-              <div className={'flex flex-1 flex-col overflow-auto py-6'}>
+    <Grid templateColumns='repeat(4, 1fr)'>
+      <GridItem colSpan={1} position={'sticky'} top={'12'} left={'0'}>
+        <Flex flexDirection={'column'} flex='1'>
+          {body && (
+            <>
+              <Flex
+                flexDirection={'column'}
+                flex='1'
+                overflow={'auto'}
+                py={'6'}
+              >
                 {body}
-              </div>
-            )}
-            {footer && <div className={'flex-shrink-0 py-6'}>{footer}</div>}
-          </div>
-        </div>
-        <div className={'col-span-5 self-start p-6'}>{children} </div>
-      </div>
-    </div>
+              </Flex>
+            </>
+          )}
+          {footer && (
+            <Box flexShrink={'0'} py={'6'}>
+              {footer}
+            </Box>
+          )}
+        </Flex>
+      </GridItem>
+      <GridItem colSpan={3} p={'6'} display={'flex'}>
+        <Divider orientation='vertical' mx={'6'} pr={'6'} />
+        <Box flex={'1'}>{children}</Box>
+      </GridItem>
+    </Grid>
   );
 }

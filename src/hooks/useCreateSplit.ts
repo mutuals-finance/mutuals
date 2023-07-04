@@ -1,7 +1,10 @@
 import { BigNumber, utils } from 'ethers';
-import ethers from 'ethers';
-import { useEffect, useMemo } from 'react';
-import { useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { useMemo } from 'react';
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  UsePrepareContractWriteConfig,
+} from 'wagmi';
 
 import { FACTORY_ADDRESS } from '@/lib/constants';
 import useDebounce from '@/hooks/useDebounce';
@@ -16,30 +19,15 @@ export type CreateSplitArgs = [
   BigNumber
 ];
 
-export type CreateSplitResult = Omit<
-  ReturnType<
-    typeof usePrepareContractWrite<
-      typeof SplitFactory__factory.abi,
-      'createSplit'
-    >
-  >,
-  'error'
-> &
-  ReturnType<
-    typeof useContractWrite<typeof SplitFactory__factory.abi, 'createSplit'>
-  >;
-
 export type CreateSplitProps = {
   uri?: string;
   metadataLocked?: boolean;
   payees?: string[];
   shares?: number[];
-} & Parameters<
-  typeof usePrepareContractWrite<
-    typeof SplitFactory__factory.abi,
-    'createSplit'
-  >
->[0];
+} & Omit<
+  UsePrepareContractWriteConfig,
+  'args' | 'enabled' | 'functionName' | 'abi' | 'address'
+>;
 
 export default function useCreateSplit({
   payees = [],
@@ -53,7 +41,7 @@ export default function useCreateSplit({
   const argsMemo = useMemo(() => {
     return [
       payees,
-      shares.map((s = 0) => BigNumber.from(s)),
+      shares.map((s) => BigNumber.from(s)),
       uri,
       !!metadataLocked,
       salt,

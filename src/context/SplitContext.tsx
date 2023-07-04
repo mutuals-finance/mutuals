@@ -9,19 +9,19 @@ import { createContext, useContext } from 'react';
 import { useAsync } from 'react-use';
 import { useAccount } from 'wagmi';
 
+import { ANKR_API_KEY } from '@/lib/constants';
 import {
   ShareFragmentFragment,
   SplitDetailsFragmentFragment,
 } from '@/lib/graphql/__generated__/graphql';
-import { formatRoundNumber } from '@/lib/utils';
 
 function useTokenTransfers(params: GetTransfersRequest) {
-  const ankrjsProvider = new AnkrProvider();
+  const ankrjsProvider = new AnkrProvider(ANKR_API_KEY);
   return useAsync(() => ankrjsProvider.getTokenTransfers(params));
 }
 
 const blockchain = 'eth';
-const address = '0x388c818ca8b9251b393131c08a736a67ccb19297';
+const address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
 
 interface SplitContextType {
   split: SplitDetailsFragmentFragment;

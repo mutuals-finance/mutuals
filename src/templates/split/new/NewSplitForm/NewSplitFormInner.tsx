@@ -1,19 +1,19 @@
+import { Box, Button } from '@chakra-ui/react';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
-import { ButtonPrimary } from '@/components/Button';
 import FormGroup from '@/components/Form/FormGroup';
 import Input from '@/components/Form/Input';
 import InputImage from '@/components/Form/InputImage';
 import InputSwitch from '@/components/Form/InputSwitch';
 import TextArea from '@/components/Form/TextArea';
 
-import { CreateFormData } from '@/templates/split/new/NewSplitForm/index';
+import { CreateFormData } from '@/templates/split/new/NewSplitForm';
 import NewSplitModal from '@/templates/split/new/NewSplitModal';
 
 import PayeeList from '../PayeeList';
 
-interface NewSplitFormInnerProps extends UseFormReturn<CreateFormData> {
+interface NewSplitFormInnerProps extends UseFormReturn<CreateFormData, never> {
   onModalClose: () => void;
   isModalOpen: boolean;
 }
@@ -52,11 +52,11 @@ export default function NewSplitFormInner({
         <PayeeList id={'payees'} />
       </FormGroup>
 
-      <FormGroup>
-        <ButtonPrimary size={'md'} type='submit' className={'self-start'}>
+      <Box>
+        <Button colorScheme={'teal'} type='submit'>
           Create
-        </ButtonPrimary>
-      </FormGroup>
+        </Button>
+      </Box>
     </>
   );
 }

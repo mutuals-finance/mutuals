@@ -1,19 +1,18 @@
 import React from 'react';
 
 import AssetTable from '@/components/AssetTable';
-import { AssetTableProps } from '@/components/AssetTable/types';
-import Box from '@/components/Box';
+import ContentCard from '@/components/ContentCard';
 
-type AssetsProps = AssetTableProps;
+import { useSplit } from '@/context/SplitContext';
 
-export function Assets({ assets }: AssetsProps) {
+export function Assets() {
+  const { balance } = useSplit();
   return (
-    <Box
+    <ContentCard
       title={'Assets'}
-      className={'lg:col-span-3'}
-      innerClassName={'p-0 lg:p-0 overflow-y-auto max-h-72'}
+      bodyProps={{ p: '0', maxHeight: 'sm', overflowY: 'auto' }}
     >
-      <AssetTable assets={assets} />
-    </Box>
+      <AssetTable assets={balance?.assets} size={'sm'} />
+    </ContentCard>
   );
 }

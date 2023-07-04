@@ -1,20 +1,24 @@
+import { Text } from '@chakra-ui/react';
 import React from 'react';
+
+import TabPage from '@/components/TabPage';
 
 import { WithdrawForm } from '@/templates/split/details/WithdrawTab/WithdrawForm';
 
 export function WithdrawTab() {
   return (
-    <section>
-      <div className={'container'}>
-        <div className={'w-full max-w-2xl space-y-6'}>
-          <h2 className={'title-1'}>Withdraw</h2>
-          <p>
-            Withdraw funds from your split. You may either withdraw for your own
-            or distribute to all other recipients.
-          </p>
-          <WithdrawForm />
-        </div>
-      </div>
-    </section>
+    <TabPage
+      title={'Withdraw'}
+      as={'section'}
+      contentProps={{ maxWidth: '4xl' }}
+    >
+      <>
+        <Text>
+          Withdraw funds from your split. You may either withdraw for your own
+          or distribute to all other recipients.
+        </Text>
+        <WithdrawForm />
+      </>
+    </TabPage>
   );
 }

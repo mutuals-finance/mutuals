@@ -382,9 +382,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Thin.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Thin.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Thin.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-Thin.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-Thin.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-Thin.ttf') format('truetype');
   font-weight: 100;
   font-display: swap;
   font-style: normal;
@@ -393,9 +393,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-ThinItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-ThinItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-ThinItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-ThinItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-ThinItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-ThinItalic.ttf') format('truetype');
   font-weight: 100;
   font-display: swap;
   font-style: italic;
@@ -404,9 +404,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-ExtraLight.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-ExtraLight.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-ExtraLight.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-ExtraLight.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-ExtraLight.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-ExtraLight.ttf') format('truetype');
   font-weight: 200;
   font-display: swap;
   font-style: normal;
@@ -415,9 +415,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-ExtraLightItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-ExtraLightItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-ExtraLightItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-ExtraLightItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-ExtraLightItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-ExtraLightItalic.ttf') format('truetype');
   font-weight: 200;
   font-display: swap;
   font-style: italic;
@@ -426,9 +426,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Light.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Light.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Light.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-Light.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-Light.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-Light.ttf') format('truetype');
   font-weight: 300;
   font-display: swap;
   font-style: normal;
@@ -437,9 +437,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-LightItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-LightItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-LightItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-LightItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-LightItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-LightItalic.ttf') format('truetype');
   font-weight: 300;
   font-display: swap;
   font-style: italic;
@@ -448,9 +448,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Regular.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Regular.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Regular.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-Regular.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-Regular.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
   font-style: normal;
@@ -459,9 +459,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Italic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Italic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Italic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-Italic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-Italic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-Italic.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
   font-style: italic;
@@ -470,9 +470,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Medium.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Medium.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Medium.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-Medium.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-Medium.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-Medium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
   font-style: normal;
@@ -481,9 +481,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-MediumItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-MediumItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-MediumItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-MediumItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-MediumItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
   font-style: italic;
@@ -492,9 +492,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-SemiBold.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-SemiBold.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-SemiBold.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-SemiBold.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-SemiBold.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-display: swap;
   font-style: normal;
@@ -503,9 +503,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-SemiBoldItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-SemiBoldItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-SemiBoldItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-SemiBoldItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-SemiBoldItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-SemiBoldItalic.ttf') format('truetype');
   font-weight: 600;
   font-display: swap;
   font-style: italic;
@@ -514,9 +514,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Bold.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Bold.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Bold.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-Bold.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-Bold.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-Bold.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
   font-style: normal;
@@ -525,9 +525,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-BoldItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-BoldItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-BoldItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-BoldItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-BoldItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
   font-style: italic;
@@ -536,9 +536,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-ExtraBold.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-ExtraBold.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-ExtraBold.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-ExtraBold.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-ExtraBold.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-ExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-display: swap;
   font-style: normal;
@@ -547,9 +547,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-ExtraBoldItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-ExtraBoldItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-ExtraBoldItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-ExtraBoldItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-ExtraBoldItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-ExtraBoldItalic.ttf') format('truetype');
   font-weight: 800;
   font-display: swap;
   font-style: italic;
@@ -558,9 +558,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-Black.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-Black.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-Black.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-Black.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-Black.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-Black.ttf') format('truetype');
   font-weight: 900;
   font-display: swap;
   font-style: normal;
@@ -569,9 +569,9 @@ explicitly, e.g.
 
 @font-face {
   font-family: 'Archivo';
-  src: url('../assets/font/Archivo/Archivo-BlackItalic.woff2') format('woff2'),
-  url('../assets/font/Archivo/Archivo-BlackItalic.woff') format('woff'),
-  url('../assets/font/Archivo/Archivo-BlackItalic.ttf') format('truetype');
+  src: url('../theme/font/Archivo/Archivo-BlackItalic.woff2') format('woff2'),
+  url('../theme/font/Archivo/Archivo-BlackItalic.woff') format('woff'),
+  url('../theme/font/Archivo/Archivo-BlackItalic.ttf') format('truetype');
   font-weight: 900;
   font-display: swap;
   font-style: italic;

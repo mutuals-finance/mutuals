@@ -1,49 +1,21 @@
-import Image from 'next/image';
+import { Image } from '@chakra-ui/next-js';
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Spinner,
+} from '@chakra-ui/react';
 import React from 'react';
-import { Chain as WagmiChain, useNetwork, useSwitchNetwork } from 'wagmi';
+import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 
-import { getLogoByChainId } from '@/lib/utils/chainLogo';
+import { getAvailableChains, getLogoByChainId } from '@/lib/utils';
 
-import Popover from '@/components/Popover';
-import PopoverItem from '@/components/Popover/PopoverItem';
-
-import ChainButton from '@/layouts/root/Header/ChainButton';
-
-interface ChainSelectorItemProps extends WagmiChain {
-  isSwitching: boolean;
-  onSelectChain: (chainId: number) => void;
-}
-
-function ChainSelectorItem({
-  id,
-  name,
-  isSwitching,
-  onSelectChain,
-}: ChainSelectorItemProps) {
-  return (
-    <PopoverItem
-      icon={
-        <Image
-          className={'h-4 w-4'}
-          objectFit='contain'
-          height={8}
-          src={getLogoByChainId(id)}
-          alt={name}
-        />
-      } /*
-
-disabled={isSwitching}
-*/
-      onClick={() => onSelectChain(id)}
-    >
-      {name}
-      {isSwitching && ' (switching)'}
-    </PopoverItem>
-  );
-}
 export default function Chain() {
-  const { chains, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork();
+  const { isLoading, pendingChainId, switchNetwork } = useSwitchNetwork();
   const { chain: currentChain } = useNetwork();
 
   function onSelectChain(chainId: number) {
@@ -53,29 +25,50 @@ export default function Chain() {
   }
 
   return (
-    <Popover
-      button={
-        <ChainButton
-          src={getLogoByChainId(currentChain?.id || 1)}
-          alt={currentChain?.name || 'UNKNOWN'}
-        />
-      }
-    >
-      <div className='rounded-default border-default shadow-default w-60 divide-y border bg-white dark:bg-neutral-900'>
-        <div className='flex flex-col p-2'>
-          {chains.map(
-            (chain) =>
-              chain.id !== currentChain?.id && (
-                <ChainSelectorItem
-                  key={chain.id}
-                  isSwitching={isLoading && pendingChainId === chain.id}
-                  onSelectChain={onSelectChain}
-                  {...chain}
-                />
-              )
-          )}
-        </div>
-      </div>
-    </Popover>
+    <Menu closeOnSelect={false}>
+      {({ isOpen }) => (
+        <>
+          <MenuButton
+            as={Button}
+            leftIcon={
+              <Image
+                boxSize='4'
+                src={getLogoByChainId(currentChain?.id)}
+                alt={currentChain?.name || 'UNKNOWN'}
+              />
+            }
+            rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
+            variant={'ghost'}
+            isLoading={isLoading}
+          >
+            {currentChain?.name || 'Unknown'}{' '}
+          </MenuButton>
+          <MenuList>
+            <MenuGroup title='Choose Your Network'>
+              {getAvailableChains().map(
+                (chain) =>
+                  chain.id !== currentChain?.id && (
+                    <MenuItem
+                      onClick={() => onSelectChain(chain.id)}
+                      key={chain.id}
+                    >
+                      <Image
+                        boxSize='4'
+                        src={chain.logo}
+                        alt={chain.name}
+                        mr={'1'}
+                      />
+                      {chain.name}
+                      {isLoading && pendingChainId === chain.id && (
+                        <Spinner size='xs' ml={'1'} />
+                      )}
+                    </MenuItem>
+                  )
+              )}
+            </MenuGroup>
+          </MenuList>
+        </>
+      )}
+    </Menu>
   );
 }

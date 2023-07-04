@@ -1,4 +1,5 @@
 import { type Balance } from '@ankr.com/ankr.js';
+import { TableProps } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import React, { HTMLProps } from 'react';
 
@@ -14,7 +15,7 @@ const columnHelper = createColumnHelper<Balance>();
 export default function AssetTable({
   assets: data = [],
   ...props
-}: AssetTableProps & Omit<HTMLProps<HTMLTableElement>, 'data'>) {
+}: AssetTableProps & TableProps) {
   const columns = [
     columnHelper.accessor('contractAddress', {
       header: 'Asset',

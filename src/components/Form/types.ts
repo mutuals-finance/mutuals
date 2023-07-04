@@ -1,10 +1,18 @@
-import React, { HTMLProps } from 'react';
+import { ImageProps } from '@chakra-ui/next-js';
+import {
+  InputProps as ChakraInputProps,
+  UseNumberInputProps,
+} from '@chakra-ui/react';
+import { HTMLProps } from 'react';
 import { FieldError, RegisterOptions } from 'react-hook-form';
-import { NumericFormatProps } from 'react-number-format';
 
 export interface BaseLabelProps {
+  id?: string;
+
   /** Input label */
   label?: string;
+  /** Manual validation using RHF, it is encouraged to use yup resolver instead */
+  validation?: RegisterOptions;
 }
 
 export interface BaseFeedbackProps {
@@ -17,7 +25,7 @@ export interface BaseFeedbackProps {
 }
 
 export interface BaseFieldProps
-  extends HTMLProps<HTMLInputElement>,
+  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'size'>,
     BaseLabelProps,
     BaseFeedbackProps {
   /** Disables the input and shows defaultValue (can be set from React Hook Form) */
@@ -26,21 +34,15 @@ export interface BaseFieldProps
   validation?: RegisterOptions;
 }
 
-export interface InputBaseProps extends BaseFieldProps {
-  /** Icon before input */
-  icon?: React.ReactNode;
-  /** Icon after input */
-  iconAfter?: React.ReactNode;
-  /** Class of input */
-  inputClassName?: string;
-}
+export type InputBaseProps = ChakraInputProps &
+  BaseFieldProps & { hideWrapper?: boolean };
 
 export type InputNumberBaseProps = InputBaseProps &
-  NumericFormatProps & {
+  UseNumberInputProps & {
     addDisabled?: boolean;
     removeDisabled?: boolean;
   };
 
 export interface FileWithPreview extends Partial<File> {
-  preview: string;
+  preview: ImageProps['src'];
 }

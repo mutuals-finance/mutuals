@@ -1,16 +1,34 @@
+import {
+  Alert,
+  AlertIcon,
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
+  Divider,
+  Flex,
+  IconButton,
+  ListItem,
+  Stack,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  Text,
+  UnorderedList,
+} from '@chakra-ui/react';
 import React from 'react';
 import {
   IoCopyOutline,
   IoEllipsisHorizontal,
-  IoEllipsisVertical,
   IoGlobeOutline,
-  IoWarning,
+  IoOpenOutline,
 } from 'react-icons/io5';
 
-import { ButtonOutline, ButtonSecondary } from '@/components/Button';
-import Chip from '@/components/Chip';
 import QRCode from '@/components/QRCode';
-import Statistic from '@/components/Statistic';
+import TabPage from '@/components/TabPage';
 
 import { useSplit } from '@/context/SplitContext';
 
@@ -19,66 +37,76 @@ export function DepositTab() {
   const { address } = split;
 
   return (
-    <section>
-      <div className={'container'}>
-        <article className={'w-full max-w-2xl space-y-6'}>
-          <h2 className={'title-1'}>Deposit</h2>
-          <div
-            className={
-              'rounded-default bg-default relative inline-flex overflow-hidden border border-orange-400'
-            }
-          >
-            <span className={'block w-2 bg-orange-400'} />
-            <span className={'block self-center pl-3 text-2xl text-orange-400'}>
-              <IoWarning />
-            </span>
-            <div className={'p-3 text-sm'}>
-              <p>
-                Only ETH and ERC-20 tokens can be deposited. Do not send NFTs to
-                a Split.
-              </p>
-            </div>
-          </div>
+    <TabPage
+      title={'Deposit'}
+      as={'section'}
+      contentProps={{ maxWidth: '4xl' }}
+    >
+      <>
+        <Alert status='warning'>
+          <AlertIcon />
+          <UnorderedList>
+            <ListItem>
+              Only ETH and ERC-20 tokens can be deposited. Do not send NFTs to a
+              Split.
+            </ListItem>
+            <ListItem>
+              Please make sure to operate on the Ethereum chain. Other networks
+              are not supported for this address.
+            </ListItem>
+          </UnorderedList>
+        </Alert>
 
-          <p>Use the address below to receive funds to your split</p>
+        <Text>Use the address below to receive funds to your split.</Text>
 
-          <div
-            className={
-              'rounded-default border-default inline-flex flex-col items-center border  px-6'
-            }
-          >
-            <div
-              className={
-                'flex items-center justify-between space-x-3 self-stretch pt-6'
-              }
-            >
-              <div className={'inline-flex items-center space-x-1 text-xs'}>
-                <IoGlobeOutline className={'text-light'} />
-                <span>Ethereum Chain</span>
-              </div>
+        <Card maxW='md' variant='outline'>
+          <CardHeader>
+            <Flex gap='3' alignItems={'center'}>
+              <Flex flex='1'>
+                <Tag size={'sm'}>
+                  <TagLeftIcon as={IoGlobeOutline} />
+                  <TagLabel>Ethereum Chain</TagLabel>
+                </Tag>
+              </Flex>
 
-              <div>
-                <ButtonOutline size={'sm'} icon={<IoEllipsisHorizontal />} />
-              </div>
-            </div>
+              <IconButton
+                variant='ghost'
+                colorScheme='gray'
+                aria-label='See menu'
+                icon={<IoEllipsisHorizontal />}
+              />
+            </Flex>
+          </CardHeader>
 
-            <div className={'py-6'}>
+          <CardBody>
+            <Center>
               <div className={'rounded-default overflow-hidden'}>
                 <QRCode text={address} />
               </div>
-            </div>
+            </Center>
+          </CardBody>
 
-            <div className={'border-default self-start border-t py-6'}>
-              <Statistic
-                title={'Split address'}
-                className={'whitespace-nowrap slashed-zero'}
-              >
-                {address}
-              </Statistic>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
+          <Divider />
+
+          <CardFooter>
+            <Stack>
+              <Text>Split address</Text>
+              <ButtonGroup variant='outline' size='sm' isAttached>
+                <Button
+                  rightIcon={<IoCopyOutline />}
+                  aria-label='Copy split address to clipboard'
+                >
+                  {address}
+                </Button>
+                <IconButton
+                  aria-label='View on Etherscan'
+                  icon={<IoOpenOutline />}
+                />
+              </ButtonGroup>
+            </Stack>
+          </CardFooter>
+        </Card>
+      </>
+    </TabPage>
   );
 }

@@ -1,19 +1,23 @@
 import React from 'react';
 
 import ActivityTable from '@/components/ActivityTable';
-import { ActivityTableProps } from '@/components/ActivityTable/types';
-import Box from '@/components/Box';
+import ContentCard from '@/components/ContentCard';
 
-type ActivityProps = ActivityTableProps;
+import { useSplit } from '@/context/SplitContext';
 
-export function Activity({ transfers, address }: ActivityProps) {
+export function Activity() {
+  const { split, transfers } = useSplit();
+
   return (
-    <Box
+    <ContentCard
       title={'Activity'}
-      className={'lg:col-span-6'}
-      innerClassName={'p-0 lg:p-0 overflow-y-auto max-h-72'}
+      bodyProps={{ p: '0', maxHeight: 'sm', overflowY: 'auto' }}
     >
-      <ActivityTable transfers={transfers} address={address} />
-    </Box>
+      <ActivityTable
+        transfers={transfers?.transfers}
+        address={split.address}
+        size={'sm'}
+      />
+    </ContentCard>
   );
 }

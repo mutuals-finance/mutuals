@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { StackProps, VStack } from '@chakra-ui/react';
+import React from 'react';
 import {
   FieldValues,
   FormProvider,
@@ -11,15 +12,10 @@ import {
   SubmitHandler,
 } from 'react-hook-form/dist/types/form';
 
-import clsxm from '@/lib/utils/clsxm';
-
 interface FormProps<
   TFieldValues extends FieldValues = FieldValues,
-  TContext = any
-> extends Omit<
-      React.FormHTMLAttributes<HTMLFormElement>,
-      'onSubmit' | 'children'
-    >,
+  TContext = never
+> extends Omit<StackProps, 'children' | 'onSubmit'>,
     UseFormProps<TFieldValues, TContext> {
   onSubmit?: SubmitHandler<TFieldValues>;
   onSubmitInvalid?: SubmitErrorHandler<TFieldValues>;
@@ -30,9 +26,8 @@ interface FormProps<
 
 export default function Form<
   TFieldValues extends FieldValues = FieldValues,
-  TContext = any
+  TContext = never
 >({
-  className,
   children,
   onSubmit,
   onSubmitInvalid,
@@ -44,13 +39,15 @@ export default function Form<
 
   return (
     <FormProvider {...methods}>
-      <form
-        className={clsxm(`flex w-full flex-col`, className)}
+      <VStack
+        as={'form'}
+        align={'stretch'}
+        spacing={'6'}
         onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}
         {...props}
       >
         {typeof children == 'function' ? children(methods) : children}
-      </form>
+      </VStack>
     </FormProvider>
   );
 }

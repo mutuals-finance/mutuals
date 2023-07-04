@@ -3,24 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply 2xl:text-[0.8vw];
-  }
-
-  section:not(:first-of-type, :last-of-type) {
-    @apply py-6 lg:py-12;
-  }
-
-  section:first-of-type {
-    @apply pb-6 lg:pb-12;
-  }
-
-  section:last-of-type {
-    @apply pt-6 lg:pt-12;
-  }
 
   .title-1 {
-    @apply text-5xl font-medium;
+    @apply text-5xl font-semibold;
   }
 
   .title-2 {
@@ -64,27 +49,10 @@
     @apply text-default border-default bg-default rounded-default m-0 flex w-full justify-start border px-4 py-3 text-left outline-0 ring-0 focus:ring-0 placeholder:text-neutral-400 focus:border-neutral-400 dark:focus:border-neutral-500;
   }
 
-  input,
-  .input {
-    @apply input-default h-10 items-center;
-  }
-
-  input[type="number"].input-number::-webkit-outer-spin-button,
-  input[type="number"].input-number::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  input[type="number"].input-number {
-    -moz-appearance: textfield;
-  }
-
-
   .input-readonly {
     @apply cursor-default border-default bg-opacity-50
   }
 
-  textarea,
   .textarea {
     @apply input-default min-h-[8rem] items-start;
   }
@@ -147,11 +115,6 @@
   }
 }
 
-@layer components {
-  .container {
-    @apply 2xl:max-w-[90rem];
-  }
-}
 
 /* chrome and chromium based */
 .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {

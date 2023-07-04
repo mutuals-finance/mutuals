@@ -1,7 +1,24 @@
+import {
+  Box,
+  Button,
+  Divider,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Progress,
+  Step,
+  StepIcon,
+  StepIndicator,
+  StepNumber,
+  Stepper,
+  StepStatus,
+} from '@chakra-ui/react';
 import React from 'react';
 
-import { ButtonOutline, ButtonPrimary } from '@/components/Button';
-import Modal from '@/components/Modal';
 import StepperItem, {
   StepperModalStep,
 } from '@/components/StepperModal/StepperItem';
@@ -9,11 +26,8 @@ import StepperItem, {
 interface StepperModalProps {
   open: boolean;
   onClose: () => void;
-  onNext: (
-    current: StepperModalStep,
-    currentIndex: number
-  ) => void | Promise<void>;
-  currentIndex: number;
+  onNext: (step: StepperModalStep, index: number) => void | Promise<void>;
+  activeStep: number;
   steps: StepperModalStep[];
 }
 
@@ -21,60 +35,78 @@ export default function StepperModal({
   onClose,
   onNext,
   open,
-  currentIndex,
+  activeStep,
   steps,
 }: StepperModalProps) {
-  const current = steps[currentIndex];
+  const activeStepContent = steps[activeStep];
+  const activeStepTitle = activeStepContent?.title;
+
+  const max = steps.length - 1;
+  const progressPercent = (activeStep / max) * 100;
 
   return (
-    <Modal
-      header={
-        <span className={'block truncate text-lg font-semibold'}>
-          {current?.title}
-        </span>
-      }
-      onClose={onClose}
-      open={open}
-      dense={true}
-    >
-      <div className='flex w-96 flex-col space-y-6'>
-        <div>
-          <ul className='flex flex-col'>
-            {steps.map(({ children, ...item }, index) => {
-              return (
-                <li key={item.id} className={'block'}>
-                  <StepperItem
-                    {...item}
-                    isActive={index === currentIndex}
-                    index={index}
-                  >
-                    {children}
-                  </StepperItem>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+    <Modal isOpen={open} onClose={onClose} size={'xl'}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{activeStepTitle}</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Box position='relative' mb={'6'}>
+            <Stepper size='sm' index={activeStep} gap='0'>
+              {steps.map((_, index) => (
+                <Step key={index}>
+                  <StepIndicator bg='white'>
+                    <StepStatus
+                      complete={<StepIcon />}
+                      incomplete={<StepNumber />}
+                      active={<StepNumber />}
+                    />
+                  </StepIndicator>
+                </Step>
+              ))}
+            </Stepper>
+            <Progress
+              value={progressPercent}
+              position='absolute'
+              height='3px'
+              width='full'
+              top='10px'
+              zIndex={-1}
+            />
+          </Box>
 
-        <div className={'flex items-center justify-center space-x-6'}>
-          <ButtonOutline
-            className={'flex-1'}
-            fullWidth={true}
-            onClick={() => onClose()}
-          >
+          <Divider my={'6'} />
+
+          {steps.map(({ children, ...item }, index) => {
+            return (
+              <Box key={item.id}>
+                <StepperItem
+                  {...item}
+                  isActive={index === activeStep}
+                  index={index}
+                >
+                  {children}
+                </StepperItem>
+              </Box>
+            );
+          })}
+        </ModalBody>
+
+        <ModalFooter>
+          <Button variant='ghost' onClick={() => onClose()} mr={3}>
             Cancel
-          </ButtonOutline>
+          </Button>
 
-          <ButtonPrimary
-            className={'flex-1'}
-            fullWidth={true}
-            disabled={current?.disabled}
-            onClick={() => !!current && onNext(current, currentIndex)}
+          <Button
+            isDisabled={activeStepContent?.disabled}
+            onClick={() =>
+              !!activeStepContent && onNext(activeStepContent, activeStep)
+            }
           >
             Next
-          </ButtonPrimary>
-        </div>
-      </div>
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 }
