@@ -7,9 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { RowData, TableOptions } from '@tanstack/table-core';
-import React, { HTMLProps } from 'react';
-
-import clsxm from '@/lib/utils/clsxm';
+import React from 'react';
 
 import BodyRow from '@/components/Table/BodyRow';
 import HeaderRow from '@/components/Table/HeaderRow';

@@ -3,8 +3,9 @@ import React from 'react';
 import Seo from '@/components/Seo';
 
 import {
-  SplitListBanner,
-  SplitListList,
+  SplitListGrid,
+  SplitListHeader,
+  SplitListSearchAndCreate,
   SplitListWrapper,
 } from '@/templates/split/list';
 
@@ -14,7 +15,11 @@ const SplitsPage: NextPageWithLayout = function () {
   return (
     <>
       <Seo />
-      <SplitListWrapper />
+      <SplitListWrapper>
+        <SplitListHeader />
+        <SplitListSearchAndCreate />
+        <SplitListGrid />
+      </SplitListWrapper>
     </>
   );
 };

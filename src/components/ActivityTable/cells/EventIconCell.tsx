@@ -5,8 +5,6 @@ import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 import { HiArrowDownTray, HiArrowUpTray } from 'react-icons/hi2';
 
-import clsxm from '@/lib/utils/clsxm';
-
 import { EventType } from '@/components/ActivityTable/types';
 import useActivityEvent from '@/components/ActivityTable/useActivityEvent';
 

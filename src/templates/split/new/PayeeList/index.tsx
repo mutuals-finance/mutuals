@@ -1,7 +1,6 @@
-import { HStack, VStack } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { NumberFormatValues } from 'react-number-format';
 
 import { formatRoundNumber } from '@/lib/utils';
 

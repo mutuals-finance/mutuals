@@ -7,7 +7,6 @@ import {
   MenuList,
   useColorMode,
 } from '@chakra-ui/react';
-import { useTheme } from 'next-themes';
 import React, { useEffect, useState } from 'react';
 import {
   IoChevronDown,

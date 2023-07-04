@@ -91,7 +91,7 @@ export default function WithdrawModal({
         onClose();
         reset();
       }}
-      currentIndex={currentIndex}
+      activeStep={currentIndex}
       open={open}
     />
   );

@@ -5,7 +5,7 @@ import {
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import InputBase from '@/components/Form/InputBase';
 
 import { BaseFieldProps } from './types';
 
@@ -25,9 +25,9 @@ export default function TextArea({
       name={id}
       rules={validation}
       render={({ field }) => (
-        <BaseWrapper id={id} validation={validation} {...rest}>
+        <InputBase id={id} validation={validation} {...rest}>
           <ChakraTextarea id={id} rows={rows} {...rest} {...field} />
-        </BaseWrapper>
+        </InputBase>
       )}
     />
   );

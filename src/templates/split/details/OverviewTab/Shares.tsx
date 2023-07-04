@@ -1,3 +1,4 @@
+import { Link } from '@chakra-ui/next-js';
 import {
   AspectRatio,
   Flex,
@@ -13,9 +14,9 @@ import React from 'react';
 import { useList } from 'react-use';
 
 import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import useExplorerLink from '@/hooks/useExplorerLink';
 
 import ContentCard from '@/components/ContentCard';
-import { LinkChainExplorer } from '@/components/Link';
 import UserAvatar from '@/components/UserAvatar';
 
 import { useSplit } from '@/context/SplitContext';
@@ -32,13 +33,17 @@ interface ShareItemProps extends FlexProps {
 }
 
 function ShareItem({ share, isActive, ...props }: ShareItemProps) {
+  const { href, shortAddress } = useExplorerLink({ address: share.payee });
+
   return (
     <Tr bg={isActive ? 'gray.100' : 'white'} {...props}>
       <Td>
         <Flex gap={'3'} alignItems={'center'}>
           <UserAvatar address={share.payee} />
 
-          <LinkChainExplorer address={share.payee} color={'secondary'} />
+          <Link href={href} target={'_blank'} rel={'noopener noreferrer'}>
+            {shortAddress}
+          </Link>
         </Flex>
       </Td>
 

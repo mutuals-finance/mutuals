@@ -1,3 +1,4 @@
-export * from './Banner';
-export * from './List';
+export * from './Grid';
+export * from './Header';
+export * from './SearchAndCreate';
 export * from './Wrapper';

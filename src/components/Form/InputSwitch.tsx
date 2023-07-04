@@ -1,11 +1,8 @@
 import { Switch, SwitchProps } from '@chakra-ui/react';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { IoCheckmark, IoClose } from 'react-icons/io5';
 
-import clsxm from '@/lib/utils/clsxm';
-
-import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import InputBase from '@/components/Form/InputBase';
 import { BaseFieldProps } from '@/components/Form/types';
 
 type InputSwitchProps = SwitchProps & BaseFieldProps;
@@ -18,13 +15,13 @@ export default function InputSwitch({
   const { control } = useFormContext();
 
   return (
-    <BaseWrapper id={id} validation={validation} {...rest}>
+    <InputBase id={id} validation={validation} {...rest}>
       <Controller
         control={control}
         name={id}
         rules={validation}
         render={({ field }) => <Switch {...rest} {...field} id={id} />}
       />
-    </BaseWrapper>
+    </InputBase>
   );
 }

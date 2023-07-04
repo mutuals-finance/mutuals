@@ -97,9 +97,9 @@ function WithdrawFormInner() {
   const [isModalOpen, setIsModalOpen] = useToggle(false);
 
   return (
-    <VStack spacing={'6'} alignItems={'grow'}>
+    <VStack spacing={'6'} alignItems={'stretch'}>
       <FormGroup>
-        <InputListbox<Balance, true>
+        <InputListbox<Balance, true, GroupBase<Balance>>
           label='Assets'
           helperText={'Specify the tokens you want to withdraw.'}
           id='assets'
@@ -112,6 +112,25 @@ function WithdrawFormInner() {
           }}
           isMulti={true}
           options={balance?.assets || []}
+          getOptionValue={(option) =>
+            option.blockchain +
+            ':' +
+            option.contractAddress +
+            ':' +
+            option.tokenName
+          }
+          filterOption={({ data }, input) =>
+            (
+              data.tokenSymbol +
+              data.tokenName +
+              data.blockchain +
+              data.tokenType +
+              data.contractAddress +
+              data.tokenDecimals
+            )
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
           components={{
             Option: TokenSelectOption,
             MultiValueLabel: TokenSelectLabel,

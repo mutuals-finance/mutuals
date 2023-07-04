@@ -4,7 +4,6 @@ import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 
 import { formatCurrencyAmount } from '@/lib/utils';
-import clsxm from '@/lib/utils/clsxm';
 
 import { EventType } from '@/components/ActivityTable/types';
 import useActivityEvent from '@/components/ActivityTable/useActivityEvent';

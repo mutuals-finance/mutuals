@@ -57,7 +57,7 @@ export function useMetadata() {
         let reader = null;
 
         if (image) {
-          const imageData = new Blob([image]);
+          const imageData = new Blob([image as unknown as BlobPart]);
           reader = await NFTStorage.encodeBlob(imageData);
         }
 

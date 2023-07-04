@@ -1,4 +1,5 @@
-import { mode } from '@chakra-ui/theme-tools'
+import { StyleFunctionProps } from '@chakra-ui/react';
+import { mode } from '@chakra-ui/theme-tools';
 
 const SectionTitle = {
   parts: ['wrapper', 'title', 'description'],
@@ -16,7 +17,7 @@ const SectionTitle = {
     },
   },
   variants: {
-    default: (props: any) => ({
+    default: (props: StyleFunctionProps) => ({
       title: {},
       description: {
         color: mode('gray.500', 'gray.400')(props),
@@ -30,7 +31,7 @@ const SectionTitle = {
         color: 'gray.700',
       },
     },
-    light: (props: any) => ({
+    light: () => ({
       title: {
         color: 'white',
       },
@@ -65,6 +66,6 @@ const SectionTitle = {
       },
     },
   },
-}
+};
 
-export default SectionTitle
+export default SectionTitle;

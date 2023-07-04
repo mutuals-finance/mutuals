@@ -14,7 +14,7 @@ function SplitReviewCard({ image, name, description }: CreateFormData) {
       timestamp={new Date().getTime()}
       metaData={{
         name: name,
-        image: image?.preview,
+        image: image?.preview.toString(),
         description: description,
       }}
     />

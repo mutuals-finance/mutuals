@@ -1,8 +1,5 @@
+import { Box } from '@chakra-ui/react';
 import { IoAlertCircle, IoCheckmarkCircle } from 'react-icons/io5';
-
-import clsxm from '@/lib/utils/clsxm';
-
-import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface LoadingStepProps {
   description?: string;
@@ -27,11 +24,11 @@ function LoadingStepIndicator({
         className={'inline-flex h-8 w-8 items-center justify-center text-3xl'}
       >
         {isError ? (
-          <IoAlertCircle className={'block text-error'} />
+          <IoAlertCircle className={'text-error block'} />
         ) : isSuccess ? (
           <IoCheckmarkCircle className={'block text-green-500'} />
         ) : (
-          <LoadingSpinner color={'outline'} size={'xl'} />
+          <Box />
         )}
       </div>
     </div>
@@ -47,11 +44,11 @@ function LoadingStepStatus({
     <div className={'flex items-center justify-between border-y py-3'}>
       <span className={'label block'}>Status</span>
       <span
-        className={clsxm(
-          `block text-xs font-semibold`,
-          isError && 'text-error',
-          isSuccess && 'text-green-500'
-        )}
+        className={
+          `block text-xs font-semibold` + isError &&
+          'text-error' + isSuccess &&
+          'text-green-500'
+        }
       >
         {status}
       </span>
@@ -69,7 +66,7 @@ export function LoadingStep({
       <LoadingStepIndicator {...props} />
       <div>
         {!!error && (
-          <div className={'pt-1 text-xs text-error'}>
+          <div className={'text-error pt-1 text-xs'}>
             <p>{error?.message || 'Unknown Error'}</p>{' '}
           </div>
         )}

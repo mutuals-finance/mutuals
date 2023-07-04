@@ -1,10 +1,9 @@
-import { Listbox, ListboxProps } from '@headlessui/react';
 import { GroupBase, Select } from 'chakra-react-select';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Props } from 'react-select';
 
-import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import InputBase from '@/components/Form/InputBase';
 import { BaseFieldProps } from '@/components/Form/types';
 
 type InputListboxProps<
@@ -18,26 +17,16 @@ export default function InputListbox<
   IsMulti extends boolean = false,
   Group extends GroupBase<Option> = GroupBase<Option>
 >({ id = '', validation, ...rest }: InputListboxProps<Option, IsMulti, Group>) {
-  const { control, trigger } = useFormContext();
+  const { control } = useFormContext();
 
   return (
-    <BaseWrapper id={id} validation={validation} {...rest}>
+    <InputBase id={id} validation={validation} {...rest}>
       <Controller
         control={control}
         name={id}
         rules={validation}
-        render={({ field }) => (
-          <Select
-            {...rest}
-            {...field}
-            onChange={(v) => {
-              console.log('onChange', v);
-              field.onChange(v);
-              void trigger(id);
-            }}
-          />
-        )}
+        render={({ field }) => <Select {...rest} {...field} />}
       />
-    </BaseWrapper>
+    </InputBase>
   );
 }

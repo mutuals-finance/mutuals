@@ -1,6 +1,5 @@
 import {
   Box,
-  Container,
   Divider,
   Tab,
   TabIndicator,
@@ -10,9 +9,7 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useState } from 'react';
-
-import { LinkUnstyled } from '@/components/Link';
+import React, { useMemo } from 'react';
 
 import routes from '@/templates/split/details';
 

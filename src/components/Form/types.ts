@@ -1,15 +1,18 @@
+import { ImageProps } from '@chakra-ui/next-js';
 import {
   InputProps as ChakraInputProps,
-  NumberInputProps as ChakraNumberInputProps,
   UseNumberInputProps,
 } from '@chakra-ui/react';
 import { HTMLProps } from 'react';
 import { FieldError, RegisterOptions } from 'react-hook-form';
-import { NumericFormatProps } from 'react-number-format';
 
 export interface BaseLabelProps {
+  id?: string;
+
   /** Input label */
   label?: string;
+  /** Manual validation using RHF, it is encouraged to use yup resolver instead */
+  validation?: RegisterOptions;
 }
 
 export interface BaseFeedbackProps {
@@ -41,5 +44,5 @@ export type InputNumberBaseProps = InputBaseProps &
   };
 
 export interface FileWithPreview extends Partial<File> {
-  preview: string;
+  preview: ImageProps['src'];
 }

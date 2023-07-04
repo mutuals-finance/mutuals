@@ -1,56 +1,10 @@
-import {
-  Box,
-  FormControl,
-  FormControlProps,
-  FormLabel,
-} from '@chakra-ui/react';
+import { FormControl, FormControlProps } from '@chakra-ui/react';
 import React from 'react';
-import { get, RegisterOptions, useFormContext } from 'react-hook-form';
 
-import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
 import { BaseFeedbackProps, BaseLabelProps } from '@/components/Form/types';
 
-type BaseWrapperProps = BaseFeedbackProps &
-  BaseLabelProps &
-  FormControlProps & {
-    id?: string;
-    /** Manual validation using RHF, it is encouraged to use yup resolver instead */
-    validation?: RegisterOptions;
-  };
+type BaseWrapperProps = BaseFeedbackProps & BaseLabelProps & FormControlProps;
 
-export default function BaseWrapper({
-  id,
-  label,
-  children,
-  validation,
-  helperText,
-  hideError,
-  ...props
-}: BaseWrapperProps) {
-  const {
-    formState: { errors },
-  } = useFormContext();
-
-  const error = get(errors, id);
-
-  return (
-    <FormControl {...props}>
-      {label && (
-        <Box mb={'1'}>
-          <FormLabel htmlFor={id} display={'inline'}>
-            {label}
-            {!!validation?.required && <span>*</span>}
-          </FormLabel>
-        </Box>
-      )}
-
-      {children}
-
-      <BaseFeedback
-        error={error}
-        helperText={helperText}
-        hideError={hideError}
-      />
-    </FormControl>
-  );
+export default function BaseWrapper({ children, ...props }: BaseWrapperProps) {
+  return <FormControl {...props}>{children}</FormControl>;
 }

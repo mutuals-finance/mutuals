@@ -5,7 +5,7 @@ import { Controller, get, useFormContext } from 'react-hook-form';
 
 import { formatBytes, formatStringItems } from '@/lib/utils';
 
-import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import InputBase from '@/components/Form/InputBase';
 import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
 import FilePreview from '@/components/Form/InputImage/FilePreview';
 import { BaseFieldProps } from '@/components/Form/types';
@@ -85,7 +85,7 @@ export default function InputImage({
 
   React.useEffect(() => {
     return () => {
-      !!file && URL.revokeObjectURL(file.preview);
+      !!file && URL.revokeObjectURL(file.preview.toString());
     };
   }, [file]);
 
@@ -104,7 +104,7 @@ export default function InputImage({
     : {};
 
   return (
-    <BaseWrapper id={id} helperText={helperText} {...props}>
+    <InputBase id={id} helperText={helperText} {...props}>
       <Controller
         control={control}
         name={id}
@@ -135,6 +135,6 @@ export default function InputImage({
           </Box>
         )}
       />
-    </BaseWrapper>
+    </InputBase>
   );
 }

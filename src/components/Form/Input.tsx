@@ -2,7 +2,7 @@ import { Input as ChakraInput } from '@chakra-ui/react';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import InputBase from '@/components/Form/InputBase';
 import { InputBaseProps } from '@/components/Form/types';
 
 export default function Input({
@@ -20,9 +20,9 @@ export default function Input({
       render={({ field }) => (
         <>
           {!hideWrapper ? (
-            <BaseWrapper id={id} {...props}>
+            <InputBase id={id} {...props}>
               <ChakraInput id={id} {...props} {...field} />
-            </BaseWrapper>
+            </InputBase>
           ) : (
             <ChakraInput id={id} {...props} {...field} />
           )}
