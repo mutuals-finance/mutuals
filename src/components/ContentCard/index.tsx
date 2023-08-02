@@ -5,6 +5,7 @@ import {
   CardHeader,
   type CardProps,
   Heading,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import React from 'react';
 
@@ -22,10 +23,11 @@ export default function ContentCard({
   bodyProps,
   ...props
 }: React.PropsWithChildren<BoxProps>) {
+  const headerBg = useColorModeValue('gray.100', 'gray.900');
   return (
     <Card as={'article'} variant={variant} {...props}>
       {(!!title || !!titleAfter) && (
-        <CardHeader bg={'gray.100'}>
+        <CardHeader bg={headerBg}>
           {!!title && (
             <Heading as='h2' size='md' fontWeight={'500'}>
               {title}

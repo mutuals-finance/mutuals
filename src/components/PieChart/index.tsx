@@ -28,7 +28,7 @@ function PieChartInner({
   );
 
   return (
-    <svg width={size} height={size} className={'overflow-visible'}>
+    <svg width={size} height={size} overflow={'visible'}>
       <Group left={size >> 1} top={size >> 1}>
         <Pie
           data={data}
@@ -46,8 +46,8 @@ function PieChartInner({
                   dx='-50%'
                   dy='-50%'
                   fontSize={'1rem'}
-                  className={'fill-current font-medium'}
                   textAnchor='middle'
+                  fill={'currentColor'}
                 >
                   {arcs.length} Payee{arcs.length > 1 ? 's' : ''}
                 </text>

@@ -1,7 +1,17 @@
 import { Link } from '@chakra-ui/next-js';
-import { Box, Button, Flex, Stack, useColorModeValue } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import {
+  AbsoluteCenter,
+  Box,
+  Flex,
+  Hide,
+  IconButton,
+  Show,
+  Stack,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { IoMenuSharp } from 'react-icons/io5';
 import { useMount } from 'react-use';
 
 import Chain from '@/layouts/root/Header/Chain';
@@ -28,6 +38,7 @@ export default function Header() {
   const [isReady, setIsReady] = useState(false);
   const linkColor = useColorModeValue('gray.600', 'gray.200');
   const linkHoverColor = useColorModeValue('black', 'white');
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useMount(() => setIsReady(true));
 
@@ -35,32 +46,42 @@ export default function Header() {
     <Flex
       as='header'
       position='sticky'
-      color={useColorModeValue('black', 'white')}
-      h={'72px'}
-      px={'12'}
+      h={{ base: '54px', lg: '72px' }}
+      px={{ base: '3', lg: '12' }}
       zIndex={'50'}
       top={'0'}
       left={'0'}
       w={'100%'}
-      align={'center'}
+      alignItems={'center'}
+      justifyContent={'space-between'}
       gap={'12'}
-      _before={{
-        content: '""',
-        position: 'absolute',
-        inset: 0,
-        zIndex: '-1',
-        bg: useColorModeValue('white', 'black'),
-      }}
+      bg={'bg.1'}
     >
-      <Logo />
+      <IconButton
+        icon={<IoMenuSharp display={'block'} />}
+        fontSize={'2xl'}
+        aria-label={'Open Menu'}
+        display={{ base: 'flex', lg: 'none' }}
+        onClick={isOpen ? onClose : onOpen}
+        variant={'ghost'}
+      />
 
-      <Stack direction={'row'} align={'center'} spacing={3} flex={'1'}>
-        <NextLink href='/splits/new' passHref legacyBehavior>
-          <Button size={'sm'} as={'a'}>
-            Create New
-          </Button>
-        </NextLink>
+      <Show above='lg'>
+        <Logo />
+      </Show>
+      <Hide above='lg'>
+        <AbsoluteCenter>
+          <Logo />
+        </AbsoluteCenter>
+      </Hide>
 
+      <Stack
+        direction={'row'}
+        align={'center'}
+        spacing={3}
+        flex={'1'}
+        display={{ base: 'none', lg: 'flex' }}
+      >
         {NAV_ITEMS.map((navItem) => (
           <Box key={navItem.label}>
             <Link

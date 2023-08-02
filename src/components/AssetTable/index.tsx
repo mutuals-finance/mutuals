@@ -1,11 +1,11 @@
 import { type Balance } from '@ankr.com/ankr.js';
-import { TableProps } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import React, { HTMLProps } from 'react';
+import React from 'react';
 
 import { formatCurrencyAmount, formatUSDPrice } from '@/lib/utils';
 
-import Table from '@/components/Table';
+import Table, { type TableProps } from '@/components/Table';
 
 import AssetCell from './AssetCell';
 import { type AssetTableProps } from './types';
@@ -15,7 +15,7 @@ const columnHelper = createColumnHelper<Balance>();
 export default function AssetTable({
   assets: data = [],
   ...props
-}: AssetTableProps & TableProps) {
+}: AssetTableProps & Omit<TableProps<Balance>, 'data' | 'columns'>) {
   const columns = [
     columnHelper.accessor('contractAddress', {
       header: 'Asset',
@@ -23,12 +23,22 @@ export default function AssetTable({
     }),
     columnHelper.accessor('balance', {
       header: 'Balance',
-      cell: ({ getValue, row }) =>
-        `${formatCurrencyAmount(getValue())} ${row.original.tokenSymbol}`,
+      cell: ({ getValue, row }) => (
+        <>
+          <Text variant={'slashed-zero'} as={'span'}>
+            {formatCurrencyAmount(getValue())}
+          </Text>{' '}
+          {row.original.tokenSymbol}
+        </>
+      ),
     }),
     columnHelper.accessor('balanceUsd', {
       header: 'Value',
-      cell: ({ getValue }) => formatUSDPrice(getValue()),
+      cell: ({ getValue }) => (
+        <Text variant={'slashed-zero'} as={'span'}>
+          {formatUSDPrice(getValue())}
+        </Text>
+      ),
     }),
   ];
 

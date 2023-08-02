@@ -10,12 +10,13 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
-import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
 
 import { getAvailableChains, getLogoByChainId } from '@/lib/utils';
 
 export default function Chain() {
-  const { isLoading, pendingChainId, switchNetwork } = useSwitchNetwork();
+  const { isConnected } = useAccount();
+  const { isLoading, switchNetwork, pendingChainId } = useSwitchNetwork();
   const { chain: currentChain } = useNetwork();
 
   function onSelectChain(chainId: number) {
@@ -28,21 +29,25 @@ export default function Chain() {
     <Menu closeOnSelect={false}>
       {({ isOpen }) => (
         <>
-          <MenuButton
-            as={Button}
-            leftIcon={
-              <Image
-                boxSize='4'
-                src={getLogoByChainId(currentChain?.id)}
-                alt={currentChain?.name || 'UNKNOWN'}
-              />
-            }
-            rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
-            variant={'ghost'}
-            isLoading={isLoading}
-          >
-            {currentChain?.name || 'Unknown'}{' '}
-          </MenuButton>
+          {isConnected && (
+            <MenuButton
+              display={{ base: 'none', lg: 'flex' }}
+              as={Button}
+              leftIcon={
+                <Image
+                  boxSize='4'
+                  src={getLogoByChainId(currentChain?.id)}
+                  alt={currentChain?.name || 'UNKNOWN'}
+                />
+              }
+              rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
+              variant={'ghost'}
+              isLoading={isLoading}
+            >
+              {currentChain?.name || 'Unknown'}{' '}
+            </MenuButton>
+          )}
+
           <MenuList>
             <MenuGroup title='Choose Your Network'>
               {getAvailableChains().map(

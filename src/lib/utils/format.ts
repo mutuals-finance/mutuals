@@ -1,5 +1,7 @@
 // Number formatting follows the standards defined by Uniswap
 
+import { format, fromUnixTime } from 'date-fns';
+
 const FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat('en-US', {
   notation: 'standard',
   maximumFractionDigits: 5,
@@ -342,14 +344,18 @@ export function formatPrice(
  * Very simple date formatter
  * Feel free to add more options / adapt to your needs.
  */
-export function formatDate(date: Date) {
-  return date.toLocaleString('en-US', {
-    day: 'numeric', // numeric, 2-digit
-    year: 'numeric', // numeric, 2-digit
-    month: 'short', // numeric, 2-digit, long, short, narrow
-    hour: 'numeric', // numeric, 2-digit
-    minute: 'numeric', // numeric, 2-digit
-  });
+export function formatTimestamp(
+  timestamp: string | number,
+  formatString = 'LLLL d, yyyy',
+  options?: {
+    locale?: Locale;
+    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    firstWeekContainsDate?: number;
+    useAdditionalWeekYearTokens?: boolean;
+    useAdditionalDayOfYearTokens?: boolean;
+  }
+) {
+  return format(fromUnixTime(Number(timestamp)), formatString, options);
 }
 
 export function formatNumberOrString(price: number | string, type: NumberType) {

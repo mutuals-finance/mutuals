@@ -75,8 +75,12 @@ export function Shares() {
       flex='1'
       bodyProps={{ flex: '1', overflowY: 'auto' }}
     >
-      <Flex gap={'6'}>
-        <AspectRatio flex={'1'} maxWidth={'33%'} ratio={1}>
+      <Flex gap={'6'} direction={{ base: 'column', md: 'row' }}>
+        <AspectRatio
+          flex={'1'}
+          maxWidth={{ base: '100%', md: '33%' }}
+          ratio={1}
+        >
           <PieChart
             data={shares}
             onMouseOut={(_, i) => setInactive(i)}

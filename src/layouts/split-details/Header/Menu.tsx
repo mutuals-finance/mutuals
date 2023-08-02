@@ -11,13 +11,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 
+import { useSplit } from '@/context/SplitContext';
 import routes from '@/templates/split/details';
 
-interface MenuProps {
-  id: string;
-}
+export default function Menu() {
+  const { split } = useSplit();
 
-export default function Menu({ id }: MenuProps) {
   const router = useRouter();
 
   const tabIndex = useMemo(() => {
@@ -45,7 +44,7 @@ export default function Menu({ id }: MenuProps) {
               color={i === tabIndex ? tabColorActive : tabColor}
               as={Link}
               scroll={false}
-              href={`/splits/${'maticmum'}:${id}/${route.slug}`}
+              href={`/splits/${'maticmum'}:${split.id}/${route.slug}`}
               key={route.slug}
             >
               {route.label}

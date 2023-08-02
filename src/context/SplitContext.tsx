@@ -7,6 +7,7 @@ import {
 import { useAccountBalance } from 'ankr-react';
 import { createContext, useContext } from 'react';
 import { useAsync } from 'react-use';
+import useSWR from 'swr';
 import { useAccount } from 'wagmi';
 
 import { ANKR_API_KEY } from '@/lib/constants';
@@ -52,7 +53,6 @@ export const SplitProvider = ({
     blockchain,
     onlyWhitelisted: true,
   });
-
   const { value: transfers } = useTokenTransfers({
     address: [address],
     blockchain,

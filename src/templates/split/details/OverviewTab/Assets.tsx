@@ -10,9 +10,13 @@ export function Assets() {
   return (
     <ContentCard
       title={'Assets'}
-      bodyProps={{ p: '0', maxHeight: 'sm', overflowY: 'auto' }}
+      bodyProps={{ p: '0', display: 'flex', maxHeight: 'sm' }}
     >
-      <AssetTable assets={balance?.assets} size={'sm'} />
+      <AssetTable
+        assets={balance?.assets}
+        size={'sm'}
+        containerProps={{ flex: '1' }}
+      />
     </ContentCard>
   );
 }

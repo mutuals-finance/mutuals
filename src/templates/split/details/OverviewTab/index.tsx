@@ -11,28 +11,15 @@ import { Creator } from '@/templates/split/details/OverviewTab/Creator';
 
 import { Activity } from './Activity';
 import { Shares } from './Shares';
-import { TotalBalance } from './TotalBalance';
 
 export function OverviewTab() {
   return (
     <TabPage>
       <Grid templateColumns='repeat(6, 1fr)' gap={'6'}>
-        <GridItem colSpan={3}>
-          <TotalBalance />
-        </GridItem>
-        <GridItem>
-          <ChainInfo />
-        </GridItem>
-        <GridItem>
-          <Creator />
-        </GridItem>
-        <GridItem>
-          <CreationDate />
-        </GridItem>
-        <GridItem colSpan={3}>
+        <GridItem colSpan={{ base: 6, lg: 3 }}>
           <Assets />
         </GridItem>
-        <GridItem colSpan={3}>
+        <GridItem colSpan={{ base: 6, lg: 3 }}>
           <Shares />
         </GridItem>
         <GridItem colSpan={6}>

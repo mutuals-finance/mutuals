@@ -18,12 +18,13 @@ export default function SplitBlurBg({ src = '', alt = '' }: SplitBlurBgProps) {
       alignItems={'stretch'}
       justifyContent={'stretch'}
       sx={{
-        filter: 'blur(6px)',
+        filter: 'blur(12px)',
       }}
     >
       {!!src && (
         <Image
           fill
+          objectFit={'cover'}
           src={ipfsResolveData(src) || src}
           alt={alt || 'Split Background'}
           className={'w-full flex-1 object-cover'}

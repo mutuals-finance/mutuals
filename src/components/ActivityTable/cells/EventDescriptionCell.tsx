@@ -20,10 +20,7 @@ export function EventDescriptionCell({
   return (
     <Box>
       <Text>{type}</Text>
-      <Date
-        className='text-lighter block leading-snug'
-        timestamp={row.original.timestamp.toString()}
-      />
+      <Date timestamp={row.original.timestamp.toString()} />
     </Box>
   );
 }

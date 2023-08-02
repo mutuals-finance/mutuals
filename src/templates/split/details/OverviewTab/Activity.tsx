@@ -11,12 +11,13 @@ export function Activity() {
   return (
     <ContentCard
       title={'Activity'}
-      bodyProps={{ p: '0', maxHeight: 'sm', overflowY: 'auto' }}
+      bodyProps={{ p: '0', display: 'flex', maxHeight: 'sm' }}
     >
       <ActivityTable
         transfers={transfers?.transfers}
         address={split.address}
         size={'sm'}
+        containerProps={{ flex: '1' }}
       />
     </ContentCard>
   );

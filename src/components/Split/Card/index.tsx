@@ -28,6 +28,7 @@ import {
 import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
 import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
+import { useMetadata } from '@/lib/split/hooks';
 import {
   formatPrefixedAddress,
   getShortNameByChainId,
@@ -44,8 +45,9 @@ interface SplitFragmentCardProps {
 
 export function SplitFragmentCard(props: SplitFragmentCardProps) {
   const split = useFragment(splitBaseFragment, props.fragment);
+  const { data } = useMetadata({ uri: split?.metaDataUri });
 
-  return <SplitCard {...split} />;
+  return <SplitCard {...split} metaData={data} />;
 }
 
 type SplitCardProps = Partial<SplitBaseFragmentFragment>;

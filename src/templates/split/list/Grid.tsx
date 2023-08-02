@@ -4,6 +4,7 @@ import React from 'react';
 import { useAccount } from 'wagmi';
 
 import { SPLITS_BY_PAYEE } from '@/lib/graphql/queries';
+import { useMetadata } from '@/lib/split/hooks';
 
 import { SplitFragmentCard } from '@/components/Split/Card';
 

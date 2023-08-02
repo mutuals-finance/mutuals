@@ -14,12 +14,14 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import {
-  components,
+  chakraComponents,
+  ControlProps,
   GroupBase,
   MultiValueGenericProps,
   OptionProps,
+  ValueContainerProps,
 } from 'chakra-react-select';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useToggle } from 'react-use';
 
@@ -45,13 +47,13 @@ function TokenSelectOption({
   ...props
 }: OptionProps<Balance, true, GroupBase<Balance>>) {
   return (
-    <components.Option {...props}>
+    <chakraComponents.Option {...props}>
       <AssetCardHorizontal
         {...props.data}
         selected={props.isSelected}
         active={props.isSelected}
       />
-    </components.Option>
+    </chakraComponents.Option>
   );
 }
 
@@ -59,11 +61,26 @@ function TokenSelectLabel({
   ...props
 }: MultiValueGenericProps<Balance, true, GroupBase<Balance>>) {
   return (
-    <components.MultiValueLabel {...props}>
+    <chakraComponents.MultiValueLabel {...props}>
       {props.data.tokenSymbol}
-    </components.MultiValueLabel>
+    </chakraComponents.MultiValueLabel>
   );
 }
+
+const TokenSelectValueContainer = ({
+  children,
+  ...props
+}: ValueContainerProps<Balance, true, GroupBase<Balance>>) => {
+  const assets = props.getValue();
+
+  return (
+    <chakraComponents.ValueContainer {...props}>
+      <Box w={'100%'} flex={'1'}>
+        {assets.length || 0}{' '}
+      </Box>
+    </chakraComponents.ValueContainer>
+  );
+};
 
 function WithdrawFormInner() {
   const {
@@ -111,6 +128,8 @@ function WithdrawFormInner() {
             },
           }}
           isMulti={true}
+          selectedOptionStyle='check'
+          hideSelectedOptions={false}
           options={balance?.assets || []}
           getOptionValue={(option) =>
             option.blockchain +
@@ -119,21 +138,12 @@ function WithdrawFormInner() {
             ':' +
             option.tokenName
           }
-          filterOption={({ data }, input) =>
-            (
-              data.tokenSymbol +
-              data.tokenName +
-              data.blockchain +
-              data.tokenType +
-              data.contractAddress +
-              data.tokenDecimals
-            )
-              .toLowerCase()
-              .includes(input.toLowerCase())
-          }
+          isSearchable={false}
+          closeMenuOnSelect={false}
           components={{
             Option: TokenSelectOption,
             MultiValueLabel: TokenSelectLabel,
+            ValueContainer: TokenSelectValueContainer,
           }}
         />
       </FormGroup>

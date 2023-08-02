@@ -1,20 +1,20 @@
 import { extendTheme } from '@chakra-ui/react';
 
-import components from './components';
-import { fonts, fontSizes } from './foundations/typography';
+import colors from '@/theme/foundations/colors';
 
-const styles = {
-  global: () => ({
-    body: {},
-  }),
-};
+import components from './components';
+import styles from './foundations/styles';
+import semanticTokens from './foundations/tokens';
+import { fonts, fontSizes } from './foundations/typography';
 
 export default extendTheme({
   config: {
     initialColorMode: 'system',
     useSystemColorMode: true,
   },
+  colors,
   styles,
+  semanticTokens,
   fontSizes,
   fonts,
   components,

@@ -1,5 +1,6 @@
+import { Balance } from '@ankr.com/ankr.js';
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
-import { Flex, TableProps } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
 
@@ -9,7 +10,7 @@ import {
   EventDescriptionCell,
   EventIconCell,
 } from '@/components/ActivityTable/cells/';
-import Table from '@/components/Table';
+import Table, { type TableProps } from '@/components/Table';
 
 import { ActivityTableProps } from './types';
 
@@ -19,13 +20,13 @@ export default function ActivityTable({
   transfers: data = [],
   address,
   ...props
-}: ActivityTableProps & TableProps) {
+}: ActivityTableProps & Omit<TableProps<Balance>, 'data' | 'columns'>) {
   const columns = [
     columnHelper.display({
       id: 'eventIcon',
       header: 'Event',
       cell: (context) => (
-        <Flex alignItems={'center'} gap={'6'}>
+        <Flex alignItems={'center'} gap={'3'}>
           <EventIconCell {...context} address={address} />
           <EventDescriptionCell {...context} address={address} />
         </Flex>

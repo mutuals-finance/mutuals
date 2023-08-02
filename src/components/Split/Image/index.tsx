@@ -9,9 +9,11 @@ export function SplitImage({
   src = '',
   alt = 'Unknown Split',
   boxSize = '3rem',
+  p = '1',
   fill = true,
   objectFit = 'cover',
   borderRadius = 12,
+  bg,
   ...props
 }: ImageProps) {
   return (
@@ -20,11 +22,13 @@ export function SplitImage({
       borderRadius={borderRadius}
       boxSize={boxSize}
       borderWidth={'1px'}
+      bg={useColorModeValue(bg || 'whiteAlpha.600', bg || 'blackAlpha.600')}
     >
       {!src || src === '' ? (
         <IoImage />
       ) : (
         <Image
+          p={p}
           src={ipfsResolveData(src)}
           alt={alt || 'Unknown Split'}
           fill={fill}

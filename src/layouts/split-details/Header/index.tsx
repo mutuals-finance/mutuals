@@ -19,6 +19,8 @@ import { SplitImage } from '@/components/Split/Image';
 
 import { useSplit } from '@/context/SplitContext';
 import Menu from '@/layouts/split-details/Header/Menu';
+import StatsLarge from '@/layouts/split-details/Header/StatsLarge';
+import StatsSmall from '@/layouts/split-details/Header/StatsSmall';
 
 export default function Header() {
   const { split } = useSplit();
@@ -30,14 +32,14 @@ export default function Header() {
       <Container maxW='container.xl' position={'relative'}>
         <VStack
           pt={'12'}
-          my={'12'}
+          mt={'12'}
           spacing={'6'}
           justifyContent={'flex-end'}
           alignItems={'stretch'}
         >
           <ButtonGroup gap='3' position={'absolute'} top={'0'} right={'0'}>
             <Button variant={'outline'} rightIcon={<IoCopyOutline />}>
-              {shortenAddress(split.address)}
+              {shortenAddress(split.id)}
             </Button>
             <Button variant={'outline'} rightIcon={<IoShareOutline />}>
               Share
@@ -51,12 +53,20 @@ export default function Header() {
             </Heading>
           </Flex>
 
-          <Box maxW={'md'}>
-            <Text noOfLines={2}>{split.metaData.description}</Text>
+          <Box>
+            <StatsSmall />
+
+            <Box maxW={'2xl'} py={'3'}>
+              <Text noOfLines={2}>{split.metaData.description}</Text>
+            </Box>
           </Box>
 
           <Box>
-            <Menu id={split.id} />
+            <StatsLarge />
+          </Box>
+
+          <Box>
+            <Menu />
           </Box>
         </VStack>
       </Container>
