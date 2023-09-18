@@ -12,5 +12,5 @@ export function ipfsResolveData(data?: ImageProps['src'] | null) {
 }
 
 export function ipfsUrlFromUri(uri: string) {
-  return uri.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
+  return uri.replace('ipfs://', 'https://cf-ipfs.com/ipfs/');
 }

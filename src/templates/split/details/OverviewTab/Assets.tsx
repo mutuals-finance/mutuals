@@ -13,7 +13,7 @@ export function Assets() {
       bodyProps={{ p: '0', display: 'flex', maxHeight: 'sm' }}
     >
       <AssetTable
-        assets={balance?.assets}
+        assets={balance?.assets.slice(0, 6)}
         size={'sm'}
         containerProps={{ flex: '1' }}
       />

@@ -2,12 +2,16 @@ const semanticTokens = {
   colors: {
     bg: {
       1: {
-        default: 'neutral.50',
-        _dark: 'neutral.900',
+        default: 'white',
+        _dark: 'gray.900',
       },
       2: {
-        default: 'neutral.100',
-        _dark: 'neutral.800',
+        default: 'gray.50',
+        _dark: 'gray.700',
+      },
+      3: {
+        default: 'gray.100',
+        _dark: 'gray.800',
       },
     },
   },

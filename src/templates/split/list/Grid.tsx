@@ -11,16 +11,20 @@ import { SplitFragmentCard } from '@/components/Split/Card';
 export function SplitListGrid() {
   const { address, isConnected } = useAccount();
 
-  const { data } = useQuery(SPLITS_BY_PAYEE, {
+  const { data, loading } = useQuery(SPLITS_BY_PAYEE, {
     variables: { payee: address },
     skip: !isConnected,
   });
 
   return (
     <SimpleGrid columns={3} spacing={6}>
-      {data?.splits.map((fragment, index) => {
-        return <SplitFragmentCard fragment={fragment} key={index} />;
-      })}
+      {loading ? (
+        <>Loading</>
+      ) : (
+        data?.splits.map((fragment, index) => {
+          return <SplitFragmentCard fragment={fragment} key={index} />;
+        })
+      )}
     </SimpleGrid>
   );
 }

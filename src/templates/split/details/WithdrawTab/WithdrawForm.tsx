@@ -28,6 +28,7 @@ import { useToggle } from 'react-use';
 import { formatCurrency, formatCurrencyAmount } from '@/lib/utils';
 import useWithdrawSplit from '@/hooks/useWithdrawSplit';
 
+import ContentCard from '@/components/ContentCard';
 import Form from '@/components/Form';
 import FormGroup from '@/components/Form/FormGroup';
 import InputListbox from '@/components/Form/InputListbox';
@@ -214,11 +215,9 @@ export function WithdrawForm() {
 
   return (
     <Form<WithdrawData> values={{ assets, distribute: false }}>
-      <Card maxW='xl' variant='outline'>
-        <CardBody>
-          <WithdrawFormInner />
-        </CardBody>
-      </Card>
+      <ContentCard maxW='xl'>
+        <WithdrawFormInner />
+      </ContentCard>
     </Form>
   );
 }

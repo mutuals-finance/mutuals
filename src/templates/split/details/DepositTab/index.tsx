@@ -27,6 +27,7 @@ import {
   IoOpenOutline,
 } from 'react-icons/io5';
 
+import ContentCard from '@/components/ContentCard';
 import QRCode from '@/components/QRCode';
 import TabPage from '@/components/TabPage';
 
@@ -40,7 +41,7 @@ export function DepositTab() {
     <TabPage
       title={'Deposit'}
       as={'section'}
-      contentProps={{ maxWidth: '4xl' }}
+      contentProps={{ maxWidth: '2xl' }}
     >
       <>
         <Alert status='warning'>
@@ -59,53 +60,47 @@ export function DepositTab() {
 
         <Text>Use the address below to receive funds to your split.</Text>
 
-        <Card maxW='md' variant='outline'>
-          <CardHeader>
-            <Flex gap='3' alignItems={'center'}>
-              <Flex flex='1'>
-                <Tag size={'sm'}>
-                  <TagLeftIcon as={IoGlobeOutline} />
-                  <TagLabel>Ethereum Chain</TagLabel>
-                </Tag>
-              </Flex>
-
-              <IconButton
-                variant='ghost'
-                colorScheme='gray'
-                aria-label='See menu'
-                icon={<IoEllipsisHorizontal />}
-              />
+        <ContentCard maxW={'md'}>
+          <Flex gap='3' alignItems={'center'}>
+            <Flex flex='1'>
+              <Tag size={'sm'}>
+                <TagLeftIcon as={IoGlobeOutline} />
+                <TagLabel>Ethereum Chain</TagLabel>
+              </Tag>
             </Flex>
-          </CardHeader>
 
-          <CardBody>
-            <Center>
-              <div className={'rounded-default overflow-hidden'}>
-                <QRCode text={address} />
-              </div>
-            </Center>
-          </CardBody>
+            <IconButton
+              variant='ghost'
+              colorScheme='gray'
+              aria-label='See menu'
+              icon={<IoEllipsisHorizontal />}
+            />
+          </Flex>
 
-          <Divider />
+          <Center my={'6'}>
+            <div className={'rounded-default overflow-hidden'}>
+              <QRCode text={address} />
+            </div>
+          </Center>
 
-          <CardFooter>
-            <Stack>
-              <Text>Split address</Text>
-              <ButtonGroup variant='outline' size='sm' isAttached>
-                <Button
-                  rightIcon={<IoCopyOutline />}
-                  aria-label='Copy split address to clipboard'
-                >
-                  {address}
-                </Button>
-                <IconButton
-                  aria-label='View on Etherscan'
-                  icon={<IoOpenOutline />}
-                />
-              </ButtonGroup>
-            </Stack>
-          </CardFooter>
-        </Card>
+          <Divider my={'6'} />
+
+          <Stack>
+            <Text>Split address</Text>
+            <ButtonGroup variant='outline' size='sm' isAttached>
+              <Button
+                rightIcon={<IoCopyOutline />}
+                aria-label='Copy split address to clipboard'
+              >
+                {address}
+              </Button>
+              <IconButton
+                aria-label='View on Etherscan'
+                icon={<IoOpenOutline />}
+              />
+            </ButtonGroup>
+          </Stack>
+        </ContentCard>
       </>
     </TabPage>
   );

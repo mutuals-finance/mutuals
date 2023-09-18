@@ -16,7 +16,6 @@ const SplitsPage: NextPageWithLayout = function () {
     <>
       <Seo />
       <SplitListWrapper>
-        <SplitListHeader />
         <SplitListSearchAndCreate />
         <SplitListGrid />
       </SplitListWrapper>

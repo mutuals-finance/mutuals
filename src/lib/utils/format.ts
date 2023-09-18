@@ -416,3 +416,13 @@ export function formatRoundNumber(
   const pow = Math.pow(10, decimal);
   return round((x + Number.EPSILON) * pow) / pow;
 }
+
+export function formatPercentage(
+  value: string | undefined,
+  type: NumberType = NumberType.TokenNonTx,
+  placeholder?: string
+) {
+  return (
+    formatNumber(!!value ? parseFloat(value) : 0.0, type, placeholder) + ' %'
+  );
+}

@@ -1,7 +1,16 @@
-import { Grid, GridItem, Text } from '@chakra-ui/react';
+import { Icon } from '@chakra-ui/icon';
+import { Grid, GridItem, Text, useColorModeValue } from '@chakra-ui/react';
+import { Stat, StatLabel, StatNumber } from '@chakra-ui/stat';
 import React from 'react';
+import {
+  IoCalendarOutline,
+  IoInformation,
+  IoInformationCircle,
+  IoInformationCircleOutline,
+} from 'react-icons/io5';
 
 import ContentCard from '@/components/ContentCard';
+import Date from '@/components/Date';
 import TabPage from '@/components/TabPage';
 
 import { useSplit } from '@/context/SplitContext';
@@ -16,8 +25,18 @@ export function AboutTab() {
     <TabPage title={'About'} as={'section'}>
       <Grid templateColumns={'repeat(6, 1fr)'} gap={'6'}>
         <GridItem colSpan={3}>
-          <ContentCard variant={'unstyled'}>
-            <Text>{split.metaData.description}</Text>
+          <ContentCard>
+            <Icon
+              as={IoInformationCircleOutline}
+              fontSize={'2xl'}
+              mb={'auto'}
+              color={useColorModeValue('gray.500', 'gray.400')}
+            />
+
+            <Stat mt={'3'}>
+              <StatLabel>Description</StatLabel>
+              <Text>{split.metaData.description}</Text>
+            </Stat>
           </ContentCard>
         </GridItem>
         <GridItem>

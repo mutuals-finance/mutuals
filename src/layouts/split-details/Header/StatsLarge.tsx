@@ -1,4 +1,4 @@
-import { Box, HStack, SimpleGrid } from '@chakra-ui/react';
+import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
 import { Stat, StatLabel, StatNumber } from '@chakra-ui/stat';
 import React from 'react';
 
@@ -14,7 +14,11 @@ export default function StatsLarge() {
   const { balance, split } = useSplit();
 
   return (
-    <HStack spacing={'12'}>
+    <SimpleGrid
+      minChildWidth={{ base: '120px', lg: 'unset' }}
+      spacing={{ base: '3', lg: '12' }}
+      display={{ base: 'grid', lg: 'flex' }}
+    >
       <Box>
         <Stat>
           <StatNumber>
@@ -32,10 +36,14 @@ export default function StatsLarge() {
       </Box>
       <Box>
         <Stat>
-          <StatNumber>{shortenAddress(split.address)}</StatNumber>
+          <StatNumber>
+            <Text variant={'slashed-zero'}>
+              {shortenAddress(split.address)}
+            </Text>{' '}
+          </StatNumber>
           <StatLabel>Creator</StatLabel>
         </Stat>
       </Box>
-    </HStack>
+    </SimpleGrid>
   );
 }

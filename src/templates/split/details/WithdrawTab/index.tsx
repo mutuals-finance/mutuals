@@ -10,7 +10,7 @@ export function WithdrawTab() {
     <TabPage
       title={'Withdraw'}
       as={'section'}
-      contentProps={{ maxWidth: '4xl' }}
+      contentProps={{ maxWidth: 'xl' }}
     >
       <>
         <Text>

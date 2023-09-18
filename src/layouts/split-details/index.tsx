@@ -15,7 +15,7 @@ export default function SplitDetailsLayout({
   return (
     <SplitProvider split={split}>
       <Header />
-      <Box pt={'6'}>{children}</Box>
+      <Box py={'12'}>{children}</Box>
     </SplitProvider>
   );
 }

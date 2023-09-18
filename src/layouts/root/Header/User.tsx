@@ -9,7 +9,7 @@ import {
   Show,
   useColorMode,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   IoChevronDown,
   IoChevronUp,
@@ -32,11 +32,10 @@ export default function User() {
   const { address, isConnected, isConnecting } = useAccount();
   const { disconnect } = useDisconnect();
   const [walletModalOpen, setWalletModalOpen] = useState(false);
-  const [displayName, setDisplayName] = useState<string>('');
-
-  useEffect(() => {
-    setDisplayName(isConnected ? shortenAddress(address) : 'Login');
-  }, [isConnected, address]);
+  const displayName = useMemo(
+    () => (isConnected ? shortenAddress(address, 3) : 'Not Connected'),
+    [isConnected, address]
+  );
 
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -64,7 +63,6 @@ export default function User() {
                 as={Button}
                 leftIcon={avatarIcon()}
                 rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
-                variant={'outline'}
                 isLoading={isConnecting}
               >
                 {displayName}
@@ -76,8 +74,7 @@ export default function User() {
                 as={IconButton}
                 aria-label={'Show user menu'}
                 icon={avatarIcon('sm')}
-                borderRadius={'full'}
-                variant={'outline'}
+                rounded={'full'}
                 isLoading={isConnecting}
               >
                 {displayName}

@@ -10,7 +10,7 @@ const routes: SplitTemplateTab[] = [
   { label: 'Overview', slug: 'overview', component: OverviewTab },
   { label: 'Withdraw', slug: 'withdraw', component: WithdrawTab },
   { label: 'Deposit', slug: 'deposit', component: DepositTab },
-  { label: 'About', slug: 'about', component: AboutTab },
+  // { label: 'About', slug: 'about', component: AboutTab },
   { label: 'Settings', slug: 'settings', component: SettingsTab },
 ];
 

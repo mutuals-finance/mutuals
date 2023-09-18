@@ -1,8 +1,7 @@
-import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
-import { Stat, StatLabel, StatNumber } from '@chakra-ui/stat';
+import { Box, HStack, Text } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
 
-import { formatDate, formatTimestamp, formatUSDPrice } from '@/lib/utils';
+import { formatTimestamp } from '@/lib/utils';
 
 import { useSplit } from '@/context/SplitContext';
 
@@ -28,7 +27,11 @@ export default function StatsSmall() {
   );
 
   return (
-    <HStack divider={<Box borderLeft={'none'}>&middot;</Box>} spacing={'2'}>
+    <HStack
+      wrap={'wrap'}
+      divider={<Box borderLeft={'none'}>&middot;</Box>}
+      spacing={'2'}
+    >
       {stats.map(({ label, value }) => (
         <Box key={label}>
           <Text display={'inline'}>{label}</Text> <Text as='b'>{value}</Text>
