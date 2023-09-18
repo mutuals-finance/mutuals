@@ -2,6 +2,7 @@ import {
   Table as ChakraTable,
   TableContainer as ChakraTableContainer,
   TableContainerProps as ChakraTableContainerProps,
+  TableHeadProps as ChakraTableHeadProps,
   TableProps as ChakraTableProps,
   Tbody,
   Thead,
@@ -18,12 +19,16 @@ export interface TableProps<TData extends RowData>
   extends Pick<TableOptions<TData>, 'data' | 'columns'>,
     Omit<ChakraTableProps, 'data'> {
   containerProps?: ChakraTableContainerProps;
+  headProps?: ChakraTableHeadProps;
+  headerHidden?: boolean;
 }
 
 export default function Table<TData extends RowData>({
   data,
   columns,
   containerProps,
+  headProps,
+  headerHidden = false,
   ...props
 }: TableProps<TData>) {
   const table = useReactTable<TData>({
@@ -36,17 +41,20 @@ export default function Table<TData extends RowData>({
   return (
     <ChakraTableContainer overflowY={'auto'} {...containerProps}>
       <ChakraTable {...props}>
-        <Thead
-          position={'sticky'}
-          top={'0'}
-          left={'0'}
-          bg={tHeadBg}
-          zIndex={'1'}
-        >
-          {table?.getHeaderGroups()?.map((headerGroup) => (
-            <HeaderRow<TData> {...headerGroup} key={headerGroup.id} />
-          ))}
-        </Thead>
+        {!headerHidden && (
+          <Thead
+            position={'sticky'}
+            top={'0'}
+            left={'0'}
+            bg={'bg.3'}
+            zIndex={'1'}
+            {...headProps}
+          >
+            {table?.getHeaderGroups()?.map((headerGroup) => (
+              <HeaderRow<TData> {...headerGroup} key={headerGroup.id} />
+            ))}
+          </Thead>
+        )}
         <Tbody>
           {table?.getRowModel()?.rows?.map((row) => (
             <BodyRow<TData> {...row} key={row.id} />

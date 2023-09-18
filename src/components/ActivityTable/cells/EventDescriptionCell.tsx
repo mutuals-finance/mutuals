@@ -1,5 +1,5 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, useColorModeValue } from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 
@@ -19,8 +19,11 @@ export function EventDescriptionCell({
 
   return (
     <Box>
-      <Text>{type}</Text>
-      <Date timestamp={row.original.timestamp.toString()} />
+      <Text lineHeight={'1.4'}>{type}</Text>
+      <Date
+        timestamp={row.original.timestamp.toString()}
+        color={useColorModeValue('gray.300', 'gray.400')}
+      />
     </Box>
   );
 }

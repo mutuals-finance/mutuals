@@ -1,6 +1,8 @@
 import { Balance } from '@ankr.com/ankr.js/dist/types';
-import { Box, BoxProps, Text } from '@chakra-ui/react';
+import { Box, BoxProps, Text, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
+
+import Date from '@/components/Date';
 
 interface TokenLabelProps
   extends BoxProps,
@@ -13,10 +15,8 @@ export default function TokenLabel({
 }: TokenLabelProps) {
   return (
     <Box fontSize={'sm'} {...props}>
-      <Text display={'block'} as={'span'}>
-        {tokenName}
-      </Text>
-      <Text display={'block'} as={'span'}>
+      <Text lineHeight={'1.4'}>{tokenName}</Text>
+      <Text color={useColorModeValue('gray.300', 'gray.400')}>
         {tokenSymbol}
       </Text>
     </Box>

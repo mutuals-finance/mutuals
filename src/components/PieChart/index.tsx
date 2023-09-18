@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import { Group } from '@visx/group';
 import { ParentSize } from '@visx/responsive';
 import { Pie } from '@visx/shape';
@@ -28,7 +29,7 @@ function PieChartInner({
   );
 
   return (
-    <svg width={size} height={size} overflow={'visible'}>
+    <svg width={size} height={size}>
       <Group left={size >> 1} top={size >> 1}>
         <Pie
           data={data}
@@ -77,7 +78,7 @@ function PieChartInner({
 
 export default function PieChart({ data, ...props }: PieChartProps) {
   return (
-    <ParentSize className={'w-full'}>
+    <ParentSize>
       {({ width }) =>
         width > 0 && <PieChartInner size={width} data={data} {...props} />
       }

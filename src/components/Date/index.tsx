@@ -1,7 +1,7 @@
+import { Text, TextProps } from '@chakra-ui/react';
 import { format, fromUnixTime } from 'date-fns';
-import { HTMLAttributes } from 'react';
 
-interface DateProps extends HTMLAttributes<HTMLTimeElement> {
+interface DateProps extends TextProps {
   timestamp: string;
   formatString?: string;
   options?: {
@@ -20,8 +20,8 @@ export default function Date({
 }: DateProps) {
   const date = fromUnixTime(Number(timestamp));
   return (
-    <time dateTime={date.toJSON()} {...props}>
+    <Text as={'time'} dateTime={date.toJSON()} {...props}>
       {format(date, formatString, options)}
-    </time>
+    </Text>
   );
 }

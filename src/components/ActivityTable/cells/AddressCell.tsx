@@ -1,5 +1,6 @@
 import { type TokenTransfer } from '@ankr.com/ankr.js/dist/types';
 import { Link } from '@chakra-ui/next-js';
+import { Text } from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 
@@ -15,11 +16,11 @@ export function AddressCell({ getValue, address: parent }: AddressCellProps) {
   const { href, shortAddress } = useExplorerLink({ address });
   return !equals ? (
     <Link href={href} target={'_blank'} rel={'noopener noreferrer'}>
-      {shortAddress}
+      <Text variant={'slashed-zero'}>{shortAddress}</Text>
     </Link>
   ) : (
     <Link href={href} target={'_blank'} rel={'noopener noreferrer'}>
-      {shortAddress}
+      <Text variant={'slashed-zero'}>{shortAddress}</Text>
     </Link>
   );
 }

@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/icon';
-import { Flex, FlexProps } from '@chakra-ui/react';
+import { Flex, FlexProps, useColorModeValue } from '@chakra-ui/react';
 import Image, { ImageProps } from 'next/image';
 import React from 'react';
 import { IoHelp } from 'react-icons/io5';
@@ -16,6 +16,7 @@ export default function TokenImage({ src, alt, ...props }: TokenImageProps) {
       borderRadius={'md'}
       w={'8'}
       h={'8'}
+      bg={'bg.3'}
       {...props}
     >
       <Flex

@@ -21,15 +21,21 @@ export default function ContentCard({
   children,
   variant = 'outline',
   bodyProps,
+  rounded = 'md',
   ...props
 }: React.PropsWithChildren<BoxProps>) {
-  const headerBg = useColorModeValue('gray.100', 'gray.900');
   return (
-    <Card as={'article'} variant={variant} {...props}>
+    <Card
+      as={'article'}
+      variant={variant}
+      rounded={rounded}
+      overflow={'hidden'}
+      {...props}
+    >
       {(!!title || !!titleAfter) && (
-        <CardHeader bg={headerBg}>
+        <CardHeader bg={'bg.3'}>
           {!!title && (
-            <Heading as='h2' size='md' fontWeight={'500'}>
+            <Heading as='h2' size='md' fontWeight={'600'}>
               {title}
             </Heading>
           )}
@@ -37,7 +43,9 @@ export default function ContentCard({
         </CardHeader>
       )}
 
-      <CardBody {...bodyProps}>{children}</CardBody>
+      <CardBody bg={'bg.2'} {...bodyProps}>
+        {children}
+      </CardBody>
     </Card>
   );
 }

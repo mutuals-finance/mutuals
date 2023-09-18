@@ -41,9 +41,6 @@ export default function MotionPieArch({
 
   return (
     <motion.path
-      cursor={'pointer'}
-      strokeWidth={isActive ? '2%' : '0'}
-      stroke={fill}
       onMouseMove={handleOnHover}
       onMouseOut={onMouseOut}
       d={path || ''}

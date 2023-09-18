@@ -24,8 +24,9 @@ export function AmountCell({ address = '', row, getValue }: AmountCellProps) {
   return (
     <>
       <Text
+        variant={'slashed-zero'}
         color={useColorModeValue(
-          isDeposit ? 'green.600' : 'red.600',
+          isDeposit ? 'green.700' : 'red.700',
           isDeposit ? 'green.400' : 'red.400'
         )}
       >
