@@ -24,6 +24,7 @@ module.exports = {
       'polygonscan.com',
       'afksystem.finance',
       'ipfs.io',
+      'cf-ipfs.com',
       'oropocket.com',
       'matic.ripae.finance',
       'bookie.farm',
