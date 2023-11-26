@@ -18,7 +18,7 @@ export default function TabPage({
   children,
   title,
   contentProps,
-  maxW = 'container.xl',
+  maxW = 'container.lg',
   ...props
 }: TabPageProps) {
   return (

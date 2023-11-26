@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useAccount } from 'wagmi';
 
@@ -17,9 +17,12 @@ export function SplitListGrid() {
   });
 
   return (
-    <SimpleGrid columns={3} spacing={6}>
+    <SimpleGrid
+      templateColumns={'repeat(auto-fill, minmax(20' + 'rem, 1fr))'}
+      spacing={6}
+    >
       {loading ? (
-        <>Loading</>
+        <Text>Loading</Text>
       ) : (
         data?.splits.map((fragment, index) => {
           return <SplitFragmentCard fragment={fragment} key={index} />;

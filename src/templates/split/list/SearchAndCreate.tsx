@@ -15,7 +15,7 @@ import Input from '@/components/Form/Input';
 
 export function SplitListSearchAndCreate() {
   return (
-    <HStack mb={'12'} spacing={'6'} alignItems={'center'}>
+    <HStack mb={'6'} spacing={'6'} alignItems={'center'}>
       <Form flex={'1'}>
         <InputGroup>
           <InputLeftElement pointerEvents='none'>
@@ -27,9 +27,6 @@ export function SplitListSearchAndCreate() {
           <Input hideWrapper={true} placeholder='Search...' pl={'10'} />
         </InputGroup>
       </Form>
-      <Link href='/splits/new' passHref legacyBehavior>
-        <Button as={'a'}>Create New Split</Button>
-      </Link>
     </HStack>
   );
 }

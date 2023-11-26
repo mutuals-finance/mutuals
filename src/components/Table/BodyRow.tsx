@@ -9,9 +9,9 @@ export default function BodyRow<TData extends RowData>(
   row: BodyRowProps<TData>
 ) {
   return (
-    <Tr _hover={{ bg: 'bg.3' }} bg={'transparent'}>
+    <Tr>
       {row.getVisibleCells().map((cell) => (
-        <Td py={'3'} key={cell.id}>
+        <Td py={'2'} key={cell.id}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </Td>
       ))}

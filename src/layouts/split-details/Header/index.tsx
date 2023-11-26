@@ -5,6 +5,7 @@ import {
   ButtonGroupProps,
   Container,
   Heading,
+  HStack,
   IconButton,
   Menu,
   MenuButton,
@@ -15,11 +16,13 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
+import { BsLayoutSidebarReverse } from 'react-icons/bs';
 import {
   IoAlertCircleOutline,
   IoCopy,
   IoCopyOutline,
   IoEllipsisHorizontal,
+  IoEllipsisVertical,
   IoOpenOutline,
   IoSettingsOutline,
   IoShareOutline,
@@ -27,22 +30,16 @@ import {
 
 import { ipfsResolveData, shortenAddress } from '@/lib/utils';
 
-import SplitBlurBg from '@/components/Split/BlurBg';
 import { SplitImage } from '@/components/Split/Image';
 
 import { useSplit } from '@/context/SplitContext';
-import TabMenu from '@/layouts/split-details/Header/Menu';
-import StatsLarge from '@/layouts/split-details/Header/StatsLarge';
-import StatsSmall from '@/layouts/split-details/Header/StatsSmall';
+import SplitHandlers from '@/templates/split/details/SplitHandlers';
 
 function SplitHeaderButtonGroup(props: ButtonGroupProps) {
   const { split } = useSplit();
 
   return (
-    <ButtonGroup gap={1} {...props}>
-      <Button rightIcon={<IoCopy />}>
-        <Text variant={'slashed-zero'}>{shortenAddress(split.id)}</Text>
-      </Button>
+    <ButtonGroup variant={'outline'} size={'sm'} {...props}>
       <Menu>
         <MenuButton
           as={IconButton}
@@ -51,7 +48,9 @@ function SplitHeaderButtonGroup(props: ButtonGroupProps) {
         />
         <MenuList>
           <MenuItem icon={<IoShareOutline />}>Share</MenuItem>
-          <MenuItem icon={<IoCopyOutline />}>Copy Address</MenuItem>
+          <MenuItem icon={<IoCopyOutline />}>
+            Copy {shortenAddress(split.id)}
+          </MenuItem>
           <MenuItem icon={<IoOpenOutline />}>Etherscan</MenuItem>
           <MenuItem icon={<IoSettingsOutline />}>Settings</MenuItem>
           <MenuItem icon={<IoAlertCircleOutline />}>Report</MenuItem>
@@ -60,70 +59,56 @@ function SplitHeaderButtonGroup(props: ButtonGroupProps) {
     </ButtonGroup>
   );
 }
-export default function Header() {
+export default function Header({
+  toggleSidebar,
+}: {
+  toggleSidebar: () => void;
+}) {
   const { split } = useSplit();
   const image = ipfsResolveData(split.metaData.image);
   const name = split.metaData.name || '';
 
   return (
-    <Box as={'header'} position={'relative'} width={'100%'} overflow={'hidden'}>
-      <Container maxW='container.xl' position={'relative'}>
-        <VStack
-          pt={'12'}
-          mt={{ lg: '12' }}
-          spacing={'6'}
-          justifyContent={'flex-end'}
-          alignItems={'stretch'}
-        >
-          <Stack
-            direction={{ base: 'column', lg: 'row' }}
-            alignItems={{ lg: 'center' }}
-            spacing={{ base: '6', lg: '3' }}
+    <>
+      <Box as={'header'} pt={'12'} my={'12'} w={'full'}>
+        <Container maxW='container.lg'>
+          <VStack
+            spacing={'6'}
+            justifyContent={'flex-end'}
+            alignItems={'stretch'}
+            w={'full'}
           >
             <Stack
-              justify='space-between'
-              spacing={{ base: '3', lg: '0' }}
-              direction={'row'}
+              direction={{ base: 'column', lg: 'row' }}
+              alignItems={{ lg: 'center' }}
+              spacing={{ base: '6', lg: '3' }}
+              w={'full'}
             >
-              <SplitImage src={image} alt={name} boxSize='6rem' flex={'1'} />
-              <SplitHeaderButtonGroup
+              <HStack flex={'1'} w={'full'} spacing='3' alignItems={'center'}>
+                <SplitImage src={image} alt={name} boxSize='3rem' />
+                <Heading as={'h1'} fontWeight={'700'} size={'xl'}>
+                  {name}
+                </Heading>
+                <SplitHeaderButtonGroup />
+              </HStack>
+              <IconButton
+                size={'sm'}
                 flexShrink={'0'}
-                position={{ lg: 'absolute' }}
-                top={{ lg: '0' }}
-                right={{ lg: '0' }}
+                aria-label='Toggle Sidebar'
+                icon={<BsLayoutSidebarReverse />}
+                onClick={() => toggleSidebar()}
               />
             </Stack>
 
-            <Heading
-              as={'h1'}
-              fontWeight={'600'}
-              size={{ base: '2xl', lg: 'xl' }}
-            >
-              {name}
-            </Heading>
-          </Stack>
-
-          <Box>
-            <StatsSmall />
-          </Box>
-
-          <Box maxW={'2xl'}>
-            <Text noOfLines={{ base: 3, lg: 2 }}>
-              {split.metaData.description}
-            </Text>
-          </Box>
-
-          <Box>
-            <StatsLarge />
-          </Box>
-
-          <Box>
-            <TabMenu />
-          </Box>
-        </VStack>
-      </Container>
-
-      <SplitBlurBg src={image} alt={name} />
-    </Box>
+            <Box maxW={'xl'}>
+              <Text noOfLines={{ base: 3, lg: 3 }}>
+                {split.metaData.description}
+              </Text>
+            </Box>
+          </VStack>
+        </Container>
+      </Box>
+      <SplitHandlers />
+    </>
   );
 }

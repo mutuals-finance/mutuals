@@ -25,7 +25,7 @@ import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useToggle } from 'react-use';
 
-import { formatCurrency, formatCurrencyAmount } from '@/lib/utils';
+import { formatCurrency, formatCurrencyAmount, formatPrice } from '@/lib/utils';
 import useWithdrawSplit from '@/hooks/useWithdrawSplit';
 
 import ContentCard from '@/components/ContentCard';
@@ -35,7 +35,7 @@ import InputListbox from '@/components/Form/InputListbox';
 import InputSwitch from '@/components/Form/InputSwitch';
 
 import { useSplit } from '@/context/SplitContext';
-import WithdrawModal from '@/templates/split/details/WithdrawTab/WithdrawModal';
+import WithdrawModal from '@/templates/split/details/OverviewTab/WithdrawTab/WithdrawModal';
 
 import AssetCardHorizontal from './AssetCardHorizontal';
 
@@ -159,24 +159,26 @@ function WithdrawFormInner() {
         />
       </FormGroup>
 
-      <TableContainer>
+      <TableContainer overflow={'hidden'}>
         <Table size='sm'>
           <Tbody>
             {Object.keys(summary).map((name) => (
               <Tr key={name}>
-                <Td>{name}</Td>
-                <Td isNumeric>{summary[name]}</Td>
+                <Td px={'0'}>{name}</Td>
+                <Td isNumeric px={'0'}>
+                  {summary[name]}
+                </Td>
               </Tr>
             ))}
           </Tbody>
           <Tfoot>
             <Tr>
-              <Td>
+              <Td px={'0'}>
                 <Text as='b'>You Receive</Text>
               </Td>
-              <Td isNumeric>
+              <Td px={'0'} isNumeric>
                 <Text as='b'>
-                  {formatCurrency(userWithdrawal)} (
+                  {formatPrice(userWithdrawal.toString())} (
                   {formatCurrencyAmount(total.assetCount.toString())} tokens)
                 </Text>
               </Td>
@@ -187,9 +189,10 @@ function WithdrawFormInner() {
 
       <Box>
         <Button
-          colorScheme='blue'
+          colorScheme='primary'
           disabled={!isValid || tx.isError || tx.isLoading}
           type={'button'}
+          w={'full'}
           onClick={() => {
             tx.write?.();
             setIsModalOpen(true);
@@ -215,9 +218,7 @@ export function WithdrawForm() {
 
   return (
     <Form<WithdrawData> values={{ assets, distribute: false }}>
-      <ContentCard maxW='xl'>
-        <WithdrawFormInner />
-      </ContentCard>
+      <WithdrawFormInner />
     </Form>
   );
 }

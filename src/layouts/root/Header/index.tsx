@@ -57,7 +57,7 @@ export default function Header() {
     <Stack
       as='header'
       position='sticky'
-      h={{ base: '72px', lg: '72px' }}
+      h={{ base: '4rem', lg: '4rem' }}
       px={{ base: '6', lg: '12' }}
       py={'6'}
       zIndex={'50'}
@@ -67,55 +67,12 @@ export default function Header() {
       align={'center'}
       justify={'space-between'}
       spacing={'12'}
-      bg={'bg.1'}
+      borderBottom='1px'
+      borderColor={useColorModeValue('gray.200', 'gray.600')}
+      bg={useColorModeValue('white', 'gray.900')}
       direction={'row'}
     >
-      <IconButton
-        icon={<IoMenuSharp display={'block'} />}
-        fontSize={'2xl'}
-        aria-label={'Open Menu'}
-        display={{ base: 'flex', lg: 'none' }}
-        onClick={isOpen ? onClose : onOpen}
-        variant={'ghost'}
-      />
-
-      <Show above='lg'>
-        <Logo w={'32'} />
-        <Divider orientation='vertical' />
-      </Show>
-
-      <Hide above='lg'>
-        <AbsoluteCenter>
-          <Logo w={'24'} />
-        </AbsoluteCenter>
-      </Hide>
-
-      <Stack
-        direction={'row'}
-        align={'center'}
-        spacing={6}
-        flex={'1'}
-        display={{ base: 'none', lg: 'flex' }}
-      >
-        {NAV_ITEMS.map((navItem) => (
-          <Box key={navItem.label}>
-            <Link
-              href={navItem.href}
-              fontWeight={500}
-              _hover={{
-                color: linkHoverColor,
-              }}
-            >
-              {navItem.label}
-            </Link>
-          </Box>
-        ))}
-      </Stack>
-
-      {/*
-      <Divider orientation='vertical' />
-
-      <Form flex={'1'}>
+      <Form>
         <InputGroup size={'sm'}>
           <InputLeftElement pointerEvents='none'>
             <Icon
@@ -126,9 +83,17 @@ export default function Header() {
           <Input hideWrapper={true} placeholder='Search...' pl={'10'} />
         </InputGroup>
       </Form>
-*/}
 
-      <Stack direction={'row'} spacing={6}>
+      <IconButton
+        icon={<IoMenuSharp display={'block'} />}
+        fontSize={'2xl'}
+        aria-label={'Open Menu'}
+        display={{ base: 'flex', lg: 'none' }}
+        onClick={isOpen ? onClose : onOpen}
+        variant={'ghost'}
+      />
+
+      <Stack direction={'row'} spacing={6} ml={'auto'}>
         {isReady && <Chain />}
         {isReady && <User />}
       </Stack>

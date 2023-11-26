@@ -1,5 +1,5 @@
-import { Image } from '@chakra-ui/next-js';
 import { IconButton } from '@chakra-ui/react';
+import Image from 'next/image';
 import { IoClose } from 'react-icons/io5';
 
 import { FileWithPreview } from '../types';

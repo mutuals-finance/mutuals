@@ -1,4 +1,4 @@
-import { Container, Flex } from '@chakra-ui/react';
+import { Box, Container, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useAccount } from 'wagmi';
 
@@ -10,11 +10,11 @@ export function SplitListWrapper({ children }: React.PropsWithChildren) {
   const { address, isConnected } = useAccount();
 
   return (
-    <Flex minH={'calc(100vh - 72px)'}>
-      <Container maxW='container.xl'>
+    <Box as={'section'} my={'12'}>
+      <Container maxW='container.lg'>
         <SplitListHeader />
-        {!isConnected ? <SplitListPlaceholder /> : children}
+        {isConnected ? children : <SplitListPlaceholder />}
       </Container>
-    </Flex>
+    </Box>
   );
 }

@@ -3,8 +3,8 @@ import React from 'react';
 
 export function SplitListHeader() {
   return (
-    <Heading as={'h1'} size={'2xl'} my={'12'}>
-      My Splits
+    <Heading as={'h2'} size={'lg'} fontWeight={'700'} mb={'6'}>
+      Treasuries
     </Heading>
   );
 }

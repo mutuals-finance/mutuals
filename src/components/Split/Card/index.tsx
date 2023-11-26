@@ -1,9 +1,11 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
+  Divider,
   Flex,
   Heading,
   IconButton,
@@ -13,9 +15,12 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  StatArrow,
+  StatNumber,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { Stat, StatHelpText, StatLabel } from '@chakra-ui/stat';
 import NextLink from 'next/link';
 import React from 'react';
 import {
@@ -31,6 +36,7 @@ import { splitBaseFragment } from '@/lib/graphql/fragments';
 import { useMetadata } from '@/lib/split/hooks';
 import {
   formatPrefixedAddress,
+  formatUSDPrice,
   getShortNameByChainId,
   shortenAddress,
 } from '@/lib/utils';
@@ -59,22 +65,8 @@ export default function SplitCard({
   timestamp,
 }: SplitCardProps) {
   return (
-    <LinkBox
-      as='article'
-      rounded={'md'}
-      position={'relative'}
-      overflow={'hidden'}
-      display={'flex'}
-    >
-      <SplitBlurBg src={metaData?.image} alt={metaData?.name} />
-      <Card
-        flex={1}
-        size={'sm'}
-        p={'3'}
-        rounded={'md'}
-        variant={'outline'}
-        bg={useColorModeValue('whiteAlpha.200', 'blackAlpha.200')}
-      >
+    <LinkBox as='article' rounded={'lg'}>
+      <Card variant={'outline'} bg={'transparent'}>
         <CardHeader as={Flex} alignItems={'center'} gap={'3'}>
           <Box flexShrink={0}>
             {!!metaData?.image && (
@@ -86,13 +78,11 @@ export default function SplitCard({
           </Box>
 
           <Box flex='1'>
-            <Heading size='md' as={'h3'}>
+            <Heading size='sm' as={'h3'} fontWeight={'700'}>
               {metaData?.name === '' ? 'Unknown' : metaData?.name}
             </Heading>
 
-            <Text fontSize='xs' fontWeight={'500'}>
-              {shortenAddress(address)}
-            </Text>
+            <Text variant={'label-mono'}>{shortenAddress(address)}</Text>
           </Box>
 
           <Menu size={'sm'}>
@@ -111,12 +101,21 @@ export default function SplitCard({
             </MenuList>
           </Menu>
         </CardHeader>
-        <CardBody>
-          <Text noOfLines={2}>{metaData?.description}</Text>
+        <CardBody pt={'0'}>
+          <Text fontSize={'sm'} noOfLines={2}>
+            {metaData?.description}
+          </Text>
+
+          <Divider my={'6'} />
+
+          <Flex justifyContent={'space-between'} alignItems={'flex-end'}>
+            <Stat>
+              <StatLabel>Total Balance</StatLabel>
+              <StatNumber>{formatUSDPrice('4000123.24')}</StatNumber>
+            </Stat>
+            {id && <Button size={'sm'}>More</Button>}
+          </Flex>
         </CardBody>
-        <CardFooter>
-          <Date timestamp={timestamp} />
-        </CardFooter>
       </Card>
       {!!id && (
         <LinkOverlay

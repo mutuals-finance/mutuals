@@ -1,5 +1,5 @@
-import { Image, ImageProps } from '@chakra-ui/next-js';
 import { Box, Flex, useColorModeValue } from '@chakra-ui/react';
+import NextImage, { ImageProps } from 'next/image';
 import React from 'react';
 
 import { ipfsResolveData } from '@/lib/utils';
@@ -22,12 +22,10 @@ export default function SplitBlurBg({ src = '', alt = '' }: SplitBlurBgProps) {
       }}
     >
       {!!src && (
-        <Image
-          fill
-          objectFit={'cover'}
+        <NextImage
           src={ipfsResolveData(src) || src}
           alt={alt || 'Split Background'}
-          className={'w-full flex-1 object-cover'}
+          fill={true}
         />
       )}
       <Box

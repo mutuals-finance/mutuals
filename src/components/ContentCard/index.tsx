@@ -4,6 +4,7 @@ import {
   CardBodyProps,
   CardHeader,
   type CardProps,
+  Divider,
   Heading,
   useColorModeValue,
 } from '@chakra-ui/react';
@@ -21,7 +22,7 @@ export default function ContentCard({
   children,
   variant = 'outline',
   bodyProps,
-  rounded = 'md',
+  rounded,
   ...props
 }: React.PropsWithChildren<BoxProps>) {
   return (
@@ -33,9 +34,9 @@ export default function ContentCard({
       {...props}
     >
       {(!!title || !!titleAfter) && (
-        <CardHeader bg={'bg.3'}>
+        <CardHeader>
           {!!title && (
-            <Heading as='h2' size='md' fontWeight={'600'}>
+            <Heading as='h2' size='md' fontWeight={'700'}>
               {title}
             </Heading>
           )}
@@ -43,9 +44,7 @@ export default function ContentCard({
         </CardHeader>
       )}
 
-      <CardBody bg={'bg.2'} {...bodyProps}>
-        {children}
-      </CardBody>
+      <CardBody {...bodyProps}>{children}</CardBody>
     </Card>
   );
 }

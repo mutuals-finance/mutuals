@@ -36,7 +36,6 @@ export default function Table<TData extends RowData>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-  const tHeadBg = useColorModeValue('gray.100', 'gray.900');
 
   return (
     <ChakraTableContainer overflowY={'auto'} {...containerProps}>
@@ -46,8 +45,10 @@ export default function Table<TData extends RowData>({
             position={'sticky'}
             top={'0'}
             left={'0'}
-            bg={'bg.3'}
             zIndex={'1'}
+            bg={'bg.1'}
+            borderBottom={'1px'}
+            borderColor={'border'}
             {...headProps}
           >
             {table?.getHeaderGroups()?.map((headerGroup) => (

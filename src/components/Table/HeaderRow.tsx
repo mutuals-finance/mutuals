@@ -11,7 +11,7 @@ export default function HeaderRow<TData extends RowData>(
   return (
     <Tr>
       {headerGroup.headers.map((header) => (
-        <Th key={header.id} fontWeight={'500'} py={'2'}>
+        <Th key={header.id} py={'3'}>
           {header.isPlaceholder
             ? null
             : flexRender(header.column.columnDef.header, header.getContext())}

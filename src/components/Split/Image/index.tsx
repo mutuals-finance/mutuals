@@ -1,5 +1,5 @@
-import { Image, type ImageProps } from '@chakra-ui/next-js';
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box, BoxProps, useColorModeValue } from '@chakra-ui/react';
+import NextImage, { type ImageProps } from 'next/image';
 import React from 'react';
 import { IoImage } from 'react-icons/io5';
 
@@ -15,7 +15,7 @@ export function SplitImage({
   borderRadius = 12,
   bg,
   ...props
-}: ImageProps) {
+}: ImageProps & Omit<BoxProps, 'fill'>) {
   return (
     <Box
       position={'relative'}
@@ -27,15 +27,14 @@ export function SplitImage({
       {!src || src === '' ? (
         <IoImage />
       ) : (
-        <Image
-          p={p}
-          src={ipfsResolveData(src)}
-          alt={alt || 'Unknown Split'}
-          fill={fill}
-          borderRadius={borderRadius}
-          objectFit={objectFit}
-          {...props}
-        />
+        <Box p={p} borderRadius={borderRadius} {...props}>
+          <NextImage
+            src={ipfsResolveData(src)}
+            alt={alt || 'Unknown Split'}
+            fill={fill}
+            objectFit={objectFit}
+          />
+        </Box>
       )}
     </Box>
   );

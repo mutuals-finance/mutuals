@@ -15,10 +15,8 @@ export default function TokenLabel({
 }: TokenLabelProps) {
   return (
     <Box fontSize={'sm'} {...props}>
-      <Text lineHeight={'1.4'}>{tokenName}</Text>
-      <Text color={useColorModeValue('gray.300', 'gray.400')}>
-        {tokenSymbol}
-      </Text>
+      <Text>{tokenName}</Text>
+      <Text variant={'label-mono'}>{tokenSymbol}</Text>
     </Box>
   );
 }

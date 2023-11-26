@@ -1,5 +1,4 @@
-import { Image, Link, type LinkProps } from '@chakra-ui/next-js';
-import { Heading, HStack } from '@chakra-ui/react';
+import { Link, type LinkProps } from '@chakra-ui/next-js';
 import React from 'react';
 
 import SplitFiLogo from '@/components/SplitFiLogo';

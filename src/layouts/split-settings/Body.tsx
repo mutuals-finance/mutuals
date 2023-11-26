@@ -1,5 +1,7 @@
+import { Icon } from '@chakra-ui/icon';
 import {
   Box,
+  Button,
   Flex,
   Heading,
   LinkBox,
@@ -34,25 +36,17 @@ export default function SettingsSidebarBody() {
           </Heading>
           <VStack alignItems={'stretch'} spacing={'3'}>
             {sections[label as SplitSettingsSection]?.map((route) => (
-              <LinkBox
-                p='3'
-                fontWeight={'500'}
-                fontSize={'lg'}
-                rounded='md'
+              <Button
+                as={NextLink}
+                href={`/splits/${split.id}/settings/${route.slug}`}
+                size={'lg'}
+                h={'14'}
+                justifyContent={'flex-start'}
                 key={label + '-' + route.slug}
-                bg={'gray.100'}
+                leftIcon={<Icon as={route.icon} />}
               >
-                <Flex alignItems={'center'} gap={'3'}>
-                  <route.icon />
-
-                  <LinkOverlay
-                    as={NextLink}
-                    href={`/splits/${split.id}/settings/${route.slug}`}
-                  >
-                    {route.label}
-                  </LinkOverlay>
-                </Flex>
-              </LinkBox>
+                {route.label}
+              </Button>
             ))}
           </VStack>
         </Box>

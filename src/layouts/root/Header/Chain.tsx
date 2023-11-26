@@ -1,5 +1,5 @@
-import { Image } from '@chakra-ui/next-js';
 import {
+  Box,
   Button,
   Menu,
   MenuButton,
@@ -7,8 +7,9 @@ import {
   MenuItem,
   MenuList,
   Spinner,
+  Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import NextImage from 'next/image';
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
 
@@ -31,20 +32,22 @@ export default function Chain() {
         <>
           {isConnected && (
             <MenuButton
-              display={{ base: 'none', lg: 'flex' }}
               as={Button}
+              display={{ base: 'none', lg: 'flex' }}
               leftIcon={
-                <Image
-                  boxSize='4'
-                  src={getLogoByChainId(currentChain?.id)}
-                  alt={currentChain?.name || 'UNKNOWN'}
-                />
+                <Box w='4' h={'4'} position={'relative'}>
+                  <NextImage
+                    src={getLogoByChainId(currentChain?.id)}
+                    alt={currentChain?.name || 'UNKNOWN'}
+                    fill={true}
+                  />
+                </Box>
               }
               rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
               variant={'ghost'}
               isLoading={isLoading}
             >
-              {currentChain?.name || 'Unknown'}{' '}
+              {currentChain?.name || 'Unknown'}
             </MenuButton>
           )}
 
@@ -57,12 +60,14 @@ export default function Chain() {
                       onClick={() => onSelectChain(chain.id)}
                       key={chain.id}
                     >
-                      <Image
-                        boxSize='4'
-                        src={chain.logo}
-                        alt={chain.name}
-                        mr={'1'}
-                      />
+                      <Box w='3' h='3' position={'relative'} mr={'1'}>
+                        <NextImage
+                          src={chain.logo}
+                          alt={chain.name}
+                          fill={true}
+                        />
+                      </Box>
+
                       {chain.name}
                       {isLoading && pendingChainId === chain.id && (
                         <Spinner size='xs' ml={'1'} />

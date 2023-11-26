@@ -18,12 +18,9 @@ export function EventDescriptionCell({
   const type = getEventType(row.original);
 
   return (
-    <Box>
-      <Text lineHeight={'1.4'}>{type}</Text>
-      <Date
-        timestamp={row.original.timestamp.toString()}
-        color={useColorModeValue('gray.300', 'gray.400')}
-      />
+    <Box fontSize={'sm'}>
+      <Text>{type}</Text>
+      <Date timestamp={row.original.timestamp.toString()} variant={'label'} />
     </Box>
   );
 }

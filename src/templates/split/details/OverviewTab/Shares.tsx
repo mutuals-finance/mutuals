@@ -37,7 +37,7 @@ export function Shares() {
       bodyProps={{ flex: '1', overflowY: 'auto', p: '0' }}
     >
       <Stack direction={{ base: 'column', md: 'row' }}>
-        <Flex p={'6'} flex={'1'} maxWidth={{ base: '12rem', md: '42%' }}>
+        <Flex p={'6'} flex={'1'} maxWidth={{ base: '12rem', md: '16rem' }}>
           <AspectRatio ratio={1} flex={'1'}>
             <PieChart
               data={payees}
