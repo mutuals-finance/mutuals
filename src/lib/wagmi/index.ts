@@ -1,5 +1,5 @@
-import { BaseProvider, WebSocketProvider } from '@ethersproject/providers';
-import { type Client, configureChains, createClient } from 'wagmi';
+import {FallbackTransport} from "viem";
+import {Config, configureChains, createConfig, PublicClient, WebSocketPublicClient} from 'wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
@@ -11,18 +11,18 @@ import { INFURA_KEY, WALLETCONNECT_PROJECT_ID } from '@/lib/constants';
 
 import { availableChains } from './chains';
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   availableChains,
   [
-    infuraProvider({ apiKey: INFURA_KEY, priority: 0 }),
-    publicProvider({ priority: 1 }),
+    infuraProvider({ apiKey: INFURA_KEY }),
+    publicProvider(),
   ]
 );
 
 export function useWagmi() {
-  return createClient({
+  const config = createConfig({
     autoConnect: true,
-    connectors: [
+    publicClient, webSocketPublicClient,    connectors: [
       new MetaMaskConnector({ chains }),
       new CoinbaseWalletConnector({
         chains,
@@ -44,7 +44,7 @@ export function useWagmi() {
         },
       }),
     ],
-    provider,
-    webSocketProvider,
-  }) as Client<BaseProvider, WebSocketProvider>;
+  })
+
+  return config as never
 }

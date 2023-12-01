@@ -1,4 +1,4 @@
-import { getAddress, isAddress } from 'ethers/lib/utils';
+import {getAddress,isAddress} from "ethers";
 
 export function shortenAddress(address = '', chars = 4) {
   const parsed = isAddress(address);

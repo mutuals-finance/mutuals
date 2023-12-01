@@ -16,7 +16,7 @@ export default function AppProviders({
   ...pageProps
 }: React.PropsWithChildren<AppProps['pageProps']>) {
   const apolloClient = useApollo(pageProps);
-  const wagmiClient = useWagmi();
+  const wagmiConfig = useWagmi();
 
   return (
     <CacheProvider>
@@ -27,7 +27,7 @@ export default function AppProviders({
               'cef60793f2f7367ec790a80c1d9070fca55c8c7b8ec1f353279bb53cccb8289d'
             }
           >
-            <WagmiConfig client={wagmiClient}>{children}</WagmiConfig>
+            <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
           </AnkrProvider>
         </ApolloProvider>
       </ChakraProvider>

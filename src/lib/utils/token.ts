@@ -1,5 +1,4 @@
-import { BigNumber, BigNumberish, utils } from 'ethers';
-import { isAddress } from 'ethers/lib/utils';
+import { BigNumberish, formatUnits,isAddress} from 'ethers';
 
 import {
   ETH_TOKEN,
@@ -8,10 +7,10 @@ import {
 } from '@/lib/constants';
 
 export function formatAmount(
-  amount: string | BigNumber,
+  amount: string | BigNumberish,
   decimals: string | BigNumberish
 ) {
-  return parseFloat(utils.formatUnits(amount, decimals));
+  return parseFloat(formatUnits(amount, decimals));
 }
 
 export function getDefaultTokenLogoURI(chainId = 1) {
@@ -30,7 +29,7 @@ export function isNativeTokenAddress(address: string) {
 }
 
 export function formatBalance(balance: string | number) {
-  const formatCurrency = new Intl.NumberFormat(undefined, {
+  const formatCurrency = new Intl.NumberFormat(undefined!, {
     maximumFractionDigits: 2,
   });
 
@@ -38,7 +37,7 @@ export function formatBalance(balance: string | number) {
 }
 
 export function formatCurrency(value: string | number) {
-  const formatCurrency = new Intl.NumberFormat(undefined, {
+  const formatCurrency = new Intl.NumberFormat(undefined!, {
     style: 'currency',
     currency: 'USD',
   });
