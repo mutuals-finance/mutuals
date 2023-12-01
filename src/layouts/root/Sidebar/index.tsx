@@ -2,37 +2,27 @@ import { Link } from '@chakra-ui/next-js';
 import {
   Box,
   Button,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
   HStack,
   IconButton,
-  SimpleGrid,
   Stack,
-  StackDivider,
   Text,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { MotionConfig } from 'framer-motion';
-import React, { useState } from 'react';
+import React from 'react';
 import { IconType } from 'react-icons';
 import {
   IoAppsOutline,
   IoGridOutline,
-  IoGridSharp,
   IoHelpCircleOutline,
-  IoHelpOutline,
   IoMenuSharp,
   IoPeopleOutline,
   IoSettingsOutline,
-  IoWalletOutline,
 } from 'react-icons/io5';
 import { useToggle } from 'react-use';
 
 import AnimationBox from '@/components/Animation/Box';
+import Sidebar from '@/components/Sidebar';
 
 import Logo from '@/layouts/root/Header/Logo';
 
@@ -79,33 +69,10 @@ export default function RootSidebar({ children }: React.PropsWithChildren) {
 
   return (
     <Stack gap='0' justifyContent={'stretch'} direction={'row'}>
-      <AnimationBox
-        flexShrink={'0'}
-        position={'sticky'}
-        top={'0'}
-        left={'0'}
-        h={'100vh'}
-        display={'flex'}
-        borderRight={'1px'}
-        borderColor={useColorModeValue('gray.200', 'gray.600')}
-        animate={isOpen ? 'open' : 'closed'}
-        variants={{
-          open: {
-            width: '16rem',
-          },
-          closed: {
-            width: '5.6rem',
-          },
-        }}
-      >
-        <VStack flex={'1'} alignItems={'stretch'} overflow={'hidden'}>
-          <HStack
-            flexShrink={'0'}
-            h={{ base: '64px', lg: '64px' }}
-            justifyContent={'flex-end'}
-            alignItems={'center'}
-            p={'6'}
-          >
+      <Sidebar
+        isOpen={isOpen}
+        header={
+          <HStack justifyContent={'flex-end'}>
             {isOpen && <Logo w={'24'} mr={'auto'} />}
 
             <IconButton
@@ -116,50 +83,9 @@ export default function RootSidebar({ children }: React.PropsWithChildren) {
               variant={'ghost'}
             />
           </HStack>
-          <VStack
-            flex={'1'}
-            p={'6'}
-            spacing={3}
-            overflowY={'auto'}
-            overflowX={'hidden'}
-            justifyContent={'space-between'}
-          >
-            {Object.keys(NAV_SECTIONS).map((section) => (
-              <Box w={'full'} key={section}>
-                <Text mb={'3'} fontSize={'sm'} noOfLines={1}>
-                  {section}
-                </Text>
-                <Stack spacing={3}>
-                  {NAV_SECTIONS[section]?.map((navItem) => (
-                    <Button
-                      key={navItem.label}
-                      w={'full'}
-                      justifyContent={'flex-start'}
-                      px={'3.5'}
-                      as={Link}
-                      href={navItem.href}
-                      fontWeight={'500'}
-                      fontSize={'sm'}
-                      textAlign={'left'}
-                      leftIcon={<navItem.icon />}
-                      iconSpacing={'4'}
-                      sx={{ textDecoration: 'none !important' }}
-                      overflow={'hidden'}
-                    >
-                      {navItem.label}
-                    </Button>
-                  ))}
-                </Stack>
-              </Box>
-            ))}
-          </VStack>
-
+        }
+        footer={
           <Box
-            flexShrink={'0'}
-            px={'6'}
-            py={'3'}
-            borderTop={'1px'}
-            borderColor={useColorModeValue('gray.200', 'gray.600')}
             textAlign={'center'}
             fontSize={'xs'}
             visibility={isOpen ? 'inherit' : 'hidden'}
@@ -170,8 +96,37 @@ export default function RootSidebar({ children }: React.PropsWithChildren) {
               <Link href={'/'}>Terms</Link>
             </Text>
           </Box>
-        </VStack>
-      </AnimationBox>
+        }
+      >
+        {Object.keys(NAV_SECTIONS).map((section) => (
+          <Box w={'full'} key={section}>
+            <Text mb={'3'} fontSize={'sm'} noOfLines={1}>
+              {section}
+            </Text>
+            <Stack spacing={3}>
+              {NAV_SECTIONS[section]?.map((navItem) => (
+                <Button
+                  key={navItem.label}
+                  w={'full'}
+                  justifyContent={'flex-start'}
+                  px={'3.5'}
+                  as={Link}
+                  href={navItem.href}
+                  fontWeight={'500'}
+                  fontSize={'sm'}
+                  textAlign={'left'}
+                  leftIcon={<navItem.icon />}
+                  iconSpacing={'4'}
+                  sx={{ textDecoration: 'none !important' }}
+                  overflow={'hidden'}
+                >
+                  {navItem.label}
+                </Button>
+              ))}
+            </Stack>
+          </Box>
+        ))}
+      </Sidebar>
 
       <Box flex={'1'}>{children}</Box>
     </Stack>

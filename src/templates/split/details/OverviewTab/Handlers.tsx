@@ -9,16 +9,28 @@ import {
 
 import IconTextButton from '@/components/IconTextButton';
 
-const handlers = [
-  { 'aria-label': 'Deposit', icon: <IoArrowDownCircleOutline /> },
-  { 'aria-label': 'Withdraw', icon: <IoArrowUpCircleOutline /> },
-  { 'aria-label': 'Settings', icon: <IoWalletOutline /> },
-  { 'aria-label': 'Insights', icon: <IoAppsOutline /> },
-];
+import { useSplit } from '@/context/SplitContext';
 
-export default function SplitHandlers() {
+export function Handlers() {
+  const { sidebar } = useSplit();
+
+  const handlers = [
+    {
+      'aria-label': 'Deposit',
+      icon: <IoArrowDownCircleOutline />,
+      onClick: () => sidebar.toggle('DEPOSIT'),
+    },
+    {
+      'aria-label': 'Withdraw',
+      icon: <IoArrowUpCircleOutline />,
+      onClick: () => sidebar.toggle('WITHDRAW'),
+    },
+    { 'aria-label': 'Settings', icon: <IoWalletOutline /> },
+    { 'aria-label': 'Insights', icon: <IoAppsOutline /> },
+  ];
+
   return (
-    <Box as={'section'} my={'12'}>
+    <Box as={'section'}>
       <Container
         maxW={'container.lg'}
         as={SimpleGrid}

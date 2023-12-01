@@ -2,7 +2,6 @@ import {
   Box,
   ButtonGroup,
   ButtonGroupProps,
-  Container,
   Heading,
   HStack,
   IconButton,
@@ -14,7 +13,6 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
 import { BsLayoutSidebarReverse } from 'react-icons/bs';
 import {
   IoAlertCircleOutline,
@@ -55,49 +53,47 @@ function SplitHeaderButtonGroup(props: ButtonGroupProps) {
     </ButtonGroup>
   );
 }
-export default function Header() {
+export function Header() {
   const { split, sidebar } = useSplit();
   const image = ipfsResolveData(split.metaData.image);
   const name = split.metaData.name || '';
 
   return (
-    <Box as={'header'} pt={'12'} my={'12'} w={'full'}>
-      <Container maxW='container.lg'>
-        <VStack
+    <Box as={'header'} px={'6'} mt={'24'} w={'full'}>
+      <VStack
+        spacing={'6'}
+        justifyContent={'flex-end'}
+        alignItems={'stretch'}
+        w={'full'}
+      >
+        <Stack
+          direction={{ base: 'column', lg: 'row' }}
+          alignItems={{ lg: 'center' }}
           spacing={'6'}
-          justifyContent={'flex-end'}
-          alignItems={'stretch'}
           w={'full'}
         >
-          <Stack
-            direction={{ base: 'column', lg: 'row' }}
-            alignItems={{ lg: 'center' }}
-            spacing={{ base: '6', lg: '3' }}
-            w={'full'}
-          >
-            <HStack flex={'1'} w={'full'} spacing='3' alignItems={'center'}>
-              <SplitImage src={image} alt={name} boxSize='3rem' />
-              <Heading as={'h1'} fontWeight={'700'} size={'xl'}>
-                {name}
-              </Heading>
-              <SplitHeaderButtonGroup />
-            </HStack>
-            <IconButton
-              size={'sm'}
-              flexShrink={'0'}
-              aria-label='Toggle Sidebar'
-              icon={<BsLayoutSidebarReverse />}
-              onClick={() => sidebar.toggle()}
-            />
-          </Stack>
+          <HStack flex={'1'} w={'full'} spacing='3' alignItems={'center'}>
+            <SplitImage src={image} alt={name} boxSize='3rem' />
+            <Heading as={'h1'} fontWeight={'700'} size={'xl'}>
+              {name}
+            </Heading>
+            <SplitHeaderButtonGroup />
+          </HStack>
+          <IconButton
+            size={'sm'}
+            flexShrink={'0'}
+            aria-label='Toggle Sidebar'
+            icon={<BsLayoutSidebarReverse />}
+            onClick={() => sidebar.toggle()}
+          />
+        </Stack>
 
-          <Box maxW={'xl'}>
-            <Text noOfLines={{ base: 3, lg: 3 }}>
-              {split.metaData.description}
-            </Text>
-          </Box>
-        </VStack>
-      </Container>
+        <Box maxW={'xl'}>
+          <Text noOfLines={{ base: 3, lg: 3 }}>
+            {split.metaData.description}
+          </Text>
+        </Box>
+      </VStack>
     </Box>
   );
 }
