@@ -36,12 +36,12 @@ const NAV_SECTIONS: {
   General: [
     {
       label: 'Dashboard',
-      href: '/splits',
+      href: '/',
       icon: IoAppsOutline,
     },
     {
       label: 'Treasuries',
-      href: '/splits',
+      href: '/dashboard',
       icon: IoGridOutline,
     },
     {

@@ -1,7 +1,9 @@
 import { Box, Container, Heading, SimpleGrid } from '@chakra-ui/react';
 import React from 'react';
 
-export function WalletListWrapper({ children }: React.PropsWithChildren) {
+import WalletCard from './WalletCard';
+
+export default function WalletList() {
   return (
     <Box as={'section'} my={'12'}>
       <Container maxW='container.lg'>
@@ -9,7 +11,13 @@ export function WalletListWrapper({ children }: React.PropsWithChildren) {
           Wallets
         </Heading>
 
-        {children}
+        <SimpleGrid
+          templateColumns={'repeat(auto-fill, minmax(16rem, 1fr))'}
+          spacing={6}
+        >
+          <WalletCard />
+          <WalletCard />
+        </SimpleGrid>
       </Container>
     </Box>
   );

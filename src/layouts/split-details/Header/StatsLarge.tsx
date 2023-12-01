@@ -1,12 +1,8 @@
-import { Box, HStack, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { Stat, StatLabel, StatNumber } from '@chakra-ui/stat';
 import React from 'react';
 
-import {
-  formatCurrencyAmount,
-  formatUSDPrice,
-  shortenAddress,
-} from '@/lib/utils';
+import { formatUSDPrice, shortenAddress } from '@/lib/utils';
 
 import { useSplit } from '@/context/SplitContext';
 

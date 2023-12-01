@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SplitsPage from '@/pages/splits';
+import DashboardPage from '@/pages/dashboard';
 
 export default function HomePage() {
-  return <SplitsPage />;
+  return <DashboardPage />;
 }
