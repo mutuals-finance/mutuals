@@ -14,23 +14,24 @@ export function SplitImage({
   borderRadius = 12,
   bg,
   ...props
-}: Omit<BoxProps, 'fill'> & Omit<ImageProps, "borderRadius" | "boxSize">) {
+}: Omit<BoxProps, 'fill'> & ImageProps) {
   return (
     <Box
       position={'relative'}
-      borderRadius={borderRadius}
-      boxSize={boxSize}
+      borderRadius={borderRadius!}
+      boxSize={boxSize!}
       borderWidth={'1px'}
       bg={useColorModeValue(bg || 'whiteAlpha.600', bg || 'blackAlpha.600')}
     >
       {!src || src === '' ? (
         <IoImage />
       ) : (
-        <Box p={p} borderRadius={borderRadius} {...props}>
+        <Box p={p!} borderRadius={borderRadius!} position={"absolute"} inset={"0"} {...props}>
           <NextImage
             src={ipfsResolveData(src)}
             alt={alt || 'Unknown Split'}
             fill={fill}
+            sizes={"150"}
           />
         </Box>
       )}
