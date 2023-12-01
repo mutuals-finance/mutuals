@@ -1,6 +1,7 @@
-import { Chain, useNetwork } from 'wagmi';
+import * as chainsObject from 'viem/chains'
 
 import { shortenAddress } from '@/lib/utils';
+import {Chain} from "wagmi";
 
 type UseExplorerLinkProps = {
   address?: string | `0x${string}`;
@@ -8,19 +9,18 @@ type UseExplorerLinkProps = {
   chain?: Chain;
 };
 
+const chains = Object.values(chainsObject);
+
 export default function useExplorerLink({
   address = '',
   chainId,
   chain,
 }: UseExplorerLinkProps) {
-  const net = useNetwork();
   const _chain = !!chainId
-    ? net.chains.find((c) => c?.id === chainId)
+    ? chains.find((c) => c?.id === chainId)
     : !!chain
       ? chain
-      : !!net.chain
-        ? net.chain
-        : net.chains[0];
+        : chains[0];
 
   const baseUrl = _chain?.blockExplorers?.default.url || '';
   const href = `${baseUrl}/address/${address}`;

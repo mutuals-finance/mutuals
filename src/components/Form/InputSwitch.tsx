@@ -10,17 +10,18 @@ type InputSwitchProps = SwitchProps & BaseFieldProps;
 export default function InputSwitch({
   id = '',
   validation,
+  helperText,
   ...rest
 }: InputSwitchProps) {
   const { control } = useFormContext();
 
   return (
-    <InputBase id={id} validation={validation} {...rest}>
+    <InputBase id={id!} validation={validation!} helperText={helperText!} {...rest}>
       <Controller
-        control={control}
-        name={id}
-        rules={validation}
-        render={({ field }) => <Switch {...rest} {...field} id={id} />}
+        control={control!}
+        name={id!}
+        rules={validation!}
+        render={({ field }) => <Switch {...rest} {...field} id={id!} />}
       />
     </InputBase>
   );

@@ -26,14 +26,14 @@ export default function InputBase({
 
   return (
     <BaseWrapper {...props}>
-      <BaseLabel label={label} validation={validation} id={id} />
+      <BaseLabel label={label!} validation={validation!} id={id!} />
 
       {children}
 
       <BaseFeedback
         error={error}
-        helperText={helperText}
-        hideError={hideError}
+        helperText={helperText!}
+        hideError={hideError!}
       />
     </BaseWrapper>
   );
