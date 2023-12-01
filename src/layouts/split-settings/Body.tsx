@@ -13,7 +13,7 @@ import NextLink from 'next/link';
 import React from 'react';
 
 import { useSplit } from '@/context/SplitContext';
-import { routes } from '@/templates/split/details/SettingsTab';
+import { routes } from '@/templates/split/settings';
 
 import { SplitSettingsSection, SplitSettingsTemplateTab } from '#/split';
 
