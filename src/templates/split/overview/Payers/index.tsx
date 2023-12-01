@@ -6,7 +6,7 @@ import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
 import ContentCard from '@/components/ContentCard';
 
 import { useSplit } from '@/context/SplitContext';
-import PayerTable from '@/templates/split/details/OverviewTab/PayerTable';
+import PayerTable from '@/templates/split/overview/Payers/PayerTable';
 
 type ActivePayer = ShareFragmentFragment & { isActive?: boolean };
 

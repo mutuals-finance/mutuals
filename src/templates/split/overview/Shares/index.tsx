@@ -6,8 +6,8 @@ import { useList } from 'react-use';
 import ContentCard from '@/components/ContentCard';
 
 import { useSplit } from '@/context/SplitContext';
-import ShareTable from '@/templates/split/details/OverviewTab/ShareTable';
-import { ActiveShare } from '@/templates/split/details/OverviewTab/ShareTable/types';
+import ShareTable from '@/templates/split/overview/Shares/ShareTable';
+import { ActiveShare } from '@/templates/split/overview/Shares/ShareTable/types';
 
 const PieChart = dynamic(() => import('@/components/PieChart'), {
   ssr: false,
@@ -49,7 +49,6 @@ export function Shares() {
         <ShareTable
           shares={payees}
           containerProps={{ flex: '1' }}
-          headerHidden={true}
         />
 
         {/*

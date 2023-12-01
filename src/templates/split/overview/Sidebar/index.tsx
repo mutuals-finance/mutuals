@@ -12,8 +12,8 @@ import React from 'react';
 import SidebarComponent from '@/components/Sidebar';
 
 import { useSplit } from '@/context/SplitContext';
-import { DepositTab } from '@/templates/split/details/OverviewTab/DepositTab';
-import { WithdrawTab } from '@/templates/split/details/OverviewTab/WithdrawTab';
+import { DepositTab } from '@/templates/split/overview/Sidebar/DepositTab';
+import { WithdrawTab } from '@/templates/split/overview/Sidebar/WithdrawTab';
 
 export function Sidebar({ ...props }: BoxProps) {
   const { sidebar } = useSplit();

@@ -1,11 +1,9 @@
-import { OverviewTab } from '@/templates/split/details/OverviewTab';
-import { SettingsTab } from '@/templates/split/settings';
+import SplitOverview from '@/templates/split/overview';
 
 import { SplitTemplateTab } from '#/split';
 
 const routes: SplitTemplateTab[] = [
-  { label: 'Overview', slug: '', component: OverviewTab },
-  { label: 'Settings', slug: 'settings', component: SettingsTab },
+  { label: 'Overview', slug: '', component: SplitOverview },
 ];
 
 export default routes;

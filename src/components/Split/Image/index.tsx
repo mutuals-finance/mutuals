@@ -11,11 +11,10 @@ export function SplitImage({
   boxSize = '3rem',
   p = '1',
   fill = true,
-  objectFit = 'cover',
   borderRadius = 12,
   bg,
   ...props
-}: ImageProps & Omit<BoxProps, 'fill'>) {
+}: Omit<BoxProps, 'fill'> & Omit<ImageProps, "borderRadius" | "boxSize">) {
   return (
     <Box
       position={'relative'}
@@ -32,7 +31,6 @@ export function SplitImage({
             src={ipfsResolveData(src)}
             alt={alt || 'Unknown Split'}
             fill={fill}
-            objectFit={objectFit}
           />
         </Box>
       )}

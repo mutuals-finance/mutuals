@@ -8,7 +8,7 @@ import {Payers} from './Payers';
 import {Shares} from './Shares';
 import {Sidebar} from './Sidebar';
 
-export function OverviewTab() {
+export default function SplitOverview() {
   return (
     <Stack direction={'row'} gap={'0'}>
       <Box flex={'1'}>

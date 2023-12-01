@@ -3,7 +3,7 @@ import React from 'react';
 
 import TabPage from '@/components/TabPage';
 
-import { WithdrawForm } from '@/templates/split/details/OverviewTab/WithdrawTab/WithdrawForm';
+import { WithdrawForm } from '@/templates/split/overview/Sidebar/WithdrawTab/WithdrawForm';
 
 export function WithdrawTab() {
   return (

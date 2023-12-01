@@ -21,7 +21,6 @@ export default function FilePreview({
         src={file.preview}
         alt={file.name || 'File Preview'}
         fill={true}
-        objectFit={'cover'}
       />
       {!readOnly && (
         <IconButton

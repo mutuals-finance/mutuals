@@ -25,8 +25,8 @@ export default function InputImage({
   maxSize = 5242880, // 5 MiB
   acceptedImageExtensions = ['.png', '.jpg', '.jpeg'],
   helperText = `You can upload files with ${formatStringItems(
-    acceptedImageExtensions,
-  )} extension and a maximum size of ${formatBytes(maxSize)}.`,
+    acceptedImageExtensions!,
+  )} extension and a maximum size of ${formatBytes(maxSize!)}.`,
   ...props
 }: InputImageProps) {
   const {
@@ -39,7 +39,7 @@ export default function InputImage({
   } = useFormContext();
   const error = get(errors, id);
 
-  const dropzoneRef = React.useRef<HTMLDivElement>(null);
+  const dropzoneRef = React.useRef<HTMLDivElement | null>(null);
 
   const maxFiles = 1;
 
@@ -52,7 +52,7 @@ export default function InputImage({
   const onDrop = React.useCallback(
     <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles && rejectedFiles.length > 0) {
-        setError(id, {
+        setError(id!, {
           type: 'manual',
           message: rejectedFiles && rejectedFiles[0]?.errors[0]?.message,
         });
@@ -64,7 +64,7 @@ export default function InputImage({
 
         setFile(newFilePreview);
 
-        setValue(id, newFilePreview, {
+        setValue(id!, newFilePreview, {
           shouldValidate: true,
         });
 
@@ -76,7 +76,7 @@ export default function InputImage({
 
   const onDeleteFile = () => {
     setFile(null);
-    setValue(id, null, {
+    setValue(id!, null, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
@@ -104,11 +104,11 @@ export default function InputImage({
     : {};
 
   return (
-    <InputBase id={id} helperText={helperText} {...props}>
+    <InputBase id={id!} helperText={helperText!} {...props}>
       <Controller
-        control={control}
-        name={id}
-        rules={validation}
+        control={control!}
+        name={id!}
+        rules={validation!}
         render={({ field: { value: _, ...field } }) => (
           <Box
             {...getRootProps()}
@@ -121,11 +121,11 @@ export default function InputImage({
             cursor={'pointer'}
             display={'flex'}
           >
-            <input id={id} {...getInputProps(field)} />
+            <input id={id!} {...getInputProps(field)} />
 
             {!!file ? (
               <FilePreview
-                readOnly={readOnly}
+                readOnly={readOnly!}
                 file={file}
                 onDeleteFile={onDeleteFile}
               />

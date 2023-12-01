@@ -7,11 +7,11 @@ import useExplorerLink from '@/hooks/useExplorerLink';
 
 import UserAvatar from '@/components/UserAvatar';
 
-import { Payer } from '@/templates/split/details/OverviewTab/PayerTable/types';
+import { type ActiveShare } from '@/templates/split/overview/Shares/ShareTable/types';
 
-export default function PayerCell({
+export default function ShareCell({
   getValue,
-}: CellContext<Payer, string | undefined>) {
+}: CellContext<ActiveShare, string | undefined>) {
   const address = getValue();
   const { href, shortAddress } = useExplorerLink({ address });
 

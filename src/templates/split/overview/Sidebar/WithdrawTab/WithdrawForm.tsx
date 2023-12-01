@@ -35,7 +35,7 @@ import InputListbox from '@/components/Form/InputListbox';
 import InputSwitch from '@/components/Form/InputSwitch';
 
 import { useSplit } from '@/context/SplitContext';
-import WithdrawModal from '@/templates/split/details/OverviewTab/WithdrawTab/WithdrawModal';
+import WithdrawModal from '@/templates/split/overview/Sidebar/WithdrawTab/WithdrawModal';
 
 import AssetCardHorizontal from './AssetCardHorizontal';
 
