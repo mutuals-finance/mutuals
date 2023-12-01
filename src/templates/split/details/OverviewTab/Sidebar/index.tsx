@@ -6,11 +6,10 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import React from 'react';
 
-import AnimationBox from '@/components/Animation/Box';
+import SidebarComponent from '@/components/Sidebar';
 
 import { useSplit } from '@/context/SplitContext';
 import { DepositTab } from '@/templates/split/details/OverviewTab/DepositTab';
@@ -18,30 +17,19 @@ import { WithdrawTab } from '@/templates/split/details/OverviewTab/WithdrawTab';
 
 export function Sidebar({ ...props }: BoxProps) {
   const { sidebar } = useSplit();
+  const sidebarWidth = "24rem"
 
   return (
-    <AnimationBox
-      position={'sticky'}
-      top={'64px'}
+    <SidebarComponent
+      isOpen={sidebar.isOpen}
+      top={'4rem'}
       h={'calc(100vh - 4rem)'}
-      overflowY={'auto'}
-      borderLeft={'1px'}
-      bg={'bg.1'}
-      right={'0'}
-      overflow={'hidden'}
-      borderColor={useColorModeValue('gray.200', 'gray.600')}
-      animate={sidebar.isOpen ? 'open' : 'closed'}
-      variants={{
-        open: {
-          width: '24rem',
-        },
-        closed: {
-          width: '0',
-        },
-      }}
+      placement={"right"}
+      w={sidebarWidth}
+      overflow={"hidden"}
       {...props}
     >
-      <Box position={'absolute'} top={'0'} left={'0'} h={'full'} w={'24rem'}>
+      <Box position={'absolute'} inset={'0'} w={sidebarWidth}>
         <Tabs
           isFitted
           colorScheme={'primary'}
@@ -61,6 +49,6 @@ export function Sidebar({ ...props }: BoxProps) {
           </TabPanels>
         </Tabs>
       </Box>
-    </AnimationBox>
+    </SidebarComponent>
   );
 }

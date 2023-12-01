@@ -1,6 +1,5 @@
 import { NextComponentType, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
-import React from 'react';
 
 import AppProviders from '@/components/AppProviders';
 

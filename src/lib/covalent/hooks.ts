@@ -29,7 +29,7 @@ export function useTokenBalances({
   return useSWR(
     `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/`,
     () => getTokenBalances(chainId, address),
-    props
+    props,
   );
 }
 
@@ -41,7 +41,7 @@ export function usePortfolio({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/address/${address}/portfolio_v2/`,
     () => getPortfolio(chainId, address),
-    props
+    props,
   );
   return res;
 }
@@ -54,7 +54,7 @@ export function useTransfers({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/address/${address}/transfers_v2/`,
     () => getTransfers(chainId, address),
-    props
+    props,
   );
   return res;
 }
@@ -67,7 +67,7 @@ export function useBlock({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/block_v2/${blockHeight}/`,
     () => getBlock(chainId, blockHeight),
-    props
+    props,
   );
   return res;
 }
@@ -85,7 +85,7 @@ export function useBlockHeights({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/block_v2/${startDate}/${endDate}/`,
     () => getBlockHeights(chainId, startDate, endDate),
-    props
+    props,
   );
   return res;
 }
@@ -98,7 +98,7 @@ export function useLogs({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/events/address/${address}/`,
     () => getLogs(chainId, address),
-    props
+    props,
   );
   return res;
 }
@@ -111,7 +111,7 @@ export function useLogsForTopic({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/events/topics/${topic}/`,
     () => getLogsForTopic(chainId, topic),
-    props
+    props,
   );
   return res;
 }
@@ -125,7 +125,7 @@ export function useNftMetadata({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/tokens/${address}/nft_metadata/${tokenId}/`,
     () => getNftMetadata(chainId, address, tokenId),
-    props
+    props,
   );
   return res;
 }
@@ -138,7 +138,7 @@ export function useNftTokenIds({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/tokens/${address}/nft_token_ids/`,
     () => getNftTokenIds(chainId, address),
-    props
+    props,
   );
   return res;
 }
@@ -152,7 +152,7 @@ export function useNftTransactions({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/tokens/${address}/nft_transactions/${tokenId}/`,
     () => getNftTransactions(chainId, address, tokenId),
-    props
+    props,
   );
   return res;
 }
@@ -165,7 +165,7 @@ export function useHoldersChanges({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/tokens/${address}/token_holders_changes/`,
     () => getHoldersChanges(chainId, address),
-    props
+    props,
   );
   return res;
 }
@@ -178,7 +178,7 @@ export function useHolders({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/tokens/${address}/token_holders/`,
     () => getTokenHolders(chainId, address),
-    props
+    props,
   );
   return res;
 }
@@ -191,7 +191,7 @@ export function useTokenMetadata({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/tokens/tokenlists/${id}/`,
     () => getTokenMetadata(chainId, id),
-    props
+    props,
   );
   return res;
 }
@@ -204,7 +204,7 @@ export function useTransaction({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/transaction_v2/${txHash}/`,
     () => getTransaction(chainId, txHash),
-    props
+    props,
   );
   return res;
 }
@@ -222,7 +222,7 @@ export function useTransactions({
   const res = useSWR(
     `https://api.covalenthq.com/v1/${chainId}/address/${address}/transactions_v3/page/${page}/`,
     () => getTransactions(chainId, address),
-    props
+    props,
   );
   return res;
 }
@@ -231,7 +231,7 @@ export function useChains(props: SWRConfiguration) {
   const res = useSWR(
     `https://api.covalenthq.com/v1/chains/status/`,
     () => getChains(),
-    props
+    props,
   );
   return res;
 }
@@ -240,7 +240,7 @@ export function useChainsStatus(props: SWRConfiguration) {
   const res = useSWR(
     `https://api.covalenthq.com/v1/chains/status/`,
     () => getChainsStatus(),
-    props
+    props,
   );
   return res;
 }

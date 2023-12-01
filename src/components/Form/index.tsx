@@ -14,7 +14,7 @@ import {
 
 interface FormProps<
   TFieldValues extends FieldValues = FieldValues,
-  TContext = never
+  TContext = never,
 > extends Omit<StackProps, 'children' | 'onSubmit'>,
     UseFormProps<TFieldValues, TContext> {
   onSubmit?: SubmitHandler<TFieldValues>;
@@ -26,7 +26,7 @@ interface FormProps<
 
 export default function Form<
   TFieldValues extends FieldValues = FieldValues,
-  TContext = never
+  TContext = never,
 >({
   children,
   onSubmit,

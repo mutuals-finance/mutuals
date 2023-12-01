@@ -74,5 +74,5 @@ export const AVAILABLE_CHAINS: Array<Chain> = _AVAILABLE_CHAINS.map(
       shortName: CHAIN_SHORT_NAME_MAP[chain.id],
       logo: CHAIN_LOGO_URI_MAP[chain.id],
     } as ChainExt),
-  })
+  }),
 );

@@ -70,6 +70,8 @@ export default function RootSidebar({ children }: React.PropsWithChildren) {
   return (
     <Stack gap='0' justifyContent={'stretch'} direction={'row'}>
       <Sidebar
+        w={"16rem"}
+        minW={'5.6rem'}
         isOpen={isOpen}
         header={
           <HStack justifyContent={'flex-end'}>

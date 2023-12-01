@@ -36,8 +36,8 @@ export default function PayeeListFooter({
             totalShares > maxShares
               ? 'red'
               : totalShares == maxShares
-              ? 'green'
-              : 'gray'
+                ? 'green'
+                : 'gray'
           }
           size='sm'
           value={totalShares}

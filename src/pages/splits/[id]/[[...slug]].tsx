@@ -15,56 +15,14 @@ import Seo from '@/components/Seo';
 import routes from '@/templates/split/details';
 
 import { NextPageWithLayout } from '#/app';
-
-export async function getServerSideProps({
-  params: { id },
-}: {
-  params: { id?: string };
-}) {
-  if (!id) {
-    // no split id and no tab
-    return {
-      notFound: true,
-    };
-  }
-
-  const client = await initializeApollo();
-  const { address } = parsePrefixedAddress(id);
-
-  const { data } = await client.query({
-    query: SPLIT,
-    variables: { id: address.toLowerCase() },
-  });
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const split = useFragment(splitDetailsFragment, data.split);
-
-  if (!split?.id) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const metaData = await getMetadata(split?.metaDataUri);
-
-  const pageProps: AppProps['pageProps'] = {
-    props: {
-      split: {
-        ...split,
-        metaData,
-      },
-    },
-  };
-
-  return addApolloState(client, pageProps);
-}
+import {getSplitDetails} from "@/lib/split";
 
 const SplitDetailPage: NextPageWithLayout = function ({
   split,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetServerSidePropsType<typeof getSplitDetails>) {
   const template = useRouterTemplate(
     routes,
-    ({ asPath }) => asPath.split('/')[3]
+    ({ asPath }) => asPath.split('/')[3],
   );
 
   return (
@@ -74,6 +32,8 @@ const SplitDetailPage: NextPageWithLayout = function ({
     </>
   );
 };
+
+export const getServerSideProps = getSplitDetails;
 
 SplitDetailPage.Layout = 'SplitDetails';
 export default SplitDetailPage;

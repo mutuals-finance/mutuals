@@ -20,7 +20,7 @@ const FIVE_DECIMALS_MAX_TWO_DECIMALS_MIN_NO_COMMAS = new Intl.NumberFormat(
     maximumFractionDigits: 5,
     minimumFractionDigits: 2,
     useGrouping: false,
-  }
+  },
 );
 
 const THREE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat('en-US', {
@@ -73,7 +73,7 @@ const SHORTHAND_TWO_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat(
   {
     notation: 'compact',
     maximumFractionDigits: 2,
-  }
+  },
 );
 
 const SHORTHAND_FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat(
@@ -81,7 +81,7 @@ const SHORTHAND_FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat(
   {
     notation: 'compact',
     maximumFractionDigits: 5,
-  }
+  },
 );
 
 const SHORTHAND_USD_TWO_DECIMALS = new Intl.NumberFormat('en-US', {
@@ -310,7 +310,7 @@ function getFormatterRule(input: number, type: NumberType) {
 export function formatNumber(
   input: number,
   type: NumberType = NumberType.TokenNonTx,
-  placeholder = '-'
+  placeholder = '-',
 ) {
   if (input === null || input === undefined) {
     return placeholder;
@@ -324,14 +324,14 @@ export function formatNumber(
 export function formatCurrencyAmount(
   amount: string | undefined,
   type: NumberType = NumberType.TokenNonTx,
-  placeholder?: string
+  placeholder?: string,
 ) {
   return formatNumber(!!amount ? parseFloat(amount) : 0.0, type, placeholder);
 }
 
 export function formatPrice(
   price: string,
-  type: NumberType = NumberType.FiatTokenPrice
+  type: NumberType = NumberType.FiatTokenPrice,
 ) {
   if (price === null || price === undefined) {
     return '-';
@@ -353,7 +353,7 @@ export function formatTimestamp(
     firstWeekContainsDate?: number;
     useAdditionalWeekYearTokens?: boolean;
     useAdditionalDayOfYearTokens?: boolean;
-  }
+  },
 ) {
   return format(fromUnixTime(Number(timestamp)), formatString, options);
 }
@@ -366,7 +366,7 @@ export function formatNumberOrString(price: number | string, type: NumberType) {
 
 export function formatUSDPrice(
   price: number | string,
-  type: NumberType = NumberType.FiatTokenPrice
+  type: NumberType = NumberType.FiatTokenPrice,
 ) {
   return formatNumberOrString(price, type);
 }
@@ -411,7 +411,7 @@ export function formatRoundNumber(
   } = {
     round: Math.round,
     decimal: 2,
-  }
+  },
 ) {
   const pow = Math.pow(10, decimal);
   return round((x + Number.EPSILON) * pow) / pow;
@@ -420,7 +420,7 @@ export function formatRoundNumber(
 export function formatPercentage(
   value: string | undefined,
   type: NumberType = NumberType.TokenNonTx,
-  placeholder?: string
+  placeholder?: string,
 ) {
   return (
     formatNumber(!!value ? parseFloat(value) : 0.0, type, placeholder) + ' %'

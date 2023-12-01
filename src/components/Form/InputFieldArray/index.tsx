@@ -24,10 +24,10 @@ interface InputFieldArrayProps<TFieldValue> extends FieldArrayBaseFieldProps {
   hideAdd?: boolean;
   children: (id: string) => React.ReactNode;
   contentBefore?: (
-    method: UseFieldArrayReturn<FieldValues, string, 'id'>
+    method: UseFieldArrayReturn<FieldValues, string, 'id'>,
   ) => React.ReactNode;
   contentAfter?: (
-    method: UseFieldArrayReturn<FieldValues, string, 'id'>
+    method: UseFieldArrayReturn<FieldValues, string, 'id'>,
   ) => React.ReactNode;
 }
 

@@ -33,7 +33,7 @@ export default function SplitBlurBg({ src = '', alt = '' }: SplitBlurBgProps) {
         inset={'0'}
         bgGradient={useColorModeValue(
           'linear(to-t, white, whiteAlpha.800)',
-          'linear(to-t, black, blackAlpha.800)'
+          'linear(to-t, black, blackAlpha.800)',
         )}
       />
     </Flex>

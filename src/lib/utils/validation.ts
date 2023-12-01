@@ -40,7 +40,7 @@ export const uniqueAddress =
   (address: string): string | undefined => {
     const ADDRESS_REPEATED_ERROR = 'Address already added';
     const addressExists = addresses.some((addressFromList) =>
-      sameAddress(addressFromList, address)
+      sameAddress(addressFromList, address),
     );
     return addressExists ? ADDRESS_REPEATED_ERROR : undefined;
   };

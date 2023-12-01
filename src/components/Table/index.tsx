@@ -51,15 +51,17 @@ export default function Table<TData extends RowData>({
             borderColor={'border'}
             {...headProps}
           >
-            {table?.getHeaderGroups()?.map((headerGroup) => (
-              <HeaderRow<TData> {...headerGroup} key={headerGroup.id} />
-            ))}
+            {table
+              ?.getHeaderGroups()
+              ?.map((headerGroup) => (
+                <HeaderRow<TData> {...headerGroup} key={headerGroup.id} />
+              ))}
           </Thead>
         )}
         <Tbody>
-          {table?.getRowModel()?.rows?.map((row) => (
-            <BodyRow<TData> {...row} key={row.id} />
-          ))}
+          {table
+            ?.getRowModel()
+            ?.rows?.map((row) => <BodyRow<TData> {...row} key={row.id} />)}
         </Tbody>
       </ChakraTable>
     </ChakraTableContainer>

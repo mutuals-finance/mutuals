@@ -33,7 +33,7 @@ export default function PayeeList({ id }: PayeeListProps) {
 
   const totalShares = payees.reduce(
     (total, p) => (total * 100 + Number(p.value) * 100) / 100,
-    0.0
+    0.0,
   );
   const totalPayees = payees.length;
 
@@ -46,7 +46,7 @@ export default function PayeeList({ id }: PayeeListProps) {
     indices.forEach((index) => {
       setValue(
         `${id}.${index}.value`,
-        formatRoundNumber(steps > 0 ? steps-- && value + 0.01 : value)
+        formatRoundNumber(steps > 0 ? steps-- && value + 0.01 : value),
       );
     });
   }
@@ -57,14 +57,14 @@ export default function PayeeList({ id }: PayeeListProps) {
       payees
         .map((p, index) => ({ index, ...p }))
         .filter((p: Payee) => Number(p.value) <= 0)
-        .map((p) => p.index)
+        .map((p) => p.index),
     );
   }
 
   function onSetValuesEvenly() {
     _setValues(
       maxShares,
-      payees.map((_, index) => index)
+      payees.map((_, index) => index),
     );
   }
 

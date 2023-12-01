@@ -98,7 +98,7 @@ function WithdrawFormInner() {
       balance: total.balance + Number(asset?.balanceUsd || '0.00'),
       assetCount: total.assetCount + Number(asset.balance || '0.00'),
     }),
-    { balance: 0, assetCount: 0 }
+    { balance: 0, assetCount: 0 },
   ) || { balance: 0, assetCount: 0 };
 
   const userWithdrawal = Number(accountShare?.value || '0.00') * total?.balance;

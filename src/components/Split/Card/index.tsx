@@ -122,7 +122,7 @@ export default function SplitCard({
           as={NextLink}
           href={`/splits/${formatPrefixedAddress(
             id,
-            getShortNameByChainId(80001)
+            getShortNameByChainId(80001),
           )}`}
         />
       )}

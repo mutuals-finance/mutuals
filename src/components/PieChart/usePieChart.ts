@@ -16,7 +16,7 @@ export default function usePieChart(data: ArchData[], size: number) {
         domain: [0, data.length],
         range: ['#E3E6FE', '#6E7DF8'],
       }),
-    [data]
+    [data],
   );
 
   return {

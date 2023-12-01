@@ -6,7 +6,7 @@ import React from 'react';
 type HeaderRowProps<TData extends RowData> = HeaderGroup<TData>;
 
 export default function HeaderRow<TData extends RowData>(
-  headerGroup: HeaderRowProps<TData>
+  headerGroup: HeaderRowProps<TData>,
 ) {
   return (
     <Tr>

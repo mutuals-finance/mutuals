@@ -25,7 +25,7 @@ export default function InputImage({
   maxSize = 5242880, // 5 MiB
   acceptedImageExtensions = ['.png', '.jpg', '.jpeg'],
   helperText = `You can upload files with ${formatStringItems(
-    acceptedImageExtensions
+    acceptedImageExtensions,
   )} extension and a maximum size of ${formatBytes(maxSize)}.`,
   ...props
 }: InputImageProps) {
@@ -71,7 +71,7 @@ export default function InputImage({
         clearErrors(id);
       }
     },
-    [clearErrors, file, id, maxFiles, setError, setValue]
+    [clearErrors, file, id, maxFiles, setError, setValue],
   );
 
   const onDeleteFile = () => {

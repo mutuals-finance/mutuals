@@ -16,72 +16,25 @@ import routes from '@/templates/split/details';
 
 import { NextPageWithLayout } from '#/app';
 
-export async function getServerSideProps({
-  params: { id, slug },
-}: {
-  params: { id?: string; slug?: string };
-}) {
-  if (!id) {
-    // no split id and no tab
-    return {
-      notFound: true,
-    };
-  }
+import {getSplitDetails} from "@/lib/split";
 
-  const client = await initializeApollo();
-  const { address } = parsePrefixedAddress(id);
-
-  const { data } = await client.query({
-    query: SPLIT,
-    variables: { id: address.toLowerCase() },
-  });
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const split = useFragment(splitDetailsFragment, data.split);
-
-  if (!split?.id) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const metaData = await getMetadata(split?.metaDataUri);
-
-  const pageProps: AppProps['pageProps'] = {
-    props: {
-      split: {
-        ...split,
-        metaData,
-      },
-    },
-  };
-
-  if (!slug) {
-    // split id and no tab -> send to overview
-    pageProps.redirect = {
-      permanent: false,
-      destination: `splits/${id}/overview`,
-    };
-  }
-
-  return addApolloState(client, pageProps);
-}
-
-const SplitDetailPage: NextPageWithLayout = function ({
+const SplitDetailSettingsPage: NextPageWithLayout = function ({
   split,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetServerSidePropsType<typeof getSplitDetails>) {
   const template = useRouterTemplate(
     routes,
-    ({ asPath }) => asPath.split('/')[3]
+    ({ asPath }) => asPath.split('/')[3],
   );
 
   return (
     <>
-      <Seo title={`${split.metaData.name} » ${template?.label}`} />
+      <Seo title={`${split.metaData.name} Settings » ${template?.label}`} />
       <template.component />
     </>
   );
 };
 
-SplitDetailPage.Layout = 'SplitDetails';
-export default SplitDetailPage;
+export const getServerSideProps = getSplitDetails;
+
+SplitDetailSettingsPage.Layout = 'SplitDetails';
+export default SplitDetailSettingsPage;

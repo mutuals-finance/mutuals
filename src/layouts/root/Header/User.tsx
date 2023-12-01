@@ -34,7 +34,7 @@ export default function User() {
   const [walletModalOpen, setWalletModalOpen] = useState(false);
   const displayName = useMemo(
     () => (isConnected ? shortenAddress(address, 3) : 'Not Connected'),
-    [isConnected, address]
+    [isConnected, address],
   );
 
   const { colorMode, toggleColorMode } = useColorMode();

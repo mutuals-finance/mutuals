@@ -6,7 +6,7 @@ export interface StepperItemState {
   disabled?: boolean;
   onNext?: (
     current: StepperModalStep,
-    currentIndex: number
+    currentIndex: number,
   ) => Promise<void> | void;
   isError?: boolean;
   error?: Error;

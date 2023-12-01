@@ -25,7 +25,7 @@ function PieChartInner({
 }: PieChartInnerProps) {
   const { colorScale, innerRadius, outerRadius, x, y } = usePieChart(
     data,
-    size
+    size,
   );
 
   return (

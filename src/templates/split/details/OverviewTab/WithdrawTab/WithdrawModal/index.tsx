@@ -38,8 +38,8 @@ export default function WithdrawModal({
           status: tx.isError
             ? 'Confirmation error'
             : tx.isSuccess
-            ? 'Successfully confirmed'
-            : 'Waiting for you to confirm',
+              ? 'Successfully confirmed'
+              : 'Waiting for you to confirm',
         }),
     },
     {
@@ -54,8 +54,8 @@ export default function WithdrawModal({
           status: receipt.isError
             ? 'Confirmation error'
             : receipt.isSuccess
-            ? 'Successfully confirmed'
-            : 'Waiting for transaction confirmation',
+              ? 'Successfully confirmed'
+              : 'Waiting for transaction confirmation',
         }),
     },
     {

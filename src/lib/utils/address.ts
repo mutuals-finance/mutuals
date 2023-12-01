@@ -1,4 +1,4 @@
-import {getAddress,isAddress} from "ethers";
+import { getAddress, isAddress } from 'ethers';
 
 export function shortenAddress(address = '', chars = 4) {
   const parsed = isAddress(address);
@@ -49,14 +49,14 @@ export const parsePrefixedAddress = (value: string): PrefixedAddress => {
 
 export const formatPrefixedAddress = (
   address: string,
-  prefix?: string
+  prefix?: string,
 ): string => {
   return prefix ? `${prefix}:${address}` : address;
 };
 
 export const sameAddress = (
   firstAddress: string | undefined,
-  secondAddress: string | undefined
+  secondAddress: string | undefined,
 ): boolean => {
   if (!firstAddress || !secondAddress) {
     return false;

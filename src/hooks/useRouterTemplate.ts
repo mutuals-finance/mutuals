@@ -8,7 +8,7 @@ export interface TemplatedRouteChild {
 
 export function useRouterTemplate<TTemplate extends TemplatedRouteChild>(
   routes: TTemplate[],
-  slug: ((router: NextRouter) => string | undefined) | string
+  slug: ((router: NextRouter) => string | undefined) | string,
 ) {
   const { ...router } = useRouter();
   const currentSlug = typeof slug === 'string' ? slug : slug(router);

@@ -1,7 +1,7 @@
 export const INFURA_KEY = process.env.NEXT_PUBLIC_INFURA_KEY || '';
 if (INFURA_KEY === '') {
   throw new Error(
-    `NEXT_PUBLIC_INFURA_KEY must be a defined environment variable`
+    `NEXT_PUBLIC_INFURA_KEY must be a defined environment variable`,
   );
 }
 export const NFT_STORAGE_TOKEN =

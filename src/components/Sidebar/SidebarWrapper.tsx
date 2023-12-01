@@ -1,15 +1,18 @@
-import { BoxProps, useColorModeValue, VStack } from '@chakra-ui/react';
+import {BoxProps, SlideDirection, useColorModeValue, VStack} from '@chakra-ui/react';
 import React from 'react';
 
 import AnimationBox from '@/components/Animation/Box';
 
-interface SidebarWrapperProps extends BoxProps {
+export interface SidebarWrapperProps extends BoxProps {
   isOpen?: boolean;
+  placement?: SlideDirection;
 }
 
 export function SidebarWrapper({
-  isOpen,
-  children,
+  isOpen = true,
+                                 children,
+                                 width,
+                                 w,placement ="left",
   ...props
 }: SidebarWrapperProps) {
   return (
@@ -20,15 +23,18 @@ export function SidebarWrapper({
       left={'0'}
       h={'100vh'}
       display={'flex'}
-      borderRight={'1px'}
+      borderRight={placement === "left" && '1px'}
+      borderLeft={placement === "right" && '1px'}
+      borderTop={placement === "bottom" && '1px'}
+      borderBottom={placement === "top" && '1px'}
       borderColor={useColorModeValue('gray.200', 'gray.600')}
       animate={isOpen ? 'open' : 'closed'}
       variants={{
         open: {
-          width: '16rem',
+          width: width || w,
         },
         closed: {
-          width: '5.6rem',
+          width: 0,
         },
       }}
       {...props}

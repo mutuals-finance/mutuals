@@ -19,7 +19,7 @@ export function Shares() {
     split.shares.map((s) => ({
       ...s,
       isActive: false,
-    }))
+    })),
   );
 
   function setActive(index: number) {

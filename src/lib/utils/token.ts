@@ -1,4 +1,4 @@
-import { BigNumberish, formatUnits,isAddress} from 'ethers';
+import { BigNumberish, formatUnits, isAddress } from 'ethers';
 
 import {
   ETH_TOKEN,
@@ -8,7 +8,7 @@ import {
 
 export function formatAmount(
   amount: string | BigNumberish,
-  decimals: string | BigNumberish
+  decimals: string | BigNumberish,
 ) {
   return parseFloat(formatUnits(amount, decimals));
 }

@@ -94,7 +94,7 @@ export function useApollo(pageProps: AppProps['pageProps']) {
 
 export function addApolloState(
   client: ApolloClient<unknown>,
-  pageProps: AppProps['pageProps']
+  pageProps: AppProps['pageProps'],
 ) {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();

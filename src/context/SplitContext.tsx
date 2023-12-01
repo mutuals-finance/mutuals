@@ -76,7 +76,7 @@ export const SplitProvider = ({
   const { address: accountAddress } = useAccount();
 
   const accountShare = split.shares.find(
-    (share) => share.payee.toLowerCase() === accountAddress?.toLowerCase()
+    (share) => share.payee.toLowerCase() === accountAddress?.toLowerCase(),
   );
 
   const [sidebarTab, setSidebarTab] = useState<SidebarStates | null>('DEPOSIT');
@@ -94,7 +94,7 @@ export const SplitProvider = ({
           tab: sidebarTab,
           toggle: (tab?: SidebarStates) =>
             setSidebarTab((current) =>
-              !tab ? (!current ? 'DEPOSIT' : null) : tab
+              !tab ? (!current ? 'DEPOSIT' : null) : tab,
             ),
         },
       }}

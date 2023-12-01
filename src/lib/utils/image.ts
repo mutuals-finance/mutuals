@@ -41,7 +41,7 @@ export function urlToFile(url: string, fileName = 'file') {
 
 export async function urlToFile(
   url: string,
-  fileName = 'file'
+  fileName = 'file',
 ): Promise<FileWithPreview> {
   const response = await fetch(url);
   const blob = await response.blob();

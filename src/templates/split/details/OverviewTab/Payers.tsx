@@ -16,7 +16,7 @@ export function Payers() {
     split.shares.map((s) => ({
       ...s,
       isActive: false,
-    }))
+    })),
   );
 
   return (

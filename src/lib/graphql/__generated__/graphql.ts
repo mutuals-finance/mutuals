@@ -2,9 +2,15 @@
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -173,7 +179,7 @@ export enum ContractUriUpdate_OrderBy {
   TransactionGasPrice = 'transaction__gasPrice',
   TransactionGasUsed = 'transaction__gasUsed',
   TransactionId = 'transaction__id',
-  TransactionTimestamp = 'transaction__timestamp'
+  TransactionTimestamp = 'transaction__timestamp',
 }
 
 export type Deposit = TokenValue & {
@@ -334,13 +340,13 @@ export enum Deposit_OrderBy {
   TransactionGasUsed = 'transaction__gasUsed',
   TransactionId = 'transaction__id',
   TransactionTimestamp = 'transaction__timestamp',
-  Type = 'type'
+  Type = 'type',
 }
 
 /** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export type Query = {
@@ -374,18 +380,15 @@ export type Query = {
   withdrawals: Array<Withdrawal>;
 };
 
-
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
-
 
 export type QueryContractUriUpdateArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryContractUriUpdatesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -397,13 +400,11 @@ export type QueryContractUriUpdatesArgs = {
   where?: InputMaybe<ContractUriUpdate_Filter>;
 };
 
-
 export type QueryDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryDepositsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -415,13 +416,11 @@ export type QueryDepositsArgs = {
   where?: InputMaybe<Deposit_Filter>;
 };
 
-
 export type QueryShareArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerySharesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -433,13 +432,11 @@ export type QuerySharesArgs = {
   where?: InputMaybe<Share_Filter>;
 };
 
-
 export type QuerySplitArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerySplitFactoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -451,13 +448,11 @@ export type QuerySplitFactoriesArgs = {
   where?: InputMaybe<SplitFactory_Filter>;
 };
 
-
 export type QuerySplitFactoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerySplitMetadataArgs = {
   block?: InputMaybe<Block_Height>;
@@ -469,7 +464,6 @@ export type QuerySplitMetadataArgs = {
   where?: InputMaybe<SplitMetadata_Filter>;
 };
 
-
 export type QuerySplitsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
@@ -480,20 +474,17 @@ export type QuerySplitsArgs = {
   where?: InputMaybe<Split_Filter>;
 };
 
-
 export type QueryTokenArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryTokenDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryTokenDepositsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -505,13 +496,11 @@ export type QueryTokenDepositsArgs = {
   where?: InputMaybe<TokenDeposit_Filter>;
 };
 
-
 export type QueryTokenValueArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryTokenValuesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -523,13 +512,11 @@ export type QueryTokenValuesArgs = {
   where?: InputMaybe<TokenValue_Filter>;
 };
 
-
 export type QueryTokenWithdrawableArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryTokenWithdrawablesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -541,13 +528,11 @@ export type QueryTokenWithdrawablesArgs = {
   where?: InputMaybe<TokenWithdrawable_Filter>;
 };
 
-
 export type QueryTokenWithdrawalArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryTokenWithdrawalsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -559,7 +544,6 @@ export type QueryTokenWithdrawalsArgs = {
   where?: InputMaybe<TokenWithdrawal_Filter>;
 };
 
-
 export type QueryTokensArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
@@ -570,13 +554,11 @@ export type QueryTokensArgs = {
   where?: InputMaybe<Token_Filter>;
 };
 
-
 export type QueryTransactionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryTransactionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -588,13 +570,11 @@ export type QueryTransactionsArgs = {
   where?: InputMaybe<Transaction_Filter>;
 };
 
-
 export type QueryWithdrawalArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryWithdrawalsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -710,7 +690,7 @@ export enum Share_OrderBy {
   SplitTxCount = 'split__txCount',
   Timestamp = 'timestamp',
   Value = 'value',
-  ValueBp = 'valueBp'
+  ValueBp = 'valueBp',
 }
 
 export type Split = {
@@ -735,7 +715,6 @@ export type Split = {
   withdrawals: Array<Withdrawal>;
 };
 
-
 export type SplitContractUriUpdatesArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<ContractUriUpdate_OrderBy>;
@@ -743,7 +722,6 @@ export type SplitContractUriUpdatesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<ContractUriUpdate_Filter>;
 };
-
 
 export type SplitDepositsArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -753,7 +731,6 @@ export type SplitDepositsArgs = {
   where?: InputMaybe<Deposit_Filter>;
 };
 
-
 export type SplitSharesArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Share_OrderBy>;
@@ -761,7 +738,6 @@ export type SplitSharesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<Share_Filter>;
 };
-
 
 export type SplitTokenDepositsArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -771,7 +747,6 @@ export type SplitTokenDepositsArgs = {
   where?: InputMaybe<TokenDeposit_Filter>;
 };
 
-
 export type SplitTokenWithdrawalsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<TokenWithdrawal_OrderBy>;
@@ -779,7 +754,6 @@ export type SplitTokenWithdrawalsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TokenWithdrawal_Filter>;
 };
-
 
 export type SplitTransactionsArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -789,7 +763,6 @@ export type SplitTransactionsArgs = {
   where?: InputMaybe<Transaction_Filter>;
 };
 
-
 export type SplitWithdrawableTokensArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<TokenWithdrawable_OrderBy>;
@@ -797,7 +770,6 @@ export type SplitWithdrawableTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TokenWithdrawable_Filter>;
 };
-
 
 export type SplitWithdrawalsArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -815,7 +787,6 @@ export type SplitFactory = {
   splits: Array<Split>;
   splitsCount: Scalars['BigInt'];
 };
-
 
 export type SplitFactorySplitsArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -874,7 +845,7 @@ export enum SplitFactory_OrderBy {
   Id = 'id',
   Owner = 'owner',
   Splits = 'splits',
-  SplitsCount = 'splitsCount'
+  SplitsCount = 'splitsCount',
 }
 
 export type SplitMetadata = {
@@ -964,7 +935,7 @@ export enum SplitMetadata_OrderBy {
   Description = 'description',
   Id = 'id',
   Image = 'image',
-  Name = 'name'
+  Name = 'name',
 }
 
 export type Split_Filter = {
@@ -1128,7 +1099,7 @@ export enum Split_OrderBy {
   Transactions = 'transactions',
   TxCount = 'txCount',
   WithdrawableTokens = 'withdrawableTokens',
-  Withdrawals = 'withdrawals'
+  Withdrawals = 'withdrawals',
 }
 
 export type Subscription = {
@@ -1162,18 +1133,15 @@ export type Subscription = {
   withdrawals: Array<Withdrawal>;
 };
 
-
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
-
 
 export type SubscriptionContractUriUpdateArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionContractUriUpdatesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1185,13 +1153,11 @@ export type SubscriptionContractUriUpdatesArgs = {
   where?: InputMaybe<ContractUriUpdate_Filter>;
 };
 
-
 export type SubscriptionDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionDepositsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1203,13 +1169,11 @@ export type SubscriptionDepositsArgs = {
   where?: InputMaybe<Deposit_Filter>;
 };
 
-
 export type SubscriptionShareArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionSharesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1221,13 +1185,11 @@ export type SubscriptionSharesArgs = {
   where?: InputMaybe<Share_Filter>;
 };
 
-
 export type SubscriptionSplitArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionSplitFactoriesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1239,13 +1201,11 @@ export type SubscriptionSplitFactoriesArgs = {
   where?: InputMaybe<SplitFactory_Filter>;
 };
 
-
 export type SubscriptionSplitFactoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionSplitMetadataArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1257,7 +1217,6 @@ export type SubscriptionSplitMetadataArgs = {
   where?: InputMaybe<SplitMetadata_Filter>;
 };
 
-
 export type SubscriptionSplitsArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
@@ -1268,20 +1227,17 @@ export type SubscriptionSplitsArgs = {
   where?: InputMaybe<Split_Filter>;
 };
 
-
 export type SubscriptionTokenArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionTokenDepositArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTokenDepositsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1293,13 +1249,11 @@ export type SubscriptionTokenDepositsArgs = {
   where?: InputMaybe<TokenDeposit_Filter>;
 };
 
-
 export type SubscriptionTokenValueArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTokenValuesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1311,13 +1265,11 @@ export type SubscriptionTokenValuesArgs = {
   where?: InputMaybe<TokenValue_Filter>;
 };
 
-
 export type SubscriptionTokenWithdrawableArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTokenWithdrawablesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1329,13 +1281,11 @@ export type SubscriptionTokenWithdrawablesArgs = {
   where?: InputMaybe<TokenWithdrawable_Filter>;
 };
 
-
 export type SubscriptionTokenWithdrawalArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTokenWithdrawalsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1347,7 +1297,6 @@ export type SubscriptionTokenWithdrawalsArgs = {
   where?: InputMaybe<TokenWithdrawal_Filter>;
 };
 
-
 export type SubscriptionTokensArgs = {
   block?: InputMaybe<Block_Height>;
   first?: InputMaybe<Scalars['Int']>;
@@ -1358,13 +1307,11 @@ export type SubscriptionTokensArgs = {
   where?: InputMaybe<Token_Filter>;
 };
 
-
 export type SubscriptionTransactionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTransactionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1376,13 +1323,11 @@ export type SubscriptionTransactionsArgs = {
   where?: InputMaybe<Transaction_Filter>;
 };
 
-
 export type SubscriptionWithdrawalArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionWithdrawalsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1499,7 +1444,7 @@ export enum TokenDeposit_OrderBy {
   TokenName = 'token__name',
   TokenSymbol = 'token__symbol',
   TokenTotalSupply = 'token__totalSupply',
-  Type = 'type'
+  Type = 'type',
 }
 
 export type TokenValue = {
@@ -1512,7 +1457,7 @@ export type TokenValue = {
 export enum TokenValueType {
   Deposit = 'Deposit',
   Withdrawable = 'Withdrawable',
-  Withdrawal = 'Withdrawal'
+  Withdrawal = 'Withdrawal',
 }
 
 export type TokenValue_Filter = {
@@ -1572,7 +1517,7 @@ export enum TokenValue_OrderBy {
   TokenName = 'token__name',
   TokenSymbol = 'token__symbol',
   TokenTotalSupply = 'token__totalSupply',
-  Type = 'type'
+  Type = 'type',
 }
 
 export type TokenWithdrawable = TokenValue & {
@@ -1671,7 +1616,7 @@ export enum TokenWithdrawable_OrderBy {
   TokenName = 'token__name',
   TokenSymbol = 'token__symbol',
   TokenTotalSupply = 'token__totalSupply',
-  Type = 'type'
+  Type = 'type',
 }
 
 export type TokenWithdrawal = TokenValue & {
@@ -1770,7 +1715,7 @@ export enum TokenWithdrawal_OrderBy {
   TokenName = 'token__name',
   TokenSymbol = 'token__symbol',
   TokenTotalSupply = 'token__totalSupply',
-  Type = 'type'
+  Type = 'type',
 }
 
 export type Token_Filter = {
@@ -1849,7 +1794,7 @@ export enum Token_OrderBy {
   Id = 'id',
   Name = 'name',
   Symbol = 'symbol',
-  TotalSupply = 'totalSupply'
+  TotalSupply = 'totalSupply',
 }
 
 export type Transaction = {
@@ -1865,7 +1810,6 @@ export type Transaction = {
   withdrawals: Array<Withdrawal>;
 };
 
-
 export type TransactionContractUriUpdatesArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<ContractUriUpdate_OrderBy>;
@@ -1874,7 +1818,6 @@ export type TransactionContractUriUpdatesArgs = {
   where?: InputMaybe<ContractUriUpdate_Filter>;
 };
 
-
 export type TransactionDepositsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Deposit_OrderBy>;
@@ -1882,7 +1825,6 @@ export type TransactionDepositsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<Deposit_Filter>;
 };
-
 
 export type TransactionWithdrawalsArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -1980,7 +1922,7 @@ export enum Transaction_OrderBy {
   SplitTotalShares = 'split__totalShares',
   SplitTxCount = 'split__txCount',
   Timestamp = 'timestamp',
-  Withdrawals = 'withdrawals'
+  Withdrawals = 'withdrawals',
 }
 
 export type Withdrawal = TokenValue & {
@@ -2141,7 +2083,7 @@ export enum Withdrawal_OrderBy {
   TransactionGasUsed = 'transaction__gasUsed',
   TransactionId = 'transaction__id',
   TransactionTimestamp = 'transaction__timestamp',
-  Type = 'type'
+  Type = 'type',
 }
 
 export type _Block_ = {
@@ -2175,130 +2117,1042 @@ export enum _SubgraphErrorPolicy_ {
   /** Data will be returned even if the subgraph has indexing errors */
   Allow = 'allow',
   /** If the subgraph has indexing errors, data will be omitted. The default. */
-  Deny = 'deny'
+  Deny = 'deny',
 }
 
-export type TokenFragmentFragment = { __typename?: 'Token', id: string, symbol: string, name: string, decimals: any, totalSupply?: any | null } & { ' $fragmentName'?: 'TokenFragmentFragment' };
+export type TokenFragmentFragment = {
+  __typename?: 'Token';
+  id: string;
+  symbol: string;
+  name: string;
+  decimals: any;
+  totalSupply?: any | null;
+} & { ' $fragmentName'?: 'TokenFragmentFragment' };
 
-type TokenValueFragment_Deposit_Fragment = { __typename?: 'Deposit', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_Deposit_Fragment' };
+type TokenValueFragment_Deposit_Fragment = {
+  __typename?: 'Deposit';
+  amount: any;
+  token: { __typename?: 'Token' } & {
+    ' $fragmentRefs'?: { TokenFragmentFragment: TokenFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'TokenValueFragment_Deposit_Fragment' };
 
-type TokenValueFragment_TokenDeposit_Fragment = { __typename?: 'TokenDeposit', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenDeposit_Fragment' };
+type TokenValueFragment_TokenDeposit_Fragment = {
+  __typename?: 'TokenDeposit';
+  amount: any;
+  token: { __typename?: 'Token' } & {
+    ' $fragmentRefs'?: { TokenFragmentFragment: TokenFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'TokenValueFragment_TokenDeposit_Fragment' };
 
-type TokenValueFragment_TokenWithdrawable_Fragment = { __typename?: 'TokenWithdrawable', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenWithdrawable_Fragment' };
+type TokenValueFragment_TokenWithdrawable_Fragment = {
+  __typename?: 'TokenWithdrawable';
+  amount: any;
+  token: { __typename?: 'Token' } & {
+    ' $fragmentRefs'?: { TokenFragmentFragment: TokenFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'TokenValueFragment_TokenWithdrawable_Fragment' };
 
-type TokenValueFragment_TokenWithdrawal_Fragment = { __typename?: 'TokenWithdrawal', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_TokenWithdrawal_Fragment' };
+type TokenValueFragment_TokenWithdrawal_Fragment = {
+  __typename?: 'TokenWithdrawal';
+  amount: any;
+  token: { __typename?: 'Token' } & {
+    ' $fragmentRefs'?: { TokenFragmentFragment: TokenFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'TokenValueFragment_TokenWithdrawal_Fragment' };
 
-type TokenValueFragment_Withdrawal_Fragment = { __typename?: 'Withdrawal', amount: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TokenValueFragment_Withdrawal_Fragment' };
+type TokenValueFragment_Withdrawal_Fragment = {
+  __typename?: 'Withdrawal';
+  amount: any;
+  token: { __typename?: 'Token' } & {
+    ' $fragmentRefs'?: { TokenFragmentFragment: TokenFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'TokenValueFragment_Withdrawal_Fragment' };
 
-export type TokenValueFragmentFragment = TokenValueFragment_Deposit_Fragment | TokenValueFragment_TokenDeposit_Fragment | TokenValueFragment_TokenWithdrawable_Fragment | TokenValueFragment_TokenWithdrawal_Fragment | TokenValueFragment_Withdrawal_Fragment;
+export type TokenValueFragmentFragment =
+  | TokenValueFragment_Deposit_Fragment
+  | TokenValueFragment_TokenDeposit_Fragment
+  | TokenValueFragment_TokenWithdrawable_Fragment
+  | TokenValueFragment_TokenWithdrawal_Fragment
+  | TokenValueFragment_Withdrawal_Fragment;
 
-export type ShareFragmentFragment = { __typename?: 'Share', id: string, payee: any, timestamp: any, value: any } & { ' $fragmentName'?: 'ShareFragmentFragment' };
+export type ShareFragmentFragment = {
+  __typename?: 'Share';
+  id: string;
+  payee: any;
+  timestamp: any;
+  value: any;
+} & { ' $fragmentName'?: 'ShareFragmentFragment' };
 
-export type TransactionBaseFragmentFragment = { __typename?: 'Transaction', id: string, blockNumber: any, timestamp: any, gasUsed: any, gasPrice: any, split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'TransactionBaseFragmentFragment' };
+export type TransactionBaseFragmentFragment = {
+  __typename?: 'Transaction';
+  id: string;
+  blockNumber: any;
+  timestamp: any;
+  gasUsed: any;
+  gasPrice: any;
+  split: { __typename?: 'Split' } & {
+    ' $fragmentRefs'?: { SplitBaseFragmentFragment: SplitBaseFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'TransactionBaseFragmentFragment' };
 
-export type TransactionDetailsFragmentFragment = { __typename?: 'Transaction', id: string, blockNumber: any, timestamp: any, gasUsed: any, gasPrice: any, split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ), withdrawals: Array<(
-    { __typename?: 'Withdrawal' }
-    & { ' $fragmentRefs'?: { 'WithdrawalFragmentFragment': WithdrawalFragmentFragment } }
-  )>, deposits: Array<(
-    { __typename?: 'Deposit' }
-    & { ' $fragmentRefs'?: { 'DepositFragmentFragment': DepositFragmentFragment } }
-  )>, contractURIUpdates: Array<(
-    { __typename?: 'ContractURIUpdate' }
-    & { ' $fragmentRefs'?: { 'ContractUriUpdateFragmentFragment': ContractUriUpdateFragmentFragment } }
-  )> } & { ' $fragmentName'?: 'TransactionDetailsFragmentFragment' };
+export type TransactionDetailsFragmentFragment = {
+  __typename?: 'Transaction';
+  id: string;
+  blockNumber: any;
+  timestamp: any;
+  gasUsed: any;
+  gasPrice: any;
+  split: { __typename?: 'Split' } & {
+    ' $fragmentRefs'?: { SplitBaseFragmentFragment: SplitBaseFragmentFragment };
+  };
+  withdrawals: Array<
+    { __typename?: 'Withdrawal' } & {
+      ' $fragmentRefs'?: {
+        WithdrawalFragmentFragment: WithdrawalFragmentFragment;
+      };
+    }
+  >;
+  deposits: Array<
+    { __typename?: 'Deposit' } & {
+      ' $fragmentRefs'?: { DepositFragmentFragment: DepositFragmentFragment };
+    }
+  >;
+  contractURIUpdates: Array<
+    { __typename?: 'ContractURIUpdate' } & {
+      ' $fragmentRefs'?: {
+        ContractUriUpdateFragmentFragment: ContractUriUpdateFragmentFragment;
+      };
+    }
+  >;
+} & { ' $fragmentName'?: 'TransactionDetailsFragmentFragment' };
 
-export type WithdrawalFragmentFragment = { __typename?: 'Withdrawal', amount: any, id: string, origin: any, logIndex?: any | null, to: any, token: { __typename?: 'Token', id: string, symbol: string, name: string, decimals: any, totalSupply?: any | null }, transaction: (
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
-  ), split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'WithdrawalFragmentFragment' };
+export type WithdrawalFragmentFragment = {
+  __typename?: 'Withdrawal';
+  amount: any;
+  id: string;
+  origin: any;
+  logIndex?: any | null;
+  to: any;
+  token: {
+    __typename?: 'Token';
+    id: string;
+    symbol: string;
+    name: string;
+    decimals: any;
+    totalSupply?: any | null;
+  };
+  transaction: { __typename?: 'Transaction' } & {
+    ' $fragmentRefs'?: {
+      TransactionBaseFragmentFragment: TransactionBaseFragmentFragment;
+    };
+  };
+  split: { __typename?: 'Split' } & {
+    ' $fragmentRefs'?: { SplitBaseFragmentFragment: SplitBaseFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'WithdrawalFragmentFragment' };
 
-export type DepositFragmentFragment = { __typename?: 'Deposit', amount: any, id: string, origin: any, logIndex?: any | null, from: any, token: (
-    { __typename?: 'Token' }
-    & { ' $fragmentRefs'?: { 'TokenFragmentFragment': TokenFragmentFragment } }
-  ), transaction: (
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
-  ), split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'DepositFragmentFragment' };
+export type DepositFragmentFragment = {
+  __typename?: 'Deposit';
+  amount: any;
+  id: string;
+  origin: any;
+  logIndex?: any | null;
+  from: any;
+  token: { __typename?: 'Token' } & {
+    ' $fragmentRefs'?: { TokenFragmentFragment: TokenFragmentFragment };
+  };
+  transaction: { __typename?: 'Transaction' } & {
+    ' $fragmentRefs'?: {
+      TransactionBaseFragmentFragment: TransactionBaseFragmentFragment;
+    };
+  };
+  split: { __typename?: 'Split' } & {
+    ' $fragmentRefs'?: { SplitBaseFragmentFragment: SplitBaseFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'DepositFragmentFragment' };
 
-export type ContractUriUpdateFragmentFragment = { __typename?: 'ContractURIUpdate', id: string, origin: any, logIndex?: any | null, previousURI: string, newURI: string, transaction: (
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionBaseFragmentFragment': TransactionBaseFragmentFragment } }
-  ), split: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  ) } & { ' $fragmentName'?: 'ContractUriUpdateFragmentFragment' };
+export type ContractUriUpdateFragmentFragment = {
+  __typename?: 'ContractURIUpdate';
+  id: string;
+  origin: any;
+  logIndex?: any | null;
+  previousURI: string;
+  newURI: string;
+  transaction: { __typename?: 'Transaction' } & {
+    ' $fragmentRefs'?: {
+      TransactionBaseFragmentFragment: TransactionBaseFragmentFragment;
+    };
+  };
+  split: { __typename?: 'Split' } & {
+    ' $fragmentRefs'?: { SplitBaseFragmentFragment: SplitBaseFragmentFragment };
+  };
+} & { ' $fragmentName'?: 'ContractUriUpdateFragmentFragment' };
 
-export type SplitBaseFragmentFragment = { __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null } } & { ' $fragmentName'?: 'SplitBaseFragmentFragment' };
+export type SplitBaseFragmentFragment = {
+  __typename?: 'Split';
+  id: string;
+  address: any;
+  blockNumber: any;
+  timestamp: any;
+  metaDataUri?: string | null;
+  totalShares: any;
+  txCount: any;
+  metaData: {
+    __typename?: 'SplitMetadata';
+    name?: string | null;
+    description?: string | null;
+    image?: string | null;
+  };
+} & { ' $fragmentName'?: 'SplitBaseFragmentFragment' };
 
-export type SplitDetailsFragmentFragment = { __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null }, shares: Array<{ __typename?: 'Share', id: string, payee: any, timestamp: any, value: any }>, tokenWithdrawals: Array<{ __typename?: 'TokenWithdrawal', amount: any, token: { __typename?: 'Token', id: string, symbol: string, name: string, decimals: any, totalSupply?: any | null } }>, tokenDeposits: Array<{ __typename?: 'TokenDeposit', amount: any, token: { __typename?: 'Token', id: string, symbol: string, name: string, decimals: any, totalSupply?: any | null } }>, withdrawableTokens: Array<{ __typename?: 'TokenWithdrawable', amount: any, token: { __typename?: 'Token', id: string, symbol: string, name: string, decimals: any, totalSupply?: any | null } }> } & { ' $fragmentName'?: 'SplitDetailsFragmentFragment' };
+export type SplitDetailsFragmentFragment = {
+  __typename?: 'Split';
+  id: string;
+  address: any;
+  blockNumber: any;
+  timestamp: any;
+  metaDataUri?: string | null;
+  totalShares: any;
+  txCount: any;
+  metaData: {
+    __typename?: 'SplitMetadata';
+    name?: string | null;
+    description?: string | null;
+    image?: string | null;
+  };
+  shares: Array<{
+    __typename?: 'Share';
+    id: string;
+    payee: any;
+    timestamp: any;
+    value: any;
+  }>;
+  tokenWithdrawals: Array<{
+    __typename?: 'TokenWithdrawal';
+    amount: any;
+    token: {
+      __typename?: 'Token';
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      totalSupply?: any | null;
+    };
+  }>;
+  tokenDeposits: Array<{
+    __typename?: 'TokenDeposit';
+    amount: any;
+    token: {
+      __typename?: 'Token';
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      totalSupply?: any | null;
+    };
+  }>;
+  withdrawableTokens: Array<{
+    __typename?: 'TokenWithdrawable';
+    amount: any;
+    token: {
+      __typename?: 'Token';
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: any;
+      totalSupply?: any | null;
+    };
+  }>;
+} & { ' $fragmentName'?: 'SplitDetailsFragmentFragment' };
 
 export type SplitsByPayeeQueryVariables = Exact<{
   payee?: InputMaybe<Scalars['Bytes']>;
 }>;
 
-
-export type SplitsByPayeeQuery = { __typename?: 'Query', splits: Array<(
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitBaseFragmentFragment': SplitBaseFragmentFragment } }
-  )> };
+export type SplitsByPayeeQuery = {
+  __typename?: 'Query';
+  splits: Array<
+    { __typename?: 'Split' } & {
+      ' $fragmentRefs'?: {
+        SplitBaseFragmentFragment: SplitBaseFragmentFragment;
+      };
+    }
+  >;
+};
 
 export type SplitQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type SplitQuery = { __typename?: 'Query', split?: (
-    { __typename?: 'Split' }
-    & { ' $fragmentRefs'?: { 'SplitDetailsFragmentFragment': SplitDetailsFragmentFragment } }
-  ) | null };
+export type SplitQuery = {
+  __typename?: 'Query';
+  split?:
+    | ({ __typename?: 'Split' } & {
+        ' $fragmentRefs'?: {
+          SplitDetailsFragmentFragment: SplitDetailsFragmentFragment;
+        };
+      })
+    | null;
+};
 
 export type TransactionsBySplitQueryVariables = Exact<{
   split: Scalars['String'];
 }>;
 
+export type TransactionsBySplitQuery = {
+  __typename?: 'Query';
+  transactions: Array<
+    { __typename?: 'Transaction' } & {
+      ' $fragmentRefs'?: {
+        TransactionDetailsFragmentFragment: TransactionDetailsFragmentFragment;
+      };
+    }
+  >;
+};
 
-export type TransactionsBySplitQuery = { __typename?: 'Query', transactions: Array<(
-    { __typename?: 'Transaction' }
-    & { ' $fragmentRefs'?: { 'TransactionDetailsFragmentFragment': TransactionDetailsFragmentFragment } }
-  )> };
-
-export const TokenFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Token"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"decimals"}},{"kind":"Field","name":{"kind":"Name","value":"totalSupply"}}]}}]} as unknown as DocumentNode<TokenFragmentFragment, unknown>;
-export const TokenValueFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TokenValueFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TokenValue"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}}]}},...TokenFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TokenValueFragmentFragment, unknown>;
-export const ShareFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ShareFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Share"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]} as unknown as DocumentNode<ShareFragmentFragment, unknown>;
-export const SplitBaseFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SplitBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Split"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}}]}}]} as unknown as DocumentNode<SplitBaseFragmentFragment, unknown>;
-export const TransactionBaseFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Transaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"gasUsed"}},{"kind":"Field","name":{"kind":"Name","value":"gasPrice"}}]}},...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionBaseFragmentFragment, unknown>;
-export const WithdrawalFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WithdrawalFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Withdrawal"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"decimals"}},{"kind":"Field","name":{"kind":"Name","value":"totalSupply"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"to"}}]}},...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<WithdrawalFragmentFragment, unknown>;
-export const DepositFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DepositFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Deposit"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TokenFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"from"}}]}},...TokenFragmentFragmentDoc.definitions,...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<DepositFragmentFragment, unknown>;
-export const ContractUriUpdateFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ContractURIUpdateFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ContractURIUpdate"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"transaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"origin"}},{"kind":"Field","name":{"kind":"Name","value":"logIndex"}},{"kind":"Field","name":{"kind":"Name","value":"previousURI"}},{"kind":"Field","name":{"kind":"Name","value":"newURI"}}]}},...TransactionBaseFragmentFragmentDoc.definitions,...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<ContractUriUpdateFragmentFragment, unknown>;
-export const TransactionDetailsFragmentFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionDetailsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Transaction"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"gasUsed"}},{"kind":"Field","name":{"kind":"Name","value":"gasPrice"}},{"kind":"Field","name":{"kind":"Name","value":"withdrawals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"WithdrawalFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"deposits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DepositFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contractURIUpdates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ContractURIUpdateFragment"}}]}}]}},...SplitBaseFragmentFragmentDoc.definitions,...WithdrawalFragmentFragmentDoc.definitions,...DepositFragmentFragmentDoc.definitions,...ContractUriUpdateFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionDetailsFragmentFragment, unknown>;
-export const SplitDetailsFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SplitDetailsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Split"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}},{"kind":"Field","name":{"kind":"Name","value":"shares"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tokenWithdrawals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"decimals"}},{"kind":"Field","name":{"kind":"Name","value":"totalSupply"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"tokenDeposits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"decimals"}},{"kind":"Field","name":{"kind":"Name","value":"totalSupply"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"withdrawableTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"decimals"}},{"kind":"Field","name":{"kind":"Name","value":"totalSupply"}}]}}]}}]}}]} as unknown as DocumentNode<SplitDetailsFragmentFragment, unknown>;
-export const SplitsByPayeeDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SplitsByPayee"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payee"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Bytes"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"splits"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shares_"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"payee"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payee"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitBaseFragment"}}]}}]}},...SplitBaseFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitsByPayeeQuery, SplitsByPayeeQueryVariables>;
-export const SplitDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Split"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"split"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SplitDetailsFragment"}}]}}]}},...SplitDetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SplitQuery, SplitQueryVariables>;
-export const TransactionsBySplitDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TransactionsBySplit"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"split"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transactions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"split"},"value":{"kind":"Variable","name":{"kind":"Name","value":"split"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionDetailsFragment"}}]}}]}},...TransactionDetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<TransactionsBySplitQuery, TransactionsBySplitQueryVariables>;
+export const TokenFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TokenFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Token' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'symbol' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'decimals' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'totalSupply' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TokenFragmentFragment, unknown>;
+export const TokenValueFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TokenValueFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'TokenValue' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'token' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'TokenFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...TokenFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<TokenValueFragmentFragment, unknown>;
+export const ShareFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ShareFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Share' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'payee' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'value' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ShareFragmentFragment, unknown>;
+export const SplitBaseFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'SplitBaseFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Split' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'blockNumber' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'metaData' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'metaDataUri' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'totalShares' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'txCount' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SplitBaseFragmentFragment, unknown>;
+export const TransactionBaseFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TransactionBaseFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Transaction' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'split' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'SplitBaseFragment' },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'blockNumber' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'gasUsed' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'gasPrice' } },
+        ],
+      },
+    },
+    ...SplitBaseFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<TransactionBaseFragmentFragment, unknown>;
+export const WithdrawalFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'WithdrawalFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Withdrawal' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'token' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'symbol' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'decimals' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalSupply' } },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transaction' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'TransactionBaseFragment' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'split' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'SplitBaseFragment' },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'origin' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'logIndex' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'to' } },
+        ],
+      },
+    },
+    ...TransactionBaseFragmentFragmentDoc.definitions,
+    ...SplitBaseFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<WithdrawalFragmentFragment, unknown>;
+export const DepositFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'DepositFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Deposit' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'token' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'TokenFragment' },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transaction' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'TransactionBaseFragment' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'split' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'SplitBaseFragment' },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'origin' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'logIndex' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'from' } },
+        ],
+      },
+    },
+    ...TokenFragmentFragmentDoc.definitions,
+    ...TransactionBaseFragmentFragmentDoc.definitions,
+    ...SplitBaseFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<DepositFragmentFragment, unknown>;
+export const ContractUriUpdateFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ContractURIUpdateFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'ContractURIUpdate' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transaction' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'TransactionBaseFragment' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'split' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'SplitBaseFragment' },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'origin' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'logIndex' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'previousURI' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'newURI' } },
+        ],
+      },
+    },
+    ...TransactionBaseFragmentFragmentDoc.definitions,
+    ...SplitBaseFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<ContractUriUpdateFragmentFragment, unknown>;
+export const TransactionDetailsFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TransactionDetailsFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Transaction' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'split' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'SplitBaseFragment' },
+                },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'blockNumber' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'gasUsed' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'gasPrice' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'withdrawals' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'WithdrawalFragment' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deposits' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'DepositFragment' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'contractURIUpdates' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ContractURIUpdateFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SplitBaseFragmentFragmentDoc.definitions,
+    ...WithdrawalFragmentFragmentDoc.definitions,
+    ...DepositFragmentFragmentDoc.definitions,
+    ...ContractUriUpdateFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<TransactionDetailsFragmentFragment, unknown>;
+export const SplitDetailsFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'SplitDetailsFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Split' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'blockNumber' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'metaData' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+              ],
+            },
+          },
+          { kind: 'Field', name: { kind: 'Name', value: 'metaDataUri' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'totalShares' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'txCount' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'shares' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'payee' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'value' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'tokenWithdrawals' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'token' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'symbol' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'decimals' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'totalSupply' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'tokenDeposits' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'token' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'symbol' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'decimals' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'totalSupply' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'withdrawableTokens' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'token' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'symbol' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'decimals' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'totalSupply' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SplitDetailsFragmentFragment, unknown>;
+export const SplitsByPayeeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'SplitsByPayee' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'payee' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Bytes' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'splits' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'shares_' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'payee' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'payee' },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'SplitBaseFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SplitBaseFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<SplitsByPayeeQuery, SplitsByPayeeQueryVariables>;
+export const SplitDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Split' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'split' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'SplitDetailsFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SplitDetailsFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<SplitQuery, SplitQueryVariables>;
+export const TransactionsBySplitDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'TransactionsBySplit' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'split' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transactions' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'split' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'split' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'TransactionDetailsFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...TransactionDetailsFragmentFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  TransactionsBySplitQuery,
+  TransactionsBySplitQueryVariables
+>;

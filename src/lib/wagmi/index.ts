@@ -1,5 +1,4 @@
-import {FallbackTransport} from "viem";
-import {Config, configureChains, createConfig, PublicClient, WebSocketPublicClient} from 'wagmi';
+import { configureChains, createConfig } from 'wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
@@ -13,16 +12,15 @@ import { availableChains } from './chains';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   availableChains,
-  [
-    infuraProvider({ apiKey: INFURA_KEY }),
-    publicProvider(),
-  ]
+  [infuraProvider({ apiKey: INFURA_KEY }), publicProvider()],
 );
 
 export function useWagmi() {
   const config = createConfig({
     autoConnect: true,
-    publicClient, webSocketPublicClient,    connectors: [
+    publicClient,
+    webSocketPublicClient,
+    connectors: [
       new MetaMaskConnector({ chains }),
       new CoinbaseWalletConnector({
         chains,
@@ -44,7 +42,7 @@ export function useWagmi() {
         },
       }),
     ],
-  })
+  });
 
-  return config as never
+  return config as never;
 }

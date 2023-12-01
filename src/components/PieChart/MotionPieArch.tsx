@@ -13,7 +13,7 @@ export interface MotionPieArchProps extends ArchData {
   isActive?: boolean;
   onMouseMove?: (
     e: React.MouseEvent<SVGPathElement, MouseEvent>,
-    data: ArchData
+    data: ArchData,
   ) => void;
   onMouseOut?: (e: React.MouseEvent<SVGPathElement, MouseEvent>) => void;
 }
@@ -36,7 +36,7 @@ export default function MotionPieArch({
         });
       }
     },
-    [onMouseMove, id, value]
+    [onMouseMove, id, value],
   );
 
   return (

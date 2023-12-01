@@ -19,7 +19,7 @@ export type WithdrawSplitProps = Omit<
 export default function useWithdrawSplit(
   address: string,
   tokens: Balance[] = [],
-  props?: WithdrawSplitProps
+  props?: WithdrawSplitProps,
 ) {
   const account = useAccount();
 

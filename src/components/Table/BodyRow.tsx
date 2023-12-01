@@ -6,7 +6,7 @@ import React from 'react';
 type BodyRowProps<TData extends RowData> = Row<TData>;
 
 export default function BodyRow<TData extends RowData>(
-  row: BodyRowProps<TData>
+  row: BodyRowProps<TData>,
 ) {
   return (
     <Tr>

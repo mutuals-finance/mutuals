@@ -16,7 +16,7 @@ export type CreateSplitArgs = [
   BigNumber[],
   string,
   boolean,
-  BigNumber
+  BigNumber,
 ];
 
 export type CreateSplitProps = {

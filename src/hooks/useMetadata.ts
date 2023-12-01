@@ -71,7 +71,7 @@ export function useMetadata() {
                   ? `ipfs://${reader?.cid.toString()}`
                   : null,
               }),
-            ])
+            ]),
           ),
           !!reader?.car && (await client.storeCar(reader?.car)),
         ]);
@@ -86,7 +86,7 @@ export function useMetadata() {
         controllerRef.current = null;
       }
     },
-    [client]
+    [client],
   );
 
   return {

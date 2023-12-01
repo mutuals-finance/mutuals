@@ -17,10 +17,10 @@ export default function useExplorerLink({
   const _chain = !!chainId
     ? net.chains.find((c) => c?.id === chainId)
     : !!chain
-    ? chain
-    : !!net.chain
-    ? net.chain
-    : net.chains[0];
+      ? chain
+      : !!net.chain
+        ? net.chain
+        : net.chains[0];
 
   const baseUrl = _chain?.blockExplorers?.default.url || '';
   const href = `${baseUrl}/address/${address}`;

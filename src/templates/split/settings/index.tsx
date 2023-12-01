@@ -49,7 +49,7 @@ export const routes = [
 export function SettingsTab() {
   const template = useRouterTemplate(
     routes,
-    ({ asPath }) => asPath.split('/')[4]
+    ({ asPath }) => asPath.split('/')[4],
   );
 
   return (

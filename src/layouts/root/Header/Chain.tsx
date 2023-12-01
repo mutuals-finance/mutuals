@@ -73,7 +73,7 @@ export default function Chain() {
                         <Spinner size='xs' ml={'1'} />
                       )}
                     </MenuItem>
-                  )
+                  ),
               )}
             </MenuGroup>
           </MenuList>
