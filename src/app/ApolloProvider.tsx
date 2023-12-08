@@ -43,11 +43,15 @@ export default function ApolloProvider({
     });
 
     const delayLink = new ApolloLink((operation, forward) => {
-      const delay = typeof window === 'undefined' ? delayProp : delayProp;
+      const delay =
+        typeof window === 'undefined'
+          ? delayProp
+          : clientCookies.get('apollo-x-custom-delay') ?? delayProp;
       operation.setContext(({ headers = {} }) => {
         return {
           headers: {
             ...headers,
+            // 'x-custom-delay': delay,
           },
         };
       });

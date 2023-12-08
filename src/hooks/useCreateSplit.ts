@@ -1,4 +1,3 @@
-import { BigNumber, utils } from 'ethers';
 import { useMemo } from 'react';
 import {
   useContractWrite,
@@ -10,13 +9,14 @@ import { FACTORY_ADDRESS } from '@/lib/constants';
 import useDebounce from '@/hooks/useDebounce';
 
 import { SplitFactory__factory } from '@/../../types/typechain';
+import { randomBytes } from 'ethers';
 
 export type CreateSplitArgs = [
   `0x{string}`[],
-  BigNumber[],
+  BigInt[],
   string,
   boolean,
-  BigNumber,
+  BigInt,
 ];
 
 export type CreateSplitProps = {
@@ -36,12 +36,15 @@ export default function useCreateSplit({
   metadataLocked,
   ...props
 }: CreateSplitProps) {
-  const salt = BigNumber.from(utils.randomBytes(32));
+  const salt = randomBytes(32).reduce(
+    (acc, val) => acc + BigInt(val.toString()),
+    BigInt('0'),
+  );
 
   const argsMemo = useMemo(() => {
     return [
       payees,
-      shares.map((s) => BigNumber.from(s)),
+      shares.map((s) => BigInt(s.toString())),
       uri,
       !!metadataLocked,
       salt,
