@@ -16,7 +16,12 @@ export default function InputSwitch({
   const { control } = useFormContext();
 
   return (
-    <InputBase id={id!} validation={validation!} helperText={helperText!} {...rest}>
+    <InputBase
+      id={id!}
+      validation={validation!}
+      helperText={helperText!}
+      {...rest}
+    >
       <Controller
         control={control!}
         name={id!}

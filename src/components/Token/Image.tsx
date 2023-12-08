@@ -30,7 +30,7 @@ export default function TokenImage({ src, alt, ...props }: TokenImageProps) {
             src={src}
             alt={alt || 'Unknown Token'}
             fill={true}
-            sizes={"22"}
+            sizes={'22'}
           />
         ) : (
           <Icon as={IoHelp} />

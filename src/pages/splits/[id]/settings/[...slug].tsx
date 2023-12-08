@@ -16,7 +16,7 @@ import routes from '@/templates/split/details';
 
 import { NextPageWithLayout } from '#/app';
 
-import {getSplitDetails} from "@/lib/split";
+import { getSplitDetails } from '@/lib/split';
 
 const SplitDetailSettingsPage: NextPageWithLayout = function ({
   split,

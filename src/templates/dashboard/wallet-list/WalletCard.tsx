@@ -1,46 +1,18 @@
+'use client';
+
 import {
   Box,
   Button,
   Card,
-  CardBody,
   CardFooter,
   CardHeader,
-  Flex,
   Heading,
-  IconButton,
-  LinkBox,
-  LinkOverlay,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Stack,
   Text,
-  useColorModeValue,
-  VStack,
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
 import React from 'react';
-import {
-  IoEllipsisHorizontal,
-  IoEyeOffOutline,
-  IoOpenOutline,
-  IoSettingsOutline,
-} from 'react-icons/io5';
+import { shortenAddress } from '@/lib/utils';
 
-import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
-import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
-import { splitBaseFragment } from '@/lib/graphql/fragments';
-import { useMetadata } from '@/lib/split/hooks';
-import {
-  formatPrefixedAddress,
-  getShortNameByChainId,
-  shortenAddress,
-} from '@/lib/utils';
-
-import Date from '@/components/Date';
-import SplitBlurBg from '@/components/Split/BlurBg';
-import { SplitImage } from '@/components/Split/Image';
 import UserAvatar from '@/components/UserAvatar';
 
 type SplitCardProps = {};

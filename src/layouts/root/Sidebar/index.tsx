@@ -1,14 +1,7 @@
-import { Link } from '@chakra-ui/next-js';
-import {
-  Box,
-  Button,
-  HStack,
-  IconButton,
-  Stack,
-  Text,
-  useColorModeValue,
-  VStack,
-} from '@chakra-ui/react';
+'use client';
+
+import Link from 'next/link';
+import { Box, Button, HStack, IconButton, Stack, Text } from '@chakra-ui/react';
 import React from 'react';
 import { IconType } from 'react-icons';
 import {
@@ -21,7 +14,6 @@ import {
 } from 'react-icons/io5';
 import { useToggle } from 'react-use';
 
-import AnimationBox from '@/components/Animation/Box';
 import Sidebar from '@/components/Sidebar';
 
 import Logo from '@/layouts/root/Header/Logo';
@@ -70,12 +62,16 @@ export default function RootSidebar({ children }: React.PropsWithChildren) {
   return (
     <Stack gap='0' justifyContent={'stretch'} direction={'row'}>
       <Sidebar
-        w={"16rem"}
+        w={'16rem'}
         minW={'5.6rem'}
         isOpen={isOpen}
         header={
           <HStack justifyContent={'flex-end'}>
-            {isOpen && <Logo w={'24'} mr={'auto'} />}
+            {isOpen && (
+              <Box w={'24'} mr={'auto'}>
+                <Logo />
+              </Box>
+            )}
 
             <IconButton
               icon={<IoMenuSharp display={'block'} />}

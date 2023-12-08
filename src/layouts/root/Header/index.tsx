@@ -1,17 +1,11 @@
+'use client';
+
 import { Icon } from '@chakra-ui/icon';
-import { Link } from '@chakra-ui/next-js';
 import {
-  AbsoluteCenter,
-  Box,
-  Divider,
-  Flex,
-  Hide,
   IconButton,
   InputGroup,
   InputLeftElement,
-  Show,
   Stack,
-  StackDivider,
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -23,7 +17,6 @@ import Form from '@/components/Form';
 import Input from '@/components/Form/Input';
 
 import Chain from '@/layouts/root/Header/Chain';
-import Logo from '@/layouts/root/Header/Logo';
 import User from '@/layouts/root/Header/User';
 
 interface NavItem {

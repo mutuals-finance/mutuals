@@ -17,16 +17,16 @@ import { WithdrawTab } from '@/templates/split/overview/Sidebar/WithdrawTab';
 
 export function Sidebar({ ...props }: BoxProps) {
   const { sidebar } = useSplit();
-  const sidebarWidth = "24rem"
+  const sidebarWidth = '24rem';
 
   return (
     <SidebarComponent
       isOpen={sidebar.isOpen}
       top={'4rem'}
       h={'calc(100vh - 4rem)'}
-      placement={"right"}
+      placement={'right'}
       w={sidebarWidth}
-      overflow={"hidden"}
+      overflow={'hidden'}
       {...props}
     >
       <Box position={'absolute'} inset={'0'} w={sidebarWidth}>

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import {Contract, Interface, Signer} from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   ContractMetadata,
@@ -73,7 +73,7 @@ const _abi = [
 export class ContractMetadata__factory {
   static readonly abi = _abi;
   static createInterface(): ContractMetadataInterface {
-    return new utils.Interface(_abi) as ContractMetadataInterface;
+    return new Interface(_abi) as ContractMetadataInterface;
   }
   static connect(
     address: string,

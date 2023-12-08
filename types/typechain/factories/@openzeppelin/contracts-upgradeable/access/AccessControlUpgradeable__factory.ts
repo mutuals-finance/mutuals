@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import {Contract, Interface, Signer} from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   AccessControlUpgradeable,
@@ -232,7 +232,7 @@ const _abi = [
 export class AccessControlUpgradeable__factory {
   static readonly abi = _abi;
   static createInterface(): AccessControlUpgradeableInterface {
-    return new utils.Interface(_abi) as AccessControlUpgradeableInterface;
+    return new Interface(_abi) as AccessControlUpgradeableInterface;
   }
   static connect(
     address: string,

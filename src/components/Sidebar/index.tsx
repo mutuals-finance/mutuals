@@ -1,15 +1,18 @@
 import React from 'react';
 
 import { SidebarHeader } from '@/components/Sidebar/SidebarHeader';
-import {SidebarWrapper, SidebarWrapperProps} from '@/components/Sidebar/SidebarWrapper';
+import {
+  SidebarWrapper,
+  SidebarWrapperProps,
+} from '@/components/Sidebar/SidebarWrapper';
 
 import { SidebarContent } from './SidebarContent';
 import { SidebarFooter } from './SidebarFooter';
-import {BoxProps} from "@chakra-ui/react";
+import { BoxProps } from '@chakra-ui/react';
 
 export { SidebarContent, SidebarFooter, SidebarHeader, SidebarWrapper };
 
-interface SidebarProps extends SidebarWrapperProps{
+interface SidebarProps extends SidebarWrapperProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
 }

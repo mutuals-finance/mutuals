@@ -1,13 +1,5 @@
-import { Link } from '@chakra-ui/next-js';
-import {
-  Box,
-  Container,
-  Divider,
-  HStack,
-  Stack,
-  StackDivider,
-  Text,
-} from '@chakra-ui/react';
+import { Container, Stack, StackDivider, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 
 export default function Footer() {
   const routes: Record<string, string> = {

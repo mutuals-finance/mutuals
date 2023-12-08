@@ -1,9 +1,9 @@
-import {ipfsUrlFromUri, parsePrefixedAddress} from '@/lib/utils';
-import {addApolloState, initializeApollo} from "@/lib/graphql/client";
-import {SPLIT} from "@/lib/graphql/queries";
-import {useFragment} from "@/lib/graphql/__generated__";
-import {splitDetailsFragment} from "@/lib/graphql/fragments";
-import {AppProps} from "next/app";
+import { ipfsUrlFromUri, parsePrefixedAddress } from '@/lib/utils';
+import { addApolloState, initializeApollo } from '@/lib/graphql/client';
+import { SPLIT } from '@/lib/graphql/queries';
+import { useFragment } from '@/lib/graphql/__generated__';
+import { splitDetailsFragment } from '@/lib/graphql/fragments';
+import { AppProps } from 'next/app';
 
 export const fetcher = <TResponse = unknown>(url: string): Promise<TResponse> =>
   fetch(url).then((res) => res.json());
@@ -11,7 +11,9 @@ export const fetcher = <TResponse = unknown>(url: string): Promise<TResponse> =>
 export const getMetadata = (uri?: string | null) =>
   fetcher(ipfsUrlFromUri(uri || ''));
 
-export const getSplitDetails = async ({params: {id},}: {
+export const getSplitDetails = async ({
+  params: { id },
+}: {
   params: { id?: string };
 }) => {
   if (!id) {
@@ -22,11 +24,11 @@ export const getSplitDetails = async ({params: {id},}: {
   }
 
   const client = await initializeApollo();
-  const {address} = parsePrefixedAddress(id);
+  const { address } = parsePrefixedAddress(id);
 
-  const {data} = await client.query({
+  const { data } = await client.query({
     query: SPLIT,
-    variables: {id: address.toLowerCase()},
+    variables: { id: address.toLowerCase() },
   });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -50,4 +52,4 @@ export const getSplitDetails = async ({params: {id},}: {
   };
 
   return addApolloState(client, pageProps);
-}
+};

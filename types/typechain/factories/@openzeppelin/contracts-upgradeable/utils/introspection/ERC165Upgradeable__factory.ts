@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import {Contract, Interface, Signer} from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   ERC165Upgradeable,
@@ -47,7 +47,7 @@ const _abi = [
 export class ERC165Upgradeable__factory {
   static readonly abi = _abi;
   static createInterface(): ERC165UpgradeableInterface {
-    return new utils.Interface(_abi) as ERC165UpgradeableInterface;
+    return new Interface(_abi) as ERC165UpgradeableInterface;
   }
   static connect(
     address: string,

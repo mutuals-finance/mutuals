@@ -26,12 +26,18 @@ export function SplitImage({
       {!src || src === '' ? (
         <IoImage />
       ) : (
-        <Box p={p!} borderRadius={borderRadius!} position={"absolute"} inset={"0"} {...props}>
+        <Box
+          p={p!}
+          borderRadius={borderRadius!}
+          position={'absolute'}
+          inset={'0'}
+          {...props}
+        >
           <NextImage
             src={ipfsResolveData(src)}
             alt={alt || 'Unknown Split'}
             fill={fill}
-            sizes={"150"}
+            sizes={'150'}
           />
         </Box>
       )}

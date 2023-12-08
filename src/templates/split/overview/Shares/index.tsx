@@ -46,10 +46,7 @@ export function Shares() {
             />
           </AspectRatio>
         </Flex>
-        <ShareTable
-          shares={payees}
-          containerProps={{ flex: '1' }}
-        />
+        <ShareTable shares={payees} containerProps={{ flex: '1' }} />
 
         {/*
         <ShareItem

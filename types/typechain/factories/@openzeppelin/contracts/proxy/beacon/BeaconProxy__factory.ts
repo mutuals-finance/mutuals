@@ -3,11 +3,9 @@
 /* eslint-disable */
 import {
   Signer,
-  utils,
   Contract,
   ContractFactory,
-  PayableOverrides,
-  BytesLike,
+  BytesLike, Overrides, Interface,
 } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
 import type { PromiseOrValue } from "../../../../../common";
@@ -111,14 +109,14 @@ export class BeaconProxy__factory extends ContractFactory {
   override deploy(
     beacon: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<BeaconProxy> {
     return super.deploy(beacon, data, overrides || {}) as Promise<BeaconProxy>;
   }
   override getDeployTransaction(
     beacon: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): TransactionRequest {
     return super.getDeployTransaction(beacon, data, overrides || {});
   }
@@ -132,7 +130,7 @@ export class BeaconProxy__factory extends ContractFactory {
   static readonly bytecode = _bytecode;
   static readonly abi = _abi;
   static createInterface(): BeaconProxyInterface {
-    return new utils.Interface(_abi) as BeaconProxyInterface;
+    return new Interface(_abi) as BeaconProxyInterface;
   }
   static connect(
     address: string,

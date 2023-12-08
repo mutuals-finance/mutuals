@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import {Contract, Interface, Signer} from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   Ownable,
@@ -67,7 +67,7 @@ const _abi = [
 export class Ownable__factory {
   static readonly abi = _abi;
   static createInterface(): OwnableInterface {
-    return new utils.Interface(_abi) as OwnableInterface;
+    return new Interface(_abi) as OwnableInterface;
   }
   static connect(
     address: string,

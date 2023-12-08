@@ -12,7 +12,7 @@ import {
   polygonMumbai,
 } from 'wagmi/chains';
 
-import { NODE_ENV } from '@/lib/constants';
+import { IS_DEV } from '@/lib/constants';
 
 import * as ARBITRUM_LOGO from '@/assets/svg/arbitrum-logo.svg';
 import * as ETH_LOGO from '@/assets/svg/ethereum-logo.svg';
@@ -61,13 +61,15 @@ const _LOCAL_DEV_CHAINS = [
 const _CHAINS_BY_ENV = {
   production: _DEFAULT_CHAINS,
   development: _LOCAL_DEV_CHAINS,
-  test: _LOCAL_DEV_CHAINS,
 };
 
-const _AVAILABLE_CHAINS = (_CHAINS_BY_ENV[NODE_ENV] ||
-  _LOCAL_DEV_CHAINS) as WagmiChain[];
+/*
+const AVAILABLE_CHAINS_INNER = (
+  IS_DEV ? _DEFAULT_CHAINS : _LOCAL_DEV_CHAINS
+) as WagmiChain[];
+*/
 
-export const AVAILABLE_CHAINS: Array<Chain> = _AVAILABLE_CHAINS.map(
+export const AVAILABLE_CHAINS: Array<Chain> = _LOCAL_DEV_CHAINS.map(
   (chain) => ({
     ...chain,
     ...({

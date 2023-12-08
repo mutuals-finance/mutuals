@@ -1,3 +1,5 @@
+'use client';
+
 import { useQuery } from '@apollo/client';
 import { Box, Container, Heading, SimpleGrid } from '@chakra-ui/react';
 import React from 'react';

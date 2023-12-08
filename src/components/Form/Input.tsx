@@ -1,3 +1,5 @@
+'use client';
+
 import { Input as ChakraInput } from '@chakra-ui/react';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';

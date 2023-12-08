@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import {Contract, Interface, Signer} from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   Initializable,
@@ -28,7 +28,7 @@ const _abi = [
 export class Initializable__factory {
   static readonly abi = _abi;
   static createInterface(): InitializableInterface {
-    return new utils.Interface(_abi) as InitializableInterface;
+    return new Interface(_abi) as InitializableInterface;
   }
   static connect(
     address: string,

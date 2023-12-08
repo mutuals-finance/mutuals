@@ -7,7 +7,6 @@ import {
   MenuItem,
   MenuList,
   Spinner,
-  Text,
 } from '@chakra-ui/react';
 import NextImage from 'next/image';
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5';

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import { Contract, Interface, Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   IERC1822Proxiable,
@@ -28,7 +28,7 @@ const _abi = [
 export class IERC1822Proxiable__factory {
   static readonly abi = _abi;
   static createInterface(): IERC1822ProxiableInterface {
-    return new utils.Interface(_abi) as IERC1822ProxiableInterface;
+    return new Interface(_abi) as IERC1822ProxiableInterface;
   }
   static connect(
     address: string,

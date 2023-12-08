@@ -15,7 +15,7 @@ import Seo from '@/components/Seo';
 import routes from '@/templates/split/details';
 
 import { NextPageWithLayout } from '#/app';
-import {getSplitDetails} from "@/lib/split";
+import { getSplitDetails } from '@/lib/split';
 
 const SplitDetailPage: NextPageWithLayout = function ({
   split,

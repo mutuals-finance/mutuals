@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Box,
   Button,
@@ -20,7 +22,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { Stat, StatHelpText, StatLabel } from '@chakra-ui/stat';
+import { Stat, StatLabel } from '@chakra-ui/stat';
 import NextLink from 'next/link';
 import React from 'react';
 import {
@@ -41,8 +43,6 @@ import {
   shortenAddress,
 } from '@/lib/utils';
 
-import Date from '@/components/Date';
-import SplitBlurBg from '@/components/Split/BlurBg';
 import { SplitImage } from '@/components/Split/Image';
 
 interface SplitFragmentCardProps {

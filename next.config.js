@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+  webpack: (config) => {
+    // https://github.com/wevm/wagmi/issues/3178#issuecomment-1840103498
+    config.externals.push('pino-pretty', 'lokijs', 'encoding');
+    return config;
+  },
   images: {
     domains: [
       'tokens.1inch.io',

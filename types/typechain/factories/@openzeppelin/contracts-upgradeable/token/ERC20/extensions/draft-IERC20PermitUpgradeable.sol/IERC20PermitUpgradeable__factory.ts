@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
+import { Contract, Interface, Signer} from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   IERC20PermitUpgradeable,
@@ -90,7 +90,7 @@ const _abi = [
 export class IERC20PermitUpgradeable__factory {
   static readonly abi = _abi;
   static createInterface(): IERC20PermitUpgradeableInterface {
-    return new utils.Interface(_abi) as IERC20PermitUpgradeableInterface;
+    return new Interface(_abi) as IERC20PermitUpgradeableInterface;
   }
   static connect(
     address: string,

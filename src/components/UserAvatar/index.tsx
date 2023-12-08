@@ -1,11 +1,11 @@
 import { Avatar, type AvatarProps } from '@chakra-ui/react';
 import React from 'react';
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 
 const JazzIcon = dynamic(
   () => import('@ukstv/jazzicon-react').then((mod) => mod.Jazzicon),
-  { ssr: false }
-)
+  { ssr: false },
+);
 
 interface UserAvatarProps extends AvatarProps {
   address?: string;

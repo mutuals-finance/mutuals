@@ -5,13 +5,13 @@ import { Props } from 'react-select';
 
 import InputBase from '@/components/Form/InputBase';
 import { BaseFieldProps } from '@/components/Form/types';
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 
 // Import <Select /> because react-select seems to not be optimized for SSR - https://github.com/JedWatson/react-select/issues/5459
-const Select  = dynamic(
+const Select = dynamic(
   () => import('chakra-react-select').then((mod) => mod.Select),
-  { ssr: false }
-)
+  { ssr: false },
+);
 
 type InputListboxProps<
   Option,
@@ -25,7 +25,15 @@ export default function InputListbox<
   Group extends GroupBase<Option> = GroupBase<Option>,
 >({ id = '', validation, ...rest }: InputListboxProps<Option, IsMulti, Group>) {
   const { control } = useFormContext();
-  const { isMulti, selectedOptionStyle, hideSelectedOptions, getOptionValue, isSearchable, closeMenuOnSelect, ...props} = rest;
+  const {
+    isMulti,
+    selectedOptionStyle,
+    hideSelectedOptions,
+    getOptionValue,
+    isSearchable,
+    closeMenuOnSelect,
+    ...props
+  } = rest;
   return (
     <InputBase id={id!} validation={validation!} {...props}>
       <Controller

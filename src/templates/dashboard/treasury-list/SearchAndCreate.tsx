@@ -1,12 +1,10 @@
 import { Icon } from '@chakra-ui/icon';
 import {
-  Button,
   HStack,
   InputGroup,
   InputLeftElement,
   useColorModeValue,
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import React from 'react';
 import { IoSearch } from 'react-icons/io5';
 
