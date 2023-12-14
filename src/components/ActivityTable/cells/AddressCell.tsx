@@ -1,5 +1,5 @@
 import { type TokenTransfer } from '@ankr.com/ankr.js/dist/types';
-import { Link } from '@chakra-ui/next-js';
+import Link from 'next/link';
 import { Text } from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';

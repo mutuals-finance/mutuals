@@ -1,25 +1,10 @@
-import { Chain as WagmiChain } from 'wagmi';
-import {
-  arbitrum,
-  arbitrumGoerli,
-  goerli,
-  hardhat,
-  localhost,
-  mainnet,
-  optimism,
-  optimismGoerli,
-  polygon,
-  polygonMumbai,
-} from 'wagmi/chains';
-
-import { IS_DEV } from '@/lib/constants';
-
 import * as ARBITRUM_LOGO from '@/assets/svg/arbitrum-logo.svg';
 import * as ETH_LOGO from '@/assets/svg/ethereum-logo.svg';
 import * as OPTIMISM_LOGO from '@/assets/svg/optimism-logo.svg';
 import * as MATIC_LOGO from '@/assets/svg/polygonMatic-logo.svg';
 
 import { Chain, ChainExt } from '#/chain';
+import { allChains } from '@/lib/wagmi/chains';
 
 export { ARBITRUM_LOGO, ETH_LOGO, MATIC_LOGO };
 
@@ -49,27 +34,13 @@ export const CHAIN_SHORT_NAME_MAP: Record<number, string> = {
   31337: 'local', // hardhat
 };
 
-const _DEFAULT_CHAINS = [mainnet, polygon, arbitrum, optimism];
-const _DEV_CHAINS = [polygonMumbai, goerli, arbitrumGoerli, optimismGoerli];
-const _LOCAL_DEV_CHAINS = [
-  ..._DEFAULT_CHAINS,
-  ..._DEV_CHAINS,
-  hardhat,
-  localhost,
-];
-
-const _CHAINS_BY_ENV = {
-  production: _DEFAULT_CHAINS,
-  development: _LOCAL_DEV_CHAINS,
-};
-
 /*
 const AVAILABLE_CHAINS_INNER = (
   IS_DEV ? _DEFAULT_CHAINS : _LOCAL_DEV_CHAINS
 ) as WagmiChain[];
 */
 
-export const AVAILABLE_CHAINS: Array<Chain> = _LOCAL_DEV_CHAINS.map(
+export const AVAILABLE_CHAINS: Array<Chain> = Object.values(allChains).map(
   (chain) => ({
     ...chain,
     ...({

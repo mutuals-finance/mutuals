@@ -135,6 +135,12 @@ export const splitBaseFragment = graphql(/* GraphQL */ `
     metaDataUri
     totalShares
     txCount
+    shares {
+      id
+      payee
+      timestamp
+      value
+    }
   }
 `);
 

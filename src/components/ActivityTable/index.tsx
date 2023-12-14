@@ -1,3 +1,5 @@
+'use client';
+
 import { Balance } from '@ankr.com/ankr.js';
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
 import { Flex } from '@chakra-ui/react';

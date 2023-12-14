@@ -1,14 +1,17 @@
 import React, { PropsWithChildren } from 'react';
 import Layout from '@/layouts/root/';
-import Providers from '@/app/Providers';
+import ServerProviders from '@/app/ServerProviders';
+import ClientProviders from '@/app/ClientProviders';
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='en'>
       <body>
-        <Providers>
-          <Layout>{children}</Layout>
-        </Providers>
+        <ServerProviders>
+          <ClientProviders>
+            <Layout>{children}</Layout>
+          </ClientProviders>
+        </ServerProviders>
       </body>
     </html>
   );

@@ -53,17 +53,12 @@ export function SplitFragmentCard(props: SplitFragmentCardProps) {
   const split = useFragment(splitBaseFragment, props.fragment);
   const { data } = useMetadata({ uri: split?.metaDataUri });
 
-  return <SplitCard {...split} metaData={data} />;
+  return <SplitCard {...split} metaData={data!} />;
 }
 
 type SplitCardProps = Partial<SplitBaseFragmentFragment>;
 
-export default function SplitCard({
-  id,
-  metaData,
-  address,
-  timestamp,
-}: SplitCardProps) {
+export default function SplitCard({ id, metaData, address }: SplitCardProps) {
   return (
     <LinkBox as='article' rounded={'lg'}>
       <Card variant={'outline'} bg={'transparent'}>

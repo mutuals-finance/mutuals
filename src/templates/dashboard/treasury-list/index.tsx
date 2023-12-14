@@ -23,7 +23,7 @@ export default function TreasuryList() {
     <Box as={'section'} my={'12'}>
       <Container maxW='container.lg'>
         <Heading as={'h2'} size={'lg'} fontWeight={'700'} mb={'6'}>
-          Treasuries
+          Payment Pools
         </Heading>
         <TreasurySearchAndCreate />
         <SimpleGrid

@@ -1,3 +1,5 @@
+'use client';
+
 import { type Balance } from '@ankr.com/ankr.js';
 import { Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';

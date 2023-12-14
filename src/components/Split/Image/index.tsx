@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, BoxProps, useColorModeValue } from '@chakra-ui/react';
 import NextImage, { type ImageProps } from 'next/image';
 import React from 'react';
@@ -21,26 +23,28 @@ export function SplitImage({
       borderRadius={borderRadius!}
       boxSize={boxSize!}
       borderWidth={'1px'}
-      bg={useColorModeValue(bg || 'whiteAlpha.600', bg || 'blackAlpha.600')}
+      bg={useColorModeValue(bg ?? 'whiteAlpha.600', bg ?? 'blackAlpha.600')}
     >
-      {!src || src === '' ? (
-        <IoImage />
-      ) : (
-        <Box
-          p={p!}
-          borderRadius={borderRadius!}
-          position={'absolute'}
-          inset={'0'}
-          {...props}
-        >
-          <NextImage
-            src={ipfsResolveData(src)}
-            alt={alt || 'Unknown Split'}
-            fill={fill}
-            sizes={'150'}
-          />
-        </Box>
-      )}
+      <>
+        {!src || src === '' ? (
+          <IoImage />
+        ) : (
+          <Box
+            p={p!}
+            borderRadius={borderRadius!}
+            position={'absolute'}
+            inset={'0'}
+            {...props}
+          >
+            <NextImage
+              src={ipfsResolveData(src)}
+              alt={alt || 'Unknown Split'}
+              fill={fill}
+              sizes={'150'}
+            />
+          </Box>
+        )}
+      </>
     </Box>
   );
 }
