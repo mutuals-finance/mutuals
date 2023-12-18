@@ -89,7 +89,7 @@ export default async function PoolHandleDeposit({
         borderTop={'1px solid'}
         borderColor={'border.1'}
       >
-        <Text>Pool address</Text>
+        <Text fontSize={'sm'}>Pool address</Text>
         <ButtonGroup size='md' variant='outline' isAttached>
           <Button
             w={'full'}

@@ -1,3 +1,5 @@
+'use client';
+
 import { Balance } from '@ankr.com/ankr.js/dist/types';
 import {
   Box,
@@ -11,22 +13,14 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
-import {
-  chakraComponents,
-  ControlProps,
-  GroupBase,
-  MultiValueGenericProps,
-  OptionProps,
-  ValueContainerProps,
-} from 'chakra-react-select';
-import React, { useMemo } from 'react';
+import { GroupBase } from 'chakra-react-select';
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useToggle } from 'react-use';
 
 import { formatCurrency, formatCurrencyAmount, formatPrice } from '@/lib/utils';
 import useWithdrawSplit from '@/hooks/useWithdrawSplit';
 
-import ContentCard from '@/components/ContentCard';
 import Form from '@/components/Form';
 import FormGroup from '@/components/Form/FormGroup';
 import InputListbox from '@/components/Form/InputListbox';
@@ -34,61 +28,50 @@ import InputSwitch from '@/components/Form/InputSwitch';
 
 import WithdrawModal from '@/app/pool/[id]/(overview)/withdraw/WithdrawModal';
 
-import AssetCardHorizontal from './AssetCardHorizontal';
+import {
+  TokenSelectLabel,
+  TokenSelectOption,
+  TokenSelectValueContainer,
+} from '@/app/pool/[id]/(overview)/withdraw/WithdrawForm/TokenSelectComponents';
+import { GetAccountBalanceReply } from '@ankr.com/ankr.js';
+import {
+  FragmentType,
+  useFragment as getFragment,
+} from '@/lib/graphql/__generated__';
+import { shareFragment, splitBaseFragment } from '@/lib/graphql/fragments';
+
+interface WithdrawFormProps {
+  balance?: GetAccountBalanceReply;
+  shares?: FragmentType<typeof shareFragment>[];
+  pool?: FragmentType<typeof splitBaseFragment> | null;
+}
+
+export default function WithdrawForm(props: WithdrawFormProps) {
+  const assets = props.balance?.assets ?? [];
+
+  return (
+    <Form<WithdrawData> values={{ assets, distribute: false }}>
+      <WithdrawFormInner {...props} />
+    </Form>
+  );
+}
 
 interface WithdrawData {
   assets?: Balance[];
   distribute: boolean;
 }
 
-function TokenSelectOption({
-  ...props
-}: OptionProps<Balance, true, GroupBase<Balance>>) {
-  return (
-    <chakraComponents.Option {...props}>
-      <AssetCardHorizontal
-        {...props.data}
-        selected={props.isSelected}
-        active={props.isSelected}
-      />
-    </chakraComponents.Option>
-  );
-}
-
-function TokenSelectLabel({
-  ...props
-}: MultiValueGenericProps<Balance, true, GroupBase<Balance>>) {
-  return (
-    <chakraComponents.MultiValueLabel {...props}>
-      {props.data.tokenSymbol}
-    </chakraComponents.MultiValueLabel>
-  );
-}
-
-const TokenSelectValueContainer = ({
-  children,
-  ...props
-}: ValueContainerProps<Balance, true, GroupBase<Balance>>) => {
-  const assets = props.getValue();
-
-  return (
-    <chakraComponents.ValueContainer {...props}>
-      <Box w={'100%'} flex={'1'}>
-        {assets.length || 0}{' '}
-      </Box>
-    </chakraComponents.ValueContainer>
-  );
-};
-
-function WithdrawFormInner() {
+function WithdrawFormInner({ balance, ...props }: WithdrawFormProps) {
   const {
     watch,
     formState: { isValid },
   } = useFormContext<WithdrawData>();
+  const shares = props.shares?.map((s) => getFragment(shareFragment, s));
+  const pool = getFragment(splitBaseFragment, props.pool);
+
+  const share = !!shares ? shares[0] : null;
   const assets = watch('assets');
   const distribute = watch('distribute');
-
-  const { balance, accountShare, split } = useSplit();
 
   const total = assets?.reduce(
     (total, asset) => ({
@@ -98,7 +81,7 @@ function WithdrawFormInner() {
     { balance: 0, assetCount: 0 },
   ) || { balance: 0, assetCount: 0 };
 
-  const userWithdrawal = Number(accountShare?.value || '0.00') * total?.balance;
+  const userWithdrawal = Number(share?.value || '0.00') * total?.balance;
 
   const totalWithdrawal = distribute ? total?.balance : userWithdrawal;
 
@@ -108,7 +91,7 @@ function WithdrawFormInner() {
     'Withdrawal Fee': formatCurrency(0),
   };
 
-  const { ...tx } = useWithdrawSplit(split.address, assets);
+  const { ...tx } = useWithdrawSplit(pool?.address, assets);
   const [isModalOpen, setIsModalOpen] = useToggle(false);
 
   return (
@@ -119,10 +102,10 @@ function WithdrawFormInner() {
           helperText={'Specify the tokens you want to withdraw.'}
           id='assets'
           validation={{
-            validate: (v) => v.length > 0 || 'Please select at least one Asset',
+            validate: (v) => v.length > 0 || 'Please select at least one asset',
             required: {
               value: true,
-              message: 'Please select at least one Asset',
+              message: 'Please select at least one asset',
             },
           }}
           isMulti={true}
@@ -205,17 +188,5 @@ function WithdrawFormInner() {
         onClose={() => setIsModalOpen(false)}
       />
     </VStack>
-  );
-}
-
-export function WithdrawForm() {
-  const { balance } = useSplit();
-
-  const assets = balance?.assets || [];
-
-  return (
-    <Form<WithdrawData> values={{ assets, distribute: false }}>
-      <WithdrawFormInner />
-    </Form>
   );
 }
