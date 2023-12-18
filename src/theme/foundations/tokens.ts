@@ -14,6 +14,12 @@ const semanticTokens = {
         _dark: 'gray.700',
       },
     },
+    border: {
+      1: {
+        default: 'gray.200',
+        _dark: 'gray.600',
+      },
+    },
     alpha: {
       1: {
         default: 'blackAlpha.500',

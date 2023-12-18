@@ -1,16 +1,7 @@
-import {
-  Box,
-  Divider,
-  Tab,
-  TabIndicator,
-  TabList,
-  Tabs,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Stack, Tab, TabList, Tabs } from '@chakra-ui/react';
 import Link from 'next/link';
 import React, { PropsWithChildren, useMemo } from 'react';
 import { TabType } from '@/app/pool/[id]/(overview)/Sidebar/tabs';
-import { usePathname } from 'next/navigation';
 
 interface SidebarTabMenuProps {
   tabs?: TabType[];
@@ -22,8 +13,8 @@ export default function SidebarTabsContent({
   children,
 }: PropsWithChildren<SidebarTabMenuProps>) {
   return (
-    <Box>
-      <Tabs isFitted={true} index={index}>
+    <>
+      <Tabs isFitted={true} index={index} flexShrink={'0'}>
         <TabList>
           {tabs?.map(({ title, href }) => (
             <Tab
@@ -39,7 +30,7 @@ export default function SidebarTabsContent({
         </TabList>
       </Tabs>
 
-      <Box p={'3'}>{children}</Box>
-    </Box>
+      {children}
+    </>
   );
 }

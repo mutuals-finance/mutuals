@@ -17,19 +17,19 @@ const PieChart = dynamic(() => import('@/components/PieChart'), {
 });
 
 interface SharesContentProps {
-  shares: FragmentType<typeof shareFragment>[];
+  shares?: FragmentType<typeof shareFragment>[];
 }
 
 export default function SharesContent(props: SharesContentProps) {
-  const shares = props.shares.map((s) => getFragment(shareFragment, s));
+  const shares = props.shares?.map((s) => getFragment(shareFragment, s));
 
   const accountAddress = '0x84f36e3afa3d0994401b24f1eabd4fddbdc715db';
-  const accountShare = shares.find(
+  const accountShare = shares?.find(
     (share) => share.payee.toLowerCase() === accountAddress?.toLowerCase(),
   );
 
   const [payees, { updateAt }] = useList<ActiveShare>(
-    shares.map((s) => ({
+    shares?.map((s) => ({
       ...s,
       isActive: false,
     })),

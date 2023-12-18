@@ -29,6 +29,15 @@ export type PrefixedAddress = {
 };
 
 /**
+ * Decodes and parses a string that may/may not contain an address and returns only the decoded checksummed `address`
+ * @param value (prefixed) address
+ * @returns checksummed `address`
+ */
+export const decodePrefixedAddress = (value: string): string => {
+  return parsePrefixedAddress(decodeURIComponent(value)).address.toLowerCase();
+};
+
+/**
  * Parses a string that may/may not contain an address and returns the `prefix` and checksummed `address`
  * @param value (prefixed) address
  * @returns `prefix` and checksummed `address`

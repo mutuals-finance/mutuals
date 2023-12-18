@@ -8,14 +8,6 @@ export const SPLITS_BY_PAYEE = graphql(/* GraphQL */ `
   }
 `);
 
-export const SPLIT = graphql(/* GraphQL */ `
-  query Split($id: ID!) {
-    split(id: $id) {
-      ...SplitDetailsFragment
-    }
-  }
-`);
-
 export const POOL = graphql(/* GraphQL */ `
   query Pool($id: ID!) {
     split(id: $id) {
@@ -36,6 +28,17 @@ export const SHARES_BY_POOL = graphql(/* GraphQL */ `
   query SharesByPool($pool: String!) {
     shares(where: { split: $pool }) {
       ...ShareFragment
+    }
+  }
+`);
+
+export const POOL_WITH_SHARES = graphql(/* GraphQL */ `
+  query PoolWithShares($id: ID!) {
+    split(id: $id) {
+      ...SplitBaseFragment
+      shares {
+        ...ShareFragment
+      }
     }
   }
 `);

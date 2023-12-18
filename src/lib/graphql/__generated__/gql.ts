@@ -21,13 +21,12 @@ const documents = {
     "\n  fragment WithdrawalFragment on Withdrawal {\n    amount\n    token {\n      id\n      symbol\n      name\n      decimals\n      totalSupply\n    }\n    id\n    transaction {\n      ...TransactionBaseFragment\n    }\n    split {\n      ...SplitBaseFragment\n    }\n    origin\n    logIndex\n    to\n  }\n": types.WithdrawalFragmentFragmentDoc,
     "\n  fragment DepositFragment on Deposit {\n    amount\n    token {\n      ...TokenFragment\n    }\n    id\n    transaction {\n      ...TransactionBaseFragment\n    }\n    split {\n      ...SplitBaseFragment\n    }\n    origin\n    logIndex\n    from\n  }\n": types.DepositFragmentFragmentDoc,
     "\n  fragment ContractURIUpdateFragment on ContractURIUpdate {\n    id\n    transaction {\n      ...TransactionBaseFragment\n    }\n    split {\n      ...SplitBaseFragment\n    }\n    origin\n    logIndex\n    previousURI\n    newURI\n  }\n": types.ContractUriUpdateFragmentFragmentDoc,
-    "\n  fragment SplitBaseFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n    shares {\n      id\n      payee\n      timestamp\n      value\n    }\n  }\n": types.SplitBaseFragmentFragmentDoc,
-    "\n  fragment SplitDetailsFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n    shares {\n      id\n      payee\n      timestamp\n      value\n    }\n    tokenWithdrawals {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n    tokenDeposits {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n    withdrawableTokens {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n  }\n": types.SplitDetailsFragmentFragmentDoc,
+    "\n  fragment SplitBaseFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n  }\n": types.SplitBaseFragmentFragmentDoc,
     "\n  query SplitsByPayee($payee: Bytes = \"\") {\n    splits(where: { shares_: { payee: $payee } }) {\n      ...SplitBaseFragment\n    }\n  }\n": types.SplitsByPayeeDocument,
-    "\n  query Split($id: ID!) {\n    split(id: $id) {\n      ...SplitDetailsFragment\n    }\n  }\n": types.SplitDocument,
     "\n  query Pool($id: ID!) {\n    split(id: $id) {\n      ...SplitBaseFragment\n    }\n  }\n": types.PoolDocument,
     "\n  query TransactionsBySplit($split: String!) {\n    transactions(where: { split: $split }) {\n      ...TransactionDetailsFragment\n    }\n  }\n": types.TransactionsBySplitDocument,
     "\n  query SharesByPool($pool: String!) {\n    shares(where: { split: $pool }) {\n      ...ShareFragment\n    }\n  }\n": types.SharesByPoolDocument,
+    "\n  query PoolWithShares($id: ID!) {\n    split(id: $id) {\n      ...SplitBaseFragment\n      shares {\n        ...ShareFragment\n      }\n    }\n  }\n": types.PoolWithSharesDocument,
 };
 
 /**
@@ -79,19 +78,11 @@ export function graphql(source: "\n  fragment ContractURIUpdateFragment on Contr
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment SplitBaseFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n    shares {\n      id\n      payee\n      timestamp\n      value\n    }\n  }\n"): (typeof documents)["\n  fragment SplitBaseFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n    shares {\n      id\n      payee\n      timestamp\n      value\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  fragment SplitDetailsFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n    shares {\n      id\n      payee\n      timestamp\n      value\n    }\n    tokenWithdrawals {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n    tokenDeposits {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n    withdrawableTokens {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment SplitDetailsFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n    shares {\n      id\n      payee\n      timestamp\n      value\n    }\n    tokenWithdrawals {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n    tokenDeposits {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n    withdrawableTokens {\n      amount\n      token {\n        id\n        symbol\n        name\n        decimals\n        totalSupply\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  fragment SplitBaseFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n  }\n"): (typeof documents)["\n  fragment SplitBaseFragment on Split {\n    id\n    address\n    blockNumber\n    timestamp\n    metaData {\n      name\n      description\n      image\n    }\n    metaDataUri\n    totalShares\n    txCount\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query SplitsByPayee($payee: Bytes = \"\") {\n    splits(where: { shares_: { payee: $payee } }) {\n      ...SplitBaseFragment\n    }\n  }\n"): (typeof documents)["\n  query SplitsByPayee($payee: Bytes = \"\") {\n    splits(where: { shares_: { payee: $payee } }) {\n      ...SplitBaseFragment\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  query Split($id: ID!) {\n    split(id: $id) {\n      ...SplitDetailsFragment\n    }\n  }\n"): (typeof documents)["\n  query Split($id: ID!) {\n    split(id: $id) {\n      ...SplitDetailsFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -104,6 +95,10 @@ export function graphql(source: "\n  query TransactionsBySplit($split: String!) 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query SharesByPool($pool: String!) {\n    shares(where: { split: $pool }) {\n      ...ShareFragment\n    }\n  }\n"): (typeof documents)["\n  query SharesByPool($pool: String!) {\n    shares(where: { split: $pool }) {\n      ...ShareFragment\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query PoolWithShares($id: ID!) {\n    split(id: $id) {\n      ...SplitBaseFragment\n      shares {\n        ...ShareFragment\n      }\n    }\n  }\n"): (typeof documents)["\n  query PoolWithShares($id: ID!) {\n    split(id: $id) {\n      ...SplitBaseFragment\n      shares {\n        ...ShareFragment\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

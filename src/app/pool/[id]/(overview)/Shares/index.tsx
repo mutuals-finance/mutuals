@@ -5,7 +5,7 @@ import { Stack } from '@chakra-ui/react';
 import { shareFragment } from '@/lib/graphql/fragments';
 
 interface SharesProps {
-  shares: FragmentType<typeof shareFragment>[];
+  shares?: FragmentType<typeof shareFragment>[];
 }
 
 export default function Shares({ shares }: SharesProps) {

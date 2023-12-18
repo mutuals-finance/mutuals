@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, BoxProps } from '@chakra-ui/react';
+import { Box, BoxProps, Flex, Stack } from '@chakra-ui/react';
 import React, { PropsWithChildren } from 'react';
 
 import { usePathname } from 'next/navigation';
@@ -33,11 +33,18 @@ export default function PoolSidebar({
       overflow={'hidden'}
       {...props}
     >
-      <Box position={'absolute'} inset={'0'} w={sidebarWidth}>
+      <Stack
+        position={'absolute'}
+        top={'0'}
+        left={'0'}
+        w={sidebarWidth}
+        h={'full'}
+        gap={'0'}
+      >
         <SidebarTabsContent tabs={tabs} index={tabIndex}>
           {children}
         </SidebarTabsContent>
-      </Box>
+      </Stack>
     </SidebarComponent>
   );
 }

@@ -3,9 +3,6 @@ import React from 'react';
 import AssetTable from '@/components/AssetTable';
 import ContentCard from '@/components/ContentCard';
 
-import { useSplit } from '@/context/SplitContext';
-import { usePool } from '@/context/PoolContext';
-import { getAccountBalance } from '@/lib/ankr';
 import { GetAccountBalanceReply } from '@ankr.com/ankr.js';
 
 export default function Assets({
