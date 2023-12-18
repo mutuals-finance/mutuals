@@ -115,7 +115,7 @@ export default function SplitCard({ id, metaData, address }: SplitCardProps) {
       {!!id && (
         <LinkOverlay
           as={NextLink}
-          href={`/splits/${formatPrefixedAddress(
+          href={`/pool/${formatPrefixedAddress(
             id,
             getShortNameByChainId(80001),
           )}`}

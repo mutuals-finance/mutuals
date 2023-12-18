@@ -1,29 +1,28 @@
+'use client';
+
 import {
+  forwardRef,
   IconButton,
   IconButtonProps,
   Stack,
-  StackProps,
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
 
-type IconTextButtonProps = IconButtonProps & {
-  spacing?: StackProps['spacing'];
-};
+type IconTextButtonProps = IconButtonProps;
 
-export default function IconTextButton({
-  children,
-  spacing = '3',
-  size = 'xl',
-  w = '16',
-  rounded = 'full',
-  ...props
-}: IconTextButtonProps) {
+const IconTextButton = forwardRef<IconTextButtonProps, 'button'>(function (
+  { children, size = 'xl', w = '16', rounded = 'full', ...props },
+  ref,
+) {
   return (
-    <Stack spacing={spacing} alignItems={'center'} textAlign={'center'}>
-      <IconButton rounded={rounded} size={size} w={w} {...props} />
+    <Stack spacing='3' alignItems={'center'} textAlign={'center'}>
+      <IconButton rounded={rounded} size={size} w={w} {...props} ref={ref} />
 
-      <Text fontWeight={'500'}>{props['aria-label'] || children}</Text>
+      <Text fontWeight={'500'}>{children || props['aria-label']}</Text>
     </Stack>
   );
-}
+});
+
+IconTextButton.displayName = 'IconTextButton';
+export default IconTextButton;

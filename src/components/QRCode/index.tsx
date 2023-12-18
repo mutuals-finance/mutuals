@@ -1,3 +1,5 @@
+'use client';
+
 import { useQRCode } from 'next-qrcode';
 import { QRCodeOptions } from 'next-qrcode/dist/useQRCode';
 import { HTMLProps } from 'react';
@@ -15,7 +17,6 @@ export default function QRCode({ text, options, ...props }: QRCodeProps) {
     <Canvas
       text={text}
       options={{
-        level: 'H',
         margin: 2,
         scale: 5,
         width: 250,

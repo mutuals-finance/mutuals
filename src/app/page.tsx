@@ -1,6 +1,6 @@
-import WalletList from '@/templates/dashboard/wallet-list';
-import DashboardHandlers from '@/templates/dashboard/handlers';
-import PoolList from '@/templates/dashboard/treasury-list';
+import WalletList from 'src/app/WalletList';
+import DashboardHandlers from 'src/app/Handlers';
+import PoolList from 'src/app/PoolList';
 
 export default function DashboardPage() {
   return (
