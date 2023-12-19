@@ -2,10 +2,21 @@ import { Box, Container, SimpleGrid } from '@chakra-ui/react';
 import { IoAppsOutline, IoWalletOutline } from 'react-icons/io5';
 
 import IconTextButton from '@/components/IconTextButton';
+import Link from 'next/link';
 
 const handlers = [
-  { 'aria-label': 'Add Wallet', icon: <IoWalletOutline /> },
-  { 'aria-label': 'Create Treasury', icon: <IoAppsOutline /> },
+  {
+    'aria-label': 'Add Wallet',
+    icon: <IoWalletOutline />,
+    as: Link,
+    href: '/pool/new',
+  },
+  {
+    'aria-label': 'New Payment Pool',
+    icon: <IoAppsOutline />,
+    as: Link,
+    href: '/pool/new',
+  },
 ];
 
 export default function DashboardHandlers() {
