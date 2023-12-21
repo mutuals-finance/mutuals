@@ -13,12 +13,11 @@ interface PoolActivityProps {
 
 export default function PoolActivity({ pool, activity }: PoolActivityProps) {
   return (
-    <ContentCard title={'Activity'} bodyProps={{ p: '0', display: 'flex' }}>
+    <ContentCard title={'Activity'} bodyProps={{ p: '0' }}>
       <ActivityTable
         transfers={activity?.transfers}
         address={pool?.address}
         size={'sm'}
-        containerProps={{ flex: '1' }}
       />
     </ContentCard>
   );

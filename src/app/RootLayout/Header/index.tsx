@@ -5,6 +5,7 @@ import {
   IconButton,
   InputGroup,
   InputLeftElement,
+  Show,
   Stack,
   useColorModeValue,
   useDisclosure,
@@ -50,7 +51,7 @@ export default function Header() {
     <Stack
       as='header'
       position='sticky'
-      h={{ base: '4rem', lg: '4rem' }}
+      h={'3.6rem'}
       px={{ base: '6', lg: '12' }}
       py={'6'}
       zIndex={'50'}
@@ -60,22 +61,24 @@ export default function Header() {
       align={'center'}
       justify={'space-between'}
       spacing={'12'}
-      borderBottom='1px'
-      borderColor={useColorModeValue('gray.200', 'gray.600')}
+      borderBottom='1px solid'
+      borderColor={'border.1'}
       bg={useColorModeValue('white', 'gray.900')}
       direction={'row'}
     >
-      <Form>
-        <InputGroup size={'sm'}>
-          <InputLeftElement pointerEvents='none'>
-            <Icon
-              as={IoSearch}
-              color={useColorModeValue('gray.400', 'gray.600')}
-            />
-          </InputLeftElement>
-          <Input hideWrapper={true} placeholder='Search...' pl={'10'} />
-        </InputGroup>
-      </Form>
+      <Show above={'lg'}>
+        <Form>
+          <InputGroup size={'sm'}>
+            <InputLeftElement pointerEvents='none'>
+              <Icon
+                as={IoSearch}
+                color={useColorModeValue('gray.400', 'gray.600')}
+              />
+            </InputLeftElement>
+            <Input hideWrapper={true} placeholder='Search...' pl={'10'} />
+          </InputGroup>
+        </Form>
+      </Show>
 
       <IconButton
         icon={<IoMenuSharp display={'block'} />}

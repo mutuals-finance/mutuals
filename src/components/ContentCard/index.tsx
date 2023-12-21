@@ -26,13 +26,7 @@ export default function ContentCard({
   ...props
 }: React.PropsWithChildren<BoxProps>) {
   return (
-    <Card
-      as={'article'}
-      variant={variant}
-      rounded={rounded}
-      overflow={'hidden'}
-      {...props}
-    >
+    <Card as={'article'} variant={variant} rounded={rounded} {...props}>
       {(!!title || !!titleAfter) && (
         <CardHeader>
           {!!title && (

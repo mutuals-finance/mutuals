@@ -20,6 +20,11 @@ const variants = {
       bg: 'bg.1',
     },
   }),
+  transparent: definePartsStyle({
+    container: {
+      bg: 'transparent',
+    },
+  }),
 };
 
 const defaultProps = {};

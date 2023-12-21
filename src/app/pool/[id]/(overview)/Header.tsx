@@ -8,6 +8,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Show,
   Stack,
   Text,
   VStack,
@@ -35,7 +36,7 @@ interface PoolHeaderProps {
 
 export default function PoolHeader({ metaData, pool }: PoolHeaderProps) {
   return (
-    <Box as={'header'} px={'6'} mt={'24'} w={'full'}>
+    <Box as={'header'} mt={{ base: '12', lg: '24' }} w={'full'}>
       <VStack
         spacing={'6'}
         justifyContent={'flex-end'}
@@ -76,12 +77,14 @@ export default function PoolHeader({ metaData, pool }: PoolHeaderProps) {
               </Menu>
             </ButtonGroup>
           </HStack>
-          <IconButton
-            size={'sm'}
-            flexShrink={'0'}
-            aria-label='Toggle Sidebar'
-            icon={<BsLayoutSidebarReverse />}
-          />
+          <Show above={'lg'}>
+            <IconButton
+              size={'sm'}
+              flexShrink={'0'}
+              aria-label='Toggle Sidebar'
+              icon={<BsLayoutSidebarReverse />}
+            />
+          </Show>
         </Stack>
 
         <Box maxW={'xl'}>

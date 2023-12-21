@@ -1,5 +1,9 @@
 import { Box, Container, SimpleGrid } from '@chakra-ui/react';
-import { IoAppsOutline, IoWalletOutline } from 'react-icons/io5';
+import {
+  IoAppsOutline,
+  IoSettingsOutline,
+  IoWalletOutline,
+} from 'react-icons/io5';
 
 import IconTextButton from '@/components/IconTextButton';
 import Link from 'next/link';
@@ -17,11 +21,17 @@ const handlers = [
     as: Link,
     href: '/pool/new',
   },
+  {
+    'aria-label': 'Settings',
+    icon: <IoSettingsOutline />,
+    as: Link,
+    href: '/settings',
+  },
 ];
 
 export default function DashboardHandlers() {
   return (
-    <Box as={'section'} my={'12'}>
+    <Box as={'section'} my={'12'} overflowX={'auto'}>
       <Container
         maxW={'container.lg'}
         as={SimpleGrid}

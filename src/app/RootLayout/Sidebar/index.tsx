@@ -1,8 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { Box, Button, HStack, IconButton, Stack, Text } from '@chakra-ui/react';
-import React from 'react';
+import {
+  Box,
+  Button,
+  HStack,
+  IconButton,
+  Stack,
+  Text,
+  useBreakpointValue,
+} from '@chakra-ui/react';
+import { PropsWithChildren, useEffect } from 'react';
 import { IconType } from 'react-icons';
 import {
   IoAppsOutline,
@@ -32,7 +40,7 @@ const NAV_SECTIONS: {
       icon: IoAppsOutline,
     },
     {
-      label: 'Treasuries',
+      label: 'Payment Pools',
       href: '/dashboard',
       icon: IoGridOutline,
     },
@@ -56,15 +64,30 @@ const NAV_SECTIONS: {
   ],
 };
 
-export default function RootSidebar({ children }: React.PropsWithChildren) {
-  const [isOpen, toggleIsOpen] = useToggle(true);
+function RootSidebarInner({
+  children,
+  defaultOpen = true,
+}: PropsWithChildren<{ defaultOpen?: boolean }>) {
+  const [isOpen, toggleIsOpen] = useToggle(defaultOpen);
+
+  const w = useBreakpointValue(
+    {
+      base: '100%',
+      lg: '16rem',
+    },
+    {
+      fallback: '100%',
+    },
+  );
 
   return (
     <Stack gap='0' justifyContent={'stretch'} direction={'row'}>
       <Sidebar
-        w={'16rem'}
-        minW={'5.6rem'}
+        w={w}
+        minW={{ base: '0', lg: '5.6rem' }}
         isOpen={isOpen}
+        borderColor={{ base: 'transparent', lg: 'border.1' }}
+        bg={'bg.1'}
         header={
           <HStack justifyContent={'flex-end'}>
             {isOpen && (
@@ -126,7 +149,18 @@ export default function RootSidebar({ children }: React.PropsWithChildren) {
         ))}
       </Sidebar>
 
-      <Box flex={'1'}>{children}</Box>
+      <Box flex={'1'} w={'full'}>
+        {children}
+      </Box>
     </Stack>
   );
+}
+
+export default function RootSidebar(props: PropsWithChildren) {
+  const defaultOpen = useBreakpointValue({
+    base: false,
+    lg: true,
+  });
+
+  return <RootSidebarInner {...props} defaultOpen={defaultOpen} />;
 }

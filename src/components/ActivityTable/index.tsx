@@ -2,7 +2,7 @@
 
 import { Balance } from '@ankr.com/ankr.js';
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
-import { Flex } from '@chakra-ui/react';
+import { Flex, Stack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import React from 'react';
 
@@ -28,10 +28,10 @@ export default function ActivityTable({
       id: 'eventIcon',
       header: 'Event',
       cell: (context) => (
-        <Flex alignItems={'center'} gap={'3'}>
+        <Stack direction='row' alignItems={'center'} spacing={'3'}>
           <EventIconCell {...context} address={address} />
           <EventDescriptionCell {...context} address={address} />
-        </Flex>
+        </Stack>
       ),
     }),
     columnHelper.accessor('fromAddress', {

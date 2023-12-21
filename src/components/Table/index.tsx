@@ -38,7 +38,7 @@ export default function Table<TData extends RowData>({
   });
 
   return (
-    <ChakraTableContainer overflowY={'auto'} {...containerProps}>
+    <ChakraTableContainer {...containerProps}>
       <ChakraTable {...props}>
         {!headerHidden && (
           <Thead
@@ -48,7 +48,7 @@ export default function Table<TData extends RowData>({
             zIndex={'1'}
             bg={'bg.1'}
             borderBottom={'1px'}
-            borderColor={'border'}
+            borderColor={'border.1'}
             {...headProps}
           >
             {table
