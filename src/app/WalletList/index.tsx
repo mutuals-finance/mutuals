@@ -2,22 +2,35 @@ import { Box, Container, Heading, SimpleGrid } from '@chakra-ui/react';
 import React from 'react';
 
 import WalletCard from './WalletCard';
+import KeenSlider from '@/components/KeenSlider/KeenSlider';
+import KeenSliderSlide from '@/components/KeenSlider/KeenSliderSlide';
 
 export default function WalletList() {
   return (
-    <Box as={'section'} my={'12'}>
-      <Container maxW='container.lg'>
+    <Box as={'section'} my={'12'} overflow={'hidden'}>
+      <Container maxW='container.lg' overflow={'visible'}>
         <Heading as={'h2'} size={'lg'} fontWeight='700' mb={'6'}>
           Wallets
         </Heading>
 
-        <SimpleGrid
-          templateColumns={'repeat(auto-fill, minmax(16rem, 1fr))'}
-          spacing={6}
+        <KeenSlider
+          sx={{ overflow: 'visible !important' }}
+          options={{
+            mode: 'free',
+            rubberband: false,
+            slides: { perView: 'auto', spacing: 16 },
+          }}
         >
-          <WalletCard />
-          <WalletCard />
-        </SimpleGrid>
+          {[1, 2, 3, 4].map((key) => (
+            <KeenSliderSlide
+              key={key}
+              flexShrink={'0'}
+              sx={{ w: 'xs !important' }}
+            >
+              <WalletCard />
+            </KeenSliderSlide>
+          ))}
+        </KeenSlider>
       </Container>
     </Box>
   );

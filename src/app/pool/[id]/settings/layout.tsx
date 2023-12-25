@@ -7,28 +7,6 @@ import { getMetadata, getPoolDetails } from '@/lib/split';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
 
-const breadcrumbItems = {
-  'Payment Pool': { href: '/' },
-  Owncloud: {
-    href: '/pool/maticmum:0x84f36e3afa3d0994401b24f1eabd4fddbdc715db',
-  },
-  Settings: {
-    isCurrentPage: true,
-    href: '/pool/maticmum:0x84f36e3afa3d0994401b24f1eabd4fddbdc715db/settings',
-  },
-};
-
-const tabs = [
-  {
-    title: 'General',
-    href: '/pool/maticmum:0x84f36e3afa3d0994401b24f1eabd4fddbdc715db/settings',
-  },
-  {
-    title: 'Notifications',
-    href: '/pool/maticmum:0x84f36e3afa3d0994401b24f1eabd4fddbdc715db/settings/notifications',
-  },
-];
-
 interface PoolSettingsLayoutProps {
   params: { id: string };
 }
@@ -43,6 +21,17 @@ export default async function PoolSettingsLayout({
   const pool = useFragment(splitBaseFragment, data.split);
 
   const metaData = await getMetadata(pool?.metaDataUri);
+
+  const tabs = [
+    {
+      title: 'General',
+      href: `/pool/maticmum:${pool?.address}/settings`,
+    },
+    {
+      title: 'Notifications',
+      href: `/pool/maticmum:${pool?.address}/notifications`,
+    },
+  ];
 
   return (
     <Container maxW={'container.lg'}>

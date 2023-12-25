@@ -6,6 +6,7 @@ import {
   Card,
   CardFooter,
   CardHeader,
+  CardProps,
   Heading,
   Stack,
   Text,
@@ -15,12 +16,12 @@ import { shortenAddress } from '@/lib/utils';
 
 import UserAvatar from '@/components/UserAvatar';
 
-type SplitCardProps = {};
+type SplitCardProps = CardProps;
 
-export default function WalletCard({}: SplitCardProps) {
+export default function WalletCard(props: SplitCardProps) {
   const address = '0x24856890515299d77f0a3f344921f3860a82877b';
   return (
-    <Card as='article' variant={'outline'} bg={'transparent'}>
+    <Card as='article' variant={'outline'} bg={'transparent'} {...props}>
       <CardHeader
         as={Stack}
         spacing={'3'}
