@@ -2,6 +2,7 @@
 
 import { Icon } from '@chakra-ui/icon';
 import {
+  Box,
   IconButton,
   InputGroup,
   InputLeftElement,
@@ -19,6 +20,7 @@ import Input from '@/components/Form/Input';
 
 import Chain from '@/app/RootLayout/Header/Chain';
 import User from '@/app/RootLayout/Header/User';
+import Logo from '@/app/RootLayout/Header/Logo';
 
 interface NavItem {
   label: string;
@@ -42,7 +44,6 @@ const NAV_ITEMS: Array<NavItem> = [
 
 export default function Header() {
   const [isReady, setIsReady] = useState(false);
-  const linkHoverColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useMount(() => setIsReady(true));
@@ -51,8 +52,8 @@ export default function Header() {
     <Stack
       as='header'
       position='sticky'
-      h={'3.6rem'}
-      px={{ base: '6', lg: '12' }}
+      h={{ base: '4.2rem', md: '3.6rem' }}
+      px={{ base: '3', lg: '12' }}
       py={'6'}
       zIndex={'50'}
       top={'0'}
@@ -60,10 +61,10 @@ export default function Header() {
       w={'100%'}
       align={'center'}
       justify={'space-between'}
-      spacing={'12'}
+      spacing={{ base: '3', lg: '12' }}
       borderBottom='1px solid'
       borderColor={'border.1'}
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={'bg.1'}
       direction={'row'}
     >
       <Show above={'lg'}>
@@ -80,6 +81,17 @@ export default function Header() {
         </Form>
       </Show>
 
+      <Show below='lg'>
+        <Box w={'24'} mr={'auto'}>
+          <Logo />
+        </Box>
+      </Show>
+
+      <Stack direction={'row'} spacing={6} ml={'auto'}>
+        {isReady && <Chain />}
+        {isReady && <User />}
+      </Stack>
+
       <IconButton
         icon={<IoMenuSharp display={'block'} />}
         fontSize={'2xl'}
@@ -88,11 +100,6 @@ export default function Header() {
         onClick={isOpen ? onClose : onOpen}
         variant={'ghost'}
       />
-
-      <Stack direction={'row'} spacing={6} ml={'auto'}>
-        {isReady && <Chain />}
-        {isReady && <User />}
-      </Stack>
     </Stack>
   );
 }

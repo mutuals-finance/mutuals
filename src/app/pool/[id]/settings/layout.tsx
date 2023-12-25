@@ -1,43 +1,11 @@
-import {
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbProps,
-  Container,
-  Heading,
-  Stack,
-  Tab,
-  TabList,
-  Tabs,
-} from '@chakra-ui/react';
-import { PropsWithChildren } from 'react';
-import { IoChevronForwardOutline } from 'react-icons/io5';
+import { Container, Heading, Stack } from '@chakra-ui/react';
+import { PropsWithChildren, useCallback } from 'react';
 import RouterTabs from '@/components/RouterTabs';
-
-interface BreadcrumbsProps extends BreadcrumbProps {
-  items: { [title: string]: { href: string; isCurrentPage?: boolean } };
-}
-
-function Breadcrumbs({ items, ...props }: BreadcrumbsProps) {
-  return (
-    <Breadcrumb
-      fontSize={'sm'}
-      spacing='3'
-      separator={<IoChevronForwardOutline />}
-      {...props}
-    >
-      {Object.keys(items).map((title) => (
-        <BreadcrumbItem
-          key={title}
-          isCurrentPage={!!items[title]?.isCurrentPage}
-        >
-          <BreadcrumbLink href={items[title]?.href}>{title}</BreadcrumbLink>
-        </BreadcrumbItem>
-      ))}
-    </Breadcrumb>
-  );
-}
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { decodePrefixedAddress } from '@/lib/utils';
+import { getMetadata, getPoolDetails } from '@/lib/split';
+import { useFragment } from '@/lib/graphql/__generated__';
+import { splitBaseFragment } from '@/lib/graphql/fragments';
 
 const breadcrumbItems = {
   'Payment Pool': { href: '/' },
@@ -61,11 +29,30 @@ const tabs = [
   },
 ];
 
-export default function PoolSettingsLayout({ children }: PropsWithChildren) {
+interface PoolSettingsLayoutProps {
+  params: { id: string };
+}
+
+export default async function PoolSettingsLayout({
+  children,
+  params,
+}: PropsWithChildren<PoolSettingsLayoutProps>) {
+  const id = decodePrefixedAddress(params.id);
+  const { data } = await getPoolDetails({ variables: { id } });
+
+  const pool = useFragment(splitBaseFragment, data.split);
+
+  const metaData = await getMetadata(pool?.metaDataUri);
+
   return (
     <Container maxW={'container.lg'}>
       <Stack as={'header'} spacing={'6'} my={'12'}>
-        <Breadcrumbs items={breadcrumbItems} />
+        <Breadcrumbs
+          overwrite={{
+            pool: 'Payment Pools',
+            id: metaData.name,
+          }}
+        />
 
         <Heading size={'2xl'}>Settings</Heading>
       </Stack>

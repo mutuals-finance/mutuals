@@ -20,7 +20,7 @@ import {
   IoPeopleOutline,
   IoSettingsOutline,
 } from 'react-icons/io5';
-import { useToggle } from 'react-use';
+import { useMount, useToggle } from 'react-use';
 
 import Sidebar from '@/components/Sidebar';
 
@@ -64,11 +64,17 @@ const NAV_SECTIONS: {
   ],
 };
 
-function RootSidebarInner({
-  children,
-  defaultOpen = true,
-}: PropsWithChildren<{ defaultOpen?: boolean }>) {
-  const [isOpen, toggleIsOpen] = useToggle(defaultOpen);
+function RootSidebarInner({ children }: PropsWithChildren) {
+  const breakpointIsOpen = useBreakpointValue({
+    base: false,
+    lg: true,
+  });
+
+  const [isOpen, toggleIsOpen] = useToggle(false);
+
+  useEffect(() => {
+    toggleIsOpen(breakpointIsOpen);
+  }, [toggleIsOpen, breakpointIsOpen]);
 
   const w = useBreakpointValue(
     {
@@ -157,10 +163,5 @@ function RootSidebarInner({
 }
 
 export default function RootSidebar(props: PropsWithChildren) {
-  const defaultOpen = useBreakpointValue({
-    base: false,
-    lg: true,
-  });
-
-  return <RootSidebarInner {...props} defaultOpen={defaultOpen} />;
+  return <RootSidebarInner {...props} />;
 }

@@ -5,7 +5,14 @@ import { decodePrefixedAddress, ipfsResolveData } from '@/lib/utils';
 import { FileWithPreview } from '@/components/Form/types';
 import PoolMetadataForm from '@/app/pool/[id]/settings/MetadataForm';
 import ContentCard from '@/components/ContentCard';
-import { Box, Button, Heading, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Stack,
+  StackDivider,
+  Text,
+} from '@chakra-ui/react';
 import Head from 'next/head';
 
 interface PoolSettingsPageProps {
@@ -35,17 +42,34 @@ export default async function PoolSettingsPage({
         <PoolMetadataForm defaultValues={defaultValues} />
       </ContentCard>
 
-      <ContentCard title={'Danger Zone'} borderColor={'red.500'}>
-        <Stack direction={{ base: 'column', md: 'row' }} flex={'1'}>
-          <Box flex={'1'}>
-            <Heading size={'sm'}>Delete this Payment Pool</Heading>
-            <Text>
-              Once deleted, it will be gone forever. Please be certain.
-            </Text>
-          </Box>
-          <Box>
-            <Button colorScheme={'red'}>Delete this Payment Pool</Button>
-          </Box>
+      <ContentCard title={'Danger Zone'} borderColor={'red.400'}>
+        <Stack spacing={'6'} divider={<StackDivider />}>
+          <Stack direction={{ base: 'column', md: 'row' }} flex={'1'}>
+            <Box flex={'1'}>
+              <Heading size='sm' lineHeight={'2'}>
+                Disable this Payment Pool
+              </Heading>
+              <Text fontSize={'sm'}>
+                Once disabled, no funds can be withdrawn.
+              </Text>
+            </Box>
+            <Box>
+              <Button colorScheme={'orange'}>Disable this Payment Pool</Button>
+            </Box>
+          </Stack>
+          <Stack direction={{ base: 'column', md: 'row' }} flex={'1'}>
+            <Box flex={'1'}>
+              <Heading size='sm' lineHeight={'2'}>
+                Delete this Payment Pool
+              </Heading>
+              <Text fontSize={'sm'}>
+                Once deleted, it will be gone forever. Please be certain.
+              </Text>
+            </Box>
+            <Box>
+              <Button colorScheme={'red'}>Delete this Payment Pool</Button>
+            </Box>
+          </Stack>
         </Stack>
       </ContentCard>
     </Stack>

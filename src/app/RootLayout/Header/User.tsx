@@ -58,17 +58,16 @@ export default function User() {
       <Menu closeOnSelect={false}>
         {({ isOpen }) => (
           <>
-            <Show above='lg'>
-              <MenuButton
-                as={Button}
-                leftIcon={avatarIcon()}
-                rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
-                isLoading={isConnecting}
-              >
-                {displayName}
-              </MenuButton>
-            </Show>
+            <MenuButton
+              as={Button}
+              leftIcon={avatarIcon()}
+              rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
+              isLoading={isConnecting}
+            >
+              {displayName}
+            </MenuButton>
 
+            {/*
             <Show below='lg'>
               <MenuButton
                 as={IconButton}
@@ -80,6 +79,7 @@ export default function User() {
                 {displayName}
               </MenuButton>
             </Show>
+*/}
 
             <MenuList>
               <MenuItem icon={<IoMegaphoneOutline />}>Feedback</MenuItem>

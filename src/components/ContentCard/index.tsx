@@ -28,7 +28,7 @@ export default function ContentCard({
   return (
     <Card as={'article'} variant={variant} rounded={rounded} {...props}>
       {(!!title || !!titleAfter) && (
-        <CardHeader>
+        <CardHeader borderBottom={'1px solid'} borderColor={'border.1'}>
           {!!title && (
             <Heading as='h2' size='md' fontWeight={'700'}>
               {title}

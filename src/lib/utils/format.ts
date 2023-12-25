@@ -426,3 +426,9 @@ export function formatPercentage(
     formatNumber(!!value ? parseFloat(value) : 0.0, type, placeholder) + ' %'
   );
 }
+
+export function formatToTitleCase(value: string) {
+  return value.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+  });
+}
