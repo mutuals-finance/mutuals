@@ -1,11 +1,12 @@
 import { Container, Heading, Stack } from '@chakra-ui/react';
-import { PropsWithChildren, useCallback } from 'react';
+import { PropsWithChildren } from 'react';
 import RouterTabs from '@/components/RouterTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { decodePrefixedAddress } from '@/lib/utils';
 import { getMetadata, getPoolDetails } from '@/lib/split';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
+import SectionContainer from '@/components/Shell/SectionContainer';
 
 interface PoolSettingsLayoutProps {
   params: { id: string };
@@ -29,26 +30,19 @@ export default async function PoolSettingsLayout({
     },
     {
       title: 'Notifications',
-      href: `/pool/maticmum:${pool?.address}/notifications`,
+      href: `/pool/maticmum:${pool?.address}/settings/notifications`,
     },
   ];
 
   return (
-    <Container maxW={'container.lg'}>
-      <Stack as={'header'} spacing={'6'} my={'12'}>
-        <Breadcrumbs
-          overwrite={{
-            pool: 'Payment Pools',
-            id: metaData.name,
-          }}
-        />
-
-        <Heading size={'2xl'}>Settings</Heading>
-      </Stack>
+    <SectionContainer as={'header'}>
+      <Heading as={'h1'} size={'2xl'}>
+        Settings
+      </Heading>
 
       <RouterTabs my={'6'} tabs={tabs}>
         {children}
       </RouterTabs>
-    </Container>
+    </SectionContainer>
   );
 }

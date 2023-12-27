@@ -10,6 +10,7 @@ import { SPLITS_BY_PAYEE } from '@/lib/graphql/queries';
 import { SplitFragmentCard } from '@/components/Split/Card';
 
 import { TreasurySearchAndCreate } from '@/app/PoolList/SearchAndCreate';
+import SectionContainer from '@/components/Shell/SectionContainer';
 
 export default function TreasuryList() {
   const { address, isConnected } = useAccount();
@@ -20,21 +21,19 @@ export default function TreasuryList() {
   });
 
   return (
-    <Box as={'section'} my={'12'}>
-      <Container maxW='container.lg'>
-        <Heading as={'h2'} size={'lg'} fontWeight={'700'} mb={'6'}>
-          Payment Pools
-        </Heading>
-        <TreasurySearchAndCreate />
-        <SimpleGrid
-          templateColumns={'repeat(auto-fill, minmax(20rem, 1fr))'}
-          spacing={6}
-        >
-          {data?.splits.map((fragment, index) => {
-            return <SplitFragmentCard fragment={fragment} key={index} />;
-          })}
-        </SimpleGrid>
-      </Container>
-    </Box>
+    <SectionContainer>
+      <Heading as={'h2'} size={'lg'} fontWeight={'700'} mb={'6'}>
+        Payment Pools
+      </Heading>
+      <TreasurySearchAndCreate />
+      <SimpleGrid
+        templateColumns={'repeat(auto-fill, minmax(20rem, 1fr))'}
+        spacing={6}
+      >
+        {data?.splits.map((fragment, index) => {
+          return <SplitFragmentCard fragment={fragment} key={index} />;
+        })}
+      </SimpleGrid>
+    </SectionContainer>
   );
 }

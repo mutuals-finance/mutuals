@@ -3,9 +3,11 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbProps,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { ReactNode } from 'react';
+import Link from 'next/link';
 
 interface BreadcrumbsInnerProps extends BreadcrumbProps {
   items: { href: string; children: ReactNode }[];
@@ -18,7 +20,7 @@ export default function BreadcrumbsInner({
   return (
     <Breadcrumb
       fontSize={'sm'}
-      spacing='3'
+      spacing='2'
       separator={<IoChevronForwardOutline />}
       {...props}
     >
@@ -26,8 +28,9 @@ export default function BreadcrumbsInner({
         <BreadcrumbItem
           key={`${href}-${i}`}
           isCurrentPage={i === items.length - 1}
+          fontWeight={'500'}
         >
-          <BreadcrumbLink href={href}>{children}</BreadcrumbLink>
+          <Link href={href}>{children}</Link>
         </BreadcrumbItem>
       ))}
     </Breadcrumb>

@@ -11,10 +11,7 @@ export default function Assets({
   balance?: GetAccountBalanceReply;
 }) {
   return (
-    <ContentCard
-      title={'Assets'}
-      bodyProps={{ p: '0', display: 'flex', maxHeight: 'sm' }}
-    >
+    <ContentCard title={'Assets'} bodyProps={{ p: '0' }}>
       <AssetTable
         assets={balance?.assets?.slice(0, 6)}
         size={'sm'}

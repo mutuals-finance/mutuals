@@ -5,6 +5,7 @@ import ContentCard from '@/components/ContentCard';
 
 import { GetTokenTransfersReply } from '@ankr.com/ankr.js';
 import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import SectionContainer from '@/components/Shell/SectionContainer';
 
 interface PoolActivityProps {
   pool?: SplitBaseFragmentFragment | null;

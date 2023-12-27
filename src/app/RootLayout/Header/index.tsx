@@ -52,8 +52,8 @@ export default function Header() {
     <Stack
       as='header'
       position='sticky'
-      h={{ base: '4.2rem', md: '3.6rem' }}
-      px={{ base: '3', lg: '12' }}
+      h={{ base: '5rem', md: '3.4rem' }}
+      px={{ base: '6', lg: '12' }}
       py={'6'}
       zIndex={'50'}
       top={'0'}

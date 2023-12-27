@@ -15,12 +15,13 @@ interface IconButtonListContainerProps extends SectionContainerProps {
 export default function IconButtonListContainer({
   children,
   items,
+  containerProps,
   ...props
 }: IconButtonListContainerProps) {
   return (
     <SectionContainer
       overflow={'hidden'}
-      containerProps={{ px: '0' }}
+      containerProps={{ overflow: 'visible', ...containerProps }}
       {...props}
     >
       <KeenSlider
@@ -28,14 +29,14 @@ export default function IconButtonListContainer({
         options={{
           mode: 'free',
           rubberband: false,
-          slides: { perView: 'auto', spacing: 16 },
+          slides: { perView: 'auto', spacing: 32 },
         }}
       >
         {items.map((props, i) => (
           <KeenSliderSlide
             key={`${i}-${props['aria-label']}`}
             flexShrink={'0'}
-            sx={{ w: '36 !important' }}
+            sx={{ w: '24 !important' }}
           >
             <IconTextButton {...props} />
           </KeenSliderSlide>

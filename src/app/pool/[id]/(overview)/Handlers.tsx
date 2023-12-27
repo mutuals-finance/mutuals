@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   IoDownloadOutline,
   IoPushOutline,
@@ -32,10 +31,15 @@ export default function PoolHandlers({ pool }: PoolHandlersProps) {
       icon: <IoSettingsOutline />,
       as: Link,
       href: `/pool/maticmum:${pool?.address}/settings`,
-      variant: 'outline',
     },
-    //{ 'aria-label': 'Insights', icon: <IoAppsOutline />, href: 'deposit' },
   ];
 
-  return <IconButtonListContainer items={items} />;
+  return (
+    <IconButtonListContainer
+      items={items}
+      as={'article'}
+      my={'3'}
+      containerProps={{ px: '0' }}
+    />
+  );
 }

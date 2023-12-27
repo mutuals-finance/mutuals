@@ -34,8 +34,8 @@ export default function PoolSidebar({
   return (
     <SidebarComponent
       isOpen={isOpen}
-      top={'3.6rem'}
-      h={'calc(100vh - 3.6rem)'}
+      top={{ base: '8rem', md: '6rem' }}
+      h={{ base: 'calc(100vh - 8rem)', md: 'calc(100vh - 6rem)' }}
       placement={'right'}
       borderColor={{ base: 'transparent', lg: 'border.1' }}
       w={sidebarWidth}
