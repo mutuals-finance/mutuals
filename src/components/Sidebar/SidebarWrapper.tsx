@@ -1,5 +1,6 @@
 import {
   BoxProps,
+  DrawerProps,
   SlideDirection,
   useColorModeValue,
   VStack,
@@ -10,7 +11,7 @@ import AnimationBox from '@/components/Animation/Box';
 
 export interface SidebarWrapperProps extends BoxProps {
   isOpen?: boolean;
-  placement?: SlideDirection;
+  placement?: DrawerProps['placement'];
 }
 
 export function SidebarWrapper({
