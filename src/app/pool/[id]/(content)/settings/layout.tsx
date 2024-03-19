@@ -1,4 +1,4 @@
-import { Container, Heading, Stack } from '@chakra-ui/react';
+import { Box, Container, Heading, Stack } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
 import RouterTabs from '@/components/RouterTabs';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -29,13 +29,17 @@ export default async function PoolSettingsLayout({
       href: `/pool/maticmum:${pool?.address}/settings`,
     },
     {
+      title: 'Security',
+      href: `/pool/maticmum:${pool?.address}/settings/security`,
+    },
+    {
       title: 'Notifications',
       href: `/pool/maticmum:${pool?.address}/settings/notifications`,
     },
   ];
 
   return (
-    <SectionContainer as={'header'}>
+    <Box as={'header'}>
       <Heading as={'h1'} size={'2xl'}>
         Settings
       </Heading>
@@ -43,6 +47,6 @@ export default async function PoolSettingsLayout({
       <RouterTabs my={'6'} tabs={tabs}>
         {children}
       </RouterTabs>
-    </SectionContainer>
+    </Box>
   );
 }

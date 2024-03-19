@@ -64,12 +64,12 @@ export default function PoolSidebar({
 }
 
 function PoolSidebarSidebar({ children, ...props }: PoolSidebarWrapperProps) {
-  const sidebarWidth = '24rem';
+  const sidebarWidth = '28rem';
 
   return (
     <SidebarComponent
-      top={{ base: '8rem', md: '6rem' }}
-      h={{ base: 'calc(100vh - 8rem)', md: 'calc(100vh - 6rem)' }}
+      top={{ base: '5rem', md: '3.4rem' }}
+      h={{ base: 'calc(100vh - 5rem)', md: 'calc(100vh - 3.4rem)' }}
       borderColor={{ base: 'transparent', lg: 'border.1' }}
       w={sidebarWidth}
       overflow={'hidden'}

@@ -1,4 +1,4 @@
-import { Stack } from '@chakra-ui/react';
+import { Box, Stack } from '@chakra-ui/react';
 import React, { PropsWithChildren } from 'react';
 import Sidebar from '@/app/pool/[id]/(overview)/Sidebar';
 import { getAccountBalance, getTokenTransfers } from '@/lib/ankr';
@@ -11,13 +11,7 @@ import Shares from '@/app/pool/[id]/(overview)/Shares';
 import Assets from '@/app/pool/[id]/(overview)/Assets';
 import Activity from '@/app/pool/[id]/(overview)/Activity';
 import { decodePrefixedAddress } from '@/lib/utils';
-import SectionContainer from '@/components/Shell/SectionContainer';
-
-interface PoolOverviewLayoutProps {
-  params: {
-    id: string;
-  };
-}
+import PoolPageShell from '@/app/pool/[id]/PoolPageShell';
 
 const tabs = [
   {
@@ -33,7 +27,11 @@ const tabs = [
 export default async function PoolOverviewLayout({
   children,
   params,
-}: PropsWithChildren<PoolOverviewLayoutProps>) {
+}: PropsWithChildren<{
+  params: {
+    id: string;
+  };
+}>) {
   const id = decodePrefixedAddress(params.id);
   const address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
   const isSidebarOpen = tabs.some(({ href }) =>
@@ -60,22 +58,20 @@ export default async function PoolOverviewLayout({
   };
 
   return (
-    <>
-      <Stack direction={'row'} gap={'0'} w={'full'}>
-        <SectionContainer flex={'1'} w={'full'}>
-          <Stack direction={'column'} gap={'6'}>
-            <Description {...props} />
-            <Handlers {...props} />
-            <Shares {...props} />
-            <Assets {...props} />
-            <Activity {...props} />
-          </Stack>
-        </SectionContainer>
+    <Stack direction={'row'} gap={'0'} w={'full'}>
+      <PoolPageShell metaData={metaData}>
+        <Stack gap={'6'}>
+          <Description {...props} />
+          <Handlers {...props} />
+          <Shares {...props} />
+          <Assets {...props} />
+          <Activity {...props} />
+        </Stack>
+      </PoolPageShell>
 
-        <Sidebar tabs={tabs} defaultOpen={isSidebarOpen}>
-          {children}
-        </Sidebar>
-      </Stack>
-    </>
+      <Sidebar tabs={tabs} defaultOpen={isSidebarOpen}>
+        {children}
+      </Sidebar>
+    </Stack>
   );
 }

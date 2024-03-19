@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import { Provider as AnkrProvider } from 'ankr-react';
 import ApolloProvider from './ApolloProvider';
 import { cookies } from 'next/headers';
 

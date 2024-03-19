@@ -183,7 +183,6 @@ const switzer = localFont({
 
 const manrope = Manrope({
   subsets: ['latin'],
-  display: 'swap',
 });
 
 export const fontSizes = {};

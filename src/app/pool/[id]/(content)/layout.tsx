@@ -1,20 +1,16 @@
-import { Stack } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
 import { decodePrefixedAddress } from '@/lib/utils';
 import { getMetadata, getPoolDetails } from '@/lib/split';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
-import PoolHeader from '@/app/pool/[id]/PoolPageShell/Breadcrumbs';
-import SectionContainer from '@/components/Shell/SectionContainer';
+import PoolPageShell from '@/app/pool/[id]/PoolPageShell';
 
-interface PoolSettingsLayoutProps {
-  params: { id: string };
-}
-
-export default async function PoolDetailsLayout({
+export default async function PoolContentLayout({
   children,
   params,
-}: PropsWithChildren<PoolSettingsLayoutProps>) {
+}: PropsWithChildren<{
+  params: { id: string };
+}>) {
   const id = decodePrefixedAddress(params.id);
   const { data } = await getPoolDetails({ variables: { id } });
   const pool = useFragment(splitBaseFragment, data.split);
@@ -25,5 +21,5 @@ export default async function PoolDetailsLayout({
     metaData,
   };
 
-  return <>{children}</>;
+  return <PoolPageShell {...props}>{children}</PoolPageShell>;
 }

@@ -3,11 +3,11 @@ import { ipfsResolveData } from '@/lib/utils';
 import { SplitImage } from '@/components/Split/Image';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
-interface PoolHeaderProps {
+export interface PoolHeaderProps {
   metaData: { name: string; description: string; image: string };
 }
 
-export default function PoolHeaderTitle({ metaData }: PoolHeaderProps) {
+export default function PoolHeader({ metaData }: PoolHeaderProps) {
   return (
     <Breadcrumbs
       overwrite={{
