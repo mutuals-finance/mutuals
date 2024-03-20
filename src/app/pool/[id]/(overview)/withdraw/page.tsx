@@ -28,12 +28,11 @@ export default async function PoolHandleWithdraw({
   };
 
   return (
-    <Stack overflowY={'auto'} flex={'1'} p='6' spacing={'3'}>
+    <WithdrawForm {...props}>
       <Text>
         Withdraw funds from your Payment Pool. You may either withdraw for your
         own or distribute to all other recipients.
       </Text>
-      <WithdrawForm {...props} />
-    </Stack>
+    </WithdrawForm>
   );
 }

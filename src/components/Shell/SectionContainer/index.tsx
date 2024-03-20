@@ -14,7 +14,11 @@ export default function SectionContainer({
 }: SectionContainerProps) {
   return (
     <Box as={as} my={'12'} {...props}>
-      <Container maxW={'container.lg'} {...containerProps}>
+      <Container
+        maxW={'container.lg'}
+        px={{ base: '6', lg: '12' }}
+        {...containerProps}
+      >
         {children}
       </Container>
     </Box>

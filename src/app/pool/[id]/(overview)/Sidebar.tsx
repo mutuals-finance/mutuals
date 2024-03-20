@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Box,
   BoxProps,
   Drawer,
   DrawerBody,
@@ -9,6 +10,8 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerProps,
+  Heading,
+  IconButton,
   Stack,
   useBreakpointValue,
 } from '@chakra-ui/react';
@@ -16,6 +19,8 @@ import {
 import SidebarComponent from '@/components/Sidebar';
 import RouterTabs, { RouterTabProps } from '@/components/RouterTabs';
 import { useParams, usePathname, useRouter } from 'next/navigation';
+import Header from '@/app/RootLayout/Header';
+import { IoClose } from 'react-icons/io5';
 
 interface PoolSidebarWrapperProps extends DrawerProps {}
 
@@ -45,26 +50,24 @@ export default function PoolSidebar({
   const router = useRouter();
 
   const index = tabs?.findIndex((t) => pathname == t.href.toString());
-  const isOpen = index >= 0;
+  const isClosed = index < 0;
 
-  const Wrapper = isLargerLg ? PoolSidebarSidebar : PoolSidebarDrawer;
+  const Wrapper = !isLargerLg ? PoolSidebarDrawer : PoolSidebarSidebar;
 
   return (
     <Wrapper
-      isOpen={isOpen}
+      isOpen={!isClosed}
       onClose={() => router.push(`/pool/${decodeURIComponent(params.id)}`)}
       placement='right'
       {...props}
     >
-      <RouterTabs isFitted={true} tabs={tabs}>
-        {children}
-      </RouterTabs>
+      <RouterTabs tabs={tabs}>{children}</RouterTabs>
     </Wrapper>
   );
 }
 
 function PoolSidebarSidebar({ children, ...props }: PoolSidebarWrapperProps) {
-  const sidebarWidth = '28rem';
+  const sidebarWidth = '26rem';
 
   return (
     <SidebarComponent

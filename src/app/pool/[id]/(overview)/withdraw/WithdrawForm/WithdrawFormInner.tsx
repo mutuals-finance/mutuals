@@ -4,6 +4,7 @@ import { Balance } from '@ankr.com/ankr.js/dist/types';
 import {
   Box,
   Button,
+  Stack,
   Table,
   TableContainer,
   Tbody,
@@ -14,7 +15,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { GroupBase } from 'chakra-react-select';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useToggle } from 'react-use';
 
@@ -52,8 +53,9 @@ export interface WithdrawData {
 
 export default function WithdrawFormInner({
   balance,
+  children,
   ...props
-}: WithdrawFormInnerProps) {
+}: PropsWithChildren<WithdrawFormInnerProps>) {
   const {
     watch,
     formState: { isValid },
@@ -87,79 +89,96 @@ export default function WithdrawFormInner({
   const [isModalOpen, setIsModalOpen] = useToggle(false);
 
   return (
-    <VStack spacing={'6'} alignItems={'stretch'}>
-      <FormGroup>
-        <InputListbox<Balance, true, GroupBase<Balance>>
-          label='Assets'
-          helperText={'Specify the tokens you want to withdraw.'}
-          id='assets'
-          validation={{
-            validate: (v) => v.length > 0 || 'Please select at least one asset',
-            required: {
-              value: true,
-              message: 'Please select at least one asset',
-            },
-          }}
-          isMulti={true}
-          selectedOptionStyle='check'
-          hideSelectedOptions={false}
-          options={balance?.assets || []}
-          getOptionValue={(option) =>
-            option.blockchain +
-            ':' +
-            option.contractAddress +
-            ':' +
-            option.tokenName
-          }
-          isSearchable={false}
-          closeMenuOnSelect={false}
-          components={{
-            Option: TokenSelectOption,
-            MultiValueLabel: TokenSelectLabel,
-            ValueContainer: TokenSelectValueContainer,
-          }}
-        />
-      </FormGroup>
+    <>
+      <WithdrawModal
+        {...tx}
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
-      <FormGroup>
-        <InputSwitch
-          label={'Distribute'}
-          id={'distribute'}
-          helperText={
-            'Specify whether you want to distribute assets to all the recipients of this Pool.'
-          }
-        />
-      </FormGroup>
+      <VStack
+        p='6'
+        alignItems={'stretch'}
+        flex={'1'}
+        gap={'6'}
+        overflowY={'auto'}
+      >
+        {children}
 
-      <TableContainer overflow={'hidden'}>
-        <Table size='sm'>
-          <Tbody>
-            {Object.keys(summary).map((name) => (
-              <Tr key={name}>
-                <Td px={'0'}>{name}</Td>
-                <Td isNumeric px={'0'}>
-                  {summary[name]}
+        <FormGroup>
+          <InputSwitch label={'Distribute'} id={'distribute'} />
+        </FormGroup>
+
+        <FormGroup>
+          <InputListbox<Balance, true, GroupBase<Balance>>
+            label='Assets'
+            helperText={'Specify the tokens you want to withdraw.'}
+            id='assets'
+            validation={{
+              validate: (v) =>
+                v.length > 0 || 'Please select at least one asset',
+              required: {
+                value: true,
+                message: 'Please select at least one asset',
+              },
+            }}
+            isMulti={true}
+            selectedOptionStyle='check'
+            hideSelectedOptions={false}
+            options={balance?.assets || []}
+            getOptionValue={(option) =>
+              option.blockchain +
+              ':' +
+              option.contractAddress +
+              ':' +
+              option.tokenName
+            }
+            isSearchable={false}
+            closeMenuOnSelect={false}
+            components={{
+              Option: TokenSelectOption,
+              MultiValueLabel: TokenSelectLabel,
+              ValueContainer: TokenSelectValueContainer,
+            }}
+          />
+        </FormGroup>
+      </VStack>
+
+      <Stack
+        flexShrink={'0'}
+        p={'6'}
+        gap={'6'}
+        borderTop={'1px solid'}
+        borderColor={'border.1'}
+      >
+        <TableContainer overflow={'hidden'}>
+          <Table size='sm'>
+            <Tbody>
+              {Object.keys(summary).map((name) => (
+                <Tr key={name}>
+                  <Td px={'0'}>{name}</Td>
+                  <Td isNumeric px={'0'}>
+                    {summary[name]}
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+            <Tfoot>
+              <Tr>
+                <Td px={'0'}>
+                  <Text as='b'>You Receive</Text>
+                </Td>
+                <Td px={'0'} isNumeric>
+                  <Text as='b'>
+                    {formatPrice(userWithdrawal.toString())} (
+                    {formatCurrencyAmount(total.assetCount.toString())} tokens)
+                  </Text>
                 </Td>
               </Tr>
-            ))}
-          </Tbody>
-          <Tfoot>
-            <Tr>
-              <Td px={'0'}>
-                <Text as='b'>You Receive</Text>
-              </Td>
-              <Td px={'0'} isNumeric>
-                <Text as='b'>
-                  {formatPrice(userWithdrawal.toString())} (
-                  {formatCurrencyAmount(total.assetCount.toString())} tokens)
-                </Text>
-              </Td>
-            </Tr>
-          </Tfoot>
-        </Table>
-      </TableContainer>
+            </Tfoot>
+          </Table>
+        </TableContainer>
 
-      <Box>
         <Button
           colorScheme='primary'
           disabled={!isValid || tx.isError || tx.isLoading}
@@ -172,13 +191,7 @@ export default function WithdrawFormInner({
         >
           Withdraw
         </Button>
-      </Box>
-
-      <WithdrawModal
-        {...tx}
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-    </VStack>
+      </Stack>
+    </>
   );
 }

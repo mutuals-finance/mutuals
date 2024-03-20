@@ -36,6 +36,7 @@ export default function RouterTabs({
               key={title}
               _focus={{ outline: '0', boxShadow: 'none' }}
               as={Link}
+              fontWeight={'600'}
               {..._props}
             >
               {title}
