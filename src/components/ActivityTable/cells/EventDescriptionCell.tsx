@@ -20,7 +20,10 @@ export function EventDescriptionCell({
   return (
     <Box fontSize={'sm'}>
       <Text>{type}</Text>
-      <Date timestamp={row.original.timestamp.toString()} variant={'label'} />
+      <Date
+        timestamp={row.original.timestamp.toString()}
+        variant={'label-mono'}
+      />
     </Box>
   );
 }

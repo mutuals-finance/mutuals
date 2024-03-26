@@ -4,21 +4,40 @@ import Image, { ImageProps } from 'next/image';
 import React from 'react';
 import { IoHelp } from 'react-icons/io5';
 
-interface TokenImageProps extends FlexProps {
+type TokenImageSize = 'xs' | 'sm';
+
+export interface TokenImageProps extends FlexProps {
   src?: ImageProps['src'];
   alt?: string;
+  size?: TokenImageSize;
 }
-export default function TokenImage({ src, alt, ...props }: TokenImageProps) {
+
+const sizeProps: Record<
+  TokenImageSize,
+  { w: string; h: string; borderRadius: string; p: string }
+> = {
+  xs: {
+    p: '0.5',
+    w: '6',
+    h: '6',
+    borderRadius: 'md',
+  },
+  sm: {
+    p: '1',
+    w: '8',
+    h: '8',
+    borderRadius: 'md',
+  },
+};
+
+export default function TokenImage({
+  src,
+  alt,
+  size = 'sm',
+  ...props
+}: TokenImageProps) {
   return (
-    <Flex
-      p={'1'}
-      borderWidth={'1px'}
-      borderRadius={'md'}
-      w={'8'}
-      h={'8'}
-      bg={'bg.3'}
-      {...props}
-    >
+    <Flex borderWidth={'1px'} bg={'bg.3'} {...sizeProps[size]} {...props}>
       <Flex
         justifyContent={'center'}
         alignItems={'center'}

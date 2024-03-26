@@ -1,22 +1,35 @@
 import { Balance } from '@ankr.com/ankr.js/dist/types';
-import { Box, BoxProps, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  BoxProps,
+  Stack,
+  StackProps,
+  Text,
+  TextProps,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import React from 'react';
 
 import Date from '@/components/Date';
 
-interface TokenLabelProps
-  extends BoxProps,
+export interface TokenLabelProps
+  extends TextProps,
     Partial<Pick<Balance, 'tokenName' | 'tokenSymbol'>> {}
 
 export default function TokenLabel({
-  tokenName = 'Unknown Token',
-  tokenSymbol = 'NONE',
+  tokenName = 'Unknown',
+  tokenSymbol = '??',
+  fontSize = 'sm',
+  noOfLines = 2,
   ...props
 }: TokenLabelProps) {
   return (
-    <Box fontSize={'sm'} {...props}>
-      <Text>{tokenName}</Text>
-      <Text variant={'label-mono'}>{tokenSymbol}</Text>
-    </Box>
+    <Text fontSize={fontSize} noOfLines={noOfLines} {...props}>
+      {tokenName}
+      <br />
+      <Text variant={'label-mono'} as={'span'}>
+        {tokenSymbol}
+      </Text>
+    </Text>
   );
 }
