@@ -5,6 +5,7 @@ import React from 'react';
 
 import { EventType } from '@/components/ActivityTable/types';
 import useActivityEvent from '@/components/ActivityTable/useActivityEvent';
+import { formatCurrencyAmount } from '@/lib/utils';
 
 type AmountCellProps = CellContext<TokenTransfer, string> & {
   address?: string;
@@ -15,12 +16,13 @@ export function AmountCell({ address = '', row, getValue }: AmountCellProps) {
 
   const type = getEventType(row.original);
   const isDeposit = type === EventType.Deposit;
-  const text = /*${formatCurrencyAmount(getValue())}*/ `td ${row.original.tokenSymbol}`;
+  const text = `${formatCurrencyAmount(getValue())} ${
+    row.original.tokenSymbol
+  }`;
 
   return (
     <>
       <Text
-        variant={'slashed-zero'}
         color={useColorModeValue(
           isDeposit ? 'green.700' : 'red.700',
           isDeposit ? 'green.400' : 'red.400',

@@ -3,6 +3,7 @@
 import {
   forwardRef,
   Tab,
+  TabIndicator,
   TabList,
   TabProps,
   Tabs,
@@ -28,21 +29,32 @@ export default function RouterTabs({
 
   return (
     <>
-      <Tabs index={index} {...props}>
+      <Tabs
+        index={index}
+        position='relative'
+        variant='unstyled'
+        borderBottom={'1px solid'}
+        borderColor={'border.1'}
+        {...props}
+      >
         <TabList>
           {tabs?.map(({ title, href, ..._props }) => (
             <Tab
               href={href}
               key={title}
+              color={'alpha.1'}
               _focus={{ outline: '0', boxShadow: 'none' }}
+              _selected={{ color: 'color.1' }}
+              _hover={{ color: 'color.1' }}
               as={Link}
-              fontWeight={'600'}
               {..._props}
             >
               {title}
             </Tab>
           ))}
         </TabList>
+
+        <TabIndicator mt='-1.5px' height='2px' bg='color.1' />
       </Tabs>
 
       {children}

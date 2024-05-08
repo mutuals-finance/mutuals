@@ -6,7 +6,7 @@ const { definePartsStyle, defineMultiStyleConfig } =
 
 const baseStyle = definePartsStyle({
   // define the part you're going to style
-  container: { rounded: 'lg' },
+  container: { rounded: 'md' },
 });
 
 const variants = {

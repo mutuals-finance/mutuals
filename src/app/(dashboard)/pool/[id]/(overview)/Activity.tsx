@@ -5,7 +5,6 @@ import ContentCard from '@/components/ContentCard';
 
 import { GetTokenTransfersReply } from '@ankr.com/ankr.js';
 import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
-import SectionContainer from '@/components/Shell/SectionContainer';
 import { Box, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 

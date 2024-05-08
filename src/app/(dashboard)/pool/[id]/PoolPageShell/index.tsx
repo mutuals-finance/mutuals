@@ -1,11 +1,11 @@
-import React, { PropsWithChildren } from 'react';
-import { Box, Stack } from '@chakra-ui/react';
-import SectionContainer, {
-  SectionContainerProps,
-} from '@/components/Shell/SectionContainer';
-import PoolBreadcrumbs from '@/app/(dashboard)/pool/[id]/PoolPageShell/Breadcrumbs';
+import React from 'react';
+import { Container, HStack, Text } from '@chakra-ui/react';
+import { SectionContainerProps } from '@/components/Shell/SectionContainer';
+import PageShell, { PageShellProps } from '@/components/Shell/PageShell';
+import { SplitImage } from '@/components/Split/Image';
+import { ipfsResolveData } from '@/lib/utils';
 
-interface PoolPageShellProps {
+interface PoolPageShellProps extends PageShellProps {
   metaData: { name: string; description: string; image: string };
   sectionContainerProps?: SectionContainerProps;
 }
@@ -13,11 +13,30 @@ export default function PoolPageShell({
   metaData,
   sectionContainerProps,
   children,
-}: PropsWithChildren<PoolPageShellProps>) {
+  ...props
+}: PoolPageShellProps) {
   return (
-    <SectionContainer flex={'1'} {...sectionContainerProps}>
-      <PoolBreadcrumbs metaData={metaData} />
-      <Box mt={'12'}>{children}</Box>
-    </SectionContainer>
+    <PageShell
+      breadcrumbsProps={{
+        overwrite: {
+          pool: false,
+          id: (
+            <HStack spacing='1' alignItems={'center'}>
+              <SplitImage
+                src={ipfsResolveData(metaData.image)}
+                alt={metaData.name}
+                boxSize='1.2rem'
+              />
+              <Text>{metaData.name}</Text>
+            </HStack>
+          ),
+        },
+      }}
+      {...props}
+    >
+      <Container variant={'shell'} {...sectionContainerProps}>
+        {children}
+      </Container>
+    </PageShell>
   );
 }

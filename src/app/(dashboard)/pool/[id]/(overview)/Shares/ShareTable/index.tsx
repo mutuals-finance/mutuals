@@ -21,7 +21,7 @@ export default function ShareTable({
     }),
     columnHelper.accessor('value', {
       cell: ({ getValue }) => (
-        <Text variant={'slashed-zero'} as={'span'}>
+        <Text as={'span'}>
           {formatPercentage((getValue() * 100).toString())}
         </Text>
       ),

@@ -10,6 +10,7 @@ import {
   Divider,
   Flex,
   Heading,
+  HStack,
   IconButton,
   LinkBox,
   LinkOverlay,
@@ -17,6 +18,8 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Stack,
+  StackDivider,
   StatArrow,
   StatNumber,
   Text,
@@ -44,6 +47,7 @@ import {
 } from '@/lib/utils';
 
 import { SplitImage } from '@/components/Split/Image';
+import { BsBoxArrowInUpRight } from 'react-icons/bs';
 
 interface SplitFragmentCardProps {
   fragment: FragmentType<typeof splitBaseFragment>;
@@ -60,8 +64,14 @@ type SplitCardProps = Partial<SplitBaseFragmentFragment>;
 
 export default function SplitCard({ id, metaData, address }: SplitCardProps) {
   return (
-    <LinkBox as='article' rounded={'lg'}>
-      <Card variant={'outline'} bg={'transparent'}>
+    <LinkBox
+      as='article'
+      rounded={'md'}
+      _hover={{ transform: 'translateY(-4px)' }}
+      transitionDuration={'0.2s'}
+      transitionTimingFunction={'ease-in-out'}
+    >
+      <Card variant={'outline'} bg={'bg.1'} size={'sm'}>
         <CardHeader as={Flex} alignItems={'center'} gap={'3'}>
           <Box flexShrink={0}>
             {!!metaData?.image && (
@@ -73,11 +83,13 @@ export default function SplitCard({ id, metaData, address }: SplitCardProps) {
           </Box>
 
           <Box flex='1'>
-            <Heading size='sm' as={'h3'} fontWeight={'700'}>
+            <Heading size='sm' as={'h3'}>
               {metaData?.name === '' ? 'Unknown' : metaData?.name}
             </Heading>
 
-            <Text variant={'label-mono'}>{shortenAddress(address)}</Text>
+            <Text variant={'label-mono'} fontSize={'xs'}>
+              {shortenAddress(address)}
+            </Text>
           </Box>
 
           <Menu size={'sm'}>
@@ -97,19 +109,30 @@ export default function SplitCard({ id, metaData, address }: SplitCardProps) {
           </Menu>
         </CardHeader>
         <CardBody pt={'0'}>
-          <Text fontSize={'sm'} noOfLines={2}>
-            {metaData?.description}
-          </Text>
+          <Stack spacing='3'>
+            <Text noOfLines={2} fontSize={'sm'}>
+              {metaData?.description}
+            </Text>
 
-          <Divider my={'6'} />
+            <HStack flex={'1'} gap={'6'}>
+              <Stat flex={'0'}>
+                <StatLabel fontSize={'xs'}>Pool Balance</StatLabel>
+                <StatNumber fontSize={'xl'}>
+                  {formatUSDPrice('493123.24')}
+                </StatNumber>
+              </Stat>
+              <Stat flex={'0'}>
+                <StatLabel fontSize={'xs'}>Your Balance</StatLabel>
+                <StatNumber fontSize={'xl'}>
+                  {formatUSDPrice('10123.98')}
+                </StatNumber>
+              </Stat>
+            </HStack>
 
-          <Flex justifyContent={'space-between'} alignItems={'flex-end'}>
-            <Stat>
-              <StatLabel>Total Balance</StatLabel>
-              <StatNumber>{formatUSDPrice('4000123.24')}</StatNumber>
-            </Stat>
-            {id && <Button size={'sm'}>More</Button>}
-          </Flex>
+            <Button size={'sm'} _hover={{ cursor: 'default' }}>
+              View More
+            </Button>
+          </Stack>
         </CardBody>
       </Card>
       {!!id && (

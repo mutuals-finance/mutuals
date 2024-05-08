@@ -4,10 +4,10 @@ import { decodePrefixedAddress } from '@/lib/utils';
 import { getMetadata, getPoolDetails } from '@/lib/split';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
-import PoolContentShell from '@/app/(dashboard)/pool/[id]/PoolContentShell';
 import AssetTable from '@/components/AssetTable';
 import { getAccountBalance } from '@/lib/ankr';
 import ContentCard from '@/components/ContentCard';
+import PageShell from '@/components/Shell/PageShell';
 
 interface PoolAssetsPageProps {
   params: { id: string };
@@ -31,14 +31,14 @@ export default async function PoolAssetsPage({
 
   return (
     <>
-      <PoolContentShell title={'Assets'}>
+      <PageShell breadcrumbsEnabled={false} title={'Assets'}>
         <ContentCard
           bodyProps={{ p: '0' }}
           sx={{ overflow: 'auto !important' }}
         >
           <AssetTable assets={balance?.assets} size={'sm'} />
         </ContentCard>
-      </PoolContentShell>
+      </PageShell>
     </>
   );
 }

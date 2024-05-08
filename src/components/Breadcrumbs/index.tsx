@@ -5,7 +5,7 @@ import BreadcrumbsInner from '@/components/Breadcrumbs/BreadcrumbsInner';
 import { ReactNode, useCallback, useEffect, useMemo } from 'react';
 import { formatToTitleCase } from '@/lib/utils';
 
-interface BreadcrumbsProps {
+export interface BreadcrumbsProps {
   overwrite?: { [key: string]: ReactNode };
 }
 export default function Breadcrumbs({ overwrite }: BreadcrumbsProps) {

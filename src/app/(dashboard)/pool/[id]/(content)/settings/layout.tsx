@@ -4,7 +4,7 @@ import { decodePrefixedAddress } from '@/lib/utils';
 import { getMetadata, getPoolDetails } from '@/lib/split';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
-import PoolContentShell from '@/app/(dashboard)/pool/[id]/PoolContentShell';
+import PageShell from '@/components/Shell/PageShell';
 
 interface PoolSettingsLayoutProps {
   params: { id: string };
@@ -37,10 +37,10 @@ export default async function PoolSettingsLayout({
   ];
 
   return (
-    <PoolContentShell title={'Settings'}>
+    <PageShell breadcrumbsEnabled={false} title={'Settings'}>
       <RouterTabs tabs={tabs} mb={'6'}>
         {children}
       </RouterTabs>
-    </PoolContentShell>
+    </PageShell>
   );
 }

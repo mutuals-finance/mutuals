@@ -10,9 +10,8 @@ import { SPLITS_BY_PAYEE } from '@/lib/graphql/queries';
 import { SplitFragmentCard } from '@/components/Split/Card';
 
 import { TreasurySearchAndCreate } from '@/app/(dashboard)/PoolList/SearchAndCreate';
-import SectionContainer from '@/components/Shell/SectionContainer';
 
-export default function TreasuryList() {
+export default function PoolList() {
   const { address, isConnected } = useAccount();
 
   const { data, loading } = useQuery(SPLITS_BY_PAYEE, {
@@ -21,19 +20,22 @@ export default function TreasuryList() {
   });
 
   return (
-    <SectionContainer>
-      <Heading as={'h2'} size={'lg'} fontWeight={'700'} mb={'6'}>
+    <Container variant={'shell'}>
+      <Heading as={'h2'} size={'lg'} mb={'6'}>
         Payment Pools
       </Heading>
+
       <TreasurySearchAndCreate />
       <SimpleGrid
         templateColumns={'repeat(auto-fill, minmax(20rem, 1fr))'}
         spacing={6}
       >
-        {data?.splits.map((fragment, index) => {
-          return <SplitFragmentCard fragment={fragment} key={index} />;
-        })}
+        {Array(4)
+          .fill(data?.splits[0])
+          .map((fragment, index) => {
+            return <SplitFragmentCard fragment={fragment} key={index} />;
+          })}
       </SimpleGrid>
-    </SectionContainer>
+    </Container>
   );
 }

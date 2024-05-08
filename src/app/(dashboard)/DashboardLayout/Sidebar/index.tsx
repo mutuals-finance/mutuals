@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
   useBreakpointValue,
+  VStack,
 } from '@chakra-ui/react';
 import { PropsWithChildren, useEffect } from 'react';
 import { IconType } from 'react-icons';
@@ -87,15 +88,16 @@ function RootSidebarInner({ children }: PropsWithChildren) {
   );
 
   return (
-    <Stack gap='0' justifyContent={'stretch'} direction={'row'}>
+    <Stack gap='0' direction={'row'}>
       <Sidebar
+        zIndex={'1'}
         w={w}
         minW={{ base: '0', lg: '5.6rem' }}
         isOpen={isOpen}
         borderColor={{ base: 'transparent', lg: 'border.1' }}
         bg={'bg.1'}
         header={
-          <HStack justifyContent={'flex-end'}>
+          <HStack justifyContent={'flex-end'} gap={'3'}>
             {isOpen && (
               <Box w={'24'} mr={'auto'}>
                 <Logo />
@@ -126,11 +128,11 @@ function RootSidebarInner({ children }: PropsWithChildren) {
         }
       >
         {Object.keys(NAV_SECTIONS).map((section) => (
-          <Box w={'full'} key={section}>
+          <VStack alignItems={'stretch'} key={section}>
             <Text mb={'3'} fontSize={'sm'} noOfLines={1}>
               {section}
             </Text>
-            <Stack spacing={3}>
+            <Stack gap={1.5} w={'full'}>
               {NAV_SECTIONS[section]?.map((navItem) => (
                 <Button
                   key={navItem.label}
@@ -151,11 +153,11 @@ function RootSidebarInner({ children }: PropsWithChildren) {
                 </Button>
               ))}
             </Stack>
-          </Box>
+          </VStack>
         ))}
       </Sidebar>
 
-      <Box flex={'1'} w={'full'}>
+      <Box zIndex={'0'} flex={'1 1 auto'} minWidth={'0'}>
         {children}
       </Box>
     </Stack>

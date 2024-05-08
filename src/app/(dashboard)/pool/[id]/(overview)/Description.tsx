@@ -1,34 +1,25 @@
 import {
   Box,
-  ButtonGroup,
   Heading,
-  HStack,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Show,
   Stack,
+  Stat,
+  StatArrow,
+  StatGroup,
+  StatHelpText,
+  StatLabel,
+  StatNumber,
   Text,
-  VStack,
 } from '@chakra-ui/react';
-import { BsLayoutSidebarReverse } from 'react-icons/bs';
-import {
-  IoAlertCircleOutline,
-  IoCopyOutline,
-  IoEllipsisHorizontal,
-  IoOpenOutline,
-  IoSettingsOutline,
-  IoShareOutline,
-} from 'react-icons/io5';
 
-import { ipfsResolveData, shortenAddress } from '@/lib/utils';
+import {
+  formatCurrencyAmount,
+  formatUSDPrice,
+  ipfsResolveData,
+} from '@/lib/utils';
 
 import { SplitImage } from '@/components/Split/Image';
 import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
-import Link from 'next/link';
-import SectionContainer from '@/components/Shell/SectionContainer';
+import ContentCard from '@/components/ContentCard';
 
 interface PoolDescriptionProps {
   pool?: SplitBaseFragmentFragment | null;
@@ -37,7 +28,7 @@ interface PoolDescriptionProps {
 
 export default function PoolDescription({ metaData }: PoolDescriptionProps) {
   return (
-    <Box as={'article'}>
+    <Stack gap={'6'} as={'article'}>
       <Stack
         direction={{ base: 'row', lg: 'row' }}
         alignItems={'center'}
@@ -49,14 +40,31 @@ export default function PoolDescription({ metaData }: PoolDescriptionProps) {
           alt={metaData.name}
           boxSize={'3.4rem'}
         />
-        <Heading as={'h1'} fontWeight={'700'} size={'xl'}>
+        <Heading as={'h1'} size={'xl'}>
           {metaData.name}
         </Heading>
       </Stack>
 
-      <Box maxW={'xl'} mt={'6'}>
+      <StatGroup gap={{ base: '6', lg: '12' }}>
+        <Stat flex={'0'}>
+          <StatLabel>Total Income</StatLabel>
+          <StatNumber fontSize={'3xl'}>{formatUSDPrice('29183.80')}</StatNumber>
+        </Stat>
+        <Stat flex={'0'}>
+          <StatLabel>Balance</StatLabel>
+          <StatNumber fontSize={'3xl'}>{formatUSDPrice('14900.92')}</StatNumber>
+        </Stat>
+        <Stat flex={'1'}>
+          <StatLabel>Withdraws</StatLabel>
+          <StatNumber fontSize={'3xl'}>
+            {formatUSDPrice((29183.8 - 14900.92).toString())}
+          </StatNumber>
+        </Stat>
+      </StatGroup>
+
+      <Box maxW={'xl'}>
         <Text noOfLines={{ base: 3, lg: 3 }}>{metaData.description}</Text>
       </Box>
-    </Box>
+    </Stack>
   );
 }

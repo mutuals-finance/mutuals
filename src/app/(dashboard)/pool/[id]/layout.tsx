@@ -4,8 +4,6 @@ import { decodePrefixedAddress } from '@/lib/utils';
 import { getMetadata, getPoolDetails } from '@/lib/split';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
-import PoolHeader from '@/app/(dashboard)/pool/[id]/PoolPageShell/Breadcrumbs';
-import SectionContainer from '@/components/Shell/SectionContainer';
 
 interface PoolSettingsLayoutProps {
   params: { id: string };

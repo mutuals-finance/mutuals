@@ -4,6 +4,8 @@ import {
   BoxProps,
   Stack,
   StackProps,
+  Tag,
+  TagLabel,
   Text,
   TextProps,
   useColorModeValue,
@@ -24,12 +26,14 @@ export default function TokenLabel({
   ...props
 }: TokenLabelProps) {
   return (
-    <Text fontSize={fontSize} noOfLines={noOfLines} {...props}>
-      {tokenName}
-      <br />
-      <Text variant={'label-mono'} as={'span'}>
-        {tokenSymbol}
+    <Stack alignItems={'flex-start'} gap={'1'}>
+      <Text fontSize={fontSize} noOfLines={noOfLines} {...props}>
+        {tokenName}
       </Text>
-    </Text>
+
+      <Tag size='sm' rounded={'md'} colorScheme={'primary'}>
+        <TagLabel fontSize={'2xs'}>{tokenSymbol}</TagLabel>
+      </Tag>
+    </Stack>
   );
 }

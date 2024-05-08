@@ -7,6 +7,7 @@ import {
   MenuItem,
   MenuList,
   Show,
+  Text,
   useColorMode,
 } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
@@ -32,10 +33,6 @@ export default function User() {
   const { address, isConnected, isConnecting } = useAccount();
   const { disconnect } = useDisconnect();
   const [walletModalOpen, setWalletModalOpen] = useState(false);
-  const displayName = useMemo(
-    () => (isConnected ? shortenAddress(address, 3) : 'Not Connected'),
-    [isConnected, address],
-  );
 
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -64,7 +61,13 @@ export default function User() {
               rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
               isLoading={isConnecting}
             >
-              {displayName}
+              {isConnected ? (
+                <Text as={'span'} fontFamily={'monospace'}>
+                  {shortenAddress(address)}
+                </Text>
+              ) : (
+                'Not Connected'
+              )}
             </MenuButton>
 
             {/*
@@ -86,7 +89,7 @@ export default function User() {
               <MenuItem icon={<IoHelpOutline />}>Help</MenuItem>
               <MenuDivider />
               <MenuItem
-                fontWeight={'600'}
+                fontWeight={'500'}
                 icon={
                   colorMode === `light` ? <IoMoonOutline /> : <IoSunnyOutline />
                 }
@@ -97,7 +100,7 @@ export default function User() {
               <MenuItem
                 icon={isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
                 onClick={() => (isConnected ? disconnect() : openWalletModal())}
-                fontWeight={'600'}
+                fontWeight={'500'}
               >
                 {isConnected ? `Logout` : `Login`}
               </MenuItem>

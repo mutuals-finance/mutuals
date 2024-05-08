@@ -4,12 +4,10 @@ import { decodePrefixedAddress } from '@/lib/utils';
 import { getMetadata, getPoolDetails } from '@/lib/split';
 import { useFragment } from '@/lib/graphql/__generated__';
 import { splitBaseFragment } from '@/lib/graphql/fragments';
-import PoolContentShell from '@/app/(dashboard)/pool/[id]/PoolContentShell';
-import AssetTable from '@/components/AssetTable';
-import { getAccountBalance, getTokenTransfers } from '@/lib/ankr';
+import { getTokenTransfers } from '@/lib/ankr';
 import ContentCard from '@/components/ContentCard';
 import ActivityTable from '@/components/ActivityTable';
-import { getTransfers } from '@/lib/covalent';
+import PageShell from '@/components/Shell/PageShell';
 
 interface PoolAssetsPageProps {
   params: { id: string };
@@ -32,11 +30,12 @@ export default async function PoolAssetsPage({
 
   return (
     <>
-      <PoolContentShell
+      <PageShell
         title={'Activity'}
         description={
           'Your activity contains all withdrawals and deposits associated with your payment pool. Currently, ERC20 Token Transfers are tracked.'
         }
+        breadcrumbsEnabled={false}
       >
         <ContentCard
           bodyProps={{ p: '0' }}
@@ -48,7 +47,7 @@ export default async function PoolAssetsPage({
             size={'sm'}
           />
         </ContentCard>
-      </PoolContentShell>
+      </PageShell>
     </>
   );
 }

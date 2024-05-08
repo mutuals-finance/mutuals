@@ -3,7 +3,6 @@ import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
 import SharesContent from '@/app/(dashboard)/pool/[id]/(overview)/Shares/SharesContent';
 import { Stack } from '@chakra-ui/react';
 import { shareFragment } from '@/lib/graphql/fragments';
-import SectionContainer from '@/components/Shell/SectionContainer';
 
 interface SharesProps {
   shares?: FragmentType<typeof shareFragment>[];

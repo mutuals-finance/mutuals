@@ -30,7 +30,7 @@ export default function ContentCard({
       {(!!title || !!titleAfter) && (
         <CardHeader borderBottom={'1px solid'} borderColor={'border.1'}>
           {!!title && (
-            <Heading as='h2' size='md' fontWeight={'700'}>
+            <Heading as='h2' size='md'>
               {title}
             </Heading>
           )}

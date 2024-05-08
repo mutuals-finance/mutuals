@@ -59,7 +59,7 @@ export default async function PoolOverviewLayout({
 
   return (
     <Stack direction={'row'} gap={'0'} w={'full'}>
-      <PoolPageShell metaData={metaData}>
+      <PoolPageShell metaData={metaData} flex={'1'} minWidth={'0'}>
         <Stack gap={'6'}>
           <Description {...props} />
           <Handlers {...props} />

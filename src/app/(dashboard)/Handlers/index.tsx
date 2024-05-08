@@ -6,7 +6,7 @@ import {
 
 import IconButtonListContainer from '@/components/Shell/IconButtonListContainer';
 import Link from 'next/link';
-import SectionContainer from '@/components/Shell/SectionContainer';
+import { Container } from '@chakra-ui/react';
 
 export default function DashboardHandlers() {
   const items = [
@@ -32,8 +32,8 @@ export default function DashboardHandlers() {
   ];
 
   return (
-    <SectionContainer>
+    <Container variant={'shell'}>
       <IconButtonListContainer items={items} />
-    </SectionContainer>
+    </Container>
   );
 }

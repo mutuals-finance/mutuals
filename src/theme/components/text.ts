@@ -1,18 +1,20 @@
 import { defineStyleConfig, useColorModeValue } from '@chakra-ui/react';
 
+const baseStyle = { fontWeight: '400' };
+
 export default defineStyleConfig({
+  baseStyle,
   variants: {
     'slashed-zero': {
+      fontFamily: 'monospace',
       fontVariantNumeric: 'slashed-zero',
     },
     'label-mono': {
       fontFamily: 'monospace',
-      fontWeight: '500',
-      color: 'alpha.1',
+      color: 'color.3',
     },
     label: {
-      color: 'alpha.1',
-      fontWeight: '500',
+      color: 'color.3',
     },
   },
 });

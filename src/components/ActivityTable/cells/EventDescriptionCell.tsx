@@ -1,5 +1,12 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
-import { Box, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Stack,
+  Tag,
+  TagLabel,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 
@@ -18,12 +25,17 @@ export function EventDescriptionCell({
   const type = getEventType(row.original);
 
   return (
-    <Box fontSize={'sm'}>
-      <Text>{type}</Text>
-      <Date
-        timestamp={row.original.timestamp.toString()}
-        variant={'label-mono'}
-      />
-    </Box>
+    <Stack alignItems={'flex-start'} gap={'1'}>
+      <Text fontSize={'sm'}>{type}</Text>
+      <Tag size={'sm'}>
+        <TagLabel
+          as={Date}
+          fontWeight={'500'}
+          fontSize={'2xs'}
+          formatString='LLLL dd, yyyy'
+          timestamp={row.original.timestamp.toString()}
+        ></TagLabel>
+      </Tag>
+    </Stack>
   );
 }

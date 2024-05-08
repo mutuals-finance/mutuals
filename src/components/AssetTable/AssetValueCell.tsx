@@ -15,7 +15,7 @@ export default function AssetValueCell({
   ...props
 }: AssetValueCellProps) {
   return (
-    <Text variant={'slashed-zero'} as={'span'} {...props}>
+    <Text as={'span'} {...props}>
       {formatUSDPrice(getValue() ?? '')}
     </Text>
   );

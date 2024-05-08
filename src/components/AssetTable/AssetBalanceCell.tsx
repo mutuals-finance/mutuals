@@ -17,8 +17,13 @@ export default function AssetBalanceCell({
 }: AssetBalanceCellProps) {
   const { tokenSymbol } = row.original;
   return (
-    <Text variant={'slashed-zero'} as={'span'} {...props}>
-      {formatCurrencyAmount(getValue())} {tokenSymbol}
-    </Text>
+    <>
+      <Text as={'span'} {...props}>
+        {formatCurrencyAmount(getValue())}
+      </Text>{' '}
+      <Text variant={'label'} as={'span'} {...props}>
+        {tokenSymbol}
+      </Text>
+    </>
   );
 }

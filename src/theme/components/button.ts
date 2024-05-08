@@ -13,9 +13,30 @@ const xl = defineStyle({
 
 const variants = {
   navParent: defineStyle({
-    fontWeight: '500',
     textAlign: 'left',
     justifyContent: 'flex-start',
+  }),
+  blackWhite: defineStyle({
+    bg: 'gray.900',
+    color: 'white',
+    _dark: {
+      bg: 'gray.50',
+      color: 'gray.900',
+    },
+    _hover: {
+      bg: 'gray.700',
+
+      _dark: {
+        bg: 'gray.200',
+      },
+    },
+    _active: {
+      bg: 'gray.800',
+
+      _dark: {
+        bg: 'gray.100',
+      },
+    },
   }),
 };
 
@@ -23,6 +44,7 @@ export default defineStyleConfig({
   sizes: { xl },
   variants,
   baseStyle: {
-    borderRadius: 'lg',
+    fontWeight: '400',
+    borderRadius: 'md',
   },
 });

@@ -9,6 +9,8 @@ import {
   CardProps,
   Heading,
   Stack,
+  Tag,
+  TagLabel,
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
@@ -31,12 +33,15 @@ export default function WalletCard(props: SplitCardProps) {
         textAlign={'center'}
       >
         <UserAvatar address={address} size={'sm'} />
-        <Box>
-          <Heading size='sm' as={'h3'} fontWeight={'700'}>
+        <Stack gap={'1.5'} alignItems={'center'}>
+          <Heading size='sm' as={'h3'}>
             Company Multisig
           </Heading>
-          <Text variant={'label-mono'}>{shortenAddress(address, 3)}</Text>
-        </Box>
+
+          <Text fontSize='xs' fontFamily={'monospace'}>
+            {shortenAddress(address)}
+          </Text>
+        </Stack>
         {/*
         <Menu size={'sm'}>
           <MenuButton

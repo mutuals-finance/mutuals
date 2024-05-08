@@ -1,4 +1,4 @@
-import { Manrope } from 'next/font/google';
+import { Inter, Manrope } from 'next/font/google';
 import localFont from 'next/font/local';
 
 const switzer = localFont({
@@ -181,12 +181,12 @@ const switzer = localFont({
   ],
 });
 
-const manrope = Manrope({
+const manrope = Inter({
   subsets: ['latin'],
 });
 
 export const fontSizes = {};
 export const fonts = {
-  body: switzer.style.fontFamily,
+  body: manrope.style.fontFamily,
   heading: manrope.style.fontFamily,
 };
