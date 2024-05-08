@@ -22,14 +22,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const isAuthenticated = true;
+  const isAuthenticated = request.cookies.get('SPLITFI_JWT')?.value;
 
-  // If the user is authenticated, continue as normal
-  if (isAuthenticated) {
-    return NextResponse.next();
+  // Redirect to login page if not authenticated
+  if (!isAuthenticated) {
+    request.cookies.set('redirectURL', request.nextUrl.href);
+    return NextResponse.redirect(new URL('/auth/sign-in', request.url));
   }
 
-  request.cookies.set('redirectURL', request.nextUrl.href);
-  // Redirect to login page if not authenticated
-  return NextResponse.redirect(new URL('/auth/sign-in', request.url));
+  // If the user is authenticated, continue as normal
+  return NextResponse.next();
 }
