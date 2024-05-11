@@ -10,19 +10,16 @@ import {
 } from '@chakra-ui/react';
 import NextImage from 'next/image';
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useAccount, useChains, useSwitchChain } from 'wagmi';
 
 import { getAvailableChains, getLogoByChainId } from '@/lib/utils';
 
 export default function Chain() {
-  const { isConnected } = useAccount();
-  const { isLoading, switchNetwork, pendingChainId } = useSwitchNetwork();
-  const { chain: currentChain } = useNetwork();
+  const { isConnected, chain: currentChain } = useAccount();
+  const { isPending, switchChain, variables } = useSwitchChain();
 
   function onSelectChain(chainId: number) {
-    if (switchNetwork) {
-      switchNetwork(chainId);
-    }
+    switchChain({ chainId });
   }
 
   return (
@@ -44,7 +41,7 @@ export default function Chain() {
               }
               rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
               variant={'ghost'}
-              isLoading={isLoading}
+              isLoading={isPending}
             >
               {currentChain?.name || 'Unknown'}
             </MenuButton>
@@ -68,7 +65,7 @@ export default function Chain() {
                       </Box>
 
                       {chain.name}
-                      {isLoading && pendingChainId === chain.id && (
+                      {isPending && variables?.chainId === chain.id && (
                         <Spinner size='xs' ml={'1'} />
                       )}
                     </MenuItem>

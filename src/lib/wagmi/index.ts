@@ -1,50 +1,58 @@
-'use client';
+import { cookieStorage, createConfig, createStorage } from 'wagmi';
 
-import { configureChains, createConfig } from 'wagmi';
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { infuraProvider } from 'wagmi/providers/infura';
-import { publicProvider } from 'wagmi/providers/public';
+import { IS_DEV, WALLETCONNECT_PROJECT_ID } from '@/lib/constants';
 
-import { INFURA_KEY, WALLETCONNECT_PROJECT_ID } from '@/lib/constants';
+import { chains, transports } from './chains';
+import {
+  coinbaseWallet,
+  injected,
+  metaMask,
+  safe,
+  walletConnect,
+} from '@wagmi/connectors';
+import {
+  arbitrumGoerli,
+  hardhat,
+  localhost,
+  mainnet,
+  optimismGoerli,
+  polygonMumbai,
+  sepolia,
+} from 'wagmi/chains';
+import { http } from 'viem';
 
-import { availableChains } from './chains';
-
-export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  availableChains,
-  [infuraProvider({ apiKey: INFURA_KEY }), publicProvider()],
-);
-
-export function useWagmi() {
-  const config = createConfig({
-    autoConnect: true,
-    publicClient,
-    webSocketPublicClient,
-    connectors: [
-      new MetaMaskConnector({ chains }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: 'SplitFi',
-        },
-      }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          projectId: WALLETCONNECT_PROJECT_ID,
-        },
-      }),
-      new InjectedConnector({
-        chains,
-        options: {
-          name: 'Injected',
-          shimDisconnect: true,
-        },
-      }),
-    ],
-  });
-
-  return config as never;
-}
+export const config = createConfig({
+  chains: [
+    mainnet,
+    polygonMumbai,
+    sepolia,
+    arbitrumGoerli,
+    optimismGoerli,
+    hardhat,
+    localhost,
+  ],
+  transports: {
+    [mainnet.id]: http(),
+    [polygonMumbai.id]: http(),
+    [sepolia.id]: http(),
+    [arbitrumGoerli.id]: http(),
+    [optimismGoerli.id]: http(),
+    [hardhat.id]: http(),
+    [localhost.id]: http(),
+  },
+  ssr: true,
+  storage: createStorage({
+    storage: cookieStorage,
+  }),
+  connectors: [
+    injected(),
+    metaMask({ dappMetadata: { name: 'SplitFi' } }),
+    coinbaseWallet({
+      appName: 'SplitFi',
+    }),
+    walletConnect({
+      projectId: WALLETCONNECT_PROJECT_ID,
+    }),
+    safe({ debug: IS_DEV }),
+  ],
+});
