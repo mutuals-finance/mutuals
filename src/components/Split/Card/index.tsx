@@ -35,9 +35,12 @@ import {
   IoSettingsOutline,
 } from 'react-icons/io5';
 
-import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
-import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
-import { splitBaseFragment } from '@/lib/graphql/fragments';
+import {
+  FragmentType,
+  useFragment,
+} from 'src/lib/graphql/thegraph/__generated__';
+import { SplitBaseFragmentFragment } from '@/lib/graphql/thegraph/__generated__/graphql';
+import { splitBaseFragment } from '@/lib/graphql/thegraph/fragments';
 import { useMetadata } from '@/lib/split/hooks';
 import {
   formatPrefixedAddress,
@@ -64,13 +67,7 @@ type SplitCardProps = Partial<SplitBaseFragmentFragment>;
 
 export default function SplitCard({ id, metaData, address }: SplitCardProps) {
   return (
-    <LinkBox
-      as='article'
-      rounded={'md'}
-      _hover={{ transform: 'translateY(-4px)' }}
-      transitionDuration={'0.2s'}
-      transitionTimingFunction={'ease-in-out'}
-    >
+    <LinkBox as='article' rounded={'md'}>
       <Card variant={'outline'} bg={'bg.1'} size={'sm'}>
         <CardHeader as={Flex} alignItems={'center'} gap={'3'}>
           <Box flexShrink={0}>
@@ -114,24 +111,28 @@ export default function SplitCard({ id, metaData, address }: SplitCardProps) {
               {metaData?.description}
             </Text>
 
-            <HStack flex={'1'} gap={'6'}>
-              <Stat flex={'0'}>
-                <StatLabel fontSize={'xs'}>Pool Balance</StatLabel>
-                <StatNumber fontSize={'xl'}>
+            <HStack
+              flex={'1'}
+              align={'flex-end'}
+              gap={'6'}
+              p={'3'}
+              bg={'bg.2'}
+              rounded={'md'}
+            >
+              <Stat flex={'1'}>
+                <StatLabel fontSize={'xs'}>Your Balance</StatLabel>
+                <StatNumber fontSize={'lg'}>
                   {formatUSDPrice('493123.24')}
                 </StatNumber>
               </Stat>
-              <Stat flex={'0'}>
-                <StatLabel fontSize={'xs'}>Your Balance</StatLabel>
-                <StatNumber fontSize={'xl'}>
-                  {formatUSDPrice('10123.98')}
-                </StatNumber>
-              </Stat>
+              <Button
+                size={'sm'}
+                variant={'ghost'}
+                _hover={{ cursor: 'default' }}
+              >
+                View More
+              </Button>
             </HStack>
-
-            <Button size={'sm'} _hover={{ cursor: 'default' }}>
-              View More
-            </Button>
           </Stack>
         </CardBody>
       </Card>

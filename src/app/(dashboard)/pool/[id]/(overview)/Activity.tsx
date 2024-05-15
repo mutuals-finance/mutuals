@@ -4,7 +4,7 @@ import ActivityTable from '@/components/ActivityTable';
 import ContentCard from '@/components/ContentCard';
 
 import { GetTokenTransfersReply } from '@ankr.com/ankr.js';
-import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import { SplitBaseFragmentFragment } from '@/lib/graphql/thegraph/__generated__/graphql';
 import { Box, Button } from '@chakra-ui/react';
 import Link from 'next/link';
 

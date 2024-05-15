@@ -30,10 +30,6 @@ export default function TokenLabel({
       <Text fontSize={fontSize} noOfLines={noOfLines} {...props}>
         {tokenName}
       </Text>
-
-      <Tag size='sm' rounded={'md'} colorScheme={'primary'}>
-        <TagLabel fontSize={'2xs'}>{tokenSymbol}</TagLabel>
-      </Tag>
     </Stack>
   );
 }

@@ -1,7 +1,5 @@
-import { SendTransactionResult } from '@wagmi/core';
 import React, { useState } from 'react';
 import { useUpdateEffect } from 'react-use';
-import { useWaitForTransaction } from 'wagmi';
 
 import StepperModal from '@/components/StepperModal';
 
@@ -10,7 +8,6 @@ import { LoadingStep, SuccessStep } from './steps';
 interface WithdrawModalProps {
   onClose: () => void;
   open: boolean;
-  data?: SendTransactionResult;
   error: Error | null;
   isError: boolean;
   isLoading: boolean;
@@ -23,8 +20,6 @@ export default function WithdrawModal({
   onClose,
   ...tx
 }: WithdrawModalProps) {
-  const receipt = useWaitForTransaction({ hash: tx.data?.hash });
-
   const steps = [
     {
       id: 'sign',
@@ -48,12 +43,12 @@ export default function WithdrawModal({
       disabled: true,
       children: () =>
         LoadingStep({
-          ...receipt,
+          ...tx,
           description:
             'Please wait for the transaction to be confirmed by the network. This may take a moment, depending on the current workload.',
-          status: receipt.isError
+          status: tx.isError
             ? 'Confirmation error'
-            : receipt.isSuccess
+            : tx.isSuccess
               ? 'Successfully confirmed'
               : 'Waiting for transaction confirmation',
         }),
@@ -66,7 +61,7 @@ export default function WithdrawModal({
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const deps = [tx.isSuccess, receipt.isSuccess];
+  const deps = [tx.isSuccess, tx.isSuccess];
 
   function reset() {
     setTimeout(() => {

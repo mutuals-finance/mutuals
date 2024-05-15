@@ -1,20 +1,19 @@
 import { Balance } from '@ankr.com/ankr.js/dist/types';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  UsePrepareContractWriteConfig,
+  useSimulateContract,
+  UseSimulateContractParameters,
+  useTransactionReceipt,
+  useWriteContract,
 } from 'wagmi';
 
 import { Split__factory } from '#/typechain';
+import { Address } from 'viem';
 
-export type WithdrawSplitArgs = [boolean, `0x{string}`[], `0x{string}`];
+export type WithdrawSplitArgs = [boolean, Address[], Address];
 
-export type WithdrawSplitProps = Omit<
-  UsePrepareContractWriteConfig,
-  'args' | 'abi' | 'functionName' | 'address'
->;
+export type WithdrawSplitProps = UseSimulateContractParameters;
 
 export default function useWithdrawSplit(
   address: string,
@@ -27,19 +26,31 @@ export default function useWithdrawSplit(
     .filter((a) => a.tokenType !== 'NATIVE')
     .map((a) => a.contractAddress);
 
-  const prepare = usePrepareContractWrite({
-    address: address as `0x${string}`,
+  const simulate = useSimulateContract({
+    address: address as Address,
     abi: Split__factory.abi,
     functionName: 'batchWithdraw',
     args: [
       tokensNoNative.length !== tokens.length,
       tokensNoNative,
       account.address,
-    ],
+    ] as WithdrawSplitArgs,
     ...props,
   });
 
-  const tx = useContractWrite(prepare.config);
+  const {
+    writeContractAsync: _,
+    writeContract: _writeContract,
+    ...write
+  } = useWriteContract(props);
 
-  return { ...prepare, ...tx, error: prepare.error || tx.error };
+  const writeContract = useCallback(() => {
+    if (simulate?.data?.request) {
+      _writeContract(simulate.data.request);
+    }
+  }, [_writeContract, simulate]);
+
+  const tx = useTransactionReceipt({ hash: write.data });
+
+  return { ...write, ...tx, writeContract };
 }

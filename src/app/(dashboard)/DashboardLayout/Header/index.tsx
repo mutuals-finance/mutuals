@@ -3,17 +3,14 @@
 import { Icon } from '@chakra-ui/icon';
 import {
   Box,
-  IconButton,
   InputGroup,
   InputLeftElement,
   Show,
   Stack,
   useColorModeValue,
-  useDisclosure,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { IoMenuSharp, IoSearch } from 'react-icons/io5';
-import { useMount } from 'react-use';
+import React from 'react';
+import { IoSearch } from 'react-icons/io5';
 
 import Form from '@/components/Form';
 import Input from '@/components/Form/Input';
@@ -21,33 +18,14 @@ import Input from '@/components/Form/Input';
 import Chain from '@/app/(dashboard)/DashboardLayout/Header/Chain';
 import User from '@/app/(dashboard)/DashboardLayout/Header/User';
 import Logo from '@/app/(dashboard)/DashboardLayout/Header/Logo';
+import MobileMenuButton from '@/app/(dashboard)/DashboardLayout/Header/MobileMenuButton';
 
 interface NavItem {
   label: string;
   href: string;
 }
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: 'Splits',
-    href: '/splits',
-  },
-  {
-    label: 'Address Book',
-    href: '/address-book',
-  },
-  {
-    label: 'Settings',
-    href: '/settings',
-  },
-];
-
 export default function Header() {
-  const [isReady, setIsReady] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  useMount(() => setIsReady(true));
-
   return (
     <Stack
       as='header'
@@ -88,18 +66,12 @@ export default function Header() {
       </Show>
 
       <Stack direction={'row'} spacing={6} ml={'auto'}>
-        {isReady && <Chain />}
-        {isReady && <User />}
+        <Chain />
+        <User />
       </Stack>
-
-      <IconButton
-        icon={<IoMenuSharp display={'block'} />}
-        fontSize={'2xl'}
-        aria-label={'Open Menu'}
-        display={{ base: 'flex', lg: 'none' }}
-        onClick={isOpen ? onClose : onOpen}
-        variant={'ghost'}
-      />
+      <Show below='lg'>
+        <MobileMenuButton />
+      </Show>
     </Stack>
   );
 }

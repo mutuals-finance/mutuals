@@ -1,6 +1,6 @@
 // Number formatting follows the standards defined by Uniswap
 
-import { format, fromUnixTime } from 'date-fns';
+import { format, FormatOptions, fromUnixTime, Locale } from 'date-fns';
 
 const FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat('en-US', {
   notation: 'standard',
@@ -341,19 +341,12 @@ export function formatPrice(
 }
 
 /**
- * Very simple date formatter
- * Feel free to add more options / adapt to your needs.
+ * Date formatter
  */
 export function formatTimestamp(
   timestamp: string | number,
   formatString = 'LLLL d, yyyy',
-  options?: {
-    locale?: Locale;
-    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-    firstWeekContainsDate?: number;
-    useAdditionalWeekYearTokens?: boolean;
-    useAdditionalDayOfYearTokens?: boolean;
-  },
+  options?: FormatOptions,
 ) {
   return format(fromUnixTime(Number(timestamp)), formatString, options);
 }

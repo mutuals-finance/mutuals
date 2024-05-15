@@ -34,9 +34,12 @@ import {
   IoSettingsOutline,
 } from 'react-icons/io5';
 
-import { FragmentType, useFragment } from '@/lib/graphql/__generated__';
-import { SplitBaseFragmentFragment } from '@/lib/graphql/__generated__/graphql';
-import { splitBaseFragment } from '@/lib/graphql/fragments';
+import {
+  FragmentType,
+  useFragment,
+} from 'src/lib/graphql/thegraph/__generated__';
+import { SplitBaseFragmentFragment } from '@/lib/graphql/thegraph/__generated__/graphql';
+import { splitBaseFragment } from '@/lib/graphql/thegraph/fragments';
 import { useMetadata } from '@/lib/split/hooks';
 import {
   formatPrefixedAddress,

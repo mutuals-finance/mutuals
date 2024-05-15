@@ -1,33 +1,27 @@
-import { useMemo } from 'react';
+'use client';
+
+import { useCallback } from 'react';
 import {
-  useContractWrite,
-  usePrepareContractWrite,
-  UsePrepareContractWriteConfig,
+  useSimulateContract,
+  useTransactionReceipt,
+  useWriteContract,
+  UseWriteContractParameters,
 } from 'wagmi';
 
 import { FACTORY_ADDRESS } from '@/lib/constants';
-import useDebounce from '@/hooks/useDebounce';
 
 import { SplitFactory__factory } from '@/../../types/typechain';
 import { randomBytes } from 'ethers';
+import { Address } from 'viem';
 
-export type CreateSplitArgs = [
-  `0x{string}`[],
-  BigInt[],
-  string,
-  boolean,
-  BigInt,
-];
+export type CreateSplitArgs = [Address[], bigint[], string, boolean, bigint];
 
-export type CreateSplitProps = {
+export type UseCreateSplitProps = {
   uri?: string;
   metadataLocked?: boolean;
   payees?: string[];
   shares?: number[];
-} & Omit<
-  UsePrepareContractWriteConfig,
-  'args' | 'enabled' | 'functionName' | 'abi' | 'address'
->;
+} & UseWriteContractParameters;
 
 export default function useCreateSplit({
   payees = [],
@@ -35,36 +29,41 @@ export default function useCreateSplit({
   uri = '',
   metadataLocked,
   ...props
-}: CreateSplitProps) {
+}: UseCreateSplitProps) {
   const salt = randomBytes(32).reduce(
-    (acc, val) => acc + BigInt(val.toString()),
+    (acc, val) => acc + BigInt(val),
     BigInt('0'),
   );
 
-  const argsMemo = useMemo(() => {
-    return [
-      payees,
-      shares.map((s) => BigInt(s.toString())),
-      uri,
-      !!metadataLocked,
-      salt,
-    ];
-  }, [payees, shares, uri, metadataLocked, salt]) as CreateSplitArgs;
-
-  const [...args] = useDebounce(argsMemo, 500);
-
-  const enabled = args[0].length > 1 && args[1].length > 1 && args[2] !== '';
-
-  const prepare = usePrepareContractWrite({
+  const simulate = useSimulateContract({
     address: FACTORY_ADDRESS,
     abi: SplitFactory__factory.abi,
     functionName: 'createSplit',
-    enabled,
-    args,
-    ...props,
+    args: [
+      payees,
+      shares.map((s) => BigInt(s)),
+      uri,
+      !!metadataLocked,
+      salt,
+    ] as CreateSplitArgs,
+    query: {
+      enabled: payees.length > 1 && shares.length > 1 && uri !== '',
+    },
   });
 
-  const tx = useContractWrite(prepare.config);
+  const {
+    writeContractAsync: _,
+    writeContract: _writeContract,
+    ...write
+  } = useWriteContract(props);
 
-  return { ...prepare, ...tx, error: prepare.error || tx.error };
+  const writeContract = useCallback(() => {
+    if (simulate?.data?.request) {
+      _writeContract(simulate.data.request);
+    }
+  }, [_writeContract, simulate]);
+
+  const tx = useTransactionReceipt({ hash: write.data });
+
+  return { ...write, ...tx, writeContract };
 }

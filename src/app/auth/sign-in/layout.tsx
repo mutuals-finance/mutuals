@@ -5,6 +5,7 @@ import {
   GridItem,
   Heading,
   Hide,
+  Show,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -54,11 +55,11 @@ export default function SignInLayout({ children }: PropsWithChildren) {
 
       <GridItem>
         <Container variant={'shell'} maxW={'3xl'}>
-          <Hide above={'lg'}>
+          <Show below={'lg'}>
             <Box w={'28'}>
               <Logo />
             </Box>
-          </Hide>
+          </Show>
 
           <VStack py={'12'} maxW={'md'} gap={'6'} alignItems={'stretch'}>
             <Heading as='h1' size='2xl'>

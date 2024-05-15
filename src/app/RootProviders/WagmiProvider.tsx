@@ -1,22 +1,7 @@
 'use client';
 
 import { PropsWithChildren } from 'react';
-import {
-  cookieStorage,
-  createConfig,
-  createStorage,
-  State,
-  WagmiProvider,
-} from 'wagmi';
-import { chains, transports } from '@/lib/wagmi/chains';
-import {
-  coinbaseWallet,
-  injected,
-  metaMask,
-  safe,
-  walletConnect,
-} from '@wagmi/connectors';
-import { IS_DEV, WALLETCONNECT_PROJECT_ID } from '@/lib/constants';
+import { State, WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { config } from '@/lib/wagmi';
 

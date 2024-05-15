@@ -17,8 +17,11 @@ import { GetAccountBalanceReply } from '@ankr.com/ankr.js';
 import {
   FragmentType,
   useFragment as getFragment,
-} from '@/lib/graphql/__generated__';
-import { shareFragment, splitBaseFragment } from '@/lib/graphql/fragments';
+} from 'src/lib/graphql/thegraph/__generated__';
+import {
+  shareFragment,
+  splitBaseFragment,
+} from '@/lib/graphql/thegraph/fragments';
 import SummaryTable from '@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/SummaryTable';
 import WithdrawTable from '@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawTable';
 
@@ -91,7 +94,7 @@ export default function WithdrawFormInner({
           type={'button'}
           w={'full'}
           onClick={() => {
-            tx.write?.();
+            tx.writeContract();
             setIsModalOpen(true);
           }}
         >

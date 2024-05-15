@@ -1,7 +1,6 @@
 import { useSteps } from '@chakra-ui/react';
 import React from 'react';
 import { useUpdateEffect } from 'react-use';
-import { useWaitForTransaction } from 'wagmi';
 
 import useCreateSplitFull from '@/hooks/useCreateSplitFull';
 
@@ -28,8 +27,6 @@ export default function NewSplitModal({
     payees: payees.map((p) => p.id),
     shares: payees.map((p) => Number(p.value) * 100),
   });
-
-  const receipt = useWaitForTransaction({ hash: tx.data?.hash });
 
   const steps = [
     {
@@ -75,12 +72,12 @@ export default function NewSplitModal({
       disabled: true,
       children: () =>
         LoadingStep({
-          ...receipt,
+          ...tx,
           description:
             'Please wait for the transaction to be confirmed by the network. This may take a moment, depending on the current workload.',
-          status: receipt.isError
+          status: tx.isError
             ? 'Confirmation error'
-            : receipt.isSuccess
+            : tx.isSuccess
               ? 'Successfully confirmed'
               : 'Waiting for transaction confirmation',
         }),
@@ -90,14 +87,14 @@ export default function NewSplitModal({
       title: 'Congratulations',
       disabled: true,
       children: () =>
-        SuccessStep({ contractAddress: receipt.data?.contractAddress! }),
+        SuccessStep({ contractAddress: tx.data?.contractAddress! }),
     },
   ];
   const { activeStep, setActiveStep, goToNext } = useSteps({
     count: steps.length,
   });
 
-  const deps = [storage.isSuccess, tx.isSuccess, receipt.isSuccess];
+  const deps = [storage.isSuccess, tx.isSuccess, tx.isSuccess];
 
   function reset() {
     setTimeout(() => {

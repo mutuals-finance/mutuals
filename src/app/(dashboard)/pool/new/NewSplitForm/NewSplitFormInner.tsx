@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  Grid,
-  GridItem,
-  Stack,
-} from '@chakra-ui/react';
+import { Box, Button, Grid, GridItem, Stack, Text } from '@chakra-ui/react';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -34,6 +26,8 @@ export default function NewSplitFormInner({
 }: NewSplitFormInnerProps) {
   const data = getValues();
 
+  const previewData = { ...data, image: data.image?.preview?.toString() };
+
   return (
     <>
       <NewSplitModal data={data} open={isModalOpen} onClose={onModalClose} />
@@ -60,18 +54,28 @@ export default function NewSplitFormInner({
             <PayeeList id={'payees'} />
           </FormGroup>
 
-          <Box>
-            <Button colorScheme={'teal'} type='submit'>
-              Create
+          <Stack direction='row' justify={'space-between'}>
+            <Button variant={'blackWhite'} type='submit'>
+              Create Pool
             </Button>
-          </Box>
+          </Stack>
         </GridItem>
 
         <GridItem>
           <Box position={'sticky'} top={'20'}>
             <InputBase label={`Preview`}>
-              <SplitCard metaData={data} />
+              <SplitCard metaData={previewData!} />
             </InputBase>
+
+            <Stack direction={'row'} mt={'6'} justify={'space-between'}>
+              <Box>
+                <InputSwitch label={'Auto Save'} />
+              </Box>
+
+              <Box>
+                <Text variant={'label'}>Unsaved changes</Text>
+              </Box>
+            </Stack>
           </Box>
         </GridItem>
       </Grid>

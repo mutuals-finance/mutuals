@@ -1,16 +1,16 @@
+'use client';
+
 import {
   Button,
-  IconButton,
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
-  Show,
   Text,
   useColorMode,
 } from '@chakra-ui/react';
-import React, { useMemo, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
   IoChevronDown,
   IoChevronUp,
@@ -27,22 +27,14 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { shortenAddress } from '@/lib/utils';
 
 import UserAvatar from '@/components/UserAvatar';
-import WalletModal from '@/components/WalletModal';
+import { useRouter } from 'next/navigation';
 
 export default function User() {
   const { address, isConnected, isConnecting } = useAccount();
   const { disconnect } = useDisconnect();
-  const [walletModalOpen, setWalletModalOpen] = useState(false);
 
   const { colorMode, toggleColorMode } = useColorMode();
-
-  function closeWalletModal() {
-    setWalletModalOpen(false);
-  }
-
-  function openWalletModal() {
-    setWalletModalOpen(true);
-  }
+  const router = useRouter();
 
   const avatarIcon = (size = 'xs') =>
     isConnected ? (
@@ -50,6 +42,7 @@ export default function User() {
     ) : (
       <IoPersonCircle />
     );
+
   return (
     <>
       <Menu closeOnSelect={false}>
@@ -70,20 +63,6 @@ export default function User() {
               )}
             </MenuButton>
 
-            {/*
-            <Show below='lg'>
-              <MenuButton
-                as={IconButton}
-                aria-label={'Show user menu'}
-                icon={avatarIcon('sm')}
-                rounded={'full'}
-                isLoading={isConnecting}
-              >
-                {displayName}
-              </MenuButton>
-            </Show>
-*/}
-
             <MenuList>
               <MenuItem icon={<IoMegaphoneOutline />}>Feedback</MenuItem>
               <MenuItem icon={<IoHelpOutline />}>Help</MenuItem>
@@ -99,7 +78,9 @@ export default function User() {
               </MenuItem>
               <MenuItem
                 icon={isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
-                onClick={() => (isConnected ? disconnect() : openWalletModal())}
+                onClick={() =>
+                  isConnected ? disconnect() : router.push('/auth/sign-in')
+                }
                 fontWeight={'500'}
               >
                 {isConnected ? `Logout` : `Login`}
@@ -108,8 +89,6 @@ export default function User() {
           </>
         )}
       </Menu>
-
-      <WalletModal open={walletModalOpen} onClose={closeWalletModal} />
     </>
   );
 }

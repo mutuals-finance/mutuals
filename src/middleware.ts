@@ -1,4 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
+import { config as wagmiConfig } from '@/lib/wagmi';
+import { getAccount } from '@wagmi/core';
+import { cookieToInitialState, deserialize, State } from 'wagmi';
 
 export const config = {
   /*

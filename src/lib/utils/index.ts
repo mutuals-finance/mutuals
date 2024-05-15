@@ -6,3 +6,4 @@ export * from './image';
 export * from './ipfs';
 export * from './ssr';
 export * from './token';
+export * from './utils';

@@ -45,7 +45,7 @@ export default function AssetIconCell({
           tokenSymbol={tokenSymbol}
           {...labelProps}
         />
-      )}{' '}
+      )}
     </HStack>
   );
 }

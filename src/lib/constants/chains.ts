@@ -4,7 +4,7 @@ import * as OPTIMISM_LOGO from '@/assets/svg/optimism-logo.svg';
 import * as MATIC_LOGO from '@/assets/svg/polygonMatic-logo.svg';
 
 import { Chain, ChainExt } from '#/chain';
-import { allChains } from '@/lib/wagmi/chains';
+import { chains } from '@/lib/wagmi/chains';
 
 export { ARBITRUM_LOGO, ETH_LOGO, MATIC_LOGO };
 
@@ -40,12 +40,10 @@ const AVAILABLE_CHAINS_INNER = (
 ) as WagmiChain[];
 */
 
-export const AVAILABLE_CHAINS: Array<Chain> = Object.values(allChains).map(
-  (chain) => ({
-    ...chain,
-    ...({
-      shortName: CHAIN_SHORT_NAME_MAP[chain.id],
-      logo: CHAIN_LOGO_URI_MAP[chain.id],
-    } as ChainExt),
-  }),
-);
+export const AVAILABLE_CHAINS: Array<Chain> = chains.map((chain) => ({
+  ...chain,
+  ...({
+    shortName: CHAIN_SHORT_NAME_MAP[chain.id],
+    logo: CHAIN_LOGO_URI_MAP[chain.id],
+  } as ChainExt),
+}));

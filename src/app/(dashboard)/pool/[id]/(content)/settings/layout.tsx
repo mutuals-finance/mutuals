@@ -2,8 +2,8 @@ import { PropsWithChildren } from 'react';
 import RouterTabs from '@/components/RouterTabs';
 import { decodePrefixedAddress } from '@/lib/utils';
 import { getMetadata, getPoolDetails } from '@/lib/split';
-import { useFragment } from '@/lib/graphql/__generated__';
-import { splitBaseFragment } from '@/lib/graphql/fragments';
+import { useFragment } from 'src/lib/graphql/thegraph/__generated__';
+import { splitBaseFragment } from '@/lib/graphql/thegraph/fragments';
 import PageShell from '@/components/Shell/PageShell';
 
 interface PoolSettingsLayoutProps {

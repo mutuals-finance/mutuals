@@ -1,5 +1,12 @@
 import { Balance } from '@ankr.com/ankr.js/dist/types';
-import { HStack, Text, TextProps } from '@chakra-ui/react';
+import {
+  HStack,
+  Stack,
+  Tag,
+  TagLabel,
+  Text,
+  TextProps,
+} from '@chakra-ui/react';
 import { CellContext } from '@tanstack/react-table';
 import React from 'react';
 
@@ -17,13 +24,13 @@ export default function AssetBalanceCell({
 }: AssetBalanceCellProps) {
   const { tokenSymbol } = row.original;
   return (
-    <>
+    <Stack direction={'row'} align={'center'}>
       <Text as={'span'} {...props}>
         {formatCurrencyAmount(getValue())}
       </Text>{' '}
-      <Text variant={'label'} as={'span'} {...props}>
-        {tokenSymbol}
-      </Text>
-    </>
+      <Tag size='sm' rounded={'md'} colorScheme={'primary'}>
+        <TagLabel fontSize={'2xs'}>{tokenSymbol}</TagLabel>
+      </Tag>
+    </Stack>
   );
 }

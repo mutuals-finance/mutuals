@@ -1,6 +1,6 @@
 import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
 
-import { SplitDetailsFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import { SplitDetailsFragmentFragment } from '@/lib/graphql/thegraph/__generated__/graphql';
 
 export enum EventType {
   Deposit = 'Deposit',

@@ -3,7 +3,7 @@
 import React from 'react';
 import { useList } from 'react-use';
 
-import { ShareFragmentFragment } from '@/lib/graphql/__generated__/graphql';
+import { ShareFragmentFragment } from '@/lib/graphql/thegraph/__generated__/graphql';
 
 import ContentCard from '@/components/ContentCard';
 

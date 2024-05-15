@@ -7,24 +7,32 @@ import {
   polygonMumbai,
   hardhat,
   localhost,
+  arbitrum,
+  optimism,
 } from 'wagmi/chains';
 import { Chain, http } from 'viem';
-import { INFURA_KEY } from '@/lib/constants';
 
-const defaultChains = [mainnet, polygon];
-const devChains = [polygonMumbai, sepolia, arbitrumGoerli, optimismGoerli];
-const localDevChains = [...defaultChains, ...devChains, hardhat, localhost];
+const prodChains = [mainnet, polygon, arbitrum, optimism];
+const devChains = [
+  ...prodChains,
+  sepolia,
+  polygonMumbai,
+  arbitrumGoerli,
+  optimismGoerli,
+  hardhat,
+  localhost,
+];
 
-const chainByEnv = {
-  production: defaultChains,
-  development: localDevChains,
-  test: localDevChains,
-};
+const chains = ({
+  production: prodChains,
+  development: devChains,
+  test: devChains,
+}[process.env.NODE_ENV] ?? prodChains) as unknown as readonly [
+  Chain,
+  ...Chain[],
+];
 
-export const chains = (chainByEnv['development'] ||
-  defaultChains) as readonly Chain[];
-
-export const transports = chains.reduce(
+const transports = chains.reduce(
   (aggregate, chain) => ({
     ...aggregate,
     [chain.id]: http(), // `https://${chain.name}.infura.io/v3/${INFURA_KEY}`
@@ -32,12 +40,4 @@ export const transports = chains.reduce(
   {},
 );
 
-export const allChains = {
-  mainnet,
-  polygonMumbai,
-  sepolia,
-  arbitrumGoerli,
-  optimismGoerli,
-  hardhat,
-  localhost,
-};
+export { chains, transports };

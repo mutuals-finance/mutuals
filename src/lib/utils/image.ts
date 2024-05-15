@@ -1,4 +1,5 @@
 import { FileWithPreview } from '@/components/Form/types';
+import { CONNECTOR_LOGO_MAP } from '@/lib/constants/connectors';
 /*
 
 const toDataURL = (url: string): Promise<string> =>
@@ -49,4 +50,8 @@ export async function urlToFile(
   return Object.assign(file, {
     preview: url,
   });
+}
+
+export function getConnectorImage(id: string) {
+  return CONNECTOR_LOGO_MAP[id];
 }

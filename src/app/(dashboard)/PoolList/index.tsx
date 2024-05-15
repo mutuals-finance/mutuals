@@ -5,7 +5,7 @@ import { Box, Container, Heading, SimpleGrid } from '@chakra-ui/react';
 import React from 'react';
 import { useAccount } from 'wagmi';
 
-import { SPLITS_BY_PAYEE } from '@/lib/graphql/queries';
+import { SPLITS_BY_PAYEE } from '@/lib/graphql/thegraph/queries';
 
 import { SplitFragmentCard } from '@/components/Split/Card';
 
@@ -27,7 +27,7 @@ export default function PoolList() {
 
       <TreasurySearchAndCreate />
       <SimpleGrid
-        templateColumns={'repeat(auto-fill, minmax(20rem, 1fr))'}
+        templateColumns={'repeat(auto-fit, minmax(22rem, 1fr))'}
         spacing={6}
       >
         {Array(4)

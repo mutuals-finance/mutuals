@@ -1,12 +1,16 @@
-import { getClient } from '@/lib/graphql/apolloClient';
-import { POOL, POOL_WITH_SHARES, SHARES_BY_POOL } from '@/lib/graphql/queries';
+import { getClient } from '@/lib/graphql/thegraph/apolloClient';
+import {
+  POOL,
+  POOL_WITH_SHARES,
+  SHARES_BY_POOL,
+} from '@/lib/graphql/thegraph/queries';
 import { QueryOptions } from '@apollo/client';
 import {
   PoolQuery,
   PoolWithSharesQuery,
   PoolWithSharesQueryVariables,
   SharesByPoolQuery,
-} from '@/lib/graphql/__generated__/graphql';
+} from '@/lib/graphql/thegraph/__generated__/graphql';
 
 type TQueryOptions<TVariableType, TQueryType> = Omit<
   QueryOptions<TVariableType, TQueryType>,
