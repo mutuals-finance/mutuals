@@ -1,1 +1,0 @@
-declare module '@davatar/react';
