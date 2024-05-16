@@ -7,19 +7,17 @@ import {
   HStack,
   IconButton,
   Show,
+  SplitFiLogo,
 } from "@splitfi/ui";
 import { IoMenuSharp } from "react-icons/io5";
 
-import SplitFiLogo from "@/components/Logo";
 import links from "@/layout/links";
 import NavLink from "@/layout/NavLink";
 
 export default function Navigation() {
   return (
     <HStack flex="1" spacing="12" justify="space-between" position="relative">
-      <Box w={{ base: "24", lg: "24" }}>
-        <SplitFiLogo />
-      </Box>
+      <SplitFiLogo w={{ base: "24", lg: "24" }} />
 
       <Show above="lg">
         <AbsoluteCenter>

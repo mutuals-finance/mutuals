@@ -9,11 +9,11 @@ import {
   GridItem,
   Stack,
   useColorModeValue,
+  SplitFiLogo,
 } from "@splitfi/ui";
 import Image from "next/image";
 
 import ctaBgImage from "@/assets/bg-cta.jpg";
-import SplitFiLogo from "@/components/Logo";
 
 export default function CTA() {
   return (
