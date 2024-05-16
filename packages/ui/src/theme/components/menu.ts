@@ -1,4 +1,4 @@
-import { createMultiStyleConfigHelpers } from "@splitfi/ui";
+import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 
 const helpers = createMultiStyleConfigHelpers(["list"]);
 

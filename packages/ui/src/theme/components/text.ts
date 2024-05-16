@@ -1,4 +1,4 @@
-import { defineStyle, defineStyleConfig } from "@splitfi/ui";
+import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 const baseStyle = {
   fontWeight: "400",

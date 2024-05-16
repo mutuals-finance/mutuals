@@ -1,4 +1,4 @@
-import { defineStyleConfig, defineStyle } from "@splitfi/ui";
+import { defineStyleConfig, defineStyle } from "@chakra-ui/react";
 
 const blackWhite = defineStyle({
   background: "black",

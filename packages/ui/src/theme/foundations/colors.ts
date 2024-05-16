@@ -1,4 +1,4 @@
-import type { DeepPartial, Theme } from "@splitfi/ui";
+import type { DeepPartial, Theme } from "@chakra-ui/react";
 
 /** extend additional color here */
 const extendedColors = {
