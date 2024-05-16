@@ -8,13 +8,11 @@
     "./code": "./src/code.tsx"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen component"
+    "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {
     "@splitfi/eslint-config": "workspace:*",
     "@splitfi/typescript-config": "workspace:*",
-    "@turbo/gen": "^1.13.3",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",

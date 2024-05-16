@@ -4,6 +4,9 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "dev:web": "turbo run dev -F @splitfi/web",
+    "dev:docs": "turbo run dev -F @splitfi/docs",
+    "gen:component": "turbo gen component",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
@@ -16,5 +19,8 @@
   "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@turbo/gen": "^1.13.3"
   }
 }
