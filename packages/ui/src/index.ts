@@ -1,4 +1,8 @@
-// Unmodified components exported directly from ChakraUI
+/**
+ * Unmodified Components
+ * These components are exported directly from ChakraUI.
+ */
+
 export * from "@chakra-ui/react";
 
 /**
