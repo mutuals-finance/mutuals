@@ -7,10 +7,10 @@ import {
   Tag,
   TagLabel,
   useColorModeValue,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import type { HomeHeroAnimBaseType } from '~/app/Hero/index';
-import AnimationBox from '~/components/Animation/Box';
+import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
+import AnimationBox from "@/components/Animation/Box";
 
 type HomeHeroHeadingProps = HomeHeroAnimBaseType;
 

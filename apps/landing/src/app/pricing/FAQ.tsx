@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import type { AccordionItemProps } from '@chakra-ui/react';
+import type { AccordionItemProps } from "@chakra-ui/react";
 import {
   Accordion,
   AccordionButton,
@@ -14,9 +14,9 @@ import {
   Text,
   ListItem,
   OrderedList,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import SectionHeader from '~/components/SectionHeader';
+import SectionHeader from "@/components/SectionHeader";
 
 interface FAQItemProps extends AccordionItemProps {
   title: string;
@@ -45,7 +45,7 @@ function FAQItem({ title, children, ...props }: FAQItemProps) {
 export default function PricingFAQ() {
   return (
     <Box my="24">
-      <Container maxW="container.xl" px={{ base: '6', lg: '12' }}>
+      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
         <SectionHeader>Frequently Asked Questions</SectionHeader>
 
         <Accordion allowMultiple as={Stack} width="100%" spacing="3">

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Box,
@@ -15,24 +15,24 @@ import {
   Accordion,
   Button,
   Stack,
-} from '@chakra-ui/react';
-import Image from 'next/image';
+} from "@chakra-ui/react";
+import Image from "next/image";
 
-import featureImage from '~/assets/feature.png';
+import featureImage from "@/assets/feature.png";
 
 export default function HomeValue() {
   return (
-    <Container my="24" maxW="container.xl" px={{ base: '6', lg: '12' }}>
+    <Container my="24" maxW="container.xl" px={{ base: "6", lg: "12" }}>
       <Grid
         templateColumns={{
-          base: '1fr',
-          lg: '1fr 1fr',
+          base: "1fr",
+          lg: "1fr 1fr",
         }}
-        gap={{ base: '6', lg: '12' }}
+        gap={{ base: "6", lg: "12" }}
       >
         <GridItem
           as={Stack}
-          p={{ base: '0', lg: '12' }}
+          p={{ base: "0", lg: "12" }}
           alignItems="flex-start"
         >
           <Accordion
@@ -43,10 +43,10 @@ export default function HomeValue() {
             flex="1"
           >
             {[
-              'Split tokens',
-              'Automate payments',
-              'Track earnings',
-              'Accelerate partnerships',
+              "Split tokens",
+              "Automate payments",
+              "Track earnings",
+              "Accelerate partnerships",
             ].map((title) => (
               <AccordionItem
                 key={title}
@@ -95,7 +95,7 @@ export default function HomeValue() {
             src={featureImage}
             alt="Split Funds Without Trust"
             fill
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: "contain" }}
           />
         </GridItem>
       </Grid>

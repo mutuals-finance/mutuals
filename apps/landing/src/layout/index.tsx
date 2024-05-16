@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Box } from '@chakra-ui/react';
-import type { PropsWithChildren, ReactNode } from 'react';
+import { Box } from "@chakra-ui/react";
+import type { PropsWithChildren, ReactNode } from "react";
 
-import CTA from '~/layout/CTA';
+import CTA from "@/layout/CTA";
 
-import Footer from './Footer';
-import Header from './Header';
+import Footer from "./Footer";
+import Header from "./Header";
 
 type LayoutProps = {
   children: ReactNode;

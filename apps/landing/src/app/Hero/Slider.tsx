@@ -1,9 +1,9 @@
-import { Flex, SimpleGrid, useBreakpointValue } from '@chakra-ui/react';
-import NextImage from 'next/image';
+import { Flex, SimpleGrid, useBreakpointValue } from "@chakra-ui/react";
+import NextImage from "next/image";
 
-import type { HomeHeroAnimBaseType } from '~/app/Hero/index';
-import aboutImage from '~/assets/hero.png';
-import AnimationBox from '~/components/Animation/Box';
+import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
+import aboutImage from "@/assets/hero.png";
+import AnimationBox from "@/components/Animation/Box";
 
 type HomeHeroSliderProps = HomeHeroAnimBaseType;
 
@@ -40,7 +40,7 @@ export default function HomeHeroSlider({ animLabel }: HomeHeroSliderProps) {
     >
       <AnimationBox
         position="relative"
-        minW={{ base: '150vh', md: '150%', lg: '133%' }}
+        minW={{ base: "150vh", md: "150%", lg: "133%" }}
         mt={-1 * animSpace}
         scale={0.92}
         animate={animLabel}

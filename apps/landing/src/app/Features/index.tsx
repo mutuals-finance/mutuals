@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { Box, Container, GridItem, SimpleGrid } from '@chakra-ui/react';
-import { IoWalletOutline } from 'react-icons/io5';
-import { LuSplit } from 'react-icons/lu';
-import { MdMoneyOff } from 'react-icons/md';
-import { RiHandCoinFill } from 'react-icons/ri';
-import { TbPlugConnected } from 'react-icons/tb';
+import { Box, Container, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { IoWalletOutline } from "react-icons/io5";
+import { LuSplit } from "react-icons/lu";
+import { MdMoneyOff } from "react-icons/md";
+import { RiHandCoinFill } from "react-icons/ri";
+import { TbPlugConnected } from "react-icons/tb";
 
-import FeatureCard from '~/app/Features/FeatureCard';
-import SectionHeader from '~/components/SectionHeader';
+import FeatureCard from "@/app/Features/FeatureCard";
+import SectionHeader from "@/components/SectionHeader";
 
 export default function HomeFeatures() {
   return (
     <Box my="24">
-      <Container maxW="container.xl" px={{ base: '6', lg: '12' }}>
+      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
         <SectionHeader>A Few More Things You’re Going To Love</SectionHeader>
         <SimpleGrid columns={{ base: 1, lg: 3 }} gap={{ base: 6, lg: 12 }}>
           <FeatureCard

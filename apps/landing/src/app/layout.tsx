@@ -1,43 +1,43 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
-import Providers from '~/app/providers';
-import Layout from '~/layout';
+import Providers from "@/app/providers";
+import Layout from "@/layout";
 
 type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-const APP_NAME = 'SplitFi';
+const APP_NAME = "SplitFi";
 
 export const metadata: Metadata = {
-  title: { default: APP_NAME, template: '%s | SplitFi' },
-  description: 'Next.js + chakra-ui + TypeScript template',
+  title: { default: APP_NAME, template: "%s | SplitFi" },
+  description: "Next.js + chakra-ui + TypeScript template",
   viewport: {
-    width: 'device-width',
+    width: "device-width",
     initialScale: 1,
   },
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
     title: APP_NAME,
-    statusBarStyle: 'default',
+    statusBarStyle: "default",
   },
   formatDetection: {
     telephone: false,
   },
-  themeColor: '#FFFFFF',
+  themeColor: "#FFFFFF",
   openGraph: {
-    url: 'https://nextarter-chakra.sznm.dev',
-    title: 'SplitFi',
-    description: 'Next.js + chakra-ui + TypeScript template',
+    url: "https://nextarter-chakra.sznm.dev",
+    title: "SplitFi",
+    description: "Next.js + chakra-ui + TypeScript template",
     images: {
-      url: 'https://og-image.sznm.dev/**nextarter-chakra**.sznm.dev.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fsznm.dev%2Favataaars.svg&widths=250',
-      alt: 'nextarter-chakra.sznm.dev og-image',
+      url: "https://og-image.sznm.dev/**nextarter-chakra**.sznm.dev.png?theme=dark&md=1&fontSize=125px&images=https%3A%2F%2Fsznm.dev%2Favataaars.svg&widths=250",
+      alt: "nextarter-chakra.sznm.dev og-image",
     },
   },
   twitter: {
-    creator: '@splitfi',
-    card: 'summary_large_image',
+    creator: "@splitfi",
+    card: "summary_large_image",
   },
 };
 

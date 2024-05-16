@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { Box } from '@chakra-ui/react';
-import { useMotionValueEvent, useScroll, MotionConfig } from 'framer-motion';
-import { useState } from 'react';
+import { Box } from "@chakra-ui/react";
+import { useMotionValueEvent, useScroll, MotionConfig } from "framer-motion";
+import { useState } from "react";
 
-import HomeHeroBgImage from '~/app/Hero/BgImage';
-import HomeHeroHeading from '~/app/Hero/Heading';
-import HomeHeroSlider from '~/app/Hero/Slider';
+import HomeHeroBgImage from "@/app/Hero/BgImage";
+import HomeHeroHeading from "@/app/Hero/Heading";
+import HomeHeroSlider from "@/app/Hero/Slider";
 
 export type HomeHeroAnimBaseType = {
-  animLabel: 'grow' | 'shrink';
+  animLabel: "grow" | "shrink";
 };
 
 export default function HomeHero() {
   const { scrollY } = useScroll();
 
-  const [animLabel, setAnimLabel] = useState<'grow' | 'shrink'>('grow');
+  const [animLabel, setAnimLabel] = useState<"grow" | "shrink">("grow");
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    if (animLabel === 'shrink' && latest <= 10) {
-      setAnimLabel('grow');
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (animLabel === "shrink" && latest <= 10) {
+      setAnimLabel("grow");
     }
-    if (animLabel === 'grow' && latest > 10) {
-      setAnimLabel('shrink');
+    if (animLabel === "grow" && latest > 10) {
+      setAnimLabel("shrink");
     }
   });
 

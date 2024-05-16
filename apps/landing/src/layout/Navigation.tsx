@@ -1,5 +1,5 @@
-import type { LinkProps } from '@chakra-ui/next-js';
-import { Link } from '@chakra-ui/next-js';
+import type { LinkProps } from "@chakra-ui/next-js";
+import { Link } from "@chakra-ui/next-js";
 import {
   AbsoluteCenter,
   Box,
@@ -9,17 +9,17 @@ import {
   HStack,
   IconButton,
   Show,
-} from '@chakra-ui/react';
-import { IoMenuSharp } from 'react-icons/io5';
+} from "@chakra-ui/react";
+import { IoMenuSharp } from "react-icons/io5";
 
-import SplitFiLogo from '~/components/Logo';
-import links from '~/layout/links';
-import NavLink from '~/layout/NavLink';
+import SplitFiLogo from "@/components/Logo";
+import links from "@/layout/links";
+import NavLink from "@/layout/NavLink";
 
 export default function Navigation() {
   return (
     <HStack flex="1" spacing="12" justify="space-between" position="relative">
-      <Box w={{ base: '24', lg: '24' }}>
+      <Box w={{ base: "24", lg: "24" }}>
         <SplitFiLogo />
       </Box>
 
