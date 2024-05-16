@@ -1,6 +1,5 @@
 "use client";
 
-import type { AccordionItemProps } from "@splitfi/ui";
 import {
   Accordion,
   AccordionButton,
@@ -8,19 +7,21 @@ import {
   AccordionPanel,
   Box,
   Container,
-  Heading,
   Stack,
   AccordionIcon,
+  type AccordionItemProps,
   Text,
   ListItem,
   OrderedList,
 } from "@splitfi/ui";
 
 import SectionHeader from "@/components/SectionHeader";
+import { ReactNode } from "react";
 
 interface FAQItemProps extends AccordionItemProps {
   title: string;
 }
+
 function FAQItem({ title, children, ...props }: FAQItemProps) {
   return (
     <AccordionItem rounded="md" borderWidth="1px" {...props}>
@@ -37,7 +38,7 @@ function FAQItem({ title, children, ...props }: FAQItemProps) {
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel px={6} pb={6} color="gray.400">
-        {children}
+        {children as ReactNode}
       </AccordionPanel>
     </AccordionItem>
   );

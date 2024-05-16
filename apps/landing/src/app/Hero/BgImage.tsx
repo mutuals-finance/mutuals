@@ -1,9 +1,7 @@
 import type { FlexProps } from "@splitfi/ui";
-import { useBreakpointValue, useUnmountEffect } from "@splitfi/ui";
+import { useBreakpointValue } from "@splitfi/ui";
 import { useEffect, useRef } from "react";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
 import heroVideo from "@/assets/home-hero.mp4";
 import AnimationBox from "@/components/Animation/Box";

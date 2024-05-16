@@ -2,18 +2,11 @@ import {
   Box,
   Button,
   Heading,
-  DarkMode,
-  ButtonGroup,
   Container,
-  Grid,
-  GridItem,
   Stack,
   useColorModeValue,
   SplitFiLogo,
 } from "@splitfi/ui";
-import Image from "next/image";
-
-import ctaBgImage from "@/assets/bg-cta.jpg";
 
 export default function CTA() {
   return (

@@ -14,7 +14,6 @@ export default function FeatureCard({
   heading,
   description,
   icon,
-  image,
   ...props
 }: FeatureCardProps) {
   return (

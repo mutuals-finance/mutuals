@@ -32,40 +32,36 @@ function ThemeToggleMenu() {
   return (
     <DarkMode>
       <Menu>
-        {({ isOpen }) => (
-          <>
-            <ButtonGroup>
-              <MenuButton
-                as={Button}
-                aria-label="Open theme menu"
-                leftIcon={colorMode === "dark" ? <RiMoonFill /> : <RiSunLine />}
-                rightIcon={
-                  <IoChevronDown rotate={colorMode === "dark" ? 0 : 0.5} />
-                }
-              >
-                {colorMode === "dark" ? "Dark Theme" : "Light Theme"}
-              </MenuButton>
-            </ButtonGroup>
+        <ButtonGroup>
+          <MenuButton
+            as={Button}
+            aria-label="Open theme menu"
+            leftIcon={colorMode === "dark" ? <RiMoonFill /> : <RiSunLine />}
+            rightIcon={
+              <IoChevronDown rotate={colorMode === "dark" ? 0 : 0.5} />
+            }
+          >
+            {colorMode === "dark" ? "Dark Theme" : "Light Theme"}
+          </MenuButton>
+        </ButtonGroup>
 
-            <MenuList color="color.1">
-              <MenuItem
-                aria-label="Enable light theme"
-                icon={<RiSunLine />}
-                onClick={() => setColorMode("light")}
-              >
-                Light Theme
-              </MenuItem>
+        <MenuList color="color.1">
+          <MenuItem
+            aria-label="Enable light theme"
+            icon={<RiSunLine />}
+            onClick={() => setColorMode("light")}
+          >
+            Light Theme
+          </MenuItem>
 
-              <MenuItem
-                aria-label="Enable dark theme"
-                icon={<RiMoonFill />}
-                onClick={() => setColorMode("dark")}
-              >
-                Dark Theme
-              </MenuItem>
-            </MenuList>
-          </>
-        )}
+          <MenuItem
+            aria-label="Enable dark theme"
+            icon={<RiMoonFill />}
+            onClick={() => setColorMode("dark")}
+          >
+            Dark Theme
+          </MenuItem>
+        </MenuList>
       </Menu>
     </DarkMode>
   );

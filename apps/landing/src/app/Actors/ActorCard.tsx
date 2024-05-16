@@ -15,7 +15,6 @@ export default function ActorCard({
   title,
   subtitle,
   description,
-  image,
   ...props
 }: ActorCardProps) {
   return (

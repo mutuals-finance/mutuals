@@ -6,7 +6,6 @@ import {
   Stack,
   Tag,
   TagLabel,
-  useColorModeValue,
 } from "@splitfi/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
