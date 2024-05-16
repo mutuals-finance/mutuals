@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { Link, type LinkProps } from '@chakra-ui/next-js';
-import { Box, forwardRef } from '@chakra-ui/react';
-import { usePathname } from 'next/navigation';
+import { Link, type LinkProps } from "@chakra-ui/next-js";
+import { Box, forwardRef } from "@splitfi/ui";
+import { usePathname } from "next/navigation";
 
 export interface NavLinkProps extends LinkProps {
   id?: string;
 }
 
-const NavLink = forwardRef<NavLinkProps, 'a'>(({ children, ...props }, ref) => {
+const NavLink = forwardRef<NavLinkProps, "a">(({ children, ...props }, ref) => {
   const pathname = usePathname();
   const isActive = pathname === props.href;
   return (
     <Link
       ref={ref}
-      display={{ base: 'none', lg: 'flex' }}
-      fontWeight={isActive ? '600' : '500'}
+      display={{ base: "none", lg: "flex" }}
+      fontWeight={isActive ? "600" : "500"}
       textTransform="uppercase"
       fontSize="xs"
       position="relative"
@@ -37,6 +37,6 @@ const NavLink = forwardRef<NavLinkProps, 'a'>(({ children, ...props }, ref) => {
   );
 });
 
-NavLink.displayName = 'NavLink';
+NavLink.displayName = "NavLink";
 
 export default NavLink;

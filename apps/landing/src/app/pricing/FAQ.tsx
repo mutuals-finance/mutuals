@@ -1,6 +1,6 @@
 "use client";
 
-import type { AccordionItemProps } from "@chakra-ui/react";
+import type { AccordionItemProps } from "@splitfi/ui";
 import {
   Accordion,
   AccordionButton,
@@ -14,7 +14,7 @@ import {
   Text,
   ListItem,
   OrderedList,
-} from "@chakra-ui/react";
+} from "@splitfi/ui";
 
 import SectionHeader from "@/components/SectionHeader";
 

@@ -9,7 +9,7 @@ import {
   GridItem,
   Stack,
   useColorModeValue,
-} from "@chakra-ui/react";
+} from "@splitfi/ui";
 import Image from "next/image";
 
 import ctaBgImage from "@/assets/bg-cta.jpg";

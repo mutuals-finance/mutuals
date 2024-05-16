@@ -5,6 +5,14 @@
 
 export * from "@chakra-ui/react";
 
+export {
+  Image,
+  type ImageProps,
+  Link,
+  type LinkProps,
+  CacheProvider,
+  type CacheProviderProps,
+} from "@chakra-ui/next-js";
 /**
  * Custom Re-exports
  *

@@ -1,16 +1,16 @@
-import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
+import { defineStyle, defineStyleConfig } from "@splitfi/ui";
 
 const baseStyle = {
-  fontWeight: '400',
+  fontWeight: "400",
 };
 
 const tag = defineStyle({
-  color: 'color.primary',
-  textTransform: 'uppercase',
-  fontSize: 'xs',
-  fontWeight: '500',
+  color: "color.primary",
+  textTransform: "uppercase",
+  fontSize: "xs",
+  fontWeight: "500",
   _dark: {
-    color: 'color.primary',
+    color: "color.primary",
   },
 });
 

@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@splitfi/ui";
 
 import { semanticTokens } from "@/styles/theme/foundations/tokens";
 

@@ -9,7 +9,7 @@ import {
   HStack,
   IconButton,
   Show,
-} from "@chakra-ui/react";
+} from "@splitfi/ui";
 import { IoMenuSharp } from "react-icons/io5";
 
 import SplitFiLogo from "@/components/Logo";

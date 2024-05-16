@@ -15,7 +15,7 @@ import {
   Accordion,
   Button,
   Stack,
-} from "@chakra-ui/react";
+} from "@splitfi/ui";
 import Image from "next/image";
 
 import featureImage from "@/assets/feature.png";

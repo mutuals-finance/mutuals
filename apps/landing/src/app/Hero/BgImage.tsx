@@ -1,5 +1,5 @@
-import type { FlexProps } from "@chakra-ui/react";
-import { useBreakpointValue, useUnmountEffect } from "@chakra-ui/react";
+import type { FlexProps } from "@splitfi/ui";
+import { useBreakpointValue, useUnmountEffect } from "@splitfi/ui";
 import { useEffect, useRef } from "react";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

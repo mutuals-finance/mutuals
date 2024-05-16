@@ -7,7 +7,7 @@ import {
   Tag,
   TagLabel,
   useColorModeValue,
-} from "@chakra-ui/react";
+} from "@splitfi/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
 import AnimationBox from "@/components/Animation/Box";

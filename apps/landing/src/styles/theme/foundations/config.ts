@@ -1,6 +1,6 @@
-import type { ThemeConfig } from '@chakra-ui/react';
+import type { ThemeConfig } from "@splitfi/ui";
 
 export const config: ThemeConfig = {
-  initialColorMode: 'dark',
+  initialColorMode: "dark",
   disableTransitionOnChange: false,
 };

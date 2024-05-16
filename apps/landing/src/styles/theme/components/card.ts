@@ -1,28 +1,28 @@
-import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
+import { createMultiStyleConfigHelpers } from "@splitfi/ui";
 
 const helpers = createMultiStyleConfigHelpers([
-  'container',
-  'header',
-  'body',
-  'footer',
+  "container",
+  "header",
+  "body",
+  "footer",
 ]);
 
 export const Card = helpers.defineMultiStyleConfig({
   baseStyle: {
     container: {
-      rounded: 'md',
+      rounded: "md",
     },
   },
   variants: {
     filled: () => ({
       container: {
-        bg: 'bg.2',
+        bg: "bg.2",
       },
     }),
     outline: () => ({
       container: {
-        bg: 'bg.1',
-        borderColor: 'border.1',
+        bg: "bg.1",
+        borderColor: "border.1",
       },
     }),
   },

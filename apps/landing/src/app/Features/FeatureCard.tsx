@@ -1,13 +1,13 @@
-import type { CardProps, FlexProps, As } from '@chakra-ui/react';
-import { Card, CardBody, Heading, Icon, Stack, Text } from '@chakra-ui/react';
-import type { ImageProps } from 'next/image';
+import type { CardProps, FlexProps, As } from "@splitfi/ui";
+import { Card, CardBody, Heading, Icon, Stack, Text } from "@splitfi/ui";
+import type { ImageProps } from "next/image";
 
 interface FeatureCardProps extends CardProps {
   heading: string;
   description: string;
   icon?: As;
   href?: string;
-  image?: ImageProps['src'];
+  image?: ImageProps["src"];
   iconProps?: FlexProps;
 }
 export default function FeatureCard({

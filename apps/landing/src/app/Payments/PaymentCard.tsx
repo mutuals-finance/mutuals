@@ -1,4 +1,4 @@
-import type { CardProps } from '@chakra-ui/react';
+import type { CardProps } from "@splitfi/ui";
 import {
   AspectRatio,
   Card,
@@ -6,14 +6,14 @@ import {
   CardHeader,
   Heading,
   Text,
-} from '@chakra-ui/react';
-import type { ImageProps } from 'next/image';
-import Image from 'next/image';
+} from "@splitfi/ui";
+import type { ImageProps } from "next/image";
+import Image from "next/image";
 
 interface PaymentOptionSlideProps extends CardProps {
   heading: string;
   description: string;
-  image?: ImageProps['src'];
+  image?: ImageProps["src"];
 }
 
 export default function PaymentCard({
@@ -37,7 +37,7 @@ export default function PaymentCard({
               src={image}
               alt={heading}
               fill
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: "contain" }}
             />
           </AspectRatio>
         </CardHeader>

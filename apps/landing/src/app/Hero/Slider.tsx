@@ -1,4 +1,4 @@
-import { Flex, SimpleGrid, useBreakpointValue } from "@chakra-ui/react";
+import { Flex, SimpleGrid, useBreakpointValue } from "@splitfi/ui";
 import NextImage from "next/image";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";

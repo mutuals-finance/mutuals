@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import type { CardProps } from '@chakra-ui/react';
+import type { CardProps } from "@splitfi/ui";
 import {
   Box,
   Button,
@@ -13,8 +13,8 @@ import {
   SimpleGrid,
   Stack,
   Text,
-} from '@chakra-ui/react';
-import { IoCheckmark } from 'react-icons/io5';
+} from "@splitfi/ui";
+import { IoCheckmark } from "react-icons/io5";
 
 interface PricingCardProps extends CardProps {
   heading: string;
@@ -28,12 +28,12 @@ function PricingCard({
   label,
   description,
   features = [],
-  variant = 'outline',
+  variant = "outline",
 }: PricingCardProps) {
   const baseFeatures = [
-    'Unlimited Splits, Receipients and Tokens',
-    'Multiple Chains Available',
-    'No Fees or hidden costs',
+    "Unlimited Splits, Receipients and Tokens",
+    "Multiple Chains Available",
+    "No Fees or hidden costs",
   ];
 
   return (
@@ -70,7 +70,7 @@ function PricingCard({
 export default function PricingInfo() {
   return (
     <Box mt="12" mb="24">
-      <Container maxW="container.xl" px={{ base: '6', lg: '12' }}>
+      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
         <SimpleGrid spacing={{ base: 6, lg: 12 }} columns={{ base: 1, lg: 2 }}>
           <PricingCard
             heading="Regular Usage"
@@ -82,8 +82,8 @@ export default function PricingInfo() {
             label="Custom %"
             description="You select the donation portion."
             features={[
-              'Custom donation per withdrawal',
-              'Publicly visible donation badge',
+              "Custom donation per withdrawal",
+              "Publicly visible donation badge",
             ]}
           />
         </SimpleGrid>

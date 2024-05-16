@@ -11,10 +11,6 @@
   },
   "dependencies": {
     "@splitfi/ui": "workspace:*",
-    "@chakra-ui/next-js": "^2.1.4",
-    "@chakra-ui/react": "^2.7.1",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
     "framer-motion": "^10.12.18",
     "keen-slider": "^6.8.6",
     "next": "^14.2.3",

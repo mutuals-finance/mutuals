@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Box,
-  Container,
-  SimpleGrid,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Container, SimpleGrid, useColorModeValue } from "@splitfi/ui";
 
 import ActorCard from "@/app/Actors/ActorCard";
 import SectionHeader from "@/components/SectionHeader";

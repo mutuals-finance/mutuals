@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Box,
@@ -7,7 +7,7 @@ import {
   SimpleGrid,
   Text,
   useColorModeValue,
-} from '@chakra-ui/react';
+} from "@splitfi/ui";
 
 export default function PricingHeader() {
   return (
@@ -15,19 +15,19 @@ export default function PricingHeader() {
       as="header"
       pt="32"
       position="relative"
-      bg={useColorModeValue('blue.100', 'blue.900')}
+      bg={useColorModeValue("blue.100", "blue.900")}
       roundedBottom="md"
     >
       <Container
         maxW="container.xl"
-        px={{ base: '6', lg: '12' }}
+        px={{ base: "6", lg: "12" }}
         pb="12"
         pt="24"
         position="relative"
       >
         <SimpleGrid
           columns={{ lg: 2 }}
-          gap={{ base: '6', lg: '12' }}
+          gap={{ base: "6", lg: "12" }}
           alignItems="flex-end"
         >
           <Box>
@@ -39,7 +39,7 @@ export default function PricingHeader() {
             </Heading>
           </Box>
           <Box>
-            <Text fontSize={{ lg: 'lg' }}>
+            <Text fontSize={{ lg: "lg" }}>
               Using SplitFi is free — that’s it. To support our work you can
               forward a part of of your split&apos;s earnings as donation to our
               team. Everything else goes directly to your cause.

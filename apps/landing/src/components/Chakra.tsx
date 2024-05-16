@@ -2,7 +2,7 @@ import {
   ChakraProvider,
   ColorModeScript,
   cookieStorageManager,
-} from "@chakra-ui/react";
+} from "@splitfi/ui";
 
 import customTheme from "@/styles/theme";
 

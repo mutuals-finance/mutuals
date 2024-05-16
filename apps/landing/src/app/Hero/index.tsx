@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
+import { Box } from "@splitfi/ui";
 import { useMotionValueEvent, useScroll, MotionConfig } from "framer-motion";
 import { useState } from "react";
 

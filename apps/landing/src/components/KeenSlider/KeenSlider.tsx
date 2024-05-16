@@ -1,7 +1,7 @@
-import type { BoxProps } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
-import type { KeenSliderOptions, KeenSliderPlugin } from 'keen-slider/react';
-import { useKeenSlider } from 'keen-slider/react';
+import type { BoxProps } from "@splitfi/ui";
+import { Box } from "@splitfi/ui";
+import type { KeenSliderOptions, KeenSliderPlugin } from "keen-slider/react";
+import { useKeenSlider } from "keen-slider/react";
 
 interface KeenSliderProps extends BoxProps {
   options?: KeenSliderOptions;
@@ -23,7 +23,7 @@ export default function KeenSlider({
       ref={sliderRef}
       className={`keen-slider ${className}`}
       cursor="grab"
-      _active={{ cursor: 'grabbing', ..._active }}
+      _active={{ cursor: "grabbing", ..._active }}
       {...props}
     >
       {children}

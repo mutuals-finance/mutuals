@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { Box, Container, GridItem, SimpleGrid } from "@splitfi/ui";
 import { IoWalletOutline } from "react-icons/io5";
 import { LuSplit } from "react-icons/lu";
 import { MdMoneyOff } from "react-icons/md";

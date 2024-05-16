@@ -1,4 +1,4 @@
-import { Link } from '@chakra-ui/next-js';
+import { Link } from "@chakra-ui/next-js";
 import {
   Box,
   Button,
@@ -17,16 +17,16 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
-} from '@chakra-ui/react';
-import type { PropsWithChildren } from 'react';
-import { BiLogoTelegram } from 'react-icons/bi';
+} from "@splitfi/ui";
+import type { PropsWithChildren } from "react";
+import { BiLogoTelegram } from "react-icons/bi";
 import {
   IoChevronDown,
   IoLogoDiscord,
   IoLogoTwitter,
   IoSend,
-} from 'react-icons/io5';
-import { RiMoonFill, RiSunLine } from 'react-icons/ri';
+} from "react-icons/io5";
+import { RiMoonFill, RiSunLine } from "react-icons/ri";
 
 function ThemeToggleMenu() {
   const { colorMode, setColorMode } = useColorMode();
@@ -40,12 +40,12 @@ function ThemeToggleMenu() {
               <MenuButton
                 as={Button}
                 aria-label="Open theme menu"
-                leftIcon={colorMode === 'dark' ? <RiMoonFill /> : <RiSunLine />}
+                leftIcon={colorMode === "dark" ? <RiMoonFill /> : <RiSunLine />}
                 rightIcon={
-                  <IoChevronDown rotate={colorMode === 'dark' ? 0 : 0.5} />
+                  <IoChevronDown rotate={colorMode === "dark" ? 0 : 0.5} />
                 }
               >
-                {colorMode === 'dark' ? 'Dark Theme' : 'Light Theme'}
+                {colorMode === "dark" ? "Dark Theme" : "Light Theme"}
               </MenuButton>
             </ButtonGroup>
 
@@ -53,7 +53,7 @@ function ThemeToggleMenu() {
               <MenuItem
                 aria-label="Enable light theme"
                 icon={<RiSunLine />}
-                onClick={() => setColorMode('light')}
+                onClick={() => setColorMode("light")}
               >
                 Light Theme
               </MenuItem>
@@ -61,7 +61,7 @@ function ThemeToggleMenu() {
               <MenuItem
                 aria-label="Enable dark theme"
                 icon={<RiMoonFill />}
-                onClick={() => setColorMode('dark')}
+                onClick={() => setColorMode("dark")}
               >
                 Dark Theme
               </MenuItem>
@@ -96,7 +96,7 @@ export default function Footer() {
           as={Stack}
           maxW="container.xl"
           py={12}
-          px={{ base: '6', lg: '12' }}
+          px={{ base: "6", lg: "12" }}
           color="color.1"
         >
           <SimpleGrid
@@ -142,11 +142,11 @@ export default function Footer() {
           as={Stack}
           maxW="container.xl"
           py={6}
-          px={{ base: '6', lg: '12' }}
-          direction={{ base: 'column', md: 'row' }}
+          px={{ base: "6", lg: "12" }}
+          direction={{ base: "column", md: "row" }}
           spacing={6}
-          justify={{ md: 'space-between' }}
-          align={{ md: 'center' }}
+          justify={{ md: "space-between" }}
+          align={{ md: "center" }}
         >
           <DarkMode>
             <Text fontSize="xs" color="color.3" fontFamily="monospace">

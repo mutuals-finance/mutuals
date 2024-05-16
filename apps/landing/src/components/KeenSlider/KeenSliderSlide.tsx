@@ -1,5 +1,5 @@
-import type { BoxProps } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
+import type { BoxProps } from "@splitfi/ui";
+import { Box } from "@splitfi/ui";
 
 export default function KeenSliderSlide({
   className,

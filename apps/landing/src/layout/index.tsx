@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
+import { Box } from "@splitfi/ui";
 import type { PropsWithChildren, ReactNode } from "react";
 
 import CTA from "@/layout/CTA";
