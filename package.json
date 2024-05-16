@@ -14,13 +14,12 @@
     "@splitfi/eslint-config": "workspace:*",
     "@splitfi/typescript-config": "workspace:*",
     "prettier": "^3.2.5",
-    "turbo": "^1.13.3"
+    "turbo": "^1.13.3",
+    "@turbo/gen": "^1.13.3"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
   },
-  "dependencies": {
-    "@turbo/gen": "^1.13.3"
-  }
+  "dependencies": {}
 }
