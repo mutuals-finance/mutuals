@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
+import type { PropsWithChildren } from "react";
 
 import Providers from "@/app/providers";
 import Layout from "@/layout";
 
-type RootLayoutProps = {
-  children: React.ReactNode;
-};
+type RootLayoutProps = PropsWithChildren;
 
 const APP_NAME = "SplitFi";
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: "%s | SplitFi" },
   description: "Next.js + chakra-ui + TypeScript template",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
@@ -25,7 +20,6 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-  themeColor: "#FFFFFF",
   openGraph: {
     url: "https://nextarter-chakra.sznm.dev",
     title: "SplitFi",

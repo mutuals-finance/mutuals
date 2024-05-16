@@ -24,14 +24,14 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       {
         type: "add",
         templateFile: "templates/component.hbs",
-        path: `${PATH.ui}/components/{{dashCase name}}.tsx`,
+        path: `${PATH.ui}/components/{{pascalCase name}}/index.tsx`,
         skipIfExists: true,
       },
       {
         type: "append",
         path: `${PATH.ui}/index.ts`,
         template:
-          'export { {{pascalCase name}} } from "./components/{{dashCase name}}";',
+          'export { {{pascalCase name}} } from "./components/{{pascalCase name}}";',
       },
     ],
   });

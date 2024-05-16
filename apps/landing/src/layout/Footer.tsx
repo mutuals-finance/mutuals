@@ -1,5 +1,5 @@
-import { Link } from "@splitfi/ui";
 import {
+  Link,
   Box,
   Button,
   ButtonGroup,
@@ -13,10 +13,8 @@ import {
   MenuList,
   SimpleGrid,
   Stack,
-  StackDivider,
   Text,
   useColorMode,
-  useColorModeValue,
 } from "@splitfi/ui";
 import type { PropsWithChildren } from "react";
 import { BiLogoTelegram } from "react-icons/bi";

@@ -13,6 +13,7 @@ export {
   CacheProvider,
   type CacheProviderProps,
 } from "@chakra-ui/next-js";
+
 /**
  * Custom Re-exports
  *
@@ -24,3 +25,5 @@ export {
  * Custom Components
  * These components are custom to @splitfi/ui and are not included in ChakraUI, although they may rely on ChakraUI components.
  */
+
+export { UIProvider } from "./components/UIProvider";
