@@ -14,7 +14,8 @@ const tag = defineStyle({
   },
 });
 
-export const Text = defineStyleConfig({
+// prevent redeclare of global Text definition from lib dom
+export const ChakraText = defineStyleConfig({
   baseStyle,
   defaultProps: {},
   variants: {

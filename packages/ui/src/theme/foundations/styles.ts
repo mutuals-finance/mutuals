@@ -1,7 +1,7 @@
 export const styles = {
   global: () => ({
     body: {
-      bg: 'bg.1',
+      bg: "bg.1",
     },
   }),
 };

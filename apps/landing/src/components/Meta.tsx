@@ -1,4 +1,4 @@
-const APP_NAME = '@splitfi/landing-ui';
+const APP_NAME = "@splitfi/landing-ui";
 
 export default function Meta() {
   return (
