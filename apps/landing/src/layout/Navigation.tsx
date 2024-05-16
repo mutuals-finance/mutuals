@@ -1,5 +1,3 @@
-import type { LinkProps } from "@chakra-ui/next-js";
-import { Link } from "@chakra-ui/next-js";
 import {
   AbsoluteCenter,
   Box,

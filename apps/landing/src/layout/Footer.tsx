@@ -1,4 +1,4 @@
-import { Link } from "@chakra-ui/next-js";
+import { Link } from "@splitfi/ui";
 import {
   Box,
   Button,

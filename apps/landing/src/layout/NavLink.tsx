@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, type LinkProps } from "@chakra-ui/next-js";
+import { Link, type LinkProps } from "@splitfi/ui";
 import { Box, forwardRef } from "@splitfi/ui";
 import { usePathname } from "next/navigation";
 

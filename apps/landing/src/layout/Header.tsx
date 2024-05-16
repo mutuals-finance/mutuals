@@ -1,13 +1,5 @@
 import type { BoxProps } from "@splitfi/ui";
-import {
-  Box,
-  Container,
-  Flex,
-  HStack,
-  Stack,
-  useBreakpointValue,
-  useColorModeValue,
-} from "@splitfi/ui";
+import { Box, Container, Flex, HStack } from "@splitfi/ui";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 

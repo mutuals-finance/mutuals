@@ -1,6 +1,6 @@
 "use client";
 
-import { CacheProvider } from "@chakra-ui/next-js";
+import { CacheProvider } from "@splitfi/ui";
 
 import ChakraProvider from "@/components/Chakra";
 import "keen-slider/keen-slider.min.css";

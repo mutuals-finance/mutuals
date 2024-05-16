@@ -1,16 +1,14 @@
-import type { LinkProps } from '@chakra-ui/next-js';
+import type { LinkProps } from "@splitfi/ui";
 
-const hideMobile = {
-  // display: ['none', null, 'block'],
-};
-
-export default [
-  { id: 'home', label: 'Home', href: '/' },
+const links: (LinkProps & { label: string })[] = [
+  { id: "home", label: "Home", href: "/" },
   {
-    href: '/pricing',
-    label: 'Pricing',
-    ...hideMobile,
+    id: "pricing",
+    href: "/pricing",
+    label: "Pricing",
   },
-  { id: 'contact', label: 'Contact', href: '/contact' },
-  { id: 'support', label: 'Support', href: '/support' },
-] as (LinkProps & { label: string })[];
+  { id: "contact", label: "Contact", href: "/contact" },
+  { id: "support", label: "Support", href: "/support" },
+];
+
+export default links;
