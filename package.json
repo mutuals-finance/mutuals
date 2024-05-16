@@ -5,6 +5,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "dev:web": "turbo run dev -F @splitfi/web",
+    "dev:landing": "turbo run dev -F @splitfi/landing",
     "dev:docs": "turbo run dev -F @splitfi/docs",
     "gen:component": "turbo gen component",
     "lint": "turbo lint",
