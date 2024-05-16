@@ -1,3 +1,3 @@
-# `@turbo/eslint-config`
+# `@splitfi/eslint-config`
 
 Collection of internal eslint configurations.
