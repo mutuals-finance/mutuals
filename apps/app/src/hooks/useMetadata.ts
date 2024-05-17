@@ -67,7 +67,7 @@ export function useMetadata() {
               JSON.stringify({
                 name,
                 description,
-                image: !!reader?.cid
+                image: reader?.cid
                   ? `ipfs://${reader?.cid.toString()}`
                   : null,
               }),

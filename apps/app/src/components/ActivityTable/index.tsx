@@ -2,7 +2,7 @@
 
 import { Balance } from "@ankr.com/ankr.js";
 import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-import { Flex, Stack } from "@splitfi/ui";
+import { Stack } from "@splitfi/ui";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 

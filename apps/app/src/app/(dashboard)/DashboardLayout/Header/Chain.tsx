@@ -12,7 +12,7 @@ import {
 } from "@splitfi/ui";
 import NextImage from "next/image";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useAccount, useChains, useSwitchChain } from "wagmi";
+import { useAccount, useSwitchChain } from "wagmi";
 
 import { getAvailableChains, getLogoByChainId } from "@/lib/utils";
 

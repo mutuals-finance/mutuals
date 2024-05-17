@@ -4,7 +4,6 @@ import {
   Container,
   ContainerProps,
   Heading,
-  LayoutProps,
   Stack,
 } from "@splitfi/ui";
 import React from "react";

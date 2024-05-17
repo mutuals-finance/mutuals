@@ -3,23 +3,19 @@ import {
   Heading,
   Stack,
   Stat,
-  StatArrow,
   StatGroup,
-  StatHelpText,
   StatLabel,
   StatNumber,
   Text,
 } from "@splitfi/ui";
 
 import {
-  formatCurrencyAmount,
   formatUSDPrice,
   ipfsResolveData,
 } from "@/lib/utils";
 
 import { SplitImage } from "@/components/Split/Image";
 import { SplitBaseFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
-import ContentCard from "@/components/ContentCard";
 
 interface PoolDescriptionProps {
   pool?: SplitBaseFragmentFragment | null;

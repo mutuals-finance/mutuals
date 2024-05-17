@@ -13,9 +13,9 @@ export default function useExplorerLink({
   chainId,
   chain,
 }: UseExplorerLinkProps) {
-  const _chain = !!chainId
+  const _chain = chainId
     ? AVAILABLE_CHAINS.find((c) => c?.id === chainId)
-    : !!chain
+    : chain
       ? chain
       : AVAILABLE_CHAINS[0];
 

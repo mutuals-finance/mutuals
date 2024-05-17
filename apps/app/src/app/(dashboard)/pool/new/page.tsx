@@ -1,10 +1,7 @@
 import {
   Box,
   Container,
-  Grid,
-  GridItem,
   Heading,
-  Stack,
   Text,
 } from "@splitfi/ui";
 import { NewSplitForm } from "./NewSplitForm";

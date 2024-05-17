@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Grid, GridItem, Heading } from "@splitfi/ui";
+import { Box, Divider, Flex, Grid, GridItem } from "@splitfi/ui";
 import React from "react";
 
 interface SidebarLayoutProps {

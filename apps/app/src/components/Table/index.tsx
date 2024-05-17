@@ -6,7 +6,6 @@ import {
   TableProps as ChakraTableProps,
   Tbody,
   Thead,
-  useColorModeValue,
 } from "@splitfi/ui";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { RowData, TableOptions } from "@tanstack/table-core";

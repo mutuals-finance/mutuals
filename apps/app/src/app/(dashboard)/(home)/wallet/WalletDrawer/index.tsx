@@ -21,7 +21,6 @@ import Input from "@/components/Form/Input";
 import Form from "@/components/Form";
 import UserAvatar from "@/components/UserAvatar";
 import BaseLabel from "@/components/Form/InputBase/BaseLabel";
-import InputBase from "@/components/Form/InputBase";
 
 type WalletData = {
   name: string;

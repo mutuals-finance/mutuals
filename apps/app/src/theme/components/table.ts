@@ -1,4 +1,4 @@
-import { tableAnatomy, tabsAnatomy } from "@chakra-ui/anatomy";
+import { tableAnatomy } from "@chakra-ui/anatomy";
 import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 
 const { definePartsStyle, defineMultiStyleConfig } =

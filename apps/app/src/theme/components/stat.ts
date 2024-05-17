@@ -1,5 +1,5 @@
 import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
-import { drawerAnatomy, menuAnatomy, statAnatomy } from "@chakra-ui/anatomy";
+import { statAnatomy } from "@chakra-ui/anatomy";
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(statAnatomy.keys);

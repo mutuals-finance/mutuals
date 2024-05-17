@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { Box, Container, Heading, SimpleGrid } from "@splitfi/ui";
+import { Container, Heading, SimpleGrid } from "@splitfi/ui";
 import React from "react";
 import { useAccount } from "wagmi";
 

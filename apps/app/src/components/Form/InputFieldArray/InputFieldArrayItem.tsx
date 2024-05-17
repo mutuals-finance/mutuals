@@ -1,4 +1,4 @@
-import { Box, HStack, IconButton, StackDivider } from "@splitfi/ui";
+import { HStack, IconButton } from "@splitfi/ui";
 import React from "react";
 import { IoAdd, IoTrashOutline } from "react-icons/io5";
 

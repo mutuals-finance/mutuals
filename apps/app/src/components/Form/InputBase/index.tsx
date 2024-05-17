@@ -1,4 +1,4 @@
-import { FormControl, FormControlProps } from "@splitfi/ui";
+import { FormControlProps } from "@splitfi/ui";
 import React from "react";
 import { get, useFormContext } from "react-hook-form";
 

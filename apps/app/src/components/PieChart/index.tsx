@@ -1,4 +1,3 @@
-import { Box } from "@splitfi/ui";
 import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
 import { Pie } from "@visx/shape";

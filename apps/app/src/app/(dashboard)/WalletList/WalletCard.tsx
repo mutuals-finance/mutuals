@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Box,
   Button,
   Card,
   CardFooter,
@@ -9,8 +8,6 @@ import {
   CardProps,
   Heading,
   Stack,
-  Tag,
-  TagLabel,
   Text,
 } from "@splitfi/ui";
 import React from "react";

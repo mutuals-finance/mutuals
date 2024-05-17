@@ -9,7 +9,6 @@ import {
 import { SplitBaseFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
 import IconButtonListContainer from "@/components/Shell/IconButtonListContainer";
 import Link from "next/link";
-import { IoIosMore } from "react-icons/io";
 
 interface PoolHandlersProps {
   pool?: SplitBaseFragmentFragment | null;

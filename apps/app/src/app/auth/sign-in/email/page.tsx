@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@splitfi/ui";
+import { Button } from "@splitfi/ui";
 import Form from "@/components/Form";
 import FormGroup from "@/components/Form/FormGroup";
 import Input from "@/components/Form/Input";

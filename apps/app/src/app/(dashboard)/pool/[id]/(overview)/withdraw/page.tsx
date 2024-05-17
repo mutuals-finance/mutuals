@@ -1,4 +1,4 @@
-import { Stack, Text } from "@splitfi/ui";
+import { Text } from "@splitfi/ui";
 import { decodePrefixedAddress } from "@/lib/utils";
 import { getPoolDetailsWithShares } from "@/lib/split";
 

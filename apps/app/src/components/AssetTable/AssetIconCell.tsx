@@ -1,4 +1,3 @@
-import { Balance } from "@ankr.com/ankr.js/dist/types";
 import { HStack, StackProps } from "@splitfi/ui";
 import React from "react";
 

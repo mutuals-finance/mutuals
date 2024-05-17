@@ -1,4 +1,4 @@
-import { alertAnatomy, cardAnatomy } from "@chakra-ui/anatomy";
+import { cardAnatomy } from "@chakra-ui/anatomy";
 import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 
 const { definePartsStyle, defineMultiStyleConfig } =

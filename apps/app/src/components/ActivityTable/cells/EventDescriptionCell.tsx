@@ -1,11 +1,9 @@
 import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
 import {
-  Box,
   Stack,
   Tag,
   TagLabel,
   Text,
-  useColorModeValue,
 } from "@splitfi/ui";
 import { CellContext } from "@tanstack/react-table";
 import React from "react";

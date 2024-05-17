@@ -7,7 +7,6 @@ import { ShareFragmentFragment } from "@/lib/graphql/thegraph/__generated__/grap
 
 import ContentCard from "@/components/ContentCard";
 
-import { useSplit } from "@/context/SplitContext";
 import PayerTable from "@/app/(dashboard)/pool/[id]/(overview)/Payers/PayerTable";
 import { usePool } from "@/context/PoolContext";
 

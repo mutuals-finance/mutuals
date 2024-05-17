@@ -8,7 +8,6 @@ import {
 
 import { SidebarContent } from "./SidebarContent";
 import { SidebarFooter } from "./SidebarFooter";
-import { BoxProps } from "@splitfi/ui";
 
 export { SidebarContent, SidebarFooter, SidebarHeader, SidebarWrapper };
 

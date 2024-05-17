@@ -1,4 +1,4 @@
-import { Inter, Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 
 const switzer = localFont({

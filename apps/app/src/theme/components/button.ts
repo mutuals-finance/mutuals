@@ -1,9 +1,7 @@
 import {
   defineStyle,
   defineStyleConfig,
-  StyleFunctionProps,
 } from "@chakra-ui/react";
-import defaultTheme from "@chakra-ui/theme";
 
 const xl = defineStyle({
   fontSize: "xl",

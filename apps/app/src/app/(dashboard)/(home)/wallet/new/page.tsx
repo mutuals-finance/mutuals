@@ -1,5 +1,5 @@
 import WalletDrawer from "@/app/(dashboard)/(home)/wallet/WalletDrawer";
-import { Alert, AlertIcon } from "@splitfi/ui";
+import { Alert } from "@splitfi/ui";
 import React from "react";
 
 export default function AddWalletPage() {

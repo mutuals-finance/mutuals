@@ -1,7 +1,6 @@
 import ContentCard from "@/components/ContentCard";
 import {
   FragmentType,
-  useFragment,
 } from "@/lib/graphql/thegraph/__generated__";
 import SharesContent from "@/app/(dashboard)/pool/[id]/(overview)/Shares/SharesContent";
 import { Stack } from "@splitfi/ui";

@@ -1,18 +1,11 @@
 import { Balance } from "@ankr.com/ankr.js/dist/types";
 import {
-  Box,
-  BoxProps,
   Stack,
-  StackProps,
-  Tag,
-  TagLabel,
   Text,
   TextProps,
-  useColorModeValue,
 } from "@splitfi/ui";
 import React from "react";
 
-import Date from "@/components/Date";
 
 export interface TokenLabelProps
   extends TextProps,

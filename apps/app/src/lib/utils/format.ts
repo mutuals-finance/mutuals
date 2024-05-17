@@ -1,6 +1,6 @@
 // Number formatting follows the standards defined by Uniswap
 
-import { format, FormatOptions, fromUnixTime, Locale } from "date-fns";
+import { format, FormatOptions, fromUnixTime } from "date-fns";
 
 const FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat("en-US", {
   notation: "standard",
@@ -326,7 +326,7 @@ export function formatCurrencyAmount(
   type: NumberType = NumberType.TokenNonTx,
   placeholder?: string,
 ) {
-  return formatNumber(!!amount ? parseFloat(amount) : 0.0, type, placeholder);
+  return formatNumber(amount ? parseFloat(amount) : 0.0, type, placeholder);
 }
 
 export function formatPrice(
@@ -416,7 +416,7 @@ export function formatPercentage(
   placeholder?: string,
 ) {
   return (
-    formatNumber(!!value ? parseFloat(value) : 0.0, type, placeholder) + " %"
+    formatNumber(value ? parseFloat(value) : 0.0, type, placeholder) + " %"
   );
 }
 

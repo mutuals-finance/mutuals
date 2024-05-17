@@ -1,8 +1,6 @@
 import {
   BoxProps,
   DrawerProps,
-  SlideDirection,
-  useColorModeValue,
   VStack,
 } from "@splitfi/ui";
 import React from "react";

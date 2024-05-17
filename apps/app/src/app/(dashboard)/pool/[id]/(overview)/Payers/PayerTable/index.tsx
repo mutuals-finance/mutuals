@@ -2,7 +2,7 @@ import { Text } from "@splitfi/ui";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
-import { formatPercentage, formatUSDPrice } from "@/lib/utils";
+import { formatUSDPrice } from "@/lib/utils";
 
 import Table, { type TableProps } from "@/components/Table";
 

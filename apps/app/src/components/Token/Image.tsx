@@ -1,5 +1,5 @@
 import { Icon } from "@chakra-ui/icon";
-import { Flex, FlexProps, useColorModeValue } from "@splitfi/ui";
+import { Flex, FlexProps } from "@splitfi/ui";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 import { IoHelp } from "react-icons/io5";

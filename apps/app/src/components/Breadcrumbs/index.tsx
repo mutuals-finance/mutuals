@@ -2,7 +2,7 @@
 
 import { useParams, usePathname } from "next/navigation";
 import BreadcrumbsInner from "@/components/Breadcrumbs/BreadcrumbsInner";
-import { ReactNode, useCallback, useEffect, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { formatToTitleCase } from "@/lib/utils";
 
 export interface BreadcrumbsProps {

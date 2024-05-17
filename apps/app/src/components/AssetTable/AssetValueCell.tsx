@@ -1,11 +1,7 @@
-import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { HStack, Text, TextProps } from "@splitfi/ui";
-import { CellContext } from "@tanstack/react-table";
+import { Text, TextProps } from "@splitfi/ui";
 import React from "react";
 
-import TokenImage from "@/components/Token/Image";
-import TokenLabel from "@/components/Token/Label";
-import { formatCurrencyAmount, formatUSDPrice } from "@/lib/utils";
+import { formatUSDPrice } from "@/lib/utils";
 import { AssetCellProps } from "@/components/AssetTable/types";
 
 type AssetValueCellProps = AssetCellProps & TextProps;

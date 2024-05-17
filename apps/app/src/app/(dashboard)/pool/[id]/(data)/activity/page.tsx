@@ -1,4 +1,3 @@
-import { Box } from "@splitfi/ui";
 import React, { PropsWithChildren } from "react";
 import { decodePrefixedAddress } from "@/lib/utils";
 import { getMetadata, getPoolDetails } from "@/lib/split";

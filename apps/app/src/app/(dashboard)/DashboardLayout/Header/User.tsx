@@ -10,7 +10,7 @@ import {
   Text,
   useColorMode,
 } from "@splitfi/ui";
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import {
   IoChevronDown,
   IoChevronUp,

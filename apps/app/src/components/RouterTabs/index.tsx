@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  forwardRef,
   Tab,
   TabIndicator,
   TabList,
@@ -11,7 +10,6 @@ import {
 } from "@splitfi/ui";
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useImperativeHandle, useMemo } from "react";
 
 export type RouterTabProps = { title: string } & LinkProps & TabProps;
 

@@ -7,8 +7,8 @@ import type {
   KeenSliderOptions,
   KeenSliderPlugin,
 } from "keen-slider/react";
-import { SliderOptions, useKeenSlider } from "keen-slider/react";
-import { useEffect, useState } from "react";
+import { useKeenSlider } from "keen-slider/react";
+import { useState } from "react";
 
 interface KeenSliderProps extends BoxProps {
   options?: KeenSliderOptions;

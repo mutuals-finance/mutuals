@@ -21,7 +21,7 @@ import {
   IoPeopleOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
-import { useMount, useToggle } from "react-use";
+import { useToggle } from "react-use";
 
 import Sidebar from "@/components/Sidebar";
 

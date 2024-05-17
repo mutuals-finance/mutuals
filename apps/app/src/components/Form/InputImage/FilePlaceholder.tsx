@@ -1,6 +1,6 @@
 import { Icon } from "@chakra-ui/icon";
-import { Center, Text, VStack } from "@splitfi/ui";
-import { IoImage, IoImageOutline } from "react-icons/io5";
+import { Center, Text } from "@splitfi/ui";
+import { IoImage } from "react-icons/io5";
 
 import { BaseFieldProps } from "../types";
 

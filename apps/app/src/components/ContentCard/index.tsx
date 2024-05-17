@@ -4,9 +4,7 @@ import {
   CardBodyProps,
   CardHeader,
   type CardProps,
-  Divider,
   Heading,
-  useColorModeValue,
 } from "@splitfi/ui";
 import React from "react";
 

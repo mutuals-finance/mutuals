@@ -5,9 +5,7 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
-  Divider,
   Flex,
   Heading,
   HStack,
@@ -19,11 +17,8 @@ import {
   MenuItem,
   MenuList,
   Stack,
-  StackDivider,
-  StatArrow,
   StatNumber,
   Text,
-  useColorModeValue,
 } from "@splitfi/ui";
 import { Stat, StatLabel } from "@chakra-ui/stat";
 import NextLink from "next/link";
@@ -50,7 +45,6 @@ import {
 } from "@/lib/utils";
 
 import { SplitImage } from "@/components/Split/Image";
-import { BsBoxArrowInUpRight } from "react-icons/bs";
 
 interface SplitFragmentCardProps {
   fragment: FragmentType<typeof splitBaseFragment>;

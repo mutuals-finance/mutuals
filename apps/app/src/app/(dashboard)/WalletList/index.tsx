@@ -1,4 +1,4 @@
-import { Box, Container, Heading, SimpleGrid } from "@splitfi/ui";
+import { Box, Container, Heading } from "@splitfi/ui";
 import React from "react";
 
 import WalletCard from "./WalletCard";

@@ -4,7 +4,6 @@ import { useQRCode } from "next-qrcode";
 import { QRCodeOptions } from "next-qrcode/dist/useQRCode";
 import { HTMLProps } from "react";
 
-import logo from "@/assets/images/splitFi-logo.png";
 
 interface QRCodeProps extends HTMLProps<HTMLCanvasElement> {
   text: string;

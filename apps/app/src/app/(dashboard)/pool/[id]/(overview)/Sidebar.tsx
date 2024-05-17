@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Box,
   BoxProps,
   Drawer,
   DrawerBody,
@@ -10,8 +9,6 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerProps,
-  Heading,
-  IconButton,
   Stack,
   useBreakpointValue,
 } from "@splitfi/ui";
@@ -19,8 +16,6 @@ import {
 import SidebarComponent from "@/components/Sidebar";
 import RouterTabs, { RouterTabProps } from "@/components/RouterTabs";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import Header from "@/app/(dashboard)/DashboardLayout/Header";
-import { IoClose } from "react-icons/io5";
 
 interface PoolSidebarWrapperProps extends DrawerProps {}
 

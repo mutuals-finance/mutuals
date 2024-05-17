@@ -1,4 +1,4 @@
-import { Td, Tr, useColorModeValue } from "@chakra-ui/react";
+import { Td, Tr } from "@chakra-ui/react";
 import { flexRender, Row } from "@tanstack/react-table";
 import { RowData } from "@tanstack/table-core";
 import React from "react";

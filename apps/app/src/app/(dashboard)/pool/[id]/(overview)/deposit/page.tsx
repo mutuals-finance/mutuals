@@ -9,13 +9,10 @@ import {
   ButtonGroup,
   Button,
   Alert,
-  UnorderedList,
-  ListItem,
   Box,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
 } from "@splitfi/ui";
 import {
   IoCopyOutline,

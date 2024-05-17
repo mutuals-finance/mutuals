@@ -16,7 +16,6 @@ import {
 } from "@/lib/graphql/thegraph/__generated__";
 import { shareFragment } from "@/lib/graphql/thegraph/fragments";
 import { WithdrawData } from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawFormInner";
-import { ChakraStylesConfig } from "chakra-react-select";
 
 export interface SummaryTableProps extends WithdrawData {
   shares?: FragmentType<typeof shareFragment>[];

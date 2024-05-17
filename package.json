@@ -9,6 +9,7 @@
     "dev:docs": "turbo run dev -F @splitfi/docs",
     "gen:component": "turbo gen component",
     "lint": "turbo lint",
+    "lint:fix": "turbo lint -- --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {

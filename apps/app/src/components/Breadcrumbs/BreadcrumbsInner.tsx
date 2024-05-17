@@ -5,11 +5,9 @@ import {
   BreadcrumbItemProps,
   BreadcrumbProps,
 } from "@splitfi/ui";
-import { IoChevronForwardOutline } from "react-icons/io5";
 import { ReactNode } from "react";
 import Link from "next/link";
 import { Icon } from "@chakra-ui/icon";
-import { BsSlash } from "react-icons/bs";
 import { RxSlash } from "react-icons/rx";
 
 function BreadcrumbsInnerItem({
