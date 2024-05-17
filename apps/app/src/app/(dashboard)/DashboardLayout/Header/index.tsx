@@ -1,7 +1,7 @@
 "use client";
 
-import { Icon } from "@chakra-ui/icon";
 import {
+  Icon,
   Box,
   InputGroup,
   InputLeftElement,

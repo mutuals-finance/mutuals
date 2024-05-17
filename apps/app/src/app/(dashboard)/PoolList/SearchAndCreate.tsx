@@ -1,4 +1,4 @@
-import { Icon } from "@chakra-ui/icon";
+import { Icon } from "@splitfi/ui";
 import {
   HStack,
   InputGroup,

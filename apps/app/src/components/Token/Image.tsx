@@ -1,4 +1,4 @@
-import { Icon } from "@chakra-ui/icon";
+import { Icon } from "@splitfi/ui";
 import { Flex, FlexProps } from "@splitfi/ui";
 import Image, { ImageProps } from "next/image";
 import React from "react";

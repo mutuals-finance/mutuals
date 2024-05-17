@@ -7,7 +7,7 @@ import {
 } from "@splitfi/ui";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { Icon } from "@chakra-ui/icon";
+import { Icon } from "@splitfi/ui";
 import { RxSlash } from "react-icons/rx";
 
 function BreadcrumbsInnerItem({

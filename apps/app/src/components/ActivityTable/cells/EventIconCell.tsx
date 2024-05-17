@@ -1,5 +1,5 @@
 import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-import { Icon } from "@chakra-ui/icon";
+import { Icon } from "@splitfi/ui";
 import { Flex, useColorModeValue } from "@splitfi/ui";
 import { CellContext } from "@tanstack/react-table";
 import React from "react";

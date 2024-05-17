@@ -1,4 +1,4 @@
-import { Icon } from "@chakra-ui/icon";
+import { Icon } from "@splitfi/ui";
 import { Center, Text } from "@splitfi/ui";
 import { IoImage } from "react-icons/io5";
 
