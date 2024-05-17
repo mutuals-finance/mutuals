@@ -1,5 +1,5 @@
-import { NODE_ENV } from '@/lib/constants';
+import { NODE_ENV } from "@/lib/constants";
 
 export function isDev() {
-  return NODE_ENV !== 'production';
+  return NODE_ENV !== "production";
 }

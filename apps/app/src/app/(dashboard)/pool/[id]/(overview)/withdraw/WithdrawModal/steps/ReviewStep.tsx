@@ -1,6 +1,6 @@
-import SplitCard from '@/components/Split/Card';
+import SplitCard from "@/components/Split/Card";
 
-import { CreateFormData } from '@/templates/split/new';
+import { CreateFormData } from "@/templates/split/new";
 
 interface ReviewStepProps {
   data: CreateFormData;
@@ -21,7 +21,7 @@ function SplitReviewCard({ image, name, description }: CreateFormData) {
 
 export function ReviewStep({ data }: ReviewStepProps) {
   return (
-    <div className={'flex w-full flex-col space-y-6'}>
+    <div className={"flex w-full flex-col space-y-6"}>
       <p>You are about to create the following Split:</p>
 
       <SplitReviewCard {...data} />

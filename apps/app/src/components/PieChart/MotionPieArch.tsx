@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import React, { useCallback } from 'react';
+import { motion } from "framer-motion";
+import React, { useCallback } from "react";
 
 export type ArchData = {
   id: string;
@@ -43,7 +43,7 @@ export default function MotionPieArch({
     <motion.path
       onMouseMove={handleOnHover}
       onMouseOut={onMouseOut}
-      d={path || ''}
+      d={path || ""}
       fill={fill}
     />
   );

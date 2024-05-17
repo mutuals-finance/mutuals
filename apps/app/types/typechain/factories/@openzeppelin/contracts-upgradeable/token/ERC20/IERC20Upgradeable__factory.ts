@@ -202,7 +202,7 @@ export class IERC20Upgradeable__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): IERC20Upgradeable {
     return new Contract(address, _abi, signerOrProvider) as IERC20Upgradeable;
   }

@@ -1,12 +1,12 @@
-import { IconType } from 'react-icons';
+import { IconType } from "react-icons";
 
-import { TemplatedRouteChild } from '@/hooks/useRouterTemplate';
+import { TemplatedRouteChild } from "@/hooks/useRouterTemplate";
 
 export type SplitTemplateTab = TemplatedRouteChild;
 
 export enum SplitSettingsSection {
-  SPLIT = 'Split',
-  PERSONAL = 'Personal',
+  SPLIT = "Split",
+  PERSONAL = "Personal",
 }
 
 export type SplitSettingsTemplateTab = TemplatedRouteChild & {

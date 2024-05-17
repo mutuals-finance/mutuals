@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface StepperItemState {
   id: string;
@@ -33,7 +33,7 @@ export default function StepperItem({ children, ...props }: StepperItemProps) {
       {isActive && (
         <>
           {children(props)}
-          {isError && <p>{error?.message || 'Unknown Error'}</p>}
+          {isError && <p>{error?.message || "Unknown Error"}</p>}
         </>
       )}
     </>

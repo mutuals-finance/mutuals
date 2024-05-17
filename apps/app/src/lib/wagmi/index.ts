@@ -1,14 +1,14 @@
-import { cookieStorage, createConfig, createStorage } from 'wagmi';
+import { cookieStorage, createConfig, createStorage } from "wagmi";
 
-import { IS_DEV, WALLETCONNECT_PROJECT_ID } from '@/lib/constants';
+import { IS_DEV, WALLETCONNECT_PROJECT_ID } from "@/lib/constants";
 
-import { chains, transports } from './chains';
+import { chains, transports } from "./chains";
 import {
   coinbaseWallet,
   metaMask,
   safe,
   walletConnect,
-} from '@wagmi/connectors';
+} from "@wagmi/connectors";
 
 export const config = createConfig({
   chains,
@@ -19,9 +19,9 @@ export const config = createConfig({
   }),
   connectors: [
     //injected(),
-    metaMask({ dappMetadata: { name: 'SplitFi' } }),
+    metaMask({ dappMetadata: { name: "SplitFi" } }),
     coinbaseWallet({
-      appName: 'SplitFi',
+      appName: "SplitFi",
     }),
     walletConnect({
       projectId: WALLETCONNECT_PROJECT_ID,

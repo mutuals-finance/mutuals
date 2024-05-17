@@ -1,10 +1,10 @@
-import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
+import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
 
-import { SplitDetailsFragmentFragment } from '@/lib/graphql/thegraph/__generated__/graphql';
+import { SplitDetailsFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
 
 export enum EventType {
-  Deposit = 'Deposit',
-  Withdrawal = 'Withdrawal',
+  Deposit = "Deposit",
+  Withdrawal = "Withdrawal",
 }
 
 export interface SplitEvent {
@@ -16,6 +16,6 @@ export interface SplitEvent {
 }
 
 export interface ActivityTableProps
-  extends Pick<SplitDetailsFragmentFragment, 'address'> {
+  extends Pick<SplitDetailsFragmentFragment, "address"> {
   transfers?: TokenTransfer[];
 }

@@ -31,16 +31,16 @@ export interface IERC20PermitUpgradeableInterface extends utils.Interface {
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "nonces" | "permit"
+    nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "nonces" | "permit",
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "DOMAIN_SEPARATOR",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "nonces",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "permit",
@@ -51,13 +51,13 @@ export interface IERC20PermitUpgradeableInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
 
   decodeFunctionResult(
     functionFragment: "DOMAIN_SEPARATOR",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
@@ -75,15 +75,15 @@ export interface IERC20PermitUpgradeable extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -96,7 +96,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
 
     nonces(
       owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     permit(
@@ -107,7 +107,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -115,7 +115,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
 
   nonces(
     owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   permit(
@@ -126,7 +126,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
     v: PromiseOrValue<BigNumberish>,
     r: PromiseOrValue<BytesLike>,
     s: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -134,7 +134,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
 
     nonces(
       owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     permit(
@@ -145,7 +145,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
@@ -156,7 +156,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
 
     nonces(
       owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     permit(
@@ -167,7 +167,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -176,7 +176,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
 
     nonces(
       owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     permit(
@@ -187,7 +187,7 @@ export interface IERC20PermitUpgradeable extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

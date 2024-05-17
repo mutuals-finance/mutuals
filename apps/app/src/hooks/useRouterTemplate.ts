@@ -1,4 +1,4 @@
-import { NextRouter, useRouter } from 'next/router';
+import { NextRouter, useRouter } from "next/router";
 
 export interface TemplatedRouteChild {
   label: string;
@@ -11,7 +11,7 @@ export function useRouterTemplate<TTemplate extends TemplatedRouteChild>(
   slug: ((router: NextRouter) => string | undefined) | string,
 ) {
   const { ...router } = useRouter();
-  const currentSlug = typeof slug === 'string' ? slug : slug(router);
+  const currentSlug = typeof slug === "string" ? slug : slug(router);
 
   return (routes.find((route) => route.slug === currentSlug) ||
     routes[0]) as TTemplate;

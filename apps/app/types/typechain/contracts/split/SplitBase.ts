@@ -80,141 +80,141 @@ export interface SplitBaseInterface extends utils.Interface {
       | "withdraw(address)"
       | "withdraw(address,address)"
       | "withdrawn(address)"
-      | "withdrawn(address,address)"
+      | "withdrawn(address,address)",
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "CONTRACT_METADATA_AUTHOR_ROLE",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "batchWithdraw(bool,address[])",
-    values: [PromiseOrValue<boolean>, PromiseOrValue<string>[]]
+    values: [PromiseOrValue<boolean>, PromiseOrValue<string>[]],
   ): string;
   encodeFunctionData(
     functionFragment: "batchWithdraw(bool,address[],address)",
     values: [
       PromiseOrValue<boolean>,
       PromiseOrValue<string>[],
-      PromiseOrValue<string>
-    ]
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "contractURI",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "getPending(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "getPending(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: "grantRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "hasRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "payee",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: "payeeCount",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "revokeRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "setContractURI",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "shares",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: "totalShares",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn()",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
     functionFragment: "CONTRACT_METADATA_AUTHOR_ROLE",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "batchWithdraw(bool,address[])",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "batchWithdraw(bool,address[],address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "contractURI",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "getPending(address,address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "getPending(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "getRoleAdmin",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
@@ -222,45 +222,45 @@ export interface SplitBaseInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "payeeCount", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceRole",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setContractURI",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalShares",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn()",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdraw(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdraw(address,address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address,address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {
@@ -394,15 +394,15 @@ export interface SplitBase extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -418,14 +418,14 @@ export interface SplitBase extends BaseContract {
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
@@ -433,34 +433,34 @@ export interface SplitBase extends BaseContract {
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     payeeCount(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -468,59 +468,59 @@ export interface SplitBase extends BaseContract {
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
   };
 
@@ -531,14 +531,14 @@ export interface SplitBase extends BaseContract {
   "batchWithdraw(bool,address[])"(
     withdrawETH: PromiseOrValue<boolean>,
     tokens: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   "batchWithdraw(bool,address[],address)"(
     withdrawETH: PromiseOrValue<boolean>,
     tokens: PromiseOrValue<string>[],
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   contractURI(overrides?: CallOverrides): Promise<string>;
@@ -546,34 +546,34 @@ export interface SplitBase extends BaseContract {
   "getPending(address,address)"(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "getPending(address)"(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getRoleAdmin(
     role: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   grantRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   hasRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   payee(
     index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
@@ -581,59 +581,59 @@ export interface SplitBase extends BaseContract {
   renounceRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setContractURI(
     _uri: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   shares(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
   "totalWithdrawn(address)"(
     token: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   "withdraw(address)"(
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   "withdraw(address,address)"(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   "withdrawn(address)"(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "withdrawn(address,address)"(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   callStatic: {
@@ -644,14 +644,14 @@ export interface SplitBase extends BaseContract {
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
@@ -659,34 +659,34 @@ export interface SplitBase extends BaseContract {
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
@@ -694,70 +694,70 @@ export interface SplitBase extends BaseContract {
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   filters: {
     "ContractURIUpdated(string,string)"(
       prevURI?: null,
-      newURI?: null
+      newURI?: null,
     ): ContractURIUpdatedEventFilter;
     ContractURIUpdated(
       prevURI?: null,
-      newURI?: null
+      newURI?: null,
     ): ContractURIUpdatedEventFilter;
 
     "Deposit(address,uint256)"(from?: null, amount?: null): DepositEventFilter;
@@ -766,12 +766,12 @@ export interface SplitBase extends BaseContract {
     "ERC20Withdrawal(address,address,uint256)"(
       token?: PromiseOrValue<string> | null,
       to?: null,
-      amount?: null
+      amount?: null,
     ): ERC20WithdrawalEventFilter;
     ERC20Withdrawal(
       token?: PromiseOrValue<string> | null,
       to?: null,
-      amount?: null
+      amount?: null,
     ): ERC20WithdrawalEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
@@ -779,53 +779,53 @@ export interface SplitBase extends BaseContract {
 
     "PayeeAdded(address,uint256)"(
       account?: null,
-      shares?: null
+      shares?: null,
     ): PayeeAddedEventFilter;
     PayeeAdded(account?: null, shares?: null): PayeeAddedEventFilter;
 
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
       role?: PromiseOrValue<BytesLike> | null,
       previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
       role?: PromiseOrValue<BytesLike> | null,
       previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     "RoleGranted(bytes32,address,address)"(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
     RoleGranted(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
 
     "RoleRevoked(bytes32,address,address)"(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
     RoleRevoked(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
 
     "Withdrawal(address,uint256)"(
       to?: null,
-      amount?: null
+      amount?: null,
     ): WithdrawalEventFilter;
     Withdrawal(to?: null, amount?: null): WithdrawalEventFilter;
   };
 
   estimateGas: {
     CONTRACT_METADATA_AUTHOR_ROLE(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -833,14 +833,14 @@ export interface SplitBase extends BaseContract {
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
@@ -848,34 +848,34 @@ export interface SplitBase extends BaseContract {
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
@@ -883,82 +883,82 @@ export interface SplitBase extends BaseContract {
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     CONTRACT_METADATA_AUTHOR_ROLE(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -966,34 +966,34 @@ export interface SplitBase extends BaseContract {
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     payeeCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1001,61 +1001,61 @@ export interface SplitBase extends BaseContract {
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "totalWithdrawn()"(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

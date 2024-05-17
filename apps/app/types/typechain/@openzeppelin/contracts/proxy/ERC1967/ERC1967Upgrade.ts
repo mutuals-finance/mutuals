@@ -64,15 +64,15 @@ export interface ERC1967Upgrade extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -87,25 +87,25 @@ export interface ERC1967Upgrade extends BaseContract {
   filters: {
     "AdminChanged(address,address)"(
       previousAdmin?: null,
-      newAdmin?: null
+      newAdmin?: null,
     ): AdminChangedEventFilter;
     AdminChanged(
       previousAdmin?: null,
-      newAdmin?: null
+      newAdmin?: null,
     ): AdminChangedEventFilter;
 
     "BeaconUpgraded(address)"(
-      beacon?: PromiseOrValue<string> | null
+      beacon?: PromiseOrValue<string> | null,
     ): BeaconUpgradedEventFilter;
     BeaconUpgraded(
-      beacon?: PromiseOrValue<string> | null
+      beacon?: PromiseOrValue<string> | null,
     ): BeaconUpgradedEventFilter;
 
     "Upgraded(address)"(
-      implementation?: PromiseOrValue<string> | null
+      implementation?: PromiseOrValue<string> | null,
     ): UpgradedEventFilter;
     Upgraded(
-      implementation?: PromiseOrValue<string> | null
+      implementation?: PromiseOrValue<string> | null,
     ): UpgradedEventFilter;
   };
 

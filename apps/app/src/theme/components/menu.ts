@@ -1,25 +1,25 @@
-import { createMultiStyleConfigHelpers } from '@chakra-ui/react';
-import { drawerAnatomy, menuAnatomy } from '@chakra-ui/anatomy';
+import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
+import { drawerAnatomy, menuAnatomy } from "@chakra-ui/anatomy";
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(menuAnatomy.keys);
 
 const baseStyle = {
   list: {
-    bg: 'bg.1',
-    border: 'border.1',
+    bg: "bg.1",
+    border: "border.1",
   },
   item: {
-    bg: 'bg.1',
+    bg: "bg.1",
     _hover: {
-      bg: 'bg.2',
+      bg: "bg.2",
     },
     _focus: {
-      bg: 'bg.2',
+      bg: "bg.2",
     },
   },
   divider: {
-    borderColor: 'border.1',
+    borderColor: "border.1",
   },
 };
 const variants = {};

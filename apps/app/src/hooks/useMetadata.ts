@@ -1,9 +1,9 @@
-import { CIDString, NFTStorage } from 'nft.storage';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { CIDString, NFTStorage } from "nft.storage";
+import { useCallback, useMemo, useRef, useState } from "react";
 
-import { NFT_STORAGE_TOKEN } from '@/lib/constants';
+import { NFT_STORAGE_TOKEN } from "@/lib/constants";
 
-import { FileWithPreview } from '@/components/Form/types';
+import { FileWithPreview } from "@/components/Form/types";
 
 export interface Metadata {
   name?: string;
@@ -46,11 +46,11 @@ export function useMetadata() {
 
   function onError(e: unknown) {
     setIsError(true);
-    setError(e instanceof Error ? e : new Error('Unexpected error'));
+    setError(e instanceof Error ? e : new Error("Unexpected error"));
   }
 
   const save = useCallback(
-    async ({ image, name = '', description = '' }: Metadata) => {
+    async ({ image, name = "", description = "" }: Metadata) => {
       onReset();
       controllerRef.current = new AbortController();
       try {

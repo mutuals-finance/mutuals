@@ -1,4 +1,4 @@
-import useSWR, { SWRConfiguration } from 'swr';
+import useSWR, { SWRConfiguration } from "swr";
 
 import {
   getBlock,
@@ -18,7 +18,7 @@ import {
   getTransaction,
   getTransactions,
   getTransfers,
-} from './fetchers';
+} from "./fetchers";
 
 // CLASS A
 export function useTokenBalances({

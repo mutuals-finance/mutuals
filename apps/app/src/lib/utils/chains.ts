@@ -3,7 +3,7 @@ import {
   CHAIN_LOGO_URI_MAP,
   CHAIN_SHORT_NAME_MAP,
   ETH_LOGO,
-} from '@/lib/constants/';
+} from "@/lib/constants/";
 
 export function getLogoByChainId(id?: number) {
   return CHAIN_LOGO_URI_MAP[id || 1] || ETH_LOGO;

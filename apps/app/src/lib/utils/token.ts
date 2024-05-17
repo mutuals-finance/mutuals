@@ -1,10 +1,10 @@
-import { BigNumberish, formatUnits, isAddress } from 'ethers';
+import { BigNumberish, formatUnits, isAddress } from "ethers";
 
 import {
   ETH_TOKEN,
   NATIVE_TOKEN_ADDRESS,
   NATIVE_TOKEN_LOGO_URI,
-} from '@/lib/constants';
+} from "@/lib/constants";
 
 export function formatAmount(
   amount: string | BigNumberish,
@@ -38,8 +38,8 @@ export function formatBalance(balance: string | number) {
 
 export function formatCurrency(value: string | number) {
   const formatCurrency = new Intl.NumberFormat(undefined!, {
-    style: 'currency',
-    currency: 'USD',
+    style: "currency",
+    currency: "USD",
   });
   return formatCurrency.format(Number(value));
 }

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useList } from 'react-use';
+import React from "react";
+import { useList } from "react-use";
 
-import { ShareFragmentFragment } from '@/lib/graphql/thegraph/__generated__/graphql';
+import { ShareFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
 
-import ContentCard from '@/components/ContentCard';
+import ContentCard from "@/components/ContentCard";
 
-import { useSplit } from '@/context/SplitContext';
-import PayerTable from '@/app/(dashboard)/pool/[id]/(overview)/Payers/PayerTable';
-import { usePool } from '@/context/PoolContext';
+import { useSplit } from "@/context/SplitContext";
+import PayerTable from "@/app/(dashboard)/pool/[id]/(overview)/Payers/PayerTable";
+import { usePool } from "@/context/PoolContext";
 
 type ActivePayer = ShareFragmentFragment & { isActive?: boolean };
 
@@ -24,11 +24,11 @@ export default function PoolPayers() {
 
   return (
     <ContentCard
-      title={'Earnings From'}
-      flex='1'
-      bodyProps={{ flex: '1', overflowY: 'auto', p: '0' }}
+      title={"Earnings From"}
+      flex="1"
+      bodyProps={{ flex: "1", overflowY: "auto", p: "0" }}
     >
-      <PayerTable payers={payers} containerProps={{ flex: '1' }} />
+      <PayerTable payers={payers} containerProps={{ flex: "1" }} />
 
       {/*
         <ShareItem

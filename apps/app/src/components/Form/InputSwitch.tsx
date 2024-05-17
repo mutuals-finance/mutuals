@@ -1,14 +1,14 @@
-import { Switch, SwitchProps } from '@chakra-ui/react';
-import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Switch, SwitchProps } from "@chakra-ui/react";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
-import InputBase from '@/components/Form/InputBase';
-import { BaseFieldProps } from '@/components/Form/types';
+import InputBase from "@/components/Form/InputBase";
+import { BaseFieldProps } from "@/components/Form/types";
 
 type InputSwitchProps = SwitchProps & BaseFieldProps;
 
 export default function InputSwitch({
-  id = '',
+  id = "",
   validation,
   helperText,
   ...rest

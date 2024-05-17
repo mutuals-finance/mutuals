@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, Signer} from "ethers";
+import { Contract, Interface, Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   IERC20PermitUpgradeable,
@@ -94,12 +94,12 @@ export class IERC20PermitUpgradeable__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): IERC20PermitUpgradeable {
     return new Contract(
       address,
       _abi,
-      signerOrProvider
+      signerOrProvider,
     ) as IERC20PermitUpgradeable;
   }
 }

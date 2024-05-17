@@ -1,6 +1,6 @@
-import { getAddress, isAddress } from 'ethers';
+import { getAddress, isAddress } from "ethers";
 
-export function shortenAddress(address = '', chars = 4) {
+export function shortenAddress(address = "", chars = 4) {
   const parsed = isAddress(address);
   return parsed
     ? `${address.substring(0, chars + 2)}...${address.substring(42 - chars)}`
@@ -43,11 +43,11 @@ export const decodePrefixedAddress = (value: string): string => {
  * @returns `prefix` and checksummed `address`
  */
 export const parsePrefixedAddress = (value: string): PrefixedAddress => {
-  let [prefix, address] = value.split(':');
+  let [prefix, address] = value.split(":");
 
   if (!address) {
     address = value;
-    prefix = '';
+    prefix = "";
   }
 
   return {

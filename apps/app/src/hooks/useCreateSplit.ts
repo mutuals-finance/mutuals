@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useCallback } from 'react';
+import { useCallback } from "react";
 import {
   useSimulateContract,
   useTransactionReceipt,
   useWriteContract,
   UseWriteContractParameters,
-} from 'wagmi';
+} from "wagmi";
 
-import { FACTORY_ADDRESS } from '@/lib/constants';
+import { FACTORY_ADDRESS } from "@/lib/constants";
 
-import { SplitFactory__factory } from '@/../../types/typechain';
-import { randomBytes } from 'ethers';
-import { Address } from 'viem';
+import { SplitFactory__factory } from "@/../../types/typechain";
+import { randomBytes } from "ethers";
+import { Address } from "viem";
 
 export type CreateSplitArgs = [Address[], bigint[], string, boolean, bigint];
 
@@ -26,19 +26,19 @@ export type UseCreateSplitProps = {
 export default function useCreateSplit({
   payees = [],
   shares = [],
-  uri = '',
+  uri = "",
   metadataLocked,
   ...props
 }: UseCreateSplitProps) {
   const salt = randomBytes(32).reduce(
     (acc, val) => acc + BigInt(val),
-    BigInt('0'),
+    BigInt("0"),
   );
 
   const simulate = useSimulateContract({
     address: FACTORY_ADDRESS,
     abi: SplitFactory__factory.abi,
-    functionName: 'createSplit',
+    functionName: "createSplit",
     args: [
       payees,
       shares.map((s) => BigInt(s)),
@@ -47,7 +47,7 @@ export default function useCreateSplit({
       salt,
     ] as CreateSplitArgs,
     query: {
-      enabled: payees.length > 1 && shares.length > 1 && uri !== '',
+      enabled: payees.length > 1 && shares.length > 1 && uri !== "",
     },
   });
 

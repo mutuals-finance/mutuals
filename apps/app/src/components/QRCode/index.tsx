@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useQRCode } from 'next-qrcode';
-import { QRCodeOptions } from 'next-qrcode/dist/useQRCode';
-import { HTMLProps } from 'react';
+import { useQRCode } from "next-qrcode";
+import { QRCodeOptions } from "next-qrcode/dist/useQRCode";
+import { HTMLProps } from "react";
 
-import logo from '@/assets/images/splitFi-logo.png';
+import logo from "@/assets/images/splitFi-logo.png";
 
 interface QRCodeProps extends HTMLProps<HTMLCanvasElement> {
   text: string;
@@ -22,8 +22,8 @@ export default function QRCode({ text, options, ...props }: QRCodeProps) {
         width: 250,
         ...options,
         color: {
-          dark: '#000000',
-          light: '#ffffff',
+          dark: "#000000",
+          light: "#ffffff",
           ...options?.color,
         },
       }}

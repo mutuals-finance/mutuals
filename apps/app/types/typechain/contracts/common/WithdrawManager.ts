@@ -37,41 +37,41 @@ export interface WithdrawManagerInterface extends utils.Interface {
       | "totalWithdrawn(address)"
       | "totalWithdrawn()"
       | "withdrawn(address)"
-      | "withdrawn(address,address)"
+      | "withdrawn(address,address)",
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "totalWithdrawn(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn()",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
     functionFragment: "totalWithdrawn(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn()",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address,address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {
@@ -125,15 +125,15 @@ export interface WithdrawManager extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -144,58 +144,58 @@ export interface WithdrawManager extends BaseContract {
   functions: {
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
   };
 
   "totalWithdrawn(address)"(
     token: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   "withdrawn(address)"(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "withdrawn(address,address)"(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   callStatic: {
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -203,12 +203,12 @@ export interface WithdrawManager extends BaseContract {
     "ERC20Withdrawal(address,address,uint256)"(
       token?: PromiseOrValue<string> | null,
       to?: null,
-      amount?: null
+      amount?: null,
     ): ERC20WithdrawalEventFilter;
     ERC20Withdrawal(
       token?: PromiseOrValue<string> | null,
       to?: null,
-      amount?: null
+      amount?: null,
     ): ERC20WithdrawalEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
@@ -216,7 +216,7 @@ export interface WithdrawManager extends BaseContract {
 
     "Withdrawal(address,uint256)"(
       to?: null,
-      amount?: null
+      amount?: null,
     ): WithdrawalEventFilter;
     Withdrawal(to?: null, amount?: null): WithdrawalEventFilter;
   };
@@ -224,42 +224,42 @@ export interface WithdrawManager extends BaseContract {
   estimateGas: {
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "totalWithdrawn()"(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

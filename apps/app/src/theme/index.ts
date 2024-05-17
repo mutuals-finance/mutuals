@@ -1,15 +1,15 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme } from "@chakra-ui/react";
 
-import colors from '@/theme/foundations/colors';
+import colors from "@/theme/foundations/colors";
 
-import components from './components';
-import styles from './foundations/styles';
-import semanticTokens from './foundations/tokens';
-import { fonts, fontSizes } from './foundations/typography';
+import components from "./components";
+import styles from "./foundations/styles";
+import semanticTokens from "./foundations/tokens";
+import { fonts, fontSizes } from "./foundations/typography";
 
 export default extendTheme({
   config: {
-    initialColorMode: 'system',
+    initialColorMode: "system",
     useSystemColorMode: true,
   },
   colors,

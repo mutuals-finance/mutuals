@@ -34,24 +34,24 @@ export interface PayeeManagerInterface extends utils.Interface {
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "payee" | "payeeCount" | "shares" | "totalShares"
+    nameOrSignatureOrTopic: "payee" | "payeeCount" | "shares" | "totalShares",
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "payee",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: "payeeCount",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "shares",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "totalShares",
-    values?: undefined
+    values?: undefined,
   ): string;
 
   decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
@@ -59,7 +59,7 @@ export interface PayeeManagerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalShares",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {
@@ -99,15 +99,15 @@ export interface PayeeManager extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -118,14 +118,14 @@ export interface PayeeManager extends BaseContract {
   functions: {
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     payeeCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -133,14 +133,14 @@ export interface PayeeManager extends BaseContract {
 
   payee(
     index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   shares(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   totalShares(overrides?: CallOverrides): Promise<BigNumber>;
@@ -148,14 +148,14 @@ export interface PayeeManager extends BaseContract {
   callStatic: {
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
@@ -167,7 +167,7 @@ export interface PayeeManager extends BaseContract {
 
     "PayeeAdded(address,uint256)"(
       account?: null,
-      shares?: null
+      shares?: null,
     ): PayeeAddedEventFilter;
     PayeeAdded(account?: null, shares?: null): PayeeAddedEventFilter;
   };
@@ -175,14 +175,14 @@ export interface PayeeManager extends BaseContract {
   estimateGas: {
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
@@ -191,14 +191,14 @@ export interface PayeeManager extends BaseContract {
   populateTransaction: {
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     payeeCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;

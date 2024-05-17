@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useToggle } from 'react-use';
+import { useToggle } from "react-use";
 
-import Form from '@/components/Form';
-import { FileWithPreview } from '@/components/Form/types';
+import Form from "@/components/Form";
+import { FileWithPreview } from "@/components/Form/types";
 
-import { defaultPayee, Payee } from '../PayeeList';
-import NewSplitFormInner from './NewSplitFormInner';
+import { defaultPayee, Payee } from "../PayeeList";
+import NewSplitFormInner from "./NewSplitFormInner";
 
 export interface CreateFormData {
   image: FileWithPreview;
@@ -22,7 +22,7 @@ export function NewSplitForm() {
   return (
     <Form<CreateFormData>
       onSubmit={() => toggleIsModalOpen()}
-      onSubmitInvalid={(errors, data) => console.log('INVALID', errors, data)}
+      onSubmitInvalid={(errors, data) => console.log("INVALID", errors, data)}
       defaultValues={{
         payees: [defaultPayee, defaultPayee],
       }}

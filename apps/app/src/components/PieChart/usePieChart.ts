@@ -1,7 +1,7 @@
-import { scaleLinear } from '@visx/scale';
-import { useMemo } from 'react';
+import { scaleLinear } from "@visx/scale";
+import { useMemo } from "react";
 
-import { ArchData } from './MotionPieArch';
+import { ArchData } from "./MotionPieArch";
 
 export default function usePieChart(data: ArchData[], size: number) {
   const outerRadius = size >> 1;
@@ -14,7 +14,7 @@ export default function usePieChart(data: ArchData[], size: number) {
     () =>
       scaleLinear({
         domain: [0, data.length],
-        range: ['#E3E6FE', '#6E7DF8'],
+        range: ["#E3E6FE", "#6E7DF8"],
       }),
     [data],
   );

@@ -1,4 +1,4 @@
-import { EventType } from '@/components/ActivityTable/types';
+import { EventType } from "@/components/ActivityTable/types";
 
 interface UseActivityEventProps {
   address: string;

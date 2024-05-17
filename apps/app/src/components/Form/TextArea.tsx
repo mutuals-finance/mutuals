@@ -1,18 +1,18 @@
 import {
   Textarea as ChakraTextarea,
   TextareaProps as ChakraTextareaProps,
-} from '@chakra-ui/react';
-import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+} from "@chakra-ui/react";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
-import InputBase from '@/components/Form/InputBase';
+import InputBase from "@/components/Form/InputBase";
 
-import { BaseFieldProps } from './types';
+import { BaseFieldProps } from "./types";
 
 type TextAreaProps = ChakraTextareaProps & BaseFieldProps;
 
 export default function TextArea({
-  id = '',
+  id = "",
   validation,
   rows = 6,
   ...rest

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { PropsWithChildren } from 'react';
-import { State, WagmiProvider } from 'wagmi';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { config } from '@/lib/wagmi';
+import { PropsWithChildren } from "react";
+import { State, WagmiProvider } from "wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { config } from "@/lib/wagmi";
 
 interface WagmiProviderProps {
   initialState?: State;

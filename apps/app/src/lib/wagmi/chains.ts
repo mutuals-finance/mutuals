@@ -9,8 +9,8 @@ import {
   localhost,
   arbitrum,
   optimism,
-} from 'wagmi/chains';
-import { Chain, http } from 'viem';
+} from "wagmi/chains";
+import { Chain, http } from "viem";
 
 const prodChains = [mainnet, polygon, arbitrum, optimism];
 const devChains = [

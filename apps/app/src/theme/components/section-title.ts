@@ -1,56 +1,56 @@
-import { StyleFunctionProps } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
+import { StyleFunctionProps } from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
 
 const SectionTitle = {
-  parts: ['wrapper', 'title', 'description'],
+  parts: ["wrapper", "title", "description"],
   baseStyle: {
     wrapper: {
       spacing: [2, null, 3],
-      mb: '10',
-      textAlign: ['left', null, 'center'],
+      mb: "10",
+      textAlign: ["left", null, "center"],
     },
     title: {
-      width: '100%',
+      width: "100%",
     },
     description: {
-      fontWeight: 'normal',
+      fontWeight: "normal",
     },
   },
   variants: {
     default: (props: StyleFunctionProps) => ({
       title: {},
       description: {
-        color: mode('gray.500', 'gray.400')(props),
+        color: mode("gray.500", "gray.400")(props),
       },
     }),
     dark: {
       title: {
-        color: 'gray.800',
+        color: "gray.800",
       },
       description: {
-        color: 'gray.700',
+        color: "gray.700",
       },
     },
     light: () => ({
       title: {
-        color: 'white',
+        color: "white",
       },
       description: {
-        color: 'gray.200',
+        color: "gray.200",
       },
     }),
   },
   defaultProps: {
-    variant: 'default',
-    size: 'xl',
+    variant: "default",
+    size: "xl",
   },
   sizes: {
     lg: {
       title: {
-        size: '2xl',
+        size: "2xl",
       },
       description: {
-        fontSize: 'xl',
+        fontSize: "xl",
       },
     },
     xl: {
@@ -59,10 +59,10 @@ const SectionTitle = {
         spacing: [2, null, 3],
       },
       title: {
-        fontSize: { base: '2xl', lg: '4xl' },
+        fontSize: { base: "2xl", lg: "4xl" },
       },
       description: {
-        fontSize: { base: 'xl', lg: '2xl' },
+        fontSize: { base: "xl", lg: "2xl" },
       },
     },
   },

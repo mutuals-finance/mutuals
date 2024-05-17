@@ -1,6 +1,6 @@
-import Chains from '@wagmi/core/chains';
+import Chains from "@wagmi/core/chains";
 
-import { COVALENT_KEY } from '@/lib/constants';
+import { COVALENT_KEY } from "@/lib/constants";
 
 import {
   AllChainInfoResponse,
@@ -16,7 +16,7 @@ import {
   TokenIdResponse,
   TransactionResponse,
   TransferResponse,
-} from './types';
+} from "./types";
 
 export const fetcher = <TResponse = any>(url: string): Promise<TResponse> =>
   fetch(`https://api.covalenthq.com/v1/${url}?key=${COVALENT_KEY}`).then(

@@ -33,25 +33,25 @@ export interface IContractMetadataInterface extends utils.Interface {
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "contractURI" | "setContractURI"
+    nameOrSignatureOrTopic: "contractURI" | "setContractURI",
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "contractURI",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "setContractURI",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
     functionFragment: "contractURI",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "setContractURI",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {
@@ -83,15 +83,15 @@ export interface IContractMetadata extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -104,7 +104,7 @@ export interface IContractMetadata extends BaseContract {
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -112,7 +112,7 @@ export interface IContractMetadata extends BaseContract {
 
   setContractURI(
     _uri: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -120,18 +120,18 @@ export interface IContractMetadata extends BaseContract {
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
     "ContractURIUpdated(string,string)"(
       prevURI?: null,
-      newURI?: null
+      newURI?: null,
     ): ContractURIUpdatedEventFilter;
     ContractURIUpdated(
       prevURI?: null,
-      newURI?: null
+      newURI?: null,
     ): ContractURIUpdatedEventFilter;
   };
 
@@ -140,7 +140,7 @@ export interface IContractMetadata extends BaseContract {
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -149,7 +149,7 @@ export interface IContractMetadata extends BaseContract {
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

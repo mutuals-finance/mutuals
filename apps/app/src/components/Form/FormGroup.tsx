@@ -1,5 +1,5 @@
-import { Box, BoxProps, Heading, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
+import { Box, BoxProps, Heading, Text, VStack } from "@chakra-ui/react";
+import React from "react";
 
 interface FormGroupProps extends BoxProps {
   title?: string;
@@ -14,9 +14,9 @@ export default function FormGroup({
 }: React.PropsWithChildren<FormGroupProps>) {
   return (
     <Box {...props}>
-      <VStack spacing={'6'} alignItems={'start'}>
+      <VStack spacing={"6"} alignItems={"start"}>
         {!!title && (
-          <Heading as={'h3'} size={'sm'}>
+          <Heading as={"h3"} size={"sm"}>
             {title}
           </Heading>
         )}

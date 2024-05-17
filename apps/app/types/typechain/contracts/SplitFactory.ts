@@ -44,7 +44,7 @@ export interface SplitFactoryInterface extends utils.Interface {
       | "getAddress"
       | "owner"
       | "renounceOwnership"
-      | "transferOwnership"
+      | "transferOwnership",
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "beacon", values?: undefined): string;
@@ -55,8 +55,8 @@ export interface SplitFactoryInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<string>,
       PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>
-    ]
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "getAddress",
@@ -65,33 +65,33 @@ export interface SplitFactoryInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<string>,
       PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>
-    ]
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(functionFragment: "beacon", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createSplit",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {
@@ -136,15 +136,15 @@ export interface SplitFactory extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -161,7 +161,7 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       salt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getAddress(
@@ -170,18 +170,18 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -193,7 +193,7 @@ export interface SplitFactory extends BaseContract {
     uri: PromiseOrValue<string>,
     metadataEditable: PromiseOrValue<boolean>,
     salt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getAddress(
@@ -202,18 +202,18 @@ export interface SplitFactory extends BaseContract {
     uri: PromiseOrValue<string>,
     metadataEditable: PromiseOrValue<boolean>,
     _salt: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -225,7 +225,7 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     getAddress(
@@ -234,7 +234,7 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
@@ -243,25 +243,25 @@ export interface SplitFactory extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
     "CreateSplitProxy(address)"(
-      proxy?: PromiseOrValue<string> | null
+      proxy?: PromiseOrValue<string> | null,
     ): CreateSplitProxyEventFilter;
     CreateSplitProxy(
-      proxy?: PromiseOrValue<string> | null
+      proxy?: PromiseOrValue<string> | null,
     ): CreateSplitProxyEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
   };
 
@@ -274,7 +274,7 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       salt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getAddress(
@@ -283,18 +283,18 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -307,7 +307,7 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       salt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getAddress(
@@ -316,18 +316,18 @@ export interface SplitFactory extends BaseContract {
       uri: PromiseOrValue<string>,
       metadataEditable: PromiseOrValue<boolean>,
       _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

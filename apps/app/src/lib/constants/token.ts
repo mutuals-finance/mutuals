@@ -1,6 +1,6 @@
-import * as ETH_TOKEN from '@/assets/svg/eth-token.svg';
-import * as AGOR_TOKEN from '@/assets/svg/eth-token.svg';
-import * as MATIC_TOKEN from '@/assets/svg/matic-token.svg';
+import * as ETH_TOKEN from "@/assets/svg/eth-token.svg";
+import * as AGOR_TOKEN from "@/assets/svg/eth-token.svg";
+import * as MATIC_TOKEN from "@/assets/svg/matic-token.svg";
 
 export { ETH_TOKEN, MATIC_TOKEN };
 

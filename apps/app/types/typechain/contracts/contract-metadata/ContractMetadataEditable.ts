@@ -51,80 +51,80 @@ export interface ContractMetadataEditableInterface extends utils.Interface {
       | "renounceRole"
       | "revokeRole"
       | "setContractURI"
-      | "supportsInterface"
+      | "supportsInterface",
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "CONTRACT_METADATA_AUTHOR_ROLE",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "contractURI",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: "grantRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "hasRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "revokeRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "setContractURI",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<BytesLike>],
   ): string;
 
   decodeFunctionResult(
     functionFragment: "CONTRACT_METADATA_AUTHOR_ROLE",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "contractURI",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "getRoleAdmin",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceRole",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setContractURI",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {
@@ -208,15 +208,15 @@ export interface ContractMetadataEditable extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -233,41 +233,41 @@ export interface ContractMetadataEditable extends BaseContract {
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
@@ -279,41 +279,41 @@ export interface ContractMetadataEditable extends BaseContract {
 
   getRoleAdmin(
     role: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   grantRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   hasRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   renounceRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setContractURI(
     _uri: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   callStatic: {
@@ -325,52 +325,52 @@ export interface ContractMetadataEditable extends BaseContract {
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
   filters: {
     "ContractURIUpdated(string,string)"(
       prevURI?: null,
-      newURI?: null
+      newURI?: null,
     ): ContractURIUpdatedEventFilter;
     ContractURIUpdated(
       prevURI?: null,
-      newURI?: null
+      newURI?: null,
     ): ContractURIUpdatedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
@@ -379,40 +379,40 @@ export interface ContractMetadataEditable extends BaseContract {
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
       role?: PromiseOrValue<BytesLike> | null,
       previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
       role?: PromiseOrValue<BytesLike> | null,
       previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     "RoleGranted(bytes32,address,address)"(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
     RoleGranted(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
 
     "RoleRevoked(bytes32,address,address)"(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
     RoleRevoked(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
   };
 
   estimateGas: {
     CONTRACT_METADATA_AUTHOR_ROLE(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -421,92 +421,92 @@ export interface ContractMetadataEditable extends BaseContract {
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     CONTRACT_METADATA_AUTHOR_ROLE(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     hasRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setContractURI(
       _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import {Contract, Interface, Signer} from "ethers";
+import { Contract, Interface, Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   Proxy,

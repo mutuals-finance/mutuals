@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { ApolloLink, HttpLink } from '@apollo/client';
-import clientCookies from 'js-cookie';
+import React from "react";
+import { ApolloLink, HttpLink } from "@apollo/client";
+import clientCookies from "js-cookie";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
   NextSSRApolloClient,
   SSRMultipartLink,
-} from '@apollo/experimental-nextjs-app-support/ssr';
+} from "@apollo/experimental-nextjs-app-support/ssr";
 
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
-import { setVerbosity } from 'ts-invariant';
-import { subgraphByChainId } from '@/lib/constants';
-import { mainnet } from 'wagmi/chains';
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { setVerbosity } from "ts-invariant";
+import { subgraphByChainId } from "@/lib/constants";
+import { mainnet } from "wagmi/chains";
 
-if (process.env.NODE_ENV === 'development') {
-  setVerbosity('debug');
+if (process.env.NODE_ENV === "development") {
+  setVerbosity("debug");
   loadDevMessages();
   loadErrorMessages();
 }
@@ -39,14 +39,14 @@ export default function ApolloProvider({
   function makeClient() {
     const httpLink = new HttpLink({
       uri: subgraphByChainId[mainnet.id],
-      fetchOptions: { cache: 'no-store' },
+      fetchOptions: { cache: "no-store" },
     });
 
     const delayLink = new ApolloLink((operation, forward) => {
       const delay =
-        typeof window === 'undefined'
+        typeof window === "undefined"
           ? delayProp
-          : clientCookies.get('apollo-x-custom-delay') ?? delayProp;
+          : clientCookies.get("apollo-x-custom-delay") ?? delayProp;
       operation.setContext(({ headers = {} }) => {
         return {
           headers: {
@@ -59,7 +59,7 @@ export default function ApolloProvider({
       return forward(operation);
     });
     const link =
-      typeof window === 'undefined'
+      typeof window === "undefined"
         ? ApolloLink.from([
             new SSRMultipartLink({
               stripDefer: false,

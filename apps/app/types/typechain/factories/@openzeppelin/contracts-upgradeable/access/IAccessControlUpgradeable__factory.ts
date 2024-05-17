@@ -191,12 +191,12 @@ export class IAccessControlUpgradeable__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): IAccessControlUpgradeable {
     return new Contract(
       address,
       _abi,
-      signerOrProvider
+      signerOrProvider,
     ) as IAccessControlUpgradeable;
   }
 }

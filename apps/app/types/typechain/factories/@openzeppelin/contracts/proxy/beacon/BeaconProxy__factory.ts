@@ -5,7 +5,9 @@ import {
   Signer,
   Contract,
   ContractFactory,
-  BytesLike, Overrides, Interface,
+  BytesLike,
+  Overrides,
+  Interface,
 } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
 import type { PromiseOrValue } from "../../../../../common";
@@ -94,7 +96,7 @@ type BeaconProxyConstructorParams =
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: BeaconProxyConstructorParams
+  xs: BeaconProxyConstructorParams,
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class BeaconProxy__factory extends ContractFactory {
@@ -109,14 +111,14 @@ export class BeaconProxy__factory extends ContractFactory {
   override deploy(
     beacon: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<BeaconProxy> {
     return super.deploy(beacon, data, overrides || {}) as Promise<BeaconProxy>;
   }
   override getDeployTransaction(
     beacon: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): TransactionRequest {
     return super.getDeployTransaction(beacon, data, overrides || {});
   }
@@ -134,7 +136,7 @@ export class BeaconProxy__factory extends ContractFactory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): BeaconProxy {
     return new Contract(address, _abi, signerOrProvider) as BeaconProxy;
   }

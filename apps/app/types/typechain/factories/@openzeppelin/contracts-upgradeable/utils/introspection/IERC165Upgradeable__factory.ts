@@ -38,7 +38,7 @@ export class IERC165Upgradeable__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): IERC165Upgradeable {
     return new Contract(address, _abi, signerOrProvider) as IERC165Upgradeable;
   }

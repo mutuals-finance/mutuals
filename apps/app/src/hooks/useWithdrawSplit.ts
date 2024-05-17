@@ -1,15 +1,15 @@
-import { Balance } from '@ankr.com/ankr.js/dist/types';
-import { useCallback, useMemo } from 'react';
+import { Balance } from "@ankr.com/ankr.js/dist/types";
+import { useCallback, useMemo } from "react";
 import {
   useAccount,
   useSimulateContract,
   UseSimulateContractParameters,
   useTransactionReceipt,
   useWriteContract,
-} from 'wagmi';
+} from "wagmi";
 
-import { Split__factory } from '#/typechain';
-import { Address } from 'viem';
+import { Split__factory } from "#/typechain";
+import { Address } from "viem";
 
 export type WithdrawSplitArgs = [boolean, Address[], Address];
 
@@ -23,13 +23,13 @@ export default function useWithdrawSplit(
   const account = useAccount();
 
   const tokensNoNative = tokens
-    .filter((a) => a.tokenType !== 'NATIVE')
+    .filter((a) => a.tokenType !== "NATIVE")
     .map((a) => a.contractAddress);
 
   const simulate = useSimulateContract({
     address: address as Address,
     abi: Split__factory.abi,
-    functionName: 'batchWithdraw',
+    functionName: "batchWithdraw",
     args: [
       tokensNoNative.length !== tokens.length,
       tokensNoNative,

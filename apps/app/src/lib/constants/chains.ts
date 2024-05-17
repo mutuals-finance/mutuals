@@ -1,14 +1,14 @@
-import * as ARBITRUM_LOGO from '@/assets/svg/arbitrum-logo.svg';
-import * as ETH_LOGO from '@/assets/svg/ethereum-logo.svg';
-import * as OPTIMISM_LOGO from '@/assets/svg/optimism-logo.svg';
-import * as MATIC_LOGO from '@/assets/svg/polygonMatic-logo.svg';
+import * as ARBITRUM_LOGO from "@/assets/svg/arbitrum-logo.svg";
+import * as ETH_LOGO from "@/assets/svg/ethereum-logo.svg";
+import * as OPTIMISM_LOGO from "@/assets/svg/optimism-logo.svg";
+import * as MATIC_LOGO from "@/assets/svg/polygonMatic-logo.svg";
 
-import { Chain, ChainExt } from '#/chain';
-import { chains } from '@/lib/wagmi/chains';
+import { Chain, ChainExt } from "#/chain";
+import { chains } from "@/lib/wagmi/chains";
 
 export { ARBITRUM_LOGO, ETH_LOGO, MATIC_LOGO };
 
-export const CHAIN_LOGO_URI_MAP: Record<number, typeof import('*.svg')> = {
+export const CHAIN_LOGO_URI_MAP: Record<number, typeof import("*.svg")> = {
   1: ETH_LOGO, // mainnet
   137: MATIC_LOGO, // polygon
   80001: MATIC_LOGO, // polygon mumbai
@@ -22,16 +22,16 @@ export const CHAIN_LOGO_URI_MAP: Record<number, typeof import('*.svg')> = {
 };
 
 export const CHAIN_SHORT_NAME_MAP: Record<number, string> = {
-  1: 'eth', // mainnet
-  137: 'matic', // polygon
-  80001: 'maticmum', // polygon mumbai
-  42161: 'arb1', // Arbitrum One
-  10: 'o', // Optimism
-  5: 'gor', // goerli
-  421613: 'arb-goerli', // arbitrumGoerli
-  420: 'ogor', // optimismGoerli
-  1337: 'local', // localhost
-  31337: 'local', // hardhat
+  1: "eth", // mainnet
+  137: "matic", // polygon
+  80001: "maticmum", // polygon mumbai
+  42161: "arb1", // Arbitrum One
+  10: "o", // Optimism
+  5: "gor", // goerli
+  421613: "arb-goerli", // arbitrumGoerli
+  420: "ogor", // optimismGoerli
+  1337: "local", // localhost
+  31337: "local", // hardhat
 };
 
 /*

@@ -32,7 +32,7 @@ export class IERC1822Proxiable__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): IERC1822Proxiable {
     return new Contract(address, _abi, signerOrProvider) as IERC1822Proxiable;
   }

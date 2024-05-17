@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import {Contract, Interface, Signer} from "ethers";
+import { Contract, Interface, Signer } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
   Ownable,
@@ -71,7 +71,7 @@ export class Ownable__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): Ownable {
     return new Contract(address, _abi, signerOrProvider) as Ownable;
   }

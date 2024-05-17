@@ -1,14 +1,14 @@
-import { StyleFunctionProps } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
+import { StyleFunctionProps } from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
 
 const Container = {
   baseStyle: {
-    px: { base: '6', lg: '12' },
+    px: { base: "6", lg: "12" },
   },
   variants: {
     shell: {
-      my: '12',
-      maxW: 'container.xl',
+      my: "12",
+      maxW: "container.xl",
     },
   },
 };

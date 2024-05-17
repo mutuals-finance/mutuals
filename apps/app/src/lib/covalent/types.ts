@@ -37,7 +37,7 @@ export interface BalanceResponseType {
 
 export type INFTMetadata = any;
 
-export type AssetType = 'cryptocurrency' | 'stablecoin' | 'nft' | 'dust';
+export type AssetType = "cryptocurrency" | "stablecoin" | "nft" | "dust";
 
 export interface WalletBalanceItem extends ContractMetadata {
   last_transferred_at: string;
@@ -168,7 +168,7 @@ export interface TransferResponse {
   pagination: AppliedPagination | null;
 }
 
-export type TokenTransferItemType = 'IN' | 'OUT';
+export type TokenTransferItemType = "IN" | "OUT";
 
 export interface TokenTransferItem {
   block_signed_at: string;

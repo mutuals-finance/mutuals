@@ -1,4 +1,4 @@
-import { graphql } from './__generated__/gql';
+import { graphql } from "./__generated__/gql";
 
 export const tokenFragment = graphql(/* GraphQL */ `
   fragment TokenFragment on Token {

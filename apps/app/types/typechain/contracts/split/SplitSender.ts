@@ -60,116 +60,116 @@ export interface SplitSenderInterface extends utils.Interface {
       | "withdraw(address)"
       | "withdraw(address,address)"
       | "withdrawn(address)"
-      | "withdrawn(address,address)"
+      | "withdrawn(address,address)",
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "batchWithdraw(bool,address[])",
-    values: [PromiseOrValue<boolean>, PromiseOrValue<string>[]]
+    values: [PromiseOrValue<boolean>, PromiseOrValue<string>[]],
   ): string;
   encodeFunctionData(
     functionFragment: "batchWithdraw(bool,address[],address)",
     values: [
       PromiseOrValue<boolean>,
       PromiseOrValue<string>[],
-      PromiseOrValue<string>
-    ]
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "getPending(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "getPending(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "payee",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: "payeeCount",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "shares",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "totalShares",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn()",
-    values?: undefined
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address)",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(
     functionFragment: "batchWithdraw(bool,address[])",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "batchWithdraw(bool,address[],address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "getPending(address,address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "getPending(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payeeCount", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalShares",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn()",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdraw(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdraw(address,address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address,address)",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 
   events: {
@@ -246,15 +246,15 @@ export interface SplitSender extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -266,204 +266,204 @@ export interface SplitSender extends BaseContract {
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     payeeCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
   };
 
   "batchWithdraw(bool,address[])"(
     withdrawETH: PromiseOrValue<boolean>,
     tokens: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   "batchWithdraw(bool,address[],address)"(
     withdrawETH: PromiseOrValue<boolean>,
     tokens: PromiseOrValue<string>[],
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   "getPending(address,address)"(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "getPending(address)"(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   payee(
     index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   shares(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
   "totalWithdrawn(address)"(
     token: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   "withdraw(address)"(
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   "withdraw(address,address)"(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   "withdrawn(address)"(
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   "withdrawn(address,address)"(
     token: PromiseOrValue<string>,
     account: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   callStatic: {
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -474,12 +474,12 @@ export interface SplitSender extends BaseContract {
     "ERC20Withdrawal(address,address,uint256)"(
       token?: PromiseOrValue<string> | null,
       to?: null,
-      amount?: null
+      amount?: null,
     ): ERC20WithdrawalEventFilter;
     ERC20Withdrawal(
       token?: PromiseOrValue<string> | null,
       to?: null,
-      amount?: null
+      amount?: null,
     ): ERC20WithdrawalEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
@@ -487,13 +487,13 @@ export interface SplitSender extends BaseContract {
 
     "PayeeAdded(address,uint256)"(
       account?: null,
-      shares?: null
+      shares?: null,
     ): PayeeAddedEventFilter;
     PayeeAdded(account?: null, shares?: null): PayeeAddedEventFilter;
 
     "Withdrawal(address,uint256)"(
       to?: null,
-      amount?: null
+      amount?: null,
     ): WithdrawalEventFilter;
     Withdrawal(to?: null, amount?: null): WithdrawalEventFilter;
   };
@@ -502,68 +502,68 @@ export interface SplitSender extends BaseContract {
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -571,70 +571,70 @@ export interface SplitSender extends BaseContract {
     "batchWithdraw(bool,address[])"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     "batchWithdraw(bool,address[],address)"(
       withdrawETH: PromiseOrValue<boolean>,
       tokens: PromiseOrValue<string>[],
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     "getPending(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "getPending(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     payee(
       index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     payeeCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     shares(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "totalWithdrawn(address)"(
       token: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "totalWithdrawn()"(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "withdraw(address)"(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     "withdraw(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     "withdrawn(address)"(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     "withdrawn(address,address)"(
       token: PromiseOrValue<string>,
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

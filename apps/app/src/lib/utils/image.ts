@@ -1,5 +1,5 @@
-import { FileWithPreview } from '@/components/Form/types';
-import { CONNECTOR_LOGO_MAP } from '@/lib/constants/connectors';
+import { FileWithPreview } from "@/components/Form/types";
+import { CONNECTOR_LOGO_MAP } from "@/lib/constants/connectors";
 /*
 
 const toDataURL = (url: string): Promise<string> =>
@@ -42,7 +42,7 @@ export function urlToFile(url: string, fileName = 'file') {
 
 export async function urlToFile(
   url: string,
-  fileName = 'file',
+  fileName = "file",
 ): Promise<FileWithPreview> {
   const response = await fetch(url);
   const blob = await response.blob();
