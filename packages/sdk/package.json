@@ -1,5 +1,5 @@
 {
-  "name": "@splitfi/api-client",
+  "name": "@splitfi/sdk",
   "version": "0.0.0",
   "private": true,
   "scripts": {
