@@ -5,8 +5,13 @@ const inter = Inter({
   display: "swap",
 });
 
-export const fontSizes = {};
-export const fonts = {
+const fontSizes = {};
+const fonts = {
   body: inter.style.fontFamily,
   heading: inter.style.fontFamily,
+};
+
+export default {
+  fonts,
+  fontSizes,
 };

@@ -1,15 +1,23 @@
-export const semanticTokens = {
+export default {
   colors: {
-    border: { 1: { default: "gray.200", _dark: "gray.800" } },
     alpha: {
-      1: { default: "whiteAlpha.900", _dark: "blackAlpha.900" },
-      2: { default: "whiteAlpha.700", _dark: "blackAlpha.700" },
-      3: { default: "whiteAlpha.500", _dark: "blackAlpha.500" },
+      1: {
+        default: "blackAlpha.800",
+        _dark: "whiteAlpha.800",
+      },
+      2: {
+        default: "blackAlpha.600",
+        _dark: "whiteAlpha.600",
+      },
+      3: {
+        default: "blackAlpha.400",
+        _dark: "whiteAlpha.400",
+      },
     },
     color: {
-      1: { default: "black", _dark: "white" },
-      2: { default: "gray.400", _dark: "gray.500" },
-      3: { default: "gray.700", _dark: "gray.200" },
+      1: { default: "gray.900", _dark: "white" },
+      2: { default: "gray.600", _dark: "gray.300" },
+      3: { default: "gray.400", _dark: "gray.500" },
       primary: { default: "primary.600", _dark: "primary.300" },
     },
     bg: {
@@ -18,13 +26,14 @@ export const semanticTokens = {
         _dark: "gray.900",
       },
       2: {
-        default: "gray.50",
+        default: "gray.100",
         _dark: "gray.800",
       },
       3: {
-        default: "gray.100",
+        default: "gray.200",
         _dark: "gray.700",
       },
     },
+    border: { 1: { default: "gray.200", _dark: "gray.800" } },
   },
 };

@@ -124,18 +124,6 @@ const extendedColors = {
     "800": "#164278",
     "900": "#123662",
   },
-  sand: {
-    50: "#F9F3E7",
-    100: "#F7EEDF",
-    200: "#F4E8D2",
-    300: "#EAD4AB",
-    400: "#DEBD7F",
-    500: "#D3A652",
-    600: "#BC8C30",
-    700: "#906B25",
-    800: "#634A19",
-    900: "#36280E",
-  },
   primary: {
     50: "#B8C7FF",
     100: "#A3B7FF",
@@ -153,7 +141,7 @@ const extendedColors = {
 /** override chakra colors here */
 const overridenChakraColors: DeepPartial<Theme["colors"]> = {};
 
-export const colors = {
+export default {
   ...overridenChakraColors,
   ...extendedColors,
 };

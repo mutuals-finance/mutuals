@@ -1,29 +1,37 @@
+import { cardAnatomy } from "@chakra-ui/anatomy";
 import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 
-const helpers = createMultiStyleConfigHelpers([
-  "container",
-  "header",
-  "body",
-  "footer",
-]);
+const { definePartsStyle, defineMultiStyleConfig } =
+  createMultiStyleConfigHelpers(cardAnatomy.keys);
 
-export const Card = helpers.defineMultiStyleConfig({
-  baseStyle: {
+const baseStyle = definePartsStyle({
+  // define the part you're going to style
+  container: { rounded: "lg" },
+});
+
+const variants = {
+  filled: definePartsStyle({
     container: {
-      rounded: "md",
+      bg: "bg.2",
     },
-  },
-  variants: {
-    filled: () => ({
-      container: {
-        bg: "bg.2",
-      },
-    }),
-    outline: () => ({
-      container: {
-        bg: "bg.1",
-        borderColor: "border.1",
-      },
-    }),
-  },
+  }),
+  outline: definePartsStyle({
+    container: {
+      bg: "bg.1",
+      borderColor: "border.1",
+    },
+  }),
+  transparent: definePartsStyle({
+    container: {
+      bg: "transparent",
+    },
+  }),
+};
+
+const defaultProps = {};
+
+export default defineMultiStyleConfig({
+  baseStyle,
+  defaultProps,
+  variants,
 });

@@ -1,4 +1,4 @@
-export const styles = {
+export default {
   global: () => ({
     body: {
       bg: "bg.1",

@@ -4,21 +4,30 @@ const baseStyle = {
   fontWeight: "400",
 };
 
-const tag = defineStyle({
-  color: "color.primary",
-  textTransform: "uppercase",
-  fontSize: "xs",
-  fontWeight: "500",
-  _dark: {
+const variants = {
+  "slashed-zero": {
+    fontFamily: "monospace",
+    fontVariantNumeric: "slashed-zero",
+  },
+  "label-mono": {
+    fontFamily: "monospace",
+    color: "color.3",
+  },
+  label: {
+    color: "color.3",
+  },
+  tag: defineStyle({
     color: "color.primary",
-  },
-});
+    textTransform: "uppercase",
+    fontSize: "xs",
+    fontWeight: "500",
+    _dark: {
+      color: "color.primary",
+    },
+  }),
+};
 
-// prevent redeclare of global Text definition from lib dom
-export const ChakraText = defineStyleConfig({
+export default defineStyleConfig({
   baseStyle,
-  defaultProps: {},
-  variants: {
-    tag,
-  },
+  variants,
 });
