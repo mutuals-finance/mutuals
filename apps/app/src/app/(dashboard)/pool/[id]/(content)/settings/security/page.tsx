@@ -1,4 +1,4 @@
-import { useFragment } from "src/lib/graphql/thegraph/__generated__";
+import { useFragment } from "@/lib/graphql/thegraph/__generated__";
 import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
 import { getMetadata, getPoolDetails } from "@/lib/split";
 import { decodePrefixedAddress, ipfsResolveData } from "@/lib/utils";

@@ -13,7 +13,7 @@ import { formatCurrencyAmount, formatPrice } from "@/lib/utils";
 import {
   FragmentType,
   useFragment as getFragment,
-} from "src/lib/graphql/thegraph/__generated__";
+} from "@/lib/graphql/thegraph/__generated__";
 import { shareFragment } from "@/lib/graphql/thegraph/fragments";
 import { WithdrawData } from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawFormInner";
 import { ChakraStylesConfig } from "chakra-react-select";

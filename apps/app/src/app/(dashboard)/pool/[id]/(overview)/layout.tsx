@@ -2,7 +2,7 @@ import { Box, Stack } from "@splitfi/ui";
 import React, { PropsWithChildren } from "react";
 import Sidebar from "@/app/(dashboard)/pool/[id]/(overview)/Sidebar";
 import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";
-import { useFragment } from "src/lib/graphql/thegraph/__generated__";
+import { useFragment } from "@/lib/graphql/thegraph/__generated__";
 import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
 import { getMetadata, getPoolDetailsWithShares } from "@/lib/split";
 import Description from "@/app/(dashboard)/pool/[id]/(overview)/Description";

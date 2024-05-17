@@ -38,7 +38,7 @@ import {
 import {
   FragmentType,
   useFragment,
-} from "src/lib/graphql/thegraph/__generated__";
+} from "@/lib/graphql/thegraph/__generated__";
 import { SplitBaseFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
 import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
 import { useMetadata } from "@/lib/split/hooks";

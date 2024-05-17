@@ -1,9 +1,9 @@
-import { PropsWithChildren } from 'react';
-import { decodePrefixedAddress } from '@/lib/utils';
-import { getMetadata, getPoolDetails } from '@/lib/split';
-import { useFragment } from 'src/lib/graphql/thegraph/__generated__';
-import { splitBaseFragment } from '@/lib/graphql/thegraph/fragments';
-import PoolPageShell from '@/app/(dashboard)/pool/[id]/PoolPageShell';
+import { PropsWithChildren } from "react";
+import { decodePrefixedAddress } from "@/lib/utils";
+import { getMetadata, getPoolDetails } from "@/lib/split";
+import { useFragment } from "@/lib/graphql/thegraph/__generated__";
+import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
+import PoolPageShell from "@/app/(dashboard)/pool/[id]/PoolPageShell";
 
 export default async function PoolContentLayout({
   children,

@@ -1,10 +1,10 @@
-import { PropsWithChildren } from 'react';
-import RouterTabs from '@/components/RouterTabs';
-import { decodePrefixedAddress } from '@/lib/utils';
-import { getMetadata, getPoolDetails } from '@/lib/split';
-import { useFragment } from 'src/lib/graphql/thegraph/__generated__';
-import { splitBaseFragment } from '@/lib/graphql/thegraph/fragments';
-import PageShell from '@/components/Shell/PageShell';
+import { PropsWithChildren } from "react";
+import RouterTabs from "@/components/RouterTabs";
+import { decodePrefixedAddress } from "@/lib/utils";
+import { getMetadata, getPoolDetails } from "@/lib/split";
+import { useFragment } from "@/lib/graphql/thegraph/__generated__";
+import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
+import PageShell from "@/components/Shell/PageShell";
 
 interface PoolSettingsLayoutProps {
   params: { id: string };
@@ -23,22 +23,22 @@ export default async function PoolSettingsLayout({
 
   const tabs = [
     {
-      title: 'General',
+      title: "General",
       href: `/pool/maticmum:${pool?.address}/settings`,
     },
     {
-      title: 'Security',
+      title: "Security",
       href: `/pool/maticmum:${pool?.address}/settings/security`,
     },
     {
-      title: 'Notifications',
+      title: "Notifications",
       href: `/pool/maticmum:${pool?.address}/settings/notifications`,
     },
   ];
 
   return (
-    <PageShell breadcrumbsEnabled={false} title={'Settings'}>
-      <RouterTabs tabs={tabs} mb={'6'}>
+    <PageShell breadcrumbsEnabled={false} title={"Settings"}>
+      <RouterTabs tabs={tabs} mb={"6"}>
         {children}
       </RouterTabs>
     </PageShell>

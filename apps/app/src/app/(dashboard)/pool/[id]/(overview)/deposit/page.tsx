@@ -9,13 +9,10 @@ import {
   ButtonGroup,
   Button,
   Alert,
-  UnorderedList,
-  ListItem,
   Box,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
 } from "@splitfi/ui";
 import {
   IoCopyOutline,
@@ -25,7 +22,7 @@ import {
 import QRCode from "@/components/QRCode";
 import { decodePrefixedAddress } from "@/lib/utils";
 import { getPoolDetails } from "@/lib/split";
-import { useFragment } from "src/lib/graphql/thegraph/__generated__";
+import { useFragment } from "@/lib/graphql/thegraph/__generated__";
 import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
 
 interface PoolHandleDepositProps {

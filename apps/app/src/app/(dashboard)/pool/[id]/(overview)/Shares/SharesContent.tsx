@@ -9,7 +9,7 @@ import { ActiveShare } from "@/app/(dashboard)/pool/[id]/(overview)/Shares/Share
 import {
   FragmentType,
   useFragment as getFragment,
-} from "src/lib/graphql/thegraph/__generated__";
+} from "@/lib/graphql/thegraph/__generated__";
 import { shareFragment } from "@/lib/graphql/thegraph/fragments";
 
 const PieChart = dynamic(() => import("@/components/PieChart"), {

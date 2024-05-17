@@ -17,7 +17,7 @@ import { GetAccountBalanceReply } from "@ankr.com/ankr.js";
 import {
   FragmentType,
   useFragment as getFragment,
-} from "src/lib/graphql/thegraph/__generated__";
+} from "@/lib/graphql/thegraph/__generated__";
 import {
   shareFragment,
   splitBaseFragment,
