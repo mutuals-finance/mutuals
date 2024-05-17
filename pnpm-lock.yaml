@@ -128,7 +128,7 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
-  apps/web:
+  apps/app:
     dependencies:
       '@splitfi/ui':
         specifier: workspace:*
