@@ -1,11 +1,6 @@
 import { Balance } from "@ankr.com/ankr.js/dist/types";
-import {
-  Stack,
-  Text,
-  TextProps,
-} from "@splitfi/ui";
+import { Stack, Text, TextProps } from "@splitfi/ui";
 import React from "react";
-
 
 export interface TokenLabelProps
   extends TextProps,
@@ -13,7 +8,6 @@ export interface TokenLabelProps
 
 export default function TokenLabel({
   tokenName = "Unknown",
-  tokenSymbol = "??",
   fontSize = "sm",
   noOfLines = 2,
   ...props

@@ -14,7 +14,7 @@ import { TreasurySearchAndCreate } from "@/app/(dashboard)/PoolList/SearchAndCre
 export default function PoolList() {
   const { address, isConnected } = useAccount();
 
-  const { data, loading } = useQuery(SPLITS_BY_PAYEE, {
+  const { data } = useQuery(SPLITS_BY_PAYEE, {
     variables: { payee: address },
     skip: !isConnected,
   });

@@ -1,10 +1,13 @@
 {
   "extends": "@splitfi/typescript-config/nextjs.json",
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
+      ],
+      "#/*": [
+        "./types/*"
       ]
     }
   },

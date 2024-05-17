@@ -1,8 +1,9 @@
 import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 import { statAnatomy } from "@chakra-ui/anatomy";
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(statAnatomy.keys);
+const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(
+  statAnatomy.keys,
+);
 
 const baseStyle = {
   number: {

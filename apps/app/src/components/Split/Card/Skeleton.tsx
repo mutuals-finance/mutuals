@@ -9,19 +9,8 @@ import {
   SkeletonCircle,
   SkeletonText,
 } from "@splitfi/ui";
-import React from "react";
 
-
-
-
-
-
-
-
-
-interface SplitCardSkeletonProps {}
-
-export default function SplitCardSkeleton({}: SplitCardSkeletonProps) {
+export default function SplitCardSkeleton() {
   return (
     <Card variant={"outline"} bg={"bg.1"} size={"sm"}>
       <CardHeader as={Flex} alignItems={"center"} gap={"3"}>

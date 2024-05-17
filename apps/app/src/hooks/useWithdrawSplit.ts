@@ -38,11 +38,7 @@ export default function useWithdrawSplit(
     ...props,
   });
 
-  const {
-    writeContractAsync: _,
-    writeContract: _writeContract,
-    ...write
-  } = useWriteContract(props);
+  const { writeContract: _writeContract, ...write } = useWriteContract(props);
 
   const writeContract = useCallback(() => {
     if (simulate?.data?.request) {

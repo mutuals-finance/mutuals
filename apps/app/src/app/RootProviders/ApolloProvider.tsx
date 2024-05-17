@@ -2,7 +2,6 @@
 
 import React from "react";
 import { ApolloLink, HttpLink } from "@apollo/client";
-import clientCookies from "js-cookie";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
@@ -11,18 +10,15 @@ import {
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-import { setVerbosity } from "ts-invariant";
 import { subgraphByChainId } from "@/lib/constants";
 import { mainnet } from "wagmi/chains";
 
 if (process.env.NODE_ENV === "development") {
-  setVerbosity("debug");
   loadDevMessages();
   loadErrorMessages();
 }
 export default function ApolloProvider({
   children,
-  delay: delayProp,
 }: React.PropsWithChildren<{
   // this will be passed in from a RSC that can read cookies
   // on the client we want to read the cookie instead
@@ -43,10 +39,6 @@ export default function ApolloProvider({
     });
 
     const delayLink = new ApolloLink((operation, forward) => {
-      const delay =
-        typeof window === "undefined"
-          ? delayProp
-          : clientCookies.get("apollo-x-custom-delay") ?? delayProp;
       operation.setContext(({ headers = {} }) => {
         return {
           headers: {

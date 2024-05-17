@@ -1,8 +1,9 @@
 import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 import { breadcrumbAnatomy } from "@chakra-ui/anatomy";
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(breadcrumbAnatomy.keys);
+const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(
+  breadcrumbAnatomy.keys,
+);
 
 const baseStyle = {
   link: {},

@@ -41,7 +41,7 @@ export default function WalletDrawer({
   defaultValues,
   ...props
 }: PropsWithChildren<WalletDrawerProps>) {
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const router = useRouter();
 
   return (

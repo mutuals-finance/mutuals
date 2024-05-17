@@ -25,7 +25,6 @@ export default function MotionPieArch({
   value,
   onMouseMove,
   onMouseOut,
-  isActive,
 }: MotionPieArchProps) {
   const handleOnHover = useCallback(
     (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {

@@ -1,17 +1,10 @@
-import { useFragment } from "@/lib/graphql/thegraph/__generated__";
-import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
-import { getMetadata, getPoolDetails } from "@/lib/split";
-import { decodePrefixedAddress, ipfsResolveData } from "@/lib/utils";
-import { FileWithPreview } from "@/components/Form/types";
 import ContentCard from "@/components/ContentCard";
 import { Box, Button, Heading, Stack, StackDivider, Text } from "@splitfi/ui";
 
-export default async function PoolSettingsSecurityPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function PoolSettingsSecurityPage() {
+  /*
   const id = decodePrefixedAddress(params.id);
+
   const { data } = await getPoolDetails({ variables: { id } });
 
   const pool = useFragment(splitBaseFragment, data.split);
@@ -24,6 +17,7 @@ export default async function PoolSettingsSecurityPage({
       ? { preview: ipfsResolveData(metaData.image) }
       : undefined) as unknown as FileWithPreview,
   };
+*/
 
   return (
     <ContentCard title={"Danger Zone"} borderColor={"red.400"}>

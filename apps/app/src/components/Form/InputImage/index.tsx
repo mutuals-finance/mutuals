@@ -109,7 +109,12 @@ export default function InputImage({
         control={control!}
         name={id!}
         rules={validation!}
-        render={({ field: { value: _, ...field } }) => (
+        render={({
+          field: {
+            // value: _value,
+            ...field
+          },
+        }) => (
           <Box
             {...getRootProps()}
             ref={dropzoneRef}

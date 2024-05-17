@@ -26,7 +26,6 @@ interface PoolSidebarProps extends BoxProps {
 
 export default function PoolSidebar({
   children,
-  defaultOpen = false,
   tabs,
   ...props
 }: PoolSidebarProps) {

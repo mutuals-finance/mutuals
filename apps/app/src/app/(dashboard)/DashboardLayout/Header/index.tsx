@@ -20,11 +20,6 @@ import User from "@/app/(dashboard)/DashboardLayout/Header/User";
 import Logo from "@/app/(dashboard)/DashboardLayout/Header/Logo";
 import MobileMenuButton from "@/app/(dashboard)/DashboardLayout/Header/MobileMenuButton";
 
-interface NavItem {
-  label: string;
-  href: string;
-}
-
 export default function Header() {
   return (
     <Stack

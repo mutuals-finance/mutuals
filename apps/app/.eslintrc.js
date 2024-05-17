@@ -6,4 +6,5 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  ignorePatterns: ["src/lib/graphql/thegraph/__generated__/"],
 };

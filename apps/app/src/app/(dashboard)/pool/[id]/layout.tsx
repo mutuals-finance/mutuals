@@ -1,8 +1,4 @@
 import { PropsWithChildren } from "react";
-import { decodePrefixedAddress } from "@/lib/utils";
-import { getMetadata, getPoolDetails } from "@/lib/split";
-import { useFragment } from "@/lib/graphql/thegraph/__generated__";
-import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
 
 interface PoolSettingsLayoutProps {
   params: { id: string };
@@ -10,8 +6,8 @@ interface PoolSettingsLayoutProps {
 
 export default async function PoolDetailsLayout({
   children,
-  params,
 }: PropsWithChildren<PoolSettingsLayoutProps>) {
+  /*
   const id = decodePrefixedAddress(params.id);
   const { data } = await getPoolDetails({ variables: { id } });
   const pool = useFragment(splitBaseFragment, data.split);
@@ -21,6 +17,7 @@ export default async function PoolDetailsLayout({
     pool,
     metaData,
   };
+*/
 
   return <>{children}</>;
 }

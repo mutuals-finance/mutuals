@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import RouterTabs from "@/components/RouterTabs";
 import { decodePrefixedAddress } from "@/lib/utils";
-import { getMetadata, getPoolDetails } from "@/lib/split";
+import { getPoolDetails } from "@/lib/split";
 import { useFragment } from "@/lib/graphql/thegraph/__generated__";
 import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
 import PageShell from "@/components/Shell/PageShell";
@@ -18,8 +18,6 @@ export default async function PoolSettingsLayout({
   const { data } = await getPoolDetails({ variables: { id } });
 
   const pool = useFragment(splitBaseFragment, data.split);
-
-  const metaData = await getMetadata(pool?.metaDataUri);
 
   const tabs = [
     {
