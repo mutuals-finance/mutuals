@@ -1,8 +1,13 @@
 /**
+ * Client-side rendering of all chakra ui components.
+ * Unnecessary hydration and needs to be removed in the long run.
+ */
+"use client";
+
+/**
  * Unmodified Components
  * These components are exported directly from ChakraUI.
  */
-
 export * from "@chakra-ui/react";
 
 export {

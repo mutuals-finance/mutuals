@@ -1,10 +1,10 @@
-import { Balance } from '@ankr.com/ankr.js/dist/types';
-import { HStack, StackProps } from '@chakra-ui/react';
-import React from 'react';
+import { Balance } from "@ankr.com/ankr.js/dist/types";
+import { HStack, StackProps } from "@splitfi/ui";
+import React from "react";
 
-import TokenImage, { TokenImageProps } from '@/components/Token/Image';
-import TokenLabel, { TokenLabelProps } from '@/components/Token/Label';
-import { AssetCellProps } from '@/components/AssetTable/types';
+import TokenImage, { TokenImageProps } from "@/components/Token/Image";
+import TokenLabel, { TokenLabelProps } from "@/components/Token/Label";
+import { AssetCellProps } from "@/components/AssetTable/types";
 
 type AssetIconCellProps = AssetCellProps &
   StackProps & {
@@ -18,7 +18,7 @@ export default function AssetIconCell({
   row,
   labelProps,
   imageProps,
-  spacing = '3',
+  spacing = "3",
   onlyImage = false,
   onlyLabel = false,
   ...props
@@ -26,8 +26,8 @@ export default function AssetIconCell({
   const { thumbnail, tokenName, tokenSymbol } = row.original;
   return (
     <HStack
-      alignItems={'center'}
-      justifyContent={'flex-start'}
+      alignItems={"center"}
+      justifyContent={"flex-start"}
       spacing={spacing}
       {...props}
     >
@@ -35,7 +35,7 @@ export default function AssetIconCell({
         <TokenImage
           src={thumbnail}
           alt={tokenName}
-          flexShrink={'0'}
+          flexShrink={"0"}
           {...imageProps}
         />
       )}

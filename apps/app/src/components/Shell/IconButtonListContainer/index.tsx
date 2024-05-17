@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import KeenSlider from '@/components/KeenSlider/KeenSlider';
-import KeenSliderSlide from '@/components/KeenSlider/KeenSliderSlide';
-import IconTextButton from '@/components/IconTextButton';
-import { Box, BoxProps, IconButtonProps } from '@chakra-ui/react';
+import KeenSlider from "@/components/KeenSlider/KeenSlider";
+import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
+import IconTextButton from "@/components/IconTextButton";
+import { Box, BoxProps, IconButtonProps } from "@splitfi/ui";
 
 interface IconButtonListContainerProps extends BoxProps {
   items: IconButtonProps[];
@@ -15,20 +15,20 @@ export default function IconButtonListContainer({
   ...props
 }: IconButtonListContainerProps) {
   return (
-    <Box overflow={'hidden'} {...props}>
+    <Box overflow={"hidden"} {...props}>
       <KeenSlider
-        sx={{ overflow: 'visible !important' }}
+        sx={{ overflow: "visible !important" }}
         options={{
-          mode: 'free',
+          mode: "free",
           rubberband: false,
-          slides: { perView: 'auto', spacing: 24 },
+          slides: { perView: "auto", spacing: 24 },
         }}
       >
         {items.map((props, i) => (
           <KeenSliderSlide
-            key={`${i}-${props['aria-label']}`}
-            flexShrink={'0'}
-            sx={{ w: '24 !important' }}
+            key={`${i}-${props["aria-label"]}`}
+            flexShrink={"0"}
+            sx={{ w: "24 !important" }}
           >
             <IconTextButton {...props} />
           </KeenSliderSlide>

@@ -1,9 +1,9 @@
-import { Box, Spinner } from '@chakra-ui/react';
-import React, { Suspense } from 'react';
+import { Box } from "@splitfi/ui";
+import React from "react";
 
 export default function Body({ children }: React.PropsWithChildren) {
   return (
-    <Box as='main' w={'full'}>
+    <Box as="main" w={"full"}>
       {children}
     </Box>
   );

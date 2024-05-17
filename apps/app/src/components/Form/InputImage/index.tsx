@@ -1,16 +1,16 @@
-import { Box, useMultiStyleConfig } from '@chakra-ui/react';
-import React from 'react';
-import { FileRejection, useDropzone } from 'react-dropzone';
-import { Controller, get, useFormContext } from 'react-hook-form';
+import { Box, useMultiStyleConfig } from "@splitfi/ui";
+import React from "react";
+import { FileRejection, useDropzone } from "react-dropzone";
+import { Controller, get, useFormContext } from "react-hook-form";
 
-import { formatBytes, formatStringItems } from '@/lib/utils';
+import { formatBytes, formatStringItems } from "@/lib/utils";
 
-import InputBase from '@/components/Form/InputBase';
-import FilePlaceholder from '@/components/Form/InputImage/FilePlaceholder';
-import FilePreview from '@/components/Form/InputImage/FilePreview';
-import { BaseFieldProps } from '@/components/Form/types';
+import InputBase from "@/components/Form/InputBase";
+import FilePlaceholder from "@/components/Form/InputImage/FilePlaceholder";
+import FilePreview from "@/components/Form/InputImage/FilePreview";
+import { BaseFieldProps } from "@/components/Form/types";
 
-import { FileWithPreview } from '../types';
+import { FileWithPreview } from "../types";
 
 export interface InputImageProps extends BaseFieldProps {
   maxSize?: number;
@@ -18,12 +18,12 @@ export interface InputImageProps extends BaseFieldProps {
 }
 
 export default function InputImage({
-  placeholder = 'Drag and drop your file here, or click to choose an image.',
-  id = '',
+  placeholder = "Drag and drop your file here, or click to choose an image.",
+  id = "",
   readOnly = false,
   validation,
   maxSize = 5242880, // 5 MiB
-  acceptedImageExtensions = ['.png', '.jpg', '.jpeg'],
+  acceptedImageExtensions = [".png", ".jpg", ".jpeg"],
   helperText = `You can upload files with ${formatStringItems(
     acceptedImageExtensions!,
   )} extension and a maximum size of ${formatBytes(maxSize!)}.`,
@@ -53,7 +53,7 @@ export default function InputImage({
     <T extends File>(acceptedFiles: T[], rejectedFiles: FileRejection[]) => {
       if (rejectedFiles && rejectedFiles.length > 0) {
         setError(id!, {
-          type: 'manual',
+          type: "manual",
           message: rejectedFiles && rejectedFiles[0]?.errors[0]?.message,
         });
       } else {
@@ -91,13 +91,13 @@ export default function InputImage({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { 'image/*': acceptedImageExtensions },
+    accept: { "image/*": acceptedImageExtensions },
     maxFiles,
     multiple: maxFiles > 1,
     maxSize,
   });
 
-  const { field: fieldStyles } = useMultiStyleConfig('Input');
+  const { field: fieldStyles } = useMultiStyleConfig("Input");
 
   const dragActiveStyles = isDragActive
     ? (fieldStyles as { _focusVisible: object })?._focusVisible
@@ -115,15 +115,15 @@ export default function InputImage({
             ref={dropzoneRef}
             __css={fieldStyles}
             {...dragActiveStyles}
-            p={'0'}
-            w={'48'}
-            h={'48'}
-            cursor={'pointer'}
-            display={'flex'}
+            p={"0"}
+            w={"48"}
+            h={"48"}
+            cursor={"pointer"}
+            display={"flex"}
           >
             <input id={id!} {...getInputProps(field)} />
 
-            {!!file ? (
+            {file ? (
               <FilePreview
                 readOnly={readOnly!}
                 file={file}

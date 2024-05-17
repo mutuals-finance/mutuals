@@ -1,14 +1,14 @@
-import { Box, FormLabel } from '@chakra-ui/react';
-import React from 'react';
+import { Box, FormLabel } from "@splitfi/ui";
+import React from "react";
 
-import { BaseLabelProps } from '@/components/Form/types';
+import { BaseLabelProps } from "@/components/Form/types";
 
 export default function BaseLabel({ id, validation, label }: BaseLabelProps) {
   return (
     <>
       {label && (
-        <Box mb={'1'}>
-          <FormLabel htmlFor={id} display={'inline'}>
+        <Box mb={"1"}>
+          <FormLabel htmlFor={id} display={"inline"}>
             {label}
             {!!validation?.required && <span>*</span>}
           </FormLabel>

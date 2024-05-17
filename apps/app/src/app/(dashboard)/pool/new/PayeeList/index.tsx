@@ -1,13 +1,13 @@
-import { HStack } from '@chakra-ui/react';
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { HStack } from "@splitfi/ui";
+import React from "react";
+import { useFormContext } from "react-hook-form";
 
-import { formatRoundNumber } from '@/lib/utils';
+import { formatRoundNumber } from "@/lib/utils";
 
-import Input from '@/components/Form/Input';
-import InputFieldArray from '@/components/Form/InputFieldArray';
-import InputNumber from '@/components/Form/InputNumber';
-import PayeeListFooter from '@/app/(dashboard)/pool/new/PayeeList/PayeeListFooter';
+import Input from "@/components/Form/Input";
+import InputFieldArray from "@/components/Form/InputFieldArray";
+import InputNumber from "@/components/Form/InputNumber";
+import PayeeListFooter from "@/app/(dashboard)/pool/new/PayeeList/PayeeListFooter";
 
 export interface Payee {
   id: string;
@@ -19,8 +19,8 @@ interface PayeeListProps {
 }
 
 export const defaultPayee: Payee = {
-  id: '',
-  value: '0.0',
+  id: "",
+  value: "0.0",
 };
 
 export default function PayeeList({ id }: PayeeListProps) {
@@ -87,16 +87,16 @@ export default function PayeeList({ id }: PayeeListProps) {
       {(itemId) => (
         <>
           <Input
-            flex={'1'}
-            label={'Wallet Address or ENS Name'}
-            placeholder={'0x0000...0000'}
+            flex={"1"}
+            label={"Wallet Address or ENS Name"}
+            placeholder={"0x0000...0000"}
             id={`${itemId}.id`}
           />
 
-          <HStack maxW='48'>
+          <HStack maxW="48">
             <InputNumber
               id={`${itemId}.value`}
-              label={'% Share'}
+              label={"% Share"}
               validation={{
                 min: 0.0,
                 max: maxShares,

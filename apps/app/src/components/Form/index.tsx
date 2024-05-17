@@ -1,23 +1,21 @@
-'use client';
+"use client";
 
-import { StackProps, VStack } from '@chakra-ui/react';
-import React from 'react';
+import { StackProps, VStack } from "@chakra-ui/react";
+import React from "react";
 import {
   FieldValues,
   FormProvider,
   useForm,
   UseFormReturn,
-} from 'react-hook-form';
-import { UseFormProps } from 'react-hook-form/dist/types';
-import {
-  SubmitErrorHandler,
-  SubmitHandler,
-} from 'react-hook-form/dist/types/form';
+  type UseFormProps,
+  type SubmitErrorHandler,
+  type SubmitHandler,
+} from "react-hook-form";
 
 interface FormProps<
   TFieldValues extends FieldValues = FieldValues,
   TContext = never,
-> extends Omit<StackProps, 'children' | 'onSubmit'>,
+> extends Omit<StackProps, "children" | "onSubmit">,
     UseFormProps<TFieldValues, TContext> {
   onSubmit?: SubmitHandler<TFieldValues>;
   onSubmitInvalid?: SubmitErrorHandler<TFieldValues>;
@@ -42,13 +40,13 @@ export default function Form<
   return (
     <FormProvider {...methods}>
       <VStack
-        as={'form'}
-        align={'stretch'}
-        spacing={'6'}
+        as={"form"}
+        align={"stretch"}
+        spacing={"6"}
         onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}
         {...props}
       >
-        {typeof children == 'function' ? children(methods) : children}
+        {typeof children == "function" ? children(methods) : children}
       </VStack>
     </FormProvider>
   );

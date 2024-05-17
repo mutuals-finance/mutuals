@@ -1,11 +1,11 @@
-import { Box } from '@chakra-ui/react';
-import { Group } from '@visx/group';
-import { ParentSize } from '@visx/responsive';
-import { Pie } from '@visx/shape';
-import React from 'react';
+import { Box } from "@splitfi/ui";
+import { Group } from "@visx/group";
+import { ParentSize } from "@visx/responsive";
+import { Pie } from "@visx/shape";
+import React from "react";
 
-import MotionPieArch, { ArchData } from './MotionPieArch';
-import usePieChart from './usePieChart';
+import MotionPieArch, { ArchData } from "./MotionPieArch";
+import usePieChart from "./usePieChart";
 
 interface PieChartProps {
   data: ArchData[];
@@ -42,15 +42,15 @@ function PieChartInner({
             return (
               <>
                 <text
-                  x={'50%'}
-                  y={'50%'}
-                  dx='-50%'
-                  dy='-50%'
-                  fontSize={'1rem'}
-                  textAnchor='middle'
-                  fill={'currentColor'}
+                  x={"50%"}
+                  y={"50%"}
+                  dx="-50%"
+                  dy="-50%"
+                  fontSize={"1rem"}
+                  textAnchor="middle"
+                  fill={"currentColor"}
                 >
-                  {arcs.length} Payee{arcs.length > 1 ? 's' : ''}
+                  {arcs.length} Payee{arcs.length > 1 ? "s" : ""}
                 </text>
 
                 {arcs.map((arch, i) => {

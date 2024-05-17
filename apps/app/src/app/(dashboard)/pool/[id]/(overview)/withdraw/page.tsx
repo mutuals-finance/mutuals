@@ -1,9 +1,9 @@
-import { Stack, Text } from '@chakra-ui/react';
-import { decodePrefixedAddress } from '@/lib/utils';
-import { getPoolDetailsWithShares } from '@/lib/split';
+import { Stack, Text } from "@splitfi/ui";
+import { decodePrefixedAddress } from "@/lib/utils";
+import { getPoolDetailsWithShares } from "@/lib/split";
 
-import WithdrawForm from '@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm';
-import { getAccountBalance } from '@/lib/ankr';
+import WithdrawForm from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm";
+import { getAccountBalance } from "@/lib/ankr";
 
 interface PoolHandleWithdrawProps {
   params: {
@@ -15,10 +15,10 @@ export default async function PoolHandleWithdraw({
   params,
 }: PoolHandleWithdrawProps) {
   const id = decodePrefixedAddress(params.id);
-  const address = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
+  const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
   const queries = await Promise.all([
     getPoolDetailsWithShares({ variables: { id } }),
-    getAccountBalance({ walletAddress: address, blockchain: 'eth' }),
+    getAccountBalance({ walletAddress: address, blockchain: "eth" }),
   ]);
 
   const props = {

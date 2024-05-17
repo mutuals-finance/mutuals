@@ -4,14 +4,14 @@ import {
   SlideDirection,
   useColorModeValue,
   VStack,
-} from '@chakra-ui/react';
-import React from 'react';
+} from "@splitfi/ui";
+import React from "react";
 
-import AnimationBox from '@/components/Animation/Box';
+import AnimationBox from "@/components/Animation/Box";
 
 export interface SidebarWrapperProps extends BoxProps {
   isOpen?: boolean;
-  placement?: DrawerProps['placement'];
+  placement?: DrawerProps["placement"];
 }
 
 export function SidebarWrapper({
@@ -19,25 +19,25 @@ export function SidebarWrapper({
   children,
   width,
   w,
-  placement = 'left',
+  placement = "left",
   ...props
 }: SidebarWrapperProps) {
   return (
     <AnimationBox
-      position={{ base: 'fixed', lg: 'sticky' }}
-      top={'0'}
-      left={'0'}
-      h={'100vh'}
-      display={'flex'}
-      flex={'0 0 auto'}
-      overflow={'hidden'}
-      bg={'bg.1'}
-      borderRight={placement === 'left' ? '1px' : '0px'}
-      borderLeft={placement === 'right' ? '1px' : '0px'}
-      borderTop={placement === 'bottom' ? '1px' : '0px'}
-      borderBottom={placement === 'top' ? '1px' : '0px'}
-      borderColor={'border.1'}
-      animate={isOpen ? 'open' : 'closed'}
+      position={{ base: "fixed", lg: "sticky" }}
+      top={"0"}
+      left={"0"}
+      h={"100vh"}
+      display={"flex"}
+      flex={"0 0 auto"}
+      overflow={"hidden"}
+      bg={"bg.1"}
+      borderRight={placement === "left" ? "1px" : "0px"}
+      borderLeft={placement === "right" ? "1px" : "0px"}
+      borderTop={placement === "bottom" ? "1px" : "0px"}
+      borderBottom={placement === "top" ? "1px" : "0px"}
+      borderColor={"border.1"}
+      animate={isOpen ? "open" : "closed"}
       variants={{
         open: {
           width: width || w,
@@ -48,7 +48,7 @@ export function SidebarWrapper({
       }}
       {...props}
     >
-      <VStack flex='1' alignItems={'stretch'} overflow={'hidden'} gap={'0'}>
+      <VStack flex="1" alignItems={"stretch"} overflow={"hidden"} gap={"0"}>
         {children}
       </VStack>
     </AnimationBox>

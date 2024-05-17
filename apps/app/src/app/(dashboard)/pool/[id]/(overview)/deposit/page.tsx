@@ -16,7 +16,7 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-} from "@chakra-ui/react";
+} from "@splitfi/ui";
 import {
   IoCopyOutline,
   IoEllipsisHorizontal,

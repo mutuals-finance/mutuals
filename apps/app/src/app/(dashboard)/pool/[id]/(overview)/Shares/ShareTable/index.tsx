@@ -1,27 +1,27 @@
-import { Text } from '@chakra-ui/react';
-import { createColumnHelper } from '@tanstack/react-table';
-import React from 'react';
+import { Text } from "@splitfi/ui";
+import { createColumnHelper } from "@tanstack/react-table";
+import React from "react";
 
-import { formatPercentage } from '@/lib/utils';
+import { formatPercentage } from "@/lib/utils";
 
-import Table, { type TableProps } from '@/components/Table';
+import Table, { type TableProps } from "@/components/Table";
 
-import ShareCell from './ShareCell';
-import { type ActiveShare, type ShareTableProps } from './types';
+import ShareCell from "./ShareCell";
+import { type ActiveShare, type ShareTableProps } from "./types";
 
 export default function ShareTable({
   shares: data = [],
   ...props
-}: ShareTableProps & Omit<TableProps<ActiveShare>, 'data' | 'columns'>) {
+}: ShareTableProps & Omit<TableProps<ActiveShare>, "data" | "columns">) {
   const columnHelper = createColumnHelper<ActiveShare>();
 
   const columns = [
-    columnHelper.accessor('payee', {
+    columnHelper.accessor("payee", {
       cell: (context) => <ShareCell {...context} />,
     }),
-    columnHelper.accessor('value', {
+    columnHelper.accessor("value", {
       cell: ({ getValue }) => (
-        <Text as={'span'}>
+        <Text as={"span"}>
           {formatPercentage((getValue() * 100).toString())}
         </Text>
       ),
@@ -32,7 +32,7 @@ export default function ShareTable({
     <Table<ActiveShare>
       data={data}
       columns={columns}
-      fontSize={'sm'}
+      fontSize={"sm"}
       {...props}
     />
   );

@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import type { BoxProps } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
+import type { BoxProps } from "@splitfi/ui";
+import { Box } from "@chakra-ui/react";
 import type {
   KeenSliderInstance,
   KeenSliderOptions,
   KeenSliderPlugin,
-} from 'keen-slider/react';
-import { SliderOptions, useKeenSlider } from 'keen-slider/react';
-import { useEffect, useState } from 'react';
+} from "keen-slider/react";
+import { SliderOptions, useKeenSlider } from "keen-slider/react";
+import { useEffect, useState } from "react";
 
 interface KeenSliderProps extends BoxProps {
   options?: KeenSliderOptions;
@@ -16,19 +16,19 @@ interface KeenSliderProps extends BoxProps {
 }
 
 export default function KeenSlider({
-  className = '',
+  className = "",
   children,
   _active,
   options,
   plugins,
   ...props
 }: KeenSliderProps) {
-  const [cursor, setCursor] = useState('initial');
+  const [cursor, setCursor] = useState("initial");
   const onDetailsChanged = function (slider: KeenSliderInstance) {
     options?.detailsChanged?.(slider);
     const slidesLength = slider.track.details.slidesLength ?? 0;
     const isOverflow = slidesLength > 1;
-    const newCursor = isOverflow ? 'grab' : 'default';
+    const newCursor = isOverflow ? "grab" : "default";
     cursor !== newCursor && setCursor(newCursor);
   };
 
@@ -37,7 +37,7 @@ export default function KeenSlider({
     plugins,
   );
 
-  const cursorActive = cursor === 'grab' ? 'grabbing' : 'default';
+  const cursorActive = cursor === "grab" ? "grabbing" : "default";
 
   return (
     <Box

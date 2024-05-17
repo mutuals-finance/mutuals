@@ -1,10 +1,10 @@
-import { ImageProps } from '@chakra-ui/next-js';
+import { ImageProps } from "@splitfi/ui";
 import {
   InputProps as ChakraInputProps,
   UseNumberInputProps,
-} from '@chakra-ui/react';
-import { HTMLProps } from 'react';
-import { FieldError, RegisterOptions } from 'react-hook-form';
+} from "@splitfi/ui";
+import { HTMLProps } from "react";
+import { FieldError, RegisterOptions } from "react-hook-form";
 
 export interface BaseLabelProps {
   id?: string;
@@ -25,7 +25,7 @@ export interface BaseFeedbackProps {
 }
 
 export interface BaseFieldProps
-  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'size'>,
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "size">,
     BaseLabelProps,
     BaseFeedbackProps {
   /** Disables the input and shows defaultValue (can be set from React Hook Form) */
@@ -44,5 +44,5 @@ export type InputNumberBaseProps = InputBaseProps &
   };
 
 export interface FileWithPreview extends Partial<File> {
-  preview: ImageProps['src'];
+  preview: ImageProps["src"];
 }

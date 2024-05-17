@@ -1,10 +1,10 @@
-import { type TokenTransfer } from '@ankr.com/ankr.js/dist/types';
-import Link from 'next/link';
-import { Text } from '@chakra-ui/react';
-import { CellContext } from '@tanstack/react-table';
-import React from 'react';
+import { type TokenTransfer } from "@ankr.com/ankr.js/dist/types";
+import Link from "next/link";
+import { Text } from "@splitfi/ui";
+import { CellContext } from "@tanstack/react-table";
+import React from "react";
 
-import useExplorerLink from '@/hooks/useExplorerLink';
+import useExplorerLink from "@/hooks/useExplorerLink";
 
 type AddressCellProps = CellContext<TokenTransfer, string | unknown> & {
   address?: string;
@@ -15,12 +15,12 @@ export function AddressCell({ getValue, address: parent }: AddressCellProps) {
   const equals = parent?.toLowerCase() === address.toLowerCase();
   const { href, shortAddress } = useExplorerLink({ address });
   return !equals ? (
-    <Link href={href} target={'_blank'} rel={'noopener noreferrer'}>
-      <Text variant={'slashed-zero'}>{shortAddress}</Text>
+    <Link href={href} target={"_blank"} rel={"noopener noreferrer"}>
+      <Text variant={"slashed-zero"}>{shortAddress}</Text>
     </Link>
   ) : (
-    <Link href={href} target={'_blank'} rel={'noopener noreferrer'}>
-      <Text variant={'slashed-zero'}>{shortAddress}</Text>
+    <Link href={href} target={"_blank"} rel={"noopener noreferrer"}>
+      <Text variant={"slashed-zero"}>{shortAddress}</Text>
     </Link>
   );
 }

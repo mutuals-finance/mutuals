@@ -1,5 +1,5 @@
-import { Box } from '@chakra-ui/react';
-import { IoAlertCircle, IoCheckmarkCircle } from 'react-icons/io5';
+import { Box } from "@splitfi/ui";
+import { IoAlertCircle, IoCheckmarkCircle } from "react-icons/io5";
 
 interface LoadingStepProps {
   description?: string;
@@ -10,23 +10,23 @@ interface LoadingStepProps {
   isSuccess?: boolean;
 }
 
-type LoadingStepStatusProps = Omit<LoadingStepProps, 'description'>;
+type LoadingStepStatusProps = Omit<LoadingStepProps, "description">;
 
-type LoadingStepIndicatorProps = Omit<LoadingStepStatusProps, 'status'>;
+type LoadingStepIndicatorProps = Omit<LoadingStepStatusProps, "status">;
 
 function LoadingStepIndicator({
   isError,
   isSuccess,
 }: LoadingStepIndicatorProps) {
   return (
-    <div className={'pb-6'}>
+    <div className={"pb-6"}>
       <div
-        className={'inline-flex h-8 w-8 items-center justify-center text-3xl'}
+        className={"inline-flex h-8 w-8 items-center justify-center text-3xl"}
       >
         {isError ? (
-          <IoAlertCircle className={'text-error block'} />
+          <IoAlertCircle className={"text-error block"} />
         ) : isSuccess ? (
-          <IoCheckmarkCircle className={'block text-green-500'} />
+          <IoCheckmarkCircle className={"block text-green-500"} />
         ) : (
           <Box />
         )}
@@ -41,13 +41,13 @@ function LoadingStepStatus({
   isSuccess,
 }: LoadingStepStatusProps) {
   return (
-    <div className={'flex items-center justify-between border-y py-3'}>
-      <span className={'label block'}>Status</span>
+    <div className={"flex items-center justify-between border-y py-3"}>
+      <span className={"label block"}>Status</span>
       <span
         className={
           `block text-xs font-semibold` + isError &&
-          'text-error' + isSuccess &&
-          'text-green-500'
+          "text-error" + isSuccess &&
+          "text-green-500"
         }
       >
         {status}
@@ -62,12 +62,12 @@ export function LoadingStep({
   ...props
 }: LoadingStepProps) {
   return (
-    <div className={'flex flex-col space-y-6'}>
+    <div className={"flex flex-col space-y-6"}>
       <LoadingStepIndicator {...props} />
       <div>
         {!!error && (
-          <div className={'text-error pt-1 text-xs'}>
-            <p>{error?.message || 'Unknown Error'}</p>{' '}
+          <div className={"text-error pt-1 text-xs"}>
+            <p>{error?.message || "Unknown Error"}</p>{" "}
           </div>
         )}
         <p>{description}</p>

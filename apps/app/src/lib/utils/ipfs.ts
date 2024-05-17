@@ -1,16 +1,16 @@
-import { ImageProps } from '@chakra-ui/next-js';
+import { ImageProps } from "@splitfi/ui";
 
-export function ipfsResolveData(data?: ImageProps['src'] | null) {
+export function ipfsResolveData(data?: ImageProps["src"] | null) {
   switch (typeof data) {
-    case 'string':
+    case "string":
       return ipfsUrlFromUri(data);
-    case 'object':
-      return data || '';
+    case "object":
+      return data || "";
     default:
-      return '';
+      return "";
   }
 }
 
 export function ipfsUrlFromUri(uri: string) {
-  return uri.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
+  return uri.replace("ipfs://", "https://cloudflare-ipfs.com/ipfs/");
 }

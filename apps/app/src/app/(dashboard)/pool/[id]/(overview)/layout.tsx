@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, Stack } from "@splitfi/ui";
 import React, { PropsWithChildren } from "react";
 import Sidebar from "@/app/(dashboard)/pool/[id]/(overview)/Sidebar";
 import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";

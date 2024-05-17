@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Button,
@@ -9,8 +9,8 @@ import {
   MenuList,
   Text,
   useColorMode,
-} from '@chakra-ui/react';
-import React, { PropsWithChildren } from 'react';
+} from "@splitfi/ui";
+import React, { PropsWithChildren } from "react";
 import {
   IoChevronDown,
   IoChevronUp,
@@ -21,13 +21,13 @@ import {
   IoMoonOutline,
   IoPersonCircle,
   IoSunnyOutline,
-} from 'react-icons/io5';
-import { useAccount, useDisconnect } from 'wagmi';
+} from "react-icons/io5";
+import { useAccount, useDisconnect } from "wagmi";
 
-import { shortenAddress } from '@/lib/utils';
+import { shortenAddress } from "@/lib/utils";
 
-import UserAvatar from '@/components/UserAvatar';
-import { useRouter } from 'next/navigation';
+import UserAvatar from "@/components/UserAvatar";
+import { useRouter } from "next/navigation";
 
 export default function User() {
   const { address, isConnected, isConnecting } = useAccount();
@@ -36,7 +36,7 @@ export default function User() {
   const { colorMode, toggleColorMode } = useColorMode();
   const router = useRouter();
 
-  const avatarIcon = (size = 'xs') =>
+  const avatarIcon = (size = "xs") =>
     isConnected ? (
       <UserAvatar address={address} size={size} />
     ) : (
@@ -55,11 +55,11 @@ export default function User() {
               isLoading={isConnecting}
             >
               {isConnected ? (
-                <Text as={'span'} fontFamily={'monospace'}>
+                <Text as={"span"} fontFamily={"monospace"}>
                   {shortenAddress(address)}
                 </Text>
               ) : (
-                'Not Connected'
+                "Not Connected"
               )}
             </MenuButton>
 
@@ -68,7 +68,7 @@ export default function User() {
               <MenuItem icon={<IoHelpOutline />}>Help</MenuItem>
               <MenuDivider />
               <MenuItem
-                fontWeight={'500'}
+                fontWeight={"500"}
                 icon={
                   colorMode === `light` ? <IoMoonOutline /> : <IoSunnyOutline />
                 }
@@ -79,9 +79,9 @@ export default function User() {
               <MenuItem
                 icon={isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
                 onClick={() =>
-                  isConnected ? disconnect() : router.push('/auth/sign-in')
+                  isConnected ? disconnect() : router.push("/auth/sign-in")
                 }
-                fontWeight={'500'}
+                fontWeight={"500"}
               >
                 {isConnected ? `Logout` : `Login`}
               </MenuItem>

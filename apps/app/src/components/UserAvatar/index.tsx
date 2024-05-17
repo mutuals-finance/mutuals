@@ -1,9 +1,9 @@
-import { Avatar, type AvatarProps } from '@chakra-ui/react';
-import React from 'react';
-import dynamic from 'next/dynamic';
+import { Avatar, type AvatarProps } from "@splitfi/ui";
+import React from "react";
+import dynamic from "next/dynamic";
 
 const JazzIcon = dynamic(
-  () => import('@ukstv/jazzicon-react').then((mod) => mod.Jazzicon),
+  () => import("@ukstv/jazzicon-react").then((mod) => mod.Jazzicon),
   { ssr: false },
 );
 
@@ -12,8 +12,8 @@ interface UserAvatarProps extends AvatarProps {
 }
 
 export default function UserAvatar({
-  address = '',
-  size = 'xs',
+  address = "",
+  size = "xs",
   ...props
 }: UserAvatarProps) {
   return (

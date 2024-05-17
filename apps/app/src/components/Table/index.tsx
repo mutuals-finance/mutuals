@@ -7,17 +7,17 @@ import {
   Tbody,
   Thead,
   useColorModeValue,
-} from '@chakra-ui/react';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { RowData, TableOptions } from '@tanstack/table-core';
-import React from 'react';
+} from "@splitfi/ui";
+import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { RowData, TableOptions } from "@tanstack/table-core";
+import React from "react";
 
-import BodyRow from '@/components/Table/BodyRow';
-import HeaderRow from '@/components/Table/HeaderRow';
+import BodyRow from "@/components/Table/BodyRow";
+import HeaderRow from "@/components/Table/HeaderRow";
 
 export interface TableProps<TData extends RowData>
-  extends Pick<TableOptions<TData>, 'data' | 'columns'>,
-    Omit<ChakraTableProps, 'data'> {
+  extends Pick<TableOptions<TData>, "data" | "columns">,
+    Omit<ChakraTableProps, "data"> {
   containerProps?: ChakraTableContainerProps;
   headProps?: ChakraTableHeadProps;
   headerHidden?: boolean;
@@ -42,13 +42,13 @@ export default function Table<TData extends RowData>({
       <ChakraTable {...props}>
         {!headerHidden && (
           <Thead
-            position={'sticky'}
-            top={'0'}
-            left={'0'}
-            zIndex={'1'}
-            bg={'bg.1'}
-            borderBottom={'1px'}
-            borderColor={'border.1'}
+            position={"sticky"}
+            top={"0"}
+            left={"0"}
+            zIndex={"1"}
+            bg={"bg.1"}
+            borderBottom={"1px"}
+            borderColor={"border.1"}
             {...headProps}
           >
             {table

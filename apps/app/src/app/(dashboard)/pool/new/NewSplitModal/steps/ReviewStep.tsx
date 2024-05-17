@@ -1,8 +1,8 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text } from "@splitfi/ui";
 
-import SplitCard from '@/components/Split/Card';
+import SplitCard from "@/components/Split/Card";
 
-import { CreateFormData } from '@/templates/split/new';
+import { CreateFormData } from "@/templates/split/new";
 
 interface ReviewStepProps {
   data: CreateFormData;
@@ -24,7 +24,7 @@ function SplitReviewCard({ image, name, description }: CreateFormData) {
 export function ReviewStep({ data }: ReviewStepProps) {
   return (
     <Box>
-      <Text mb={'6'}>You are about to create the following Split:</Text>
+      <Text mb={"6"}>You are about to create the following Split:</Text>
 
       <SplitReviewCard {...data} />
     </Box>
