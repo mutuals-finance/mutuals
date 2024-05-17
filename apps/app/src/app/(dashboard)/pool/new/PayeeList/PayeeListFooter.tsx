@@ -1,5 +1,12 @@
-import { Box, Button, ButtonGroup, HStack, Progress, Text } from "@splitfi/ui";
-import React from "react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  HStack,
+  Progress,
+  Text,
+} from '@chakra-ui/react';
+import React from 'react';
 
 interface PayeeListFooterProps {
   totalShares: number;
@@ -19,7 +26,7 @@ export default function PayeeListFooter({
 }: PayeeListFooterProps) {
   return (
     <>
-      <Button w={"100%"} type="button" onClick={() => onAppendRecipient()}>
+      <Button w={'100%'} type='button' onClick={() => onAppendRecipient()}>
         Add Recipient
       </Button>
 
@@ -27,25 +34,25 @@ export default function PayeeListFooter({
         <Progress
           colorScheme={
             totalShares > maxShares
-              ? "red"
+              ? 'red'
               : totalShares == maxShares
-                ? "green"
-                : "gray"
+                ? 'green'
+                : 'gray'
           }
-          size="sm"
+          size='sm'
           value={totalShares}
-          mb={"3"}
+          mb={'3'}
         />
-        <HStack w="100%" spacing={"6"} alignItems={"flex-start"}>
-          <Box flex={"1"}>
+        <HStack w='100%' spacing={'6'} alignItems={'flex-start'}>
+          <Box flex={'1'}>
             <Text>{totalShares.toFixed(2)} %</Text>
           </Box>
 
-          <ButtonGroup size="sm" flexShrink={"0"}>
-            <Button type="button" onClick={() => onSetValuesRemaining()}>
+          <ButtonGroup size='sm' flexShrink={'0'}>
+            <Button type='button' onClick={() => onSetValuesRemaining()}>
               Split Remaining
             </Button>
-            <Button type="button" onClick={() => onSetValuesEvenly()}>
+            <Button type='button' onClick={() => onSetValuesEvenly()}>
               Split Evenly
             </Button>
           </ButtonGroup>

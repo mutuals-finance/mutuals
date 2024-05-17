@@ -1,6 +1,6 @@
 "use client";
 
-import { AspectRatio, Flex } from "@splitfi/ui";
+import { AspectRatio, Flex } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useList } from "react-use";
 

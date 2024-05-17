@@ -4,7 +4,7 @@ import {
   useFragment,
 } from "@/lib/graphql/thegraph/__generated__";
 import SharesContent from "@/app/(dashboard)/pool/[id]/(overview)/Shares/SharesContent";
-import { Stack } from "@splitfi/ui";
+import { Stack } from "@chakra-ui/react";
 import { shareFragment } from "@/lib/graphql/thegraph/fragments";
 
 interface SharesProps {

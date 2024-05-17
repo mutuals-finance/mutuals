@@ -1,7 +1,7 @@
-import { FormControl, FormControlProps } from "@splitfi/ui";
-import React from "react";
+import { FormControl, FormControlProps } from '@chakra-ui/react';
+import React from 'react';
 
-import { BaseFeedbackProps, BaseLabelProps } from "@/components/Form/types";
+import { BaseFeedbackProps, BaseLabelProps } from '@/components/Form/types';
 
 type BaseWrapperProps = BaseFeedbackProps & BaseLabelProps & FormControlProps;
 

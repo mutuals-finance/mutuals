@@ -4,11 +4,11 @@ import {
   MultiValueGenericProps,
   OptionProps,
   ValueContainerProps,
-} from "chakra-react-select";
-import { Balance } from "@ankr.com/ankr.js/dist/types";
-import React from "react";
-import AssetCardHorizontal from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/AssetCardHorizontal";
-import { Box } from "@splitfi/ui";
+} from 'chakra-react-select';
+import { Balance } from '@ankr.com/ankr.js/dist/types';
+import React from 'react';
+import AssetCardHorizontal from '@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/AssetCardHorizontal';
+import { Box } from '@chakra-ui/react';
 
 export function TokenSelectOption({
   ...props
@@ -42,7 +42,7 @@ export function TokenSelectValueContainer({
 
   return (
     <chakraComponents.ValueContainer {...props}>
-      <Box w={"100%"} flex={"1"}>
+      <Box w={'100%'} flex={'1'}>
         {assets.length ?? 0}
       </Box>
     </chakraComponents.ValueContainer>

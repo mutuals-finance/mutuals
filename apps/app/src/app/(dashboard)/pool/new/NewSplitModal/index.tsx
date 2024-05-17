@@ -1,13 +1,13 @@
-import { useSteps } from "@splitfi/ui";
-import React from "react";
-import { useUpdateEffect } from "react-use";
+import { useSteps } from '@chakra-ui/react';
+import React from 'react';
+import { useUpdateEffect } from 'react-use';
 
-import useCreateSplitFull from "@/hooks/useCreateSplitFull";
+import useCreateSplitFull from '@/hooks/useCreateSplitFull';
 
-import StepperModal from "@/components/StepperModal";
+import StepperModal from '@/components/StepperModal';
 
-import { LoadingStep, ReviewStep, SuccessStep } from "./steps";
-import { CreateFormData } from "@/app/(dashboard)/pool/new/NewSplitForm";
+import { LoadingStep, ReviewStep, SuccessStep } from './steps';
+import { CreateFormData } from '@/app/(dashboard)/pool/new/NewSplitForm';
 
 interface NewSplitModalProps {
   onClose: () => void;
@@ -20,7 +20,7 @@ export default function NewSplitModal({
   onClose,
   data,
 }: NewSplitModalProps) {
-  const payees = data.payees.filter((p) => p.id !== "" && !!p.value);
+  const payees = data.payees.filter((p) => p.id !== '' && !!p.value);
 
   const { execute, tx, storage } = useCreateSplitFull({
     ...data,
@@ -30,61 +30,61 @@ export default function NewSplitModal({
 
   const steps = [
     {
-      id: "review",
-      title: "Review your Split",
+      id: 'review',
+      title: 'Review your Split',
       children: () => ReviewStep({ data }),
     },
     {
-      id: "save",
-      title: "Saving Split Metadata",
+      id: 'save',
+      title: 'Saving Split Metadata',
       disabled: true,
       children: () =>
         LoadingStep({
           ...storage,
           description:
-            "Uploading your Split Metadata on the decentralized IPFS network.",
+            'Uploading your Split Metadata on the decentralized IPFS network.',
           status: storage.isError
-            ? "Upload finished with errors"
+            ? 'Upload finished with errors'
             : storage.isSuccess
-              ? "Upload finished successfully"
-              : "Waiting for upload to finish",
+              ? 'Upload finished successfully'
+              : 'Waiting for upload to finish',
         }),
     },
     {
-      id: "sign",
-      title: "Confirm in Wallet",
+      id: 'sign',
+      title: 'Confirm in Wallet',
       disabled: true,
       children: () =>
         LoadingStep({
           ...tx,
           description:
-            "Please confirm the transaction in your wallet. This will create your Split.",
+            'Please confirm the transaction in your wallet. This will create your Split.',
           status: tx.isError
-            ? "Confirmation error"
+            ? 'Confirmation error'
             : tx.isSuccess
-              ? "Successfully confirmed"
-              : "Waiting for you to confirm",
+              ? 'Successfully confirmed'
+              : 'Waiting for you to confirm',
         }),
     },
     {
-      id: "wait",
-      title: "Waiting for Confirmation",
+      id: 'wait',
+      title: 'Waiting for Confirmation',
       disabled: true,
       children: () =>
         LoadingStep({
           ...tx,
           description:
-            "Please wait for the transaction to be confirmed by the network. This may take a moment, depending on the current workload.",
+            'Please wait for the transaction to be confirmed by the network. This may take a moment, depending on the current workload.',
           status: tx.isError
-            ? "Confirmation error"
+            ? 'Confirmation error'
             : tx.isSuccess
-              ? "Successfully confirmed"
-              : "Waiting for transaction confirmation",
+              ? 'Successfully confirmed'
+              : 'Waiting for transaction confirmation',
         }),
     },
     {
-      id: "success",
-      title: "Congratulations",
+      id: 'success',
+      title: 'Congratulations',
       disabled: true,
       children: () =>
         SuccessStep({ contractAddress: tx.data?.contractAddress! }),

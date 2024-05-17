@@ -6,8 +6,8 @@ import {
   Heading,
   LayoutProps,
   Stack,
-} from "@splitfi/ui";
-import React from "react";
+} from '@chakra-ui/react';
+import React from 'react';
 
 export interface TabPageProps extends ContainerProps {
   title?: string;
@@ -18,16 +18,16 @@ export default function TabPage({
   children,
   title,
   contentProps,
-  maxW = "container.lg",
+  maxW = 'container.lg',
   ...props
 }: TabPageProps) {
   return (
     <Container maxW={maxW} {...props}>
       <Box {...contentProps}>
-        <Stack spacing="6">
-          {title ? (
+        <Stack spacing='6'>
+          {!!title ? (
             <>
-              <Heading as="h2" size="2xl">
+              <Heading as='h2' size='2xl'>
                 {title}
               </Heading>
               {children}

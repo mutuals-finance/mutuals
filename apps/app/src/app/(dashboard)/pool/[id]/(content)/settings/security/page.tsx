@@ -5,7 +5,14 @@ import { decodePrefixedAddress, ipfsResolveData } from "@/lib/utils";
 import { FileWithPreview } from "@/components/Form/types";
 import PoolMetadataForm from "@/app/(dashboard)/pool/[id]/(content)/settings/MetadataForm";
 import ContentCard from "@/components/ContentCard";
-import { Box, Button, Heading, Stack, StackDivider, Text } from "@splitfi/ui";
+import {
+  Box,
+  Button,
+  Heading,
+  Stack,
+  StackDivider,
+  Text,
+} from "@chakra-ui/react";
 import Head from "next/head";
 
 export default async function PoolSettingsSecurityPage({

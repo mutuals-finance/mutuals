@@ -7,7 +7,7 @@ import {
   Text,
   Tfoot,
   Tr,
-} from "@splitfi/ui";
+} from "@chakra-ui/react";
 import React from "react";
 import { formatCurrencyAmount, formatPrice } from "@/lib/utils";
 import {

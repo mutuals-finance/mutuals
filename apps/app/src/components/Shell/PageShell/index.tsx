@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 import {
   Box,
   BoxProps,
@@ -9,10 +9,10 @@ import {
   Text,
   TextProps,
   VStack,
-} from "@splitfi/ui";
-import Breadcrumbs, { type BreadcrumbsProps } from "@/components/Breadcrumbs";
+} from '@chakra-ui/react';
+import Breadcrumbs, { type BreadcrumbsProps } from '@/components/Breadcrumbs';
 
-export interface PageShellProps extends Omit<BoxProps, "title"> {
+export interface PageShellProps extends Omit<BoxProps, 'title'> {
   breadcrumbsProps?: BreadcrumbsProps;
   headingProps?: HeadingProps;
   descriptionProps?: TextProps;
@@ -35,20 +35,20 @@ export default function PageShell({
   return (
     <Box {...props}>
       {(breadcrumbsEnabled || !!title || !!description) && (
-        <Container as={"header"} variant={"shell"} {...headerContainerProps}>
-          <VStack gap={"12"} mb={"6"} alignItems={"flex-start"}>
+        <Container as={'header'} variant={'shell'} {...headerContainerProps}>
+          <VStack gap={'12'} mb={'6'} alignItems={'flex-start'}>
             {breadcrumbsEnabled && <Breadcrumbs {...breadcrumbsProps} />}
 
             {!!title && (
-              <Heading as={"h1"} size={"2xl"} {...headingProps}>
+              <Heading as={'h1'} size={'2xl'} {...headingProps}>
                 {title}
               </Heading>
             )}
             {!!description && (
               <Text
-                size={"lg"}
-                variant={"light"}
-                maxW={"xl"}
+                size={'lg'}
+                variant={'light'}
+                maxW={'xl'}
                 {...descriptionProps}
               >
                 {description}

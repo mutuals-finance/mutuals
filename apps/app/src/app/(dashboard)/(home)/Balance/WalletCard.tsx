@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Box,
@@ -12,33 +12,33 @@ import {
   Tag,
   TagLabel,
   Text,
-} from "@splitfi/ui";
-import React from "react";
-import { shortenAddress } from "@/lib/utils";
+} from '@chakra-ui/react';
+import React from 'react';
+import { shortenAddress } from '@/lib/utils';
 
-import UserAvatar from "@/components/UserAvatar";
-import Link from "next/link";
+import UserAvatar from '@/components/UserAvatar';
+import Link from 'next/link';
 
 type SplitCardProps = CardProps;
 
 export default function WalletCard(props: SplitCardProps) {
-  const address = "0x24856890515299d77f0a3f344921f3860a82877b";
+  const address = '0x24856890515299d77f0a3f344921f3860a82877b';
   return (
-    <Card as="article" variant={"outline"} bg={"transparent"} {...props}>
+    <Card as='article' variant={'outline'} bg={'transparent'} {...props}>
       <CardHeader
         as={Stack}
-        spacing={"3"}
-        pb={"3"}
-        alignItems={"center"}
-        textAlign={"center"}
+        spacing={'3'}
+        pb={'3'}
+        alignItems={'center'}
+        textAlign={'center'}
       >
-        <UserAvatar address={address} size={"sm"} />
-        <Stack gap={"1.5"} alignItems={"center"}>
-          <Heading size="sm" as={"h3"}>
+        <UserAvatar address={address} size={'sm'} />
+        <Stack gap={'1.5'} alignItems={'center'}>
+          <Heading size='sm' as={'h3'}>
             Company Multisig
           </Heading>
 
-          <Text fontSize="xs" fontFamily={"monospace"}>
+          <Text fontSize='xs' fontFamily={'monospace'}>
             {shortenAddress(address)}
           </Text>
         </Stack>
@@ -61,10 +61,10 @@ export default function WalletCard(props: SplitCardProps) {
 */}
       </CardHeader>
 
-      <CardFooter pt={"0"}>
+      <CardFooter pt={'0'}>
         <Button
-          size={"sm"}
-          w={"full"}
+          size={'sm'}
+          w={'full'}
           as={Link}
           href={`wallet/${address}`}
           scroll={false}

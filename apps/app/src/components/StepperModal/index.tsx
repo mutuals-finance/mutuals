@@ -16,12 +16,12 @@ import {
   StepNumber,
   Stepper,
   StepStatus,
-} from "@splitfi/ui";
-import React from "react";
+} from '@chakra-ui/react';
+import React from 'react';
 
 import StepperItem, {
   StepperModalStep,
-} from "@/components/StepperModal/StepperItem";
+} from '@/components/StepperModal/StepperItem';
 
 interface StepperModalProps {
   open: boolean;
@@ -45,17 +45,17 @@ export default function StepperModal({
   const progressPercent = (activeStep / max) * 100;
 
   return (
-    <Modal isOpen={open} onClose={onClose} size={"xl"}>
+    <Modal isOpen={open} onClose={onClose} size={'xl'}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{activeStepTitle}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Box position="relative" mb={"6"}>
-            <Stepper size="sm" index={activeStep} gap="0">
+          <Box position='relative' mb={'6'}>
+            <Stepper size='sm' index={activeStep} gap='0'>
               {steps.map((_, index) => (
                 <Step key={index}>
-                  <StepIndicator bg="white">
+                  <StepIndicator bg='white'>
                     <StepStatus
                       complete={<StepIcon />}
                       incomplete={<StepNumber />}
@@ -67,15 +67,15 @@ export default function StepperModal({
             </Stepper>
             <Progress
               value={progressPercent}
-              position="absolute"
-              height="3px"
-              width="full"
-              top="10px"
+              position='absolute'
+              height='3px'
+              width='full'
+              top='10px'
               zIndex={-1}
             />
           </Box>
 
-          <Divider my={"6"} />
+          <Divider my={'6'} />
 
           {steps.map(({ children, ...item }, index) => {
             return (
@@ -93,7 +93,7 @@ export default function StepperModal({
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="ghost" onClick={() => onClose()} mr={3}>
+          <Button variant='ghost' onClick={() => onClose()} mr={3}>
             Cancel
           </Button>
 

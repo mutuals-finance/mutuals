@@ -1,10 +1,10 @@
-import { HStack, IconButton, useNumberInput } from "@splitfi/ui";
-import React from "react";
-import { useFormContext } from "react-hook-form";
-import { IoAdd, IoRemove } from "react-icons/io5";
+import { HStack, IconButton, useNumberInput } from '@chakra-ui/react';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { IoAdd, IoRemove } from 'react-icons/io5';
 
-import Input from "@/components/Form/Input";
-import { InputNumberBaseProps } from "@/components/Form/types";
+import Input from '@/components/Form/Input';
+import { InputNumberBaseProps } from '@/components/Form/types';
 
 export default function InputNumber({ ...props }: InputNumberBaseProps) {
   const { setValue, getValues } = useFormContext();
@@ -15,9 +15,9 @@ export default function InputNumber({ ...props }: InputNumberBaseProps) {
       max: Number(props.validation?.max),
       allowMouseWheel: true,
       onChange: (_, valueAsNumber) => {
-        setValue(props.id || "", valueAsNumber);
+        setValue(props.id || '', valueAsNumber);
       },
-      value: getValues(props.id || ""),
+      value: getValues(props.id || ''),
       ...props,
     });
 
@@ -28,16 +28,16 @@ export default function InputNumber({ ...props }: InputNumberBaseProps) {
   return (
     <HStack>
       <IconButton
-        aria-label="Decrease value"
+        aria-label='Decrease value'
         icon={<IoRemove />}
-        type={"button"}
+        type={'button'}
         {...dec}
       />
-      <Input hideWrapper={true} textAlign={"center"} {...input} />
+      <Input hideWrapper={true} textAlign={'center'} {...input} />
       <IconButton
-        aria-label="Increase value"
+        aria-label='Increase value'
         icon={<IoAdd />}
-        type={"button"}
+        type={'button'}
         {...inc}
       />
     </HStack>

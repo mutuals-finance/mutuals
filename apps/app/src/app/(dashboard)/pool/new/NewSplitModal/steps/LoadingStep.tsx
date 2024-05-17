@@ -1,4 +1,4 @@
-import { Icon } from "@chakra-ui/icon";
+import { Icon } from '@chakra-ui/icon';
 import {
   Box,
   CircularProgress,
@@ -6,8 +6,8 @@ import {
   Flex,
   Text,
   VStack,
-} from "@splitfi/ui";
-import { IoAlertCircle, IoCheckmarkCircle } from "react-icons/io5";
+} from '@chakra-ui/react';
+import { IoAlertCircle, IoCheckmarkCircle } from 'react-icons/io5';
 
 interface LoadingStepProps {
   description?: string;
@@ -18,22 +18,22 @@ interface LoadingStepProps {
   isSuccess?: boolean;
 }
 
-type LoadingStepStatusProps = Omit<LoadingStepProps, "description">;
+type LoadingStepStatusProps = Omit<LoadingStepProps, 'description'>;
 
-type LoadingStepIndicatorProps = Omit<LoadingStepStatusProps, "status">;
+type LoadingStepIndicatorProps = Omit<LoadingStepStatusProps, 'status'>;
 
 function LoadingStepIndicator({
   isError,
   isSuccess,
 }: LoadingStepIndicatorProps) {
   return (
-    <Box pb={"6"}>
+    <Box pb={'6'}>
       {isError ? (
-        <Icon as={IoAlertCircle} color={"red"} />
+        <Icon as={IoAlertCircle} color={'red'} />
       ) : isSuccess ? (
-        <Icon as={IoCheckmarkCircle} color={"green"} />
+        <Icon as={IoCheckmarkCircle} color={'green'} />
       ) : (
-        <CircularProgress isIndeterminate color={"gray.900"} />
+        <CircularProgress isIndeterminate color={'gray.900'} />
       )}
     </Box>
   );
@@ -47,15 +47,15 @@ function LoadingStepStatus({
   return (
     <Box>
       <Divider />
-      <Flex alignItems={"center"} justifyContent={"space-between"} py="3">
-        <Text display={"block"} fontSize={"sm"}>
+      <Flex alignItems={'center'} justifyContent={'space-between'} py='3'>
+        <Text display={'block'} fontSize={'sm'}>
           Status
         </Text>
         <Text
-          display={"block"}
-          color={isError ? "red" : isSuccess ? "green" : "inherit"}
-          fontWeight={"500"}
-          fontSize={"sm"}
+          display={'block'}
+          color={isError ? 'red' : isSuccess ? 'green' : 'inherit'}
+          fontWeight={'500'}
+          fontSize={'sm'}
         >
           {status}
         </Text>
@@ -72,13 +72,13 @@ export function LoadingStep({
   ...props
 }: LoadingStepProps) {
   return (
-    <VStack spacing={"6"} alignItems={"stretch"}>
+    <VStack spacing={'6'} alignItems={'stretch'}>
       <LoadingStepIndicator {...props} />
       <Box>
         {!!error && (
           <Box>
-            <Text color={"red"} pt={"1"} fontSize={"xs"}>
-              {error?.message || "Unknown Error"}
+            <Text color={'red'} pt={'1'} fontSize={'xs'}>
+              {error?.message || 'Unknown Error'}
             </Text>
           </Box>
         )}

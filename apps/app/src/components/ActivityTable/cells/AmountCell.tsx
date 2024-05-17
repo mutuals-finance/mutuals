@@ -1,17 +1,17 @@
-import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-import { Text, useColorModeValue } from "@splitfi/ui";
-import { CellContext } from "@tanstack/react-table";
-import React from "react";
+import { TokenTransfer } from '@ankr.com/ankr.js/dist/types';
+import { Text, useColorModeValue } from '@chakra-ui/react';
+import { CellContext } from '@tanstack/react-table';
+import React from 'react';
 
-import { EventType } from "@/components/ActivityTable/types";
-import useActivityEvent from "@/components/ActivityTable/useActivityEvent";
-import { formatCurrencyAmount } from "@/lib/utils";
+import { EventType } from '@/components/ActivityTable/types';
+import useActivityEvent from '@/components/ActivityTable/useActivityEvent';
+import { formatCurrencyAmount } from '@/lib/utils';
 
 type AmountCellProps = CellContext<TokenTransfer, string> & {
   address?: string;
 };
 
-export function AmountCell({ address = "", row, getValue }: AmountCellProps) {
+export function AmountCell({ address = '', row, getValue }: AmountCellProps) {
   const { getEventType } = useActivityEvent({ address });
 
   const type = getEventType(row.original);
@@ -24,11 +24,11 @@ export function AmountCell({ address = "", row, getValue }: AmountCellProps) {
     <>
       <Text
         color={useColorModeValue(
-          isDeposit ? "green.700" : "red.700",
-          isDeposit ? "green.400" : "red.400",
+          isDeposit ? 'green.700' : 'red.700',
+          isDeposit ? 'green.400' : 'red.400',
         )}
       >
-        {isDeposit ? "+ " : "- "}
+        {isDeposit ? '+ ' : '- '}
         {text}
       </Text>
     </>

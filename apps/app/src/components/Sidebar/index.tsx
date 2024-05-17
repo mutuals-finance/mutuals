@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import { SidebarHeader } from "@/components/Sidebar/SidebarHeader";
+import { SidebarHeader } from '@/components/Sidebar/SidebarHeader';
 import {
   SidebarWrapper,
   SidebarWrapperProps,
-} from "@/components/Sidebar/SidebarWrapper";
+} from '@/components/Sidebar/SidebarWrapper';
 
-import { SidebarContent } from "./SidebarContent";
-import { SidebarFooter } from "./SidebarFooter";
-import { BoxProps } from "@splitfi/ui";
+import { SidebarContent } from './SidebarContent';
+import { SidebarFooter } from './SidebarFooter';
+import { BoxProps } from '@chakra-ui/react';
 
 export { SidebarContent, SidebarFooter, SidebarHeader, SidebarWrapper };
 

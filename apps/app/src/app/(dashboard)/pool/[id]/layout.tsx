@@ -1,4 +1,4 @@
-import { Stack } from "@splitfi/ui";
+import { Stack } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import { decodePrefixedAddress } from "@/lib/utils";
 import { getMetadata, getPoolDetails } from "@/lib/split";

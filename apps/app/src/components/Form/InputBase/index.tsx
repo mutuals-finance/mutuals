@@ -1,11 +1,11 @@
-import { FormControl, FormControlProps } from "@splitfi/ui";
-import React from "react";
-import { get, useFormContext } from "react-hook-form";
+import { FormControl, FormControlProps } from '@chakra-ui/react';
+import React from 'react';
+import { get, useFormContext } from 'react-hook-form';
 
-import BaseFeedback from "@/components/Form/InputBase/BaseFeedback";
-import BaseLabel from "@/components/Form/InputBase/BaseLabel";
-import BaseWrapper from "@/components/Form/InputBase/BaseWrapper";
-import { BaseFeedbackProps, BaseLabelProps } from "@/components/Form/types";
+import BaseFeedback from '@/components/Form/InputBase/BaseFeedback';
+import BaseLabel from '@/components/Form/InputBase/BaseLabel';
+import BaseWrapper from '@/components/Form/InputBase/BaseWrapper';
+import { BaseFeedbackProps, BaseLabelProps } from '@/components/Form/types';
 
 type BaseWrapperProps = BaseFeedbackProps & BaseLabelProps & FormControlProps;
 

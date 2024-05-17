@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useQuery } from "@apollo/client";
-import { Box, Container, Heading, SimpleGrid } from "@splitfi/ui";
-import React from "react";
-import { useAccount } from "wagmi";
+import { useQuery } from '@apollo/client';
+import { Box, Container, Heading, SimpleGrid } from '@chakra-ui/react';
+import React from 'react';
+import { useAccount } from 'wagmi';
 
-import { SPLITS_BY_PAYEE } from "@/lib/graphql/thegraph/queries";
+import { SPLITS_BY_PAYEE } from '@/lib/graphql/thegraph/queries';
 
-import { SplitFragmentCard } from "@/components/Split/Card";
+import { SplitFragmentCard } from '@/components/Split/Card';
 
-import { TreasurySearchAndCreate } from "@/app/(dashboard)/PoolList/SearchAndCreate";
+import { TreasurySearchAndCreate } from '@/app/(dashboard)/PoolList/SearchAndCreate';
 
 export default function PoolList() {
   const { address, isConnected } = useAccount();
@@ -20,14 +20,14 @@ export default function PoolList() {
   });
 
   return (
-    <Container variant={"shell"}>
-      <Heading as={"h2"} size={"lg"} mb={"6"}>
+    <Container variant={'shell'}>
+      <Heading as={'h2'} size={'lg'} mb={'6'}>
         Payment Pools
       </Heading>
 
       <TreasurySearchAndCreate />
       <SimpleGrid
-        templateColumns={"repeat(auto-fit, minmax(22rem, 1fr))"}
+        templateColumns={'repeat(auto-fit, minmax(22rem, 1fr))'}
         spacing={6}
       >
         {Array(4)

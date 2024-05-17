@@ -2,37 +2,37 @@ import {
   IoAppsOutline,
   IoSettingsOutline,
   IoWalletOutline,
-} from "react-icons/io5";
+} from 'react-icons/io5';
 
-import IconButtonListContainer from "@/components/Shell/IconButtonListContainer";
-import Link from "next/link";
-import { Container } from "@splitfi/ui";
+import IconButtonListContainer from '@/components/Shell/IconButtonListContainer';
+import Link from 'next/link';
+import { Container } from '@chakra-ui/react';
 
 export default function DashboardHandlers() {
   const items = [
     {
-      "aria-label": "Add Wallet",
+      'aria-label': 'Add Wallet',
       icon: <IoWalletOutline />,
       as: Link,
-      href: "/wallet/new",
+      href: '/wallet/new',
       scroll: false,
     },
     {
-      "aria-label": "Create Pool",
+      'aria-label': 'Create Pool',
       icon: <IoAppsOutline />,
       as: Link,
-      href: "/pool/new",
+      href: '/pool/new',
     },
     {
-      "aria-label": "Settings",
+      'aria-label': 'Settings',
       icon: <IoSettingsOutline />,
       as: Link,
-      href: "/settings",
+      href: '/settings',
     },
   ];
 
   return (
-    <Container variant={"shell"}>
+    <Container variant={'shell'}>
       <IconButtonListContainer items={items} />
     </Container>
   );

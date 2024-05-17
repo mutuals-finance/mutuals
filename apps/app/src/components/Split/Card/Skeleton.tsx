@@ -23,7 +23,7 @@ import {
   StatNumber,
   Text,
   useColorModeValue,
-} from "@splitfi/ui";
+} from "@chakra-ui/react";
 import { Stat, StatLabel } from "@chakra-ui/stat";
 import NextLink from "next/link";
 import React from "react";

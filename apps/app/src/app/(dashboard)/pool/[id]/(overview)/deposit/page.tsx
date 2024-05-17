@@ -9,11 +9,14 @@ import {
   ButtonGroup,
   Button,
   Alert,
+  UnorderedList,
+  ListItem,
   Box,
   Card,
   CardHeader,
   CardBody,
-} from "@splitfi/ui";
+  CardFooter,
+} from "@chakra-ui/react";
 import {
   IoCopyOutline,
   IoEllipsisHorizontal,

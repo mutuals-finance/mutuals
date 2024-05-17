@@ -10,13 +10,13 @@ import {
   ModalProps,
   Text,
   VStack,
-} from "@splitfi/ui";
-import React from "react";
-import { useConnect } from "wagmi";
+} from '@chakra-ui/react';
+import React from 'react';
+import { useConnect } from 'wagmi';
 
 interface WalletModalProps {
-  onClose: ModalProps["onClose"];
-  open: ModalProps["isOpen"];
+  onClose: ModalProps['onClose'];
+  open: ModalProps['isOpen'];
 }
 
 export default function WalletModal({ onClose, open }: WalletModalProps) {
@@ -27,7 +27,7 @@ export default function WalletModal({ onClose, open }: WalletModalProps) {
   });
 
   return (
-    <Modal onClose={onClose} isOpen={open} size={"lg"}>
+    <Modal onClose={onClose} isOpen={open} size={'lg'}>
       <ModalOverlay />
 
       <ModalContent>
@@ -35,28 +35,28 @@ export default function WalletModal({ onClose, open }: WalletModalProps) {
         <ModalCloseButton />
 
         <ModalBody>
-          <VStack spacing={"3"}>
+          <VStack spacing={'3'}>
             {connectors.map((connector) => (
               <Button
                 key={connector.id}
-                w={"100%"}
-                size={"lg"}
+                w={'100%'}
+                size={'lg'}
                 onClick={() => connect({ connector })}
-                justifyContent={"flex-start"}
-                fontSize={"md"}
-                variant="outline"
+                justifyContent={'flex-start'}
+                fontSize={'md'}
+                variant='outline'
                 isLoading={isLoading && connector.id === pendingConnector?.id}
                 loadingText={connector.name}
-                spinnerPlacement="end"
+                spinnerPlacement='end'
               >
-                {connector.name} {!connector.ready && "(unsupported)"}
+                {connector.name} {!connector.ready && '(unsupported)'}
               </Button>
             ))}
           </VStack>
         </ModalBody>
 
         <ModalFooter>
-          <Text fontSize="xs">
+          <Text fontSize='xs'>
             By connecting a wallet, you agree to SplitFi’s Terms of Service and
             acknowledge that you have read and understand the SplitFi
             Disclaimer.

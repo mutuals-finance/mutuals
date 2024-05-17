@@ -1,7 +1,7 @@
 "use client";
 
 import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { Box, Button, Stack, VStack } from "@splitfi/ui";
+import { Box, Button, Stack, VStack } from "@chakra-ui/react";
 import React, { PropsWithChildren } from "react";
 import { useFormContext } from "react-hook-form";
 import { useToggle } from "react-use";

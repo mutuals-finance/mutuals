@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Box,
@@ -9,12 +9,12 @@ import {
   MenuItem,
   MenuList,
   Spinner,
-} from "@splitfi/ui";
-import NextImage from "next/image";
-import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useAccount, useChains, useSwitchChain } from "wagmi";
+} from '@chakra-ui/react';
+import NextImage from 'next/image';
+import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
+import { useAccount, useChains, useSwitchChain } from 'wagmi';
 
-import { getAvailableChains, getLogoByChainId } from "@/lib/utils";
+import { getAvailableChains, getLogoByChainId } from '@/lib/utils';
 
 export default function Chain() {
   const { isConnected, chain: currentChain } = useAccount();
@@ -31,26 +31,26 @@ export default function Chain() {
           {isConnected && (
             <MenuButton
               as={Button}
-              display={{ base: "none", lg: "flex" }}
+              display={{ base: 'none', lg: 'flex' }}
               leftIcon={
-                <Box w="4" h={"4"} position={"relative"}>
+                <Box w='4' h={'4'} position={'relative'}>
                   <NextImage
                     src={getLogoByChainId(currentChain?.id)}
-                    alt={currentChain?.name || "UNKNOWN"}
+                    alt={currentChain?.name || 'UNKNOWN'}
                     fill={true}
                   />
                 </Box>
               }
               rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
-              variant={"ghost"}
+              variant={'ghost'}
               isLoading={isPending}
             >
-              {currentChain?.name || "Unknown"}
+              {currentChain?.name || 'Unknown'}
             </MenuButton>
           )}
 
           <MenuList>
-            <MenuGroup title="Choose Your Network">
+            <MenuGroup title='Choose Your Network'>
               {getAvailableChains().map(
                 (chain) =>
                   chain.id !== currentChain?.id && (
@@ -58,7 +58,7 @@ export default function Chain() {
                       onClick={() => onSelectChain(chain.id)}
                       key={chain.id}
                     >
-                      <Box w="3" h="3" position={"relative"} mr={"1"}>
+                      <Box w='3' h='3' position={'relative'} mr={'1'}>
                         <NextImage
                           src={chain.logo}
                           alt={chain.name}
@@ -68,7 +68,7 @@ export default function Chain() {
 
                       {chain.name}
                       {isPending && variables?.chainId === chain.id && (
-                        <Spinner size="xs" ml={"1"} />
+                        <Spinner size='xs' ml={'1'} />
                       )}
                     </MenuItem>
                   ),
