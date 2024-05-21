@@ -2,15 +2,12 @@ import { Stack } from "@splitfi/ui";
 import React, { PropsWithChildren } from "react";
 import Sidebar from "@/app/(dashboard)/pool/[id]/(overview)/Sidebar";
 import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";
-import { useFragment } from "@/lib/graphql/thegraph/__generated__";
-import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
-import { getMetadata, getPoolDetailsWithShares } from "@/lib/split";
+import { getPoolDetailsFromRouteParams } from "@/lib/split";
 import Description from "@/app/(dashboard)/pool/[id]/(overview)/Description";
 import Handlers from "@/app/(dashboard)/pool/[id]/(overview)/Handlers";
 import Shares from "@/app/(dashboard)/pool/[id]/(overview)/Shares";
 import Assets from "@/app/(dashboard)/pool/[id]/(overview)/Assets";
 import Activity from "@/app/(dashboard)/pool/[id]/(overview)/Activity";
-import { decodePrefixedAddress } from "@/lib/utils";
 import PoolPageShell from "@/app/(dashboard)/pool/[id]/PoolPageShell";
 
 const tabs = [
@@ -32,34 +29,30 @@ export default async function PoolOverviewLayout({
     id: string;
   };
 }>) {
-  const id = decodePrefixedAddress(params.id);
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
   const isSidebarOpen = tabs.some(({ href }) =>
     href.includes((children as any)?.props?.childPropSegment ?? ""),
   );
 
   const queries = await Promise.all([
-    getPoolDetailsWithShares({ variables: { id } }),
+    getPoolDetailsFromRouteParams(params),
     getAccountBalance({ walletAddress: address, blockchain: "eth" }),
     getTokenTransfers({ address: [address], blockchain: "eth" }),
   ]);
 
-  const poolWithSharesData = queries[0]?.data;
-  const pool = useFragment(splitBaseFragment, poolWithSharesData.split);
-
-  const metaData = await getMetadata(pool?.metaDataUri);
+  const pool = queries[0];
 
   const props = {
     pool,
-    shares: poolWithSharesData?.split?.shares,
-    metaData,
+    shares: pool.shares,
+    metaData: pool.metaData,
     balance: queries[1]!,
     activity: queries[2]!,
   };
 
   return (
     <Stack direction={"row"} gap={"0"} w={"full"}>
-      <PoolPageShell metaData={metaData} flex={"1"} minWidth={"0"}>
+      <PoolPageShell metaData={pool.metaData} flex={"1"} minWidth={"0"}>
         <Stack gap={"6"}>
           <Description {...props} />
           <Handlers {...props} />

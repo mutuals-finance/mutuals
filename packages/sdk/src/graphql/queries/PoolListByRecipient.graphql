@@ -1,0 +1,16 @@
+query PoolListByRecipient($recipient: Bytes!) {
+    splits(where: { shares_: { payee: $recipient } }) {
+        id
+        address
+        blockNumber
+        timestamp
+        metaData {
+            name
+            description
+            image
+        }
+        metaDataUri
+        totalShares
+        txCount
+    }
+}

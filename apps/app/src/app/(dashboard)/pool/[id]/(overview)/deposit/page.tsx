@@ -20,10 +20,7 @@ import {
   IoOpenOutline,
 } from "react-icons/io5";
 import QRCode from "@/components/QRCode";
-import { decodePrefixedAddress } from "@/lib/utils";
-import { getPoolDetails } from "@/lib/split";
-import { useFragment } from "@/lib/graphql/thegraph/__generated__";
-import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
+import { getPoolDetailsFromRouteParams } from "@/lib/split";
 
 interface PoolHandleDepositProps {
   params: {
@@ -34,9 +31,7 @@ interface PoolHandleDepositProps {
 export default async function PoolHandleDeposit({
   params,
 }: PoolHandleDepositProps) {
-  const id = decodePrefixedAddress(params.id);
-  const { data } = await getPoolDetails({ variables: { id } });
-  const pool = useFragment(splitBaseFragment, data.split);
+  const pool = await getPoolDetailsFromRouteParams(params);
 
   return (
     <>

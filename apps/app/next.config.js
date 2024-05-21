@@ -8,6 +8,9 @@ module.exports = {
   },
   images: {
     remotePatterns: [
+      {
+        hostname: "*.ipfs.w3s.link",
+      },
       { hostname: "tokens.1inch.io" },
       { hostname: "assets.coingecko.com" },
       { hostname: "ethapi.openocean.finance" },

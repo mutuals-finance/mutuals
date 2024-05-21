@@ -19,8 +19,9 @@ import {
   Stack,
   StatNumber,
   Text,
+  Stat,
+  StatLabel,
 } from "@splitfi/ui";
-import { Stat, StatLabel } from "@chakra-ui/stat";
 import NextLink from "next/link";
 import React from "react";
 import {

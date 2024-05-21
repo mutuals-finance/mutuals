@@ -1,6 +1,5 @@
 import { Text } from "@splitfi/ui";
-import { decodePrefixedAddress } from "@/lib/utils";
-import { getPoolDetailsWithShares } from "@/lib/split";
+import { getPoolDetailsFromRouteParams } from "@/lib/split";
 
 import WithdrawForm from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm";
 import { getAccountBalance } from "@/lib/ankr";
@@ -14,16 +13,15 @@ interface PoolHandleWithdrawProps {
 export default async function PoolHandleWithdraw({
   params,
 }: PoolHandleWithdrawProps) {
-  const id = decodePrefixedAddress(params.id);
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
   const queries = await Promise.all([
-    getPoolDetailsWithShares({ variables: { id } }),
+    getPoolDetailsFromRouteParams(params),
     getAccountBalance({ walletAddress: address, blockchain: "eth" }),
   ]);
 
   const props = {
-    pool: queries[0].data.split,
-    shares: queries[0].data.split?.shares,
+    pool: queries[0],
+    shares: queries[0].shares,
     balance: queries[1],
   };
 

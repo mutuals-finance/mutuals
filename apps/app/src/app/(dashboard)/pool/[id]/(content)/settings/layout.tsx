@@ -1,10 +1,7 @@
 import { PropsWithChildren } from "react";
 import RouterTabs from "@/components/RouterTabs";
-import { decodePrefixedAddress } from "@/lib/utils";
-import { getPoolDetails } from "@/lib/split";
-import { useFragment } from "@/lib/graphql/thegraph/__generated__";
-import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
 import PageShell from "@/components/Shell/PageShell";
+import { getPoolDetailsFromRouteParams } from "@/lib/split";
 
 interface PoolSettingsLayoutProps {
   params: { id: string };
@@ -14,10 +11,7 @@ export default async function PoolSettingsLayout({
   children,
   params,
 }: PropsWithChildren<PoolSettingsLayoutProps>) {
-  const id = decodePrefixedAddress(params.id);
-  const { data } = await getPoolDetails({ variables: { id } });
-
-  const pool = useFragment(splitBaseFragment, data.split);
+  const pool = await getPoolDetailsFromRouteParams(params);
 
   const tabs = [
     {
