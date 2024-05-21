@@ -43,12 +43,7 @@ import { Split } from "@splitfi/sdk";
 
 type SplitCardProps = Partial<Split>;
 
-export default function SplitCard({
-  id,
-  metaData,
-  address,
-  ...props
-}: SplitCardProps) {
+export default function SplitCard({ id, metaData, address }: SplitCardProps) {
   return (
     <LinkBox as="article" rounded={"md"}>
       <Card variant={"outline"} bg={"bg.1"} size={"sm"}>
