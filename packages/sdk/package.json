@@ -1,8 +1,31 @@
 {
   "name": "@splitfi/sdk",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-
+    "build": "tsc -b",
+    "graphql:generate": "graphql-codegen --config src/graphql/codegen.ts",
+    "graphql:schema": "get-graphql-schema https://api.uniswap.org/v1/graphql -h Origin=https://app.uniswap.org > ./src/data/graphql/uniswap-data-api/schema.graphql",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.2.5",
+    "@splitfi/eslint-config": "workspace:*",
+    "@splitfi/typescript-config": "workspace:*",
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
+    "react": "^18.3.1",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.10.4",
+    "@apollo/experimental-nextjs-app-support": "^0.10.1",
+    "next": "^14.2.3"
   }
 }

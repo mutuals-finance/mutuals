@@ -1,0 +1,5 @@
+{
+  "extends": "@splitfi/typescript-config/react-library.json",
+  "include": ["src", "turbo"],
+  "exclude": ["node_modules"]
+}
