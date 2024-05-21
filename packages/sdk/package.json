@@ -3,6 +3,10 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./providers": "./src/providers/index.ts"
+  },
   "scripts": {
     "build": "tsc -b",
     "graphql:generate": "graphql-codegen --config src/graphql/codegen.ts",

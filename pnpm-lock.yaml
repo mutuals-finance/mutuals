@@ -59,6 +59,9 @@ importers:
       '@metamask/detect-provider':
         specifier: ^2.0.0
         version: 2.0.0
+      '@splitfi/sdk':
+        specifier: workspace:*
+        version: link:../../packages/sdk
       '@splitfi/ui':
         specifier: workspace:*
         version: link:../../packages/ui

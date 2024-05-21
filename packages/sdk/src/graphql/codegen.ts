@@ -1,5 +1,5 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import sdkConfig from "@/config";
+import sdkConfig from "../config";
 
 const config: CodegenConfig = {
   overwrite: true,
