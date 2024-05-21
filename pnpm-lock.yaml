@@ -29,12 +29,6 @@ importers:
       '@ankr.com/ankr.js':
         specifier: ^0.5.0
         version: 0.5.0
-      '@apollo/client':
-        specifier: ^3.10.4
-        version: 3.10.4(@types/react@18.3.2)(graphql@16.8.1)(react-dom@18.3.1)(react@18.3.1)
-      '@apollo/experimental-nextjs-app-support':
-        specifier: ^0.10.1
-        version: 0.10.1(@apollo/client@3.10.4)(next@14.2.3)(react@18.3.1)
       '@chakra-ui/next-js':
         specifier: ^2.2.0
         version: 2.2.0(@chakra-ui/react@2.8.2)(@emotion/react@11.11.4)(next@14.2.3)(react@18.3.1)
@@ -50,9 +44,6 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.5
         version: 11.11.5(@emotion/react@11.11.4)(@types/react@18.3.2)(react@18.3.1)
-      '@graphql-typed-document-node/core':
-        specifier: ^3.2.0
-        version: 3.2.0(graphql@16.8.1)
       '@headlessui/react':
         specifier: ^2.0.3
         version: 2.0.3(react-dom@18.3.1)(react@18.3.1)
@@ -119,9 +110,6 @@ importers:
       framer-motion:
         specifier: ^11.2.4
         version: 11.2.4(react-dom@18.3.1)(react@18.3.1)
-      graphql:
-        specifier: ^16.8.1
-        version: 16.8.1
       keen-slider:
         specifier: ^6.8.6
         version: 6.8.6
@@ -174,12 +162,6 @@ importers:
       '@ethersproject/providers':
         specifier: ^5.7.2
         version: 5.7.2
-      '@graphql-codegen/cli':
-        specifier: 5.0.2
-        version: 5.0.2(@types/node@20.12.12)(graphql@16.8.1)(typescript@5.4.5)
-      '@graphql-codegen/client-preset':
-        specifier: 4.2.5
-        version: 4.2.5(graphql@16.8.1)
       '@next/eslint-plugin-next':
         specifier: ^14.2.3
         version: 14.2.3
@@ -381,6 +363,9 @@ importers:
       '@graphql-codegen/client-preset':
         specifier: 4.2.5
         version: 4.2.5(graphql@16.8.1)
+      '@graphql-typed-document-node/core':
+        specifier: ^3.2.0
+        version: 3.2.0(graphql@16.8.1)
       '@splitfi/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config

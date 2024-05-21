@@ -7,7 +7,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema,
   documents: [
-    "./src/graphql/**/*.graphql",
+    "./src/graphql/**/*.{ts,tsx}",
     "!./src/graphql/__generated__/**/*",
   ],
   ignoreNoDocuments: true, // for better experience with the watcher
@@ -18,6 +18,16 @@ const config: CodegenConfig = {
       config: {
         // This avoid all generated schemas being wrapped in Maybe https://the-guild.dev/graphql/codegen/plugins/typescript/typescript#maybevalue-string-default-value-t--null
         maybeValue: "T",
+        useTypeImports: true,
+        skipTypename: true,
+        strictScalars: true,
+        scalars: {
+          BigDecimal: "BigInt",
+          BigInt: "BigInt",
+          Bytes: "string",
+          Int8: "BigInt",
+          Timestamp: "number",
+        },
       },
       presetConfig: {
         fragmentMasking: false,

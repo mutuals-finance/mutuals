@@ -21,7 +21,6 @@ export default async function PoolHandleWithdraw({
 
   const props = {
     pool: queries[0],
-    shares: queries[0].shares,
     balance: queries[1],
   };
 

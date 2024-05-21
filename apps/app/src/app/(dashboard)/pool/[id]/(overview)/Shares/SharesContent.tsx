@@ -3,25 +3,20 @@
 import { AspectRatio, Flex } from "@splitfi/ui";
 import dynamic from "next/dynamic";
 import { useList } from "react-use";
-
 import ShareTable from "@/app/(dashboard)/pool/[id]/(overview)/Shares/ShareTable";
 import { ActiveShare } from "@/app/(dashboard)/pool/[id]/(overview)/Shares/ShareTable/types";
-import {
-  FragmentType,
-  useFragment as getFragment,
-} from "@/lib/graphql/thegraph/__generated__";
-import { shareFragment } from "@/lib/graphql/thegraph/fragments";
+import { type Share } from "@splitfi/sdk";
 
 const PieChart = dynamic(() => import("@/components/PieChart"), {
   ssr: false,
 });
 
 interface SharesContentProps {
-  shares?: FragmentType<typeof shareFragment>[];
+  shares?: Partial<Share>[];
 }
 
 export default function SharesContent(props: SharesContentProps) {
-  const shares = props.shares?.map((s) => getFragment(shareFragment, s));
+  const shares = props.shares;
 
   const [payees, { updateAt }] = useList<ActiveShare>(
     shares?.map((s) => ({

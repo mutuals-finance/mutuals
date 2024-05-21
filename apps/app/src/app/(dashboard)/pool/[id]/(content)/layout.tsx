@@ -8,7 +8,7 @@ export default async function PoolContentLayout({
 }: PropsWithChildren<{
   params: { id: string };
 }>) {
-  const props = await getPoolDetailsFromRouteParams(params);
+  const pool = await getPoolDetailsFromRouteParams(params);
 
-  return <PoolPageShell {...props}>{children}</PoolPageShell>;
+  return <PoolPageShell metaData={pool.metaData}>{children}</PoolPageShell>;
 }

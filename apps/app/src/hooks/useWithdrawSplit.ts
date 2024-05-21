@@ -16,7 +16,7 @@ export type WithdrawSplitArgs = [boolean, Address[], Address];
 export type WithdrawSplitProps = UseSimulateContractParameters;
 
 export default function useWithdrawSplit(
-  address: string,
+  address?: string,
   tokens: Balance[] = [],
   props?: WithdrawSplitProps,
 ) {

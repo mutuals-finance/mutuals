@@ -1,4 +1,4 @@
-import { Stack } from "@splitfi/ui";
+import { Container, Stack } from "@splitfi/ui";
 import React, { PropsWithChildren } from "react";
 import Sidebar from "@/app/(dashboard)/pool/[id]/(overview)/Sidebar";
 import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";
@@ -44,8 +44,7 @@ export default async function PoolOverviewLayout({
 
   const props = {
     pool,
-    shares: pool.shares,
-    metaData: pool.metaData,
+    shares: pool.shares ?? [],
     balance: queries[1]!,
     activity: queries[2]!,
   };
@@ -53,13 +52,13 @@ export default async function PoolOverviewLayout({
   return (
     <Stack direction={"row"} gap={"0"} w={"full"}>
       <PoolPageShell metaData={pool.metaData} flex={"1"} minWidth={"0"}>
-        <Stack gap={"6"}>
+        <Container as={Stack} gap={"6"} variant={"shell"}>
           <Description {...props} />
           <Handlers {...props} />
           <Shares {...props} />
           <Assets {...props} />
           <Activity {...props} />
-        </Stack>
+        </Container>
       </PoolPageShell>
 
       <Sidebar tabs={tabs} defaultOpen={isSidebarOpen}>

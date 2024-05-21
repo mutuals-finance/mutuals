@@ -14,21 +14,14 @@ import InputSwitch from "@/components/Form/InputSwitch";
 import WithdrawModal from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawModal";
 
 import { GetAccountBalanceReply } from "@ankr.com/ankr.js";
-import {
-  FragmentType,
-  useFragment as getFragment,
-} from "@/lib/graphql/thegraph/__generated__";
-import {
-  shareFragment,
-  splitBaseFragment,
-} from "@/lib/graphql/thegraph/fragments";
 import SummaryTable from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/SummaryTable";
 import WithdrawTable from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawTable";
+import { type Split } from "@splitfi/sdk";
+import { DeepPartial } from "#/partial";
 
 export interface WithdrawFormInnerProps {
   balance?: GetAccountBalanceReply;
-  shares?: FragmentType<typeof shareFragment>[];
-  pool?: FragmentType<typeof splitBaseFragment> | null;
+  pool?: DeepPartial<Split>;
 }
 
 export interface WithdrawData {
@@ -39,18 +32,18 @@ export interface WithdrawData {
 export default function WithdrawFormInner({
   balance,
   children,
+  pool,
   ...props
 }: PropsWithChildren<WithdrawFormInnerProps>) {
   const {
     watch,
     formState: { isValid },
   } = useFormContext<WithdrawData>();
-  const pool = getFragment(splitBaseFragment, props.pool);
 
   const assets = watch("assets");
   const distribute = watch("distribute");
 
-  const { ...tx } = useWithdrawSplit(pool?.address, assets);
+  const { ...tx } = useWithdrawSplit(pool!.address, assets);
   const [isModalOpen, setIsModalOpen] = useToggle(false);
 
   return (

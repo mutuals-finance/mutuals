@@ -1,13 +1,11 @@
 import ContentCard from "@/components/ContentCard";
-import {
-  FragmentType,
-} from "@/lib/graphql/thegraph/__generated__";
+
 import SharesContent from "@/app/(dashboard)/pool/[id]/(overview)/Shares/SharesContent";
 import { Stack } from "@splitfi/ui";
-import { shareFragment } from "@/lib/graphql/thegraph/fragments";
+import { Share } from "@splitfi/sdk";
 
 interface SharesProps {
-  shares?: FragmentType<typeof shareFragment>[];
+  shares?: Partial<Share>[];
 }
 
 export default function Shares({ shares }: SharesProps) {

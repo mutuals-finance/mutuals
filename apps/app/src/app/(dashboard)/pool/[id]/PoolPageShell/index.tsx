@@ -1,17 +1,16 @@
 import React from "react";
-import { Container, HStack, Text } from "@splitfi/ui";
-import { SectionContainerProps } from "@/components/Shell/SectionContainer";
+import { HStack, Text } from "@splitfi/ui";
 import PageShell, { PageShellProps } from "@/components/Shell/PageShell";
 import { SplitImage } from "@/components/Split/Image";
 import { ipfsResolveData } from "@/lib/utils";
+import { SplitMetadata } from "@splitfi/sdk";
 
 interface PoolPageShellProps extends PageShellProps {
-  metaData: { name: string; description: string; image: string };
-  sectionContainerProps?: SectionContainerProps;
+  metaData: Partial<SplitMetadata>;
 }
+
 export default function PoolPageShell({
   metaData,
-  sectionContainerProps,
   children,
   ...props
 }: PoolPageShellProps) {
@@ -24,7 +23,7 @@ export default function PoolPageShell({
             <HStack spacing="1" alignItems={"center"}>
               <SplitImage
                 src={ipfsResolveData(metaData.image)}
-                alt={metaData.name}
+                alt={metaData?.name ?? "Unknown Payment Pool"}
                 boxSize="1.2rem"
               />
               <Text>{metaData.name}</Text>
@@ -34,9 +33,7 @@ export default function PoolPageShell({
       }}
       {...props}
     >
-      <Container variant={"shell"} {...sectionContainerProps}>
-        {children}
-      </Container>
+      {children}
     </PageShell>
   );
 }

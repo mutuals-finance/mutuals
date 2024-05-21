@@ -6,12 +6,13 @@ import {
   IoWalletOutline,
 } from "react-icons/io5";
 
-import { SplitBaseFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
 import IconButtonListContainer from "@/components/Shell/IconButtonListContainer";
 import Link from "next/link";
+import { Split } from "@splitfi/sdk";
+import { type DeepPartial } from "#/partial";
 
 interface PoolHandlersProps {
-  pool?: SplitBaseFragmentFragment | null;
+  pool?: DeepPartial<Split>;
 }
 
 export default function PoolHandlers({ pool }: PoolHandlersProps) {

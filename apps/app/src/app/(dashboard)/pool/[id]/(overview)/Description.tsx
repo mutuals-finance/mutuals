@@ -9,20 +9,17 @@ import {
   Text,
 } from "@splitfi/ui";
 
-import {
-  formatUSDPrice,
-  ipfsResolveData,
-} from "@/lib/utils";
+import { formatUSDPrice, ipfsResolveData } from "@/lib/utils";
 
 import { SplitImage } from "@/components/Split/Image";
-import { SplitBaseFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
+import { Split } from "@splitfi/sdk";
+import { type DeepPartial } from "#/partial";
 
 interface PoolDescriptionProps {
-  pool?: SplitBaseFragmentFragment | null;
-  metaData: { name: string; description: string; image: string };
+  pool?: DeepPartial<Split>;
 }
 
-export default function PoolDescription({ metaData }: PoolDescriptionProps) {
+export default function PoolDescription({ pool }: PoolDescriptionProps) {
   return (
     <Stack gap={"6"} as={"article"}>
       <Stack
@@ -32,12 +29,12 @@ export default function PoolDescription({ metaData }: PoolDescriptionProps) {
         w={"full"}
       >
         <SplitImage
-          src={ipfsResolveData(metaData.image)}
-          alt={metaData.name}
+          src={ipfsResolveData(pool?.metaData?.image)}
+          alt={pool?.metaData?.name ?? "Unknown Payment Pool"}
           boxSize={"3.4rem"}
         />
         <Heading as={"h1"} size={"xl"}>
-          {metaData.name}
+          {pool!.metaData!.name}
         </Heading>
       </Stack>
 
@@ -59,7 +56,9 @@ export default function PoolDescription({ metaData }: PoolDescriptionProps) {
       </StatGroup>
 
       <Box maxW={"xl"}>
-        <Text noOfLines={{ base: 3, lg: 3 }}>{metaData.description}</Text>
+        <Text noOfLines={{ base: 3, lg: 3 }}>
+          {pool?.metaData?.description}
+        </Text>
       </Box>
     </Stack>
   );

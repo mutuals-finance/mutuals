@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -14,19 +14,19 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  BigDecimal: { input: any; output: any; }
-  BigInt: { input: any; output: any; }
-  Bytes: { input: any; output: any; }
+  BigDecimal: { input: BigInt; output: BigInt; }
+  BigInt: { input: BigInt; output: BigInt; }
+  Bytes: { input: string; output: string; }
   /**
    * 8 bytes signed integer
    *
    */
-  Int8: { input: any; output: any; }
+  Int8: { input: BigInt; output: BigInt; }
   /**
    * A string representation of microseconds UNIX timestamp (16 digits)
    *
    */
-  Timestamp: { input: any; output: any; }
+  Timestamp: { input: number; output: number; }
 };
 
 export enum Aggregation_Interval {
@@ -45,7 +45,6 @@ export type Block_Height = {
 };
 
 export type ContractUriUpdate = {
-  __typename?: 'ContractURIUpdate';
   id: Scalars['ID']['output'];
   logIndex?: Maybe<Scalars['BigInt']['output']>;
   newURI: Scalars['String']['output'];
@@ -194,7 +193,6 @@ export enum ContractUriUpdate_OrderBy {
 }
 
 export type Deposit = TokenValue & {
-  __typename?: 'Deposit';
   amount: Scalars['BigInt']['output'];
   from: Scalars['Bytes']['output'];
   id: Scalars['ID']['output'];
@@ -361,7 +359,6 @@ export enum OrderDirection {
 }
 
 export type Query = {
-  __typename?: 'Query';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   contractURIUpdate?: Maybe<ContractUriUpdate>;
@@ -632,7 +629,6 @@ export type QueryWithdrawalsArgs = {
 };
 
 export type Share = {
-  __typename?: 'Share';
   blockNumber: Scalars['BigInt']['output'];
   id: Scalars['ID']['output'];
   payee: Scalars['Bytes']['output'];
@@ -739,7 +735,6 @@ export enum Share_OrderBy {
 }
 
 export type Split = {
-  __typename?: 'Split';
   address: Scalars['Bytes']['output'];
   blockNumber: Scalars['BigInt']['output'];
   contractURIUpdates: Array<ContractUriUpdate>;
@@ -833,7 +828,6 @@ export type SplitWithdrawalsArgs = {
 };
 
 export type SplitFactory = {
-  __typename?: 'SplitFactory';
   beacon: Scalars['Bytes']['output'];
   id: Scalars['ID']['output'];
   owner: Scalars['Bytes']['output'];
@@ -903,7 +897,6 @@ export enum SplitFactory_OrderBy {
 }
 
 export type SplitMetadata = {
-  __typename?: 'SplitMetadata';
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   image?: Maybe<Scalars['String']['output']>;
@@ -1157,7 +1150,6 @@ export enum Split_OrderBy {
 }
 
 export type Subscription = {
-  __typename?: 'Subscription';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   contractURIUpdate?: Maybe<ContractUriUpdate>;
@@ -1428,7 +1420,6 @@ export type SubscriptionWithdrawalsArgs = {
 };
 
 export type Token = {
-  __typename?: 'Token';
   decimals: Scalars['BigInt']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
@@ -1437,7 +1428,6 @@ export type Token = {
 };
 
 export type TokenDeposit = TokenValue & {
-  __typename?: 'TokenDeposit';
   amount: Scalars['BigInt']['output'];
   id: Scalars['ID']['output'];
   split: Split;
@@ -1609,7 +1599,6 @@ export enum TokenValue_OrderBy {
 }
 
 export type TokenWithdrawable = TokenValue & {
-  __typename?: 'TokenWithdrawable';
   amount: Scalars['BigInt']['output'];
   id: Scalars['ID']['output'];
   split: Split;
@@ -1708,7 +1697,6 @@ export enum TokenWithdrawable_OrderBy {
 }
 
 export type TokenWithdrawal = TokenValue & {
-  __typename?: 'TokenWithdrawal';
   amount: Scalars['BigInt']['output'];
   id: Scalars['ID']['output'];
   split: Split;
@@ -1886,7 +1874,6 @@ export enum Token_OrderBy {
 }
 
 export type Transaction = {
-  __typename?: 'Transaction';
   blockNumber: Scalars['BigInt']['output'];
   contractURIUpdates: Array<ContractUriUpdate>;
   deposits: Array<Deposit>;
@@ -2017,7 +2004,6 @@ export enum Transaction_OrderBy {
 }
 
 export type Withdrawal = TokenValue & {
-  __typename?: 'Withdrawal';
   amount: Scalars['BigInt']['output'];
   id: Scalars['ID']['output'];
   logIndex?: Maybe<Scalars['BigInt']['output']>;
@@ -2178,7 +2164,6 @@ export enum Withdrawal_OrderBy {
 }
 
 export type _Block_ = {
-  __typename?: '_Block_';
   /** The hash of the block */
   hash?: Maybe<Scalars['Bytes']['output']>;
   /** The block number */
@@ -2191,7 +2176,6 @@ export type _Block_ = {
 
 /** The type for the top-level _meta field */
 export type _Meta_ = {
-  __typename?: '_Meta_';
   /**
    * Information about a specific subgraph block. The hash of the block
    * will be null if the _meta field has a block constraint that asks for
@@ -2218,15 +2202,15 @@ export type PoolDetailsByIdQueryVariables = Exact<{
 }>;
 
 
-export type PoolDetailsByIdQuery = { __typename?: 'Query', split?: { __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null }, shares: Array<{ __typename?: 'Share', id: string, payee: any, timestamp: any, value: any }> } | null };
+export type PoolDetailsByIdQuery = { split?: { id: string, address: string, blockNumber: BigInt, timestamp: BigInt, metaDataUri?: string | null, totalShares: BigInt, txCount: BigInt, metaData: { name?: string | null, description?: string | null, image?: string | null }, shares: Array<{ id: string, payee: string, timestamp: BigInt, value: BigInt, blockNumber: BigInt }> } | null };
 
 export type PoolListByRecipientQueryVariables = Exact<{
   recipient: Scalars['Bytes']['input'];
 }>;
 
 
-export type PoolListByRecipientQuery = { __typename?: 'Query', splits: Array<{ __typename?: 'Split', id: string, address: any, blockNumber: any, timestamp: any, metaDataUri?: string | null, totalShares: any, txCount: any, metaData: { __typename?: 'SplitMetadata', name?: string | null, description?: string | null, image?: string | null } }> };
+export type PoolListByRecipientQuery = { splits: Array<{ id: string, address: string, blockNumber: BigInt, timestamp: BigInt, metaDataUri?: string | null, totalShares: BigInt, txCount: BigInt, metaData: { name?: string | null, description?: string | null, image?: string | null } }> };
 
 
-export const PoolDetailsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PoolDetailsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"split"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"shares"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]}}]} as unknown as DocumentNode<PoolDetailsByIdQuery, PoolDetailsByIdQueryVariables>;
+export const PoolDetailsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PoolDetailsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"split"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"shares"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}}]}}]}}]}}]} as unknown as DocumentNode<PoolDetailsByIdQuery, PoolDetailsByIdQueryVariables>;
 export const PoolListByRecipientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PoolListByRecipient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipient"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Bytes"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"splits"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shares_"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"payee"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipient"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"blockNumber"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaDataUri"}},{"kind":"Field","name":{"kind":"Name","value":"totalShares"}},{"kind":"Field","name":{"kind":"Name","value":"txCount"}}]}}]}}]} as unknown as DocumentNode<PoolListByRecipientQuery, PoolListByRecipientQueryVariables>;

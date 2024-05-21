@@ -32,13 +32,6 @@ import {
 } from "react-icons/io5";
 
 import {
-  FragmentType,
-  useFragment,
-} from "@/lib/graphql/thegraph/__generated__";
-import { SplitBaseFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
-import { splitBaseFragment } from "@/lib/graphql/thegraph/fragments";
-import { useMetadata } from "@/lib/split/hooks";
-import {
   formatPrefixedAddress,
   formatUSDPrice,
   getShortNameByChainId,
@@ -46,32 +39,29 @@ import {
 } from "@/lib/utils";
 
 import { SplitImage } from "@/components/Split/Image";
+import { Split } from "@splitfi/sdk";
 
-interface SplitFragmentCardProps {
-  fragment: FragmentType<typeof splitBaseFragment>;
-}
+type SplitCardProps = Partial<Split>;
 
-export function SplitFragmentCard(props: SplitFragmentCardProps) {
-  const split = useFragment(splitBaseFragment, props.fragment);
-  const { data } = useMetadata({ uri: split?.metaDataUri });
-
-  return <SplitCard {...split} metaData={data!} />;
-}
-
-type SplitCardProps = Partial<SplitBaseFragmentFragment>;
-
-export default function SplitCard({ id, metaData, address }: SplitCardProps) {
+export default function SplitCard({
+  id,
+  metaData,
+  address,
+  ...props
+}: SplitCardProps) {
   return (
     <LinkBox as="article" rounded={"md"}>
       <Card variant={"outline"} bg={"bg.1"} size={"sm"}>
         <CardHeader as={Flex} alignItems={"center"} gap={"3"}>
           <Box flexShrink={0}>
-            {!!metaData?.image && (
+            {
               <SplitImage
-                src={metaData.image}
+                src={
+                  "https://bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu.ipfs.w3s.link"
+                }
                 alt={metaData?.name || "UNKNOWN"}
               />
-            )}
+            }
           </Box>
 
           <Box flex="1">

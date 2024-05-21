@@ -3,6 +3,7 @@ import AssetTable from "@/components/AssetTable";
 import { getAccountBalance } from "@/lib/ankr";
 import ContentCard from "@/components/ContentCard";
 import PageShell from "@/components/Shell/PageShell";
+import { Container } from "@splitfi/ui";
 
 export default async function PoolAssetsPage() {
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
@@ -14,15 +15,15 @@ export default async function PoolAssetsPage() {
   });
 
   return (
-    <>
-      <PageShell breadcrumbsEnabled={false} title={"Assets"}>
+    <PageShell breadcrumbsEnabled={false} title={"Assets"}>
+      <Container as={"section"} variant={"shell"}>
         <ContentCard
           bodyProps={{ p: "0" }}
           sx={{ overflow: "auto !important" }}
         >
           <AssetTable assets={balance?.assets} size={"sm"} />
         </ContentCard>
-      </PageShell>
-    </>
+      </Container>
+    </PageShell>
   );
 }

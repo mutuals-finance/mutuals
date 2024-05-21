@@ -36,7 +36,7 @@ export default function PageShell({
     <Box {...props}>
       {(breadcrumbsEnabled || !!title || !!description) && (
         <Container as={"header"} variant={"shell"} {...headerContainerProps}>
-          <VStack gap={"12"} mb={"6"} alignItems={"flex-start"}>
+          <VStack gap={"6"} mb={"6"} alignItems={"flex-start"}>
             {breadcrumbsEnabled && <Breadcrumbs {...breadcrumbsProps} />}
 
             {!!title && (

@@ -10,23 +10,18 @@ import {
 } from "@splitfi/ui";
 import React from "react";
 import { formatCurrencyAmount, formatPrice } from "@/lib/utils";
-import {
-  FragmentType,
-  useFragment as getFragment,
-} from "@/lib/graphql/thegraph/__generated__";
-import { shareFragment } from "@/lib/graphql/thegraph/fragments";
 import { WithdrawData } from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawFormInner";
+import { Share } from "@splitfi/sdk";
 
 export interface SummaryTableProps extends WithdrawData {
-  shares?: FragmentType<typeof shareFragment>[];
+  shares?: Share[];
 }
 
 export default function SummaryTable({
   assets,
   distribute,
-  ...props
+  shares,
 }: SummaryTableProps) {
-  const shares = props.shares?.map((s) => getFragment(shareFragment, s));
   const share = shares ? shares[0] : null;
 
   const total = assets?.reduce(
