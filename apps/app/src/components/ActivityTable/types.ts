@@ -1,6 +1,5 @@
 import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-
-import { SplitDetailsFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
+import { Share } from "@splitfi/sdk";
 
 export enum EventType {
   Deposit = "Deposit",
@@ -15,7 +14,6 @@ export interface SplitEvent {
   timestamp: string;
 }
 
-export interface ActivityTableProps
-  extends Pick<SplitDetailsFragmentFragment, "address"> {
+export interface ActivityTableProps extends Pick<Share, "payee"> {
   transfers?: TokenTransfer[];
 }

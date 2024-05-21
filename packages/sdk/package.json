@@ -12,7 +12,6 @@
   "scripts": {
     "build": "tsc -b",
     "graphql:generate": "graphql-codegen --config src/graphql/codegen.ts",
-    "graphql:schema": "get-graphql-schema https://api.uniswap.org/v1/graphql -h Origin=https://app.uniswap.org > ./src/data/graphql/uniswap-data-api/schema.graphql",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc -b"
   },

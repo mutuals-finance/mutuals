@@ -20,7 +20,7 @@ export default function Assets({
         containerProps={{ flex: "1" }}
       />
       <Box p={"3"}>
-        <Button as={Link} href={"id/assets"} variant={"ghost"} size={"sm"}>
+        <Button as={Link} href={"id/assets"} size={"sm"}>
           Show all
         </Button>
       </Box>

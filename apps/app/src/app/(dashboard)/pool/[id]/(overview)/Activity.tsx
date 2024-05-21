@@ -4,12 +4,13 @@ import ActivityTable from "@/components/ActivityTable";
 import ContentCard from "@/components/ContentCard";
 
 import { GetTokenTransfersReply } from "@ankr.com/ankr.js";
-import { SplitBaseFragmentFragment } from "@/lib/graphql/thegraph/__generated__/graphql";
 import { Box, Button } from "@splitfi/ui";
 import Link from "next/link";
+import { DeepPartial } from "#/partial";
+import { Split } from "@splitfi/sdk";
 
 interface PoolActivityProps {
-  pool?: SplitBaseFragmentFragment | null;
+  pool?: DeepPartial<Split>;
   activity?: GetTokenTransfersReply;
 }
 
@@ -22,7 +23,7 @@ export default function PoolActivity({ pool, activity }: PoolActivityProps) {
         size={"sm"}
       />
       <Box p={"3"}>
-        <Button as={Link} href={"id/activity"} variant={"ghost"} size={"sm"}>
+        <Button as={Link} href={"id/activity"} size={"sm"}>
           Show all
         </Button>
       </Box>
