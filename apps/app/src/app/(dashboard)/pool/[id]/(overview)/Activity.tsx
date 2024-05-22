@@ -7,7 +7,7 @@ import { GetTokenTransfersReply } from "@ankr.com/ankr.js";
 import { Box, Button } from "@splitfi/ui";
 import Link from "next/link";
 import { DeepPartial } from "#/partial";
-import { Split } from "@splitfi/sdk";
+import { Split } from "@splitfi/sdk/thegraph";
 
 interface PoolActivityProps {
   pool?: DeepPartial<Split>;

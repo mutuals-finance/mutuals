@@ -1,4 +1,4 @@
-import { HttpLink, from } from "@apollo/client";
+import { HttpLink, from, ApolloLink } from "@apollo/client";
 import { RetryLink } from "@apollo/client/link/retry";
 import {
   NextSSRApolloClient,
@@ -20,21 +20,6 @@ export const makeClient =
   () => {
     const isSSr = typeof window === "undefined";
 
-    const httpApiLink = new HttpLink({
-      // this needs to be an absolute url, as relative urls cannot be used in SSR
-      uri: config.urls.thegraph,
-      // you can disable result caching here if you want to
-      // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
-      fetchOptions: { cache: "no-store" },
-      // you can override the default `fetchOptions` on a per query basis
-      // via the `context` property on the options passed as a second argument
-      // to an Apollo Client data fetching hook, e.g.:
-      // const { data } = useSuspensheQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
-      headers: {
-        ...(opts.authHeaders ?? {}),
-      },
-    });
-
     const retryLink = new RetryLink({
       delay: () => 1000,
       attempts: (count, operation, error) => {
@@ -42,10 +27,23 @@ export const makeClient =
       },
     });
 
-    return new NextSSRApolloClient({
-      connectToDevTools: isLocalEnv,
-      cache: new NextSSRInMemoryCache(),
-      link: isSSr
+    const apiLink = (uri: string) => {
+      const httpApiLink = new HttpLink({
+        // this needs to be an absolute url, as relative urls cannot be used in SSR
+        uri,
+        // you can disable result caching here if you want to
+        // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
+        fetchOptions: { cache: "no-store" },
+        // you can override the default `fetchOptions` on a per query basis
+        // via the `context` property on the options passed as a second argument
+        // to an Apollo Client data fetching hook, e.g.:
+        // const { data } = useSuspensheQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
+        headers: {
+          ...(opts.authHeaders ?? {}),
+        },
+      });
+
+      return isSSr
         ? from([
             // in a SSR environment, if you use multipart features like
             // @defer, you need to decide how to handle these.
@@ -55,6 +53,18 @@ export const makeClient =
             }),
             httpApiLink,
           ])
-        : from([retryLink, httpApiLink]),
+        : from([retryLink, httpApiLink]);
+    };
+
+    return new NextSSRApolloClient({
+      connectToDevTools: isLocalEnv,
+      cache: new NextSSRInMemoryCache(),
+      link: ApolloLink.split(
+        (operation) => operation.getContext().clientName === "thegraph",
+        //if above:
+        apiLink(config.urls.thegraph),
+        // else:
+        apiLink(config.urls.data),
+      ),
     });
   };

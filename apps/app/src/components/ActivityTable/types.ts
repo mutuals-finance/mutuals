@@ -1,5 +1,5 @@
 import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-import { Share } from "@splitfi/sdk";
+import { Share } from "@splitfi/sdk/thegraph";
 
 export enum EventType {
   Deposit = "Deposit",

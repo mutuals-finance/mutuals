@@ -8,7 +8,7 @@ import {
 
 import IconButtonListContainer from "@/components/Shell/IconButtonListContainer";
 import Link from "next/link";
-import { Split } from "@splitfi/sdk";
+import { Split } from "@splitfi/sdk/thegraph";
 import { type DeepPartial } from "#/partial";
 
 interface PoolHandlersProps {

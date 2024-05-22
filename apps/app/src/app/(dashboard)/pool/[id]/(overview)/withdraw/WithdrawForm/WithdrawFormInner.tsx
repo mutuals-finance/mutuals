@@ -16,7 +16,7 @@ import WithdrawModal from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/Withd
 import { GetAccountBalanceReply } from "@ankr.com/ankr.js";
 import SummaryTable from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/SummaryTable";
 import WithdrawTable from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawTable";
-import { type Split } from "@splitfi/sdk";
+import { type Split } from "@splitfi/sdk/thegraph";
 import { DeepPartial } from "#/partial";
 
 export interface WithdrawFormInnerProps {

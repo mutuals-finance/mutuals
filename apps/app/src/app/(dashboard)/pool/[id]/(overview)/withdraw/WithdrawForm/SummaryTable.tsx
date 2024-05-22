@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { formatCurrencyAmount, formatPrice } from "src/utils";
 import { WithdrawData } from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawFormInner";
-import { Share } from "@splitfi/sdk";
+import { Share } from "@splitfi/sdk/thegraph";
 
 export interface SummaryTableProps extends WithdrawData {
   shares?: Share[];

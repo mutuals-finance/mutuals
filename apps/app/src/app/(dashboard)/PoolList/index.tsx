@@ -1,19 +1,20 @@
 "use client";
 
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@splitfi/sdk";
 import { Container, Heading, SimpleGrid } from "@splitfi/ui";
 import React from "react";
 import { useAccount } from "wagmi";
 
 import { TreasurySearchAndCreate } from "@/app/(dashboard)/PoolList/SearchAndCreate";
 import SplitCard from "@/components/Split/Card";
-import { PoolListByRecipientDocument } from "@splitfi/sdk";
+import { PoolListByRecipientDocument } from "@splitfi/sdk/thegraph";
 
 export default function PoolList() {
   const { address, isConnected } = useAccount();
 
   const { data } = useQuery(PoolListByRecipientDocument, {
-    variables: { recipient: address },
+    variables: { recipient: address?.toString() ?? "" },
+    context: { clientName: "thegraph" },
     skip: !isConnected,
   });
 
@@ -28,7 +29,7 @@ export default function PoolList() {
         templateColumns={"repeat(auto-fit, minmax(22rem, 1fr))"}
         spacing={6}
       >
-        {data?.splits.length > 0
+        {!!data?.splits && data.splits.length > 0
           ? Array(4)
               .fill(data?.splits[0])
               .map((split, key) => {

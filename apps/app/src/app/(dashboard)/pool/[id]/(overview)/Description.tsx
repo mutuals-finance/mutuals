@@ -12,7 +12,7 @@ import {
 import { formatUSDPrice, ipfsResolveData } from "src/utils";
 
 import { SplitImage } from "@/components/Split/Image";
-import { Split } from "@splitfi/sdk";
+import { Split } from "@splitfi/sdk/thegraph";
 import { type DeepPartial } from "#/partial";
 
 interface PoolDescriptionProps {

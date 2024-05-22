@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useList } from "react-use";
 import ShareTable from "@/app/(dashboard)/pool/[id]/(overview)/Shares/ShareTable";
 import { ActiveShare } from "@/app/(dashboard)/pool/[id]/(overview)/Shares/ShareTable/types";
-import { type Share } from "@splitfi/sdk";
+import { type Share } from "@splitfi/sdk/thegraph";
 
 const PieChart = dynamic(() => import("@/components/PieChart"), {
   ssr: false,

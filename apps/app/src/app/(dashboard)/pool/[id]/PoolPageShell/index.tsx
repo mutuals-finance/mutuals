@@ -3,7 +3,7 @@ import { HStack, Text } from "@splitfi/ui";
 import PageShell, { PageShellProps } from "@/components/Shell/PageShell";
 import { SplitImage } from "@/components/Split/Image";
 import { ipfsResolveData } from "src/utils";
-import { SplitMetadata } from "@splitfi/sdk";
+import { SplitMetadata } from "@splitfi/sdk/thegraph";
 
 interface PoolPageShellProps extends PageShellProps {
   metaData: Partial<SplitMetadata>;
