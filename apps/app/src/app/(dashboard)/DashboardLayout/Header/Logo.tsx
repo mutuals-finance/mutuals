@@ -3,8 +3,7 @@
 import Link, { type LinkProps } from "next/link";
 import React from "react";
 
-import SplitFiLogo from "@/components/SplitFiLogo";
-
+import { SplitFiLogo } from "@splitfi/ui";
 
 export default function Logo({ href = "/", ...props }: Partial<LinkProps>) {
   return (

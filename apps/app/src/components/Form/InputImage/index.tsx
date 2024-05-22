@@ -3,7 +3,7 @@ import React from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { Controller, get, useFormContext } from "react-hook-form";
 
-import { formatBytes, formatStringItems } from "@/lib/utils";
+import { formatBytes, formatStringItems } from "src/utils";
 
 import InputBase from "@/components/Form/InputBase";
 import FilePlaceholder from "@/components/Form/InputImage/FilePlaceholder";

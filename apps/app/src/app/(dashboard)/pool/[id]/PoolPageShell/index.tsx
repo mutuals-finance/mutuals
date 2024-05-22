@@ -2,7 +2,7 @@ import React from "react";
 import { HStack, Text } from "@splitfi/ui";
 import PageShell, { PageShellProps } from "@/components/Shell/PageShell";
 import { SplitImage } from "@/components/Split/Image";
-import { ipfsResolveData } from "@/lib/utils";
+import { ipfsResolveData } from "src/utils";
 import { SplitMetadata } from "@splitfi/sdk";
 
 interface PoolPageShellProps extends PageShellProps {

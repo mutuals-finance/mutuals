@@ -13,7 +13,7 @@ import {
 import React from "react";
 import { Stat } from "@splitfi/ui";
 import { StatLabel } from "@chakra-ui/stat";
-import { formatUSDPrice } from "@/lib/utils";
+import { formatUSDPrice } from "src/utils";
 import ContentCard from "@/components/ContentCard";
 
 export default function Balance() {

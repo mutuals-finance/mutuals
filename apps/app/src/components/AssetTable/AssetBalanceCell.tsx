@@ -1,7 +1,7 @@
 import { Stack, Tag, TagLabel, Text, TextProps } from "@splitfi/ui";
 import React from "react";
 
-import { formatCurrencyAmount } from "@/lib/utils";
+import { formatCurrencyAmount } from "src/utils";
 import { AssetCellProps } from "@/components/AssetTable/types";
 
 type AssetBalanceCellProps = AssetCellProps & TextProps;

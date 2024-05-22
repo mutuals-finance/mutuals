@@ -5,7 +5,7 @@ import NextImage, { type ImageProps } from "next/image";
 import React from "react";
 import { IoImage } from "react-icons/io5";
 
-import { ipfsResolveData } from "@/lib/utils";
+import { ipfsResolveData } from "src/utils";
 
 export function SplitImage({
   src = "",

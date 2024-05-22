@@ -5,7 +5,7 @@ import React from "react";
 
 import { EventType } from "@/components/ActivityTable/types";
 import useActivityEvent from "@/components/ActivityTable/useActivityEvent";
-import { formatCurrencyAmount } from "@/lib/utils";
+import { formatCurrencyAmount } from "src/utils";
 
 type AmountCellProps = CellContext<TokenTransfer, string> & {
   address?: string;

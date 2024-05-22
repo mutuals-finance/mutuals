@@ -24,7 +24,7 @@ import {
 } from "react-icons/io5";
 import { useAccount, useDisconnect } from "wagmi";
 
-import { shortenAddress } from "@/lib/utils";
+import { shortenAddress } from "src/utils";
 
 import UserAvatar from "@/components/UserAvatar";
 import { useRouter } from "next/navigation";

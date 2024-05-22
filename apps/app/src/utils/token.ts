@@ -4,7 +4,7 @@ import {
   ETH_TOKEN,
   NATIVE_TOKEN_ADDRESS,
   NATIVE_TOKEN_LOGO_URI,
-} from "@/lib/constants";
+} from "src/constants";
 
 export function formatAmount(
   amount: string | BigNumberish,

@@ -1,4 +1,4 @@
-import { ipfsResolveData } from "@/lib/utils";
+import { ipfsResolveData } from "src/utils";
 import { FileWithPreview } from "@/components/Form/types";
 import PoolMetadataForm from "@/app/(dashboard)/pool/[id]/(content)/settings/MetadataForm";
 import ContentCard from "@/components/ContentCard";

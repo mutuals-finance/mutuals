@@ -11,7 +11,7 @@ import {
   Text,
 } from "@splitfi/ui";
 import React from "react";
-import { shortenAddress } from "@/lib/utils";
+import { shortenAddress } from "src/utils";
 
 import UserAvatar from "@/components/UserAvatar";
 import Link from "next/link";

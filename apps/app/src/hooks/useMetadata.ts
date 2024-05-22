@@ -1,7 +1,7 @@
 import { CIDString, NFTStorage } from "nft.storage";
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import { NFT_STORAGE_TOKEN } from "@/lib/constants";
+import { NFT_STORAGE_TOKEN } from "src/constants";
 
 import { FileWithPreview } from "@/components/Form/types";
 
@@ -67,9 +67,7 @@ export function useMetadata() {
               JSON.stringify({
                 name,
                 description,
-                image: reader?.cid
-                  ? `ipfs://${reader?.cid.toString()}`
-                  : null,
+                image: reader?.cid ? `ipfs://${reader?.cid.toString()}` : null,
               }),
             ]),
           ),

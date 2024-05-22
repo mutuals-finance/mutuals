@@ -3,7 +3,7 @@
 import { Box, Text, VStack } from "@splitfi/ui";
 import { Connector, useConnect } from "wagmi";
 import WalletConnectButton from "@/app/auth/sign-in/WalletConnectButton";
-import { partition } from "@/lib/utils";
+import { partition } from "src/utils";
 import { useRouter } from "next/navigation";
 
 interface WalletConnectContentProps {

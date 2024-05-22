@@ -1,7 +1,7 @@
 import { Text, TextProps } from "@splitfi/ui";
 import React from "react";
 
-import { formatUSDPrice } from "@/lib/utils";
+import { formatUSDPrice } from "src/utils";
 import { AssetCellProps } from "@/components/AssetTable/types";
 
 type AssetValueCellProps = AssetCellProps & TextProps;

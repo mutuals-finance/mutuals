@@ -3,7 +3,7 @@
 import { useParams, usePathname } from "next/navigation";
 import BreadcrumbsInner from "@/components/Breadcrumbs/BreadcrumbsInner";
 import { ReactNode, useCallback, useMemo } from "react";
-import { formatToTitleCase } from "@/lib/utils";
+import { formatToTitleCase } from "src/utils";
 
 export interface BreadcrumbsProps {
   overwrite?: { [key: string]: ReactNode };

@@ -2,7 +2,7 @@ import { HStack } from "@splitfi/ui";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-import { formatRoundNumber } from "@/lib/utils";
+import { formatRoundNumber } from "src/utils";
 
 import Input from "@/components/Form/Input";
 import InputFieldArray from "@/components/Form/InputFieldArray";

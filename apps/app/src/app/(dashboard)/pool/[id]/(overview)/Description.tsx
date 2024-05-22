@@ -9,7 +9,7 @@ import {
   Text,
 } from "@splitfi/ui";
 
-import { formatUSDPrice, ipfsResolveData } from "@/lib/utils";
+import { formatUSDPrice, ipfsResolveData } from "src/utils";
 
 import { SplitImage } from "@/components/Split/Image";
 import { Split } from "@splitfi/sdk";

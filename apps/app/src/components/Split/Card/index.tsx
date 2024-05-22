@@ -36,7 +36,7 @@ import {
   formatUSDPrice,
   getShortNameByChainId,
   shortenAddress,
-} from "@/lib/utils";
+} from "src/utils";
 
 import { SplitImage } from "@/components/Split/Image";
 import { Split } from "@splitfi/sdk";

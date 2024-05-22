@@ -14,7 +14,7 @@ import NextImage from "next/image";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { useAccount, useSwitchChain } from "wagmi";
 
-import { getAvailableChains, getLogoByChainId } from "@/lib/utils";
+import { getAvailableChains, getLogoByChainId } from "src/utils";
 
 export default function Chain() {
   const { isConnected, chain: currentChain } = useAccount();

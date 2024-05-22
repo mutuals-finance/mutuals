@@ -1,5 +1,5 @@
 import { FileWithPreview } from "@/components/Form/types";
-import { CONNECTOR_LOGO_MAP } from "@/lib/constants/connectors";
+import { CONNECTOR_LOGO_MAP } from "@/constants/connectors";
 /*
 
 const toDataURL = (url: string): Promise<string> =>

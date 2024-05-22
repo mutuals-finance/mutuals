@@ -1,9 +1,9 @@
 import {
-  AVAILABLE_CHAINS,
+  CHAINS,
   CHAIN_LOGO_URI_MAP,
   CHAIN_SHORT_NAME_MAP,
   ETH_LOGO,
-} from "@/lib/constants/";
+} from "src/constants";
 
 export function getLogoByChainId(id?: number) {
   return CHAIN_LOGO_URI_MAP[id || 1] || ETH_LOGO;
@@ -14,5 +14,5 @@ export function getShortNameByChainId(id: number) {
 }
 
 export function getAvailableChains() {
-  return AVAILABLE_CHAINS;
+  return CHAINS;
 }

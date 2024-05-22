@@ -8,7 +8,7 @@ import {
   UseWriteContractParameters,
 } from "wagmi";
 
-import { FACTORY_ADDRESS } from "@/lib/constants";
+import { FACTORY_ADDRESS } from "src/constants";
 
 import { SplitFactory__factory } from "@/../../types/typechain";
 import { randomBytes } from "ethers";

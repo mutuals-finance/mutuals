@@ -1,4 +1,4 @@
-import { ipfsUrlFromUri } from "@/lib/utils";
+import { ipfsUrlFromUri } from "src/utils";
 import { SplitMetadata } from "@splitfi/sdk";
 
 export const fetcher = <TResponse = unknown>(

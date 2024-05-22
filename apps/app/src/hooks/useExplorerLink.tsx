@@ -1,6 +1,6 @@
-import { shortenAddress } from "@/lib/utils";
+import { shortenAddress } from "src/utils";
 import { Chain } from "wagmi";
-import { AVAILABLE_CHAINS } from "@/lib/constants";
+import { CHAINS } from "src/constants";
 
 type UseExplorerLinkProps = {
   address?: string | `0x${string}`;
@@ -14,10 +14,10 @@ export default function useExplorerLink({
   chain,
 }: UseExplorerLinkProps) {
   const _chain = chainId
-    ? AVAILABLE_CHAINS.find((c) => c?.id === chainId)
+    ? CHAINS.find((c) => c?.id === chainId)
     : chain
       ? chain
-      : AVAILABLE_CHAINS[0];
+      : CHAINS[0];
 
   const baseUrl = _chain?.blockExplorers?.default.url || "";
   const href = `${baseUrl}/address/${address}`;

@@ -1,4 +1,4 @@
-import { COVALENT_KEY } from "@/lib/constants";
+import { COVALENT_KEY } from "src/constants";
 
 import {
   AllChainInfoResponse,

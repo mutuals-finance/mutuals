@@ -1,6 +1,6 @@
 import useSWR, { SWRConfiguration } from "swr";
 
-import { ipfsUrlFromUri } from "@/lib/utils";
+import { ipfsUrlFromUri } from "src/utils";
 
 import { getMetadata } from "./fetchers";
 
