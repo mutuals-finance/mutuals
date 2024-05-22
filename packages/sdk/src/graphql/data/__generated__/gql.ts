@@ -13,7 +13,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query Viewer {\n    viewer {\n      ... on Viewer {\n        __typename\n      }\n      ... on ErrNotAuthorized {\n        message\n        cause {\n          ... on ErrNoCookie {\n            message\n          }\n          ... on ErrInvalidToken {\n            message\n          }\n          ... on ErrSessionInvalidated {\n            message\n          }\n          ... on ErrDoesNotOwnRequiredToken {\n            message\n          }\n        }\n      }\n    }\n  }\n": types.ViewerDocument,
+    "\n  query Viewer {\n    viewer {\n      __typename\n    }\n  }\n": types.ViewerDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Viewer {\n    viewer {\n      ... on Viewer {\n        __typename\n      }\n      ... on ErrNotAuthorized {\n        message\n        cause {\n          ... on ErrNoCookie {\n            message\n          }\n          ... on ErrInvalidToken {\n            message\n          }\n          ... on ErrSessionInvalidated {\n            message\n          }\n          ... on ErrDoesNotOwnRequiredToken {\n            message\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query Viewer {\n    viewer {\n      ... on Viewer {\n        __typename\n      }\n      ... on ErrNotAuthorized {\n        message\n        cause {\n          ... on ErrNoCookie {\n            message\n          }\n          ... on ErrInvalidToken {\n            message\n          }\n          ... on ErrSessionInvalidated {\n            message\n          }\n          ... on ErrDoesNotOwnRequiredToken {\n            message\n          }\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query Viewer {\n    viewer {\n      __typename\n    }\n  }\n"): (typeof documents)["\n  query Viewer {\n    viewer {\n      __typename\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

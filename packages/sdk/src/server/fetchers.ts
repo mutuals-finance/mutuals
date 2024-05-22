@@ -20,30 +20,30 @@ type TQueryOptions<TVariableType, TQueryType> = Omit<
 >;
 
 export function getPoolListByRecipient(
-  options: TQueryOptions<
+  options?: TQueryOptions<
     PoolListByRecipientQueryVariables,
     PoolListByRecipientQuery
   >,
 ) {
   return getClient().query({
     query: GET_POOL_LIST_BY_RECIPIENT,
-    context: { client: "thegraph", ...options.context },
+    context: { clientName: "thegraph", ...options?.context },
     ...options,
   });
 }
 
 export function getPoolDetails(
-  options: TQueryOptions<PoolDetailsByIdQueryVariables, PoolDetailsByIdQuery>,
+  options?: TQueryOptions<PoolDetailsByIdQueryVariables, PoolDetailsByIdQuery>,
 ): Promise<ApolloQueryResult<PoolDetailsByIdQuery>> {
   return getClient().query({
     query: GET_POOL_DETAILS_BY_ID,
-    context: { client: "thegraph", ...options.context },
+    context: { clientName: "thegraph", ...options?.context },
     ...options,
   });
 }
 
 export function getViewer(
-  options: TQueryOptions<ViewerQueryVariables, ViewerQuery>,
+  options?: TQueryOptions<ViewerQueryVariables, ViewerQuery>,
 ): Promise<ApolloQueryResult<ViewerQuery>> {
   return getClient().query({
     query: GET_VIEWER,

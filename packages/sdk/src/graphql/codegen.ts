@@ -40,7 +40,7 @@ const config: CodegenConfig = {
     },
     "./src/graphql/data/__generated__/": {
       ...defaultConfig,
-      schema: sdkConfig.urls.data,
+      schema: `${sdkConfig.urls.data}`,
       documents: [
         "./src/graphql/data/**/*.{ts,tsx}",
         "!./src/graphql/data/__generated__/**/*",

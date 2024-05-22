@@ -1,4 +1,4 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 export const config = {
   /*
@@ -14,22 +14,6 @@ export const config = {
   ],
 };
 
-export function middleware(request: NextRequest) {
-  if (
-    request.nextUrl.pathname.indexOf("icon") > -1 ||
-    request.nextUrl.pathname.indexOf("chrome") > -1
-  ) {
-    return NextResponse.next();
-  }
-
-  const isAuthenticated = true;
-
-  // If the user is authenticated, continue as normal
-  if (isAuthenticated) {
-    return NextResponse.next();
-  }
-
-  // Redirect to login page if not authenticated
-  request.cookies.set("redirectURL", request.nextUrl.href);
-  return NextResponse.redirect(new URL("/auth/sign-in", request.url));
+export async function middleware() {
+  return NextResponse.next();
 }
