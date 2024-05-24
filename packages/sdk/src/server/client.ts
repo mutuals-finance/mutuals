@@ -4,14 +4,16 @@ import {
   InMemoryCache,
   from,
   ApolloLink,
+  HttpOptions,
 } from "@apollo/client";
 import { RetryLink } from "@apollo/client/link/retry";
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
 import config from "../config";
+import { headers } from "next/headers";
 
 const maxRetryAttempts = 5;
 
-const retryFrom = (uri: string) =>
+const linkWithRetry = (uri: string, options?: Omit<HttpOptions, "uri">) =>
   from([
     new RetryLink({
       delay: () => 1000,
@@ -19,20 +21,23 @@ const retryFrom = (uri: string) =>
         return !!error && count < maxRetryAttempts;
       },
     }),
-    new HttpLink({
-      uri,
-    }),
+    new HttpLink({ uri, ...options }),
   ]);
 
 export const { getClient } = registerApolloClient(() => {
+  const cookie = headers().get("cookie") ?? "";
+
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: ApolloLink.split(
       (operation) => operation.getContext().clientName === "thegraph",
       //if above:
-      retryFrom(config.urls.thegraph),
+      linkWithRetry(config.urls.thegraph),
       // else:
-      retryFrom(config.urls.data),
+      linkWithRetry(config.urls.data, {
+        headers: { cookie },
+        credentials: "include",
+      }),
     ),
   });
 });

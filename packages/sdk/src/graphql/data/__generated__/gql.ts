@@ -13,7 +13,12 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query Viewer {\n    viewer {\n      __typename\n    }\n  }\n": types.ViewerDocument,
+    "\n  mutation AddWallet(\n    $chainAddress: ChainAddressInput!\n    $authMechanism: AuthMechanism!\n  ) {\n    addUserWallet(chainAddress: $chainAddress, authMechanism: $authMechanism) {\n      ... on AddUserWalletPayload {\n        __typename\n        viewer {\n          user {\n            primaryWallet {\n              __typename\n            }\n            wallets {\n              dbid\n              chainAddress {\n                address\n                chain\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n": types.AddWalletDocument,
+    "\n  mutation CreateNonce {\n    getAuthNonce {\n      __typename\n\n      ... on AuthNonce {\n        nonce # @required(action: THROW)\n        message # @required(action: THROW)\n      }\n    }\n  }\n": types.CreateNonceDocument,
+    "\n  mutation CreateUser(\n    $authMechanism: AuthMechanism!\n    $input: CreateUserInput!\n  ) {\n    createUser(authMechanism: $authMechanism, input: $input) {\n      __typename\n      ... on CreateUserPayload {\n        __typename\n        viewer {\n          ... on Viewer {\n            user {\n              username\n            }\n          }\n        }\n      }\n      ... on ErrAuthenticationFailed {\n        __typename\n      }\n      ... on ErrDoesNotOwnRequiredToken {\n        __typename\n      }\n      ... on ErrUserAlreadyExists {\n        __typename\n      }\n      ... on ErrUsernameNotAvailable {\n        __typename\n      }\n      ... on ErrInvalidInput {\n        __typename\n      }\n    }\n  }\n": types.CreateUserDocument,
+    "\n  mutation Login($mechanism: AuthMechanism!) {\n    login(authMechanism: $mechanism) {\n      __typename\n\n      ... on LoginPayload {\n        userId # @required(action: THROW)\n      }\n      ... on ErrUserNotFound {\n        message\n      }\n      ... on ErrAuthenticationFailed {\n        message\n      }\n      ... on ErrDoesNotOwnRequiredToken {\n        message\n      }\n    }\n  }\n": types.LoginDocument,
+    "\n  query UserByAddress($chainAddress: ChainAddressInput!) {\n    userByAddress(chainAddress: $chainAddress) {\n      __typename\n      ... on SplitFiUser {\n        dbid\n        universal\n      }\n    }\n  }\n": types.UserByAddressDocument,
+    "\n  query Viewer {\n    viewer {\n      ... on Viewer {\n        __typename\n      }\n    }\n  }\n": types.ViewerDocument,
 };
 
 /**
@@ -33,7 +38,27 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Viewer {\n    viewer {\n      __typename\n    }\n  }\n"): (typeof documents)["\n  query Viewer {\n    viewer {\n      __typename\n    }\n  }\n"];
+export function graphql(source: "\n  mutation AddWallet(\n    $chainAddress: ChainAddressInput!\n    $authMechanism: AuthMechanism!\n  ) {\n    addUserWallet(chainAddress: $chainAddress, authMechanism: $authMechanism) {\n      ... on AddUserWalletPayload {\n        __typename\n        viewer {\n          user {\n            primaryWallet {\n              __typename\n            }\n            wallets {\n              dbid\n              chainAddress {\n                address\n                chain\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AddWallet(\n    $chainAddress: ChainAddressInput!\n    $authMechanism: AuthMechanism!\n  ) {\n    addUserWallet(chainAddress: $chainAddress, authMechanism: $authMechanism) {\n      ... on AddUserWalletPayload {\n        __typename\n        viewer {\n          user {\n            primaryWallet {\n              __typename\n            }\n            wallets {\n              dbid\n              chainAddress {\n                address\n                chain\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateNonce {\n    getAuthNonce {\n      __typename\n\n      ... on AuthNonce {\n        nonce # @required(action: THROW)\n        message # @required(action: THROW)\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateNonce {\n    getAuthNonce {\n      __typename\n\n      ... on AuthNonce {\n        nonce # @required(action: THROW)\n        message # @required(action: THROW)\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateUser(\n    $authMechanism: AuthMechanism!\n    $input: CreateUserInput!\n  ) {\n    createUser(authMechanism: $authMechanism, input: $input) {\n      __typename\n      ... on CreateUserPayload {\n        __typename\n        viewer {\n          ... on Viewer {\n            user {\n              username\n            }\n          }\n        }\n      }\n      ... on ErrAuthenticationFailed {\n        __typename\n      }\n      ... on ErrDoesNotOwnRequiredToken {\n        __typename\n      }\n      ... on ErrUserAlreadyExists {\n        __typename\n      }\n      ... on ErrUsernameNotAvailable {\n        __typename\n      }\n      ... on ErrInvalidInput {\n        __typename\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateUser(\n    $authMechanism: AuthMechanism!\n    $input: CreateUserInput!\n  ) {\n    createUser(authMechanism: $authMechanism, input: $input) {\n      __typename\n      ... on CreateUserPayload {\n        __typename\n        viewer {\n          ... on Viewer {\n            user {\n              username\n            }\n          }\n        }\n      }\n      ... on ErrAuthenticationFailed {\n        __typename\n      }\n      ... on ErrDoesNotOwnRequiredToken {\n        __typename\n      }\n      ... on ErrUserAlreadyExists {\n        __typename\n      }\n      ... on ErrUsernameNotAvailable {\n        __typename\n      }\n      ... on ErrInvalidInput {\n        __typename\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation Login($mechanism: AuthMechanism!) {\n    login(authMechanism: $mechanism) {\n      __typename\n\n      ... on LoginPayload {\n        userId # @required(action: THROW)\n      }\n      ... on ErrUserNotFound {\n        message\n      }\n      ... on ErrAuthenticationFailed {\n        message\n      }\n      ... on ErrDoesNotOwnRequiredToken {\n        message\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation Login($mechanism: AuthMechanism!) {\n    login(authMechanism: $mechanism) {\n      __typename\n\n      ... on LoginPayload {\n        userId # @required(action: THROW)\n      }\n      ... on ErrUserNotFound {\n        message\n      }\n      ... on ErrAuthenticationFailed {\n        message\n      }\n      ... on ErrDoesNotOwnRequiredToken {\n        message\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query UserByAddress($chainAddress: ChainAddressInput!) {\n    userByAddress(chainAddress: $chainAddress) {\n      __typename\n      ... on SplitFiUser {\n        dbid\n        universal\n      }\n    }\n  }\n"): (typeof documents)["\n  query UserByAddress($chainAddress: ChainAddressInput!) {\n    userByAddress(chainAddress: $chainAddress) {\n      __typename\n      ... on SplitFiUser {\n        dbid\n        universal\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Viewer {\n    viewer {\n      ... on Viewer {\n        __typename\n      }\n    }\n  }\n"): (typeof documents)["\n  query Viewer {\n    viewer {\n      ... on Viewer {\n        __typename\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

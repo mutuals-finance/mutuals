@@ -16,7 +16,11 @@ export default function SplitFiWagmiProvider({
   const queryClient = new QueryClient();
 
   return (
-    <WagmiProvider config={config} initialState={initialState}>
+    <WagmiProvider
+      config={config}
+      reconnectOnMount={true}
+      initialState={initialState}
+    >
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </WagmiProvider>
   );

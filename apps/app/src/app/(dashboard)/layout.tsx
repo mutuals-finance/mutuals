@@ -7,13 +7,17 @@ import { cookies } from "next/headers";
 export default async function DashboardLayout({ children }: PropsWithChildren) {
   const { data } = await getViewer();
 
-  const isLoggedIn = data.viewer?.__typename === "Viewer";
+  const isLoggedIn =
+    !!data?.viewer &&
+    "__typename" in data.viewer &&
+    data.viewer.__typename === "Viewer";
 
   if (!isLoggedIn) {
     const pathname = (children as any).props?.childProp?.segment;
     if (pathname) {
       cookies().set("redirectURL", pathname);
     }
+
     redirect(`/auth/sign-in`);
   }
 

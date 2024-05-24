@@ -4,17 +4,20 @@ import { ApolloProvider } from "@splitfi/sdk/providers";
 import { cookieToInitialState } from "wagmi";
 import WagmiProvider from "@/app/RootProviders/WagmiProvider";
 import { config } from "@/lib/wagmi";
+import { UIProvider } from "@splitfi/ui";
+import AuthProvider from "@/context/AuthContext/Provider";
 
 export default function ServerProviders({ children }: PropsWithChildren) {
-  //const cookieStore = cookies();
-  const wagmiInitialState = cookieToInitialState(
-    config,
-    headers().get("cookie"),
-  );
+  const cookie = headers().get("cookie") ?? "";
+  const wagmiInitialState = cookieToInitialState(config, cookie);
 
   return (
-    <ApolloProvider>
-      <WagmiProvider initialState={wagmiInitialState}>{children}</WagmiProvider>
-    </ApolloProvider>
+    <UIProvider>
+      <ApolloProvider>
+        <WagmiProvider initialState={wagmiInitialState}>
+          <AuthProvider>{children}</AuthProvider>
+        </WagmiProvider>
+      </ApolloProvider>
+    </UIProvider>
   );
 }
