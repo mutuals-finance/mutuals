@@ -22,16 +22,17 @@ import {
   IoPersonCircle,
   IoSunnyOutline,
 } from "react-icons/io5";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount } from "wagmi";
 
 import { shortenAddress } from "src/utils";
 
 import UserAvatar from "@/components/UserAvatar";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function User() {
   const { address, isConnected, isConnecting } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { disconnectAndLogout } = useAuth();
 
   const { colorMode, toggleColorMode } = useColorMode();
   const router = useRouter();
@@ -79,7 +80,9 @@ export default function User() {
               <MenuItem
                 icon={isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
                 onClick={() =>
-                  isConnected ? disconnect() : router.push("/auth/sign-in")
+                  isConnected
+                    ? disconnectAndLogout()
+                    : router.push("/auth/login")
                 }
                 fontWeight={"500"}
               >

@@ -42,7 +42,7 @@ export default function Header(props: HeaderProps) {
           spacing="12"
           position="relative"
         >
-          <Navigation />
+          <Navigation color={"white"} />
         </Container>
       </Box>
 
@@ -56,9 +56,11 @@ export default function Header(props: HeaderProps) {
         justifyContent="stretch"
         w="full"
         h="16"
-        shadow="sm"
-        roundedBottom="md"
-        bg="bg.1"
+        bg="whiteAlpha.900"
+        borderBottom={"1px solid"}
+        borderColor={"border.1"}
+        backdropFilter="auto"
+        backdropBlur="4px"
         animate={animLabel}
         transition={{ duration: 0.8, ease: [0.72, 0, 0.12, 1] }}
         variants={{

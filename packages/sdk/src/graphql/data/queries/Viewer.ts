@@ -5,6 +5,14 @@ export const GET_VIEWER = graphql(/* GraphQL */ `
     viewer {
       ... on Viewer {
         __typename
+        id
+        user {
+          wallets {
+            chainAddress {
+              address
+            }
+          }
+        }
       }
     }
   }

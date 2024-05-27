@@ -1,38 +1,18 @@
 "use client";
 
 import { Box, Text, VStack } from "@splitfi/ui";
-import { Connector, useConnect, useConnections, useReconnect } from "wagmi";
-import WalletConnectButton from "@/app/auth/sign-in/WalletConnectButton";
-import { partition } from "src/utils";
+import { Connector, useConnect } from "wagmi";
+import WalletConnectButton from "@/app/auth/login/WalletConnectButton";
+import { partition } from "@/utils";
 import { useAuth } from "@/context/AuthContext";
-import { useCallback } from "react";
 
 export default function WalletConnectContent() {
-  const connections = useConnections();
-  const { data, connect, connectors } = useConnect();
-  const { reconnectAsync } = useReconnect();
-  const { login } = useAuth();
+  const { connectors } = useConnect();
+  const { connectAndLogin } = useAuth();
 
   const [recentConnectors, popularConnectors] = partition(
     connectors as Connector[],
     (c) => c.type === "injected",
-  );
-
-  const connectOrLogin = useCallback(
-    async (connector: Connector) => {
-      const isAuthorized = await connector.isAuthorized();
-
-      if (!isAuthorized) {
-        const result = await reconnectAsync({ connectors: [connector] });
-
-        if (result.length <= 0) {
-          connect({ connector });
-        }
-      } else {
-        login();
-      }
-    },
-    [connections, reconnectAsync, connect, login],
   );
 
   return (
@@ -47,7 +27,7 @@ export default function WalletConnectContent() {
               {recentConnectors?.map((connector) => (
                 <WalletConnectButton
                   key={connector.id}
-                  onClick={() => connectOrLogin(connector)}
+                  onClick={() => connectAndLogin(connector)}
                   connector={connector}
                 />
               ))}
@@ -63,7 +43,7 @@ export default function WalletConnectContent() {
             {popularConnectors?.map((connector) => (
               <WalletConnectButton
                 key={connector.id}
-                onClick={() => connectOrLogin(connector)}
+                onClick={() => connectAndLogin(connector)}
                 connector={connector}
               />
             ))}

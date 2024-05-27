@@ -5,100 +5,78 @@ import {
   Container,
   Heading,
   Text,
-  AspectRatio,
   Grid,
   GridItem,
-  VStack,
-  AccordionPanel,
-  AccordionButton,
-  AccordionItem,
-  Accordion,
-  Button,
   Stack,
+  Icon,
 } from "@splitfi/ui";
-import Image from "next/image";
-
-import featureImage from "@/assets/feature.png";
+import SectionHeader from "@/components/SectionHeader";
+import { IoGitMerge } from "react-icons/io5";
 
 export default function HomeValue() {
   return (
-    <Container my="24" maxW="container.xl" px={{ base: "6", lg: "12" }}>
-      <Grid
-        templateColumns={{
-          base: "1fr",
-          lg: "1fr 1fr",
-        }}
-        gap={{ base: "6", lg: "12" }}
-      >
-        <GridItem
-          as={Stack}
-          p={{ base: "0", lg: "12" }}
-          alignItems="flex-start"
+    <Box bg={"bg.2"} py="24" mt={"24"}>
+      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
+        <SectionHeader
+          label={"Fully fledged toolset"}
+          mx="unset"
+          textAlign={{ lg: "left" }}
         >
-          <Accordion
-            defaultIndex={0}
-            as={VStack}
-            gap="3"
-            alignItems="stretch"
-            flex="1"
-          >
-            {[
-              "Split tokens",
-              "Automate payments",
-              "Track earnings",
-              "Accelerate partnerships",
-            ].map((title) => (
-              <AccordionItem
-                key={title}
-                position="relative"
-                pl="6"
-                border="none"
+          Financial management for on-chain teams
+        </SectionHeader>
+
+        <Grid
+          templateColumns={{
+            base: "1fr 1fr",
+            lg: "1fr 1fr 1fr 1fr",
+          }}
+          gap={{ base: "6", lg: "12" }}
+        >
+          {[
+            "Split tokens",
+            "Automate payments",
+            "Track earnings",
+            "Accelerate partnerships",
+          ].map((title) => (
+            <GridItem
+              as={Stack}
+              key={title}
+              borderLeft={"2px solid"}
+              borderColor="border.1"
+              pl={"3"}
+            >
+              <Icon
+                as={IoGitMerge}
+                boxSize={10}
+                bg="primary.50"
+                color={"primary.600"}
+                p="3"
+                rounded="md"
+                mb={"12"}
+              />
+
+              <Heading
+                as="h3"
+                size="xs"
+                fontWeight={"500"}
+                letterSpacing={"0.05rem"}
+                fontFamily={"monospace"}
+                textTransform={"uppercase"}
+                color={"color.3"}
+                mb={"1"}
+                mt={"auto"}
               >
-                <Box
-                  position="absolute"
-                  h="full"
-                  w="1"
-                  bg="primary.600"
-                  top="0"
-                  left="0"
-                />
-                <h3>
-                  <AccordionButton>
-                    <Heading as="span" size="lg">
-                      {title}
-                    </Heading>
-                  </AccordionButton>
-                </h3>
-                <AccordionPanel pb={3}>
-                  <Text fontSize="lg">
-                    SplitFi integrates with your clients systems and connects
-                    with a range of data sources
-                  </Text>
-                </AccordionPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                {title}
+              </Heading>
 
-          <Button variant="outline" colorScheme="primary" flexShrink="0">
-            Launch app and get started
-          </Button>
-        </GridItem>
-
-        <GridItem
-          as={AspectRatio}
-          w="full"
-          ratio={1}
-          position="relative"
-          rounded="md"
-        >
-          <Image
-            src={featureImage}
-            alt="Split Funds Without Trust"
-            fill
-            style={{ objectFit: "contain" }}
-          />
-        </GridItem>
-      </Grid>
-    </Container>
+              <Text fontSize="sm" fontWeight={"500"}>
+                SplitFi integrates with your clients systems and connects with a
+                range of data sources
+              </Text>
+            </GridItem>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 }

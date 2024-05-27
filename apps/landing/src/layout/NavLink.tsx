@@ -1,7 +1,7 @@
 "use client";
 
 import { Link, type LinkProps } from "@splitfi/ui";
-import { Box, forwardRef } from "@splitfi/ui";
+import { forwardRef } from "@splitfi/ui";
 import { usePathname } from "next/navigation";
 
 export interface NavLinkProps extends LinkProps {
@@ -15,23 +15,14 @@ const NavLink = forwardRef<NavLinkProps, "a">(({ children, ...props }, ref) => {
     <Link
       ref={ref}
       display={{ base: "none", lg: "flex" }}
-      fontWeight={isActive ? "600" : "500"}
-      textTransform="uppercase"
-      fontSize="xs"
+      fontWeight={"500"}
+      letterSpacing={"0.0325rem"}
+      fontSize="sm"
       position="relative"
-      _hover={{ opacity: 0.7 }}
+      opacity={isActive ? 1 : 0.8}
+      _hover={{ opacity: 1 }}
       {...props}
     >
-      <Box
-        position="absolute"
-        top="50%"
-        left="-2"
-        transform="translate(-50%, -50%)"
-        w="1"
-        h="1"
-        bg="red.500"
-        opacity={isActive ? 1 : 0}
-      />
       {children}
     </Link>
   );

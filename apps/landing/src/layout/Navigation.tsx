@@ -1,5 +1,4 @@
 import {
-  AbsoluteCenter,
   Button,
   ButtonGroup,
   Hide,
@@ -7,38 +6,57 @@ import {
   IconButton,
   Show,
   SplitFiLogo,
+  StackDivider,
+  StackProps,
 } from "@splitfi/ui";
 import { IoMenuSharp } from "react-icons/io5";
 
-import links from "@/layout/links";
 import NavLink from "@/layout/NavLink";
 
-export default function Navigation() {
+const links = {
+  left: [
+    {
+      id: "pricing",
+      href: "/pricing",
+      label: "Pricing",
+    },
+    { id: "contact", label: "Contact", href: "/contact" },
+  ],
+  right: [{ id: "support", label: "Support", href: "/support" }],
+};
+
+export default function Navigation(props: StackProps) {
   return (
-    <HStack flex="1" spacing="12" justify="space-between" position="relative">
-      <SplitFiLogo w={{ base: "24", lg: "24" }} />
+    <HStack flex="1" spacing="24" position="relative" {...props}>
+      <SplitFiLogo w={{ base: "24", lg: "20" }} />
 
       <Show above="lg">
-        <AbsoluteCenter>
-          <HStack spacing="12" justify="center">
-            {links.map(({ href, id, label, ...props }) => {
-              return (
-                <NavLink href={href} key={id} {...props}>
-                  {label}
-                </NavLink>
-              );
-            })}
-          </HStack>
-        </AbsoluteCenter>
+        <HStack spacing="12" justify="center">
+          {links.left.map(({ href, id, label, ...props }) => {
+            return (
+              <NavLink href={href} key={id} {...props}>
+                {label}
+              </NavLink>
+            );
+          })}
+        </HStack>
 
-        <HStack spacing="6" justify="center">
+        <HStack spacing="6" justify="center" ml={"auto"}>
+          {links.right.map(({ href, id, label, ...props }) => {
+            return (
+              <NavLink href={href} key={id} {...props}>
+                {label}
+              </NavLink>
+            );
+          })}
+          <StackDivider />
           <NavLink href="/docs">Docs</NavLink>
           <Button variant="blackWhite">Launch App</Button>
         </HStack>
       </Show>
 
       <Hide above="lg">
-        <ButtonGroup spacing="3" alignItems="center">
+        <ButtonGroup spacing="3" alignItems="center" ml={"auto"}>
           <Button variant="blackWhite">Launch App</Button>
 
           <IconButton

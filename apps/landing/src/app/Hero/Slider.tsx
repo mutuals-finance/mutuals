@@ -1,11 +1,11 @@
-import { Flex, SimpleGrid, useBreakpointValue } from "@splitfi/ui";
+import { Flex, FlexProps, SimpleGrid, useBreakpointValue } from "@splitfi/ui";
 import NextImage from "next/image";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
 import aboutImage from "@/assets/hero.png";
 import AnimationBox from "@/components/Animation/Box";
 
-type HomeHeroSliderProps = HomeHeroAnimBaseType;
+type HomeHeroSliderProps = FlexProps & HomeHeroAnimBaseType;
 
 const animSpace = 32;
 
@@ -28,7 +28,10 @@ const imageAnimVariants = {
   },
 };
 
-export default function HomeHeroSlider({ animLabel }: HomeHeroSliderProps) {
+export default function HomeHeroSlider({
+  animLabel,
+  ...props
+}: HomeHeroSliderProps) {
   return (
     <Flex
       justifyContent="center"
@@ -37,6 +40,7 @@ export default function HomeHeroSlider({ animLabel }: HomeHeroSliderProps) {
       overflow="hidden"
       mt={-1 * animSpace}
       pt={animSpace}
+      {...props}
     >
       <AnimationBox
         position="relative"

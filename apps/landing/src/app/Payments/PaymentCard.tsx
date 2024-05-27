@@ -4,20 +4,23 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Heading,
   Text,
+  Tag,
+  Box,
 } from "@splitfi/ui";
 import type { ImageProps } from "next/image";
 import Image from "next/image";
 
 interface PaymentOptionSlideProps extends CardProps {
-  heading: string;
+  tag: string;
+  headline: string;
   description: string;
   image?: ImageProps["src"];
 }
 
 export default function PaymentCard({
-  heading,
+  tag,
+  headline,
   description,
   image,
   ...props
@@ -25,29 +28,38 @@ export default function PaymentCard({
   return (
     <Card variant="filled" bg="transparent" {...props}>
       {!!image && (
-        <CardHeader p="0">
+        <CardHeader p="0" position="relative">
           <AspectRatio
             w="full"
-            bg="bg.3"
-            rounded="md"
-            ratio={16 / 9}
+            bgGradient={"linear(to-tl,primary.800,primary.800,primary.900)"}
+            rounded="lg"
+            ratio={3 / 4}
             position="relative"
           >
             <Image
               src={image}
-              alt={heading}
+              alt={tag}
               fill
               style={{ objectFit: "contain" }}
             />
           </AspectRatio>
+
+          <Box position={"absolute"} top={"0"} left={"0"} p={"3"}>
+            <Tag colorScheme={"blackAlpha"} rounded={"full"} p={"3"}>
+              {tag}
+            </Tag>
+          </Box>
         </CardHeader>
       )}
 
       <CardBody px="0">
-        <Heading mb="3" size="sm">
-          {heading}
-        </Heading>
-        <Text color="color.2">{description}</Text>
+        <Text fontSize={"lg"} fontWeight={"500"}>
+          {headline}
+          <Text as={"span"} color={"color.3"} fontWeight={"500"}>
+            {" "}
+            {description}
+          </Text>
+        </Text>
       </CardBody>
     </Card>
   );

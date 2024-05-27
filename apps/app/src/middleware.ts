@@ -10,7 +10,7 @@ export const config = {
    * - sw.js (service worker)
    */
   matcher: [
-    "/((?!api|auth/sign-in|_next/static|_next/image|favicon.ico|sw.js).*)",
+    "/((?!api|auth/login|_next/static|_next/image|favicon.ico|sw.js).*)",
   ],
 };
 

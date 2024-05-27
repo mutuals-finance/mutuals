@@ -1,43 +1,51 @@
 "use client";
 
-import { Box, Container, SimpleGrid, useColorModeValue } from "@splitfi/ui";
+import { Box, Container, SimpleGrid, DarkMode } from "@splitfi/ui";
 
 import ActorCard from "@/app/Actors/ActorCard";
 import SectionHeader from "@/components/SectionHeader";
 
 export default function HomeActors() {
   return (
-    <>
-      <Box my="24">
-        <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
-          <SectionHeader>Versatile Solutions For Everyone</SectionHeader>
+    <Box my="24">
+      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
+        <SectionHeader label={"Your Benefit"}>
+          Versatile Solutions For Everyone
+        </SectionHeader>
 
-          <SimpleGrid
-            columns={{ base: 1, lg: 2 }}
-            gap={{ base: "6", lg: "12" }}
-            alignItems="flex-start"
-          >
+        <SimpleGrid
+          columns={{ base: 1, lg: 2 }}
+          gap={"6"}
+          alignItems="flex-start"
+        >
+          <DarkMode>
             <ActorCard
               title="Automate and Track Project Earnings"
-              subtitle="For Creators"
-              description="No need to worry about distributing token payments. Utilize our highly customizable, gas-efficient smart contracts to automate token payments and track your project earnings."
+              subtitle="For Owners"
+              description="SplitFi lets you automate and distribute your project earnings."
               href="#"
+              bg={"gray.900"}
+              benefits={[
+                "Highly customizable, gas-efficient smart contracts",
+                "No need to worry about distributing token payments",
+                "Automate income streams and track project earnings",
+              ]}
             />
-            <ActorCard
-              title="Trustless Revenue Distribution"
-              subtitle="For Stakeholders"
-              description="Trustless distribution of revenues without relying on intermediaries. Supported by a clean and easy-to-use interface for analyzing project earnings."
-              href="#"
-            />
-          </SimpleGrid>
-        </Container>
-      </Box>
-      <Box
-        my="24"
-        bg={useColorModeValue("blue.50", "blue.900")}
-        w="full"
-        h="40"
-      />
-    </>
+          </DarkMode>
+          <ActorCard
+            title="Trustless Revenue Distribution"
+            subtitle="For Partners"
+            description="SplitFi enables trustless revenue distribution and removes reliance on intermediaries."
+            benefits={[
+              "Trustless distribution of revenues",
+              "No reliance on intermediaries",
+              "Clean and easy-to-use interface for analyzing project earnings",
+            ]}
+            href="#"
+            bg={"blue.100"}
+          />
+        </SimpleGrid>
+      </Container>
+    </Box>
   );
 }

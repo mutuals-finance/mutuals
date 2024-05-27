@@ -18,7 +18,7 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
       cookies().set("redirectURL", pathname);
     }
 
-    redirect(`/auth/sign-in`);
+    redirect(`/auth/login`);
   }
 
   return <Layout>{children}</Layout>;

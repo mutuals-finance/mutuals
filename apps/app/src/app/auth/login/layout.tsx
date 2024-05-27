@@ -73,8 +73,8 @@ export default function SignInLayout({ children }: PropsWithChildren) {
 
             <RouterTabs
               tabs={[
-                { title: "Continue With Wallet", href: "/auth/sign-in" },
-                { title: "Continue With Email", href: "/auth/sign-in/email" },
+                { title: "Continue With Wallet", href: "/auth/login" },
+                { title: "Continue With Email", href: "/auth/login/email" },
               ]}
             >
               {children}

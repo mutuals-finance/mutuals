@@ -15,7 +15,7 @@ import { PropsWithChildren } from "react";
 
 type WalletAuthModalProps = PropsWithChildren<Omit<ModalProps, "children">>;
 
-export default function WalletAuthModal({
+export default function SignModal({
   onClose,
   isOpen,
   size = "sm",

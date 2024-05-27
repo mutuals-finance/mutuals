@@ -14,7 +14,13 @@ export default function HomeFeatures() {
   return (
     <Box my="24">
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
-        <SectionHeader>A Few More Things You’re Going To Love</SectionHeader>
+        <SectionHeader
+          label={"Sophisticated features"}
+          mx={"unset"}
+          textAlign={"left"}
+        >
+          A Few More Things You’re Going To Love
+        </SectionHeader>
         <SimpleGrid columns={{ base: 1, lg: 3 }} gap={{ base: 6, lg: 12 }}>
           <FeatureCard
             icon={MdMoneyOff}

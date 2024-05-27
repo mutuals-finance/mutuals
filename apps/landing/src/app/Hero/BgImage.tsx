@@ -35,9 +35,9 @@ export default function HomeHeroBgImage({
         display: "block",
         position: "absolute",
         inset: "0",
-        bg: "blackAlpha.400",
+        bgGradient:
+          "linear(to-b, blackAlpha.500, blackAlpha.700,blackAlpha.900)",
       }}
-      zIndex={-1}
       animate={animLabel}
       variants={useBreakpointValue({
         base: {

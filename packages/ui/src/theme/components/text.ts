@@ -9,21 +9,15 @@ const variants = {
     fontFamily: "monospace",
     fontVariantNumeric: "slashed-zero",
   },
-  "label-mono": {
-    fontFamily: "monospace",
-    color: "color.3",
-  },
   label: {
     color: "color.3",
   },
   tag: defineStyle({
-    color: "color.primary",
+    fontFamily: "monospace",
+    color: "color.3",
     textTransform: "uppercase",
-    fontSize: "xs",
     fontWeight: "500",
-    _dark: {
-      color: "color.primary",
-    },
+    letterSpacing: "0.05rem",
   }),
 };
 

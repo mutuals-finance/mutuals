@@ -14,6 +14,7 @@ import {
   CreateUserMutationVariables,
   Exact,
   LoginMutationVariables,
+  LogoutMutationVariables,
   UserByAddressQuery,
   UserByAddressQueryVariables,
 } from "../graphql/data/__generated__/graphql";
@@ -21,6 +22,7 @@ import { CREATE_NONCE } from "../graphql/data/mutations/CreateNonce";
 import { GET_USER_BY_WALLET_ADDRESS } from "../graphql/data/queries/GetUserByWalletAddress";
 import { CREATE_USER } from "../graphql/data/mutations/CreateUser";
 import { ADD_WALLET } from "../graphql/data/mutations/AddWallet";
+import { LOGOUT } from "../graphql/data/mutations/Logout";
 
 type TMutationOptions<TMutationDocument> = MutationHookOptions<
   TMutationDocument,
@@ -48,6 +50,10 @@ export function useCreateUser(variables?: CreateUserMutationVariables) {
 
 export function useLogin(variables?: LoginMutationVariables) {
   return useMutation(LOGIN, { variables });
+}
+
+export function useLogout(variables?: LogoutMutationVariables) {
+  return useMutation(LOGOUT, { variables });
 }
 
 export function useCreateNonce(

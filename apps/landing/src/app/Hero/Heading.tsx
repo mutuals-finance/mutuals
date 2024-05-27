@@ -2,48 +2,47 @@ import {
   Button,
   ButtonGroup,
   Container,
+  ContainerProps,
   Heading,
   Stack,
-  Tag,
-  TagLabel,
+  Text,
 } from "@splitfi/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
 import AnimationBox from "@/components/Animation/Box";
 
-type HomeHeroHeadingProps = HomeHeroAnimBaseType;
+type HomeHeroHeadingProps = ContainerProps & HomeHeroAnimBaseType;
 
-export default function HomeHeroHeading({ animLabel }: HomeHeroHeadingProps) {
+export default function HomeHeroHeading({
+  animLabel,
+  ...props
+}: HomeHeroHeadingProps) {
   return (
-    <Container maxW="container.lg" py="24" px={{ base: 6, sm: 12 }}>
+    <Container
+      maxW="container.lg"
+      mr="auto"
+      py="24"
+      px={{ base: 6, sm: 12 }}
+      {...props}
+    >
       <AnimationBox
         animate={animLabel}
         variants={{ shrink: { scale: 0.8 }, grow: { scale: 1 } }}
       >
-        <Stack gap="12" textAlign="center" alignItems="center" mx="auto">
-          <Tag
-            variant="solid"
-            borderRadius="full"
-            colorScheme="primary"
-            size="lg"
-          >
-            <TagLabel fontWeight="400">Join now for free</TagLabel>
-          </Tag>
+        <Stack gap="12" alignItems="flex-start" justifyContent={"flex-start"}>
+          <Text variant={"tag"}>Join now for free</Text>
           <Heading
+            color={"color.1"}
             as="h1"
-            fontSize="clamp(3rem,5.2vw,6rem)"
-            fontWeight="400"
-            lineHeight="1.4"
-            color="white"
+            fontSize="clamp(3.2rem,5.4vw,6.4rem)"
+            fontWeight="500"
+            lineHeight="1.2"
           >
             The best way to manage your on-chain income.
           </Heading>
 
-          <ButtonGroup size="lg" spacing="6">
-            <Button color="white" colorScheme="whiteAlpha">
-              Learn More
-            </Button>
-            <Button variant="blackWhite">Launch App</Button>
+          <ButtonGroup spacing="6">
+            <Button variant={"blackWhite"}>Get Started</Button>
           </ButtonGroup>
         </Stack>
       </AnimationBox>
