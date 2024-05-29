@@ -12,7 +12,10 @@ import { GET_VIEWER } from "../graphql/data/queries/Viewer";
 import {
   ViewerQuery,
   ViewerQueryVariables,
+  ViewerWalletsQuery,
+  ViewerWalletsQueryVariables,
 } from "../graphql/data/__generated__/graphql";
+import { GET_VIEWER_WALLETS } from "../graphql/data/queries/GetViewerWallets";
 
 type TQueryOptions<TVariableType, TQueryType> = Omit<
   QueryOptions<TVariableType, TQueryType>,
@@ -47,6 +50,15 @@ export function getViewer(
 ): Promise<ApolloQueryResult<ViewerQuery>> {
   return getClient().query({
     query: GET_VIEWER,
+    ...options,
+  });
+}
+
+export function getViewerWallets(
+  options?: TQueryOptions<ViewerWalletsQueryVariables, ViewerWalletsQuery>,
+): Promise<ApolloQueryResult<ViewerWalletsQuery>> {
+  return getClient().query({
+    query: GET_VIEWER_WALLETS,
     ...options,
   });
 }

@@ -3,7 +3,7 @@ import { Box } from "@splitfi/ui";
 import type { KeenSliderOptions, KeenSliderPlugin } from "keen-slider/react";
 import { useKeenSlider } from "keen-slider/react";
 
-interface KeenSliderProps extends BoxProps {
+export interface KeenSliderProps extends BoxProps {
   options?: KeenSliderOptions;
   plugins?: KeenSliderPlugin[];
 }
@@ -16,14 +16,17 @@ export default function KeenSlider({
   plugins,
   ...props
 }: KeenSliderProps) {
-  const [sliderRef] = useKeenSlider(options, plugins);
+  const [sliderRef, { current }] = useKeenSlider(options, plugins);
 
   return (
     <Box
       ref={sliderRef}
       className={`keen-slider ${className}`}
-      cursor="grab"
-      _active={{ cursor: "grabbing", ..._active }}
+      cursor={current?.options.drag ? "grab" : "default"}
+      _active={{
+        cursor: current?.options.drag ? "grabbing" : "default",
+        ..._active,
+      }}
       {...props}
     >
       {children}

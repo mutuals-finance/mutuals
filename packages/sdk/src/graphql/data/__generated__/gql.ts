@@ -19,6 +19,7 @@ const documents = {
     "\n  mutation Login($mechanism: AuthMechanism!) {\n    login(authMechanism: $mechanism) {\n      __typename\n\n      ... on LoginPayload {\n        userId # @required(action: THROW)\n      }\n      ... on ErrUserNotFound {\n        message\n      }\n      ... on ErrAuthenticationFailed {\n        message\n      }\n      ... on ErrDoesNotOwnRequiredToken {\n        message\n      }\n    }\n  }\n": types.LoginDocument,
     "\n  mutation Logout {\n    logout {\n      __typename\n    }\n  }\n": types.LogoutDocument,
     "\n  query UserByAddress($chainAddress: ChainAddressInput!) {\n    userByAddress(chainAddress: $chainAddress) {\n      __typename\n      ... on SplitFiUser {\n        dbid\n        universal\n      }\n    }\n  }\n": types.UserByAddressDocument,
+    "\n  query ViewerWallets {\n    viewer {\n      ... on Viewer {\n        user {\n          wallets {\n            dbid\n            chainAddress {\n              chain\n              address\n            }\n          }\n          primaryWallet {\n            dbid\n            chainAddress {\n              chain\n              address\n            }\n          }\n        }\n      }\n    }\n  }\n": types.ViewerWalletsDocument,
     "\n  query Viewer {\n    viewer {\n      ... on Viewer {\n        __typename\n        id\n        user {\n          wallets {\n            chainAddress {\n              address\n            }\n          }\n        }\n      }\n    }\n  }\n": types.ViewerDocument,
 };
 
@@ -60,6 +61,10 @@ export function graphql(source: "\n  mutation Logout {\n    logout {\n      __ty
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query UserByAddress($chainAddress: ChainAddressInput!) {\n    userByAddress(chainAddress: $chainAddress) {\n      __typename\n      ... on SplitFiUser {\n        dbid\n        universal\n      }\n    }\n  }\n"): (typeof documents)["\n  query UserByAddress($chainAddress: ChainAddressInput!) {\n    userByAddress(chainAddress: $chainAddress) {\n      __typename\n      ... on SplitFiUser {\n        dbid\n        universal\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query ViewerWallets {\n    viewer {\n      ... on Viewer {\n        user {\n          wallets {\n            dbid\n            chainAddress {\n              chain\n              address\n            }\n          }\n          primaryWallet {\n            dbid\n            chainAddress {\n              chain\n              address\n            }\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query ViewerWallets {\n    viewer {\n      ... on Viewer {\n        user {\n          wallets {\n            dbid\n            chainAddress {\n              chain\n              address\n            }\n          }\n          primaryWallet {\n            dbid\n            chainAddress {\n              chain\n              address\n            }\n          }\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -41,7 +41,7 @@ export default function HomeHero() {
             />
           </Box>
           <HomeHeroSlider animLabel={animLabel} />
-          <HomeHeroFooter animLabel={animLabel} />
+          <HomeHeroFooter />
         </Box>
       </DarkMode>
     </MotionConfig>

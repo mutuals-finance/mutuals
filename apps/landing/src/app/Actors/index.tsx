@@ -8,7 +8,7 @@ import SectionHeader from "@/components/SectionHeader";
 export default function HomeActors() {
   return (
     <Box my="24">
-      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
+      <Container maxW="100%" px={{ base: "6", lg: "12" }}>
         <SectionHeader label={"Your Benefit"}>
           Versatile Solutions For Everyone
         </SectionHeader>

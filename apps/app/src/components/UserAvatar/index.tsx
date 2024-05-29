@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, type AvatarProps } from "@splitfi/ui";
 import React from "react";
 import dynamic from "next/dynamic";

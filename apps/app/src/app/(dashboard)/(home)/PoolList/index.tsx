@@ -5,7 +5,7 @@ import { Container, Heading, SimpleGrid } from "@splitfi/ui";
 import React from "react";
 import { useAccount } from "wagmi";
 
-import { TreasurySearchAndCreate } from "@/app/(dashboard)/PoolList/SearchAndCreate";
+import { TreasurySearchAndCreate } from "./SearchAndCreate";
 import SplitCard from "@/components/Split/Card";
 import { PoolListByRecipientDocument } from "@splitfi/sdk/thegraph";
 

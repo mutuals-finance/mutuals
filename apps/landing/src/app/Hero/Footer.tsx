@@ -1,8 +1,6 @@
 import { Container, ContainerProps, Box, Text } from "@splitfi/ui";
 
-import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
-
-type HomeHeroFooterProps = ContainerProps & HomeHeroAnimBaseType;
+type HomeHeroFooterProps = ContainerProps;
 
 export default function HomeHeroFooter({ ...props }: HomeHeroFooterProps) {
   return (

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Button,
   Card,
@@ -15,11 +13,18 @@ import { shortenAddress } from "src/utils";
 
 import UserAvatar from "@/components/UserAvatar";
 import Link from "next/link";
+import { Wallet } from "@splitfi/sdk";
+import { DeepPartial } from "#/partial";
 
-type SplitCardProps = CardProps;
+interface WalletCardProps extends DeepPartial<Wallet>, CardProps {
+  isPrimaryWallet: boolean;
+}
 
-export default function WalletCard(props: SplitCardProps) {
-  const address = "0x24856890515299d77f0a3f344921f3860a82877b";
+export default function WalletCard({
+  chainAddress,
+  isPrimaryWallet,
+  ...props
+}: WalletCardProps) {
   return (
     <Card as="article" variant={"outline"} bg={"transparent"} {...props}>
       <CardHeader
@@ -29,14 +34,14 @@ export default function WalletCard(props: SplitCardProps) {
         alignItems={"center"}
         textAlign={"center"}
       >
-        <UserAvatar address={address} size={"sm"} />
+        <UserAvatar address={chainAddress?.address} size={"sm"} />
         <Stack gap={"1.5"} alignItems={"center"}>
           <Heading size="sm" as={"h3"}>
             Company Multisig
           </Heading>
 
           <Text fontSize="xs" fontFamily={"monospace"}>
-            {shortenAddress(address)}
+            {shortenAddress(chainAddress?.address)}
           </Text>
         </Stack>
         {/*
@@ -63,7 +68,7 @@ export default function WalletCard(props: SplitCardProps) {
           size={"sm"}
           w={"full"}
           as={Link}
-          href={`wallet/${address}`}
+          href={`wallet/${chainAddress?.address}`}
           scroll={false}
         >
           Manage

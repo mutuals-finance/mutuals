@@ -1,15 +1,19 @@
 import React, { PropsWithChildren } from "react";
-import WalletList from "@/app/(dashboard)/WalletList";
-import DashboardHandlers from "@/app/(dashboard)/Handlers";
-import PoolList from "@/app/(dashboard)/PoolList";
-import Balance from "@/app/(dashboard)/(home)/Balance";
+import WalletList from "./WalletList";
+import DashboardHandlers from "./Handlers";
+import PoolList from "./PoolList";
+import Balance from "./Balance";
+import { getViewerWallets } from "@splitfi/sdk/server";
 
-export default function DashboardHomeLayout({ children }: PropsWithChildren) {
+export default async function DashboardHomeLayout({
+  children,
+}: PropsWithChildren) {
+  const query = await getViewerWallets();
   return (
     <>
       <Balance />
       <DashboardHandlers />
-      <WalletList />
+      <WalletList {...query} />
       <PoolList />
       {children}
     </>

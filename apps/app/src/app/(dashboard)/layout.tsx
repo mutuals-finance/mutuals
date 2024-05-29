@@ -8,7 +8,7 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
   const { data } = await getViewer();
 
   const isLoggedIn =
-    !!data?.viewer &&
+    data?.viewer &&
     "__typename" in data.viewer &&
     data.viewer.__typename === "Viewer";
 
