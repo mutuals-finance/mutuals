@@ -7,7 +7,6 @@ import { useState } from "react";
 import HomeHeroBgImage from "@/app/Hero/BgImage";
 import HomeHeroHeading from "@/app/Hero/Heading";
 import HomeHeroSlider from "@/app/Hero/Slider";
-import HomeHeroFooter from "@/app/Hero/Footer";
 import { DarkMode } from "@splitfi/ui";
 
 export type HomeHeroAnimBaseType = {
@@ -30,10 +29,10 @@ export default function HomeHero() {
 
   return (
     <MotionConfig transition={{ duration: 0.8, ease: [0.72, 0, 0.12, 1] }}>
-      <DarkMode>
-        <Box bg={"bg.1"}>
+      <Box>
+        <DarkMode>
           <Box position="relative" py="24">
-            <HomeHeroBgImage animLabel={animLabel} top="24" />
+            <HomeHeroBgImage animLabel={animLabel} top="0" />
             <HomeHeroHeading
               animLabel={animLabel}
               zIndex={"2"}
@@ -41,9 +40,8 @@ export default function HomeHero() {
             />
           </Box>
           <HomeHeroSlider animLabel={animLabel} />
-          <HomeHeroFooter />
-        </Box>
-      </DarkMode>
+        </DarkMode>
+      </Box>
     </MotionConfig>
   );
 }

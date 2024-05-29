@@ -12,8 +12,8 @@ export default function HomePage() {
       <Actors />
       <Chains />
       <Value />
-      <Payments />
       <Features />
+      <Payments />
     </>
   );
 }

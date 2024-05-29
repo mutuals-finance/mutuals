@@ -33,13 +33,9 @@ const values = [
 ];
 export default function HomeValue() {
   return (
-    <Box bg={"bg.2"} mt={"24"} py="24">
+    <Box bg={"bg.1"} pt="24" pb={"0"}>
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
-        <SectionHeader
-          label={"Fully fledged toolset"}
-          mx="unset"
-          textAlign={{ lg: "left" }}
-        >
+        <SectionHeader label={"Fully fledged toolset"}>
           Financial management for on-chain teams
         </SectionHeader>
 

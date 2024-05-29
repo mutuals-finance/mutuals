@@ -8,8 +8,8 @@ import SectionHeader from "@/components/SectionHeader";
 export default function HomeActors() {
   return (
     <Box my="24">
-      <Container maxW="100%" px={{ base: "6", lg: "12" }}>
-        <SectionHeader label={"Your Benefit"}>
+      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
+        <SectionHeader label={"Explore SplitFi"}>
           Versatile Solutions For Everyone
         </SectionHeader>
 
@@ -42,7 +42,7 @@ export default function HomeActors() {
               "Clean and easy-to-use interface for analyzing project earnings",
             ]}
             href="#"
-            bg={"blue.100"}
+            bg={"primary.100"}
           />
         </SimpleGrid>
       </Container>

@@ -27,7 +27,7 @@ export default function HomeHeroBgImage({
       left="50%"
       w={{ base: "full", lg: "calc(100% - var(--chakra-space-12))" }}
       transform="translateX(-50%)"
-      rounded="md"
+      roundedBottom="lg"
       overflow="hidden"
       _after={{
         zIndex: 1,
@@ -35,8 +35,11 @@ export default function HomeHeroBgImage({
         display: "block",
         position: "absolute",
         inset: "0",
+        bg: "blackAlpha.700",
+        /*
         bgGradient:
-          "linear(to-b, blackAlpha.500, blackAlpha.700,blackAlpha.900)",
+          "linear(to-b, blackAlpha.500, blackAlpha.700, blackAlpha.900)",
+*/
       }}
       animate={animLabel}
       variants={useBreakpointValue({
@@ -50,10 +53,10 @@ export default function HomeHeroBgImage({
         },
         lg: {
           shrink: {
-            width: "100%",
+            width: "calc(100% - var(--chakra-space-12))",
           },
           grow: {
-            width: "calc(100% - var(--chakra-space-12))",
+            width: "100%",
           },
         },
       })}

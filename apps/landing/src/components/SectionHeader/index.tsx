@@ -1,12 +1,20 @@
-import { type BoxProps, Text, Box, Heading } from "@splitfi/ui";
+import {
+  type BoxProps,
+  type HeadingProps,
+  Text,
+  Box,
+  Heading,
+} from "@splitfi/ui";
 
 interface SectionHeaderProps extends BoxProps {
   label?: string;
+  headingProps?: HeadingProps;
 }
 
 export default function SectionHeader({
   children,
   label,
+  headingProps,
   ...props
 }: SectionHeaderProps) {
   return (
@@ -22,7 +30,7 @@ export default function SectionHeader({
           {label}
         </Text>
       )}
-      <Heading size="2xl" lineHeight="1.2" color={"color.1"}>
+      <Heading size="2xl" lineHeight="1.2" color={"color.1"} {...headingProps}>
         {children}
       </Heading>
     </Box>
