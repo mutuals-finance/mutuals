@@ -1,5 +1,4 @@
 import { Button, ButtonProps } from "@splitfi/ui";
-import React from "react";
 import { Connector } from "wagmi";
 import NextImage from "next/image";
 

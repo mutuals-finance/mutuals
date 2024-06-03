@@ -24,14 +24,25 @@ const networks = [
 
 export default function HomeChains() {
   return (
-    <Box mt={"12"}>
+    <Box mt={"24"} mb={"12"}>
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
         <Text variant={"tag"} mb={"6"}>
           Available on {networks.length - 1}+ networks
         </Text>
-
-        <ChainSlider networks={networks} />
       </Container>
+
+      <Box position={"relative"}>
+        <ChainSlider networks={networks} />
+
+        <Box
+          position={"absolute"}
+          w="full"
+          h="full"
+          top="0"
+          right={"0"}
+          bgGradient="linear(to-r, bg.1,transparent,transparent,transparent,transparent, bg.1)"
+        />
+      </Box>
     </Box>
   );
 }

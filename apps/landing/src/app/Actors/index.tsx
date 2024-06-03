@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, SimpleGrid, DarkMode } from "@splitfi/ui";
+import { Box, Container, DarkMode, Stack } from "@splitfi/ui";
 
 import ActorCard from "@/app/Actors/ActorCard";
 import SectionHeader from "@/components/SectionHeader";
@@ -8,43 +8,41 @@ import SectionHeader from "@/components/SectionHeader";
 export default function HomeActors() {
   return (
     <Box my="24">
-      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
+      <Container maxW="container.xl" px={"3"}>
         <SectionHeader label={"Explore SplitFi"}>
           Versatile Solutions For Everyone
         </SectionHeader>
 
-        <SimpleGrid
-          columns={{ base: 1, lg: 2 }}
-          gap={"6"}
-          alignItems="flex-start"
-        >
+        <Stack gap={"3"} direction="row">
           <DarkMode>
             <ActorCard
-              title="Automate and Track Project Earnings"
-              subtitle="For Owners"
-              description="SplitFi lets you automate and distribute your project earnings."
-              href="#"
-              bg={"gray.900"}
+              animate={"shrink"}
+              title="Project Owners"
+              description="Mutuals lets you automate and distribute your project earnings."
+              bg={"bg.1"}
               benefits={[
                 "Highly customizable, gas-efficient smart contracts",
                 "No need to worry about distributing token payments",
                 "Automate income streams and track project earnings",
               ]}
+              iconProps={{ color: "whiteAlpha.300" }}
+              buttonProps={{ variant: "blackWhite" }}
             />
           </DarkMode>
+
           <ActorCard
-            title="Trustless Revenue Distribution"
-            subtitle="For Partners"
-            description="SplitFi enables trustless revenue distribution and removes reliance on intermediaries."
+            animate={"grow"}
+            title="Project Partners"
+            description="Mutuals enables trustless revenue distribution and removes reliance on intermediaries."
             benefits={[
               "Trustless distribution of revenues",
               "No reliance on intermediaries",
               "Clean and easy-to-use interface for analyzing project earnings",
             ]}
-            href="#"
-            bg={"primary.100"}
+            bg={"blue.100"}
+            buttonProps={{ colorScheme: "primary" }}
           />
-        </SimpleGrid>
+        </Stack>
       </Container>
     </Box>
   );

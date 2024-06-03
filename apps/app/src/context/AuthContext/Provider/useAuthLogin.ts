@@ -3,9 +3,9 @@ import { useCallback } from "react";
 import { Chain } from "@splitfi/sdk";
 import { type Address } from "viem";
 import { useStateList } from "react-use";
-import useSignRemoteMessage from "@/hooks/auth/useSignRemoteMessage";
 import useLoginOrCreateUser from "@/hooks/auth/useLoginOrCreateUser";
 import { AbortFn } from "@/hooks/useAbortController";
+import { useSignMessage } from "@/context/SignMessageContext";
 
 type State =
   | "Initial"
@@ -46,7 +46,7 @@ type UseAuthLoginResult = [LoginFn, AbortFn, AuthLoginState];
 const _stateSet = Object.keys(states) as State[];
 
 export default function useAuthLogin(): UseAuthLoginResult {
-  const [signRemoteMessage, abortSignRemoteMessage] = useSignRemoteMessage();
+  const { signMessage, abort: abortSignMessage } = useSignMessage();
   const [loginOrCreateUser, abortLoginOrCreateUser] = useLoginOrCreateUser();
 
   const { state, currentIndex, setState, next } = useStateList(_stateSet);
@@ -66,7 +66,11 @@ export default function useAuthLogin(): UseAuthLoginResult {
 
       // the app will hang until a signature is provided
       try {
-        const { signature, message, nonce } = await signRemoteMessage();
+        const { signature, message, nonce } = await signMessage({
+          modalProps: {
+            prompt: "Please sign the message in your wallet in order to login.",
+          },
+        });
         next();
         await loginOrCreateUser(address, {
           eoa: {
@@ -88,11 +92,11 @@ export default function useAuthLogin(): UseAuthLoginResult {
         options?.onComplete?.(_state);
       }
     },
-    [signRemoteMessage, loginOrCreateUser],
+    [signMessage, loginOrCreateUser],
   );
 
   const abort = () => {
-    abortSignRemoteMessage();
+    abortSignMessage();
     abortLoginOrCreateUser();
   };
 

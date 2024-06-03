@@ -1,34 +1,53 @@
-import type { CardProps, FlexProps, As } from "@splitfi/ui";
-import { Card, CardBody, Heading, Icon, Stack, Text } from "@splitfi/ui";
-import type { ImageProps } from "next/image";
+import { GridItemProps } from "@splitfi/ui";
+import { GridItem, Stack, StackProps, Heading, Text, Box } from "@splitfi/ui";
 
-interface FeatureCardProps extends CardProps {
+interface FeatureCardProps extends StackProps, GridItemProps {
   heading: string;
   description: string;
-  icon?: As;
-  href?: string;
-  image?: ImageProps["src"];
-  iconProps?: FlexProps;
+  index?: number;
 }
+
 export default function FeatureCard({
   heading,
+  index,
   description,
-  icon,
+  children,
   ...props
 }: FeatureCardProps) {
   return (
-    <Card variant="outline" {...props}>
-      <CardBody as={Stack} spacing={3}>
-        <Stack spacing={2} direction="row" alignItems="flex-start">
-          {!!icon && (
-            <Icon as={icon} boxSize={8} bg="bg.2" p="2" rounded="md" />
-          )}
-          <Heading size="sm" mt="1.5">
-            {heading}
-          </Heading>
-        </Stack>
-        <Text color="color.2">{description}</Text>
-      </CardBody>
-    </Card>
+    <GridItem
+      as={Stack}
+      direction={"column"}
+      justify={"flex-end"}
+      rounded={"lg"}
+      position={"relative"}
+      overflow={"hidden"}
+      p={{ base: "3", lg: "6" }}
+      {...props}
+    >
+      {/*
+              <Box position={"absolute"} rounded={"lg"} overflow={"hidden"}>
+                <Image
+                  src={featureImage}
+                  alt={"SplitFi features"}
+                  width={"32"}
+                  style={{ objectFit: "contain" }}
+                />
+              </Box>
+*/}
+      {children}
+
+      <Box position={"relative"}>
+        {index && index >= 0 && (
+          <Text variant={"tag"} mb={"1"}>
+            0{index}
+          </Text>
+        )}
+
+        <Heading as={"h4"} size={"lg"}>
+          {heading}
+        </Heading>
+      </Box>
+    </GridItem>
   );
 }

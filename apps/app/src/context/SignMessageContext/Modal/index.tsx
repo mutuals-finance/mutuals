@@ -11,16 +11,18 @@ import {
   ModalProps,
   Text,
 } from "@splitfi/ui";
-import { PropsWithChildren } from "react";
 
-type WalletAuthModalProps = PropsWithChildren<Omit<ModalProps, "children">>;
+export interface SignMessageModalProps extends Omit<ModalProps, "children"> {
+  prompt?: string;
+}
 
 export default function SignModal({
   onClose,
   isOpen,
   size = "sm",
+  prompt = "Please sign the message in your wallet.",
   ...props
-}: WalletAuthModalProps) {
+}: SignMessageModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} {...props}>
       <ModalOverlay />
@@ -29,9 +31,7 @@ export default function SignModal({
           <Stack align={"center"} textAlign={"center"} gap={"6"} pt={"6"}>
             <Spinner speed="0.65s" size="xl" />
             <Heading size={"md"}>Loading</Heading>
-            <Text variant={"label"}>
-              Please sign the message in your wallet to sign in safely.
-            </Text>
+            <Text variant={"label"}>{prompt}</Text>
           </Stack>
         </ModalBody>
 

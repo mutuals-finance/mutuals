@@ -6,7 +6,11 @@ export const LOGIN = graphql(/* GraphQL */ `
       __typename
 
       ... on LoginPayload {
-        userId # @required(action: THROW)
+        viewer {
+          user {
+            dbid
+          }
+        }
       }
       ... on ErrUserNotFound {
         message

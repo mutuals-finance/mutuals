@@ -1,4 +1,6 @@
-import { ApolloQueryResult, QueryOptions } from "@apollo/client";
+"use server";
+
+import { ApolloQueryResult } from "@apollo/client";
 import { getClient } from "./client";
 import {
   PoolDetailsByIdQuery,
@@ -16,13 +18,9 @@ import {
   ViewerWalletsQueryVariables,
 } from "../graphql/data/__generated__/graphql";
 import { GET_VIEWER_WALLETS } from "../graphql/data/queries/GetViewerWallets";
+import { TQueryOptions } from "../types";
 
-type TQueryOptions<TVariableType, TQueryType> = Omit<
-  QueryOptions<TVariableType, TQueryType>,
-  "query"
->;
-
-export function getPoolListByRecipient(
+export async function getPoolListByRecipient(
   options?: TQueryOptions<
     PoolListByRecipientQueryVariables,
     PoolListByRecipientQuery
@@ -35,7 +33,7 @@ export function getPoolListByRecipient(
   });
 }
 
-export function getPoolDetails(
+export async function getPoolDetails(
   options?: TQueryOptions<PoolDetailsByIdQueryVariables, PoolDetailsByIdQuery>,
 ): Promise<ApolloQueryResult<PoolDetailsByIdQuery>> {
   return getClient().query({
@@ -45,7 +43,7 @@ export function getPoolDetails(
   });
 }
 
-export function getViewer(
+export async function getViewer(
   options?: TQueryOptions<ViewerQueryVariables, ViewerQuery>,
 ): Promise<ApolloQueryResult<ViewerQuery>> {
   return getClient().query({
@@ -54,7 +52,7 @@ export function getViewer(
   });
 }
 
-export function getViewerWallets(
+export async function getViewerWallets(
   options?: TQueryOptions<ViewerWalletsQueryVariables, ViewerWalletsQuery>,
 ): Promise<ApolloQueryResult<ViewerWalletsQuery>> {
   return getClient().query({

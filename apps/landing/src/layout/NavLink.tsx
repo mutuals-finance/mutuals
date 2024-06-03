@@ -15,12 +15,11 @@ const NavLink = forwardRef<NavLinkProps, "a">(({ children, ...props }, ref) => {
     <Link
       ref={ref}
       display={{ base: "none", lg: "flex" }}
-      fontWeight={"500"}
-      letterSpacing={"0.0325rem"}
       fontSize="sm"
       position="relative"
-      opacity={isActive ? 1 : 0.8}
-      _hover={{ opacity: 1 }}
+      opacity={isActive ? 0.8 : 1}
+      _hover={{ opacity: 0.8 }}
+      color={"color.1"}
       {...props}
     >
       {children}

@@ -3,7 +3,6 @@ import { Box, Container, Flex, HStack } from "@splitfi/ui";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 
-import AnimationBox from "@/components/Animation/Box";
 import Navigation from "@/layout/Navigation";
 
 export type HeaderProps = Omit<BoxProps, "children">;
@@ -26,26 +25,27 @@ export default function Header(props: HeaderProps) {
       <Box
         top="0"
         left="0"
-        position="absolute"
+        position="fixed"
         zIndex={10}
         display="flex"
         alignItems="stretch"
         justifyContent="stretch"
         w="full"
-        h="24"
+        py={"6"}
       >
         <Container
           as={HStack}
-          maxW="container.xl"
+          maxW="container.lg"
           align="center"
           px={{ base: 6, sm: 12 }}
-          spacing="12"
           position="relative"
+          spacing="12"
         >
-          <Navigation color={"white"} />
+          <Navigation />
         </Container>
       </Box>
 
+      {/*
       <AnimationBox
         top="0"
         left="0"
@@ -55,12 +55,13 @@ export default function Header(props: HeaderProps) {
         alignItems="stretch"
         justifyContent="stretch"
         w="full"
+        maxW={"xl"}
         h="16"
-        bg="whiteAlpha.900"
-        borderBottom={"1px solid"}
+        bg="blackAlpha.900"
+        border={"1px solid"}
         borderColor={"border.1"}
-        backdropFilter="auto"
         backdropBlur="4px"
+        shadow={"sm"}
         animate={animLabel}
         transition={{ duration: 0.8, ease: [0.72, 0, 0.12, 1] }}
         variants={{
@@ -82,6 +83,7 @@ export default function Header(props: HeaderProps) {
           <Navigation />
         </Container>
       </AnimationBox>
+*/}
     </Flex>
   );
 }

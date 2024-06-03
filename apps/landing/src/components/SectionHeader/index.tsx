@@ -20,13 +20,7 @@ export default function SectionHeader({
   return (
     <Box maxW="2xl" mx="auto" textAlign={{ lg: "center" }} mb="12" {...props}>
       {!!label && (
-        <Text
-          mb="6"
-          variant={"tag"}
-          casing={"uppercase"}
-          fontWeight={"500"}
-          color={"color.3"}
-        >
+        <Text mb="6" variant={"tag"}>
           {label}
         </Text>
       )}

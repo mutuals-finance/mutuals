@@ -3,8 +3,9 @@ import { useBreakpointValue } from "@splitfi/ui";
 import { useEffect, useRef } from "react";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
-import heroVideo from "@/assets/home-hero.mp4";
+import heroImage from "@/assets/bg-hero.jpg";
 import AnimationBox from "@/components/Animation/Box";
+import NextImage from "next/image";
 
 type HomeHeroBgImageProps = HomeHeroAnimBaseType & FlexProps;
 
@@ -35,7 +36,7 @@ export default function HomeHeroBgImage({
         display: "block",
         position: "absolute",
         inset: "0",
-        bg: "blackAlpha.700",
+        bg: "whiteAlpha.700",
         /*
         bgGradient:
           "linear(to-b, blackAlpha.500, blackAlpha.700, blackAlpha.900)",
@@ -62,6 +63,15 @@ export default function HomeHeroBgImage({
       })}
       {...props}
     >
+      <NextImage
+        src={heroImage}
+        fill
+        alt={"SplitFi"}
+        style={{
+          objectFit: "cover",
+        }}
+      />
+      {/*
       <video
         autoPlay
         muted
@@ -76,6 +86,7 @@ export default function HomeHeroBgImage({
       >
         <source src={heroVideo} type="video/mp4" />
       </video>
+*/}
     </AnimationBox>
   );
 }

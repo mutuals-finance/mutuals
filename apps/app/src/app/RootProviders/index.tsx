@@ -8,6 +8,7 @@ import { UIProvider } from "@splitfi/ui";
 import { ApolloProvider } from "@splitfi/sdk/providers";
 import WagmiProvider from "@/app/RootProviders/WagmiProvider";
 import AuthProvider from "@/context/AuthContext/Provider";
+import SignMessageProvider from "@/context/SignMessageContext";
 
 export default function RootProviders({ children }: PropsWithChildren) {
   const cookie = headers().get("cookie") ?? "";
@@ -17,9 +18,11 @@ export default function RootProviders({ children }: PropsWithChildren) {
     <UIProvider>
       <ApolloProvider>
         <WagmiProvider initialState={wagmiInitialState}>
-          <AuthProvider>
-            <AnkrProvider>{children}</AnkrProvider>
-          </AuthProvider>
+          <SignMessageProvider>
+            <AuthProvider>
+              <AnkrProvider>{children}</AnkrProvider>
+            </AuthProvider>
+          </SignMessageProvider>
         </WagmiProvider>
       </ApolloProvider>
     </UIProvider>

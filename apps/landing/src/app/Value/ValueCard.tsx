@@ -27,7 +27,7 @@ export default function ValueCard({
     <Card
       variant="filled"
       bg="transparent"
-      borderLeft={"2px solid"}
+      borderLeft={"1px solid"}
       borderColor="border.1"
       rounded={"none"}
       pr={"0"}
@@ -38,8 +38,8 @@ export default function ValueCard({
           <Icon
             as={icon}
             boxSize={12}
-            bg="blue.200"
-            color={"blue.600"}
+            bg="blue.100"
+            color={"primary.600"}
             p="4"
             rounded="md"
           />

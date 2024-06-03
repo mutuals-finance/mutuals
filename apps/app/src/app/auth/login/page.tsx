@@ -1,5 +1,5 @@
-import WalletConnectContent from "@/app/auth/login/WalletConnectContent";
+import WalletSelector from "@/components/WalletSelector";
 
-export default function SignInPage() {
-  return <WalletConnectContent />;
+export default function LoginPage() {
+  return <WalletSelector.Wallet />;
 }

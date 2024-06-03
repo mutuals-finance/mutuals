@@ -2,10 +2,8 @@
 
 import React, { createContext, useCallback, PropsWithChildren } from "react";
 import useAuthLogin from "@/context/AuthContext/Provider/useAuthLogin";
-import { useToggle } from "react-use";
 import { useRouter } from "next/navigation";
 import { Connector, useAccountEffect, useConnect, useDisconnect } from "wagmi";
-import SignModal from "@/context/AuthContext/SignModal";
 import { ViewerQuery } from "@splitfi/sdk";
 import { Address } from "viem";
 import { useLogout } from "@splitfi/sdk/client";
@@ -30,7 +28,7 @@ interface AuthProviderContextProps extends PropsWithChildren {
   query?: ViewerQuery;
 }
 
-export default function AuthProviderContext({
+export default function AuthProviderClient({
   children,
   redirectTo = "/",
   query,
@@ -39,24 +37,21 @@ export default function AuthProviderContext({
 
   const { disconnect } = useDisconnect();
   const { connect } = useConnect();
-  const [remoteLogin, abortLogin] = useAuthLogin();
+  const [doLogin] = useAuthLogin();
   const [logout] = useLogout();
-  const [isSignModalOpen, setSignModalOpen] = useToggle(false);
   const router = useRouter();
 
   const login = useCallback(
     (address: Address) => {
       if (!walletMap[address]) {
-        setSignModalOpen(true);
-        void remoteLogin(address, {
+        void doLogin(address, {
           onSuccess: () => router.push(redirectTo),
-          onComplete: () => setSignModalOpen(false),
         });
       } else {
         router.push(redirectTo);
       }
     },
-    [router, remoteLogin, setSignModalOpen],
+    [router, doLogin],
   );
 
   const connectAndLogin = useCallback(
@@ -72,6 +67,7 @@ export default function AuthProviderContext({
 
   useAccountEffect({
     onConnect(data) {
+      console.log("trigger account effect", { ...data });
       if (!walletMap[data.address]) {
         login(data.address);
       }
@@ -89,17 +85,5 @@ export default function AuthProviderContext({
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      <SignModal
-        isOpen={isSignModalOpen}
-        onClose={() => {
-          abortLogin();
-          setSignModalOpen(false);
-        }}
-      />
-
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

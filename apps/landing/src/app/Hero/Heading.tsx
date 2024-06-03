@@ -5,7 +5,6 @@ import {
   ContainerProps,
   Heading,
   Stack,
-  Text,
 } from "@splitfi/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
@@ -19,7 +18,7 @@ export default function HomeHeroHeading({
 }: HomeHeroHeadingProps) {
   return (
     <Container
-      maxW="container.lg"
+      maxW="container.xl"
       mr="auto"
       py="24"
       px={{ base: 6, sm: 12 }}
@@ -29,20 +28,34 @@ export default function HomeHeroHeading({
         animate={animLabel}
         variants={{ shrink: { scale: 0.8 }, grow: { scale: 1 } }}
       >
-        <Stack gap="12" alignItems="flex-start" justifyContent={"flex-start"}>
-          <Text variant={"tag"}>Join now for free</Text>
+        <Stack direction="column" gap="6" position={"relative"}>
           <Heading
             color={"color.1"}
             as="h1"
-            fontSize="clamp(3.2rem,5.4vw,6.4rem)"
+            fontSize="clamp(3.2rem,6.4vw,5.6rem)"
             fontWeight="500"
             lineHeight="1.2"
           >
-            The best way to manage your on-chain income.
+            The best way to manage on-chain payments
           </Heading>
 
-          <ButtonGroup spacing="6">
-            <Button variant={"blackWhite"}>Get Started</Button>
+          <ButtonGroup
+            position={{ lg: "absolute" }}
+            size="lg"
+            bottom={{ lg: "5" }}
+            right={{ lg: "0" }}
+            spacing="3"
+          >
+            <Button
+              rounded={"full"}
+              colorScheme={"whiteAlpha"}
+              color={"color.1"}
+            >
+              Learn More
+            </Button>
+            <Button rounded={"full"} variant={"blackWhite"}>
+              Start For Free
+            </Button>
           </ButtonGroup>
         </Stack>
       </AnimationBox>

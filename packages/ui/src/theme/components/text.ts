@@ -10,14 +10,14 @@ const variants = {
     fontVariantNumeric: "slashed-zero",
   },
   label: {
-    color: "color.3",
+    color: "alpha.3",
   },
   tag: defineStyle({
     fontFamily: "monospace",
-    color: "color.3",
+    color: "alpha.3",
     textTransform: "uppercase",
-    fontWeight: "500",
-    letterSpacing: "0.05rem",
+    fontWeight: "600",
+    letterSpacing: "0.05em",
   }),
 };
 

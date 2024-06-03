@@ -10,10 +10,11 @@ export default function HomePage() {
     <>
       <Hero />
       <Actors />
-      <Chains />
+      {/*<Partners />*/}
       <Value />
-      <Features />
+      <Chains />
       <Payments />
+      <Features />
     </>
   );
 }

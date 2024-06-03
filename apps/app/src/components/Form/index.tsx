@@ -12,7 +12,7 @@ import {
   type SubmitHandler,
 } from "react-hook-form";
 
-interface FormProps<
+export interface FormProps<
   TFieldValues extends FieldValues = FieldValues,
   TContext = never,
 > extends Omit<StackProps, "children" | "onSubmit">,

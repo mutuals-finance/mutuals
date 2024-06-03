@@ -1,19 +1,9 @@
-import {
-  Box,
-  Container,
-  Grid,
-  GridItem,
-  Heading,
-  Hide,
-  Show,
-  Text,
-  VStack,
-} from "@splitfi/ui";
+import { Box, Container, Grid, GridItem, Hide, Show, Text } from "@splitfi/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.jpg";
 import Logo from "@/app/(dashboard)/DashboardLayout/Header/Logo";
-import RouterTabs from "@/components/RouterTabs";
 import { PropsWithChildren } from "react";
+import WalletSelector from "@/components/WalletSelector";
 
 export default function SignInLayout({ children }: PropsWithChildren) {
   return (
@@ -61,31 +51,27 @@ export default function SignInLayout({ children }: PropsWithChildren) {
             </Box>
           </Show>
 
-          <VStack py={"12"} maxW={"md"} gap={"6"} alignItems={"stretch"}>
-            <Heading as="h1" size="2xl">
-              Connect to SplitFi
-            </Heading>
+          <WalletSelector.Wrapper
+            heading="Connect to SplitFi"
+            headingProps={{ as: "h1", size: "2xl" }}
+            description={
+              "Choose your favourite method to sign in. You can always add more methods later."
+            }
+            tabs={[
+              { title: "Continue With Wallet", href: "/auth/login" },
+              { title: "Continue With Email", href: "/auth/login/email" },
+            ]}
+            py={"12"}
+            maxW={"md"}
+          >
+            {children}
 
-            <Text fontSize={"lg"} variant={"label"}>
-              Choose your favourite method to sign in. You can always add more
-              methods later.
-            </Text>
-
-            <RouterTabs
-              tabs={[
-                { title: "Continue With Wallet", href: "/auth/login" },
-                { title: "Continue With Email", href: "/auth/login/email" },
-              ]}
-            >
-              {children}
-            </RouterTabs>
-
-            <Text mt="6" fontSize="xs">
+            <Text fontSize="xs">
               By connecting, you agree to SplitFi’s Terms of Service and
               acknowledge that you have read and understand the SplitFi
               Disclaimer.
             </Text>
-          </VStack>
+          </WalletSelector.Wrapper>
         </Container>
       </GridItem>
     </Grid>

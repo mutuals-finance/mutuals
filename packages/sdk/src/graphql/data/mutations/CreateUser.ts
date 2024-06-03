@@ -12,7 +12,7 @@ export const CREATE_USER = graphql(/* GraphQL */ `
         viewer {
           ... on Viewer {
             user {
-              username
+              dbid
             }
           }
         }
