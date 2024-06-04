@@ -11,7 +11,7 @@ import { SidebarFooter } from "./SidebarFooter";
 
 export { SidebarContent, SidebarFooter, SidebarHeader, SidebarWrapper };
 
-interface SidebarProps extends SidebarWrapperProps {
+export interface SidebarProps extends SidebarWrapperProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
 }

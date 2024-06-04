@@ -1,8 +1,8 @@
 import React from "react";
-import AssetTable from "@/components/AssetTable";
+import AssetTable from "@/features/Asset/Table";
 import { getAccountBalance } from "@/lib/ankr";
 import ContentCard from "@/components/ContentCard";
-import PageShell from "@/components/Shell/PageShell";
+import ShellPage from "src/features/Shell/Page";
 import { Container } from "@splitfi/ui";
 
 export default async function PoolAssetsPage() {
@@ -15,7 +15,7 @@ export default async function PoolAssetsPage() {
   });
 
   return (
-    <PageShell breadcrumbsEnabled={false} title={"Assets"}>
+    <ShellPage breadcrumbsEnabled={false} title={"Assets"}>
       <Container as={"section"} variant={"shell"}>
         <ContentCard
           bodyProps={{ p: "0" }}
@@ -24,6 +24,6 @@ export default async function PoolAssetsPage() {
           <AssetTable assets={balance?.assets} size={"sm"} />
         </ContentCard>
       </Container>
-    </PageShell>
+    </ShellPage>
   );
 }

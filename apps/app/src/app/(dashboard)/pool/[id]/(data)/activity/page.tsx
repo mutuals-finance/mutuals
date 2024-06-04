@@ -1,11 +1,10 @@
 import React from "react";
 import { getTokenTransfers } from "@/lib/ankr";
-import ContentCard from "@/components/ContentCard";
-import ActivityTable from "@/components/ActivityTable";
-import PageShell from "@/components/Shell/PageShell";
+import ShellPage from "src/features/Shell/Page";
 import { Container } from "@splitfi/ui";
+import ActivityTableCard from "@/features/Activity/TableCard";
 
-export default async function PoolAssetsPage() {
+export default async function PoolActivityPage() {
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
   const activity = await getTokenTransfers({
     address: [address],
@@ -13,7 +12,7 @@ export default async function PoolAssetsPage() {
   });
 
   return (
-    <PageShell
+    <ShellPage
       title={"Activity"}
       description={
         "Your activity contains all withdrawals and deposits associated with your payment pool. Currently, ERC20 Token Transfers are tracked."
@@ -21,17 +20,16 @@ export default async function PoolAssetsPage() {
       breadcrumbsEnabled={false}
     >
       <Container as={"section"} variant={"shell"}>
-        <ContentCard
-          bodyProps={{ p: "0" }}
-          sx={{ overflow: "auto !important" }}
-        >
-          <ActivityTable
-            transfers={activity?.transfers ?? []}
-            address={address}
-            size={"sm"}
-          />
-        </ContentCard>
+        <ActivityTableCard
+          cardProps={{
+            sx: { overflow: "auto !important" },
+            bodyProps: { p: "0" },
+          }}
+          transfers={activity?.transfers ?? []}
+          size={"sm"}
+          payee={address}
+        />
       </Container>
-    </PageShell>
+    </ShellPage>
   );
 }

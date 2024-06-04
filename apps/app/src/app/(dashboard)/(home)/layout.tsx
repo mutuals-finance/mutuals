@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from "react";
-import WalletList from "./WalletList";
-import DashboardHandlers from "./Handlers";
-import PoolList from "./PoolList";
-import Balance from "./Balance";
+import { PropsWithChildren } from "react";
+import WalletList from "@/features/Wallet/List";
+import PoolList from "@/features/Pool/List";
+import Balance from "src/features/DashboardHome/Balance";
+import Handlers from "@/features/DashboardHome/Handlers";
 
 export default async function DashboardHomeLayout({
   children,
@@ -10,7 +10,7 @@ export default async function DashboardHomeLayout({
   return (
     <>
       <Balance />
-      <DashboardHandlers />
+      <Handlers />
       <WalletList />
       <PoolList />
       {children}

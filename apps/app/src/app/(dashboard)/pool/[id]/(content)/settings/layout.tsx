@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import RouterTabs from "@/components/RouterTabs";
-import PageShell from "@/components/Shell/PageShell";
+import ShellPage from "src/features/Shell/Page";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
 
 interface PoolSettingsLayoutProps {
@@ -29,10 +29,10 @@ export default async function PoolSettingsLayout({
   ];
 
   return (
-    <PageShell breadcrumbsEnabled={false} title={"Settings"}>
+    <ShellPage breadcrumbsEnabled={false} title={"Settings"}>
       <RouterTabs tabs={tabs} mb={"6"}>
         {children}
       </RouterTabs>
-    </PageShell>
+    </ShellPage>
   );
 }

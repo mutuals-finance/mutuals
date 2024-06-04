@@ -10,7 +10,8 @@ const variants = {
     fontVariantNumeric: "slashed-zero",
   },
   label: {
-    color: "alpha.3",
+    color: "alpha.2",
+    fontWeight: "500",
   },
   tag: defineStyle({
     fontFamily: "monospace",

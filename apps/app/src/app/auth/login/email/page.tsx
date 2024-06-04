@@ -1,5 +1,5 @@
-import WalletSelector from "@/components/WalletSelector";
+import AuthLoginEmail from "@/features/Auth/LoginEmail";
 
 export default function SignInEmailPage() {
-  return <WalletSelector.Email />;
+  return <AuthLoginEmail />;
 }

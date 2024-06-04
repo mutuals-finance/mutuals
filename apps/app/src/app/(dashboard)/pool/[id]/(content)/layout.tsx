@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
-import PoolPageShell from "@/app/(dashboard)/pool/[id]/PoolPageShell";
+import ShellPool from "@/features/Shell/Pool";
 
 export default async function PoolContentLayout({
   children,
@@ -10,5 +10,5 @@ export default async function PoolContentLayout({
 }>) {
   const pool = await getPoolDetailsFromRouteParams(params);
 
-  return <PoolPageShell metaData={pool.metaData}>{children}</PoolPageShell>;
+  return <ShellPool metaData={pool.metaData}>{children}</ShellPool>;
 }

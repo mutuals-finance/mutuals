@@ -1,13 +1,11 @@
 import { PropsWithChildren } from "react";
 import RouterTabs from "@/components/RouterTabs";
-import PageShell from "@/components/Shell/PageShell";
+import ShellPage from "src/features/Shell/Page";
 import { Container } from "@splitfi/ui";
 
-interface ProfileSettingsLayoutProps {}
-
-export default async function ProfileSettingsLayout({
+export default async function UserSettingsLayout({
   children,
-}: PropsWithChildren<ProfileSettingsLayoutProps>) {
+}: PropsWithChildren) {
   const tabs = [
     {
       title: "General",
@@ -24,12 +22,12 @@ export default async function ProfileSettingsLayout({
   ];
 
   return (
-    <PageShell title={"Profile Settings"}>
+    <ShellPage title={"Profile Settings"}>
       <Container variant={"shell"}>
         <RouterTabs tabs={tabs} mb={"6"}>
           {children}
         </RouterTabs>
       </Container>
-    </PageShell>
+    </ShellPage>
   );
 }

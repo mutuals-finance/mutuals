@@ -1,8 +1,7 @@
-import { Text } from "@splitfi/ui";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
 
-import WithdrawForm from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm";
 import { getAccountBalance } from "@/lib/ankr";
+import PoolActionWithdraw from "@/features/PoolAction/Withdraw";
 
 interface PoolHandleWithdrawProps {
   params: {
@@ -24,12 +23,5 @@ export default async function PoolHandleWithdraw({
     balance: queries[1],
   };
 
-  return (
-    <WithdrawForm {...props}>
-      <Text>
-        Withdraw funds from your Payment Pool. You may either withdraw for your
-        own or distribute to all other recipients.
-      </Text>
-    </WithdrawForm>
-  );
+  return <PoolActionWithdraw {...props} />;
 }

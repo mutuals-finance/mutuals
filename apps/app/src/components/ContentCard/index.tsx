@@ -6,11 +6,11 @@ import {
   type CardProps,
   Heading,
 } from "@splitfi/ui";
-import React from "react";
+import { type ReactNode } from "react";
 
-interface BoxProps extends Omit<CardProps, "title"> {
+export interface ContentCardProps extends Omit<CardProps, "title"> {
   title?: string;
-  titleAfter?: React.ReactNode;
+  titleAfter?: ReactNode;
   bodyProps?: CardBodyProps;
 }
 
@@ -22,7 +22,7 @@ export default function ContentCard({
   bodyProps,
   rounded,
   ...props
-}: React.PropsWithChildren<BoxProps>) {
+}: ContentCardProps) {
   return (
     <Card as={"article"} variant={variant} rounded={rounded} {...props}>
       {(!!title || !!titleAfter) && (

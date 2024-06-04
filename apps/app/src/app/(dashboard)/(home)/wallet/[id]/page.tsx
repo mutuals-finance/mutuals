@@ -1,12 +1,9 @@
-import WalletDrawer from "@/app/(dashboard)/(home)/wallet/WalletDrawer";
+import WalletUpdate from "@/features/Wallet/Update";
 
-export default function WalletEditPage({ params }: { params: { id: string } }) {
-  return (
-    <WalletDrawer.Drawer
-      title={"Manage Wallet"}
-      defaultValues={{ name: "Company Multisig", address: params.id }}
-    >
-      <WalletDrawer.Form />
-    </WalletDrawer.Drawer>
-  );
+export default function WalletUpdatePage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  return <WalletUpdate address={params.id} />;
 }

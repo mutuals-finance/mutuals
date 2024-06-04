@@ -1,28 +1,23 @@
-import {
-  Box,
-  Container,
-  Heading,
-  Text,
-} from "@splitfi/ui";
-import { NewSplitForm } from "./NewSplitForm";
-import PageShell from "@/components/Shell/PageShell";
+import { Box, Container, Heading, Text } from "@splitfi/ui";
+import ShellPage from "src/features/Shell/Page";
+import PoolAddForm from "src/features/PoolAdd/Form";
 
-export default function NewPoolPage() {
+export default function PoolAddPage() {
   return (
-    <PageShell breadcrumbsProps={{ overwrite: { pool: false } }}>
+    <ShellPage breadcrumbsProps={{ overwrite: { pool: false } }}>
       <Container variant={"shell"}>
         <Box maxW={"xl"} mb={"12"}>
           <Heading as={"h1"} size={"2xl"} lineHeight={"1.2"} mb={"6"}>
             Create New Payment Pool
           </Heading>
           <Text fontSize={"lg"} color={"color.3"}>
-            A payment pool smart contract automatically routes onchain payments
+            A payment pool smart contract automatically routes on-chain payments
             to different destinations.
           </Text>
         </Box>
 
-        <NewSplitForm />
+        <PoolAddForm />
       </Container>
-    </PageShell>
+    </ShellPage>
   );
 }

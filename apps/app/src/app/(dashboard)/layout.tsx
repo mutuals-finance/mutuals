@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
-import Layout from "@/app/(dashboard)/DashboardLayout";
+import ShellDashboard from "@/features/Shell/Dashboard";
 
 export default async function DashboardLayout({ children }: PropsWithChildren) {
-  return <Layout>{children}</Layout>;
+  return <ShellDashboard>{children}</ShellDashboard>;
 }

@@ -4,7 +4,7 @@ import { Box, Text, VStack } from "@splitfi/ui";
 import { Connector, useConnect } from "wagmi";
 import WalletConnectButton from "./WalletConnectButton";
 import { partition } from "@/utils";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/features/Auth/Provider";
 
 export function WalletSelectorWallet() {
   const { connectors } = useConnect();

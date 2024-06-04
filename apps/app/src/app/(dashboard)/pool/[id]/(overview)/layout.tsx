@@ -1,14 +1,12 @@
-import { Container, Stack } from "@splitfi/ui";
 import React, { PropsWithChildren } from "react";
-import Sidebar from "@/app/(dashboard)/pool/[id]/(overview)/Sidebar";
 import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
-import Description from "@/app/(dashboard)/pool/[id]/(overview)/Description";
-import Handlers from "@/app/(dashboard)/pool/[id]/(overview)/Handlers";
-import Shares from "@/app/(dashboard)/pool/[id]/(overview)/Shares";
-import Assets from "@/app/(dashboard)/pool/[id]/(overview)/Assets";
-import Activity from "@/app/(dashboard)/pool/[id]/(overview)/Activity";
-import PoolPageShell from "@/app/(dashboard)/pool/[id]/PoolPageShell";
+import PoolOverviewShares from "@/features/PoolOverview/Shares";
+import ActivityTableCard from "@/features/Activity/TableCard";
+import AssetTableCard from "@/features/Asset/TableCard";
+import PoolOverviewDescription from "@/features/PoolOverview/Description";
+import ShellPoolOverview from "@/features/Shell/PoolOverview";
+import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
 
 const tabs = [
   {
@@ -30,9 +28,6 @@ export default async function PoolOverviewLayout({
   };
 }>) {
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
-  const isSidebarOpen = tabs.some(({ href }) =>
-    href.includes((children as any)?.props?.childPropSegment ?? ""),
-  );
 
   const queries = await Promise.all([
     getPoolDetailsFromRouteParams(params),
@@ -50,20 +45,23 @@ export default async function PoolOverviewLayout({
   };
 
   return (
-    <Stack direction={"row"} gap={"0"} w={"full"}>
-      <PoolPageShell metaData={pool.metaData} flex={"1"} minWidth={"0"}>
-        <Container as={Stack} gap={"6"} variant={"shell"}>
-          <Description {...props} />
-          <Handlers {...props} />
-          <Shares {...props} />
-          <Assets {...props} />
-          <Activity {...props} />
-        </Container>
-      </PoolPageShell>
-
-      <Sidebar tabs={tabs} defaultOpen={isSidebarOpen}>
-        {children}
-      </Sidebar>
-    </Stack>
+    <ShellPoolOverview
+      sidebarProps={{ tabs }}
+      content={
+        <>
+          <PoolOverviewDescription {...props} />
+          <PoolOverviewHandlers {...props} />
+          <PoolOverviewShares {...props} />
+          <AssetTableCard assets={props.balance?.assets?.slice(0, 6)} />
+          <ActivityTableCard
+            payee={props.pool?.address!}
+            transfers={props.activity.transfers.slice(0, 6)}
+          />
+        </>
+      }
+      contentProps={{ metaData: pool.metaData }}
+    >
+      {children}
+    </ShellPoolOverview>
   );
 }

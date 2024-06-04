@@ -1,5 +1,5 @@
-import WalletSelector from "@/components/WalletSelector";
+import AuthLoginWallet from "@/features/Auth/LoginWallet";
 
 export default function LoginPage() {
-  return <WalletSelector.Wallet />;
+  return <AuthLoginWallet />;
 }
