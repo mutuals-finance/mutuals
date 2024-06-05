@@ -7,7 +7,7 @@ import { UIProvider } from "@splitfi/ui";
 import { ApolloProvider } from "@splitfi/sdk/providers";
 import WagmiProvider from "@/providers/WagmiProvider";
 import AuthProvider from "@/features/Auth/Provider";
-import SignMessageProvider from "@/context/SignMessageContext";
+import SignMessageProvider from "@/features/Wallet/SignProvider";
 import { getViewer } from "@splitfi/sdk/server";
 
 export default async function Providers({ children }: PropsWithChildren) {

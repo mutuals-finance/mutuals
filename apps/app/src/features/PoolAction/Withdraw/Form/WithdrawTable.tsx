@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { WithdrawFormInnerProps } from "@/app/(dashboard)/pool/[id]/(overview)/withdraw/WithdrawForm/WithdrawFormInner";
+
 import AssetIconCell from "@/features/Asset/Table/IconCell";
 import AssetBalanceCell from "@/features/Asset/Table/BalanceCell";
 import AssetValueCell from "@/features/Asset/Table/ValueCell";
 import Table, { TableProps } from "@/components/Table";
 import { createColumnHelper } from "@tanstack/react-table";
 
-type WithdrawTableProps = WithdrawFormInnerProps &
+type WithdrawTableProps = WithdrawFormContentProps &
   Omit<TableProps<Balance>, "data" | "columns">;
 
 const columnHelper = createColumnHelper<Balance>();

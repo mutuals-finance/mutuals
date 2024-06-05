@@ -1,6 +1,6 @@
 import { Box, Text } from "@splitfi/ui";
 
-import SplitCard from "@/components/Split/Card";
+import SplitCard from "@/features/Pool/Card";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
 

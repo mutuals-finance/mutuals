@@ -11,7 +11,7 @@ import {
 
 import { formatUSDPrice, ipfsResolveData } from "src/utils";
 
-import { SplitImage } from "@/components/Split/Image";
+import { SplitImage } from "src/features/Pool/Card/Image";
 import { Split } from "@splitfi/sdk/thegraph";
 import { type DeepPartial } from "#/partial";
 

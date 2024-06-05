@@ -6,7 +6,7 @@ import React from "react";
 import { useAccount } from "wagmi";
 
 import { TreasurySearchAndCreate } from "./SearchAndCreate";
-import SplitCard from "@/components/Split/Card";
+import PoolCard from "@/features/Pool/Card";
 import { PoolListByRecipientDocument } from "@splitfi/sdk/thegraph";
 
 export default function PoolList() {
@@ -33,7 +33,7 @@ export default function PoolList() {
           ? Array(4)
               .fill(data?.splits[0])
               .map((split, key) => {
-                return <SplitCard key={key} {...split} />;
+                return <PoolCard key={key} {...split} />;
               })
           : "No data"}
       </SimpleGrid>

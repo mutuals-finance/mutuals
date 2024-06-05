@@ -1,14 +1,12 @@
-import WithdrawFormInner, {
-  type PoolActionWithdrawFormContentProps,
-} from "@/features/PoolAction/Withdraw/Form/WithdrawFormInner";
+import WithdrawFormContent, {
+  WithdrawFormContentProps,
+} from "@/features/PoolAction/Withdraw/Form/Content";
 import Form from "@/components/Form";
 import { WithdrawData } from "@/features/PoolAction/types";
 
-export type PoolActionWithdrawFormProps = PoolActionWithdrawFormContentProps;
+export type WithdrawFormProps = WithdrawFormContentProps;
 
-export default function PoolActionWithdrawForm(
-  props: PoolActionWithdrawFormProps,
-) {
+export default function PoolActionWithdrawForm(props: WithdrawFormProps) {
   const assets = props.balance?.assets ?? [];
 
   return (
@@ -18,7 +16,7 @@ export default function PoolActionWithdrawForm(
       overflow={"hidden"}
       spacing={"0"}
     >
-      <WithdrawFormInner {...props} />
+      <WithdrawFormContent {...props} />
     </Form>
   );
 }

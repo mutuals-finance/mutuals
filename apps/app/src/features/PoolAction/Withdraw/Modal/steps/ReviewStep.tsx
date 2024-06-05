@@ -1,4 +1,4 @@
-import SplitCard from "@/components/Split/Card";
+import SplitCard from "@/features/Pool/Card";
 
 import { CreateFormData } from "@/templates/split/new";
 

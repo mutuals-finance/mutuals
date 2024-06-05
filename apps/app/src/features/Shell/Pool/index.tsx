@@ -1,7 +1,7 @@
 import React from "react";
 import { HStack, Text } from "@splitfi/ui";
-import ShellPage, { ShellPageProps } from "src/features/Shell/Page";
-import { SplitImage } from "@/components/Split/Image";
+import ShellPage, { ShellPageProps } from "@/features/Shell/Page";
+import PoolCard from "src/features/Pool/Card";
 import { ipfsResolveData } from "@/utils";
 import { SplitMetadata } from "@splitfi/sdk/thegraph";
 
@@ -21,7 +21,7 @@ export default function ShellPool({
           pool: false,
           id: (
             <HStack spacing="1" alignItems={"center"}>
-              <SplitImage
+              <PoolCard.Image
                 src={ipfsResolveData(metaData?.image)}
                 alt={metaData?.name ?? "Unknown Payment Pool"}
                 boxSize="1.2rem"

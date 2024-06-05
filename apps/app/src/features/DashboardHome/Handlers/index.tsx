@@ -4,7 +4,7 @@ import {
   IoWalletOutline,
 } from "react-icons/io5";
 
-import IconButtonListContainer from "@/components/Shell/IconButtonListContainer";
+import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import Link from "next/link";
 import { Container } from "@splitfi/ui";
 
@@ -33,7 +33,7 @@ export default function DashboardHandlers() {
 
   return (
     <Container variant={"shell"}>
-      <IconButtonListContainer items={items} />
+      <ShellIconButtonList items={items} />
     </Container>
   );
 }

@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.jpg";
 import { PropsWithChildren } from "react";
-import WalletSelector from "@/components/WalletSelector";
+import WalletSelector from "@/features/Wallet/Selection";
 import NextLink from "next/link";
 
 function LogoWithLink() {

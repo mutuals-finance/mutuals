@@ -6,7 +6,7 @@ import {
   IoWalletOutline,
 } from "react-icons/io5";
 
-import IconButtonListContainer from "@/components/Shell/IconButtonListContainer";
+import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import Link from "next/link";
 import { Split } from "@splitfi/sdk/thegraph";
 import { type DeepPartial } from "#/partial";
@@ -50,7 +50,7 @@ export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
   ];
 
   return (
-    <IconButtonListContainer
+    <ShellIconButtonList
       items={items}
       as={"article"}
       my={"3"}

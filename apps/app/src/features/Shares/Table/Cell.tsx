@@ -5,7 +5,7 @@ import React from "react";
 
 import useExplorerLink from "@/hooks/useExplorerLink";
 
-import UserAvatar from "@/components/UserAvatar";
+import UserAvatar from "src/features/Wallet/Avatar";
 
 import { type ActiveShare } from "@/features/Shares/types";
 

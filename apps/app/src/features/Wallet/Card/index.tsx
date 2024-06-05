@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { shortenAddress } from "@/utils";
 
-import UserAvatar from "@/components/UserAvatar";
+import UserAvatar from "src/features/Wallet/Avatar";
 import Link from "next/link";
 import { Wallet } from "@splitfi/sdk";
 import { DeepPartial } from "#/partial";

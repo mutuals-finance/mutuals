@@ -6,7 +6,7 @@ import React, {
   PropsWithChildren,
   useContext,
 } from "react";
-import useAuthLogin from "@/context/AuthContext/Provider/useAuthLogin";
+import useAuthLogin from "@/features/Auth/useLogin";
 import { useRouter } from "next/navigation";
 import { Connector, useAccountEffect, useConnect, useDisconnect } from "wagmi";
 import { ViewerQuery } from "@splitfi/sdk";

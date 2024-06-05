@@ -2,9 +2,9 @@ import { Balance } from "@ankr.com/ankr.js/dist/types";
 import { HStack } from "@splitfi/ui";
 import React, { HTMLProps } from "react";
 
-import TokenAssets from "@/components/Token/Assets";
-import TokenImage from "@/components/Token/Image";
-import TokenLabel from "@/components/Token/Label";
+import TokenAssets from "@/features/Asset/Card/Assets";
+import TokenImage from "@/features/Asset/Card/Image";
+import TokenLabel from "@/features/Asset/Card/Label";
 
 type AssetCardHorizontalProps = Balance &
   HTMLProps<HTMLDivElement> & { selected?: boolean; active?: boolean };

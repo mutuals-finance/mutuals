@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import React, { PropsWithChildren, useCallback } from "react";
 import Form from "@/components/Form";
 import { Chain } from "@splitfi/sdk";
-import { useSignMessage } from "@/context/SignMessageContext";
+import { useSignMessage } from "@/features/Wallet/SignProvider";
 import { addWallet } from "@splitfi/sdk/server";
 
 type WalletData = {

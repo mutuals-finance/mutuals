@@ -1,16 +1,17 @@
 import { HStack, StackProps } from "@splitfi/ui";
-import React from "react";
 
-import TokenImage, { TokenImageProps } from "@/components/Token/Image";
-import TokenLabel, { TokenLabelProps } from "@/components/Token/Label";
+import AssetCard, {
+  AssetCardLabelProps,
+  AssetCardLogoProps,
+} from "@/features/Asset/Card";
 import { AssetTableCellProps } from "@/features/Asset/types";
 
 export type AssetTableIconCellProps = AssetTableCellProps &
   StackProps & {
     onlyImage?: boolean;
     onlyLabel?: boolean;
-    imageProps?: TokenImageProps;
-    labelProps?: TokenLabelProps;
+    imageProps?: AssetCardLogoProps;
+    labelProps?: AssetCardLabelProps;
   };
 
 export default function AssetTableIconCell({
@@ -31,7 +32,7 @@ export default function AssetTableIconCell({
       {...props}
     >
       {!onlyLabel && (
-        <TokenImage
+        <AssetCard.Logo
           src={thumbnail}
           alt={tokenName}
           flexShrink={"0"}
@@ -39,7 +40,7 @@ export default function AssetTableIconCell({
         />
       )}
       {!onlyImage && (
-        <TokenLabel
+        <AssetCard.Label
           tokenName={tokenName}
           tokenSymbol={tokenSymbol}
           {...labelProps}

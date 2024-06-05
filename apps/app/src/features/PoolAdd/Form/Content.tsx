@@ -6,7 +6,7 @@ import Input from "@/components/Form/Input";
 import InputImage from "@/components/Form/InputImage";
 import InputSwitch from "@/components/Form/InputSwitch";
 import TextArea from "@/components/Form/TextArea";
-import SplitCard from "@/components/Split/Card";
+import SplitCard from "@/features/Pool/Card";
 import InputBase from "@/components/Form/InputBase";
 
 import PoolAddFormPayees from "@/features/PoolAdd/Payees";

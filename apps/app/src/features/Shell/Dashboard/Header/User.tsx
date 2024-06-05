@@ -26,7 +26,7 @@ import { useAccount } from "wagmi";
 
 import { shortenAddress } from "@/utils";
 
-import UserAvatar from "@/components/UserAvatar";
+import UserAvatar from "src/features/Wallet/Avatar";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/features/Auth/Provider";
 
