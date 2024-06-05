@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Box,
   Button,
@@ -37,7 +35,7 @@ import {
   shortenAddress,
 } from "@/utils";
 
-import PoolCardImage from "@/features/Pool/Card/Image";
+import PoolCardLogo from "@/features/Pool/Card/Logo";
 import { Split } from "@splitfi/sdk/thegraph";
 
 export type PoolCardProps = Partial<Split>;
@@ -49,7 +47,7 @@ function PoolCard({ id, metaData, address }: PoolCardProps) {
         <CardHeader as={Flex} alignItems={"center"} gap={"3"}>
           <Box flexShrink={0}>
             {
-              <PoolCardImage
+              <PoolCardLogo
                 src={
                   "https://bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu.ipfs.w3s.link"
                 }
@@ -128,5 +126,6 @@ function PoolCard({ id, metaData, address }: PoolCardProps) {
   );
 }
 
-PoolCard.Image = PoolCardImage;
+PoolCard.Logo = PoolCardLogo;
+
 export default PoolCard;

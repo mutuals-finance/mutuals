@@ -11,9 +11,9 @@ import {
 
 import { formatUSDPrice, ipfsResolveData } from "src/utils";
 
-import { SplitImage } from "src/features/Pool/Card/Image";
 import { Split } from "@splitfi/sdk/thegraph";
 import { type DeepPartial } from "#/partial";
+import PoolCard from "@/features/Pool/Card";
 
 interface PoolOverviewDescriptionProps {
   pool?: DeepPartial<Split>;
@@ -30,7 +30,7 @@ export default function PoolOverviewDescription({
         spacing={"3"}
         w={"full"}
       >
-        <SplitImage
+        <PoolCard.Logo
           src={ipfsResolveData(pool?.metaData?.image)}
           alt={pool?.metaData?.name ?? "Unknown Payment Pool"}
           boxSize={"3.4rem"}

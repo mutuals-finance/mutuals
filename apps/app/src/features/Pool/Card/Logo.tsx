@@ -1,50 +1,50 @@
-"use client";
-
-import { Box, BoxProps } from "@splitfi/ui";
+import { Box, BoxProps, Stack } from "@splitfi/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoImage } from "react-icons/io5";
 import { ipfsResolveData } from "@/utils";
 
-export type PoolCardImageProps = Omit<BoxProps, "fill"> & ImageProps;
+export type PoolCardLogoProps = Omit<BoxProps, "fill"> & ImageProps;
 
-export default function PoolCardImage({
+export default function PoolCardLogo({
   src = "",
-  alt = "Unknown Split",
-  boxSize = "3rem",
-  p = "1",
+  alt = "Unknown Pool",
+  boxSize = "2.4rem",
+  p = "0.5",
   fill = true,
-  borderRadius = 12,
+  borderRadius = "lg",
   bg,
   ...props
-}: PoolCardImageProps) {
+}: PoolCardLogoProps) {
   return (
-    <Box
+    <Stack
       position={"relative"}
       borderRadius={borderRadius!}
-      boxSize={boxSize!}
+      overflow={"hidden"}
       borderWidth={"1px"}
-      bg={"alpha.2"}
+      bg={"alpha.4"}
+      boxSize={boxSize}
+      p={p}
+      align={"stretch"}
+      justify={"stretch"}
     >
       <>
         {!src || src === "" ? (
           <IoImage />
         ) : (
           <Box
-            p={p!}
+            flex={"1"}
             borderRadius={borderRadius!}
-            position={"absolute"}
-            inset={"0"}
+            position={"relative"}
             {...props}
           >
             <NextImage
               src={ipfsResolveData(src)}
               alt={alt || "Unknown Split"}
               fill={fill}
-              sizes={"150"}
             />
           </Box>
         )}
       </>
-    </Box>
+    </Stack>
   );
 }

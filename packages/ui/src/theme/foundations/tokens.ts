@@ -13,6 +13,10 @@ export default {
         default: "blackAlpha.500",
         _dark: "whiteAlpha.500",
       },
+      4: {
+        default: "blackAlpha.200",
+        _dark: "whiteAlpha.200",
+      },
     },
     color: {
       1: { default: "gray.900", _dark: "white" },
