@@ -24,6 +24,7 @@ jobs:
 workflows:
   docs-workflow:
     jobs:
+      - setup
       - lint # use the shared lint job.
       - test # use the shared test job.
       - build-docs

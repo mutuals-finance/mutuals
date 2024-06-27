@@ -1,0 +1,15 @@
+docker:
+  - image: znck/pnpm:latest
+steps:
+  - checkout
+  - restore_cache:
+      key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+  - run:
+      name: Install
+      command: pnpm install --frozen-lockfile
+      environment:
+        TURBO_UI: "false"
+  - save_cache:
+      key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+      paths:
+        - node_modules

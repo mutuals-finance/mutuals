@@ -1,200 +1,200 @@
-#version: 2.1
-## use CircleCI's dynamic configuration feature
-#setup: true
-#
-## TODO custom executor for applying DRY to all jobs
-##executors:
-##  mutuals-pnpm:
-##    docker:
-##      - image: znck/pnpm:latest
-#
-## the path-filtering orb is required to continue a pipeline based on
-## the path of an updated fileset
-#orbs:
-#  path-filtering: circleci/path-filtering@1.0.0
-#
-#workflows:
-#  setup:
-#    jobs:
-#      - path-filtering/filter:
-#          base-revision: generate-config-file-main
-#          config-path: .circleci/no-updates.yml
-#          mapping: | # The mapping will be used to generate the dynamic configuration for all conditions that match.
-#            .* ci-shared true .circleci/shared/config.yml
-#            apps/app/.* ci-app true .circleci/app/config.yml
-#            apps/landing/.* ci-landing true .circleci/landing/config.yml
-#            apps/docs/.* ci-docs true .circleci/docs/config.yml
-#jobs:
-#  setup:
-#    executor: mutuals-pnpm
-#    steps:
-#      - checkout
-#      - restore_cache:
-#          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
-#      - run:
-#          name: Install
-#          command: pnpm install --frozen-lockfile
-#          environment:
-#            TURBO_UI: "false"
-#      - save_cache:
-#          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
-#          paths:
-#            - node_modules
-#  build:
-#    executor: mutuals-pnpm
-#    steps:
-#      - checkout
-#      - restore_cache:
-#          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
-#      - run:
-#          name: Build
-#          command: |
-#            pnpm run build
-#            ls dist
-#          environment:
-#            TURBO_UI: "false"
-#      - save_cache:
-#          key: build-output-{{ .Environment.CIRCLE_SHA1 }}
-#          paths:
-#            - dist
-#      - store_artifacts:
-#          path: dist
-#          destination: dist
-#  test:
-#    executor: mutuals-pnpm
-#    steps:
-#      - checkout
-#      - restore_cache:
-#          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
-#      - run:
-#          name: Test and Lint
-#          command: pnpm run lint && pnpm test
-#          environment:
-#            TURBO_UI: "false"
-#
-#  deploy:
+version: 2.1
+# use CircleCI's dynamic configuration feature
+setup: true
+
+# TODO custom executor for applying DRY to all jobs
+#executors:
+#  mutuals-pnpm:
 #    docker:
-#      - image: google/cloud-sdk
-#    environment:
-#
-#    steps:
-#      - restore_cache:
-#          key: build-output-{{ .Environment.CIRCLE_SHA1 }}
-#      - run:
-#          name: Deploy
-#          command: |
-#            echo "Going to correct directory"
-#            cd /home/circleci/project/
-#            ls dist
-#
-#            echo "Creating google application credentials json file"
-#            echo $GOOGLE_APPLICATION_CREDENTIALS_JSON > google-application-credentials.json
-#
-#            echo "Authenticating with Google"
-#            gcloud auth activate-service-account --key-file google-application-credentials.json
-#
-#            echo "Commit sha is $CIRCLE_SHA1. This will be the directory name under $CIRCLE_PROJECT_REPONAME in Cloud Storage."
-#
-#            echo "Uploading navbar module"
-#            gsutil cp -rZ dist gs://$BUCKET_NAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_SHA1
-#            echo "Updating import map"
-#            echo '{ "service":"@react-mf/'"$CIRCLE_PROJECT_REPONAME"'","url":"https://'"$CF_PUBLIC_URL"'/'"$CIRCLE_PROJECT_REPONAME"'/'"$CIRCLE_SHA1"'/react-mf-'"$CIRCLE_PROJECT_REPONAME"'.js" }'
-#            curl -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@react-mf/'"$CIRCLE_PROJECT_REPONAME"'","url":"https://'"$CF_PUBLIC_URL"'/'"$CIRCLE_PROJECT_REPONAME"'/'"$CIRCLE_SHA1"'/react-mf-'"$CIRCLE_PROJECT_REPONAME"'.js" }' -X PATCH http://$DEPLOYER_HOST/services\?env=$DEPLOYER_ENV -H "Accept:application/json" -H "Content-Type:application/json" --fail --insecure -i
-#
-#workflows:
-#  # the always-run workflow is always triggered, regardless of the pipeline parameters.
-#  always-run:
-#    jobs:
-#      - path-filtering/filter:
-#          name: check-updated-files
-#
-#            # Test which path is updated and set the parameter for continue_config
-#            design-system/.* run-design-system-job true
-#            app1/.* run-app1-job true
-#            app2/.* run-app2-job true
-#
-#          # Compare changes of the branch with main branch
-#          base-revision: main
-#
-#          # this is the path of the configuration we should trigger once
-#          # path filtering and pipeline parameter value updates are
-#          # complete. In this case, we are using the parent dynamic
-#          # configuration itself.
-#
-#          config-path: .circleci/continue_config.yml
-#  build-and-test:
-#    jobs:
-#      - setup
-#      - build:
-#          requires:
-#            - setup
-#      - test:
-#          requires:
-#            - setup
-#  build:
-#    jobs:
-#      - build-and-test:
-#          filters:
-#            branches:
-#              ignore:
-#                - main
-#                - dev
-#  production:
-#    jobs:
-#      - setup:
-#          filters: &filters-production
-#            branches:
-#              only: main
-#      - build:
-#          requires:
-#            - setup
-#      - test:
-#          requires:
-#            - setup
-#      - hold_for_approval:
-#          type: approval
-#          requires:
-#            - build-and-test
-#      - deploy_to_production:
-#          filters:
-#            <<: *filters-production
-#          requires:
-#            - build-and-test
-#            - hold_for_approval
-#  staging:
-#    jobs:
-#      - build-and-test:
-#          filters: &filters-staging
-#            branches:
-#              only: dev
-#      - hold_for_approval:
-#          type: approval
-#          requires:
-#            - build-and-test
-#      - deploy_to_staging:
-#          filters:
-#            <<: *filters-staging
-#          requires:
-#            - build-and-test
-#            - hold_for_approval
-#
-#deploy:
-#  stage: deploy
-#  image: znck/pnpm:latest
-#
-#  variables:
-#    PREVIEW_URL: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG.$VERCEL_SCOPE.vercel.app
-#
-#  rules:
-#    - if: $CI_MERGE_REQUEST_IID
-#    - if: $CI_COMMIT_TAG
-#    - if: $CI_COMMIT_BRANCH == 'dev'
-#
-#  environment:
-#    name: vercel/$CI_COMMIT_REF_NAME
-#    url: https://$PREVIEW_URL
-#
-#  script:
-#    - pnpm install --global vercel@latest
-#    - DEPLOYMENT_URL=$(vercel --name $CI_PROJECT_NAME --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
-#    - vercel alias set $DEPLOYMENT_URL $PREVIEW_URL -t $VERCEL_TOKEN --scope $VERCEL_SCOPE
+#      - image: znck/pnpm:latest
+
+# the path-filtering orb is required to continue a pipeline based on
+# the path of an updated fileset
+orbs:
+  path-filtering: circleci/path-filtering@1.0.0
+
+workflows:
+  setup:
+    jobs:
+      - path-filtering/filter:
+          base-revision: generate-config-file-main
+          config-path: .circleci/no-updates.yml
+          mapping: | # The mapping will be used to generate the dynamic configuration for all conditions that match.
+            .* ci-shared true .circleci/shared/config.yml
+            apps/app/.* ci-app true .circleci/app/config.yml
+            apps/landing/.* ci-landing true .circleci/landing/config.yml
+            apps/docs/.* ci-docs true .circleci/docs/config.yml
+jobs:
+  setup:
+    executor: mutuals-pnpm
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install
+          command: pnpm install --frozen-lockfile
+          environment:
+            TURBO_UI: "false"
+      - save_cache:
+          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+  build:
+    executor: mutuals-pnpm
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Build
+          command: |
+            pnpm run build
+            ls dist
+          environment:
+            TURBO_UI: "false"
+      - save_cache:
+          key: build-output-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
+      - store_artifacts:
+          path: dist
+          destination: dist
+  test:
+    executor: mutuals-pnpm
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Test and Lint
+          command: pnpm run lint && pnpm test
+          environment:
+            TURBO_UI: "false"
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+
+    steps:
+      - restore_cache:
+          key: build-output-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Deploy
+          command: |
+            echo "Going to correct directory"
+            cd /home/circleci/project/
+            ls dist
+
+            echo "Creating google application credentials json file"
+            echo $GOOGLE_APPLICATION_CREDENTIALS_JSON > google-application-credentials.json
+
+            echo "Authenticating with Google"
+            gcloud auth activate-service-account --key-file google-application-credentials.json
+
+            echo "Commit sha is $CIRCLE_SHA1. This will be the directory name under $CIRCLE_PROJECT_REPONAME in Cloud Storage."
+
+            echo "Uploading navbar module"
+            gsutil cp -rZ dist gs://$BUCKET_NAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_SHA1
+            echo "Updating import map"
+            echo '{ "service":"@react-mf/'"$CIRCLE_PROJECT_REPONAME"'","url":"https://'"$CF_PUBLIC_URL"'/'"$CIRCLE_PROJECT_REPONAME"'/'"$CIRCLE_SHA1"'/react-mf-'"$CIRCLE_PROJECT_REPONAME"'.js" }'
+            curl -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@react-mf/'"$CIRCLE_PROJECT_REPONAME"'","url":"https://'"$CF_PUBLIC_URL"'/'"$CIRCLE_PROJECT_REPONAME"'/'"$CIRCLE_SHA1"'/react-mf-'"$CIRCLE_PROJECT_REPONAME"'.js" }' -X PATCH http://$DEPLOYER_HOST/services\?env=$DEPLOYER_ENV -H "Accept:application/json" -H "Content-Type:application/json" --fail --insecure -i
+
+workflows:
+  # the always-run workflow is always triggered, regardless of the pipeline parameters.
+  always-run:
+    jobs:
+      - path-filtering/filter:
+          name: check-updated-files
+
+            # Test which path is updated and set the parameter for continue_config
+            design-system/.* run-design-system-job true
+            app1/.* run-app1-job true
+            app2/.* run-app2-job true
+
+          # Compare changes of the branch with main branch
+          base-revision: main
+
+          # this is the path of the configuration we should trigger once
+          # path filtering and pipeline parameter value updates are
+          # complete. In this case, we are using the parent dynamic
+          # configuration itself.
+
+          config-path: .circleci/continue_config.yml
+  build-and-test:
+    jobs:
+      - setup
+      - build:
+          requires:
+            - setup
+      - test:
+          requires:
+            - setup
+  build:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              ignore:
+                - main
+                - dev
+  production:
+    jobs:
+      - setup:
+          filters: &filters-production
+            branches:
+              only: main
+      - build:
+          requires:
+            - setup
+      - test:
+          requires:
+            - setup
+      - hold_for_approval:
+          type: approval
+          requires:
+            - build-and-test
+      - deploy_to_production:
+          filters:
+            <<: *filters-production
+          requires:
+            - build-and-test
+            - hold_for_approval
+  staging:
+    jobs:
+      - build-and-test:
+          filters: &filters-staging
+            branches:
+              only: dev
+      - hold_for_approval:
+          type: approval
+          requires:
+            - build-and-test
+      - deploy_to_staging:
+          filters:
+            <<: *filters-staging
+          requires:
+            - build-and-test
+            - hold_for_approval
+
+deploy:
+  stage: deploy
+  image: znck/pnpm:latest
+
+  variables:
+    PREVIEW_URL: $CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG.$VERCEL_SCOPE.vercel.app
+
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == 'dev'
+
+  environment:
+    name: vercel/$CI_COMMIT_REF_NAME
+    url: https://$PREVIEW_URL
+
+  script:
+    - pnpm install --global vercel@latest
+    - DEPLOYMENT_URL=$(vercel --name $CI_PROJECT_NAME --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
+    - vercel alias set $DEPLOYMENT_URL $PREVIEW_URL -t $VERCEL_TOKEN --scope $VERCEL_SCOPE
