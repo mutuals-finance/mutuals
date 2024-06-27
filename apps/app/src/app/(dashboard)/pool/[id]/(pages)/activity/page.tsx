@@ -3,6 +3,11 @@ import { getTokenTransfers } from "@/lib/ankr";
 import ShellPage from "@/features/Shell/Page";
 import { Container } from "@splitfi/ui";
 import ActivityTableCard from "@/features/Activity/TableCard";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Activity",
+};
 
 export default async function PoolActivityPage() {
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";

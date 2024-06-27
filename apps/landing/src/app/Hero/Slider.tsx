@@ -1,9 +1,14 @@
-import { Flex, FlexProps, SimpleGrid, useBreakpointValue } from "@splitfi/ui";
+import {
+  Flex,
+  FlexProps,
+  SimpleGrid,
+  MotionBox,
+  useBreakpointValue,
+} from "@splitfi/ui";
 import NextImage from "next/image";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
 import aboutImage from "@/assets/hero.png";
-import AnimationBox from "@/components/Animation/Box";
 
 type HomeHeroSliderProps = FlexProps & HomeHeroAnimBaseType;
 
@@ -42,9 +47,9 @@ export default function HomeHeroSlider({
       pt={animSpace}
       {...props}
     >
-      <AnimationBox
+      <MotionBox
         position="relative"
-        minW={{ base: "150vh", md: "150%", lg: "133%" }}
+        minW={{ base: "160vh", md: "150%", lg: "133%" }}
         mt={-1 * animSpace}
         scale={0.92}
         animate={animLabel}
@@ -55,7 +60,7 @@ export default function HomeHeroSlider({
           <NextImage src={aboutImage} alt="SplitFi Dashboard" />
           <NextImage src={aboutImage} alt="SplitFi Dashboard" />
         </SimpleGrid>
-      </AnimationBox>
+      </MotionBox>
     </Flex>
   );
 }

@@ -1,5 +1,10 @@
 import ContentCard from "@/components/ContentCard";
 import { Box, Button, Heading, Stack, StackDivider, Text } from "@splitfi/ui";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Security Settings",
+};
 
 export default async function PoolSettingsSecurityPage() {
   /*

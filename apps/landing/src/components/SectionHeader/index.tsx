@@ -18,7 +18,7 @@ export default function SectionHeader({
   ...props
 }: SectionHeaderProps) {
   return (
-    <Box maxW="2xl" mx="auto" textAlign={{ lg: "center" }} mb="12" {...props}>
+    <Box maxW="2xl" mx="auto" textAlign={"center"} mb="12" {...props}>
       {!!label && (
         <Text mb="6" variant={"tag"}>
           {label}

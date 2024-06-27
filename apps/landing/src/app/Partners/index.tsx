@@ -24,7 +24,7 @@ const networks = [
 
 export default function HomePartners() {
   return (
-    <Box mt={"12"}>
+    <Box mt={"16"}>
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
         <PartnerSlider networks={networks} />
       </Container>

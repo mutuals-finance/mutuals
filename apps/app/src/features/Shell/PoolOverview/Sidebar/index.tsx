@@ -48,6 +48,6 @@ export default function ShellPoolOverviewSidebar({
       {wrapperProps.children}
     </ShellPoolOverviewSidebarMobile>
   ) : (
-    <ShellPoolOverviewSidebarDesktop w={"26rem"} {...wrapperProps} />
+    <ShellPoolOverviewSidebarDesktop w={"27rem"} {...wrapperProps} />
   );
 }

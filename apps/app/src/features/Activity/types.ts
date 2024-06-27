@@ -1,5 +1,5 @@
 import type { TableProps } from "@/components/Table";
-import type { Balance, TokenTransfer } from "@ankr.com/ankr.js";
+import type { TokenTransfer } from "@ankr.com/ankr.js";
 import type { Share } from "@splitfi/sdk/thegraph";
 
 export enum EventType {
@@ -16,7 +16,7 @@ export interface SplitEvent {
 }
 
 export interface ActivityTableProps
-  extends Omit<TableProps<Balance>, "data" | "columns">,
+  extends Omit<TableProps<TokenTransfer>, "data" | "columns">,
     Pick<Share, "payee"> {
   transfers?: TokenTransfer[];
 }

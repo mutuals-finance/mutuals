@@ -1,6 +1,6 @@
-import { Balance } from "@ankr.com/ankr.js/dist/types";
+import { RowSelectionState } from "@tanstack/react-table";
 
 export type WithdrawData = {
-  assets?: Balance[];
+  assets?: RowSelectionState;
   distribute: boolean;
 };

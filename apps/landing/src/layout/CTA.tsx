@@ -4,41 +4,43 @@ import {
   Heading,
   Container,
   Stack,
-  useColorModeValue,
-  SplitFiLogo,
+  DarkMode,
+  LightMode,
 } from "@splitfi/ui";
+import NextImage from "next/image";
+import ctaBgImage from "@/assets/background-primary.png";
 
 export default function CTA() {
   return (
-    <Box
-      as="section"
-      position="relative"
-      bg={useColorModeValue("primary.600", "primary.600")}
-      color="white"
-      roundedTop="md"
-    >
-      <Container maxW="container.xl" py="24" px={{ base: 6, lg: "12" }}>
-        <Stack
-          direction={{ base: "column", lg: "row" }}
-          gap={{ base: "12", lg: "24" }}
-          alignItems="flex-start"
-        >
-          <Box flex="1">
-            <Box maxW="32">
-              <SplitFiLogo />
-            </Box>
-          </Box>
-          <Box flex="1">
-            <Heading size="2xl" mb="6" lineHeight={1.2} color="white">
-              Starting with SplitFi is simple, <br />
-              fast, and free.
-            </Heading>
+    <Box as="section" position="relative">
+      <NextImage
+        src={ctaBgImage}
+        alt={"CTA bg"}
+        fill={true}
+        style={{ objectFit: "cover" }}
+      />
 
-            <Button colorScheme="whiteAlpha" color="white">
-              Launch App
-            </Button>
-          </Box>
-        </Stack>
+      <Container
+        position={"relative"}
+        as={Stack}
+        align="center"
+        justify="center"
+        textAlign={"center"}
+        maxW="container.md"
+        py="24"
+        gap={"6"}
+        px={{ base: "3", lg: "12" }}
+      >
+        <DarkMode>
+          <Heading size="2xl" color={"color.1"} lineHeight={"1.4"}>
+            Starting with Mutuals is simple, fast, and free.
+          </Heading>
+        </DarkMode>
+        <LightMode>
+          <Button colorScheme="blackAlpha" size="lg" rounded={"full"}>
+            Get Started For Free
+          </Button>
+        </LightMode>
       </Container>
     </Box>
   );

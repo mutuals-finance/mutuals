@@ -1,11 +1,5 @@
-import {
-  BoxProps,
-  DrawerProps,
-  VStack,
-} from "@splitfi/ui";
+import { BoxProps, DrawerProps, VStack, MotionBox } from "@splitfi/ui";
 import React from "react";
-
-import AnimationBox from "@/components/Animation/Box";
 
 export interface SidebarWrapperProps extends BoxProps {
   isOpen?: boolean;
@@ -21,7 +15,7 @@ export function SidebarWrapper({
   ...props
 }: SidebarWrapperProps) {
   return (
-    <AnimationBox
+    <MotionBox
       position={{ base: "fixed", lg: "sticky" }}
       top={"0"}
       left={"0"}
@@ -49,6 +43,6 @@ export function SidebarWrapper({
       <VStack flex="1" alignItems={"stretch"} overflow={"hidden"} gap={"0"}>
         {children}
       </VStack>
-    </AnimationBox>
+    </MotionBox>
   );
 }

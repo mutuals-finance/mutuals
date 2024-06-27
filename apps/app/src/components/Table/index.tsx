@@ -7,38 +7,40 @@ import {
   Tbody,
   Thead,
 } from "@splitfi/ui";
-import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { RowData, TableOptions } from "@tanstack/table-core";
+import {
+  getCoreRowModel,
+  useReactTable,
+  RowData,
+  TableOptions,
+} from "@tanstack/react-table";
 import React from "react";
 
 import BodyRow from "@/components/Table/BodyRow";
 import HeaderRow from "@/components/Table/HeaderRow";
 
 export interface TableProps<TData extends RowData>
-  extends Pick<TableOptions<TData>, "data" | "columns">,
-    Omit<ChakraTableProps, "data"> {
+  extends Omit<TableOptions<TData>, "getCoreRowModel"> {
   containerProps?: ChakraTableContainerProps;
   headProps?: ChakraTableHeadProps;
+  tableProps?: ChakraTableProps;
   headerHidden?: boolean;
 }
 
 export default function Table<TData extends RowData>({
-  data,
-  columns,
   containerProps,
   headProps,
   headerHidden = false,
+  tableProps,
   ...props
 }: TableProps<TData>) {
   const table = useReactTable<TData>({
-    data,
-    columns,
     getCoreRowModel: getCoreRowModel(),
+    ...props,
   });
 
   return (
     <ChakraTableContainer {...containerProps}>
-      <ChakraTable {...props}>
+      <ChakraTable {...tableProps}>
         {!headerHidden && (
           <Thead
             position={"sticky"}

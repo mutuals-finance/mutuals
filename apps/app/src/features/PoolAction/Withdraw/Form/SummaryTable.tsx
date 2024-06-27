@@ -8,42 +8,53 @@ import {
   Tfoot,
   Tr,
 } from "@splitfi/ui";
-import React from "react";
-import { formatCurrencyAmount, formatPrice } from "src/utils";
+import React, { useMemo } from "react";
+import { formatPrice } from "src/utils";
 import { type WithdrawData } from "@/features/PoolAction/types";
 import { Share } from "@splitfi/sdk/thegraph";
+import { Balance } from "@ankr.com/ankr.js/dist/types";
 
 export interface SummaryTableProps extends WithdrawData {
   shares?: Share[];
+  data?: Balance[];
 }
 
 export default function SummaryTable({
-  assets,
+  assets = {},
+  data = [],
   distribute,
   shares,
 }: SummaryTableProps) {
   const share = shares ? shares[0] : null;
 
-  const total = assets?.reduce(
-    (total, asset) => ({
-      balance: total.balance + Number(asset?.balanceUsd || "0.00"),
-      assetCount: total.assetCount + Number(asset.balance || "0.00"),
-    }),
-    { balance: 0, assetCount: 0 },
-  ) || { balance: 0, assetCount: 0 };
+  const total = useMemo(
+    () =>
+      Object.keys(assets).reduce(
+        (total, index) => {
+          const asset = data[Number(index)];
+
+          if (!asset) {
+            return { balance: 0, assetCount: 0 };
+          }
+
+          return {
+            balance: total.balance + Number(asset.balanceUsd),
+            assetCount: total.assetCount + Number(asset.balance),
+          };
+        },
+        { balance: 0, assetCount: 0 },
+      ),
+    [data, assets],
+  );
 
   const userWithdraw = Number(share?.value || "0.00") * total?.balance;
 
   const rows: Record<string, { value: number; props?: ChakraProps }> = {
     "Total Withdrawal": {
       value: distribute ? total?.balance : userWithdraw,
-      props: { border: "none" },
+      props: { border: "none", py: 0 },
     },
-    "Your Withdrawal": {
-      value: userWithdraw,
-      props: { border: "none" },
-    },
-    "Withdrawal Fee": { value: 0 },
+    "Mutuals Fee": { value: 0 },
   };
 
   return (
@@ -53,7 +64,7 @@ export default function SummaryTable({
           {Object.keys(rows).map((col) => (
             <Tr key={col}>
               <Td px={"0"} {...rows[col]?.props}>
-                {col}
+                <Text>{col}</Text>
               </Td>
               <Td isNumeric px={"0"} {...rows[col]?.props}>
                 {formatPrice(rows[col]?.value.toString() ?? "")}
@@ -64,12 +75,13 @@ export default function SummaryTable({
         <Tfoot>
           <Tr>
             <Td px={"0"}>
-              <Text as="b">You Receive</Text>
+              <Text as={"b"} fontWeight={"500"}>
+                Your Withdrawal
+              </Text>
             </Td>
             <Td px={"0"} isNumeric>
-              <Text as="b">
-                {formatPrice(userWithdraw.toString())} (
-                {formatCurrencyAmount(total.assetCount.toString())} tokens)
+              <Text as="b" fontWeight={"500"}>
+                {formatPrice(userWithdraw.toString())}
               </Text>
             </Td>
           </Tr>

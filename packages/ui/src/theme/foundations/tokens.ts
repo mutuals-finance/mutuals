@@ -22,7 +22,7 @@ export default {
       1: { default: "gray.900", _dark: "white" },
       2: { default: "gray.600", _dark: "gray.300" },
       3: { default: "gray.400", _dark: "gray.500" },
-      primary: { default: "primary.600", _dark: "primary.300" },
+      primary: { default: "primary.500", _dark: "primary.300" },
     },
     bg: {
       1: {
@@ -30,14 +30,14 @@ export default {
         _dark: "gray.900",
       },
       2: {
-        default: "gray.100",
+        default: "gray.50",
         _dark: "gray.800",
       },
       3: {
-        default: "gray.200",
+        default: "gray.100",
         _dark: "gray.700",
       },
     },
-    border: { 1: { default: "gray.200", _dark: "gray.800" } },
+    border: { 1: { default: "alpha.4", _dark: "alpha.4" } },
   },
 };

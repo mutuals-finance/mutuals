@@ -27,26 +27,32 @@ export default function ValueCard({
     <Card
       variant="filled"
       bg="transparent"
-      borderLeft={"1px solid"}
-      borderColor="border.1"
+      borderLeft={{ lg: "1px solid" }}
+      borderColor={{ lg: "border.1" }}
       rounded={"none"}
-      pr={"0"}
+      pl={{ lg: "6" }}
+      textAlign={{ base: "center", lg: "left" }}
+      align={{ base: "center", lg: "flex-start" }}
       {...props}
     >
       {!!icon && (
-        <CardHeader pt={"0"} pr={"0"} pb={"12"}>
+        <CardHeader
+          px="0"
+          pb={{ base: "6", lg: "12" }}
+          pt={{ base: "6", lg: "0" }}
+        >
           <Icon
             as={icon}
-            boxSize={12}
+            boxSize={10}
             bg="blue.100"
             color={"primary.600"}
-            p="4"
-            rounded="md"
+            p="3"
+            rounded="lg"
           />
         </CardHeader>
       )}
 
-      <CardBody mt={"auto"} pr={"0"} pb={"0"}>
+      <CardBody p={"0"}>
         <Heading as="h3" size="sm" mb={"3"}>
           {heading}
         </Heading>

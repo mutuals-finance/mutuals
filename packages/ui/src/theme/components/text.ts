@@ -17,8 +17,8 @@ const variants = {
     fontFamily: "monospace",
     color: "alpha.3",
     textTransform: "uppercase",
-    fontWeight: "600",
-    letterSpacing: "0.05em",
+    fontWeight: "700",
+    letterSpacing: "0.075em",
   }),
 };
 

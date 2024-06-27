@@ -1,7 +1,7 @@
 import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 const baseStyle = {
-  fontWeight: "500",
+  fontWeight: "600",
   lineHeight: "1.2",
 };
 
@@ -11,7 +11,6 @@ const variants = {
   }),
   "h.2": defineStyle({
     fontSize: "3xl",
-    fontWeight: "700",
     color: "color.2",
   }),
 };

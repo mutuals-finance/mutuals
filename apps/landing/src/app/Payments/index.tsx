@@ -53,7 +53,7 @@ const payments = [
 export default function HomePayments() {
   const payment = payments[0] as (typeof payments)[0];
   return (
-    <Box mb="24" mt="12" py={"24"} bg={"bg.2"}>
+    <Box mb="32" mt="6" py={"32"} bg={"bg.2"}>
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
         <SectionHeader label={"Flexible Setup"}>
           Payments For Every Use Case

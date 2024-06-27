@@ -19,6 +19,7 @@ import Sidebar from "@/components/Sidebar";
 
 import { SplitFiLogo } from "@splitfi/ui";
 import navItems from "@/features/Shell/Dashboard/Sidebar/nav-items";
+import { siteCopyrightText } from "@/config";
 
 export default function ShellDashboardSidebarContent({
   children,
@@ -72,23 +73,26 @@ export default function ShellDashboardSidebarContent({
             fontSize={"xs"}
             visibility={isOpen ? "inherit" : "hidden"}
           >
-            <Text noOfLines={1}>Copyright 2023 SplitFi</Text>
             <Text noOfLines={1}>
-              <Link href={"/"}> Privacy Policy</Link> /{" "}
+              &copy; {new Date().getFullYear()} {siteCopyrightText}
+            </Text>
+            <Text noOfLines={1}>
+              <Link href={"/"}>Privacy Policy</Link> /{" "}
               <Link href={"/"}>Terms</Link>
             </Text>
           </Box>
         }
       >
         {Object.keys(navItems).map((section) => (
-          <VStack alignItems={"stretch"} key={section}>
-            <Text mb={"3"} fontSize={"sm"} noOfLines={1}>
+          <VStack alignItems={"stretch"} key={section} gap={"3"}>
+            <Text fontSize={"sm"} variant={"label"} noOfLines={1}>
               {section}
             </Text>
             <Stack gap={1.5} w={"full"}>
               {navItems[section]?.map((navItem) => (
                 <Button
                   key={navItem.label}
+                  size={"md"}
                   w={"full"}
                   justifyContent={"flex-start"}
                   px={"3.5"}

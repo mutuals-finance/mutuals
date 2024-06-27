@@ -1,5 +1,14 @@
 import { GridItemProps } from "@splitfi/ui";
-import { GridItem, Stack, StackProps, Heading, Text, Box } from "@splitfi/ui";
+import {
+  GridItem,
+  Stack,
+  CardBody,
+  Card,
+  StackProps,
+  Heading,
+  Text,
+  Box,
+} from "@splitfi/ui";
 
 interface FeatureCardProps extends StackProps, GridItemProps {
   heading: string;
@@ -15,17 +24,15 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <GridItem
-      as={Stack}
-      direction={"column"}
-      justify={"flex-end"}
-      rounded={"lg"}
-      position={"relative"}
-      overflow={"hidden"}
-      p={{ base: "3", lg: "6" }}
-      {...props}
-    >
-      {/*
+    <GridItem as={Card} variant={"outline"} {...props}>
+      <CardBody
+        as={Stack}
+        direction={"column"}
+        justify={"space-between"}
+        minH={"2xs"}
+        gap={"6"}
+      >
+        {/*
               <Box position={"absolute"} rounded={"lg"} overflow={"hidden"}>
                 <Image
                   src={featureImage}
@@ -35,19 +42,24 @@ export default function FeatureCard({
                 />
               </Box>
 */}
-      {children}
+        {children}
 
-      <Box position={"relative"}>
-        {index && index >= 0 && (
-          <Text variant={"tag"} mb={"1"}>
-            0{index}
-          </Text>
-        )}
+        <Box>
+          {index && index >= 0 && (
+            <Text variant={"tag"} mb={"3"}>
+              0{index}
+            </Text>
+          )}
 
-        <Heading as={"h4"} size={"lg"}>
-          {heading}
-        </Heading>
-      </Box>
+          <Heading as={"h4"} size={"lg"}>
+            {heading}
+          </Heading>
+        </Box>
+
+        <Box position={"relative"} w={"full"} maxW={"md"}>
+          <Text>{description}</Text>
+        </Box>
+      </CardBody>
     </GridItem>
   );
 }

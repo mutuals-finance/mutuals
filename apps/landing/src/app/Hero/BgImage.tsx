@@ -1,92 +1,52 @@
-import type { FlexProps } from "@splitfi/ui";
-import { useBreakpointValue } from "@splitfi/ui";
-import { useEffect, useRef } from "react";
+import { type FlexProps, useColorModeValue, Box } from "@splitfi/ui";
 
-import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
-import heroImage from "@/assets/bg-hero.jpg";
-import AnimationBox from "@/components/Animation/Box";
+import type { HomeHeroAnimBaseType } from "@/app/Hero";
 import NextImage from "next/image";
-
+import heroLeftImage from "@/assets/bg-hero-left.webp";
 type HomeHeroBgImageProps = HomeHeroAnimBaseType & FlexProps;
 
 export default function HomeHeroBgImage({
   animLabel,
   ...props
 }: HomeHeroBgImageProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef?.current) {
-      videoRef.current.playbackRate = 0.5;
-    }
-  }, []);
-
   return (
-    <AnimationBox
+    <Box
       position="absolute"
-      bottom="0"
-      left="50%"
-      w={{ base: "full", lg: "calc(100% - var(--chakra-space-12))" }}
-      transform="translateX(-50%)"
-      roundedBottom="lg"
+      inset="0"
       overflow="hidden"
       _after={{
-        zIndex: 1,
+        zIndex: -1,
         content: `""`,
         display: "block",
         position: "absolute",
         inset: "0",
-        bg: "whiteAlpha.700",
+        bg: useColorModeValue("blackAlpha.0", "blackAlpha.600"),
         /*
-        bgGradient:
-          "linear(to-b, blackAlpha.500, blackAlpha.700, blackAlpha.900)",
-*/
+                   bgGradient:
+                     "linear(to-b, blackAlpha.500, blackAlpha.700, blackAlpha.900)",
+           */
       }}
-      animate={animLabel}
-      variants={useBreakpointValue({
-        base: {
-          shrink: {
-            width: "100%",
-          },
-          grow: {
-            width: "100%",
-          },
-        },
-        lg: {
-          shrink: {
-            width: "calc(100% - var(--chakra-space-12))",
-          },
-          grow: {
-            width: "100%",
-          },
-        },
-      })}
-      {...props}
     >
       <NextImage
-        src={heroImage}
+        src={heroLeftImage}
         fill
         alt={"SplitFi"}
         style={{
-          objectFit: "cover",
+          objectFit: "contain",
+          objectPosition: "top left",
         }}
       />
       {/*
-      <video
-        autoPlay
-        muted
-        loop
-        ref={videoRef}
+      <NextImage
+        src={heroRightImage}
+        fill
+        alt={"SplitFi right"}
         style={{
-          objectFit: "cover",
-          width: "100%",
-          height: "100%",
-          position: "absolute",
+          objectFit: "contain",
+          objectPosition: "top right",
         }}
-      >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+      />
 */}
-    </AnimationBox>
+    </Box>
   );
 }

@@ -26,3 +26,4 @@ export {
 
 export { UIProvider } from "./components/UIProvider";
 export { SplitFiLogo } from "./components/SplitFiLogo";
+export { MotionBox } from "./components/MotionBox";

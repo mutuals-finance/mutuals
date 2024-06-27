@@ -1,20 +1,20 @@
 import { Text } from "@splitfi/ui";
 
-import PoolActionWithdrawForm, {
-  PoolActionWithdrawFormProps,
+import WithdrawForm, {
+  WithdrawFormProps,
 } from "@/features/PoolAction/Withdraw/Form";
 
-type PoolActionWithdrawProps = PoolActionWithdrawFormProps;
+type PoolActionWithdrawProps = WithdrawFormProps;
 
-export default async function PoolActionWithdraw(
+export default async function PoolActionWithdrawPage(
   props: PoolActionWithdrawProps,
 ) {
   return (
-    <PoolActionWithdrawForm {...props}>
+    <WithdrawForm {...props}>
       <Text>
         Withdraw funds from your Payment Pool. You may either withdraw for your
         own or distribute to all other recipients.
       </Text>
-    </PoolActionWithdrawForm>
+    </WithdrawForm>
   );
 }

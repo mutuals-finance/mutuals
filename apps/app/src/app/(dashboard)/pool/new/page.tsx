@@ -1,6 +1,11 @@
 import { Box, Container, Heading, Text } from "@splitfi/ui";
 import ShellPage from "src/features/Shell/Page";
 import PoolAddForm from "src/features/PoolAdd/Form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Create New Payment Pool",
+};
 
 export default function PoolAddPage() {
   return (

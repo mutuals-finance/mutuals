@@ -24,7 +24,7 @@ const networks = [
 
 export default function HomeChains() {
   return (
-    <Box mt={"24"} mb={"12"}>
+    <Box mt={"32"} mb={"6"}>
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
         <Text variant={"tag"} mb={"6"}>
           Available on {networks.length - 1}+ networks

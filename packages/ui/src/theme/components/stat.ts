@@ -10,12 +10,17 @@ const baseStyle = {
     fontWeight: "400",
   },
   label: {
+    color: "alpha.2",
     fontWeight: "400",
   },
 };
+
+const defaultProps = {};
+
 const variants = {};
 
 export default defineMultiStyleConfig({
   baseStyle,
   variants,
+  defaultProps,
 });

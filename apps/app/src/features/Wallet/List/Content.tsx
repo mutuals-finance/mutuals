@@ -24,7 +24,7 @@ export default function WalletListContent({}: WalletListContentProps) {
           <KeenSliderSlide
             key={wallet?.dbid}
             flexShrink={"0"}
-            sx={{ w: "xs !important" }}
+            sx={{ w: "2xs !important" }}
           >
             <WalletCard
               {...wallet}

@@ -31,15 +31,17 @@ export default function PoolActionWithdrawFormContent({
   ...props
 }: WithdrawFormContentProps) {
   const {
+    setValue,
     watch,
     formState: { isValid },
   } = useFormContext<WithdrawData>();
 
-  const assets = watch("assets");
+  const selectedAssets = watch("assets");
   const distribute = watch("distribute");
 
-  const { ...tx } = useWithdrawSplit(pool!.address, assets);
+  const { ...tx } = useWithdrawSplit(pool!.address, []);
   const [isModalOpen, setIsModalOpen] = useToggle(false);
+  const data = balance?.assets ?? [];
 
   return (
     <>
@@ -64,7 +66,21 @@ export default function PoolActionWithdrawFormContent({
         </FormGroup>
 
         <FormGroup>
-          <WithdrawTable balance={balance} />
+          <WithdrawTable
+            data={data}
+            state={{
+              rowSelection: selectedAssets,
+            }}
+            onRowSelectionChange={(updaterOrValue) => {
+              const isUpdaterFn = typeof updaterOrValue == "function";
+              setValue(
+                "assets",
+                isUpdaterFn
+                  ? updaterOrValue(selectedAssets ?? {})
+                  : updaterOrValue,
+              );
+            }}
+          />
         </FormGroup>
       </VStack>
 
@@ -75,7 +91,11 @@ export default function PoolActionWithdrawFormContent({
         borderTop={"1px solid"}
         borderColor={"border.1"}
       >
-        <SummaryTable distribute={distribute} assets={assets} />
+        <SummaryTable
+          data={data}
+          distribute={distribute}
+          assets={selectedAssets}
+        />
 
         <Button
           colorScheme="primary"

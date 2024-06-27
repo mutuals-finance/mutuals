@@ -5,10 +5,11 @@ import {
   ContainerProps,
   Heading,
   Stack,
+  MotionBox,
+  Text,
 } from "@splitfi/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
-import AnimationBox from "@/components/Animation/Box";
 
 type HomeHeroHeadingProps = ContainerProps & HomeHeroAnimBaseType;
 
@@ -24,17 +25,29 @@ export default function HomeHeroHeading({
       px={{ base: 6, sm: 12 }}
       {...props}
     >
-      <AnimationBox
+      <MotionBox
         animate={animLabel}
         variants={{ shrink: { scale: 0.8 }, grow: { scale: 1 } }}
       >
-        <Stack direction="column" gap="6" position={"relative"}>
+        <Stack
+          direction="column"
+          gap="6"
+          position={"relative"}
+          align={{ base: "center", lg: "flex-start" }}
+          textAlign={{ base: "center", lg: "left" }}
+        >
+          <Text
+            variant={"tag"}
+            bgGradient="linear(to-tl, primary.100, primary.200, pink.200)"
+            bgClip="text"
+            fontSize={{ base: "xs", lg: "sm" }}
+          >
+            Join now for free
+          </Text>
           <Heading
-            color={"color.1"}
             as="h1"
-            fontSize="clamp(3.2rem,6.4vw,5.6rem)"
-            fontWeight="500"
-            lineHeight="1.2"
+            fontSize="clamp(3rem,6.4vw,5.6rem)"
+            color={"color.1"}
           >
             The best way to manage on-chain payments
           </Heading>
@@ -46,19 +59,13 @@ export default function HomeHeroHeading({
             right={{ lg: "0" }}
             spacing="3"
           >
-            <Button
-              rounded={"full"}
-              colorScheme={"whiteAlpha"}
-              color={"color.1"}
-            >
-              Learn More
-            </Button>
+            <Button rounded={"full"}>Learn More</Button>
             <Button rounded={"full"} variant={"blackWhite"}>
               Start For Free
             </Button>
           </ButtonGroup>
         </Stack>
-      </AnimationBox>
+      </MotionBox>
     </Container>
   );
 }

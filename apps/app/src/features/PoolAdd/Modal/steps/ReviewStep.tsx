@@ -1,6 +1,6 @@
 import { Box, Text } from "@splitfi/ui";
 
-import SplitCard from "@/features/Pool/Card";
+import PoolCard from "@/features/Pool/Card";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
 
@@ -8,9 +8,9 @@ interface ReviewStepProps {
   data: PoolAddData;
 }
 
-function SplitReviewCard({ image, name, description }: PoolAddData) {
+function PoolReviewCard({ image, name, description }: PoolAddData) {
   return (
-    <SplitCard
+    <PoolCard
       timestamp={new Date().getTime()}
       metaData={{
         name: name,
@@ -24,9 +24,9 @@ function SplitReviewCard({ image, name, description }: PoolAddData) {
 export function ReviewStep({ data }: ReviewStepProps) {
   return (
     <Box>
-      <Text mb={"6"}>You are about to create the following Split:</Text>
+      <Text mb={"6"}>You are about to create the following Payment Pool:</Text>
 
-      <SplitReviewCard {...data} />
+      <PoolReviewCard {...data} />
     </Box>
   );
 }
