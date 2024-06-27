@@ -1,15 +1,29 @@
 docker:
-  - image: znck/pnpm:latest
+  - image: node:18
+    resource_class: large
+    parallelism: 10
 steps:
   - checkout
   - restore_cache:
-      key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+      name: Restore pnpm Package Cache
+      keys:
+        - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
   - run:
-      name: Install
-      command: pnpm install --frozen-lockfile
+      name: Install pnpm package manager
+      command: |
+        corepack enable
+        corepack prepare pnpm@latest-9 --activate
+        pnpm config set store-dir .pnpm-store
+      environment:
+        TURBO_UI: "false"
+  - run:
+      name: Install Dependencies
+      command: |
+        pnpm install
       environment:
         TURBO_UI: "false"
   - save_cache:
-      key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
+      name: Save pnpm Package Cache
+      key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       paths:
-        - node_modules
+        - .pnpm-store
