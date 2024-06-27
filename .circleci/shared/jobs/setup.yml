@@ -1,7 +1,5 @@
 docker:
   - image: node:18
-resource_class: large
-parallelism: 10
 steps:
   - checkout
   - restore_cache:
