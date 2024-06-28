@@ -15,16 +15,25 @@ parameters:
     default: false
 
 jobs:
-  build-docs:
+  build-app:
     docker:
-      - image: cimg/base:stable
+      - image: node:18
+    resource_class: large
+    parallelism: 10
     steps:
-      - run: echo "Building app"
+      - run:
+          name: Build app
+          command: |
+            pnpm build:app
+          environment:
+            TURBO_UI: "false"
 
 workflows:
   docs-workflow:
     jobs:
       - setup
-      - lint # use the shared lint job.
-      - test # use the shared test job.
-      - build-docs
+      - lint
+      - test
+      - build:
+        requires:
+          - setup
