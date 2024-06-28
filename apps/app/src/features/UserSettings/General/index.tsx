@@ -1,3 +1,3 @@
 export default function UserSettingsGeneral() {
-  return <>Settings General User</>;
+  return <>User Settings General</>;
 }

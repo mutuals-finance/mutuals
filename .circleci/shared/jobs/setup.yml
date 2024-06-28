@@ -1,5 +1,6 @@
 docker:
   - image: node:18
+working_directory: ~/ci-build
 steps:
   - checkout
   - restore_cache:
@@ -25,3 +26,7 @@ steps:
       key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       paths:
         - .pnpm-store
+  - persist_to_workspace:
+      root: /home/ci
+      paths:
+        - ci-build

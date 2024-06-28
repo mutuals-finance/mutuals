@@ -1,4 +1,5 @@
 docker:
   - image: cimg/base:stable
+working_directory: ~/ci-build
 steps:
   - run: echo "Running linting"

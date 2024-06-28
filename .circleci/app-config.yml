@@ -18,7 +18,9 @@ jobs:
   build-app:
     docker:
       - image: node:18
+    working_directory: ~/ci-build
     steps:
+      - setup
       - run:
           name: Build app
           command: pnpm build:app
@@ -28,7 +30,6 @@ jobs:
 workflows:
   app-workflow:
     jobs:
-      - setup
       - lint
       - test
       - build-app:
