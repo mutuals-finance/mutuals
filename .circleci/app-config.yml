@@ -18,10 +18,7 @@ jobs:
   build-app:
     docker:
       - image: node:18
-    resource_class: large
-    parallelism: 10
     steps:
-      - checkout
       - run:
         name: Build app
         command: pnpm build:app
@@ -34,6 +31,4 @@ workflows:
       - setup
       - lint
       - test
-      - build-app:
-        requires:
-          - setup
+      - build-app
