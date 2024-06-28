@@ -15,15 +15,15 @@ parameters:
     default: false
 
 jobs:
-  build-docs:
+  build-landing:
     docker:
       - image: cimg/base:stable
     steps:
       - run: echo "Building landing"
 
 workflows:
-  docs-workflow:
+  landing-workflow:
     jobs:
       - lint # use the shared lint job.
       - test # use the shared test job.
-      - build-docs
+      - build-landing

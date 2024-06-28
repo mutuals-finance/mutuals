@@ -29,11 +29,11 @@ jobs:
             TURBO_UI: "false"
 
 workflows:
-  docs-workflow:
+  app-workflow:
     jobs:
       - setup
       - lint
       - test
-      - build:
+      - build-app:
         requires:
           - setup
