@@ -40,6 +40,7 @@ jobs:
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/no-updates.yml
           mapping: |
+            .* ci-shared true .circleci/shared-config.yml
             .* ci-app true .circleci/app-config.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
