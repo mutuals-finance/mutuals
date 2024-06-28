@@ -31,4 +31,7 @@ workflows:
       - setup
       - lint
       - test
-      - build-app
+      - build-app:
+          requires:
+            - setup
+
