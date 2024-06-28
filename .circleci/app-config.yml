@@ -22,11 +22,10 @@ jobs:
     parallelism: 10
     steps:
       - run:
-          name: Build app
-          command: |
-            pnpm build:app
-          environment:
-            TURBO_UI: "false"
+        name: Build app
+        command: pnpm build:app
+        environment:
+          TURBO_UI: "false"
 
 workflows:
   app-workflow:
