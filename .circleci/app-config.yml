@@ -21,6 +21,7 @@ jobs:
     resource_class: large
     parallelism: 10
     steps:
+      - checkout
       - run:
         name: Build app
         command: pnpm build:app
