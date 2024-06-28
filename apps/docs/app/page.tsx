@@ -1,8 +1,6 @@
 import Image from "next/image";
-import { Card } from "@splitfi/ui/card";
-import { Code } from "@splitfi/ui/code";
 import styles from "./page.module.css";
-import { Button } from "@splitfi/ui/button";
+import { Button, Card, Code } from "@splitfi/ui";
 
 function Gradient({
   conic,
@@ -78,9 +76,7 @@ export default function Page(): JSX.Element {
         </div>
       </div>
 
-      <Button appName="docs" className={styles.button}>
-        Click me!
-      </Button>
+      <Button className={styles.button}>Click me!</Button>
 
       <div className={styles.hero}>
         <div className={styles.heroContent}>
@@ -133,8 +129,8 @@ export default function Page(): JSX.Element {
       </div>
 
       <div className={styles.grid}>
-        {LINKS.map(({ title, href, description }) => (
-          <Card className={styles.card} href={href} key={title} title={title}>
+        {LINKS.map(({ title, description }) => (
+          <Card className={styles.card} key={title} title={title}>
             {description}
           </Card>
         ))}

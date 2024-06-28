@@ -1,6 +1,7 @@
 {
   "extends": "@splitfi/typescript-config/nextjs.json",
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -18,5 +19,5 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
   ],
-  "exclude": ["./out/**/*", "./node_modules/**/*", "cypress/**/*.ts"],
+  "exclude": ["./out/**/*", "./node_modules/**/*", "cypress/**/*.ts", "./types/**/typechain/**/*.ts"],
 }

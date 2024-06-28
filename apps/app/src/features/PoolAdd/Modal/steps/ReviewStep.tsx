@@ -3,6 +3,7 @@ import { Box, Text } from "@splitfi/ui";
 import PoolCard from "@/features/Pool/Card";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
+import { toBigInt } from "ethers";
 
 interface ReviewStepProps {
   data: PoolAddData;
@@ -11,8 +12,9 @@ interface ReviewStepProps {
 function PoolReviewCard({ image, name, description }: PoolAddData) {
   return (
     <PoolCard
-      timestamp={new Date().getTime()}
+      timestamp={toBigInt(new Date().getTime())}
       metaData={{
+        id: "id",
         name: name,
         image: image?.preview.toString(),
         description: description,

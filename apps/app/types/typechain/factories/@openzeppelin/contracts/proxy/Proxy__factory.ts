@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, Signer } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   Proxy,
   ProxyInterface,
@@ -14,10 +13,6 @@ const _abi = [
     stateMutability: "payable",
     type: "fallback",
   },
-  {
-    stateMutability: "payable",
-    type: "receive",
-  },
 ] as const;
 
 export class Proxy__factory {
@@ -25,7 +20,7 @@ export class Proxy__factory {
   static createInterface(): ProxyInterface {
     return new Interface(_abi) as ProxyInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Proxy {
-    return new Contract(address, _abi, signerOrProvider) as Proxy;
+  static connect(address: string, runner?: ContractRunner | null): Proxy {
+    return new Contract(address, _abi, runner) as unknown as Proxy;
   }
 }

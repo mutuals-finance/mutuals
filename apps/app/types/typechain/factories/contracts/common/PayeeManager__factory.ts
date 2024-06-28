@@ -2,14 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 import {
-  Signer,
   Contract,
   ContractFactory,
-  Overrides,
+  ContractTransactionResponse,
   Interface,
 } from "ethers";
-import type { Provider, TransactionRequest } from "@ethersproject/providers";
-import type { PromiseOrValue } from "../../../common";
+import type { Signer, ContractDeployTransaction, ContractRunner } from "ethers";
+import type { NonPayableOverrides } from "../../../common";
 import type {
   PayeeManager,
   PayeeManagerInterface,
@@ -17,13 +16,23 @@ import type {
 
 const _abi = [
   {
+    inputs: [],
+    name: "InvalidInitialization",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotInitializing",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
         indexed: false,
-        internalType: "uint8",
+        internalType: "uint64",
         name: "version",
-        type: "uint8",
+        type: "uint64",
       },
     ],
     name: "Initialized",
@@ -115,14 +124,14 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x608060405234801561001057600080fd5b506101d5806100206000396000f3fe608060405234801561001057600080fd5b506004361061004b5760003560e01c8062dbe109146100505780633a98ef39146100675780638b83209b1461006f578063ce7c2ac2146100a7575b600080fd5b6035545b6040519081526020015b60405180910390f35b603354610054565b61008261007d36600461011a565b6100dd565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200161005e565b6100546100b5366004610133565b73ffffffffffffffffffffffffffffffffffffffff1660009081526034602052604090205490565b6000603582815481106100f2576100f2610170565b60009182526020909120015473ffffffffffffffffffffffffffffffffffffffff1692915050565b60006020828403121561012c57600080fd5b5035919050565b60006020828403121561014557600080fd5b813573ffffffffffffffffffffffffffffffffffffffff8116811461016957600080fd5b9392505050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fdfea2646970667358221220063b8c5ca44c4322b325eb26153b53ae6a697e1ed669c42101dabc70fb5e24f464736f6c63430008100033";
+  "0x608060405234801561001057600080fd5b506101d5806100206000396000f3fe608060405234801561001057600080fd5b506004361061004b5760003560e01c8062dbe109146100505780633a98ef39146100675780638b83209b1461006f578063ce7c2ac2146100a7575b600080fd5b6002545b6040519081526020015b60405180910390f35b600054610054565b61008261007d36600461011a565b6100dd565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200161005e565b6100546100b5366004610133565b73ffffffffffffffffffffffffffffffffffffffff1660009081526001602052604090205490565b6000600282815481106100f2576100f2610170565b60009182526020909120015473ffffffffffffffffffffffffffffffffffffffff1692915050565b60006020828403121561012c57600080fd5b5035919050565b60006020828403121561014557600080fd5b813573ffffffffffffffffffffffffffffffffffffffff8116811461016957600080fd5b9392505050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fdfea2646970667358221220798c59e133ad321e000629e4b87cee7f3338bee178c246514c406deca3f815f764736f6c63430008140033";
 
 type PayeeManagerConstructorParams =
   | [signer?: Signer]
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: PayeeManagerConstructorParams,
+  xs: PayeeManagerConstructorParams
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class PayeeManager__factory extends ContractFactory {
@@ -134,21 +143,20 @@ export class PayeeManager__factory extends ContractFactory {
     }
   }
 
-  override deploy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<PayeeManager> {
-    return super.deploy(overrides || {}) as Promise<PayeeManager>;
-  }
   override getDeployTransaction(
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): TransactionRequest {
+    overrides?: NonPayableOverrides & { from?: string }
+  ): Promise<ContractDeployTransaction> {
     return super.getDeployTransaction(overrides || {});
   }
-  override attach(address: string): PayeeManager {
-    return super.attach(address) as PayeeManager;
+  override deploy(overrides?: NonPayableOverrides & { from?: string }) {
+    return super.deploy(overrides || {}) as Promise<
+      PayeeManager & {
+        deploymentTransaction(): ContractTransactionResponse;
+      }
+    >;
   }
-  override connect(signer: Signer): PayeeManager__factory {
-    return super.connect(signer) as PayeeManager__factory;
+  override connect(runner: ContractRunner | null): PayeeManager__factory {
+    return super.connect(runner) as PayeeManager__factory;
   }
 
   static readonly bytecode = _bytecode;
@@ -158,8 +166,8 @@ export class PayeeManager__factory extends ContractFactory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider,
+    runner?: ContractRunner | null
   ): PayeeManager {
-    return new Contract(address, _abi, signerOrProvider) as PayeeManager;
+    return new Contract(address, _abi, runner) as unknown as PayeeManager;
   }
 }

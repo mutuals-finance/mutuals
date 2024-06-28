@@ -1,8 +1,5 @@
 {
-  "extends": "@splitfi/typescript-config/react-library.json",
-  "compilerOptions": {
-    "moduleResolution": "bundler",
-  },
+  "extends": "@splitfi/typescript-config/nextjs.json",
   "include": ["src"],
   "exclude": ["node_modules"]
 }

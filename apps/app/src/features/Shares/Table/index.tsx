@@ -31,7 +31,7 @@ export default function SharesTable({
     <Table<ActiveShare>
       data={data}
       columns={columns}
-      fontSize={"sm"}
+      tableProps={{ fontSize: "sm" }}
       {...props}
     />
   );

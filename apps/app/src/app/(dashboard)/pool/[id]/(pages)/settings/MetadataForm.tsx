@@ -9,9 +9,9 @@ import { Box, Button } from "@splitfi/ui";
 import { FileWithPreview } from "@/components/Form/types";
 
 type PoolMetadataEditType = {
-  name: string;
-  description: string;
-  image: FileWithPreview;
+  name?: string | null;
+  description?: string | null;
+  image?: FileWithPreview | null;
 };
 
 interface PoolMetadataFormProps {

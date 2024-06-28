@@ -17,12 +17,7 @@ export default function FilePreview({
 }: FilePreviewProps) {
   return (
     <>
-      <Image
-        src={file.preview}
-        alt={file.name || "File Preview"}
-        fill={true}
-        size={250}
-      />
+      <Image src={file.preview} alt={file.name || "File Preview"} fill={true} />
       {!readOnly && (
         <IconButton
           position={"absolute"}

@@ -3,12 +3,22 @@ import { useMemo } from "react";
 
 import { ArchData } from "./MotionPieArch";
 
-export default function usePieChart(data: ArchData[], size: number) {
+export default function usePieChart(
+  data: ArchData[],
+  size: number,
+): {
+  outerRadius: number;
+  size: number;
+  x: (d: ArchData) => string;
+  y: (d: ArchData) => number;
+  colorScale: any;
+  innerRadius: number;
+} {
   const outerRadius = size >> 1;
   const innerRadius = outerRadius / 1.2;
 
-  const y = (d: ArchData) => d.value;
-  const x = (d: ArchData) => d.id;
+  const y = (d: ArchData) => (d.value ? Number(d.value) : 0);
+  const x = (d: ArchData) => d.id || "0";
 
   const colorScale = useMemo(
     () =>

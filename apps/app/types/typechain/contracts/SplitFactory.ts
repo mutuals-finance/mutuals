@@ -3,331 +3,260 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumber,
   BigNumberish,
   BytesLike,
-  CallOverrides,
-  ContractTransaction,
-  Overrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import type {
   FunctionFragment,
   Result,
+  Interface,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+  AddressLike,
+  ContractRunner,
+  ContractMethod,
+  Listener,
+} from "ethers";
 import type {
-  TypedEventFilter,
-  TypedEvent,
+  TypedContractEvent,
+  TypedDeferredTopicFilter,
+  TypedEventLog,
+  TypedLogDescription,
   TypedListener,
-  OnEvent,
-  PromiseOrValue,
+  TypedContractMethod,
 } from "../common";
 
-export interface SplitFactoryInterface extends utils.Interface {
-  functions: {
-    "beacon()": FunctionFragment;
-    "createSplit(address[],uint256[],string,bool,uint256)": FunctionFragment;
-    "getAddress(address[],uint256[],string,bool,uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-  };
-
+export interface SplitFactoryInterface extends Interface {
   getFunction(
-    nameOrSignatureOrTopic:
+    nameOrSignature:
       | "beacon"
       | "createSplit"
       | "getAddress"
       | "owner"
       | "renounceOwnership"
-      | "transferOwnership",
+      | "transferOwnership"
   ): FunctionFragment;
+
+  getEvent(
+    nameOrSignatureOrTopic: "CreateSplitProxy" | "OwnershipTransferred"
+  ): EventFragment;
 
   encodeFunctionData(functionFragment: "beacon", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "createSplit",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [AddressLike[], BigNumberish[], string, boolean, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getAddress",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [AddressLike[], BigNumberish[], string, boolean, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>],
+    values: [AddressLike]
   ): string;
 
   decodeFunctionResult(functionFragment: "beacon", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createSplit",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
-
-  events: {
-    "CreateSplitProxy(address)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "CreateSplitProxy"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
-export interface CreateSplitProxyEventObject {
-  proxy: string;
+export namespace CreateSplitProxyEvent {
+  export type InputTuple = [proxy: AddressLike];
+  export type OutputTuple = [proxy: string];
+  export interface OutputObject {
+    proxy: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type CreateSplitProxyEvent = TypedEvent<
-  [string],
-  CreateSplitProxyEventObject
->;
 
-export type CreateSplitProxyEventFilter =
-  TypedEventFilter<CreateSplitProxyEvent>;
-
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
+export namespace OwnershipTransferredEvent {
+  export type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
+  export type OutputTuple = [previousOwner: string, newOwner: string];
+  export interface OutputObject {
+    previousOwner: string;
+    newOwner: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
-
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface SplitFactory extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(runner?: ContractRunner | null): SplitFactory;
+  waitForDeployment(): Promise<this>;
 
   interface: SplitFactoryInterface;
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
+  queryFilter<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
-  ): Promise<Array<TEvent>>;
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  on<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-  functions: {
-    beacon(overrides?: CallOverrides): Promise<[string]>;
+  once<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-    createSplit(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      salt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<Array<TypedListener<TCEvent>>>;
+  listeners(eventName?: string): Promise<Array<Listener>>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
 
-    getAddress(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
+  beacon: TypedContractMethod<[], [string], "view">;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+  createSplit: TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares: BigNumberish[],
+      uri: string,
+      metadataEditable: boolean,
+      salt: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+  getAddress: TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares: BigNumberish[],
+      uri: string,
+      metadataEditable: boolean,
+      _salt: BigNumberish
+    ],
+    [string],
+    "view"
+  >;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-  };
+  owner: TypedContractMethod<[], [string], "view">;
 
-  beacon(overrides?: CallOverrides): Promise<string>;
+  renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
-  createSplit(
-    payees: PromiseOrValue<string>[],
-    shares: PromiseOrValue<BigNumberish>[],
-    uri: PromiseOrValue<string>,
-    metadataEditable: PromiseOrValue<boolean>,
-    salt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  transferOwnership: TypedContractMethod<
+    [newOwner: AddressLike],
+    [void],
+    "nonpayable"
+  >;
 
-  getAddress(
-    payees: PromiseOrValue<string>[],
-    shares: PromiseOrValue<BigNumberish>[],
-    uri: PromiseOrValue<string>,
-    metadataEditable: PromiseOrValue<boolean>,
-    _salt: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  getFunction(
+    nameOrSignature: "beacon"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "createSplit"
+  ): TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares: BigNumberish[],
+      uri: string,
+      metadataEditable: boolean,
+      salt: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "getAddress"
+  ): TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares: BigNumberish[],
+      uri: string,
+      metadataEditable: boolean,
+      _salt: BigNumberish
+    ],
+    [string],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "owner"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "renounceOwnership"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "transferOwnership"
+  ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
 
-  renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  callStatic: {
-    beacon(overrides?: CallOverrides): Promise<string>;
-
-    createSplit(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    getAddress(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
-    owner(overrides?: CallOverrides): Promise<string>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-  };
+  getEvent(
+    key: "CreateSplitProxy"
+  ): TypedContractEvent<
+    CreateSplitProxyEvent.InputTuple,
+    CreateSplitProxyEvent.OutputTuple,
+    CreateSplitProxyEvent.OutputObject
+  >;
+  getEvent(
+    key: "OwnershipTransferred"
+  ): TypedContractEvent<
+    OwnershipTransferredEvent.InputTuple,
+    OwnershipTransferredEvent.OutputTuple,
+    OwnershipTransferredEvent.OutputObject
+  >;
 
   filters: {
-    "CreateSplitProxy(address)"(
-      proxy?: PromiseOrValue<string> | null,
-    ): CreateSplitProxyEventFilter;
-    CreateSplitProxy(
-      proxy?: PromiseOrValue<string> | null,
-    ): CreateSplitProxyEventFilter;
+    "CreateSplitProxy(address)": TypedContractEvent<
+      CreateSplitProxyEvent.InputTuple,
+      CreateSplitProxyEvent.OutputTuple,
+      CreateSplitProxyEvent.OutputObject
+    >;
+    CreateSplitProxy: TypedContractEvent<
+      CreateSplitProxyEvent.InputTuple,
+      CreateSplitProxyEvent.OutputTuple,
+      CreateSplitProxyEvent.OutputObject
+    >;
 
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnershipTransferredEventFilter;
-  };
-
-  estimateGas: {
-    beacon(overrides?: CallOverrides): Promise<BigNumber>;
-
-    createSplit(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      salt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    getAddress(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    beacon(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    createSplit(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      salt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    getAddress(
-      payees: PromiseOrValue<string>[],
-      shares: PromiseOrValue<BigNumberish>[],
-      uri: PromiseOrValue<string>,
-      metadataEditable: PromiseOrValue<boolean>,
-      _salt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    "OwnershipTransferred(address,address)": TypedContractEvent<
+      OwnershipTransferredEvent.InputTuple,
+      OwnershipTransferredEvent.OutputTuple,
+      OwnershipTransferredEvent.OutputObject
+    >;
+    OwnershipTransferred: TypedContractEvent<
+      OwnershipTransferredEvent.InputTuple,
+      OwnershipTransferredEvent.OutputTuple,
+      OwnershipTransferredEvent.OutputObject
+    >;
   };
 }

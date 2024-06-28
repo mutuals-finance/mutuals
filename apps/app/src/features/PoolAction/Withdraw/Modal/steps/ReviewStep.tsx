@@ -1,16 +1,16 @@
 import SplitCard from "@/features/Pool/Card";
-
-import { CreateFormData } from "@/templates/split/new";
+import { toBigInt } from "ethers";
 
 interface ReviewStepProps {
-  data: CreateFormData;
+  data: any;
 }
 
-function SplitReviewCard({ image, name, description }: CreateFormData) {
+function SplitReviewCard({ image, name, description }: any) {
   return (
     <SplitCard
-      timestamp={new Date().getTime()}
+      timestamp={toBigInt(new Date().getTime())}
       metaData={{
+        id: "id",
         name: name,
         image: image?.preview.toString(),
         description: description,

@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import React, { useCallback } from "react";
+import { DeepPartial } from "#/partial";
 
 export type ArchData = {
-  id: string;
-  value: number;
+  id?: string;
+  value?: DeepPartial<BigInt>;
   isActive?: boolean;
 };
 

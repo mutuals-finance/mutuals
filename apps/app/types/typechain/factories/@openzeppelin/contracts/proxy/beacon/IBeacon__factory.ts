@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, Signer } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   IBeacon,
   IBeaconInterface,
@@ -30,10 +29,7 @@ export class IBeacon__factory {
   static createInterface(): IBeaconInterface {
     return new Interface(_abi) as IBeaconInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider,
-  ): IBeacon {
-    return new Contract(address, _abi, signerOrProvider) as IBeacon;
+  static connect(address: string, runner?: ContractRunner | null): IBeacon {
+    return new Contract(address, _abi, runner) as unknown as IBeacon;
   }
 }

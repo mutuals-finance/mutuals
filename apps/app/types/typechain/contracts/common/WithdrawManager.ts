@@ -3,263 +3,255 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumber,
+  BigNumberish,
   BytesLike,
-  CallOverrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import type {
   FunctionFragment,
   Result,
+  Interface,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+  AddressLike,
+  ContractRunner,
+  ContractMethod,
+  Listener,
+} from "ethers";
 import type {
-  TypedEventFilter,
-  TypedEvent,
+  TypedContractEvent,
+  TypedDeferredTopicFilter,
+  TypedEventLog,
+  TypedLogDescription,
   TypedListener,
-  OnEvent,
-  PromiseOrValue,
+  TypedContractMethod,
 } from "../../common";
 
-export interface WithdrawManagerInterface extends utils.Interface {
-  functions: {
-    "totalWithdrawn(address)": FunctionFragment;
-    "totalWithdrawn()": FunctionFragment;
-    "withdrawn(address)": FunctionFragment;
-    "withdrawn(address,address)": FunctionFragment;
-  };
-
+export interface WithdrawManagerInterface extends Interface {
   getFunction(
-    nameOrSignatureOrTopic:
+    nameOrSignature:
       | "totalWithdrawn(address)"
       | "totalWithdrawn()"
       | "withdrawn(address)"
-      | "withdrawn(address,address)",
+      | "withdrawn(address,address)"
   ): FunctionFragment;
 
+  getEvent(
+    nameOrSignatureOrTopic: "ERC20Withdrawal" | "Initialized" | "Withdrawal"
+  ): EventFragment;
+
   encodeFunctionData(
     functionFragment: "totalWithdrawn(address)",
-    values: [PromiseOrValue<string>],
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn()",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address)",
-    values: [PromiseOrValue<string>],
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+    values: [AddressLike, AddressLike]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "totalWithdrawn(address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn()",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address,address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
-
-  events: {
-    "ERC20Withdrawal(address,address,uint256)": EventFragment;
-    "Initialized(uint8)": EventFragment;
-    "Withdrawal(address,uint256)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "ERC20Withdrawal"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdrawal"): EventFragment;
 }
 
-export interface ERC20WithdrawalEventObject {
-  token: string;
-  to: string;
-  amount: BigNumber;
+export namespace ERC20WithdrawalEvent {
+  export type InputTuple = [
+    token: AddressLike,
+    to: AddressLike,
+    amount: BigNumberish
+  ];
+  export type OutputTuple = [token: string, to: string, amount: bigint];
+  export interface OutputObject {
+    token: string;
+    to: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type ERC20WithdrawalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ERC20WithdrawalEventObject
->;
 
-export type ERC20WithdrawalEventFilter = TypedEventFilter<ERC20WithdrawalEvent>;
-
-export interface InitializedEventObject {
-  version: number;
+export namespace InitializedEvent {
+  export type InputTuple = [version: BigNumberish];
+  export type OutputTuple = [version: bigint];
+  export interface OutputObject {
+    version: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
-export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
-
-export interface WithdrawalEventObject {
-  to: string;
-  amount: BigNumber;
+export namespace WithdrawalEvent {
+  export type InputTuple = [to: AddressLike, amount: BigNumberish];
+  export type OutputTuple = [to: string, amount: bigint];
+  export interface OutputObject {
+    to: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type WithdrawalEvent = TypedEvent<
-  [string, BigNumber],
-  WithdrawalEventObject
->;
-
-export type WithdrawalEventFilter = TypedEventFilter<WithdrawalEvent>;
 
 export interface WithdrawManager extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(runner?: ContractRunner | null): WithdrawManager;
+  waitForDeployment(): Promise<this>;
 
   interface: WithdrawManagerInterface;
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
+  queryFilter<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
-  ): Promise<Array<TEvent>>;
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  on<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-  functions: {
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  once<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-    "totalWithdrawn()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<Array<TypedListener<TCEvent>>>;
+  listeners(eventName?: string): Promise<Array<Listener>>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
 
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  "totalWithdrawn(address)": TypedContractMethod<
+    [token: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-  };
+  "totalWithdrawn()": TypedContractMethod<[], [bigint], "view">;
 
-  "totalWithdrawn(address)"(
-    token: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  "withdrawn(address)": TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-  "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
+  "withdrawn(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-  "withdrawn(address)"(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
 
-  "withdrawn(address,address)"(
-    token: PromiseOrValue<string>,
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  getFunction(
+    nameOrSignature: "totalWithdrawn(address)"
+  ): TypedContractMethod<[token: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalWithdrawn()"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "withdrawn(address)"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "withdrawn(address,address)"
+  ): TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-  callStatic: {
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-  };
+  getEvent(
+    key: "ERC20Withdrawal"
+  ): TypedContractEvent<
+    ERC20WithdrawalEvent.InputTuple,
+    ERC20WithdrawalEvent.OutputTuple,
+    ERC20WithdrawalEvent.OutputObject
+  >;
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Withdrawal"
+  ): TypedContractEvent<
+    WithdrawalEvent.InputTuple,
+    WithdrawalEvent.OutputTuple,
+    WithdrawalEvent.OutputObject
+  >;
 
   filters: {
-    "ERC20Withdrawal(address,address,uint256)"(
-      token?: PromiseOrValue<string> | null,
-      to?: null,
-      amount?: null,
-    ): ERC20WithdrawalEventFilter;
-    ERC20Withdrawal(
-      token?: PromiseOrValue<string> | null,
-      to?: null,
-      amount?: null,
-    ): ERC20WithdrawalEventFilter;
+    "ERC20Withdrawal(address,address,uint256)": TypedContractEvent<
+      ERC20WithdrawalEvent.InputTuple,
+      ERC20WithdrawalEvent.OutputTuple,
+      ERC20WithdrawalEvent.OutputObject
+    >;
+    ERC20Withdrawal: TypedContractEvent<
+      ERC20WithdrawalEvent.InputTuple,
+      ERC20WithdrawalEvent.OutputTuple,
+      ERC20WithdrawalEvent.OutputObject
+    >;
 
-    "Initialized(uint8)"(version?: null): InitializedEventFilter;
-    Initialized(version?: null): InitializedEventFilter;
+    "Initialized(uint64)": TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
+    Initialized: TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
 
-    "Withdrawal(address,uint256)"(
-      to?: null,
-      amount?: null,
-    ): WithdrawalEventFilter;
-    Withdrawal(to?: null, amount?: null): WithdrawalEventFilter;
-  };
-
-  estimateGas: {
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    "totalWithdrawn()"(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
+    "Withdrawal(address,uint256)": TypedContractEvent<
+      WithdrawalEvent.InputTuple,
+      WithdrawalEvent.OutputTuple,
+      WithdrawalEvent.OutputObject
+    >;
+    Withdrawal: TypedContractEvent<
+      WithdrawalEvent.InputTuple,
+      WithdrawalEvent.OutputTuple,
+      WithdrawalEvent.OutputObject
+    >;
   };
 }

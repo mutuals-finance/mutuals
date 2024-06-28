@@ -65,7 +65,8 @@ export default function InputFieldArray<TFieldValue>({
             key={field.id}
             removeDisabled={
               removeDisabled ||
-              (!!validation?.minLength && fields.length <= validation.minLength)
+              (!!validation?.minLength &&
+                fields.length <= Number(validation.minLength))
             }
             onAdd={!hideAdd ? () => append(defaultItem) : undefined}
             onRemove={() => remove(index)}

@@ -1,7 +1,5 @@
-import { Td, Tr } from "@chakra-ui/react";
-import { flexRender, Row } from "@tanstack/react-table";
-import { RowData } from "@tanstack/table-core";
-import React from "react";
+import { Td, Tr } from "@splitfi/ui";
+import { flexRender, Row, type RowData } from "@tanstack/react-table";
 
 type BodyRowProps<TData extends RowData> = Row<TData>;
 
