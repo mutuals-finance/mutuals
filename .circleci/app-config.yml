@@ -18,10 +18,10 @@ jobs:
   build-app:
     docker:
       - image: node:18
-    working_directory: /ci
+    working_directory: ~/ci
     steps:
       - attach_workspace:
-          at: /ci/setup
+          at: ~/ci/setup
       - run:
           name: Build app
           command: pnpm build:app

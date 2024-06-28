@@ -1,6 +1,7 @@
 docker:
   - image: node:18
-working_directory: /ci
+working_directory: ~/ci
+resource_class: large
 steps:
   - checkout
   - restore_cache:
@@ -27,6 +28,6 @@ steps:
       paths:
         - .pnpm-store
   - persist_to_workspace:
-      root: ci
+      root: ~/ci
       paths:
         - setup
