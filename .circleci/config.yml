@@ -40,10 +40,12 @@ jobs:
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/no-updates.yml
           mapping: |
-            .* ci-shared true .circleci/shared-config.yml
-            apps/app/.* ci-app true .circleci/app-config.yml
-            apps/landing/.* ci-landing true .circleci/landing-config.yml
-            apps/docs/.* ci-docs true .circleci/docs-config.yml
+            .* ci-app true .circleci/app-config.yml
+         # mapping: |
+         #   .* ci-shared true .circleci/shared-config.yml
+         #   apps/app/.* ci-app true .circleci/app-config.yml
+         #   apps/landing/.* ci-landing true .circleci/landing-config.yml
+         #   apps/docs/.* ci-docs true .circleci/docs-config.yml
       # Generate the dynamic configuration based on the parameters set in the previous step.
       - path-filtering/generate-config
       # Optionally validate the generated configuration.
