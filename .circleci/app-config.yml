@@ -28,7 +28,7 @@ jobs:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
           name: Build
-          command: pnpm build:app
+          command: pnpm run build:app
 #          command: |
 #            pnpm build:app
 #            ls dist
