@@ -20,4 +20,4 @@ workflows:
       - lint
       - test
       - build:
-        - package: landing
+          package: landing
