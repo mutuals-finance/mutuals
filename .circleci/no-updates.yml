@@ -1,5 +1,11 @@
 version: 2.1
 
+parameters:
+  package:
+    type: enum
+    default: landing
+    enum: ["app", "landing", "docs"]
+
 jobs:
   no-updates:
     docker:
