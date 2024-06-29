@@ -17,7 +17,9 @@ parameters:
 jobs:
   build-app:
     docker:
-      - image: node:18
+      - image: znck/pnpm:last
+    resource_class: large
+    parallelism: 10
     steps:
       - checkout
       - restore_cache:
