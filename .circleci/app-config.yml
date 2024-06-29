@@ -18,15 +18,28 @@ jobs:
   build-app:
     docker:
       - image: node:18
-    working_directory: ~/ci
     steps:
-      - attach_workspace:
-          at: ~/ci/setup
+      - checkout
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
-          name: Build app
+          name: Build
           command: pnpm build:app
+#          command: |
+#            pnpm build:app
+#            ls dist
           environment:
             TURBO_UI: "false"
+#      - save_cache:
+#          name: Save build output cache
+#          key: build-output-{{ .Environment.CIRCLE_SHA1 }}
+#          paths:
+#            - dist
+#      - store_artifacts:
+#          path: dist
+#          destination: dist
 
 workflows:
   app-workflow:

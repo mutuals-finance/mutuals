@@ -1,6 +1,5 @@
 docker:
   - image: node:18
-working_directory: ~/ci
 resource_class: large
 steps:
   - checkout
@@ -27,7 +26,3 @@ steps:
       key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       paths:
         - .pnpm-store
-  - persist_to_workspace:
-      root: ~/ci
-      paths:
-        - setup

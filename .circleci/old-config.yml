@@ -13,17 +13,6 @@ setup: true
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
 
-workflows:
-  setup:
-    jobs:
-      - path-filtering/filter:
-          base-revision: generate-config-file-main
-          config-path: .circleci/no-updates.yml
-          mapping: | # The mapping will be used to generate the dynamic configuration for all conditions that match.
-            .* ci-shared true .circleci/shared/config.yml
-            apps/app/.* ci-app true .circleci/app/config.yml
-            apps/landing/.* ci-landing true .circleci/landing/config.yml
-            apps/docs/.* ci-docs true .circleci/docs/config.yml
 jobs:
   setup:
     executor: mutuals-pnpm
