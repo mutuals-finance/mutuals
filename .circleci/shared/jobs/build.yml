@@ -1,0 +1,38 @@
+docker:
+  - image: node:18
+resource_class: large
+parallelism: 10
+parameters:
+  package:
+    type: enum
+    default: landing
+    enum: ["app", "landing", "docs"]
+environment:
+  TURBO_UI: "false"
+steps:
+  - checkout
+  - restore_cache:
+      name: Restore pnpm cache
+      keys:
+        - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+  - run:
+      name: Install pnpm package manager
+      command: |
+        corepack enable
+        corepack prepare pnpm@latest-9 --activate
+        pnpm config set store-dir .pnpm-store
+  - run:
+      name: Install dependencies
+      command: |
+        pnpm install --frozen-lockfile
+  - save_cache:
+      name: Save pnpm cache
+      key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      paths:
+        - .pnpm-store
+  - run:
+      name: Build
+      command: pnpm run build:<<parameters.package>>
+      #          command: |
+      #            pnpm build:app
+      #            ls dist

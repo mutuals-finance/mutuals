@@ -1,29 +1,9 @@
 version: 2.1
 
-parameters:
-  ci-shared:
-    type: boolean
-    default: false
-  ci-app:
-    type: boolean
-    default: false
-  ci-landing:
-    type: boolean
-    default: false
-  ci-docs:
-    type: boolean
-    default: false
-
-jobs:
-  build-landing:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - run: echo "Building landing"
-
 workflows:
   landing-workflow:
     jobs:
-      - lint # use the shared lint job.
-      - test # use the shared test job.
-      - build-landing
+      - lint
+      - test
+      - build:
+        - package: "landing"
