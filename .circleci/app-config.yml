@@ -17,7 +17,7 @@ parameters:
 jobs:
   build-app:
     docker:
-      - image: znck/pnpm:last
+      - image: znck/pnpm:latest
     resource_class: large
     parallelism: 10
     steps:
