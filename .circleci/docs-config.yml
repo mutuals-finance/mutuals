@@ -1,8 +1,13 @@
 version: 2.1
 
+parameters:
+  package:
+    type: enum
+    default: landing
+    enum: ["app", "landing", "docs"]
+
 workflows:
   docs-workflow:
     jobs:
       - lint
-      - build:
-          package: docs
+      - build
