@@ -1,19 +1,5 @@
 version: 2.1
 
-parameters:
-  ci-shared:
-    type: boolean
-    default: false
-  ci-app:
-    type: boolean
-    default: false
-  ci-landing:
-    type: boolean
-    default: false
-  ci-docs:
-    type: boolean
-    default: false
-
 workflows:
   landing-workflow:
     jobs:

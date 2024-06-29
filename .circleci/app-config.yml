@@ -1,70 +1,9 @@
 version: 2.1
 
-parameters:
-  ci-shared:
-    type: boolean
-    default: false
-  ci-app:
-    type: boolean
-    default: false
-  ci-landing:
-    type: boolean
-    default: false
-  ci-docs:
-    type: boolean
-    default: false
-
-jobs:
-  build-app:
-    docker:
-      - image: node:18
-    resource_class: large
-    parallelism: 10
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore pnpm cache
-          keys:
-            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-      - run:
-          name: Install pnpm package manager
-          command: |
-            corepack enable
-            corepack prepare pnpm@latest-9 --activate
-            pnpm config set store-dir .pnpm-store
-          environment:
-            TURBO_UI: "false"
-      - run:
-          name: Install Dependencies
-          command: |
-            pnpm install --frozen-lockfile
-          environment:
-            TURBO_UI: "false"
-      - save_cache:
-          name: Save pnpm cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - .pnpm-store
-      - run:
-          name: Build
-          command: pnpm run build:app
-#          command: |
-#            pnpm build:app
-#            ls dist
-          environment:
-            TURBO_UI: "false"
-#      - save_cache:
-#          name: Save build output cache
-#          key: build-output-{{ .Environment.CIRCLE_SHA1 }}
-#          paths:
-#            - dist
-#      - store_artifacts:
-#          path: dist
-#          destination: dist
-
 workflows:
   app-workflow:
     jobs:
       - lint
       - test
-      - build-app
+      - build:
+          package: app
