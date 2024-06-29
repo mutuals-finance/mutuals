@@ -41,7 +41,7 @@ jobs:
           config-path: .circleci/no-updates.yml
           mapping: |
             .* ci-shared true .circleci/shared-config.yml
-            .* ci-app true .circleci/app-config.yml
+            .* ci-landing true .circleci/landing-config.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
          #   apps/app/.* ci-app true .circleci/app-config.yml
