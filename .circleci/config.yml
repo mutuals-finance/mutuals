@@ -3,6 +3,12 @@ version: 2.1
 # use CircleCI's dynamic configuration feature
 setup: true
 
+parameters:
+  package:
+    type: enum
+    default: landing
+    enum: ["app", "landing", "docs"]
+
 # invoke the orbs to filter, pack and continue configs.
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
