@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  run-landing:
+    type: boolean
+    default: false
+
 jobs:
   no-updates:
     docker:

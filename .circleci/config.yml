@@ -3,6 +3,11 @@ version: 2.1
 # use CircleCI's dynamic configuration feature
 setup: true
 
+parameters:
+  run-landing:
+    type: boolean
+    default: false
+
 # invoke the orbs to filter, pack and continue configs.
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
@@ -26,7 +31,7 @@ jobs:
           config-path: .circleci/no-updates.yml
           mapping: |
             .* .circleci/shared-config.yml
-            .* .circleci/landing-config.yml
+            .* run-landing true .circleci/landing-config.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
          #   apps/app/.* ci-app true .circleci/app-config.yml
