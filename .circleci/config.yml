@@ -4,6 +4,9 @@ version: 2.1
 setup: true
 
 parameters:
+  run-shared:
+    type: boolean
+    default: false
   run-landing:
     type: boolean
     default: false
@@ -30,7 +33,7 @@ jobs:
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/no-updates.yml
           mapping: |
-            .* .circleci/shared-config.yml
+            .* run-shared true .circleci/shared-config.yml
             .* run-landing true .circleci/landing-config.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
