@@ -4,10 +4,18 @@ version: 2.1
 setup: true
 
 parameters:
-  package:
-    type: enum
-    default: landing
-    enum: ["shared", "app", "landing", "docs"]
+  run-shared:
+    type: boolean
+    default: false
+  run-landing:
+    type: boolean
+    default: false
+  run-app:
+    type: boolean
+    default: false
+  run-docs:
+    type: boolean
+    default: false
 
 # invoke the orbs to filter, pack and continue configs.
 orbs:
@@ -31,8 +39,8 @@ jobs:
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/no-updates.yml
           mapping: |
-            .* package shared .circleci/shared-config.yml
-            .* package landing .circleci/landing-config.yml
+            .* run-shared true .circleci/shared-config.yml
+            .* run-landing true .circleci/landing-config.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
          #   apps/app/.* ci-app true .circleci/app-config.yml
