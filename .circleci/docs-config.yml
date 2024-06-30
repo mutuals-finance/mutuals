@@ -10,4 +10,5 @@ workflows:
   docs-workflow:
     jobs:
       - lint
-      - build
+      - build:
+          package: docs

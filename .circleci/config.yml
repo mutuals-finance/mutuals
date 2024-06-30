@@ -3,12 +3,6 @@ version: 2.1
 # use CircleCI's dynamic configuration feature
 setup: true
 
-parameters:
-  package:
-    type: enum
-    default: landing
-    enum: ["app", "landing", "docs"]
-
 # invoke the orbs to filter, pack and continue configs.
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
@@ -16,7 +10,7 @@ orbs:
   continuation: circleci/continuation@1.0.0
 
 jobs:
-  setup-base:
+  generate-config:
     executor: path-filtering/default
     steps:
       - checkout
@@ -32,7 +26,7 @@ jobs:
           config-path: .circleci/no-updates.yml
           mapping: |
             .* .circleci/shared-config.yml
-            .* package landing .circleci/landing-config.yml
+            .* .circleci/landing-config.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
          #   apps/app/.* ci-app true .circleci/app-config.yml
@@ -51,4 +45,4 @@ jobs:
 workflows:
   setup:
     jobs:
-      - setup-base
+      - generate-config
