@@ -33,7 +33,7 @@ steps:
   - restore_cache:
       name: Restore next.js cache
       keys:
-        - dependency-cache-{{ checksum "pnpm-lock.lock" }}
+        - dependency-cache-{{ checksum "pnpm-lock.yaml" }}
   - run:
       name: Build
       command: pnpm run build:<<parameters.package>>
@@ -42,7 +42,7 @@ steps:
       #            ls dist
   - save_cache:
       name: Save next.js cache
-      key: dependency-cache-{{ checksum "yarn.lock" }}
+      key: dependency-cache-{{ checksum "pnpm-lock.yaml" }}
       paths:
         - ./node_modules
         - ./.next/cache
