@@ -1,12 +1,10 @@
 version: 2.1
 
 parameters:
-  run-shared:
-    type: boolean
-    default: false
-  run-landing:
-    type: boolean
-    default: false
+  package:
+    type: enum
+    default: landing
+    enum: ["shared", "app", "landing", "docs"]
 
 jobs:
   no-updates:
