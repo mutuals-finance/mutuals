@@ -1,12 +1,15 @@
 docker:
   - image: node:18
+
 resource_class: large
-parallelism: 10
+parallelism: 3
+
 parameters:
   package:
     type: enum
     default: landing
     enum: ["app", "landing", "docs"]
+
 environment:
   TURBO_UI: "false"
 steps:
