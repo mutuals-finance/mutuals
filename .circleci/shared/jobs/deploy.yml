@@ -1,0 +1,38 @@
+docker:
+  - image: node:18
+
+resource_class: large
+parallelism: 3
+
+parameters:
+  vercel-environment:
+    type: enum
+    default: preview
+    enum: [ "preview", "production" ]
+  vercel-project:
+    type: string
+  vercel-org:
+    type: string
+  vercel-token:
+    type: string
+
+steps:
+  - checkout
+  - run:
+      name: Install Vercel CLI
+      command: npm install --global vercel@latest
+  - run:
+      name: Pull Vercel Environment Information
+      command: vercel pull --yes --environment=<<parameters.vercel-environment>> --token=<<parameters.vercel-token>>
+  - run:
+      name: Build Project Artifacts
+      command: vercel build --token=<<parameters.vercel-token>>
+  - run:
+      name: Deploy Project Artifacts to Vercel
+      command: |
+        opts=(--prebuilt --token=<<parameters.vercel-token>>)
+        
+        if [[ <<parameters.vercel-environment>> == "production" ]]; then
+          opts+=(--prod)
+        fi
+        vercel deploy "${opts[@]}"
