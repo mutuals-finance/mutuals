@@ -1,28 +1,32 @@
 version: 2.1
 
-setup: << pipeline.parameters.run-setup >>
+# use CircleCI's dynamic configuration feature
+setup: true
 
-# All pipeline parameters need to be defined equally both for the setup workflow and main workflows
-# These parameters will be passed to both of them
 parameters:
-  run-setup:
-    description: Whether it is a setup workflow or a continuation
-    type: boolean
-    default: true
-  force-all:
-    description: Emergency valve - forcibly build all the packages
+  run-shared:
     type: boolean
     default: false
-  custom-parameter:
-    description: Some string to pass
-    type: string
-    default: ""
+  run-landing:
+    type: boolean
+    default: false
+  run-app:
+    type: boolean
+    default: false
+  run-docs:
+    type: boolean
+    default: false
 
-workflows:
-  # The setup workflow
-  setup-workflow:
-    when: << pipeline.parameters.run-setup >>
-    jobs:
+# invoke the orbs to filter, pack and continue configs.
+orbs:
+  path-filtering: circleci/path-filtering@1.0.0
+  circleci-cli: circleci/circleci-cli@0.1.9
+  continuation: circleci/continuation@1.0.0
+
+jobs:
+  generate-config:
+    executor: path-filtering/default
+    steps:
       - checkout
       # Install the CircleCI CLI
       - circleci-cli/install
@@ -30,138 +34,28 @@ workflows:
       - run:
           name: Generate shared configuration
           command: circleci config pack .circleci/shared >> .circleci/shared-config.yml
-      - config-splitting/setup-dynamic-config:
-          force-all: << pipeline.parameters.force-all >>
+      # The mapping will be used to generate the dynamic configuration for all conditions that match.
+      - path-filtering/set-parameters:
           base-revision: << pipeline.git.branch >>
-          # If A is modified, the job for A will run
-          # Similarly if B is modified, the job for B will run
-          # If C is modified, then the jobs for both C and B (as a dependency) will run
-          packages: |
-            apps/app
-            apps/landing
-            apps/docs
-          #  packages/ui apps/app apps/landing
+          mapping: |
+            .* run-shared true .circleci/shared-config.yml
+            .* run-landing true .circleci/landing/config.yml
+         # mapping: |
+         #   .* ci-shared true .circleci/shared-config.yml
+         #   apps/app/.* ci-app true .circleci/app-config.yml
+         #   apps/landing/.* ci-landing true .circleci/landing-config.yml
+         #   apps/docs/.* ci-docs true .circleci/docs-config.yml
+      # Generate the dynamic configuration based on the parameters set in the previous step.
+      - path-filtering/generate-config
+      # Optionally validate the generated configuration.
+      - run:
+          name: Validate config
+          command: circleci config validate /tmp/generated-config.yml
+      # Continue the pipeline with the generated configuration.
+      - continuation/continue:
+          configuration_path: /tmp/generated-config.yml
 
-orbs:
-  # An "embedded" orb to facilitate config splitting
-  config-splitting:
-    # Dependencies
-    orbs:
-      continuation: circleci/continuation@0.1.2
-    # Commands for the setup workflow
-    commands:
-      list-changed-packages:
-        parameters:
-          packages:
-            description: |
-              Directories which should be built upon changes.
-              Each row represents a space-separated list of the root directories for packages, each of which must has own `.circleci/config.yml`.
-              The first item of the list will be tested for changes, and will be added to the filtered list of packages if there are any changes.
-              The subsequent items, if there are any, will also be added to the filtered list of packages if there are any changes in the directory specified as the first item.
-
-              CAVEAT: Directory names having white spaces cannot be specified.
-            type: string
-          packages-filtered:
-            description: Path to the file where the filtered list of packages is generated
-            type: string
-            default: /tmp/packages-filtered.txt
-          base-revision:
-            description: Revision to compare with the current HEAD
-            type: string
-            default: main
-          force-all:
-            description: Emergency valve - forcibly build all the packages
-            type: boolean
-            default: false
-        steps:
-          - run:
-              name: Generate the list of packages having changes
-              command: |
-                # Add each package to `packages-filtered` if 1) `force-all` is set to `true`, 2) there is a diff against `base-revision`, 3) there is no `HEAD~1` (i.e., this is the very first commit for the repo) OR 4) there is a diff against the previous commit
-                cat \<< EOD | sed -e '/^$/d' | while read row; do package="$(echo "$row" | awk '{ print $1 }')"; if [ << parameters.force-all >> == 'true' ] || [ $(git diff --name-only << parameters.base-revision >> "$package" | wc -l) -gt 0 ] || (! git rev-parse --verify HEAD~1) || [ $(git diff --name-only HEAD~1 "$package" | wc -l) -gt 0 ]; then echo "$row" | sed -e 's/ /\n/g' >> << parameters.packages-filtered >>; fi; done
-                << parameters.packages >>
-                EOD
-
-      merge-modular-configs:
-        parameters:
-          packages:
-            description: Path to the file for the list of the packages to build
-            type: string
-            default: /tmp/packages-filtered.txt
-          shared-config:
-            description: Path to the config providing shared resources (such as prerequisite jobs and common commands)
-            type: string
-            default: .circleci/shared-config.yml
-          continue-config:
-            description: Path to the internally-used config for continuation
-            type: string
-            default: .circleci/continue-config.yml
-        steps:
-          - run:
-              name: Merge configs
-              command: |
-                # If `packages` is unavailable, stop this job without continuation
-                if [ ! -f "<< parameters.packages >>" ] || [ ! -s "<< parameters.packages >>" ]
-                then
-                  echo 'Nothing to merge. Halting the job.'
-                  circleci-agent step halt
-                  exit
-                fi
-
-                # Convert a list of dirs to a list of config.yml
-                sed -i -e 's/$/\/.circleci\/config.yml/g' "<< parameters.packages >>"
-
-                # If `shared-config` exists, append it at the end of `packages`
-                if [ -f << parameters.shared-config >> ]
-                then
-                  echo "<< parameters.shared-config >>" >> "<< parameters.packages >>"
-                fi
-
-                xargs -a "<< parameters.packages >>" yq -y -s 'reduce .[] as $item ({}; . * $item)' | tee "<< parameters.continue-config >>"
-
+workflows:
+  setup:
     jobs:
-      # The job for the setup workflow
-      setup-dynamic-config:
-        parameters:
-          packages:
-            description: Directories which should be tested for changes; one directory per line. Each directory must have `.circleci/config.yml`.
-            type: string
-          base-revision:
-            description: Revision to compare with the current HEAD
-            type: string
-            default: main
-          force-all:
-            description: Emergency valve - forcibly build all the packages
-            type: boolean
-            default: false
-          packages-filtered:
-            description: Path to the file where the filtered list of packages is generated
-            type: string
-            default: /tmp/packages-filtered.txt
-          shared-config:
-            description: Path to the config providing shared resources (such as prerequisite jobs and common commands)
-            type: string
-            default: .circleci/shared-config.yml
-          continue-config:
-            description: Path to the internally-used config for continuation
-            type: string
-            default: .circleci/continue-config.yml
-        docker:
-          - image: cimg/python:3.9
-        steps:
-          - checkout
-          - run:
-              name: Install yq
-              command: pip install yq
-          - list-changed-packages:
-              packages: << parameters.packages >>
-              packages-filtered: << parameters.packages-filtered >>
-              base-revision: << parameters.base-revision >>
-              force-all: << parameters.force-all >>
-          - merge-modular-configs:
-              packages: << parameters.packages-filtered >>
-              shared-config: << parameters.shared-config >>
-              continue-config: << parameters.continue-config >>
-          - continuation/continue:
-              configuration_path: << parameters.continue-config >>
-              parameters: '{"run-setup":false}'
+      - generate-config
