@@ -1,3 +1,16 @@
+parameters:
+  run-shared:
+    type: boolean
+    default: false
+  run-landing:
+    type: boolean
+    default: false
+  run-app:
+    type: boolean
+    default: false
+  run-docs:
+    type: boolean
+    default: false
 docker:
   - image: cimg/base:stable
 steps:
