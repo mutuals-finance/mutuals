@@ -1,13 +1,12 @@
 version: 2.1
 
-references:
-  deploy-defaults: &deploy-defaults
-    vercel-project-id: $VERCEL_PROJECT_ID_LANDING
-    vercel-org-id: $VERCEL_ORG_ID
-    vercel-token: $VERCEL_TOKEN
-    requires:
-      - lint
-      - test
+deploy-defaults: &deploy-defaults
+  vercel-project-id: $VERCEL_PROJECT_ID_LANDING
+  vercel-org-id: $VERCEL_ORG_ID
+  vercel-token: $VERCEL_TOKEN
+  requires:
+    - lint
+    - test
 
 parameters:
   run-shared:
