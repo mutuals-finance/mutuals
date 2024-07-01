@@ -1,6 +1,5 @@
 version: 2.1
 
-# use CircleCI's dynamic configuration feature
 setup: true
 
 parameters:
@@ -17,14 +16,13 @@ parameters:
     type: boolean
     default: false
 
-# invoke the orbs to filter, pack and continue configs.
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
   circleci-cli: circleci/circleci-cli@0.1.9
   continuation: circleci/continuation@1.0.0
 
 jobs:
-  generate-config:
+  setup:
     executor: path-filtering/default
     steps:
       - checkout
@@ -37,8 +35,8 @@ jobs:
           config-path: .circleci/noop.yml
           mapping: |
             .* run-shared true .circleci/shared-config.yml
-            (apps\/app|packages\/(ui|sdk)|packages\/ui)\/.* run-app true .circleci/app/config.yml
-            (apps\/landing|packages\/(ui|sdk)|packages\/ui)\/.* run-landing true .circleci/landing/config.yml
+            apps/app/.* run-app true .circleci/app/config.yml
+            apps/landing.* run-landing true .circleci/landing/config.yml
             apps/docs/.* run-docs true .circleci/docs/config.yml
       - path-filtering/generate-config
       - run:
@@ -50,4 +48,4 @@ jobs:
 workflows:
   setup:
     jobs:
-      - generate-config
+      - setup
