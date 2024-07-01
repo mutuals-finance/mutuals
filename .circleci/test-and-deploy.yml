@@ -1,0 +1,60 @@
+version: 2.1
+
+parameters:
+  run-shared:
+    type: boolean
+    default: false
+  run-landing:
+    type: boolean
+    default: false
+  run-app:
+    type: boolean
+    default: false
+  run-docs:
+    type: boolean
+    default: false
+
+references:
+  deploy-defaults: &deploy-defaults
+    vercel-project-id: $VERCEL_PROJECT_ID
+    vercel-org-id: $VERCEL_ORG_ID
+    vercel-token: $VERCEL_TOKEN
+    requires:
+      - lint
+      - test
+
+jobs:
+  set-vercel-project:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+        command: |
+          PROJECT_OPTION=""
+          for i in <<parameters.run-app>>,APP <<parameters.run-landing>>,LANDING <<parameters.run-docs>>,DOCS ; 
+          do 
+            if [ ${i%,*} = true ] ; then
+              PROJECT_OPTION="VERCEL_PROJECT_ID_${i#*,}"
+            fi
+          done
+          echo 'export VERCEL_PROJECT_ID="${PROJECT_OPTION}"' >> "$BASH_ENV"
+
+workflows:
+  test-and-deploy:
+    jobs:
+      - lint
+      - test
+      - set-vercel-project
+      - deploy:
+          <<: *deploy-defaults
+          filters:
+            branches:
+              ignore: /main/
+          vercel-environment: preview
+      - deploy:
+          <<: *deploy-defaults
+          filters:
+            branches:
+              only: /main/
+          vercel-environment: production

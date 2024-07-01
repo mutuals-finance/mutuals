@@ -26,7 +26,7 @@ parameters:
 workflows:
   landing-workflow:
     jobs:
-      - lint
+      - lint-test-deploy
       - test
       - deploy:
           <<: *deploy-defaults
