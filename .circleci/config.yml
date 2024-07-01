@@ -3,58 +3,79 @@ version: 2.1
 # use CircleCI's dynamic configuration feature
 setup: true
 
-parameters:
-  run-shared:
-    type: boolean
-    default: false
-  run-landing:
-    type: boolean
-    default: false
-  run-app:
-    type: boolean
-    default: false
-  run-docs:
-    type: boolean
-    default: false
-
 # invoke the orbs to filter, pack and continue configs.
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
   circleci-cli: circleci/circleci-cli@0.1.9
   continuation: circleci/continuation@1.0.0
 
+commands:
+  set-continued-config:
+    parameters:
+      pipeline-parameters-json-file:
+        type: string
+        default: /tmp/pipeline-parameters.json
+      configuration-path:
+        type: string
+        default: .circleci/continue.yml
+      lookup-key:
+        type: string
+        description: key to look up the filepath for the next config
+    steps:
+      - run:
+          name: Set next config as << parameters.configuration-path >>
+          command: |
+            cp $(jq -r '.<< parameters.lookup-key >>' << parameters.pipeline-parameters-json-file >>) << parameters.configuration-path >>
+
+            # debug: confirm next config
+            cat << parameters.configuration-path >>
+      - run:
+          name: Pop << parameters.lookup-key >> key from << parameters.pipeline-parameters-json-file >>
+          command: |
+            jq 'del(.<< parameters.lookup-key >>)' << parameters.pipeline-parameters-json-file >> > params.json
+            rm << parameters.pipeline-parameters-json-file >>
+            cp params.json << parameters.pipeline-parameters-json-file >>
+
+            # debug: confirm contents
+            jq '.' << parameters.pipeline-parameters-json-file >>
+
 jobs:
   generate-config:
     executor: path-filtering/default
+    resource_class: small
     steps:
       - checkout
-      # Install the CircleCI CLI
       - circleci-cli/install
-      # Generate the shared configuration from a directory with the pack command.
       - run:
           name: Generate shared configuration
           command: circleci config pack .circleci/shared >> .circleci/shared-config.yml
-      # The mapping will be used to generate the dynamic configuration for all conditions that match.
       - path-filtering/set-parameters:
           base-revision: << pipeline.git.branch >>
-          config-path: .circleci/no-updates.yml
+          # NOTE: path-filtering mapping is basic and can be limiting.
+          # - No comments allowed
+          # - Each line can only have 3 items, separated by space
+          # - No item in each line can have space in their value
           mapping: |
-            .* run-shared true .circleci/shared-config.yml
-            .* run-landing true .circleci/test-and-deploy.yml
-         # mapping: |
-         #   .* ci-shared true .circleci/shared-config.yml
-         #   apps/app/.* ci-app true .circleci/app-config.yml
-         #   apps/landing/.* ci-landing true .circleci/landing-config.yml
-         #   apps/docs/.* ci-docs true .circleci/docs-config.yml
-      # Generate the dynamic configuration based on the parameters set in the previous step.
-      - path-filtering/generate-config
+            .* config .circleci/shared-config.yml
+            .* package shared .circleci/shared-config.yml
+            .* config ".circleci/landing-config.yml"
+            .* package "landing"
+          #    apps/app/.* config ".circleci/app-config.yml"
+          #    apps/app/.* package "app"
+          #    apps/docs/.* config ".circleci/docs-config.yml"
+          #    apps/docs/.* package "docs"
+      - set-continued-config:
+          lookup-key: config
       # Optionally validate the generated configuration.
       - run:
           name: Validate config
-          command: circleci config validate /tmp/generated-config.yml
-      # Continue the pipeline with the generated configuration.
+          command: circleci config validate .circleci/continue.yml
       - continuation/continue:
-          configuration_path: /tmp/generated-config.yml
+          # NOTE: for CircleCI Server customers, please set circleci_domain
+          # See https://circleci.com/developer/orbs/orb/circleci/continuation#commands-continue
+          configuration_path: .circleci/continue.yml
+          # NOTE: this is the default output path of https://circleci.com/developer/orbs/orb/circleci/path-filtering#commands-set-parameters
+          parameters: /tmp/pipeline-parameters.json
 
 workflows:
   setup:
