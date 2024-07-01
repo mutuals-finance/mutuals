@@ -10,21 +10,14 @@ parameters:
     enum: ["app", "landing", "docs"]
     default: "landing"
 
-jobs:
-  set-vercel-project:
-    docker:
-      - image: "cimg/base:stable"
-    steps:
-      - checkout
-      - run:
-          command: |
-            PROJECT_OPTION=<< pipeline.parameters.package >> | tr '[:upper:]'
-            echo 'export VERCEL_PROJECT_ID="${PROJECT_OPTION}"' >> "$BASH_ENV"
-
 steps:
   - run: echo "Running linting"
   - run: echo "Running tests"
-  - set-vercel-project
+  - run:
+     name: "Set Vercel Project"
+     command: |
+       PROJECT_OPTION=<< pipeline.parameters.package >> | tr '[:upper:]'
+       echo 'export VERCEL_PROJECT_ID="${PROJECT_OPTION}"' >> "$BASH_ENV"
   - vercel-deploy:
       vercel-project-id: $VERCEL_PROJECT_ID
       vercel-org-id: $VERCEL_ORG_ID
