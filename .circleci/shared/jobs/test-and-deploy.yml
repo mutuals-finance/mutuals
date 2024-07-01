@@ -1,0 +1,45 @@
+version: 2.1
+
+parameters:
+  package:
+    type: enum
+    enum: ["app", "landing", "docs"]
+    default: "landing"
+
+jobs:
+  set-vercel-project:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - checkout
+      - run:
+          command: |
+            PROJECT_OPTION=<< pipeline.parameters.package >> | tr '[:upper:]'
+            echo 'export VERCEL_PROJECT_ID="${PROJECT_OPTION}"' >> "$BASH_ENV"
+
+steps:
+  - run: echo "Running linting"
+  - run: echo "Running tests"
+  - set-vercel-project
+  - vercel-deploy:
+      vercel-project-id: $VERCEL_PROJECT_ID
+      vercel-org-id: $VERCEL_ORG_ID
+      vercel-token: $VERCEL_TOKEN
+      requires:
+        - lint
+        - test
+      filters:
+        branches:
+          ignore: /main/
+      vercel-environment: preview
+  - vercel-deploy:
+      vercel-project-id: $VERCEL_PROJECT_ID
+      vercel-org-id: $VERCEL_ORG_ID
+      vercel-token: $VERCEL_TOKEN
+      requires:
+        - lint
+        - test
+      filters:
+        branches:
+          only: /main/
+      vercel-environment: production

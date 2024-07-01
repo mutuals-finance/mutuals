@@ -1,13 +1,13 @@
 version: 2.1
 
-references:
-  deploy-defaults: &deploy-defaults
-    vercel-project-id: $VERCEL_PROJECT_ID_LANDING
-    vercel-org-id: $VERCEL_ORG_ID
-    vercel-token: $VERCEL_TOKEN
-    requires:
-      - lint
-      - test
+#references:
+#  deploy-defaults: &deploy-defaults
+#    vercel-project-id: $VERCEL_PROJECT_ID_LANDING
+#    vercel-org-id: $VERCEL_ORG_ID
+#    vercel-token: $VERCEL_TOKEN
+#    requires:
+#      - lint
+#      - test
 
 parameters:
   run-shared:
@@ -26,17 +26,12 @@ parameters:
 workflows:
   landing-workflow:
     jobs:
-      - lint-test-deploy
-      - test
-      - deploy:
-          <<: *deploy-defaults
-          filters:
-            branches:
-              ignore: /main/
-          vercel-environment: preview
-      - deploy:
-          <<: *deploy-defaults
-          filters:
-            branches:
-              only: /main/
-          vercel-environment: production
+      - test-and-deploy:
+          package: landing
+#          <<: *deploy-defaults
+#          filters:
+#            branches:
+#              ignore: /main/
+#          vercel-environment: preview
+      - vercel-deploy:
+          package: landing
