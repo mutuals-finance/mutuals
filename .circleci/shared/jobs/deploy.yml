@@ -1,9 +1,6 @@
 docker:
   - image: node:18
 
-resource_class: large
-parallelism: 3
-
 parameters:
   vercel-environment:
     type: enum
@@ -15,6 +12,10 @@ parameters:
     type: string
   vercel-token:
     type: string
+
+environment:
+  VERCEL_ORG_ID: <<parameters.vercel-org>>
+  VERCEL_PROJECT_ID: <<parameters.vercel-project>>
 
 steps:
   - checkout
