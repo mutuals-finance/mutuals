@@ -13,7 +13,7 @@ steps:
   - run:
      name: "Set Vercel Project"
      command: |
-       PROJECT_OPTION=<< pipeline.parameters.package >> | tr '[:upper:]'
+       PROJECT_OPTION=<< parameters.package >> | tr '[:upper:]'
        echo 'export VERCEL_PROJECT_ID="${PROJECT_OPTION}"' >> "$BASH_ENV"
   - vercel-deploy:
       vercel-project-id: $VERCEL_PROJECT_ID

@@ -26,7 +26,8 @@ parameters:
 workflows:
   landing-workflow:
     jobs:
-      - test-and-deploy
+      - test-and-deploy:
+          package: landing
             #          <<: *deploy-defaults
             # filters:
             #    branches:
