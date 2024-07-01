@@ -21,6 +21,6 @@ workflows:
       - test
       - deploy:
           vercel-environment: preview
-          vercel-project: "${VERCEL_PROJECT_ID_LANDING}"
-          vercel-org: "${VERCEL_ORG_ID}"
-          vercel-token: "${VERCEL_TOKEN}"
+          vercel-project: $VERCEL_PROJECT_ID_LANDING
+          vercel-org: $VERCEL_ORG_ID
+          vercel-token: $VERCEL_TOKEN
