@@ -5,8 +5,8 @@ import PolygonIcon from "@/assets/networks/Polygon.svg";
 import OPIcon from "@/assets/networks/OP.svg";
 import ArbitrumIcon from "@/assets/networks/Arbitrum.svg";
 import AvalancheIcon from "@/assets/networks/Avalanche.svg";
-import BNBIcon from "@/assets/networks/BNB.svg";
 import ZoraIcon from "@/assets/networks/Zora.svg";
+import BNBIcon from "@/assets/networks/BNB.svg";
 import ZkSyncIcon from "@/assets/networks/zkSync.svg";
 import BaseIcon from "@/assets/networks/Base.svg";
 
