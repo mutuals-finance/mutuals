@@ -6,35 +6,34 @@ parameters:
     type: enum
     default: preview
     enum: [ "preview", "production" ]
-  vercel-project:
+  vercel-project-id:
     type: string
-  vercel-org:
+  vercel-org-id:
     type: string
   vercel-token:
     type: string
 
-environment:
-  VERCEL_ORG_ID: <<parameters.vercel-org>>
-  VERCEL_PROJECT_ID: <<parameters.vercel-project>>
-
 steps:
   - checkout
+  - run:
+      name: Setup Environment Variables
+      command: |
+        echo 'export VERCEL_ORG_ID="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
+        echo 'export VERCEL_PROJECT_ID="'<<parameters.vercel-project-id>>'"' >> "$BASH_ENV"
+        echo 'export VERCEL_TOKEN="'<<parameters.vercel-token>>'"' >> "$BASH_ENV"
   - run:
       name: Install Vercel CLI
       command: npm install --global vercel@latest
   - run:
       name: Pull Vercel Environment Information
-      command: |
-        echo <<parameters.vercel-environment>>
-        printenv <<parameters.vercel-token>>
-        vercel pull --yes --environment=<<parameters.vercel-environment>> --token=<<parameters.vercel-token>>
+      command: vercel pull --yes --environment=<<parameters.vercel-environment>> --token=$VERCEL_TOKEN
   - run:
       name: Build Project Artifacts
-      command: vercel build --token=<<parameters.vercel-token>>
+      command: vercel build --token=$VERCEL_TOKEN
   - run:
       name: Deploy Project Artifacts to Vercel
       command: |
-        opts=(--prebuilt --token=<<parameters.vercel-token>>)
+        opts=(--prebuilt --token=$VERCEL_TOKEN)
         
         if [[ <<parameters.vercel-environment>> == "production" ]]; then
           opts+=(--prod)
