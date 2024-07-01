@@ -32,12 +32,12 @@ jobs:
           command: circleci config pack .circleci/shared >> .circleci/shared-config.yml
       - path-filtering/set-parameters:
           base-revision: << pipeline.git.branch >>
-          config-path: .circleci/noop.yml
           mapping: |
             .* run-shared true .circleci/shared-config.yml
             apps/app/.* run-app true .circleci/app/config.yml
-            apps/landing.* run-landing true .circleci/landing/config.yml
+            apps/landing/.* run-landing true .circleci/landing/config.yml
             apps/docs/.* run-docs true .circleci/docs/config.yml
+            !apps/.* run-shared true .circleci/noop.yml
       - path-filtering/generate-config
       - run:
           name: Validate config
