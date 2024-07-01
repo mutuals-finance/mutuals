@@ -24,6 +24,8 @@ steps:
         echo 'export VERCEL_ORG_ID="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
         echo 'export VERCEL_PROJECT_ID="'<<parameters.vercel-project-id>>'"' >> "$BASH_ENV"
         echo 'export VERCEL_TOKEN="'<<parameters.vercel-token>>'"' >> "$BASH_ENV"
+        echo 'export TURBO_TEAM="'$VERCEL_ORG_ID'"' >> "$BASH_ENV"
+        echo 'export TURBO_TOKEN="'$VERCEL_TOKEN'"' >> "$BASH_ENV"
   - restore_cache:
       name: Restore pnpm Cache
       keys:
