@@ -3,6 +3,20 @@ version: 2.1
 # use CircleCI's dynamic configuration feature
 setup: true
 
+parameters:
+  run-shared:
+    type: boolean
+    default: false
+  run-landing:
+    type: boolean
+    default: false
+  run-app:
+    type: boolean
+    default: false
+  run-docs:
+    type: boolean
+    default: false
+
 # invoke the orbs to filter, pack and continue configs.
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
@@ -21,13 +35,10 @@ jobs:
       - path-filtering/set-parameters:
           base-revision: << pipeline.git.branch >>
           mapping: |
-            .* .circleci/shared-config.yml
-            .* .circleci/app/config.yml
-         # mapping: |
-         #   .* ci-shared true .circleci/shared-config.yml
-         #   apps/app/.* run-app true .circleci/app-config.yml
-         #   apps/landing/.* run-landing true .circleci/landing-config.yml
-         #   apps/docs/.* run-docs true .circleci/docs-config.yml
+            .* run-shared true .circleci/shared-config.yml
+            (apps\/app|packages\/(ui|sdk)|packages\/ui)\/.* run-app true .circleci/app/config.yml
+            (apps\/landing|packages\/(ui|sdk)|packages\/ui)\/.* run-landing true .circleci/landing/config.yml
+            apps/docs/.* run-docs true .circleci/docs/config.yml
       - path-filtering/generate-config
       - run:
           name: Validate config
