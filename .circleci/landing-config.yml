@@ -10,14 +10,23 @@ references:
       - test
 
 parameters:
-  package:
-    type: enum
-    enum: ["shared", "app", "landing", "docs"]
+  run-shared:
+    type: boolean
+    default: false
+  run-landing:
+    type: boolean
+    default: false
+  run-app:
+    type: boolean
+    default: false
+  run-docs:
+    type: boolean
+    default: false
 
 workflows:
   landing-workflow:
     jobs:
-      - lint
+      - lint-test-deploy
       - test
       - deploy:
           <<: *deploy-defaults
