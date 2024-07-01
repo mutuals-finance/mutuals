@@ -15,9 +15,24 @@ parameters:
     default: false
 
 workflows:
-  app-workflow:
+  landing-workflow:
     jobs:
       - lint
       - test
-      - build:
-          package: app
+      - deploy: &base
+          vercel-project-id: $VERCEL_PROJECT_ID_APP
+          vercel-org-id: $VERCEL_ORG_ID
+          vercel-token: $VERCEL_TOKEN
+          requires:
+            - lint
+            - test
+          vercel-environment: preview
+          filters:
+            branches:
+              ignore: /main/
+      - deploy:
+          <<: *base
+          vercel-environment: production
+          filters:
+            branches:
+              only: /main/

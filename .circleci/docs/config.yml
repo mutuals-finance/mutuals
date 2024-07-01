@@ -15,8 +15,24 @@ parameters:
     default: false
 
 workflows:
-  docs-workflow:
+  landing-workflow:
     jobs:
       - lint
-      - build:
-          package: docs
+      - test
+      - deploy: &base
+          vercel-project-id: $VERCEL_PROJECT_ID_DOCS
+          vercel-org-id: $VERCEL_ORG_ID
+          vercel-token: $VERCEL_TOKEN
+          requires:
+            - lint
+            - test
+          vercel-environment: preview
+          filters:
+            branches:
+              ignore: /main/
+      - deploy:
+          <<: *base
+          vercel-environment: production
+          filters:
+            branches:
+              only: /main/
