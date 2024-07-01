@@ -1,14 +1,5 @@
 version: 2.1
 
-references:
-  test-and-deploy-defaults: &test-and-deploy-defaults
-    vercel-project-id: $VERCEL_PROJECT_ID
-    vercel-org-id: $VERCEL_ORG_ID
-    vercel-token: $VERCEL_TOKEN
-    requires:
-      - lint
-      - test
-
 parameters:
   run-shared:
     type: boolean
@@ -30,13 +21,23 @@ workflows:
       - test
       - set-vercel-project
       - deploy:
-          <<: *test-and-deploy-defaults
+          vercel-project-id: $VERCEL_PROJECT_ID
+          vercel-org-id: $VERCEL_ORG_ID
+          vercel-token: $VERCEL_TOKEN
+          requires:
+            - lint
+            - test
           filters:
             branches:
               ignore: /main/
           vercel-environment: preview
       - deploy:
-          <<: *test-and-deploy-defaults
+          vercel-project-id: $VERCEL_PROJECT_ID
+          vercel-org-id: $VERCEL_ORG_ID
+          vercel-token: $VERCEL_TOKEN
+          requires:
+            - lint
+            - test
           filters:
             branches:
               only: /main/
