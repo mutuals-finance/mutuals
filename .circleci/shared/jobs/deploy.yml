@@ -50,8 +50,7 @@ steps:
         fi
         vercel deploy "${opts[@]}"
   - save_cache:
-    name: Save pnpm Cache
-    key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-    paths:
-      - .pnpm-store
-
+      name: Save pnpm Cache
+      key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      paths:
+        - .pnpm-store
