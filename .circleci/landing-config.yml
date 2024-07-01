@@ -28,10 +28,14 @@ workflows:
     jobs:
       - test-and-deploy:
           package: landing
-#          <<: *deploy-defaults
-#          filters:
-#            branches:
-#              ignore: /main/
-#          vercel-environment: preview
-      - vercel-deploy:
-          package: landing
+            #          <<: *deploy-defaults
+            # filters:
+            #    branches:
+            #      ignore: /main/
+            #          vercel-environment: preview
+            #      - test-and-deploy:
+            #          <<: *deploy-defaults
+            #          filters:
+          #            branches:
+#              only: /main/
+#          vercel-environment: production
