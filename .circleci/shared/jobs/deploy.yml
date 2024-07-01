@@ -1,8 +1,7 @@
 docker:
   - image: node:18
 
-resource_class: large
-parallelism: 5
+resource_class: xlarge
 
 parameters:
   vercel-environment:
