@@ -1,15 +1,12 @@
 docker:
   - image: node:18
-
 resource_class: large
 parallelism: 3
-
 parameters:
   package:
     type: enum
+    default: landing
     enum: ["app", "landing", "docs"]
-    default: "landing"
-
 steps:
   - run: echo "Running linting"
   - run: echo "Running tests"
