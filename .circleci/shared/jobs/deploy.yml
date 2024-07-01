@@ -32,11 +32,8 @@ steps:
         corepack prepare pnpm@latest-9 --activate
         pnpm config set store-dir .pnpm-store
   - run:
-      name: Setup pnpm Package Manager
-      command: pnpm setup
-  - run:
       name: Install Vercel CLI
-      command: pnpm --global install vercel@latest
+      command: npm install --global vercel@latest
   - run:
       name: Pull Vercel Environment Information
       command: vercel pull --yes --environment=<<parameters.vercel-environment>> --token=$VERCEL_TOKEN
