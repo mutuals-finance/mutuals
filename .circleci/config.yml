@@ -34,10 +34,10 @@ jobs:
           base-revision: << pipeline.git.branch >>
           mapping: |
             .* run-shared true .circleci/shared-config.yml
-            (?!apps\/).* run-shared true .circleci/noop.yml
-            apps/app/.* run-app true .circleci/app/config.yml
-            apps/landing/.* run-landing true .circleci/landing/config.yml
-            apps/docs/.* run-docs true .circleci/docs/config.yml
+            (?!apps\/|packages\/).* run-shared true .circleci/noop.yml
+            (apps\/app|packages)\/.* run-app true .circleci/app/config.yml
+            (apps\/landing|packages)\/.* run-landing true .circleci/landing/config.yml
+            (apps\/app|packages)\/.* run-docs true .circleci/docs/config.yml
       - path-filtering/generate-config
       - run:
           name: Validate config
