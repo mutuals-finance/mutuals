@@ -22,6 +22,6 @@ jobs:
       - run: echo "No updates have been made"
 
 workflows:
-  no-update-workflow:
+  noop:
     jobs:
       - noop
