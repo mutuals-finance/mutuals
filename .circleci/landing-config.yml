@@ -1,13 +1,5 @@
 version: 2.1
 
-deploy-defaults: &deploy-defaults
-  vercel-project-id: $VERCEL_PROJECT_ID_LANDING
-  vercel-org-id: $VERCEL_ORG_ID
-  vercel-token: $VERCEL_TOKEN
-  requires:
-    - lint
-    - test
-
 parameters:
   run-shared:
     type: boolean
@@ -27,14 +19,19 @@ workflows:
     jobs:
       - lint
       - test
-      - deploy:
-          <<: *deploy-defaults
+      - deploy: &base
+          vercel-project-id: $VERCEL_PROJECT_ID_LANDING
+          vercel-org-id: $VERCEL_ORG_ID
+          vercel-token: $VERCEL_TOKEN
+          requires:
+            - lint
+            - test
           vercel-environment: preview
           filters:
             branches:
               ignore: /main/
       - deploy:
-          <<: *deploy-defaults
+          <<: *base
           vercel-environment: production
           filters:
             branches:
