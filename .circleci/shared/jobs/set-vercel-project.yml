@@ -1,16 +1,3 @@
-parameters:
-  run-shared:
-    type: boolean
-    default: false
-  run-landing:
-    type: boolean
-    default: false
-  run-app:
-    type: boolean
-    default: false
-  run-docs:
-    type: boolean
-    default: false
 docker:
   - image: cimg/base:stable
 steps:
@@ -18,7 +5,7 @@ steps:
   - run:
       command: |
         PROJECT_OPTION=""
-        for i in <<parameters.run-app>>,APP <<parameters.run-landing>>,LANDING <<parameters.run-docs>>,DOCS ; 
+        for i in <<pipeline.parameters.run-app>>,APP <<pipeline.parameters.run-landing>>,LANDING <<pipeline.parameters.run-docs>>,DOCS ; 
         do 
           if [ ${i%,*} = true ] ; then
             PROJECT_OPTION="VERCEL_PROJECT_ID_${i#*,}"
