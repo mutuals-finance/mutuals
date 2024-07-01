@@ -14,6 +14,23 @@ parameters:
     type: boolean
     default: false
 
+jobs:
+  set-vercel-project:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - checkout
+      - run:
+          command: |
+            PROJECT_OPTION=""
+            for i in << pipeline.parameters.run-app >>,APP << pipeline.parameters.run-landing >>,LANDING << pipeline.parameters.run-docs >>,DOCS ; 
+            do 
+            if [ ${i%,*} = true ] ; then
+            PROJECT_OPTION="VERCEL_PROJECT_ID_${i#*,}"
+            fi
+            done
+            echo 'export VERCEL_PROJECT_ID="${PROJECT_OPTION}"' >> "$BASH_ENV"
+
 workflows:
   test-and-deploy:
     jobs:

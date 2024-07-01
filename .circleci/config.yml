@@ -39,8 +39,8 @@ jobs:
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/no-updates.yml
           mapping: |
-            .* .circleci/shared-config.yml run-shared true
-            .* .circleci/test-and-deploy.yml run-landing true
+            .* run-shared true .circleci/shared-config.yml
+            .* run-landing true .circleci/test-and-deploy.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
          #   apps/app/.* ci-app true .circleci/app-config.yml
