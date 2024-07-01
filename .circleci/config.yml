@@ -36,12 +36,12 @@ jobs:
           base-revision: << pipeline.git.branch >>
           mapping: |
             .* run-shared true .circleci/shared-config.yml
-            .* run-landing true .circleci/landing/config.yml
+            .* run-app true .circleci/app/config.yml
          # mapping: |
          #   .* ci-shared true .circleci/shared-config.yml
-         #   apps/app/.* ci-app true .circleci/app-config.yml
-         #   apps/landing/.* ci-landing true .circleci/landing-config.yml
-         #   apps/docs/.* ci-docs true .circleci/docs-config.yml
+         #   apps/app/.* run-app true .circleci/app-config.yml
+         #   apps/landing/.* run-landing true .circleci/landing-config.yml
+         #   apps/docs/.* run-docs true .circleci/docs-config.yml
       - path-filtering/generate-config
       - run:
           name: Validate config

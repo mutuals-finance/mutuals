@@ -1,6 +1,9 @@
 docker:
   - image: node:18
 
+resource_class: large
+parallelism: 5
+
 parameters:
   vercel-environment:
     type: enum
