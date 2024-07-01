@@ -15,7 +15,7 @@ parameters:
     default: false
 
 references:
-  deploy-defaults: &deploy-defaults
+  test-and-deploy-defaults: &test-and-deploy-defaults
     vercel-project-id: $VERCEL_PROJECT_ID
     vercel-org-id: $VERCEL_ORG_ID
     vercel-token: $VERCEL_TOKEN
@@ -30,13 +30,13 @@ workflows:
       - test
       - set-vercel-project
       - deploy:
-          <<: *deploy-defaults
+          <<: *test-and-deploy-defaults
           filters:
             branches:
               ignore: /main/
           vercel-environment: preview
       - deploy:
-          <<: *deploy-defaults
+          <<: *test-and-deploy-defaults
           filters:
             branches:
               only: /main/
