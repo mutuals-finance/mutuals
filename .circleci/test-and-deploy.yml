@@ -19,7 +19,11 @@ workflows:
     jobs:
       - lint
       - test
-      - set-vercel-project
+      - set-vercel-project:
+          run-shared: <<parameters.run-shared>>
+          run-app: <<parameters.run-app>>
+          run-landing: <<parameters.run-landing>>
+          run-docs: <<parameters.run-docs>>
       - deploy:
           vercel-project-id: $VERCEL_PROJECT_ID
           vercel-org-id: $VERCEL_ORG_ID
