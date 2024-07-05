@@ -7,7 +7,7 @@ import {
   CardProps,
   CardBody,
   Icon,
-  Heading,
+  Flex,
   type As,
 } from "@splitfi/ui";
 
@@ -27,7 +27,7 @@ export default function ValueCard({
     <Card
       variant="filled"
       bg="transparent"
-      borderLeft={{ lg: "1px solid" }}
+      borderLeft={{ lg: "2px solid" }}
       borderColor={{ lg: "border.1" }}
       rounded={"none"}
       pl={{ lg: "6" }}
@@ -41,21 +41,24 @@ export default function ValueCard({
           pb={{ base: "6", lg: "12" }}
           pt={{ base: "6", lg: "0" }}
         >
-          <Icon
-            as={icon}
-            boxSize={10}
-            bg="blue.100"
-            color={"primary.600"}
-            p="3"
+          <Flex
+            align={"center"}
+            justify={"center"}
+            color={"white"}
             rounded="lg"
-          />
+            w={"12"}
+            h={"12"}
+            bgGradient={"linear(to-br, primary.100, primary.500)"}
+          >
+            <Icon as={icon} boxSize={5} />
+          </Flex>
         </CardHeader>
       )}
 
       <CardBody p={"0"}>
-        <Heading as="h3" size="sm" mb={"3"}>
+        <Text as="h3" mb="3" variant={"tag"}>
           {heading}
-        </Heading>
+        </Text>
 
         <Text>{description}</Text>
       </CardBody>
