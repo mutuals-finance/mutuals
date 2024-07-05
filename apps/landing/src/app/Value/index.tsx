@@ -2,7 +2,12 @@
 
 import { Box, Container, SimpleGrid } from "@splitfi/ui";
 import SectionHeader from "@/components/SectionHeader";
-import { IoGitMerge, IoRocket, IoSearch, IoSparkles } from "react-icons/io5";
+import {
+  IoCodeWorkingOutline,
+  IoTimerOutline,
+  IoTrendingUpOutline,
+} from "react-icons/io5";
+import { RiExchange2Line } from "react-icons/ri";
 import ValueCard from "@/app/Value/ValueCard";
 
 const values = [
@@ -10,34 +15,32 @@ const values = [
     heading: "Split tokens",
     description:
       "SplitFi integrates with your clients systems and connects with a range of data sources",
-    icon: IoGitMerge,
+    icon: RiExchange2Line,
   },
   {
     heading: "Automate payments",
     description:
       "SplitFi integrates with your clients systems and connects with a range of data sources",
-    icon: IoSparkles,
+    icon: IoCodeWorkingOutline,
   },
   {
     heading: "Track earnings",
     description:
       "SplitFi integrates with your clients systems and connects with a range of data sources",
-    icon: IoSearch,
+    icon: IoTimerOutline,
   },
   {
     heading: "Accelerate partnerships",
     description:
       "SplitFi integrates with your clients systems and connects with a range of data sources",
-    icon: IoRocket,
+    icon: IoTrendingUpOutline,
   },
 ];
 export default function HomeValue() {
   return (
     <Box bg={"bg.1"} my="48">
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
-        <SectionHeader label={"Fully fledged toolset"}>
-          Financial management for on-chain teams
-        </SectionHeader>
+        <SectionHeader>Financial management for on-chain teams</SectionHeader>
 
         <SimpleGrid
           columns={{
