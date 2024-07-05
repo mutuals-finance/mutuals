@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, Signer } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   ContextUpgradeable,
   ContextUpgradeableInterface,
@@ -11,13 +10,23 @@ import type {
 
 const _abi = [
   {
+    inputs: [],
+    name: "InvalidInitialization",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotInitializing",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
         indexed: false,
-        internalType: "uint8",
+        internalType: "uint64",
         name: "version",
-        type: "uint8",
+        type: "uint64",
       },
     ],
     name: "Initialized",
@@ -32,8 +41,8 @@ export class ContextUpgradeable__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider,
+    runner?: ContractRunner | null
   ): ContextUpgradeable {
-    return new Contract(address, _abi, signerOrProvider) as ContextUpgradeable;
+    return new Contract(address, _abi, runner) as unknown as ContextUpgradeable;
   }
 }

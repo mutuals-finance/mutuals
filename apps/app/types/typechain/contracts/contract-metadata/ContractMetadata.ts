@@ -3,165 +3,172 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumber,
+  BigNumberish,
   BytesLike,
-  CallOverrides,
-  ContractTransaction,
-  Overrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import type {
   FunctionFragment,
   Result,
+  Interface,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+  ContractRunner,
+  ContractMethod,
+  Listener,
+} from "ethers";
 import type {
-  TypedEventFilter,
-  TypedEvent,
+  TypedContractEvent,
+  TypedDeferredTopicFilter,
+  TypedEventLog,
+  TypedLogDescription,
   TypedListener,
-  OnEvent,
-  PromiseOrValue,
+  TypedContractMethod,
 } from "../../common";
 
-export interface ContractMetadataInterface extends utils.Interface {
-  functions: {
-    "contractURI()": FunctionFragment;
-    "setContractURI(string)": FunctionFragment;
-  };
-
+export interface ContractMetadataInterface extends Interface {
   getFunction(
-    nameOrSignatureOrTopic: "contractURI" | "setContractURI",
+    nameOrSignature: "contractURI" | "setContractURI"
   ): FunctionFragment;
 
+  getEvent(
+    nameOrSignatureOrTopic: "ContractURIUpdated" | "Initialized"
+  ): EventFragment;
+
   encodeFunctionData(
     functionFragment: "contractURI",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "setContractURI",
-    values: [PromiseOrValue<string>],
+    values: [string]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "contractURI",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setContractURI",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
-
-  events: {
-    "ContractURIUpdated(string,string)": EventFragment;
-    "Initialized(uint8)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "ContractURIUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
 }
 
-export interface ContractURIUpdatedEventObject {
-  prevURI: string;
-  newURI: string;
+export namespace ContractURIUpdatedEvent {
+  export type InputTuple = [prevURI: string, newURI: string];
+  export type OutputTuple = [prevURI: string, newURI: string];
+  export interface OutputObject {
+    prevURI: string;
+    newURI: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type ContractURIUpdatedEvent = TypedEvent<
-  [string, string],
-  ContractURIUpdatedEventObject
->;
 
-export type ContractURIUpdatedEventFilter =
-  TypedEventFilter<ContractURIUpdatedEvent>;
-
-export interface InitializedEventObject {
-  version: number;
+export namespace InitializedEvent {
+  export type InputTuple = [version: BigNumberish];
+  export type OutputTuple = [version: bigint];
+  export interface OutputObject {
+    version: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
-
-export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface ContractMetadata extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(runner?: ContractRunner | null): ContractMetadata;
+  waitForDeployment(): Promise<this>;
 
   interface: ContractMetadataInterface;
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
+  queryFilter<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
-  ): Promise<Array<TEvent>>;
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  on<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-  functions: {
-    contractURI(overrides?: CallOverrides): Promise<[string]>;
+  once<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-    setContractURI(
-      _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-  };
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<Array<TypedListener<TCEvent>>>;
+  listeners(eventName?: string): Promise<Array<Listener>>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
 
-  contractURI(overrides?: CallOverrides): Promise<string>;
+  contractURI: TypedContractMethod<[], [string], "view">;
 
-  setContractURI(
-    _uri: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  setContractURI: TypedContractMethod<[_uri: string], [void], "nonpayable">;
 
-  callStatic: {
-    contractURI(overrides?: CallOverrides): Promise<string>;
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
 
-    setContractURI(
-      _uri: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-  };
+  getFunction(
+    nameOrSignature: "contractURI"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "setContractURI"
+  ): TypedContractMethod<[_uri: string], [void], "nonpayable">;
+
+  getEvent(
+    key: "ContractURIUpdated"
+  ): TypedContractEvent<
+    ContractURIUpdatedEvent.InputTuple,
+    ContractURIUpdatedEvent.OutputTuple,
+    ContractURIUpdatedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
 
   filters: {
-    "ContractURIUpdated(string,string)"(
-      prevURI?: null,
-      newURI?: null,
-    ): ContractURIUpdatedEventFilter;
-    ContractURIUpdated(
-      prevURI?: null,
-      newURI?: null,
-    ): ContractURIUpdatedEventFilter;
+    "ContractURIUpdated(string,string)": TypedContractEvent<
+      ContractURIUpdatedEvent.InputTuple,
+      ContractURIUpdatedEvent.OutputTuple,
+      ContractURIUpdatedEvent.OutputObject
+    >;
+    ContractURIUpdated: TypedContractEvent<
+      ContractURIUpdatedEvent.InputTuple,
+      ContractURIUpdatedEvent.OutputTuple,
+      ContractURIUpdatedEvent.OutputObject
+    >;
 
-    "Initialized(uint8)"(version?: null): InitializedEventFilter;
-    Initialized(version?: null): InitializedEventFilter;
-  };
-
-  estimateGas: {
-    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setContractURI(
-      _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setContractURI(
-      _uri: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    "Initialized(uint64)": TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
+    Initialized: TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
   };
 }

@@ -2,14 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 import {
-  Signer,
   Contract,
   ContractFactory,
-  Overrides,
+  ContractTransactionResponse,
   Interface,
 } from "ethers";
-import type { Provider, TransactionRequest } from "@ethersproject/providers";
-import type { PromiseOrValue } from "../../../common";
+import type { Signer, ContractDeployTransaction, ContractRunner } from "ethers";
+import type { NonPayableOverrides } from "../../../common";
 import type {
   WithdrawManager,
   WithdrawManagerInterface,
@@ -17,11 +16,21 @@ import type {
 
 const _abi = [
   {
+    inputs: [],
+    name: "InvalidInitialization",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotInitializing",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
         indexed: true,
-        internalType: "contract IERC20Upgradeable",
+        internalType: "contract IERC20",
         name: "token",
         type: "address",
       },
@@ -46,9 +55,9 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "uint8",
+        internalType: "uint64",
         name: "version",
-        type: "uint8",
+        type: "uint64",
       },
     ],
     name: "Initialized",
@@ -76,7 +85,7 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "contract IERC20Upgradeable",
+        internalType: "contract IERC20",
         name: "token",
         type: "address",
       },
@@ -127,7 +136,7 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "contract IERC20Upgradeable",
+        internalType: "contract IERC20",
         name: "token",
         type: "address",
       },
@@ -151,14 +160,14 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x608060405234801561001057600080fd5b506101d5806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80630a64143a146100515780634b319713146100995780636ef61092146100a1578063dad13219146100d7575b600080fd5b61008761005f366004610142565b73ffffffffffffffffffffffffffffffffffffffff1660009081526035602052604090205490565b60405190815260200160405180910390f35b603354610087565b6100876100af366004610142565b73ffffffffffffffffffffffffffffffffffffffff1660009081526034602052604090205490565b6100876100e5366004610166565b73ffffffffffffffffffffffffffffffffffffffff918216600090815260366020908152604080832093909416825291909152205490565b73ffffffffffffffffffffffffffffffffffffffff8116811461013f57600080fd5b50565b60006020828403121561015457600080fd5b813561015f8161011d565b9392505050565b6000806040838503121561017957600080fd5b82356101848161011d565b915060208301356101948161011d565b80915050925092905056fea264697066735822122060579d214699bd624cf6cc66c0237b18c189389fc9137303091bb6cd7911614964736f6c63430008100033";
+  "0x608060405234801561001057600080fd5b506101d5806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80630a64143a146100515780634b319713146100995780636ef61092146100a1578063dad13219146100d7575b600080fd5b61008761005f366004610142565b73ffffffffffffffffffffffffffffffffffffffff1660009081526002602052604090205490565b60405190815260200160405180910390f35b600054610087565b6100876100af366004610142565b73ffffffffffffffffffffffffffffffffffffffff1660009081526001602052604090205490565b6100876100e5366004610166565b73ffffffffffffffffffffffffffffffffffffffff918216600090815260036020908152604080832093909416825291909152205490565b73ffffffffffffffffffffffffffffffffffffffff8116811461013f57600080fd5b50565b60006020828403121561015457600080fd5b813561015f8161011d565b9392505050565b6000806040838503121561017957600080fd5b82356101848161011d565b915060208301356101948161011d565b80915050925092905056fea264697066735822122064f3956496f295a9381883d3bab0cc61494ff52dd1573a3268950e8046f2645364736f6c63430008140033";
 
 type WithdrawManagerConstructorParams =
   | [signer?: Signer]
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: WithdrawManagerConstructorParams,
+  xs: WithdrawManagerConstructorParams
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class WithdrawManager__factory extends ContractFactory {
@@ -170,21 +179,20 @@ export class WithdrawManager__factory extends ContractFactory {
     }
   }
 
-  override deploy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<WithdrawManager> {
-    return super.deploy(overrides || {}) as Promise<WithdrawManager>;
-  }
   override getDeployTransaction(
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): TransactionRequest {
+    overrides?: NonPayableOverrides & { from?: string }
+  ): Promise<ContractDeployTransaction> {
     return super.getDeployTransaction(overrides || {});
   }
-  override attach(address: string): WithdrawManager {
-    return super.attach(address) as WithdrawManager;
+  override deploy(overrides?: NonPayableOverrides & { from?: string }) {
+    return super.deploy(overrides || {}) as Promise<
+      WithdrawManager & {
+        deploymentTransaction(): ContractTransactionResponse;
+      }
+    >;
   }
-  override connect(signer: Signer): WithdrawManager__factory {
-    return super.connect(signer) as WithdrawManager__factory;
+  override connect(runner: ContractRunner | null): WithdrawManager__factory {
+    return super.connect(runner) as WithdrawManager__factory;
   }
 
   static readonly bytecode = _bytecode;
@@ -194,8 +202,8 @@ export class WithdrawManager__factory extends ContractFactory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider,
+    runner?: ContractRunner | null
   ): WithdrawManager {
-    return new Contract(address, _abi, signerOrProvider) as WithdrawManager;
+    return new Contract(address, _abi, runner) as unknown as WithdrawManager;
   }
 }

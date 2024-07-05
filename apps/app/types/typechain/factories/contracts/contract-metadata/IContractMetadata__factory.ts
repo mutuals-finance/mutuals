@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, Signer } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   IContractMetadata,
   IContractMetadataInterface,
@@ -64,8 +63,8 @@ export class IContractMetadata__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider,
+    runner?: ContractRunner | null
   ): IContractMetadata {
-    return new Contract(address, _abi, signerOrProvider) as IContractMetadata;
+    return new Contract(address, _abi, runner) as unknown as IContractMetadata;
   }
 }

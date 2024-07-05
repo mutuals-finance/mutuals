@@ -6,6 +6,7 @@ import {
   Stack,
   DarkMode,
   LightMode,
+  useColorModeValue,
 } from "@splitfi/ui";
 import NextImage from "next/image";
 import ctaBgImage from "@/assets/background-primary.png";
@@ -19,6 +20,11 @@ export default function CTA() {
         fill={true}
         style={{ objectFit: "cover" }}
       />
+      <Box
+        position={"absolute"}
+        inset={"0"}
+        bg={useColorModeValue("transparent", "blackAlpha.400")}
+      ></Box>
 
       <Container
         position={"relative"}

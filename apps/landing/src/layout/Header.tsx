@@ -24,7 +24,9 @@ const variants = {
     transparent: {
       background: "transparent",
     },
-    opaque: { background: "var(--chakra-colors-bg-1)" },
+    opaque: {
+      background: "var(--chakra-colors-bgAlpha-2)",
+    },
   },
 };
 
@@ -85,6 +87,9 @@ export default function Header(props: HeaderProps) {
           zIndex={10}
           w="full"
           h={"20"}
+          backdropFilter={"auto"}
+          backdropBlur={"12px"}
+          shadow={"sm"}
           animate={isHidden ? "invisible" : "visible"}
           variants={variants.visibility}
         >

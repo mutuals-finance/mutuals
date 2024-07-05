@@ -25,7 +25,11 @@ export default function PoolAddFormContent({
 }: PoolAddFormContentProps) {
   const data = getValues();
 
-  const previewData = { ...data, image: data.image?.preview?.toString() };
+  const previewData = {
+    ...data,
+    image: data.image?.preview?.toString(),
+    id: "id",
+  };
 
   return (
     <>

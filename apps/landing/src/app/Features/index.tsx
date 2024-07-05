@@ -5,7 +5,7 @@ import FeatureCard from "@/app/Features/FeatureCard";
 
 export default function HomeFeatures() {
   return (
-    <Box my="32">
+    <Box my="48">
       <Container
         maxW="container.xl"
         px={{ base: "3", lg: "12" }}

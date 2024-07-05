@@ -3,55 +3,42 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumber,
   BigNumberish,
   BytesLike,
-  CallOverrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import type {
   FunctionFragment,
   Result,
+  Interface,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+  AddressLike,
+  ContractRunner,
+  ContractMethod,
+  Listener,
+} from "ethers";
 import type {
-  TypedEventFilter,
-  TypedEvent,
+  TypedContractEvent,
+  TypedDeferredTopicFilter,
+  TypedEventLog,
+  TypedLogDescription,
   TypedListener,
-  OnEvent,
-  PromiseOrValue,
+  TypedContractMethod,
 } from "../../common";
 
-export interface PayeeManagerInterface extends utils.Interface {
-  functions: {
-    "payee(uint256)": FunctionFragment;
-    "payeeCount()": FunctionFragment;
-    "shares(address)": FunctionFragment;
-    "totalShares()": FunctionFragment;
-  };
-
+export interface PayeeManagerInterface extends Interface {
   getFunction(
-    nameOrSignatureOrTopic: "payee" | "payeeCount" | "shares" | "totalShares",
+    nameOrSignature: "payee" | "payeeCount" | "shares" | "totalShares"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "payee",
-    values: [PromiseOrValue<BigNumberish>],
-  ): string;
+  getEvent(nameOrSignatureOrTopic: "Initialized" | "PayeeAdded"): EventFragment;
+
+  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "payeeCount",
-    values?: undefined,
+    values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "shares",
-    values: [PromiseOrValue<string>],
-  ): string;
+  encodeFunctionData(functionFragment: "shares", values: [AddressLike]): string;
   encodeFunctionData(
     functionFragment: "totalShares",
-    values?: undefined,
+    values?: undefined
   ): string;
 
   decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
@@ -59,148 +46,139 @@ export interface PayeeManagerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalShares",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
-
-  events: {
-    "Initialized(uint8)": EventFragment;
-    "PayeeAdded(address,uint256)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PayeeAdded"): EventFragment;
 }
 
-export interface InitializedEventObject {
-  version: number;
+export namespace InitializedEvent {
+  export type InputTuple = [version: BigNumberish];
+  export type OutputTuple = [version: bigint];
+  export interface OutputObject {
+    version: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
-export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
-
-export interface PayeeAddedEventObject {
-  account: string;
-  shares: BigNumber;
+export namespace PayeeAddedEvent {
+  export type InputTuple = [account: AddressLike, shares: BigNumberish];
+  export type OutputTuple = [account: string, shares: bigint];
+  export interface OutputObject {
+    account: string;
+    shares: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type PayeeAddedEvent = TypedEvent<
-  [string, BigNumber],
-  PayeeAddedEventObject
->;
-
-export type PayeeAddedEventFilter = TypedEventFilter<PayeeAddedEvent>;
 
 export interface PayeeManager extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(runner?: ContractRunner | null): PayeeManager;
+  waitForDeployment(): Promise<this>;
 
   interface: PayeeManagerInterface;
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
+  queryFilter<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
-  ): Promise<Array<TEvent>>;
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  on<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-  functions: {
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
+  once<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-    payeeCount(overrides?: CallOverrides): Promise<[BigNumber]>;
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<Array<TypedListener<TCEvent>>>;
+  listeners(eventName?: string): Promise<Array<Listener>>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
 
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
 
-    totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
-  };
+  payeeCount: TypedContractMethod<[], [bigint], "view">;
 
-  payee(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
+  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
-  payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
+  totalShares: TypedContractMethod<[], [bigint], "view">;
 
-  shares(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
 
-  totalShares(overrides?: CallOverrides): Promise<BigNumber>;
+  getFunction(
+    nameOrSignature: "payee"
+  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "payeeCount"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "shares"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalShares"
+  ): TypedContractMethod<[], [bigint], "view">;
 
-  callStatic: {
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
-    payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
-  };
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+  getEvent(
+    key: "PayeeAdded"
+  ): TypedContractEvent<
+    PayeeAddedEvent.InputTuple,
+    PayeeAddedEvent.OutputTuple,
+    PayeeAddedEvent.OutputObject
+  >;
 
   filters: {
-    "Initialized(uint8)"(version?: null): InitializedEventFilter;
-    Initialized(version?: null): InitializedEventFilter;
+    "Initialized(uint64)": TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
+    Initialized: TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
 
-    "PayeeAdded(address,uint256)"(
-      account?: null,
-      shares?: null,
-    ): PayeeAddedEventFilter;
-    PayeeAdded(account?: null, shares?: null): PayeeAddedEventFilter;
-  };
-
-  estimateGas: {
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    payeeCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "PayeeAdded(address,uint256)": TypedContractEvent<
+      PayeeAddedEvent.InputTuple,
+      PayeeAddedEvent.OutputTuple,
+      PayeeAddedEvent.OutputObject
+    >;
+    PayeeAdded: TypedContractEvent<
+      PayeeAddedEvent.InputTuple,
+      PayeeAddedEvent.OutputTuple,
+      PayeeAddedEvent.OutputObject
+    >;
   };
 }

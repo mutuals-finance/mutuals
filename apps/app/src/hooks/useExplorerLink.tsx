@@ -1,5 +1,5 @@
 import { shortenAddress } from "src/utils";
-import { Chain } from "wagmi";
+import { type Chain } from "viem";
 import { CHAINS } from "src/constants";
 
 type UseExplorerLinkProps = {

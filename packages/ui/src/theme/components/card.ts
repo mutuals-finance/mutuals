@@ -12,7 +12,7 @@ const baseStyle = definePartsStyle({
 const variants = {
   filled: definePartsStyle({
     container: {
-      bg: "bg.2",
+      bg: "bg.3",
     },
   }),
   outline: definePartsStyle({

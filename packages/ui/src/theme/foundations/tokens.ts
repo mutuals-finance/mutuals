@@ -18,6 +18,16 @@ export default {
         _dark: "whiteAlpha.200",
       },
     },
+    bgAlpha: {
+      1: {
+        default: "whiteAlpha.800",
+        _dark: "blackAlpha.800",
+      },
+      2: {
+        default: "whiteAlpha.700",
+        _dark: "blackAlpha.700",
+      },
+    },
     color: {
       1: { default: "gray.900", _dark: "white" },
       2: { default: "gray.600", _dark: "gray.300" },

@@ -1,6 +1,5 @@
-import { Th, Tr } from "@chakra-ui/react";
-import { flexRender, HeaderGroup } from "@tanstack/react-table";
-import { RowData } from "@tanstack/table-core";
+import { Tr, Th } from "@splitfi/ui";
+import { flexRender, HeaderGroup, type RowData } from "@tanstack/react-table";
 import React from "react";
 
 type HeaderRowProps<TData extends RowData> = HeaderGroup<TData>;

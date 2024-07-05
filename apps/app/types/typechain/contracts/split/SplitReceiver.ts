@@ -3,44 +3,29 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumber,
   BigNumberish,
   BytesLike,
-  CallOverrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import type {
   FunctionFragment,
   Result,
+  Interface,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+  AddressLike,
+  ContractRunner,
+  ContractMethod,
+  Listener,
+} from "ethers";
 import type {
-  TypedEventFilter,
-  TypedEvent,
+  TypedContractEvent,
+  TypedDeferredTopicFilter,
+  TypedEventLog,
+  TypedLogDescription,
   TypedListener,
-  OnEvent,
-  PromiseOrValue,
+  TypedContractMethod,
 } from "../../common";
 
-export interface SplitReceiverInterface extends utils.Interface {
-  functions: {
-    "getPending(address,address)": FunctionFragment;
-    "getPending(address)": FunctionFragment;
-    "payee(uint256)": FunctionFragment;
-    "payeeCount()": FunctionFragment;
-    "shares(address)": FunctionFragment;
-    "totalShares()": FunctionFragment;
-    "totalWithdrawn(address)": FunctionFragment;
-    "totalWithdrawn()": FunctionFragment;
-    "withdrawn(address)": FunctionFragment;
-    "withdrawn(address,address)": FunctionFragment;
-  };
-
+export interface SplitReceiverInterface extends Interface {
   getFunction(
-    nameOrSignatureOrTopic:
+    nameOrSignature:
       | "getPending(address,address)"
       | "getPending(address)"
       | "payee"
@@ -50,425 +35,371 @@ export interface SplitReceiverInterface extends utils.Interface {
       | "totalWithdrawn(address)"
       | "totalWithdrawn()"
       | "withdrawn(address)"
-      | "withdrawn(address,address)",
+      | "withdrawn(address,address)"
   ): FunctionFragment;
+
+  getEvent(
+    nameOrSignatureOrTopic:
+      | "Deposit"
+      | "ERC20Withdrawal"
+      | "Initialized"
+      | "PayeeAdded"
+      | "Withdrawal"
+  ): EventFragment;
 
   encodeFunctionData(
     functionFragment: "getPending(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+    values: [AddressLike, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getPending(address)",
-    values: [PromiseOrValue<string>],
+    values: [AddressLike]
   ): string;
-  encodeFunctionData(
-    functionFragment: "payee",
-    values: [PromiseOrValue<BigNumberish>],
-  ): string;
+  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "payeeCount",
-    values?: undefined,
+    values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "shares",
-    values: [PromiseOrValue<string>],
-  ): string;
+  encodeFunctionData(functionFragment: "shares", values: [AddressLike]): string;
   encodeFunctionData(
     functionFragment: "totalShares",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn(address)",
-    values: [PromiseOrValue<string>],
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "totalWithdrawn()",
-    values?: undefined,
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address)",
-    values: [PromiseOrValue<string>],
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawn(address,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+    values: [AddressLike, AddressLike]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "getPending(address,address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getPending(address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payeeCount", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalShares",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn(address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "totalWithdrawn()",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawn(address,address)",
-    data: BytesLike,
+    data: BytesLike
   ): Result;
-
-  events: {
-    "Deposit(address,uint256)": EventFragment;
-    "ERC20Withdrawal(address,address,uint256)": EventFragment;
-    "Initialized(uint8)": EventFragment;
-    "PayeeAdded(address,uint256)": EventFragment;
-    "Withdrawal(address,uint256)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ERC20Withdrawal"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PayeeAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdrawal"): EventFragment;
 }
 
-export interface DepositEventObject {
-  from: string;
-  amount: BigNumber;
+export namespace DepositEvent {
+  export type InputTuple = [from: AddressLike, amount: BigNumberish];
+  export type OutputTuple = [from: string, amount: bigint];
+  export interface OutputObject {
+    from: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
 
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
-
-export interface ERC20WithdrawalEventObject {
-  token: string;
-  to: string;
-  amount: BigNumber;
+export namespace ERC20WithdrawalEvent {
+  export type InputTuple = [
+    token: AddressLike,
+    to: AddressLike,
+    amount: BigNumberish
+  ];
+  export type OutputTuple = [token: string, to: string, amount: bigint];
+  export interface OutputObject {
+    token: string;
+    to: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type ERC20WithdrawalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ERC20WithdrawalEventObject
->;
 
-export type ERC20WithdrawalEventFilter = TypedEventFilter<ERC20WithdrawalEvent>;
-
-export interface InitializedEventObject {
-  version: number;
+export namespace InitializedEvent {
+  export type InputTuple = [version: BigNumberish];
+  export type OutputTuple = [version: bigint];
+  export interface OutputObject {
+    version: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
-export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
-
-export interface PayeeAddedEventObject {
-  account: string;
-  shares: BigNumber;
+export namespace PayeeAddedEvent {
+  export type InputTuple = [account: AddressLike, shares: BigNumberish];
+  export type OutputTuple = [account: string, shares: bigint];
+  export interface OutputObject {
+    account: string;
+    shares: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type PayeeAddedEvent = TypedEvent<
-  [string, BigNumber],
-  PayeeAddedEventObject
->;
 
-export type PayeeAddedEventFilter = TypedEventFilter<PayeeAddedEvent>;
-
-export interface WithdrawalEventObject {
-  to: string;
-  amount: BigNumber;
+export namespace WithdrawalEvent {
+  export type InputTuple = [to: AddressLike, amount: BigNumberish];
+  export type OutputTuple = [to: string, amount: bigint];
+  export interface OutputObject {
+    to: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type WithdrawalEvent = TypedEvent<
-  [string, BigNumber],
-  WithdrawalEventObject
->;
-
-export type WithdrawalEventFilter = TypedEventFilter<WithdrawalEvent>;
 
 export interface SplitReceiver extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(runner?: ContractRunner | null): SplitReceiver;
+  waitForDeployment(): Promise<this>;
 
   interface: SplitReceiverInterface;
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
+  queryFilter<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
-  ): Promise<Array<TEvent>>;
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  on<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-  functions: {
-    "getPending(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  once<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
 
-    "getPending(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<Array<TypedListener<TCEvent>>>;
+  listeners(eventName?: string): Promise<Array<Listener>>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
 
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
+  "getPending(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-    payeeCount(overrides?: CallOverrides): Promise<[BigNumber]>;
+  "getPending(address)": TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
 
-    totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
+  payeeCount: TypedContractMethod<[], [bigint], "view">;
 
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
-    "totalWithdrawn()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+  totalShares: TypedContractMethod<[], [bigint], "view">;
 
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+  "totalWithdrawn(address)": TypedContractMethod<
+    [token: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-  };
+  "totalWithdrawn()": TypedContractMethod<[], [bigint], "view">;
 
-  "getPending(address,address)"(
-    token: PromiseOrValue<string>,
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  "withdrawn(address)": TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-  "getPending(address)"(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  "withdrawn(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-  payee(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<string>;
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
 
-  payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
+  getFunction(
+    nameOrSignature: "getPending(address,address)"
+  ): TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getPending(address)"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "payee"
+  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "payeeCount"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "shares"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalShares"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalWithdrawn(address)"
+  ): TypedContractMethod<[token: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalWithdrawn()"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "withdrawn(address)"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "withdrawn(address,address)"
+  ): TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
 
-  shares(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  totalShares(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "totalWithdrawn(address)"(
-    token: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  "withdrawn(address)"(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  "withdrawn(address,address)"(
-    token: PromiseOrValue<string>,
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  callStatic: {
-    "getPending(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "getPending(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
-    payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-  };
+  getEvent(
+    key: "Deposit"
+  ): TypedContractEvent<
+    DepositEvent.InputTuple,
+    DepositEvent.OutputTuple,
+    DepositEvent.OutputObject
+  >;
+  getEvent(
+    key: "ERC20Withdrawal"
+  ): TypedContractEvent<
+    ERC20WithdrawalEvent.InputTuple,
+    ERC20WithdrawalEvent.OutputTuple,
+    ERC20WithdrawalEvent.OutputObject
+  >;
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+  getEvent(
+    key: "PayeeAdded"
+  ): TypedContractEvent<
+    PayeeAddedEvent.InputTuple,
+    PayeeAddedEvent.OutputTuple,
+    PayeeAddedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Withdrawal"
+  ): TypedContractEvent<
+    WithdrawalEvent.InputTuple,
+    WithdrawalEvent.OutputTuple,
+    WithdrawalEvent.OutputObject
+  >;
 
   filters: {
-    "Deposit(address,uint256)"(from?: null, amount?: null): DepositEventFilter;
-    Deposit(from?: null, amount?: null): DepositEventFilter;
+    "Deposit(address,uint256)": TypedContractEvent<
+      DepositEvent.InputTuple,
+      DepositEvent.OutputTuple,
+      DepositEvent.OutputObject
+    >;
+    Deposit: TypedContractEvent<
+      DepositEvent.InputTuple,
+      DepositEvent.OutputTuple,
+      DepositEvent.OutputObject
+    >;
 
-    "ERC20Withdrawal(address,address,uint256)"(
-      token?: PromiseOrValue<string> | null,
-      to?: null,
-      amount?: null,
-    ): ERC20WithdrawalEventFilter;
-    ERC20Withdrawal(
-      token?: PromiseOrValue<string> | null,
-      to?: null,
-      amount?: null,
-    ): ERC20WithdrawalEventFilter;
+    "ERC20Withdrawal(address,address,uint256)": TypedContractEvent<
+      ERC20WithdrawalEvent.InputTuple,
+      ERC20WithdrawalEvent.OutputTuple,
+      ERC20WithdrawalEvent.OutputObject
+    >;
+    ERC20Withdrawal: TypedContractEvent<
+      ERC20WithdrawalEvent.InputTuple,
+      ERC20WithdrawalEvent.OutputTuple,
+      ERC20WithdrawalEvent.OutputObject
+    >;
 
-    "Initialized(uint8)"(version?: null): InitializedEventFilter;
-    Initialized(version?: null): InitializedEventFilter;
+    "Initialized(uint64)": TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
+    Initialized: TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
 
-    "PayeeAdded(address,uint256)"(
-      account?: null,
-      shares?: null,
-    ): PayeeAddedEventFilter;
-    PayeeAdded(account?: null, shares?: null): PayeeAddedEventFilter;
+    "PayeeAdded(address,uint256)": TypedContractEvent<
+      PayeeAddedEvent.InputTuple,
+      PayeeAddedEvent.OutputTuple,
+      PayeeAddedEvent.OutputObject
+    >;
+    PayeeAdded: TypedContractEvent<
+      PayeeAddedEvent.InputTuple,
+      PayeeAddedEvent.OutputTuple,
+      PayeeAddedEvent.OutputObject
+    >;
 
-    "Withdrawal(address,uint256)"(
-      to?: null,
-      amount?: null,
-    ): WithdrawalEventFilter;
-    Withdrawal(to?: null, amount?: null): WithdrawalEventFilter;
-  };
-
-  estimateGas: {
-    "getPending(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "getPending(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    payeeCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "totalWithdrawn()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    "getPending(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    "getPending(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    payee(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    payeeCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    shares(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "totalWithdrawn(address)"(
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    "totalWithdrawn()"(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    "withdrawn(address)"(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    "withdrawn(address,address)"(
-      token: PromiseOrValue<string>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
+    "Withdrawal(address,uint256)": TypedContractEvent<
+      WithdrawalEvent.InputTuple,
+      WithdrawalEvent.OutputTuple,
+      WithdrawalEvent.OutputObject
+    >;
+    Withdrawal: TypedContractEvent<
+      WithdrawalEvent.InputTuple,
+      WithdrawalEvent.OutputTuple,
+      WithdrawalEvent.OutputObject
+    >;
   };
 }

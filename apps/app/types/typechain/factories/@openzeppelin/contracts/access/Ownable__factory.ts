@@ -2,14 +2,35 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, Signer } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   Ownable,
   OwnableInterface,
 } from "../../../../@openzeppelin/contracts/access/Ownable";
 
 const _abi = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
   {
     anonymous: false,
     inputs: [
@@ -69,10 +90,7 @@ export class Ownable__factory {
   static createInterface(): OwnableInterface {
     return new Interface(_abi) as OwnableInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider,
-  ): Ownable {
-    return new Contract(address, _abi, signerOrProvider) as Ownable;
+  static connect(address: string, runner?: ContractRunner | null): Ownable {
+    return new Contract(address, _abi, runner) as unknown as Ownable;
   }
 }

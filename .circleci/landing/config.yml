@@ -1,0 +1,38 @@
+version: 2.1
+
+parameters:
+  run-shared:
+    type: boolean
+    default: false
+  run-landing:
+    type: boolean
+    default: false
+  run-app:
+    type: boolean
+    default: false
+  run-docs:
+    type: boolean
+    default: false
+
+workflows:
+  run-landing:
+    jobs:
+      - lint
+      - test
+      - deploy: &base
+          vercel-project-id: $VERCEL_PROJECT_ID_LANDING
+          vercel-org-id: $VERCEL_ORG_ID
+          vercel-token: $VERCEL_TOKEN
+          requires:
+            - lint
+            - test
+          vercel-environment: preview
+          filters:
+            branches:
+              ignore: /main/
+      - deploy:
+          <<: *base
+          vercel-environment: production
+          filters:
+            branches:
+              only: /main/

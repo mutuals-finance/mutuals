@@ -9,7 +9,7 @@ const inter = Inter({
 const cabinet = localFont({
   src: [
     {
-      path: "../font/GeneralSans/GeneralSans-ExtraLight.woff2",
+      path: "../font/GeneralSans/GeneralSans-Extralight.woff2",
       weight: "200",
       style: "normal",
     },
@@ -34,7 +34,7 @@ const cabinet = localFont({
       style: "normal",
     },
     {
-      path: "../font/GeneralSans/GeneralSans-SemiBold.woff2",
+      path: "../font/GeneralSans/GeneralSans-Semibold.woff2",
       weight: "700",
       style: "normal",
     },
