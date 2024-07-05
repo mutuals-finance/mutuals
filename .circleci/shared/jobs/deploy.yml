@@ -43,7 +43,13 @@ steps:
       command: vercel pull --yes --environment=<<parameters.vercel-environment>> --token=$VERCEL_TOKEN
   - run:
       name: Build Project Artifacts
-      command: vercel build --token=$VERCEL_TOKEN
+      command: |
+        opts=(--token=$VERCEL_TOKEN)
+        if [[ <<parameters.vercel-environment>> == "production" ]]; then
+          opts+=(--prod)
+        fi
+
+        vercel build "${opts[@]}"
   - run:
       name: Deploy Project Artifacts to Vercel
       command: |
