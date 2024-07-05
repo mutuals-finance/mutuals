@@ -14,6 +14,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  Heading,
   useColorMode,
 } from "@splitfi/ui";
 import type { PropsWithChildren } from "react";
@@ -69,9 +70,9 @@ function ThemeToggleMenu() {
 
 const ListHeader = ({ children }: PropsWithChildren) => {
   return (
-    <Text fontSize="xs" textTransform="uppercase" mb={3} color="color.2">
+    <Heading size="xs" fontWeight={"500"} mb={3} color="alpha.3">
       {children}
-    </Text>
+    </Heading>
   );
 };
 
@@ -82,7 +83,7 @@ export default function Footer() {
       role="contentinfo"
       maxW="100%"
       w="100%"
-      pt="12"
+      pt="24"
       bg="gray.900"
     >
       <DarkMode>
@@ -107,6 +108,7 @@ export default function Footer() {
             </Stack>
             <Stack align="flex-start">
               <ListHeader>Support</ListHeader>
+              <Link href="/pricing">Pricing</Link>
               <Link href="/#">Help Center</Link>
               <Link href="/#">Safety Center</Link>
               <Link href="/#">Community Guidelines</Link>
@@ -143,7 +145,7 @@ export default function Footer() {
           align={{ md: "center" }}
         >
           <DarkMode>
-            <Text fontSize="xs" color="color.3" fontFamily="monospace">
+            <Text fontSize="xs" color="alpha.3">
               &copy; {new Date().getFullYear()} SplifFi, Inc. All rights
               reserved.
             </Text>

@@ -24,7 +24,7 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <GridItem as={Card} variant={"outline"} {...props}>
+    <GridItem as={Card} variant={"filled"} {...props}>
       <CardBody
         as={Stack}
         direction={"column"}

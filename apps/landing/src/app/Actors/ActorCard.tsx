@@ -21,8 +21,7 @@ import {
   Heading,
 } from "@splitfi/ui";
 import NextImage, { ImageProps } from "next/image";
-import { IoCheckbox, IoArrowUpCircle } from "react-icons/io5";
-import ownersImage from "@/assets/owners-product-slider.webp";
+import { IoCheckboxOutline, IoArrowUpCircle } from "react-icons/io5";
 import { AnimatePresence, EventInfo } from "framer-motion";
 
 export interface ActorCardProps extends CardProps {
@@ -46,6 +45,7 @@ export default function ActorCard({
   buttonProps,
   onHoverStart,
   onHoverEnd,
+  image,
   ...props
 }: ActorCardProps) {
   const isLargerLg = useBreakpointValue({ base: false, lg: true });
@@ -84,15 +84,15 @@ export default function ActorCard({
       >
         <Stack gap={"0"} maxW={{ sm: "xl" }}>
           <MotionBox
+            fontSize={"5xl"}
             animate={animate}
-            fontSize={"4xl"}
             variants={useBreakpointValue({
               lg: {
                 shrink: {
                   fontSize: "var(--chakra-fontSizes-4xl)",
                 },
                 grow: {
-                  fontSize: "var(--chakra-fontSizes-5xl)",
+                  fontSize: "var(--chakra-fontSizes-6xl)",
                 },
               },
             })}
@@ -105,13 +105,17 @@ export default function ActorCard({
               pt={{ base: "6", lg: "12" }}
               pb={"0"}
             >
-              <Heading fontSize={"inherit"} mt={{ base: "1.5", lg: "unset" }}>
+              <Heading
+                fontSize={"inherit"}
+                lineHeight="1"
+                mt={{ base: "1.5", lg: "unset" }}
+              >
                 {title}
               </Heading>
 
               <Icon
                 as={IoArrowUpCircle}
-                fontSize={{ base: "1.8em", lg: "inherit" }}
+                fontSize={{ base: "1.6em", lg: "inherit" }}
                 transform={"rotate(45deg)"}
                 order={{ lg: "-1" }}
                 {...iconProps}
@@ -128,7 +132,7 @@ export default function ActorCard({
             pb={{ base: "6", lg: "6" }}
             justifyContent={"space-between"}
           >
-            <Text fontSize="lg" maxW={{ sm: "xs" }}>
+            <Text fontSize="xl" maxW={{ sm: "xs" }}>
               {description}
             </Text>
 
@@ -141,11 +145,16 @@ export default function ActorCard({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <List spacing={"1"}>
+                    <List spacing={"1"} color={"alpha.2"}>
                       {benefits?.map((b) => (
                         <ListItem key={b} as={Flex} alignItems={"flex-start"}>
-                          <ListIcon w="5" h={"5"} as={IoCheckbox} mt={"0.5"} />
-                          <Text>{b}</Text>
+                          <ListIcon
+                            w="5"
+                            h={"5"}
+                            as={IoCheckboxOutline}
+                            mt={"1"}
+                          />
+                          <Text fontWeight="500">{b}</Text>
                         </ListItem>
                       ))}
                     </List>
@@ -163,40 +172,46 @@ export default function ActorCard({
             pb={{ base: "6", lg: "12" }}
             pt={"0"}
           >
-            <Button rounded={"full"} {...buttonProps}>
+            <Button
+              rounded={"full"}
+              size={"lg"}
+              w={{ base: "full", lg: "auto" }}
+              {...buttonProps}
+            >
               Get Started For Free
             </Button>
           </CardFooter>
         </Stack>
-
-        <AnimatePresence>
-          {isGrown && (
-            <MotionBox
-              position={{ base: "relative", lg: "absolute" }}
-              w={"full"}
-              order={"-1"}
-              maxW={{ base: "full", sm: "2xs", lg: "xs" }}
-              top={{ lg: "0" }}
-              right={{ lg: "0" }}
-              h={{ base: "sm", lg: "full" }}
-              rounded={"lg"}
-              overflow={"hidden"}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <NextImage
-                src={ownersImage}
-                alt={"Mutuals for " + title}
-                fill={true}
-                style={{
-                  objectFit: isLargerLg ? "contain" : "cover",
-                  objectPosition: isLargerLg ? "top right" : "center top",
-                }}
-              />
-            </MotionBox>
-          )}
-        </AnimatePresence>
+        {image && (
+          <AnimatePresence>
+            {isGrown && (
+              <MotionBox
+                position={{ base: "relative", lg: "absolute" }}
+                w={"full"}
+                order={"-1"}
+                maxW={{ base: "full", sm: "2xs", lg: "xs" }}
+                top={{ lg: "0" }}
+                right={{ lg: "0" }}
+                h={{ base: "sm", lg: "full" }}
+                rounded={"lg"}
+                overflow={"hidden"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <NextImage
+                  src={image}
+                  alt={"Mutuals for " + title}
+                  fill={true}
+                  style={{
+                    objectFit: isLargerLg ? "contain" : "cover",
+                    objectPosition: isLargerLg ? "top right" : "center top",
+                  }}
+                />
+              </MotionBox>
+            )}
+          </AnimatePresence>
+        )}
       </Card>
     </MotionBox>
   );

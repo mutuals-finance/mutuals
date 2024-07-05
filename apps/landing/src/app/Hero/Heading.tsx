@@ -22,7 +22,7 @@ export default function HomeHeroHeading({
       maxW="container.xl"
       mr="auto"
       py="24"
-      px={{ base: 6, sm: 12 }}
+      px={{ base: 0, sm: 12 }}
       {...props}
     >
       <MotionBox
@@ -38,15 +38,15 @@ export default function HomeHeroHeading({
         >
           <Text
             variant={"tag"}
-            bgGradient="linear(to-tl, primary.100, primary.200, pink.200)"
+            bgGradient="linear(to-bl, pink.200, purple.100, primary.200)"
             bgClip="text"
-            fontSize={{ base: "xs", lg: "sm" }}
+            fontSize={"sm"}
           >
             Join now for free
           </Text>
           <Heading
             as="h1"
-            fontSize="clamp(3rem,6.4vw,5.6rem)"
+            fontSize="clamp(3.4rem,6.4vw,5.6rem)"
             color={"color.1"}
           >
             The best way to manage on-chain payments

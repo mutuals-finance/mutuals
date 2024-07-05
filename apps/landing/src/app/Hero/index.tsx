@@ -34,7 +34,7 @@ export default function HomeHero() {
     <HeaderObserverChange theme={"dark"}>
       <MotionConfig transition={{ duration: 0.8, ease: [0.72, 0, 0.12, 1] }}>
         <DarkMode>
-          <Box mb="32" bg={"black"} position={"relative"}>
+          <Box mb="48" bg={"black"} position={"relative"}>
             <Box position={"absolute"} inset={"0"}>
               <NextImage
                 src={heroBgImage}
