@@ -11,6 +11,7 @@ import {
 import { IoMenuSharp } from "react-icons/io5";
 
 import NavLink from "@/layout/NavLink";
+import Link from "next/link";
 
 const links = [
   {
@@ -26,8 +27,9 @@ const links = [
 export default function Navigation(props: StackProps) {
   return (
     <HStack flex="1" spacing="12" position="relative" {...props}>
-      <SplitFiLogo color="color.1" w={{ base: "24", lg: "24" }} />
-
+      <Link href={"/"}>
+        <SplitFiLogo color="color.1" w={{ base: "36", lg: "36" }} />
+      </Link>
       <Show above="lg">
         <HStack ml={"auto"} spacing="12" justify="center">
           {links.map(({ href, id, label, ...props }) => {
