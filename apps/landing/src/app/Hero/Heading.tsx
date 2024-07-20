@@ -59,10 +59,8 @@ export default function HomeHeroHeading({
             right={{ lg: "0" }}
             spacing="3"
           >
-            <Button rounded={"full"}>Learn More</Button>
-            <Button rounded={"full"} variant={"blackWhite"}>
-              Start For Free
-            </Button>
+            <Button>Learn More</Button>
+            <Button variant={"blackWhite"}>Start For Free</Button>
           </ButtonGroup>
         </Stack>
       </MotionBox>

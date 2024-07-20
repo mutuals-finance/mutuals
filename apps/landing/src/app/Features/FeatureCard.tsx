@@ -46,7 +46,7 @@ export default function FeatureCard({
 
         <Box>
           {index && index >= 0 && (
-            <Text variant={"tag"} mb={"3"}>
+            <Text variant={"tag"} mb={"3"} fontSize={"xs"}>
               0{index}
             </Text>
           )}
@@ -56,7 +56,7 @@ export default function FeatureCard({
           </Heading>
         </Box>
 
-        <Box position={"relative"} w={"full"} maxW={"md"}>
+        <Box position={"relative"} w={"full"} maxW={"sm"}>
           <Text>{description}</Text>
         </Box>
       </CardBody>

@@ -26,7 +26,7 @@ export default function HomeChains() {
   return (
     <Box mt={"48"} mb={"6"}>
       <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
-        <Text variant={"tag"} mb={"6"}>
+        <Text variant={"tag"} mb={"6"} fontSize={"xs"}>
           Available on {networks.length - 1}+ networks
         </Text>
       </Container>

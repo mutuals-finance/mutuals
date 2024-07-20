@@ -1,16 +1,11 @@
-"use client";
-
 import { Box } from "@splitfi/ui";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
 import CTA from "@/layout/CTA";
+import Footer from "@/layout/Footer";
+import Header from "@/layout/Header";
 
-import Footer from "./Footer";
-import Header from "./Header";
-
-type LayoutProps = {
-  children: ReactNode;
-};
+type LayoutProps = PropsWithChildren;
 
 function Main({ children }: PropsWithChildren) {
   return <Box as="main">{children}</Box>;

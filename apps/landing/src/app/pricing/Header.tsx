@@ -12,13 +12,13 @@ export default function PricingHeader() {
             Pricing
           </Heading>
 
-          <Text fontSize={{ lg: "2xl" }}>
+          <Text fontSize={{ lg: "2xl" }} color={"alpha.2"}>
             To support our work you can forward a part of of your split&apos;s
             earnings as donation to our team. Everything else goes directly to
             your cause.
           </Text>
 
-          <Button colorScheme={"primary"} size={"lg"} rounded={"full"}>
+          <Button colorScheme={"primary"} size={"lg"}>
             Get Started
           </Button>
         </Stack>

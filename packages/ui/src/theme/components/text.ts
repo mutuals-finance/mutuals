@@ -14,10 +14,10 @@ const variants = {
     fontWeight: "500",
   },
   tag: defineStyle({
-    fontFamily: "monospace",
+    fontFamily: "var(--chakra-fonts-heading)",
     color: "alpha.3",
     textTransform: "uppercase",
-    fontWeight: "700",
+    fontWeight: "600",
     letterSpacing: "0.075em",
   }),
 };

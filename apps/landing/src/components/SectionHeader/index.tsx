@@ -20,7 +20,7 @@ export default function SectionHeader({
   return (
     <Box maxW="2xl" mx="auto" textAlign={"center"} mb="12" {...props}>
       {!!label && (
-        <Text mb="6" variant={"tag"}>
+        <Text mb="6" variant={"tag"} fontSize={"xs"}>
           {label}
         </Text>
       )}
