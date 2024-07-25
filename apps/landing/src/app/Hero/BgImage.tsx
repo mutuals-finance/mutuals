@@ -1,8 +1,9 @@
-import { type FlexProps, useColorModeValue, Box } from "@splitfi/ui";
+import { type FlexProps, Box } from "@splitfi/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero";
 import NextImage from "next/image";
-import heroLeftImage from "@/assets/bg-hero-left.webp";
+import heroLeftImage from "@/assets/bg-hero-top-left.png";
+import heroRightImage from "@/assets/bg-hero-bottom-right.png";
 type HomeHeroBgImageProps = HomeHeroAnimBaseType & FlexProps;
 
 export default function HomeHeroBgImage({
@@ -10,43 +11,47 @@ export default function HomeHeroBgImage({
   ...props
 }: HomeHeroBgImageProps) {
   return (
-    <Box
-      position="absolute"
-      inset="0"
-      overflow="hidden"
-      _after={{
-        zIndex: -1,
-        content: `""`,
-        display: "block",
-        position: "absolute",
-        inset: "0",
-        bg: useColorModeValue("blackAlpha.0", "blackAlpha.600"),
-        /*
-                   bgGradient:
-                     "linear(to-b, blackAlpha.500, blackAlpha.700, blackAlpha.900)",
-           */
-      }}
-    >
-      <NextImage
-        src={heroLeftImage}
-        fill
-        alt={"SplitFi"}
-        style={{
-          objectFit: "contain",
-          objectPosition: "top left",
-        }}
-      />
-      {/*
-      <NextImage
-        src={heroRightImage}
-        fill
-        alt={"SplitFi right"}
-        style={{
-          objectFit: "contain",
-          objectPosition: "top right",
-        }}
-      />
-*/}
-    </Box>
+    <>
+      <Box
+        position="absolute"
+        top="0"
+        left={"0"}
+        w={"full"}
+        maxW={{ base: "40", lg: "xs" }}
+        opacity={"0.5"}
+        h="full"
+        overflow="hidden"
+      >
+        <NextImage
+          src={heroLeftImage}
+          alt={"SplitFi"}
+          fill={true}
+          style={{
+            objectFit: "contain",
+            objectPosition: "top left",
+          }}
+        />
+      </Box>
+      <Box
+        position="absolute"
+        bottom="0"
+        right={"0"}
+        opacity={"0.5"}
+        w={"full"}
+        maxW={{ base: "sm", lg: "xl" }}
+        h="full"
+        overflow="hidden"
+      >
+        <NextImage
+          src={heroRightImage}
+          alt={"SplitFi right"}
+          fill={true}
+          style={{
+            objectFit: "contain",
+            objectPosition: "bottom right",
+          }}
+        />
+      </Box>
+    </>
   );
 }
