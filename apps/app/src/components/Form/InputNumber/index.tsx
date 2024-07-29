@@ -1,4 +1,4 @@
-import { HStack, IconButton, useNumberInput } from "@splitfi/ui";
+import { HStack, IconButton, useNumberInput } from "@mutuals/ui";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { IoAdd, IoRemove } from "react-icons/io5";

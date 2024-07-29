@@ -7,7 +7,7 @@ import {
   StatLabel,
   StatNumber,
   Text,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 import { formatUSDPrice, ipfsResolveData } from "src/utils";
 

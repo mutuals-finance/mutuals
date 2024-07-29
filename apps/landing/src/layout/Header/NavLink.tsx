@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, type LinkProps } from "@splitfi/ui";
+import { Link, type LinkProps } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
 
 export interface NavLinkProps extends LinkProps {}

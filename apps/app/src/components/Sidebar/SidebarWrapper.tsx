@@ -1,4 +1,4 @@
-import { BoxProps, DrawerProps, VStack, MotionBox } from "@splitfi/ui";
+import { BoxProps, DrawerProps, VStack, MotionBox } from "@mutuals/ui";
 import React from "react";
 
 export interface SidebarWrapperProps extends BoxProps {

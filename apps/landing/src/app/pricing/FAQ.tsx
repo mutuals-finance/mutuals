@@ -14,7 +14,7 @@ import {
   Text,
   ListItem,
   OrderedList,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 import SectionHeader from "@/components/SectionHeader";
 import { ReactNode } from "react";

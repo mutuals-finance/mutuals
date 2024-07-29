@@ -1,4 +1,4 @@
-import { type FlexProps, Box } from "@splitfi/ui";
+import { type FlexProps, Box } from "@mutuals/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero";
 import NextImage from "next/image";

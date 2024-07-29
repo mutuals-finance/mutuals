@@ -1,4 +1,4 @@
-import { type LinkProps } from "@splitfi/ui";
+import { type LinkProps } from "@mutuals/ui";
 
 const links: LinkProps[] = [
   {

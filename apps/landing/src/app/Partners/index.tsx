@@ -1,4 +1,4 @@
-import { Box, Container } from "@splitfi/ui";
+import { Box, Container } from "@mutuals/ui";
 import PartnerSlider from "@/app/Partners/PartnerSlider";
 import EthereumIcon from "@/assets/networks/Etherium.svg";
 import PolygonIcon from "@/assets/networks/Polygon.svg";

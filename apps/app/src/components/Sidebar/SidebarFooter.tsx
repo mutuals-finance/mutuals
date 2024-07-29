@@ -1,4 +1,4 @@
-import { Stack, StackProps, useColorModeValue } from "@splitfi/ui";
+import { Stack, StackProps, useColorModeValue } from "@mutuals/ui";
 import React from "react";
 
 export function SidebarFooter({ children, ...props }: StackProps) {

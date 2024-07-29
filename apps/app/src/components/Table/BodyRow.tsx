@@ -1,4 +1,4 @@
-import { Td, Tr } from "@splitfi/ui";
+import { Td, Tr } from "@mutuals/ui";
 import { flexRender, Row, type RowData } from "@tanstack/react-table";
 
 type BodyRowProps<TData extends RowData> = Row<TData>;

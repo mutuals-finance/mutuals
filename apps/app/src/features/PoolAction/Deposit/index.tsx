@@ -13,7 +13,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import {
   IoCopyOutline,
   IoEllipsisHorizontal,

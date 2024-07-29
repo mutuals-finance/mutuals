@@ -3,7 +3,7 @@ import AssetTable from "@/features/Asset/Table";
 import { getAccountBalance } from "@/lib/ankr";
 import ContentCard from "@/components/ContentCard";
 import ShellPage from "@/features/Shell/Page";
-import { Container } from "@splitfi/ui";
+import { Container } from "@mutuals/ui";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

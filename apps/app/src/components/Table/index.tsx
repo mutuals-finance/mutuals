@@ -6,7 +6,7 @@ import {
   TableProps as ChakraTableProps,
   Tbody,
   Thead,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import {
   getCoreRowModel,
   useReactTable,

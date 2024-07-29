@@ -1,4 +1,4 @@
-import { VStack } from "@splitfi/ui";
+import { VStack } from "@mutuals/ui";
 import React from "react";
 import {
   FieldValues,

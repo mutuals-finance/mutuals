@@ -1,4 +1,4 @@
-import { FormControl, FormControlProps } from "@splitfi/ui";
+import { FormControl, FormControlProps } from "@mutuals/ui";
 import React from "react";
 
 import { BaseFeedbackProps, BaseLabelProps } from "@/components/Form/types";

@@ -1,5 +1,5 @@
 {
-  "extends": "@splitfi/typescript-config/nextjs.json",
+  "extends": "@mutuals/typescript-config/nextjs.json",
   "compilerOptions": {
     "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",

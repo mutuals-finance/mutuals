@@ -1,4 +1,4 @@
-import { ImageProps } from "@splitfi/ui";
+import { ImageProps } from "@mutuals/ui";
 
 export function ipfsResolveData(data?: ImageProps["src"] | null) {
   switch (typeof data) {

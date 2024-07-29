@@ -1,7 +1,7 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
-  extends: ["@splitfi/eslint-config/react-internal.js"],
+  extends: ["@mutuals/eslint-config/react-internal.js"],
   env: {
     node: true,
     browser: true,

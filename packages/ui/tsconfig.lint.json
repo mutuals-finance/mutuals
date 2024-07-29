@@ -1,5 +1,5 @@
 {
-  "extends": "@splitfi/typescript-config/react-library.json",
+  "extends": "@mutuals/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "dist"
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import type { CardProps } from "@splitfi/ui";
+import type { CardProps } from "@mutuals/ui";
 import {
   AspectRatio,
   Card,
@@ -11,7 +11,7 @@ import {
   Heading,
   Collapse,
   useDisclosure,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import type { ImageProps } from "next/image";
 import Image from "next/image";
 import { IoAdd, IoRemove } from "react-icons/io5";

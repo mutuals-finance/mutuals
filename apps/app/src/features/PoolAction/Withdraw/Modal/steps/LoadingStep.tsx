@@ -1,4 +1,4 @@
-import { Box } from "@splitfi/ui";
+import { Box } from "@mutuals/ui";
 import { IoAlertCircle, IoCheckmarkCircle } from "react-icons/io5";
 
 interface LoadingStepProps {

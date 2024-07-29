@@ -4,7 +4,7 @@ import KeenSlider, {
   type KeenSliderProps,
 } from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
-import { Stack, Card, Heading, CardBody } from "@splitfi/ui";
+import { Stack, Card, Heading, CardBody } from "@mutuals/ui";
 import NextImage, { type ImageProps } from "next/image";
 
 const animation = { duration: 4 * 10000, easing: (t: number) => t };

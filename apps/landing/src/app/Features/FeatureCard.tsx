@@ -1,4 +1,4 @@
-import { GridItemProps } from "@splitfi/ui";
+import { GridItemProps } from "@mutuals/ui";
 import {
   GridItem,
   Stack,
@@ -8,7 +8,7 @@ import {
   Heading,
   Text,
   Box,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 interface FeatureCardProps extends StackProps, GridItemProps {
   heading: string;

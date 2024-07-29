@@ -1,5 +1,5 @@
-import { Icon } from "@splitfi/ui";
-import { Center, Text } from "@splitfi/ui";
+import { Icon } from "@mutuals/ui";
+import { Center, Text } from "@mutuals/ui";
 import { IoImage } from "react-icons/io5";
 
 import { BaseFieldProps } from "../types";

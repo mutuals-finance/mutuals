@@ -4,10 +4,10 @@ import {
   BreadcrumbItem,
   BreadcrumbItemProps,
   BreadcrumbProps,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { Icon } from "@splitfi/ui";
+import { Icon } from "@mutuals/ui";
 import { RxSlash } from "react-icons/rx";
 
 function BreadcrumbsInnerItem({

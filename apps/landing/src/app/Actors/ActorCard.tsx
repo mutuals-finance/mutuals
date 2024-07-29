@@ -19,7 +19,7 @@ import {
   ListIcon,
   MotionBox,
   Heading,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoCheckboxOutline, IoArrowUpCircle } from "react-icons/io5";
 import { AnimatePresence, EventInfo } from "framer-motion";

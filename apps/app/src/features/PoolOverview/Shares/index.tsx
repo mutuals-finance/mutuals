@@ -1,8 +1,8 @@
 import ContentCard from "@/components/ContentCard";
 
 import Content from "@/features/PoolOverview/Shares/Content";
-import { Stack } from "@splitfi/ui";
-import { Share } from "@splitfi/sdk/thegraph";
+import { Stack } from "@mutuals/ui";
+import { Share } from "@mutuals/sdk/thegraph";
 
 interface PoolOverviewSharesProps {
   shares?: Partial<Share>[];

@@ -1,4 +1,4 @@
-import { Box, Container, Grid, IconButton, Input, Stack } from "@splitfi/ui";
+import { Box, Container, Grid, IconButton, Input, Stack } from "@mutuals/ui";
 import { IoSend } from "react-icons/io5";
 import ListBox from "@/layout/Footer/ListBox";
 import Footer from "@/layout/Footer/Footer";

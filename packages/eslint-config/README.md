@@ -1,3 +1,3 @@
-# `@splitfi/eslint-config`
+# `@mutuals/eslint-config`
 
 Collection of internal eslint configurations.

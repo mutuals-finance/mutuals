@@ -1,4 +1,4 @@
-import { FormErrorMessage, FormHelperText } from "@splitfi/ui";
+import { FormErrorMessage, FormHelperText } from "@mutuals/ui";
 import React from "react";
 
 import { BaseFeedbackProps } from "@/components/Form/types";

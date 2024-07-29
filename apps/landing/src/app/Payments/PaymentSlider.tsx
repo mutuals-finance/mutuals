@@ -1,4 +1,4 @@
-import { Box, Container, SimpleGrid } from "@splitfi/ui";
+import { Box, Container, SimpleGrid } from "@mutuals/ui";
 
 import PaymentCard from "@/app/Payments/PaymentCard";
 import percentImage from "@/assets/percent.webp";

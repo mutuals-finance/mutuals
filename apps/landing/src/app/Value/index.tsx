@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, SimpleGrid } from "@splitfi/ui";
+import { Box, Container, SimpleGrid } from "@mutuals/ui";
 import SectionHeader from "@/components/SectionHeader";
 import {
   IoCodeWorkingOutline,

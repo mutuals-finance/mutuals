@@ -3,12 +3,12 @@ import AnkrProvider from "@/providers/AnkrProvider";
 import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { config } from "@/lib/wagmi";
-import { UIProvider } from "@splitfi/ui";
-import { ApolloProvider } from "@splitfi/sdk/providers";
+import { UIProvider } from "@mutuals/ui";
+import { ApolloProvider } from "@mutuals/sdk/providers";
 import WagmiProvider from "@/providers/WagmiProvider";
 import AuthProvider from "@/features/Auth/Provider";
 import SignMessageProvider from "@/features/Wallet/SignProvider";
-import { getViewer } from "@splitfi/sdk/server";
+import { getViewer } from "@mutuals/sdk/server";
 
 export default async function Providers({ children }: PropsWithChildren) {
   const redirectURL = "/";

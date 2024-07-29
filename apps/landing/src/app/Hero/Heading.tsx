@@ -9,7 +9,7 @@ import {
   Text,
   Tag,
   TagLabel,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
 

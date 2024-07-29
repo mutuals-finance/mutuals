@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Container, Stack, DarkMode } from "@splitfi/ui";
+import { Box, Button, Heading, Container, Stack, DarkMode } from "@mutuals/ui";
 import NextImage from "next/image";
 import ctaBgImage from "@/assets/background-primary.png";
 

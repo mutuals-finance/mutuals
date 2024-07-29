@@ -1,5 +1,5 @@
 import { decodePrefixedAddress } from "src/utils";
-import { getPoolDetails } from "@splitfi/sdk/server";
+import { getPoolDetails } from "@mutuals/sdk/server";
 import { getMetadata } from "@/lib/split/fetchers";
 
 export * from "./fetchers";

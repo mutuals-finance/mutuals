@@ -1,5 +1,5 @@
 import { ipfsUrlFromUri } from "src/utils";
-import { SplitMetadata } from "@splitfi/sdk/thegraph";
+import { SplitMetadata } from "@mutuals/sdk/thegraph";
 
 export const fetcher = <TResponse = unknown>(
   url: string,

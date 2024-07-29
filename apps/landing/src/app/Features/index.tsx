@@ -1,4 +1,4 @@
-import { Box, Container, Grid } from "@splitfi/ui";
+import { Box, Container, Grid } from "@mutuals/ui";
 
 import SectionHeader from "@/components/SectionHeader";
 import FeatureCard from "@/app/Features/FeatureCard";

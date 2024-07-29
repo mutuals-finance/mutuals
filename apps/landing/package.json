@@ -1,5 +1,5 @@
 {
-  "name": "@splitfi/landing",
+  "name": "@mutuals/landing",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "postbuild": "next-sitemap --config next-sitemap.config.js"
   },
   "dependencies": {
-    "@splitfi/ui": "workspace:*",
+    "@mutuals/ui": "workspace:*",
     "framer-motion": "^11.2.4",
     "keen-slider": "^6.8.6",
     "next": "^14.2.3",
@@ -22,8 +22,8 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.2.3",
-    "@splitfi/eslint-config": "workspace:*",
-    "@splitfi/typescript-config": "workspace:*",
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",

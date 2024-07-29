@@ -8,7 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useTheme } from "@splitfi/ui";
+import { useTheme } from "@mutuals/ui";
 
 type ContextT = {
   headerTheme: "dark" | "light" | "system";

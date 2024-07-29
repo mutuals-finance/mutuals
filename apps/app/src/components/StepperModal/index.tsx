@@ -16,7 +16,7 @@ import {
   StepNumber,
   Stepper,
   StepStatus,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import React from "react";
 
 import StepperItem, {

@@ -4,7 +4,7 @@ import {
   SimpleGrid,
   MotionBox,
   useBreakpointValue,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import NextImage from "next/image";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
