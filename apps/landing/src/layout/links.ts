@@ -1,14 +1,13 @@
-import type { LinkProps } from "@splitfi/ui";
+import { type LinkProps } from "@splitfi/ui";
 
-const links: (LinkProps & { label: string })[] = [
-  { id: "home", label: "Home", href: "/" },
+const links: LinkProps[] = [
   {
-    id: "pricing",
     href: "/pricing",
-    label: "Pricing",
+    children: "Pricing",
   },
-  { id: "contact", label: "Contact", href: "/contact" },
-  { id: "support", label: "Support", href: "/support" },
+  { children: "Contact", href: "/contact" },
+  { children: "Support", href: "/support" },
+  { children: "Docs", href: "/docs" },
 ];
 
 export default links;

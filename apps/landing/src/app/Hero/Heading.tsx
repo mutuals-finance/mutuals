@@ -7,6 +7,8 @@ import {
   Stack,
   MotionBox,
   Text,
+  Tag,
+  TagLabel,
 } from "@splitfi/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
@@ -33,17 +35,27 @@ export default function HomeHeroHeading({
           direction="column"
           gap="6"
           position={"relative"}
-          align={{ base: "center", lg: "flex-start" }}
+          align={{ base: "center", lg: "center" }}
           textAlign={{ base: "center", lg: "left" }}
         >
-          <Text
-            variant={"tag"}
-            bgGradient="linear(to-bl, pink.200, purple.100, primary.200)"
-            bgClip="text"
-            fontSize={"sm"}
+          <Tag
+            size="lg"
+            borderRadius="md"
+            bg={"bgAlpha.4"}
+            border={"1px solid"}
+            borderColor={"border.1"}
           >
-            Join now for free
-          </Text>
+            <TagLabel>
+              <Text
+                variant={"tag"}
+                bgGradient="linear(to-bl, pink.400, purple.400, primary.400)"
+                bgClip="text"
+                fontSize={"sm"}
+              >
+                Join now for free
+              </Text>
+            </TagLabel>
+          </Tag>
           <Heading
             as="h1"
             fontSize="clamp(3.4rem,6.4vw,5.6rem)"
@@ -59,10 +71,8 @@ export default function HomeHeroHeading({
             right={{ lg: "0" }}
             spacing="3"
           >
-            <Button rounded={"full"}>Learn More</Button>
-            <Button rounded={"full"} variant={"blackWhite"}>
-              Start For Free
-            </Button>
+            <Button>Learn More</Button>
+            <Button variant={"blackWhite"}>Start For Free</Button>
           </ButtonGroup>
         </Stack>
       </MotionBox>

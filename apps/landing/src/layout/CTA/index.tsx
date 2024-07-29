@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Container,
-  Stack,
-  DarkMode,
-  LightMode,
-  useColorModeValue,
-} from "@splitfi/ui";
+import { Box, Button, Heading, Container, Stack, DarkMode } from "@splitfi/ui";
 import NextImage from "next/image";
 import ctaBgImage from "@/assets/background-primary.png";
 
@@ -20,11 +11,6 @@ export default function CTA() {
         fill={true}
         style={{ objectFit: "cover" }}
       />
-      <Box
-        position={"absolute"}
-        inset={"0"}
-        bg={useColorModeValue("transparent", "blackAlpha.400")}
-      ></Box>
 
       <Container
         position={"relative"}
@@ -42,11 +28,9 @@ export default function CTA() {
             Starting with Mutuals is simple, fast, and free.
           </Heading>
         </DarkMode>
-        <LightMode>
-          <Button colorScheme="blackAlpha" size="lg" rounded={"full"}>
-            Get Started For Free
-          </Button>
-        </LightMode>
+        <DarkMode>
+          <Button size="lg">Get Started For Free</Button>
+        </DarkMode>
       </Container>
     </Box>
   );

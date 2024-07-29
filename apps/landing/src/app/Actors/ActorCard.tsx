@@ -173,7 +173,6 @@ export default function ActorCard({
             pt={"0"}
           >
             <Button
-              rounded={"full"}
               size={"lg"}
               w={{ base: "full", lg: "auto" }}
               {...buttonProps}

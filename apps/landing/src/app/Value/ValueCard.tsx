@@ -56,7 +56,7 @@ export default function ValueCard({
       )}
 
       <CardBody p={"0"}>
-        <Text as="h3" mb="3" variant={"tag"}>
+        <Text as="h3" mb="3" variant={"tag"} fontSize={"xs"}>
           {heading}
         </Text>
 
