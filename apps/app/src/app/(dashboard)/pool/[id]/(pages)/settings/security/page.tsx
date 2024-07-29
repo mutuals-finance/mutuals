@@ -1,5 +1,5 @@
 import ContentCard from "@/components/ContentCard";
-import { Box, Button, Heading, Stack, StackDivider, Text } from "@splitfi/ui";
+import { Box, Button, Heading, Stack, StackDivider, Text } from "@mutuals/ui";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

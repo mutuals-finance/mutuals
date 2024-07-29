@@ -1,4 +1,4 @@
-import { Box } from "@splitfi/ui";
+import { Box } from "@mutuals/ui";
 import type { PropsWithChildren } from "react";
 
 import CTA from "@/layout/CTA";

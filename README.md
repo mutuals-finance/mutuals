@@ -1,26 +1,14 @@
-# Turborepo starter
-
-This is an official starter Turborepo.
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
+# Mutuals
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `app`: another [Next.js](https://nextjs.org/) app
-- `@splitfi/ui`: a stub React component library shared by both `app` and `docs` applications
-- `@splitfi/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@splitfi/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `@mutuals/landing`: Mutuals [Next.js](https://nextjs.org/) landing page
+- `@mutuals/app`: Mutuals [Next.js](https://nextjs.org/) app interface
+- `@mutuals/contracts`: Mutuals smart contracts
+- `@mutuals/docs`: Mutuals [Next.js](https://nextjs.org/) docs
+- `@mutuals/ui`: a stub React component library shared by both `app` and `docs` applications
+- `@mutuals/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@mutuals/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
@@ -37,7 +25,7 @@ This Turborepo has some additional tools already setup for you:
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd mutuals
 pnpm build
 ```
 
@@ -46,7 +34,7 @@ pnpm build
 To develop all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd mutuals
 pnpm dev
 ```
 

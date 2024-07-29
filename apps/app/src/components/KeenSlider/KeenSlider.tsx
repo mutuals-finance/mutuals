@@ -1,6 +1,6 @@
 "use client";
 
-import type { BoxProps } from "@splitfi/ui";
+import type { BoxProps } from "@mutuals/ui";
 import { Box } from "@chakra-ui/react";
 import type {
   KeenSliderInstance,

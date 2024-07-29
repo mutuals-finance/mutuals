@@ -1,4 +1,4 @@
-import { Box, Stack, Button, Container, Heading, Text } from "@splitfi/ui";
+import { Box, Stack, Button, Container, Heading, Text } from "@mutuals/ui";
 
 export default function PricingHeader() {
   return (

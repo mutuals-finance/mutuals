@@ -1,4 +1,4 @@
-import { Tr, Th } from "@splitfi/ui";
+import { Tr, Th } from "@mutuals/ui";
 import { flexRender, HeaderGroup, type RowData } from "@tanstack/react-table";
 import React from "react";
 

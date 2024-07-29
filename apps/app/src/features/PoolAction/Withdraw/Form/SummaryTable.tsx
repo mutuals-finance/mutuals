@@ -7,7 +7,7 @@ import {
   Text,
   Tfoot,
   Tr,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import React, { useMemo } from "react";
 import { formatPrice } from "src/utils";
 import { type WithdrawData } from "@/features/PoolAction/types";

@@ -4,7 +4,7 @@ import AssetValueCell from "@/features/Asset/Table/ValueCell";
 import Table, { TableProps } from "@/components/Table";
 import { createColumnHelper } from "@tanstack/react-table";
 import { WithdrawFormContentProps } from "@/features/PoolAction/Withdraw/Form/Content";
-import { Checkbox } from "@splitfi/ui";
+import { Checkbox } from "@mutuals/ui";
 import { Balance } from "@ankr.com/ankr.js/dist/types";
 import { useMemo } from "react";
 

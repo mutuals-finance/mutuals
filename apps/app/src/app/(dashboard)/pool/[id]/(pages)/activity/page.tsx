@@ -1,7 +1,7 @@
 import React from "react";
 import { getTokenTransfers } from "@/lib/ankr";
 import ShellPage from "@/features/Shell/Page";
-import { Container } from "@splitfi/ui";
+import { Container } from "@mutuals/ui";
 import ActivityTableCard from "@/features/Activity/TableCard";
 import { Metadata } from "next";
 

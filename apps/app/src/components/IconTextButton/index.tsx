@@ -6,7 +6,7 @@ import {
   IconButtonProps,
   Stack,
   Text,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import React from "react";
 
 type IconTextButtonProps = IconButtonProps;

@@ -5,7 +5,7 @@ import FormGroup from "@/components/Form/FormGroup";
 import InputImage from "@/components/Form/InputImage";
 import Input from "@/components/Form/Input";
 import TextArea from "@/components/Form/TextArea";
-import { Box, Button } from "@splitfi/ui";
+import { Box, Button } from "@mutuals/ui";
 import { FileWithPreview } from "@/components/Form/types";
 
 type PoolMetadataEditType = {

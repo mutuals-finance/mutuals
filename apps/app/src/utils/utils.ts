@@ -1,4 +1,4 @@
-import { ViewerQuery } from "@splitfi/sdk";
+import { ViewerQuery } from "@mutuals/sdk";
 import { getAddress } from "ethers";
 
 export function partition<T>(

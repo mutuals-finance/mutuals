@@ -10,7 +10,7 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { Fragment, PropsWithChildren, type ReactNode } from "react";
 import { Stack } from "@chakra-ui/react";
 

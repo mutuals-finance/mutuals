@@ -8,7 +8,7 @@ import {
   Hide,
   Show,
   useDisclosure,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 import NavMobile from "@/layout/Header/NavMobile";
 import NavDesktop from "@/layout/Header/NavDesktop";

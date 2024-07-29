@@ -6,7 +6,7 @@ import {
   Container,
   Stack,
   useColorModeValue,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 import ActorCard from "@/app/Actors/ActorCard";
 import SectionHeader from "@/components/SectionHeader";

@@ -1,6 +1,6 @@
 "use client";
 
-import { AspectRatio, Flex } from "@splitfi/ui";
+import { AspectRatio, Flex } from "@mutuals/ui";
 import dynamic from "next/dynamic";
 import { useList } from "react-use";
 import SharesTable from "@/features/Shares/Table";

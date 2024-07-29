@@ -1,4 +1,4 @@
-import { Box, type BoxProps } from "@splitfi/ui";
+import { Box, type BoxProps } from "@mutuals/ui";
 
 export default function KeenSliderSlide({
   className,

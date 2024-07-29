@@ -1,4 +1,4 @@
-import { Box, FormLabel } from "@splitfi/ui";
+import { Box, FormLabel } from "@mutuals/ui";
 import React from "react";
 
 import { BaseLabelProps } from "@/components/Form/types";

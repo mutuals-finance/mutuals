@@ -9,7 +9,7 @@ import {
   Icon,
   Flex,
   type As,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 interface ValueCardProps extends CardProps {
   heading: string;

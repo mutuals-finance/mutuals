@@ -1,5 +1,5 @@
 import React from "react";
-import { getViewerWallets } from "@splitfi/sdk/server";
+import { getViewerWallets } from "@mutuals/sdk/server";
 import WalletAdd from "@/features/Wallet/Add";
 import { Metadata } from "next";
 

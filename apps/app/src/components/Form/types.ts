@@ -1,8 +1,8 @@
-import { ImageProps } from "@splitfi/ui";
+import { ImageProps } from "@mutuals/ui";
 import {
   InputProps as ChakraInputProps,
   UseNumberInputProps,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { HTMLProps } from "react";
 import { FieldError, RegisterOptions } from "react-hook-form";
 

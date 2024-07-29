@@ -1,4 +1,4 @@
-import { IconButton } from "@splitfi/ui";
+import { IconButton } from "@mutuals/ui";
 import Image from "next/image";
 import { IoClose } from "react-icons/io5";
 

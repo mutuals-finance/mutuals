@@ -1,5 +1,5 @@
-import type { BoxProps } from "@splitfi/ui";
-import { Box } from "@splitfi/ui";
+import type { BoxProps } from "@mutuals/ui";
+import { Box } from "@mutuals/ui";
 import type { KeenSliderOptions, KeenSliderPlugin } from "keen-slider/react";
 import { useKeenSlider } from "keen-slider/react";
 

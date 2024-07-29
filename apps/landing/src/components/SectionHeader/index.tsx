@@ -4,7 +4,7 @@ import {
   Text,
   Box,
   Heading,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 interface SectionHeaderProps extends BoxProps {
   label?: string;

@@ -1,4 +1,4 @@
-import { StackProps, VStack } from "@splitfi/ui";
+import { StackProps, VStack } from "@mutuals/ui";
 import React from "react";
 
 export function SidebarContent({ children, ...props }: StackProps) {

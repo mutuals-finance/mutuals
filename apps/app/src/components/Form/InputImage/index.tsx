@@ -1,4 +1,4 @@
-import { Box, useMultiStyleConfig } from "@splitfi/ui";
+import { Box, useMultiStyleConfig } from "@mutuals/ui";
 import React from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { Controller, get, useFormContext } from "react-hook-form";

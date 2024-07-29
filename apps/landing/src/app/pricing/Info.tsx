@@ -6,7 +6,7 @@ import {
   CardProps,
   Flex,
   useColorModeValue,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import {
   Box,
   Button,
@@ -20,7 +20,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { IoCheckboxOutline } from "react-icons/io5";
 
 interface PricingCardProps extends CardProps {

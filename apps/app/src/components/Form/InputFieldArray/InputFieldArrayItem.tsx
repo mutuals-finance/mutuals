@@ -1,4 +1,4 @@
-import { HStack, IconButton } from "@splitfi/ui";
+import { HStack, IconButton } from "@mutuals/ui";
 import React from "react";
 import { IoAdd, IoTrashOutline } from "react-icons/io5";
 

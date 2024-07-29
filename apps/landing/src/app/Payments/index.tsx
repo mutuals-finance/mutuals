@@ -8,7 +8,7 @@ import {
   Icon,
   Heading,
   Text,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 import percentImage from "@/assets/percent.webp";
 import bg1Image from "@/assets/pay-1-bg.png";

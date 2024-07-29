@@ -1,23 +1,23 @@
 {
-  "name": "splitfi",
+  "name": "mutuals",
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "build:app": "turbo build -F @splitfi/app",
-    "build:landing": "turbo build -F @splitfi/landing",
-    "build:docs": "turbo build -F @splitfi/docs",
+    "build:app": "turbo build -F @mutuals/app",
+    "build:landing": "turbo build -F @mutuals/landing",
+    "build:docs": "turbo build -F @mutuals/docs",
     "dev": "turbo dev",
-    "dev:app": "turbo dev -F @splitfi/app",
-    "dev:landing": "turbo dev -F @splitfi/landing",
-    "dev:docs": "turbo dev -F @splitfi/docs",
+    "dev:app": "turbo dev -F @mutuals/app",
+    "dev:landing": "turbo dev -F @mutuals/landing",
+    "dev:docs": "turbo dev -F @mutuals/docs",
     "gen:component": "turbo gen component",
     "lint": "turbo lint",
     "lint:fix": "turbo lint -- --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@splitfi/eslint-config": "workspace:*",
-    "@splitfi/typescript-config": "workspace:*",
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
     "prettier": "^3.2.5",
     "turbo": "^1.13.3",
     "@turbo/gen": "^1.13.3"

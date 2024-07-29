@@ -1,4 +1,4 @@
-import { Container, ContainerProps, Box, Text } from "@splitfi/ui";
+import { Container, ContainerProps, Box, Text } from "@mutuals/ui";
 
 type HomeHeroFooterProps = ContainerProps;
 

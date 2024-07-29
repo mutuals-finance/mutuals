@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Stack, Button, IconButton } from "@splitfi/ui";
+import { Box, Stack, Button, IconButton } from "@mutuals/ui";
 import { useMotionValueEvent, useScroll, MotionConfig } from "framer-motion";
 import { useState } from "react";
 

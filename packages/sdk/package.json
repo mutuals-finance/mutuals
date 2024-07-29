@@ -1,5 +1,5 @@
 {
-  "name": "@splitfi/sdk",
+  "name": "@mutuals/sdk",
   "version": "0.0.0",
   "private": true,
   "exports": {
@@ -19,8 +19,8 @@
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.2.5",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@splitfi/eslint-config": "workspace:*",
-    "@splitfi/typescript-config": "workspace:*",
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",

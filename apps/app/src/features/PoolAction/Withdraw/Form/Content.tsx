@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Stack, VStack } from "@splitfi/ui";
+import { Box, Button, Stack, VStack } from "@mutuals/ui";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { useToggle } from "react-use";
