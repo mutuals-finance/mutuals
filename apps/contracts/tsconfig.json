@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"composite": true,
+		"declaration": true,
+		"target": "es2022",
+		"module": "commonjs",
+		"strict": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"outDir": "dist",
+		"baseUrl": ".",
+		"skipLibCheck": true,
+		"paths": {
+			"@/tasks": ["./tasks/index.ts"],
+			"@/tasks/utils": ["./tasks/utils/*"],
+			"@/test/helpers": ["./test/helpers/index.ts"],
+			"@/plugins": ["./plugins/index.ts"],
+			"@/contracts.json": ["./contracts.json"],
+			"@/artifacts/*": ["./artifacts/contracts/*"],
+			"@/legacy-artifacts/*": ["./legacy-artifacts/contracts/*"],
+			"@/typechain-types/artifacts/contracts/*": [
+				"./types/typechain-types/artifacts/contracts/*"
+			],
+			"@/typechain-types": ["./types/typechain-types/index.ts"],
+			"@/*": ["./*"]
+		},
+		"ignoreDeprecations": "5.0"
+	},
+	"include": [
+		"./plugins/fireblocks/type-extensions.ts",
+		"**/*.ts",
+		"types/**/*.d.ts",
+		"./.eslintrc.js",
+		"contracts.json",
+		"artifacts/contracts/**/*.json",
+		"legacy-artifacts/**/*.json"
+	]
+}
