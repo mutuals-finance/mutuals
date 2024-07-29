@@ -1,1 +1,1 @@
-# split-contracts
+# @mutuals/contracts
