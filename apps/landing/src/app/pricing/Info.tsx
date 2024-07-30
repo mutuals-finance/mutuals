@@ -37,7 +37,6 @@ function PricingCard({
   description,
   features = [],
   variant = "outline",
-  colorScheme,
 }: PricingCardProps) {
   const baseFeatures = [
     "Unlimited Payment Pool, Recipients and Tokens",

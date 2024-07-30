@@ -8,9 +8,7 @@ import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/Own
 import {BeaconProxy} from "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
 import {UpgradeableBeacon} from "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
 
-import './Pool.sol';
-import "@openzeppelin/contracts/proxy/Clones.sol";
-import "@openzeppelin/contracts/utils/Nonces.sol";
+import {Pool} from './Pool.sol';
 
 /**
  * @dev This contract is for creating proxy to access Pool instances.
@@ -48,7 +46,7 @@ contract PoolFactory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 	function __PoolFactory_init(address _owner, address _beacon) external initializer {
 		__UUPSUpgradeable_init_unchained();
 		__Ownable_init_unchained(_owner);
-		__PoolFactory_init_unchained(_owner, _beacon);
+		__PoolFactory_init_unchained(_beacon);
 	}
 
 	function __PoolFactory_init_unchained(address _beacon) internal onlyInitializing {
