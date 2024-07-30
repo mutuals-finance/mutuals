@@ -52,7 +52,7 @@ export const verifyContracts = async ({
             address:
               await hre.upgrades.erc1967.getImplementationAddress(address),
             constructorArguments: [],
-          } as any);
+          } as never);
         })
     );
     for (const { reason } of results.filter(

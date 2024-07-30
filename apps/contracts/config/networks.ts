@@ -67,6 +67,12 @@ const amoy: NetworkUserConfig = {
   ...(typeof MNEMONIC === 'string' && {
     accounts: { mnemonic: MNEMONIC },
   }),
+  verify: {
+    etherscan: {
+      apiUrl: 'https://api-amoy.polygonscan.com/api',
+      apiKey: process.env.POLYGONSCAN_API_KEY,
+    },
+  },
 };
 
 const polygon: NetworkUserConfig = {

@@ -4,6 +4,7 @@ import '@nomicfoundation/hardhat-ethers';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
 import '@typechain/hardhat';
+import '@nomicfoundation/hardhat-verify';
 import 'hardhat-tracer';
 import 'hardhat-contract-sizer';
 import '@/config/environment';
