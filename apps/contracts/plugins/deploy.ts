@@ -7,7 +7,6 @@ import {
   GenericDeployFunction,
   GenericUpgradeFunction,
 } from '@/types/global';
-import { getContract } from '@/utils/contracts';
 import type { FactoryOptions } from '@nomicfoundation/hardhat-ethers/types';
 
 const deployOrUpgradeBase = async <TContract extends BaseContract>({
@@ -80,11 +79,9 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
       const artifact = await hre.deployments.getArtifact(contractName);
       if (deployment.bytecode === artifact.bytecode) {
         hre.trace('Implementation appears unchanged, skipped upgrade attempt.');
-        contract = (await getContract({
-          contractName,
-          hre,
-          signer,
-        })) as InstanceOfContract<TContract>;
+        contract = (await hre.deployments.get(
+          contractName
+        )) as InstanceOfContract<TContract>;
       } else {
         contract = await upgradeFn(maybeAddress, contractFactory, options);
         const newImplementationAddress =

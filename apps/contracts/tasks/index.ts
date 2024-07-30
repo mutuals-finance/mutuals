@@ -3,6 +3,7 @@ import { TASK_VERIFY_VERIFY } from '@nomicfoundation/hardhat-verify/internal/tas
 
 import { TASK as UPGRADE_TASK } from './upgrade';
 import { TASK as ACCOUNTS_TASK } from './accounts';
+import { DEFENDER_ADD_TASK } from '@/tasks/defender';
 
 export interface Task {
   run: ActionType<
@@ -31,6 +32,6 @@ export const TASKS = {
     >;
   },
   [ACCOUNTS_TASK.name]: { ...ACCOUNTS_TASK },
-  //[DEFENDER_ADD_TASK.name]: { ...DEFENDER_ADD_TASK },
+  [DEFENDER_ADD_TASK.name]: { ...DEFENDER_ADD_TASK },
   [UPGRADE_TASK.name]: { ...UPGRADE_TASK },
 } as const;
