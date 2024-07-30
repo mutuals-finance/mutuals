@@ -26,7 +26,6 @@ import type {
 import type { HardhatUserConfig } from 'hardhat/types/config';
 import type { Deployment } from 'hardhat-deploy/types';
 
-import type { debug } from '@/utils/debug';
 import type { TASKS } from '@/tasks';
 import type { networks } from '@/config/networks';
 import type { NamedAccounts } from '@/config/accounts';
@@ -225,7 +224,6 @@ declare global {
     deployNonUpgradeable: DeployNonUpgradeableFunction;
     log: Console['log'];
     trace: Console['log'];
-    debug: typeof debug;
   };
 
   interface CustomHardhatDeployFunction extends HardhatDeployFunction {

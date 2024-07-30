@@ -13,7 +13,6 @@ import { extendEnvironment } from 'hardhat/config';
 import { lazyFunction, lazyObject } from 'hardhat/plugins';
 import { namedAccounts } from '@/config/accounts';
 import { trace, log } from '@/utils/log';
-import { debug } from '@/utils/debug';
 import {
   deployNonUpgradeable,
   deployOrUpgradeBeacon,
@@ -28,7 +27,6 @@ extendEnvironment((hre) => {
   // todo move to @/extensions/signers, @extensions/deployments
   hre.log = lazyFunction(() => log);
   hre.trace = lazyFunction(() => trace);
-  hre.debug = lazyFunction(() => debug);
   if (hre.network.config.live) {
     hre.log('Using alchemy + hd wallet signer');
   } else {

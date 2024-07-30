@@ -164,22 +164,6 @@ export const deployTestContracts = async ({
 };
 */
 
-export const addContractsToDefender = async ({
-  hre,
-  contracts,
-}: {
-  hre: CustomHardHatRuntimeEnvironment;
-  contracts: Contracts;
-}): Promise<void> => {
-  if (hre.network.name !== 'hardhat') {
-    await hre.run('defender:add', {
-      contractNames: Object.entries(contracts)
-        .filter(([_, value]) => value !== undefined)
-        .map(([name, _]) => name), // todo Upsert contracts to OZ defender (otherwise they are added twice)
-    } as never);
-  }
-};
-
 // TODO: Would like to store more details of the deployment here like ABI
 export const saveDeployments = async ({
   hre,
@@ -216,7 +200,6 @@ export const finalizeDeployments = async ({
   contracts: Contracts;
 }): Promise<void> => {
   writeContractsConfig({ contracts });
-  await addContractsToDefender({ hre, contracts });
   await verifyContracts({ hre, contracts });
   await saveDeployments({
     hre,

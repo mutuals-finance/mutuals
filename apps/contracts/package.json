@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "node": "hardhat node",
+    "dev": "hardhat node",
     "typechain": "hardhat typechain",
     "build": "cross-env pnpm clean && pnpm build:quick",
     "build:quick": "hardhat compile --config ./hardhat.config.ts",
