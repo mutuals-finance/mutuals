@@ -5,7 +5,7 @@ import {
   AlertTitle,
   Button,
   Tooltip,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 export function SuccessStep({
   contractAddress = "",

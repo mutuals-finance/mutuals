@@ -5,7 +5,7 @@ import {
   type LinkProps,
   GridItem,
   Text,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 interface FooterListBoxProps extends GridItemProps {
   title?: string;

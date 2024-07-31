@@ -13,13 +13,13 @@ import {
   Stack,
   Text,
   ButtonGroup,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import React from "react";
 import { shortenAddress } from "@/utils";
 
 import UserAvatar from "src/features/Wallet/Avatar";
 import Link from "next/link";
-import { Wallet } from "@splitfi/sdk";
+import { Wallet } from "@mutuals/sdk";
 import { DeepPartial } from "#/partial";
 import {
   IoEllipsisHorizontal,

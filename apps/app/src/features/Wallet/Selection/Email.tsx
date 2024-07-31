@@ -1,4 +1,4 @@
-import { Button } from "@splitfi/ui";
+import { Button } from "@mutuals/ui";
 import Form from "@/components/Form";
 import FormGroup from "@/components/Form/FormGroup";
 import Input from "@/components/Form/Input";

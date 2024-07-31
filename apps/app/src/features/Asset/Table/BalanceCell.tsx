@@ -1,4 +1,4 @@
-import { Stack, Tag, TagLabel, Text, TextProps } from "@splitfi/ui";
+import { Stack, Tag, TagLabel, Text, TextProps } from "@mutuals/ui";
 
 import { formatCurrencyAmount } from "@/utils";
 import { AssetTableCellProps } from "@/features/Asset/types";

@@ -1,7 +1,7 @@
 "use client";
 
-import { BoxProps, MotionBox } from "@splitfi/ui";
-import { DarkMode, LightMode, useBreakpointValue } from "@splitfi/ui";
+import { BoxProps, MotionBox } from "@mutuals/ui";
+import { DarkMode, LightMode, useBreakpointValue } from "@mutuals/ui";
 import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
 import { Fragment, useCallback, useEffect, useState } from "react";
 

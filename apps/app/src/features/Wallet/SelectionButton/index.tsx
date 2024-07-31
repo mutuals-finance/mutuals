@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@splitfi/ui";
+import { Button, ButtonProps } from "@mutuals/ui";
 import { Connector } from "wagmi";
 import NextImage from "next/image";
 

@@ -1,4 +1,4 @@
-import { Button, Heading } from "@splitfi/ui";
+import { Button, Heading } from "@mutuals/ui";
 import React from "react";
 
 import ContentCard from "@/components/ContentCard";

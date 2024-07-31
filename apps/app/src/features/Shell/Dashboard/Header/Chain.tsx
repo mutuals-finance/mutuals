@@ -9,7 +9,7 @@ import {
   MenuItem,
   MenuList,
   Spinner,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import NextImage from "next/image";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { useAccount, useSwitchChain } from "wagmi";

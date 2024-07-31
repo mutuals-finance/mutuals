@@ -1,4 +1,4 @@
-import { useSteps } from "@splitfi/ui";
+import { useSteps } from "@mutuals/ui";
 import { useUpdateEffect } from "react-use";
 import useCreateSplitFull from "@/hooks/useCreateSplitFull";
 import StepperModal from "@/components/StepperModal";

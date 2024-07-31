@@ -1,4 +1,4 @@
-import { HStack, StackProps } from "@splitfi/ui";
+import { HStack, StackProps } from "@mutuals/ui";
 
 import AssetCard, {
   AssetCardLabelProps,

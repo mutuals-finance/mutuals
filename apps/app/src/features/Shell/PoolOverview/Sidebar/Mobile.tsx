@@ -6,7 +6,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerProps,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 export type ShellPoolOverviewSidebarMobileProps = DrawerProps;
 

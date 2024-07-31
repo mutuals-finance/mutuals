@@ -1,4 +1,4 @@
-import { Stack } from "@splitfi/ui";
+import { Stack } from "@mutuals/ui";
 import SidebarComponent, { type SidebarProps } from "@/components/Sidebar";
 
 export type ShellPoolOverviewSidebarDesktopProps = SidebarProps;

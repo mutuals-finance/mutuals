@@ -10,14 +10,14 @@ import {
   Text,
   useBreakpointValue,
   VStack,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { PropsWithChildren, useEffect } from "react";
 import { IoMenuSharp } from "react-icons/io5";
 import { useToggle } from "react-use";
 
 import Sidebar from "@/components/Sidebar";
 
-import { SplitFiLogo } from "@splitfi/ui";
+import { SplitFiLogo } from "@mutuals/ui";
 import navItems from "@/features/Shell/Dashboard/Sidebar/nav-items";
 import { siteCopyrightText } from "@/config";
 

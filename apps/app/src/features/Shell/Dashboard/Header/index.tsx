@@ -8,7 +8,7 @@ import {
   Stack,
   useColorModeValue,
   SplitFiLogo,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import React from "react";
 import { IoSearch } from "react-icons/io5";
 

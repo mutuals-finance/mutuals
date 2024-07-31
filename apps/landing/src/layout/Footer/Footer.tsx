@@ -5,7 +5,7 @@ import {
   IconButton,
   Stack,
   Text,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { BiLogoTelegram } from "react-icons/bi";
 import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
 import ThemeToggle from "@/layout/Footer/ThemeToggle";

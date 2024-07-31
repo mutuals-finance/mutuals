@@ -1,4 +1,4 @@
-import type { Share } from "@splitfi/sdk/thegraph";
+import type { Share } from "@mutuals/sdk/thegraph";
 import { DeepPartial } from "#/partial";
 export type ActiveShare = DeepPartial<Share> & { isActive?: boolean };
 

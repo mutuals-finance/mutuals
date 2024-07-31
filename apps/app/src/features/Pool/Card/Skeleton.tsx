@@ -8,7 +8,7 @@ import {
   Skeleton,
   SkeletonCircle,
   SkeletonText,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 export default function SplitCardSkeleton() {
   return (

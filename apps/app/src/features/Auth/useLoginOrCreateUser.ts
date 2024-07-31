@@ -2,12 +2,12 @@
 
 import { useCallback } from "react";
 
-import { AuthMechanism, Chain } from "@splitfi/sdk";
+import { AuthMechanism, Chain } from "@mutuals/sdk";
 import {
   useCreateUser,
   useLazyGetUserByWalletAddress,
   useLogin,
-} from "@splitfi/sdk/client";
+} from "@mutuals/sdk/client";
 import type { Address } from "viem";
 import useAbortController, { AbortFn } from "@/hooks/useAbortController";
 

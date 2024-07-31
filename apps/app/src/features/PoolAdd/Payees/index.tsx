@@ -1,4 +1,4 @@
-import { HStack } from "@splitfi/ui";
+import { HStack } from "@mutuals/ui";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 

@@ -12,13 +12,13 @@ import {
   DrawerProps,
   useDisclosure,
   VStack,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { useRouter } from "next/navigation";
 import React, { PropsWithChildren, useCallback } from "react";
 import Form from "@/components/Form";
-import { Chain } from "@splitfi/sdk";
+import { Chain } from "@mutuals/sdk";
 import { useSignMessage } from "@/features/Wallet/SignProvider";
-import { addWallet } from "@splitfi/sdk/server";
+import { addWallet } from "@mutuals/sdk/server";
 
 type WalletData = {
   name: string;

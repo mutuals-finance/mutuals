@@ -13,7 +13,7 @@ import {
   Stack,
   StackDivider,
   DrawerFooter,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/layout/Header/NavWrapper";
 

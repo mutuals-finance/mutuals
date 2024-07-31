@@ -1,5 +1,5 @@
 import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { Box, BoxProps, Text } from "@splitfi/ui";
+import { Box, BoxProps, Text } from "@mutuals/ui";
 import React from "react";
 
 import { formatCurrencyAmount, formatUSDPrice } from "@/utils";

@@ -9,7 +9,7 @@ import {
   MenuList,
   Text,
   useColorMode,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import React from "react";
 import {
   IoChevronDown,

@@ -10,7 +10,7 @@ import {
   Heading,
   ModalProps,
   Text,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 
 export interface WalletSignModalProps extends Omit<ModalProps, "children"> {
   prompt?: string;

@@ -15,7 +15,7 @@ import InputSwitch from "@/components/Form/InputSwitch";
 import WithdrawModal from "@/features/PoolAction/Withdraw/Modal";
 import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
-import { type Split } from "@splitfi/sdk/thegraph";
+import { type Split } from "@mutuals/sdk/thegraph";
 import { WithdrawData } from "@/features/PoolAction/types";
 import { StackProps } from "@chakra-ui/react";
 

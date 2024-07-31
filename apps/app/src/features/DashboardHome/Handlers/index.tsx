@@ -6,7 +6,7 @@ import {
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import Link from "next/link";
-import { Container } from "@splitfi/ui";
+import { Container } from "@mutuals/ui";
 
 export default function DashboardHandlers() {
   const items = [

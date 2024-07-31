@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, useColorModeValue } from "@splitfi/ui";
+import { Box, useColorModeValue } from "@mutuals/ui";
 
 export default function CTAOverlay() {
   const bg = useColorModeValue("transparent", "blackAlpha.600");

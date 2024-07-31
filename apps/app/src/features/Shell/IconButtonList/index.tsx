@@ -3,7 +3,7 @@
 import KeenSlider from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
 import IconTextButton from "@/components/IconTextButton";
-import { Box, BoxProps, IconButtonProps } from "@splitfi/ui";
+import { Box, BoxProps, IconButtonProps } from "@mutuals/ui";
 
 interface ShellIconButtonListProps extends BoxProps {
   items: IconButtonProps[];

@@ -1,4 +1,4 @@
-import { HStack, SplitFiLogo, StackProps } from "@splitfi/ui";
+import { HStack, SplitFiLogo, StackProps } from "@mutuals/ui";
 
 import Link from "next/link";
 

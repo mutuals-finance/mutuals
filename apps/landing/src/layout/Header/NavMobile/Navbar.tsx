@@ -1,4 +1,4 @@
-import { IconButton, Box, type IconButtonProps } from "@splitfi/ui";
+import { IconButton, Box, type IconButtonProps } from "@mutuals/ui";
 
 import NavWrapper, { NavWrapperProps } from "@/layout/Header/NavWrapper";
 import { VscMenu } from "react-icons/vsc";

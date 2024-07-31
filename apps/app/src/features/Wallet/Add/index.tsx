@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 import WalletForm from "@/features/Wallet/Form";
 import { ApolloQueryResult, ViewerWalletsQuery } from "@mutuals/sdk";
 import { walletMapFromViewerQuery } from "@/utils";
-import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@splitfi/ui";
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@mutuals/ui";
 
 interface WalletAddProps
   extends PropsWithChildren,

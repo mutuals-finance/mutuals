@@ -19,7 +19,7 @@ import {
   Text,
   Stat,
   StatLabel,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import NextLink from "next/link";
 import {
   IoEllipsisHorizontal,
@@ -36,7 +36,7 @@ import {
 } from "@/utils";
 
 import PoolCardLogo from "@/features/Pool/Card/Logo";
-import { Split } from "@splitfi/sdk/thegraph";
+import { Split } from "@mutuals/sdk/thegraph";
 
 export type PoolCardProps = Partial<Split>;
 

@@ -1,4 +1,4 @@
-import { Container, Stack, StackDivider, Text } from "@splitfi/ui";
+import { Container, Stack, StackDivider, Text } from "@mutuals/ui";
 import Link from "next/link";
 
 export default function ShellDashboardFooter() {

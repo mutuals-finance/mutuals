@@ -1,4 +1,4 @@
-import { Box, BoxProps, Stack } from "@splitfi/ui";
+import { Box, BoxProps, Stack } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoImage } from "react-icons/io5";
 import { ipfsResolveData } from "@/utils";

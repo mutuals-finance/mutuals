@@ -1,7 +1,7 @@
 "use client";
 
 import { type TokenTransfer } from "@ankr.com/ankr.js";
-import { Stack } from "@splitfi/ui";
+import { Stack } from "@mutuals/ui";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import {
