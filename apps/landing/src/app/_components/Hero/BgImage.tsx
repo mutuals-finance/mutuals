@@ -1,6 +1,6 @@
 import { type FlexProps, Box } from "@mutuals/ui";
 
-import type { HomeHeroAnimBaseType } from "@/app/Hero";
+import type { HomeHeroAnimBaseType } from "@/app/_components/Hero";
 import NextImage from "next/image";
 import heroLeftImage from "@/assets/bg-hero-top-left.png";
 import heroRightImage from "@/assets/bg-hero-bottom-right.png";

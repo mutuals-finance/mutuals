@@ -7,7 +7,7 @@ import {
 } from "@mutuals/ui";
 import NextImage from "next/image";
 
-import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
+import type { HomeHeroAnimBaseType } from "@/app/_components/Hero/index";
 import aboutImage from "@/assets/hero.png";
 
 type HomeHeroSliderProps = FlexProps & HomeHeroAnimBaseType;

@@ -11,7 +11,7 @@ import {
   TagLabel,
 } from "@mutuals/ui";
 
-import type { HomeHeroAnimBaseType } from "@/app/Hero/index";
+import type { HomeHeroAnimBaseType } from "@/app/_components/Hero/index";
 
 type HomeHeroHeadingProps = ContainerProps & HomeHeroAnimBaseType;
 
