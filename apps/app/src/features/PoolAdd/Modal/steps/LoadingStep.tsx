@@ -1,4 +1,4 @@
-import { Icon } from "@splitfi/ui";
+import { Icon } from "@mutuals/ui";
 import {
   Box,
   CircularProgress,
@@ -6,7 +6,7 @@ import {
   Flex,
   Text,
   VStack,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { IoAlertCircle, IoCheckmarkCircle } from "react-icons/io5";
 
 interface LoadingStepProps {

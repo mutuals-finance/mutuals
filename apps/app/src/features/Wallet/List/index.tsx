@@ -1,4 +1,4 @@
-import { Box, Container, Heading } from "@splitfi/ui";
+import { Box, Container, Heading } from "@mutuals/ui";
 import React from "react";
 
 import WalletListContent from "@/features/Wallet/List/Content";

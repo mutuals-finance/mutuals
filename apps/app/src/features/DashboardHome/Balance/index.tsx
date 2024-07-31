@@ -9,8 +9,8 @@ import {
   StatGroup,
   StatNumber,
   useColorModeValue,
-} from "@splitfi/ui";
-import { Stat, StatLabel } from "@splitfi/ui";
+} from "@mutuals/ui";
+import { Stat, StatLabel } from "@mutuals/ui";
 import { formatUSDPrice } from "@/utils";
 import ContentCard from "@/components/ContentCard";
 

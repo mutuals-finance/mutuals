@@ -1,4 +1,4 @@
-import { Container, Stack, type StackProps } from "@splitfi/ui";
+import { Container, Stack, type StackProps } from "@mutuals/ui";
 import ShellPool, { ShellPoolProps } from "@/features/Shell/Pool";
 import ShellPoolOverviewSidebar, {
   ShellPoolOverviewSidebarProps,

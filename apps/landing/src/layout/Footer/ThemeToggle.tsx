@@ -7,7 +7,7 @@ import {
   MenuItem,
   MenuList,
   useColorMode,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import { IoChevronDown } from "react-icons/io5";
 import { RiMoonFill, RiSunLine } from "react-icons/ri";
 

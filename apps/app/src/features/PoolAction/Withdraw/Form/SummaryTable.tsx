@@ -11,7 +11,7 @@ import {
 import React, { useMemo } from "react";
 import { formatPrice } from "src/utils";
 import { type WithdrawData } from "@/features/PoolAction/types";
-import { Share } from "@splitfi/sdk/thegraph";
+import { Share } from "@mutuals/sdk/thegraph";
 import { Balance } from "@ankr.com/ankr.js/dist/types";
 
 export interface SummaryTableProps extends WithdrawData {

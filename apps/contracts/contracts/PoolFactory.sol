@@ -7,10 +7,7 @@ import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/U
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import {BeaconProxy} from "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
 import {UpgradeableBeacon} from "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
-
-import './Pool.sol';
-import "@openzeppelin/contracts/proxy/Clones.sol";
-import "@openzeppelin/contracts/utils/Nonces.sol";
+import {Pool} from './Pool.sol';
 
 /**
  * @dev This contract is for creating proxy to access Pool instances.
@@ -18,7 +15,7 @@ import "@openzeppelin/contracts/utils/Nonces.sol";
  * The beacon should be initialized before call Pool constructor.
  *
  */
-contract PoolFactory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
+contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 	/* -------------------------------------------------------------------------- */
 	/*                                   EVENTS                                   */
 	/* -------------------------------------------------------------------------- */
@@ -48,7 +45,7 @@ contract PoolFactory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 	function __PoolFactory_init(address _owner, address _beacon) external initializer {
 		__UUPSUpgradeable_init_unchained();
 		__Ownable_init_unchained(_owner);
-		__PoolFactory_init_unchained(_owner, _beacon);
+		__PoolFactory_init_unchained(_beacon);
 	}
 
 	function __PoolFactory_init_unchained(address _beacon) internal onlyInitializing {
@@ -64,27 +61,25 @@ contract PoolFactory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 	 * @dev Uses a hash-based incrementing nonce over params and owner.
 	 * @dev designed to be used with integrating contracts to avoid salt management and needing to handle the potential
 	 * for griefing via front-running.
-	 * @param _owner Params to create pool with.
+	 * @param _initialOwner Params to create pool with.
 	 * @param _salt Salt.
 	 */
 	function createPool(
-		address _owner,
+		address _initialOwner,
 		bytes32 _root,
 		uint _salt
-	) external {
-		address beaconProxy = deployProxy(getData(_owner, _root), _salt);
-		Pool pool = Pool(address(beaconProxy));
-		pool.transferOwnership(_owner);
-		emit CreatePool(beaconProxy, _owner, _root);
+	) external { 
+		address beaconProxy = deployProxy(getData(_initialOwner, _root), _salt);
+		emit CreatePool(beaconProxy, _initialOwner, _root);
 	}
 
 	//returns address that contract with such arguments will be deployed on
-	function getAddress(address _owner, bytes32 _root, uint _salt)
+	function getAddress(address _initialOwner, bytes32 _root, uint _salt)
 	public
 	view
 	returns (address)
 	{
-		bytes memory bytecode = getCreationBytecode(getData(_owner, _root));
+		bytes memory bytecode = getCreationBytecode(getData(_initialOwner, _root));
 
 		bytes32 hash = keccak256(
 			abi.encodePacked(bytes1(0xff), address(this), _salt, keccak256(bytecode))
@@ -113,15 +108,15 @@ contract PoolFactory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 		return abi.encodePacked(type(BeaconProxy).creationCode, abi.encode(beacon, _data));
 	}
 
-	function getData(address _owner, bytes32 _root) internal pure returns (bytes memory){
+	function getData(address _initialOwner, bytes32 _root) internal pure returns (bytes memory){
 		return abi.encodeWithSelector(
 			Pool(address(0)).__Pool_init.selector,
-			_owner,
+			_initialOwner,
 			_root
 		);
 	}
 
 	/// @dev Upgrades the implementation of the proxy to new address.
-	function _authorizeUpgrade(address) internal override onlyOwner {}
+	function _authorizeUpgrade(address) internal override {}
 
 }

@@ -1,11 +1,11 @@
 "use client";
 
-import { BoxProps, MotionBox } from "@splitfi/ui";
-import { DarkMode, LightMode, useBreakpointValue } from "@splitfi/ui";
+import { BoxProps, MotionBox } from "@mutuals/ui";
+import { DarkMode, LightMode, useBreakpointValue } from "@mutuals/ui";
 import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
 import { Fragment, useCallback, useEffect, useState } from "react";
 
-import { useHeaderObserver } from "@/context/HeaderObserver";
+import { useHeaderObserver } from "providers/HeaderObserver";
 
 const variants = {
   visibility: {
@@ -82,7 +82,8 @@ export default function HeaderContainerWrapper({
         w="full"
         backdropFilter={"auto"}
         backdropBlur={"12px"}
-        shadow={"sm"}
+        borderBottom={"1px solid"}
+        borderColor={"border.1"}
         animate={isHidden ? "invisible" : "visible"}
         variants={variants.visibility}
         {...props}

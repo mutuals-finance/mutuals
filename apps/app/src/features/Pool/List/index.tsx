@@ -1,13 +1,13 @@
 "use client";
 
-import { useQuery } from "@splitfi/sdk";
-import { Container, Heading, SimpleGrid } from "@splitfi/ui";
+import { useQuery } from "@mutuals/sdk";
+import { Container, Heading, SimpleGrid } from "@mutuals/ui";
 import React from "react";
 import { useAccount } from "wagmi";
 
 import { TreasurySearchAndCreate } from "./SearchAndCreate";
 import PoolCard from "@/features/Pool/Card";
-import { PoolListByRecipientDocument } from "@splitfi/sdk/thegraph";
+import { PoolListByRecipientDocument } from "@mutuals/sdk/thegraph";
 
 export default function PoolList() {
   const { address, isConnected } = useAccount();

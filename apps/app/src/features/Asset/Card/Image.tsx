@@ -1,5 +1,5 @@
-import { Icon } from "@splitfi/ui";
-import { Flex, FlexProps } from "@splitfi/ui";
+import { Icon } from "@mutuals/ui";
+import { Flex, FlexProps } from "@mutuals/ui";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 import { IoHelp } from "react-icons/io5";

@@ -9,7 +9,7 @@ import {
   Text,
   TextProps,
   VStack,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import Breadcrumbs, { type BreadcrumbsProps } from "@/components/Breadcrumbs";
 
 export interface ShellPageProps extends Omit<BoxProps, "title"> {

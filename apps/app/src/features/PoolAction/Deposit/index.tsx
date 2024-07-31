@@ -20,7 +20,7 @@ import {
   IoOpenOutline,
 } from "react-icons/io5";
 import QRCode from "@/components/QRCode";
-import { Split } from "@splitfi/sdk/thegraph";
+import { Split } from "@mutuals/sdk/thegraph";
 import { DeepPartial } from "#/partial";
 
 interface PoolActionDepositProps {

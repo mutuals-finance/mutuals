@@ -9,9 +9,9 @@ import React, {
 import useAuthLogin from "@/features/Auth/useLogin";
 import { useRouter } from "next/navigation";
 import { Connector, useAccountEffect, useConnect, useDisconnect } from "wagmi";
-import { ViewerQuery } from "@splitfi/sdk";
+import { ViewerQuery } from "@mutuals/sdk";
 import { Address } from "viem";
-import { useLogout } from "@splitfi/sdk/client";
+import { useLogout } from "@mutuals/sdk/client";
 import { walletMapFromViewerQuery } from "@/utils";
 
 type AuthContextType = {

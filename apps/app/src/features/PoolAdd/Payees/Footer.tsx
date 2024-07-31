@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, HStack, Progress, Text } from "@splitfi/ui";
+import { Box, Button, ButtonGroup, HStack, Progress, Text } from "@mutuals/ui";
 
 interface PayeeListFooterProps {
   totalShares: number;

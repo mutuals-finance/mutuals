@@ -1,10 +1,10 @@
-import { Icon } from "@splitfi/ui";
+import { Icon } from "@mutuals/ui";
 import {
   HStack,
   InputGroup,
   InputLeftElement,
   useColorModeValue,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import React from "react";
 import { IoSearch } from "react-icons/io5";
 

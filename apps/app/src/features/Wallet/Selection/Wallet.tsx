@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Text, VStack } from "@splitfi/ui";
+import { Box, Text, VStack } from "@mutuals/ui";
 import { Connector, useConnect } from "wagmi";
 import WalletSelectionButton from "@/features/Wallet/SelectionButton";
 import { partition } from "@/utils";

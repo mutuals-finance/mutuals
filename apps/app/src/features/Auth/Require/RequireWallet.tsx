@@ -1,7 +1,7 @@
 "use client";
 
 import { PropsWithChildren } from "react";
-import { ApolloQueryResult, ViewerWalletsQuery } from "@splitfi/sdk";
+import { ApolloQueryResult, ViewerWalletsQuery } from "@mutuals/sdk";
 
 interface DashboardAuthCheckWalletProps extends PropsWithChildren {
   query: ApolloQueryResult<ViewerWalletsQuery>;

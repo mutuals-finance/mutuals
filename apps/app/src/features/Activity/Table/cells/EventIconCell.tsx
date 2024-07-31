@@ -1,6 +1,6 @@
 import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-import { Icon } from "@splitfi/ui";
-import { Flex, useColorModeValue } from "@splitfi/ui";
+import { Icon } from "@mutuals/ui";
+import { Flex, useColorModeValue } from "@mutuals/ui";
 import { CellContext } from "@tanstack/react-table";
 import React from "react";
 import { HiArrowDownTray, HiArrowUpTray } from "react-icons/hi2";

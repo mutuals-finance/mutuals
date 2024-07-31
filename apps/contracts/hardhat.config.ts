@@ -12,27 +12,27 @@ import { typechain } from '@/config/typechain';
 import { HardhatUserConfig } from 'hardhat/config';
 
 export const getConfig = (
-	environment: NodeJS.ProcessEnv = process.env
+  _: NodeJS.ProcessEnv = process.env
 ): HardhatUserConfig => {
-	return {
-		namedAccounts: namedAccountIndices,
-		networks,
-		etherscan,
-		defender,
-		solidity,
-		paths: {
-			sources: './contracts',
-			cache: './cache_hardhat',
-		},
-		tracer,
-		typechain,
-		contractSizer: {
-			alphaSort: true,
-			disambiguatePaths: false,
-			runOnCompile: true,
-			strict: false,
-		},
-	};
+  return {
+    namedAccounts: namedAccountIndices,
+    networks,
+    etherscan,
+    defender,
+    solidity,
+    paths: {
+      sources: './contracts',
+      cache: './cache_hardhat',
+    },
+    tracer,
+    typechain,
+    contractSizer: {
+      alphaSort: true,
+      disambiguatePaths: false,
+      runOnCompile: true,
+      strict: false,
+    },
+  };
 };
 
 export const config = getConfig();

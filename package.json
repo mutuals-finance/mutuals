@@ -8,6 +8,7 @@
     "build:docs": "turbo build -F @mutuals/docs",
     "dev": "turbo dev",
     "dev:app": "turbo dev -F @mutuals/app",
+    "dev:contracts": "turbo dev -F @mutuals/contracts",
     "dev:landing": "turbo dev -F @mutuals/landing",
     "dev:docs": "turbo dev -F @mutuals/docs",
     "gen:component": "turbo gen component",

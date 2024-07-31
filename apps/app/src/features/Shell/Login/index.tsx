@@ -7,7 +7,7 @@ import {
   SplitFiLogo,
   Text,
   Box,
-} from "@splitfi/ui";
+} from "@mutuals/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.jpg";
 import { PropsWithChildren } from "react";

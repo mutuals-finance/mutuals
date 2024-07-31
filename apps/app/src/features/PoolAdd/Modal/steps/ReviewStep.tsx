@@ -1,4 +1,4 @@
-import { Box, Text } from "@splitfi/ui";
+import { Box, Text } from "@mutuals/ui";
 
 import PoolCard from "@/features/Pool/Card";
 

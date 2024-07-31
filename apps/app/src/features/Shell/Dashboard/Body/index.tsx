@@ -1,4 +1,4 @@
-import { Box } from "@splitfi/ui";
+import { Box } from "@mutuals/ui";
 import React from "react";
 
 export default function ShellDashboardBody({

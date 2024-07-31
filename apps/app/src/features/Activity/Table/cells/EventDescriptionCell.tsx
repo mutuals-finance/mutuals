@@ -1,5 +1,5 @@
 import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-import { Stack, Tag, TagLabel, Text } from "@splitfi/ui";
+import { Stack, Tag, TagLabel, Text } from "@mutuals/ui";
 import { CellContext } from "@tanstack/react-table";
 import React from "react";
 

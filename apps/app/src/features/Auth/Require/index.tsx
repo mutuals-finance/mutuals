@@ -1,5 +1,5 @@
 import React from "react";
-import { getViewerWallets } from "@splitfi/sdk/server";
+import { getViewerWallets } from "@mutuals/sdk/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import RequireWallet from "./RequireWallet";

@@ -1,6 +1,6 @@
 "use client";
 
-import { BoxProps, useBreakpointValue, type DrawerProps } from "@splitfi/ui";
+import { BoxProps, useBreakpointValue, type DrawerProps } from "@mutuals/ui";
 
 import RouterTabs, { RouterTabProps } from "@/components/RouterTabs";
 import { useParams, usePathname, useRouter } from "next/navigation";

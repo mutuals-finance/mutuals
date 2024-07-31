@@ -1,6 +1,6 @@
 "use client";
 
-import { IconButton, useDisclosure } from "@splitfi/ui";
+import { IconButton, useDisclosure } from "@mutuals/ui";
 import { IoMenuSharp } from "react-icons/io5";
 
 export default function ShellDashboardHeaderMobileMenuButton() {

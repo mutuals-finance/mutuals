@@ -1,0 +1,18 @@
+{
+  "hardhat": {
+    "Pool": {
+      "proxyAddress": "0x6c0fE0b32116843B60b8c7E682B9e1B0Cc310783"
+    },
+    "PoolFactory": {
+      "proxyAddress": "0xa1c2079DE8F5a431a38b0540F53d075A89D57e82"
+    }
+  },
+  "localhost": {
+    "Pool": {
+      "proxyAddress": "0x534236DF16CA4AB06F46D8b99d2D35FCc887438A"
+    },
+    "PoolFactory": {
+      "proxyAddress": "0xb3117660142EB09172F8703975976703150656eB"
+    }
+  }
+}

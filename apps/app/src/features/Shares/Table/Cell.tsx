@@ -1,5 +1,5 @@
-import { Link } from "@splitfi/ui";
-import { HStack, Text } from "@splitfi/ui";
+import { Link } from "@mutuals/ui";
+import { HStack, Text } from "@mutuals/ui";
 import { CellContext } from "@tanstack/react-table";
 import React from "react";
 

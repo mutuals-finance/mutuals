@@ -1,6 +1,6 @@
 "use client";
 
-import { useViewerWallets } from "@splitfi/sdk/client";
+import { useViewerWallets } from "@mutuals/sdk/client";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
 import WalletCard from "@/features/Wallet/Card";
 import KeenSlider from "@/components/KeenSlider/KeenSlider";

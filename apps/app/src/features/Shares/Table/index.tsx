@@ -1,4 +1,4 @@
-import { Text } from "@splitfi/ui";
+import { Text } from "@mutuals/ui";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { formatPercentage } from "@/utils";

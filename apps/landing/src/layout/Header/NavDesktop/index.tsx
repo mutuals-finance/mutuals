@@ -1,4 +1,4 @@
-import { Button, HStack, Box, type LinkProps } from "@splitfi/ui";
+import { Button, HStack, Box, type LinkProps } from "@mutuals/ui";
 
 import NavLink from "@/layout/Header/NavLink";
 import NavWrapper, { NavWrapperProps } from "@/layout/Header/NavWrapper";

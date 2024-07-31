@@ -1,5 +1,5 @@
 import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { HStack } from "@splitfi/ui";
+import { HStack } from "@mutuals/ui";
 import React from "react";
 
 import AssetCardBalance from "@/features/Asset/Card/Assets";

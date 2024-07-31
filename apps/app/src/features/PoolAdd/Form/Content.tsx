@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem, Stack, Text } from "@splitfi/ui";
+import { Box, Button, Grid, GridItem, Stack, Text } from "@mutuals/ui";
 import { UseFormReturn } from "react-hook-form";
 
 import FormGroup from "@/components/Form/FormGroup";

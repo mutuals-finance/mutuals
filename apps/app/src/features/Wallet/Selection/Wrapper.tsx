@@ -1,4 +1,4 @@
-import { Heading, HeadingProps, VStack, Text } from "@splitfi/ui";
+import { Heading, HeadingProps, VStack, Text } from "@mutuals/ui";
 import React from "react";
 import RouterTabs, { RouterTabProps } from "@/components/RouterTabs";
 import { StackProps } from "@chakra-ui/react";

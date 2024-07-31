@@ -37,7 +37,6 @@ function PricingCard({
   description,
   features = [],
   variant = "outline",
-  colorScheme,
 }: PricingCardProps) {
   const baseFeatures = [
     "Unlimited Payment Pool, Recipients and Tokens",
@@ -46,20 +45,36 @@ function PricingCard({
   ];
 
   return (
-    <Card variant={variant} overflow={"hidden"}>
-      <CardHeader minH={"36"}>
-        <Heading size={"xl"} mb={"3"}>
+    <Card
+      variant="filled"
+      bg="transparent"
+      borderLeft={"2px solid"}
+      borderColor={"border.1"}
+      rounded={"none"}
+      pl={"6"}
+      py={"6"}
+    >
+      <CardHeader
+        minH={{ md: "36" }}
+        px="0"
+        pb={{ base: "6", lg: "12" }}
+        pt={0}
+      >
+        <Heading size={"2xl"} mb={"3"} fontWeight={"600"}>
           {heading}
         </Heading>
-        <Text>{description}</Text>
+
+        <Text fontWeight={"500"} color={"alpha.2"}>
+          {description}
+        </Text>
       </CardHeader>
-      <CardBody>
-        <Text as={"h3"} fontSize={"4xl"} fontWeight={"700"}>
-          0$
+      <CardBody px="0" py={"6"}>
+        <Text as={"h3"} fontSize={"2xl"} fontWeight={"900"}>
+          0.00 $
         </Text>
 
         <Box>
-          <Text color={"alpha.2"} fontWeight={"500"} fontSize={"sm"}>
+          <Text fontWeight={"500"} color={"alpha.2"} fontSize={"sm"}>
             {label}
           </Text>
         </Box>
@@ -68,10 +83,10 @@ function PricingCard({
           Get Started
         </Button>
       </CardBody>
-      <CardFooter bg={"bg.2"} as={Stack}>
-        <Heading as="h3" size={"sm"}>
+      <CardFooter bg={"bg.3"} rounded={"md"} as={Stack}>
+        <Text fontSize="xs" variant={"tag"} as="h3">
           Includes
-        </Heading>
+        </Text>
 
         <List gap={"0.5"} as={Stack}>
           {[...features, ...baseFeatures].map((feature) => (
@@ -94,18 +109,18 @@ function PricingCard({
 
 export default function PricingInfo() {
   return (
-    <Box my={"32"} position={"relative"}>
+    <Box mt="16" mb={"32"} position={"relative"}>
       <Container maxW="container.lg" px={{ base: "6", lg: "12" }}>
-        <SimpleGrid spacing={{ base: 6, lg: 6 }} columns={{ base: 1, md: 2 }}>
+        <SimpleGrid gap={{ base: 6, lg: 12 }} columns={{ base: 1, md: 2 }}>
           <PricingCard
             heading="Regular Usage"
-            label="free"
+            label="for free"
             description="There is no fee for using Mutuals."
             colorScheme={useColorModeValue("primary.100", "primary.900")}
           />
           <PricingCard
             heading="Donation"
-            label="+ your preferred amount"
+            label="your preferred amount"
             description="Support us by donating a portion of your withdrawals (optional)."
             features={[
               "Custom donation per withdrawal",

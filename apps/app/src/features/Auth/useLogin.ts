@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { Chain } from "@splitfi/sdk";
+import { Chain } from "@mutuals/sdk";
 import { type Address } from "viem";
 import { useStateList } from "react-use";
 import useAuthLoginOrCreateUser from "@/features/Auth/useLoginOrCreateUser";

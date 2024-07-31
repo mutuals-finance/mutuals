@@ -1,7 +1,7 @@
 import AssetTable from "src/features/Asset/Table";
 import ContentCard, { type ContentCardProps } from "@/components/ContentCard";
 
-import { Box, Button, ButtonProps } from "@splitfi/ui";
+import { Box, Button, ButtonProps } from "@mutuals/ui";
 import Link from "next/link";
 import { AssetTableProps } from "@/features/Asset/types";
 

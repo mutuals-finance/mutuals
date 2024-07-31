@@ -1,5 +1,5 @@
 import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { Stack, Text, TextProps } from "@splitfi/ui";
+import { Stack, Text, TextProps } from "@mutuals/ui";
 import React from "react";
 
 export interface AssetCardLabelProps

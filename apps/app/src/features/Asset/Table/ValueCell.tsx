@@ -1,4 +1,4 @@
-import { Text, TextProps } from "@splitfi/ui";
+import { Text, TextProps } from "@mutuals/ui";
 import { formatUSDPrice } from "@/utils";
 import { AssetTableCellProps } from "@/features/Asset/types";
 
