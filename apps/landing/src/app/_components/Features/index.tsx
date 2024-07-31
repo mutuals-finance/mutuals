@@ -1,7 +1,7 @@
 import { Box, Container, Grid } from "@mutuals/ui";
 
 import SectionHeader from "@/components/SectionHeader";
-import FeatureCard from "@/app/Features/FeatureCard";
+import FeatureCard from "@/app/_components/Features/FeatureCard";
 
 export default function HomeFeatures() {
   return (

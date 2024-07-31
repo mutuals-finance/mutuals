@@ -19,7 +19,7 @@ import {
 import SectionHeader from "@/components/SectionHeader";
 import { ReactNode } from "react";
 import { IoAddCircle, IoRemoveCircle } from "react-icons/io5";
-import HeaderObserverChange from "@/context/HeaderObserver/Change";
+import HeaderObserverChange from "@/providers/HeaderObserver/Change";
 
 interface FAQItemProps extends AccordionItemProps {
   title: string;

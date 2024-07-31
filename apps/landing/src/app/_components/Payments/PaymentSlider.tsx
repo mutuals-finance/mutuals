@@ -1,6 +1,6 @@
 import { Box, Container, SimpleGrid } from "@mutuals/ui";
 
-import PaymentCard from "@/app/Payments/PaymentCard";
+import PaymentCard from "@/app/_components/Payments/PaymentCard";
 import percentImage from "@/assets/percent.webp";
 import prioritizedImage from "@/assets/prioritized.webp";
 import SectionHeader from "@/components/SectionHeader";

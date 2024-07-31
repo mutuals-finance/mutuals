@@ -1,5 +1,5 @@
 import { Box, Container } from "@mutuals/ui";
-import PartnerSlider from "@/app/Partners/PartnerSlider";
+import PartnerSlider from "@/app/_components/Partners/PartnerSlider";
 import EthereumIcon from "@/assets/networks/Etherium.svg";
 import PolygonIcon from "@/assets/networks/Polygon.svg";
 import OPIcon from "@/assets/networks/OP.svg";

@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@mutuals/ui";
 
-import ActorCard from "@/app/Actors/ActorCard";
+import ActorCard from "@/app/_components/Actors/ActorCard";
 import SectionHeader from "@/components/SectionHeader";
 import { useState } from "react";
 import { MotionConfig } from "framer-motion";

@@ -8,7 +8,7 @@ import {
   IoTrendingUpOutline,
 } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
-import ValueCard from "@/app/Value/ValueCard";
+import ValueCard from "./ValueCard";
 
 const values = [
   {

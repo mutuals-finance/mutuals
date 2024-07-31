@@ -1,6 +1,6 @@
 "use client";
 
-import { useHeaderObserver } from "@/context/HeaderObserver";
+import { useHeaderObserver } from "@/providers/HeaderObserver/index";
 import { Box, MotionBox } from "@mutuals/ui";
 
 import { PropsWithChildren } from "react";

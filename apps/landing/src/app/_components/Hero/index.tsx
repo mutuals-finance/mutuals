@@ -4,9 +4,9 @@ import { Box, Stack, Button, IconButton } from "@mutuals/ui";
 import { useMotionValueEvent, useScroll, MotionConfig } from "framer-motion";
 import { useState } from "react";
 
-import HomeHeroBgImage from "@/app/Hero/BgImage";
-import HomeHeroHeading from "@/app/Hero/Heading";
-import HomeHeroSlider from "@/app/Hero/Slider";
+import HomeHeroBgImage from "@/app/_components/Hero/BgImage";
+import HomeHeroHeading from "@/app/_components/Hero/Heading";
+import HomeHeroSlider from "@/app/_components/Hero/Slider";
 import { IoArrowDown } from "react-icons/io5";
 
 export type HomeHeroAnimBaseType = {
