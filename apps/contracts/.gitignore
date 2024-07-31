@@ -19,6 +19,7 @@ deployments/hardhat*
 .openzeppelin/unknown-9001.json
 !.openzeppelin/unknown-80001.json
 remix-compiler.config.js
+.deps
 
 #foundry files
 cache
