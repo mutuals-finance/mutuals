@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop -- we want to run promise in sequence here */
 import { task } from 'hardhat/config';
 
 /**
@@ -11,15 +10,12 @@ export const TASK = {
   name: 'upgrade',
   description: 'Interact with upgradeable contracts',
   run: async (
-    {
-      contractNames,
-      validate,
-    }: { contractNames: (keyof Contracts)[]; validate: boolean },
+    taskArgs: { contractNames: (keyof Contracts)[]; validate: boolean },
     hre: CustomHardHatRuntimeEnvironment
   ): Promise<void> => {
-    if (validate) {
+    if (taskArgs.validate) {
       const [signer] = await hre.getSigners();
-      for (const name of contractNames) {
+      for (const name of taskArgs.contractNames) {
         const origImplementation = await hre.ethers.getContractFactory(name);
         const newImplementation = await hre.ethers.getContractFactory(
           name,

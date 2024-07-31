@@ -2,9 +2,6 @@ import path from 'node:path';
 
 import { readJsonSync, writeJsonSync } from 'fs-extra';
 
-import type { Pool } from '@/typechain-types';
-import { keccak256, toUtf8Bytes } from 'ethers';
-
 type ContractConfig = Record<string, { proxyAddress: string }>;
 
 export const readContractsConfig = (): Record<string, ContractConfig> => {
@@ -78,7 +75,7 @@ export const writeContractsConfig = ({
     updateContractsConfig({
       networkName: hre.network.name,
       contractName: name,
-      proxyAddress: contract.address,
+      proxyAddress: contract.target,
     });
   }
 };
@@ -123,18 +120,13 @@ export const deployPoolFactoryContract = async ({
   });
 };
 
-export const deployPoolContract = async ({
+export const deployPoolBeaconContract = async ({
   hre,
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
-  return hre.deployOrUpgradeBeacon<Pool>({
-    contractName: 'Pool',
-    args: [
-      hre.ethers.getNamedSigner('admin').then(({ address }) => address),
-      keccak256(toUtf8Bytes('allocationRootBytes')),
-    ],
-  });
+  const factory = await hre.ethers.getContractFactory('Pool');
+  return hre.upgrades.deployBeacon(factory);
 };
 /*
 

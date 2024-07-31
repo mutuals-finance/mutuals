@@ -28,17 +28,17 @@ contract Pool is OwnableUpgradeable {
 		_disableInitializers();
 	}
 
-	function __Pool_init(address initialOwner, bytes32 allocationRoot) external initializer {
+	function __Pool_init(address _initialOwner, bytes32 _allocationRoot) external initializer {
 		__Context_init_unchained();
-		__Ownable_init_unchained(initialOwner);
-		__Pool_init_unchained(allocationRoot);
+		__Ownable_init_unchained(_initialOwner);
+		__Pool_init_unchained(_allocationRoot);
 	}
 
 	/**
  	* @dev Initializes the contract.
   */
-	function __Pool_init_unchained(bytes32 allocationRoot) internal onlyInitializing {
-		verifier.initialize(allocationRoot);
+	function __Pool_init_unchained(bytes32 _allocationRoot) internal onlyInitializing {
+		verifier.initialize(_allocationRoot);
 	}
 
 	/* -------------------------------------------------------------------------- */

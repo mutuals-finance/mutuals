@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "hardhat node",
+    "task:accounts": "hardhat accounts",
     "typechain": "hardhat typechain",
     "build": "cross-env pnpm clean && pnpm build:quick",
     "build:quick": "hardhat compile --config ./hardhat.config.ts",
@@ -12,7 +13,7 @@
     "test:quick": "hardhat test --config ./hardhat.config.ts",
     "profile": "cross-env pnpm clean && cross-env REPORT_GAS=true hardhat test --config ./hardhat.config.ts && hardhat compare-reports",
     "profile:show": "hardhat compare-reports",
-    "deploy": "hardhat deploy",
+    "deploy": "hardhat deploy --network localhost",
     "deploy:staging": "hardhat deploy --network staging",
     "deploy:production": "hardhat deploy --network production",
     "lint": "cross-env pnpm lint:format && pnpm lint:solhint && pnpm lint:eslint",

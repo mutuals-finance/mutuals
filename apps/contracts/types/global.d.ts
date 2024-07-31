@@ -29,7 +29,7 @@ import type { Deployment } from 'hardhat-deploy/types';
 import type { TASKS } from '@/tasks';
 import type { networks } from '@/config/networks';
 import type { NamedAccounts } from '@/config/accounts';
-import type { Pool, PoolFactory } from '@/typechain-types';
+import type { Pool, PoolFactory, UpgradeableBeacon } from '@/typechain-types';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import {
   FactoryOptions,
@@ -131,7 +131,7 @@ type DeployOrUpgradeProxyFunction = <TContract extends BaseContract>(
 
 type DeployOrUpgradeBeaconFunctionArgs = {
   contractName: keyof Contracts;
-  args: unknown[];
+  args?: unknown[];
   options?: DeployBeaconOptions;
 };
 
@@ -152,8 +152,6 @@ type DeployNonUpgradeableFunction = <TContract extends BaseContract>({
 interface CustomHardhatUpgrades extends HardhatUpgrades {
   deployProxy: GenericDeployFunction; // overridden because of a mismatch in ethers types
   upgradeProxy: GenericUpgradeFunction; // overridden because of a mismatch in ethers types
-  deployBeacon: GenericDeployFunction; // overridden because of a mismatch in ethers types
-  upgradeBeacon: GenericUpgradeFunction; // overridden because of a mismatch in ethers types
 }
 
 declare global {
@@ -192,6 +190,7 @@ declare global {
   export interface Contracts {
     PoolFactory?: InstanceOfContract<PoolFactory>;
     Pool?: InstanceOfContract<Pool>;
+    UpgradeableBeacon?: InstanceOfContract<UpgradeableBeacon>;
   }
 
   let ethers: Omit<

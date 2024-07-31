@@ -23,7 +23,7 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
     options = {};
   }
   if (options.timeout === undefined) {
-    //options.timeout = 600e3;
+    options.timeout = 600e3;
   }
   const deployment = await hre.deployments.getOrNull(contractName);
   const maybeAddress = deployment?.address;
@@ -120,8 +120,8 @@ export const deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction =
   ) {
     return deployOrUpgradeBase<TContract>({
       ...args,
-      deployFn: hre.upgrades.deployBeacon,
       upgradeFn: hre.upgrades.upgradeBeacon,
+      deployFn: hre.upgrades.deployBeacon,
     });
   };
 
