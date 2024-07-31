@@ -11,8 +11,8 @@ import type { FactoryOptions } from '@nomicfoundation/hardhat-ethers/types';
 
 const deployOrUpgradeBase = async <TContract extends BaseContract>({
   contractName,
-  upgradeFn,
   deployFn,
+  upgradeFn,
   args,
   options,
 }: (DeployOrUpgradeProxyFunctionArgs | DeployOrUpgradeBeaconFunctionArgs) & {
@@ -25,16 +25,25 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
   if (options.timeout === undefined) {
     options.timeout = 600e3;
   }
+  if (options.useDefenderDeploy === undefined) {
+    options.useDefenderDeploy = false;
+  }
+
   const deployment = await hre.deployments.getOrNull(contractName);
-  const maybeAddress = deployment?.address;
+  const maybeDeployedAddress = deployment?.address;
   let contractCode = '0x';
-  if (typeof maybeAddress === 'string') {
+  if (typeof maybeDeployedAddress === 'string') {
     try {
-      contractCode = await hre.ethers.provider.getCode(maybeAddress);
+      contractCode = await hre.ethers.provider.getCode(maybeDeployedAddress);
     } catch {
       hre.trace('No existing code found');
     }
   }
+  const shouldDeployProxy =
+    contractCode === '0x' ||
+    process.env.FORCE_PROXY_DEPLOYMENT ||
+    typeof maybeDeployedAddress !== 'string';
+
   const [signer]: Signer[] = await hre.getSigners();
 
   hre.trace(
@@ -42,64 +51,55 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
   );
 
   let contract: InstanceOfContract<TContract>;
-  const contractFactory = (
-    await hre.ethers.getContractFactory(contractName, signer)
-  ).connect(signer);
-  const shouldDeployProxy =
-    contractCode === '0x' ||
-    process.env.FORCE_PROXY_DEPLOYMENT ||
-    typeof maybeAddress !== 'string';
-  if (
-    shouldDeployProxy
-    // &&
-    // This guard was used during mainnet deployment as an extra barrier to prevent
-    // accidental deployment of live contracts. It has to be removed to allow for
-    // complete test environment Hardhat deployments.
-    // !['bridgedpolygonmutuals', 'mutuals', 'lockedmutuals'].includes(
-    //   contractName.toLowerCase()
-    // )
-  ) {
+  const contractFactory = await hre.ethers
+    .getContractFactory(contractName, signer)
+    .then((f) => f.connect(signer));
+
+  if (shouldDeployProxy) {
     hre.trace('Deploying proxy and instance', contractName);
     contract = await deployFn(contractFactory, args, options);
-
-    await contract.waitForDeployment();
-    hre.log('Deployed', contractName, 'at', await contract.getAddress());
   } else {
     try {
       hre.trace(
-        'Found existing contract at:',
-        maybeAddress,
+        'Found existing deployment at:',
+        maybeDeployedAddress,
         'attempting to upgrade instance',
         contractName
       );
-      const existingImplementationAddress =
-        await hre.upgrades.erc1967.getImplementationAddress(maybeAddress);
-      hre.trace('Existing implementation at:', existingImplementationAddress);
-      const deployment = await hre.deployments.get(contractName);
+      const existingImplAddress =
+        await hre.upgrades.erc1967.getImplementationAddress(
+          maybeDeployedAddress
+        );
+      hre.trace('Existing implementation at:', existingImplAddress);
       const artifact = await hre.deployments.getArtifact(contractName);
-      if (deployment.bytecode === artifact.bytecode) {
+      if (deployment?.bytecode === artifact.bytecode) {
         hre.trace('Implementation appears unchanged, skipped upgrade attempt.');
-        contract = (await hre.deployments.get(
-          contractName
-        )) as InstanceOfContract<TContract>;
+        contract = await hre.ethers.getContract(contractName, signer);
       } else {
-        contract = await upgradeFn(maybeAddress, contractFactory, options);
-        const newImplementationAddress =
-          await hre.upgrades.erc1967.getImplementationAddress(maybeAddress);
-        if (existingImplementationAddress === newImplementationAddress) {
+        contract = await upgradeFn<TContract>(
+          maybeDeployedAddress,
+          contractFactory,
+          { ...options }
+        );
+        const newImplAddress =
+          await hre.upgrades.erc1967.getImplementationAddress(
+            maybeDeployedAddress
+          );
+        if (existingImplAddress === newImplAddress) {
           hre.trace('Implementation unchanged');
         } else {
-          hre.log('New implementation at:', newImplementationAddress);
+          hre.log('New implementation at:', newImplAddress);
         }
-        hre.trace('...awaiting deployment transaction', contractName);
-        await contract.waitForDeployment();
-        hre.trace('...successful deployment transaction', contractName);
       }
     } catch (error) {
       hre.log(`Failed to upgrade ${contractName} with error:`, error);
       throw new Error(`Failed to upgrade ${contractName} with error: ${error}`);
     }
   }
+
+  hre.trace('...awaiting deployment transaction', contractName);
+  await contract.waitForDeployment();
+  hre.trace('...successful deployment transaction', contractName);
   return contract;
 };
 

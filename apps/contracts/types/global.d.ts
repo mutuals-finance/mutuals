@@ -152,6 +152,8 @@ type DeployNonUpgradeableFunction = <TContract extends BaseContract>({
 interface CustomHardhatUpgrades extends HardhatUpgrades {
   deployProxy: GenericDeployFunction; // overridden because of a mismatch in ethers types
   upgradeProxy: GenericUpgradeFunction; // overridden because of a mismatch in ethers types
+  deployBeacon: GenericDeployFunction; // overridden because of a mismatch in ethers types
+  upgradeBeacon: GenericUpgradeFunction; // overridden because of a mismatch in ethers types
 }
 
 declare global {

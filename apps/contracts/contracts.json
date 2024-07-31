@@ -9,10 +9,10 @@
   },
   "localhost": {
     "Pool": {
-      "proxyAddress": "0xA747792d15D318A231F02e26d09c12b25DbA1CC9"
+      "proxyAddress": "0x534236DF16CA4AB06F46D8b99d2D35FCc887438A"
     },
     "PoolFactory": {
-      "proxyAddress": "0x85CD6D7DE951430Ebd9aa1ee1B0E69Fd925cB3dE"
+      "proxyAddress": "0xb3117660142EB09172F8703975976703150656eB"
     }
   }
 }
