@@ -20,12 +20,10 @@
 		"ignoreDeprecations": "5.0"
 	},
 	"include": [
-		"./plugins/fireblocks/type-extensions.ts",
 		"**/*.ts",
 		"types/**/*.d.ts",
 		"./.eslintrc.js",
 		"src/contracts.json",
-		"artifacts/contracts/**/*.json",
-		"legacy-artifacts/**/*.json"
+		"artifacts/contracts/**/*.json"
 	]
 }

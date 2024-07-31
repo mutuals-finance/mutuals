@@ -24,7 +24,6 @@ import {
  *
  */
 extendEnvironment((hre) => {
-  // todo move to @/extensions/signers, @extensions/deployments
   hre.log = lazyFunction(() => log);
   hre.trace = lazyFunction(() => trace);
   if (hre.network.config.live) {
