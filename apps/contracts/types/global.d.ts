@@ -29,7 +29,7 @@ import type { Deployment } from 'hardhat-deploy/types';
 import type { TASKS } from '@/tasks';
 import type { networks } from '@/config/networks';
 import type { NamedAccounts } from '@/config/accounts';
-import type { Pool, PoolFactory, UpgradeableBeacon } from '@/typechain-types';
+import type { Pool, PoolFactory, UpgradeableBeacon } from '#/types/typechain';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import {
   FactoryOptions,

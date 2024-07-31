@@ -8,7 +8,7 @@ import '@nomicfoundation/hardhat-verify';
 import 'hardhat-tracer';
 import 'hardhat-contract-sizer';
 import '@/config/environment';
-import '@/tasks/index';
+import '@/tasks';
 import { extendEnvironment } from 'hardhat/config';
 import { lazyFunction, lazyObject } from 'hardhat/plugins';
 import { namedAccounts } from '@/config/accounts';

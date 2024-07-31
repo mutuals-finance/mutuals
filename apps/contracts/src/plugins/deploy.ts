@@ -6,7 +6,7 @@ import {
   DeployOrUpgradeProxyFunctionArgs,
   GenericDeployFunction,
   GenericUpgradeFunction,
-} from '@/types/global';
+} from '#/types/global';
 import type { FactoryOptions } from '@nomicfoundation/hardhat-ethers/types';
 
 const deployOrUpgradeBase = async <TContract extends BaseContract>({
