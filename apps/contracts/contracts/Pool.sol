@@ -6,8 +6,6 @@ import {Currency} from "./libraries/Currency.sol";
 import {Verifier} from "./libraries/Verifier.sol";
 import {Allocation} from "./libraries/Allocation.sol";
 import {MerkleTree} from "./libraries/MerkleTree.sol";
-import {ContextUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
-import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 contract Pool is OwnableUpgradeable {
