@@ -13,8 +13,8 @@ export const namedAccountIndices = {
   /** 0x6b9d03759E9F14a641f0703fBD84F1F726159B6B */
   unassigned1: 2,
   unassigned2: 3,
-  poolOwner1: 4,
-  poolOwner2: 5,
+  poolOwnerHonest: 4,
+  poolOwnerMalicious: 5,
   partner: 6,
   employee: 7,
   mockPolygonBridge: 8,

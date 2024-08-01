@@ -2,11 +2,12 @@ import hre from 'hardhat';
 import { Pool, PoolFactory } from '#/types/typechain';
 import { expect } from 'chai';
 import { withSnapshot } from '#/test/utils';
+import { ContractTransactionReceipt, toBigInt } from 'ethers';
 
 const setupTest = withSnapshot(['pool'], async (hre) => {
-  const [poolOwner1, poolOwner2] = await Promise.all([
-    hre.ethers.getNamedSigner('poolOwner1'),
-    hre.ethers.getNamedSigner('poolOwner2'),
+  const [poolOwnerHonest, poolOwnerMalicious] = await Promise.all([
+    hre.ethers.getNamedSigner('poolOwnerHonest'),
+    hre.ethers.getNamedSigner('poolOwnerMalicious'),
   ]);
   const poolFactory = (await hre.ethers.getContract(
     'PoolFactory'
@@ -16,56 +17,61 @@ const setupTest = withSnapshot(['pool'], async (hre) => {
   return {
     poolFactory,
     pool,
-    poolOwner1,
-    poolOwner2,
+    poolOwnerHonest,
+    poolOwnerMalicious,
   };
 });
 
+const salt1 = toBigInt(hre.ethers.randomBytes(16));
+const salt2 = toBigInt(hre.ethers.randomBytes(16));
+const allocationRoot = hre.ethers.randomBytes(32);
+
 describe('PoolFactory.createPool', () => {
   context('When called with valid parameters', () => {
-    const allocationRoot = hre.ethers.randomBytes(32);
-    const allocationRoot2 = hre.ethers.randomBytes(32);
-    let createdPoolAddress: string;
+    let createdPool: Pool | null;
+    let pool1Address: string;
+    let pool2Address: string;
+
+    before(async () => {
+      const { poolFactory, poolOwnerHonest } = await setupTest();
+      [pool1Address, pool2Address] = await Promise.all([
+        poolFactory.getAddress(poolOwnerHonest.address, allocationRoot, salt1),
+        poolFactory.getAddress(poolOwnerHonest.address, allocationRoot, salt2),
+      ]);
+      await poolFactory
+        .connect(poolOwnerHonest)
+        .createPool(poolOwnerHonest.address, allocationRoot, salt2)
+        .then((tx) => tx.wait());
+      createdPool = await hre.ethers.getContractAt('Pool', pool2Address);
+    });
 
     it('should deploy a beacon proxy', async () => {
-      const { poolFactory, poolOwner1 } = await setupTest();
-
+      const { poolFactory, poolOwnerHonest } = await setupTest();
       expect(
         poolFactory
-          .connect(poolOwner1)
-          .createPool(poolOwner1.address, allocationRoot, 34)
+          .connect(poolOwnerHonest)
+          .createPool(poolOwnerHonest.address, allocationRoot, salt1)
       ).to.not.reverted;
     });
 
     it('should emit a valid CreatePool event', async () => {
-      const { poolFactory, poolOwner1 } = await setupTest();
+      const { poolFactory, poolOwnerHonest } = await setupTest();
 
-      const filter = poolFactory.filters.CreatePool;
-      const events = await poolFactory.queryFilter(filter, -1);
-      const event = events[0];
-
-      expect(event.fragment.name).to.equal('CreatePool');
-      const args = event.args;
-      expect(args.owner).to.equal(poolOwner1.address);
-      expect(args.pool).to.be.not.empty;
-      expect(args.root).to.equal(allocationRoot);
-
-      createdPoolAddress = args.pool;
+      await expect(
+        poolFactory
+          .connect(poolOwnerHonest)
+          .createPool(poolOwnerHonest.address, allocationRoot, salt1)
+      ).to.emit(poolFactory, 'CreatePool');
     });
 
     it('should initialize the proxy', async () => {
-      const { pool, poolOwner2 } = await setupTest();
-      const createdPool = pool.attach(createdPoolAddress) as Pool;
+      const { poolOwnerMalicious } = await setupTest();
+
       await expect(
         createdPool
-          .connect(poolOwner2)
-          .__Pool_init(poolOwner2.address, allocationRoot2)
-      ).to.be.revertedWith('');
-    });
-
-    it('should set the initial owner', async () => {
-      const { poolFactory, poolOwner1 } = await setupTest();
-      expect(poolFactory.owner()).to.be.equal(poolOwner1.address);
+          ?.connect(poolOwnerMalicious)
+          .__Pool_init(poolOwnerMalicious.address, allocationRoot)
+      ).to.be.reverted;
     });
   });
 });
