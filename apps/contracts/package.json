@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "hardhat node",
+    "dev": "hardhat node --watch",
     "build": "hardhat compile --config ./hardhat.config.ts",
     "build:clean": "cross-env pnpm clean && pnpm build",
     "clean": "cross-env hardhat clean && rimraf .deps cache cache_hardhat",

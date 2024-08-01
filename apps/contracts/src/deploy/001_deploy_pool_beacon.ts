@@ -4,7 +4,6 @@ import { deployPoolBeaconContract, finalizeDeployments } from '@/utils/deploy';
 export const deploy: DeployFunction = async (environment) => {
   const hre = environment as unknown as CustomHardHatRuntimeEnvironment;
   hre.trace(`deploy-pool`);
-
   const Pool = await deployPoolBeaconContract({
     hre,
   });
@@ -13,3 +12,5 @@ export const deploy: DeployFunction = async (environment) => {
 };
 
 export default deploy;
+deploy.dependencies = ['preconditions'];
+deploy.tags = ['all', 'pool'];

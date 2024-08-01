@@ -172,6 +172,7 @@ export const saveDeployments = async ({
       .map(async ([name, contract]) => {
         const { abi, bytecode, deployedBytecode } =
           await hre.artifacts.readArtifact(name);
+
         return hre.deployments.save(name, {
           abi,
           address: contract.target,
