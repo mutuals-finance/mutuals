@@ -13,7 +13,9 @@ parameters:
   run-docs:
     type: boolean
     default: false
-
+  run-contracts:
+    type: boolean
+    default: false
 workflows:
   run-app:
     jobs:
