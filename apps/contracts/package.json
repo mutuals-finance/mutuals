@@ -32,6 +32,7 @@
     "@openzeppelin/hardhat-upgrades": "^3.2.0",
     "@typechain/ethers-v6": "^0.5.1",
     "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.17",
     "@types/dotenv-defaults": "^2.0.4",
     "@types/dotenv-parse-variables": "^2.0.3",
     "@types/fs-extra": "^11.0.4",
