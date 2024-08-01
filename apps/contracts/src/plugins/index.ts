@@ -1,10 +1,11 @@
 import 'tsconfig-paths/register';
 import '@openzeppelin/hardhat-upgrades';
+import '@nomicfoundation/hardhat-chai-matchers';
 import '@nomicfoundation/hardhat-ethers';
+import '@nomicfoundation/hardhat-verify';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
 import '@typechain/hardhat';
-import '@nomicfoundation/hardhat-verify';
 import 'hardhat-tracer';
 import 'hardhat-contract-sizer';
 import '@/config/environment';

@@ -35,7 +35,7 @@ describe('PoolFactory.createPool', () => {
       const poolInitResult = pool
         .connect(poolOwner2)
         .__Pool_init(poolOwner2.address, hre.ethers.randomBytes(32));
-      expect(poolInitResult).to.be.rejectedWith(Error);
+      await expect(poolInitResult).to.be.revertedWith('');
     });
 
     it('should set the initial owner', async () => {

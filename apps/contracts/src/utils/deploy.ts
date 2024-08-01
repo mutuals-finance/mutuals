@@ -125,8 +125,9 @@ export const deployPoolBeaconContract = async ({
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
-  const factory = await hre.ethers.getContractFactory('Pool');
-  return hre.upgrades.deployBeacon(factory);
+  return hre.deployOrUpgradeBeacon({
+    contractName: 'Pool',
+  });
 };
 /*
 
@@ -165,7 +166,6 @@ export const saveDeployments = async ({
   contracts: Contracts;
 }): Promise<void> => {
   hre.trace('saving deployments');
-
   await Promise.all(
     Object.entries(contracts)
       .filter(([_, value]) => value !== undefined)
