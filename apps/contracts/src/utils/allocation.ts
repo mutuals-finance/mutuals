@@ -2,8 +2,10 @@ import { Allocation } from '#/types/typechain/contracts/Pool';
 import { SimpleMerkleTree } from '@openzeppelin/merkle-tree';
 import { solidityPackedKeccak256 } from 'ethers';
 
+type AllocationConfig = Record<string, number>;
+
 const Allocation = {
-  from(config: Record<string, number>) {
+  from(config: AllocationConfig) {
     return Object.entries(config).map(([recipient, amountOrShare], i) => {
       return {
         id: i,
@@ -35,6 +37,9 @@ const Allocation = {
         )
       )
     );
+  },
+  buildTreeFrom(config: AllocationConfig) {
+    return Allocation.buildTree(Allocation.from(config));
   },
 };
 
