@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { Pool, PoolFactory } from '#/types/typechain';
 import { expect } from 'chai';
 import { withSnapshot } from '#/test/utils';
-import { ContractTransactionReceipt, toBigInt } from 'ethers';
+import { toBigInt } from 'ethers';
 
 const setupTest = withSnapshot(['pool'], async (hre) => {
   const [poolOwnerHonest, poolOwnerMalicious] = await Promise.all([
@@ -29,20 +29,20 @@ const allocationRoot = hre.ethers.randomBytes(32);
 describe('PoolFactory.createPool', () => {
   context('When called with valid parameters', () => {
     let createdPool: Pool | null;
-    let pool1Address: string;
-    let pool2Address: string;
 
     before(async () => {
       const { poolFactory, poolOwnerHonest } = await setupTest();
-      [pool1Address, pool2Address] = await Promise.all([
-        poolFactory.getAddress(poolOwnerHonest.address, allocationRoot, salt1),
-        poolFactory.getAddress(poolOwnerHonest.address, allocationRoot, salt2),
-      ]);
       await poolFactory
         .connect(poolOwnerHonest)
         .createPool(poolOwnerHonest.address, allocationRoot, salt2)
         .then((tx) => tx.wait());
-      createdPool = await hre.ethers.getContractAt('Pool', pool2Address);
+
+      const create2Address = await poolFactory.getAddress(
+        poolOwnerHonest.address,
+        allocationRoot,
+        salt2
+      );
+      createdPool = await hre.ethers.getContractAt('Pool', create2Address);
     });
 
     it('should deploy a beacon proxy', async () => {

@@ -15,9 +15,9 @@ export const namedAccountIndices = {
   unassigned2: 3,
   poolOwnerHonest: 4,
   poolOwnerMalicious: 5,
-  partner: 6,
-  employee: 7,
-  mockPolygonBridge: 8,
+  recipient0: 6,
+  recipient1: 7,
+  recipient2: 8,
   mutualsWallet: 9,
 } as const;
 

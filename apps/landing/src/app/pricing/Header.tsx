@@ -1,27 +1,36 @@
-import { Box, Stack, Button, Container, Heading, Text } from "@mutuals/ui";
+import { Box, Container, Heading, Tag, TagLabel, Text } from "@mutuals/ui";
 
 export default function PricingHeader() {
   return (
-    <Box as="header" my="16" pt={"20"}>
+    <Box as="header" pt={"20"}>
       <Container
-        maxW={{ base: "container.sm", lg: "container.lg" }}
-        px={{ base: "3", lg: "12" }}
+        my="20"
+        textAlign={"center"}
+        maxW={"container.lg"}
+        px={{ base: "6", lg: "12" }}
       >
-        <Stack textAlign={"center"} gap={"6"} align={"center"}>
-          <Heading as="h1" variant="h.1">
-            Pricing
-          </Heading>
+        <Tag
+          size="lg"
+          borderRadius="md"
+          bg={"bgAlpha.4"}
+          border={"1px solid"}
+          borderColor={"border.1"}
+        >
+          <TagLabel>
+            <Text
+              variant={"tag"}
+              bgGradient="linear(to-bl, pink.400, purple.400, primary.400)"
+              bgClip="text"
+              fontSize={"sm"}
+            >
+              Pricing
+            </Text>
+          </TagLabel>
+        </Tag>
 
-          <Text fontSize={{ base: "lg", lg: "xl" }} color={"alpha.2"}>
-            To support our work you can forward a part of of your split&apos;s
-            earnings as donation to our team. Everything else goes directly to
-            your cause.
-          </Text>
-
-          <Button colorScheme={"primary"} size={"lg"}>
-            Launch App
-          </Button>
-        </Stack>
+        <Heading as="h1" variant="h.1" mt={"3"}>
+          For free - That's it
+        </Heading>
       </Container>
     </Box>
   );
