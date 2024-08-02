@@ -55,6 +55,14 @@ export default {
         default: "gray.100",
         _dark: "gray.700",
       },
+      4: {
+        default: "gray.200",
+        _dark: "gray.600",
+      },
+      5: {
+        default: "gray.300",
+        _dark: "gray.500",
+      },
     },
     border: { 1: { default: "alpha.4", _dark: "alpha.4" } },
   },

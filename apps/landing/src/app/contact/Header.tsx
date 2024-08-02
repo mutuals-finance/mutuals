@@ -13,8 +13,9 @@ import { IoChatbubblesOutline, IoPaperPlaneOutline } from "react-icons/io5";
 
 export default function ContactHeader() {
   return (
-    <Box as="header" mt="12" mb="32" pt={"20"}>
+    <Box as="header" pt={"20"}>
       <Container
+        my="20"
         maxW={{ base: "container.sm", lg: "container.lg" }}
         px={{ base: "3", lg: "12" }}
       >

@@ -21,8 +21,9 @@ export const getConfig = (
     defender,
     solidity,
     paths: {
+      deploy: './src/deploy',
       sources: './contracts',
-      cache: './cache_hardhat',
+      cache: './cache_hh',
     },
     tracer,
     typechain,

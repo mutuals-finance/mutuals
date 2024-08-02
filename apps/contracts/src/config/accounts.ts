@@ -13,11 +13,11 @@ export const namedAccountIndices = {
   /** 0x6b9d03759E9F14a641f0703fBD84F1F726159B6B */
   unassigned1: 2,
   unassigned2: 3,
-  poolOwner1: 4,
-  poolOwner2: 5,
-  partner: 6,
-  employee: 7,
-  mockPolygonBridge: 8,
+  poolOwnerHonest: 4,
+  poolOwnerMalicious: 5,
+  recipient0: 6,
+  recipient1: 7,
+  recipient2: 8,
   mutualsWallet: 9,
 } as const;
 

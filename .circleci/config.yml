@@ -15,6 +15,9 @@ parameters:
   run-docs:
     type: boolean
     default: false
+  run-contracts:
+    type: boolean
+    default: false
 
 orbs:
   path-filtering: circleci/path-filtering@1.0.0
@@ -38,6 +41,7 @@ jobs:
             (apps\/app|packages)\/.* run-app true .circleci/app/config.yml
             (apps\/landing|packages)\/.* run-landing true .circleci/landing/config.yml
             (apps\/app|packages)\/.* run-docs true .circleci/docs/config.yml
+            (apps\/contracts|packages\/eslint-config|packages\/typescript-config|packages\/sdk)\/.* run-contracts true .circleci/contracts/config.yml
       - path-filtering/generate-config
       - run:
           name: Validate config

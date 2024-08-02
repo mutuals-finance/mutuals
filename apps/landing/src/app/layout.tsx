@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
 
-import Index from "@/providers";
+import Providers from "@/providers";
 import Layout from "@/layout";
 
 type RootLayoutProps = PropsWithChildren;
@@ -42,9 +42,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
-        <Index>
+        <Providers>
           <Layout>{children}</Layout>
-        </Index>
+        </Providers>
       </body>
     </html>
   );

@@ -82,8 +82,7 @@ export default function HeaderContainerWrapper({
         w="full"
         backdropFilter={"auto"}
         backdropBlur={"12px"}
-        borderBottom={"1px solid"}
-        borderColor={"border.1"}
+        shadow={"sm"}
         animate={isHidden ? "invisible" : "visible"}
         variants={variants.visibility}
         {...props}

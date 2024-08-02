@@ -27,7 +27,7 @@ interface FAQItemProps extends AccordionItemProps {
 
 function FAQItem({ title, children, ...props }: FAQItemProps) {
   return (
-    <AccordionItem rounded="lg" borderWidth="1px" {...props}>
+    <AccordionItem rounded="md" borderWidth="2px" {...props}>
       {({ isExpanded }) => (
         <>
           <AccordionButton
@@ -58,14 +58,14 @@ export default function PricingFAQ() {
   return (
     <HeaderObserverChange theme={"dark"}>
       <DarkMode>
-        <Box py="32" mt="32" bg={"bg.1"}>
+        <Box py="32" mt="32" bg={"bg.2"}>
           <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
             <SectionHeader mx="unset" textAlign={"left"} label={"Mutuals FAQ"}>
               Questions? We're glad you asked.
             </SectionHeader>
 
             <Accordion allowMultiple as={Stack} width="100%" spacing="3">
-              <FAQItem title="Why is it for free?" roundedTop="3xl">
+              <FAQItem title="Why is it for free?" roundedTop="2xl">
                 <Text>
                   Withdrawing funds from Splits will transfer your balance(s)
                   from the Splits ecosystem into your wallet. To withdraw funds,
@@ -138,7 +138,7 @@ export default function PricingFAQ() {
               </FAQItem>
               <FAQItem
                 title="Is it possible to change the donation portion after creating my split?"
-                roundedBottom="3xl"
+                roundedBottom="2xl"
               >
                 <Text>
                   To get started with Chakra UI, you can install it via npm or

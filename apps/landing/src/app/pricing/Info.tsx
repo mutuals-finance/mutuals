@@ -45,22 +45,9 @@ function PricingCard({
   ];
 
   return (
-    <Card
-      variant="filled"
-      bg="transparent"
-      borderLeft={"2px solid"}
-      borderColor={"border.1"}
-      rounded={"none"}
-      pl={"6"}
-      py={"6"}
-    >
-      <CardHeader
-        minH={{ md: "36" }}
-        px="0"
-        pb={{ base: "6", lg: "12" }}
-        pt={0}
-      >
-        <Heading size={"2xl"} mb={"3"} fontWeight={"600"}>
+    <Card variant={variant} size={"lg"}>
+      <CardHeader minH={{ md: "40" }}>
+        <Heading size={"xl"} mb={"3"} fontWeight={"600"}>
           {heading}
         </Heading>
 
@@ -68,13 +55,13 @@ function PricingCard({
           {description}
         </Text>
       </CardHeader>
-      <CardBody px="0" py={"6"}>
-        <Text as={"h3"} fontSize={"2xl"} fontWeight={"900"}>
-          0.00 $
-        </Text>
+      <CardBody>
+        <Heading as={"h3"} size={"xl"} fontWeight={"600"}>
+          $0.00
+        </Heading>
 
         <Box>
-          <Text fontWeight={"500"} color={"alpha.2"} fontSize={"sm"}>
+          <Text color={"alpha.2"} fontWeight={"500"} fontSize={"sm"}>
             {label}
           </Text>
         </Box>
@@ -83,7 +70,7 @@ function PricingCard({
           Get Started
         </Button>
       </CardBody>
-      <CardFooter bg={"bg.3"} rounded={"md"} as={Stack}>
+      <CardFooter as={Stack}>
         <Text fontSize="xs" variant={"tag"} as="h3">
           Includes
         </Text>

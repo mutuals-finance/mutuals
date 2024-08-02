@@ -17,14 +17,8 @@ parameters:
     type: boolean
     default: false
 
-jobs:
-  noop:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - run: echo "No updates have been made"
-
 workflows:
-  noop:
+  run-contracts:
     jobs:
-      - noop
+      - lint
+      - test
