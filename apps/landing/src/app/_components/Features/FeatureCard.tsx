@@ -24,12 +24,12 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <GridItem as={Card} variant={"filled"} {...props}>
+    <GridItem as={Card} variant={"outline"} borderWidth={"2px"} {...props}>
       <CardBody
         as={Stack}
         direction={"column"}
         justify={"space-between"}
-        minH={"2xs"}
+        minH={{ base: "unset", md: "xs" }}
         gap={"6"}
       >
         {/*
@@ -56,8 +56,14 @@ export default function FeatureCard({
           </Heading>
         </Box>
 
-        <Box position={"relative"} w={"full"} maxW={"sm"}>
-          <Text>{description}</Text>
+        <Box position={"relative"} w={"full"} maxW={"xs"}>
+          <Text
+            fontSize={{ base: "sm", md: "md" }}
+            color={"alpha.2"}
+            fontWeight={"500"}
+          >
+            {description}
+          </Text>
         </Box>
       </CardBody>
     </GridItem>

@@ -29,7 +29,7 @@ export default function PricingHeader() {
         </Tag>
 
         <Heading as="h1" variant="h.1" mt={"3"}>
-          For free - That's it
+          Mutuals is free - That&apos;s it.
         </Heading>
       </Container>
     </Box>
