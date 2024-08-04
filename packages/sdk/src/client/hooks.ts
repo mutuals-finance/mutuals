@@ -1,8 +1,5 @@
 import {
-  MutationHookOptions,
-  OperationVariables,
   QueryHookOptions,
-  QueryOptions,
   useLazyQuery,
   useMutation,
   useQuery,

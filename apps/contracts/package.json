@@ -14,13 +14,13 @@
     "deploy:staging": "hardhat deploy --network amoy",
     "deploy:production": "hardhat deploy --network mainnet",
     "task:accounts": "hardhat accounts",
-    "lint": "cross-env pnpm lint:prettier && pnpm lint:solhint && pnpm lint:eslint",
-    "lint:prettier": "prettier --check **.{sol,js,ts}",
+    "lint": "cross-env pnpm lint:solhint && pnpm lint:eslint",
     "lint:solhint": "cross-env pnpm build && solhint --config ./config/.solhint.json --ignore-path ./config/.solhintignore contracts/**/*.sol",
     "lint:eslint": "eslint . --max-warnings 0  --ext js,ts",
-    "lint:fix": "cross-env pnpm lint:prettier:fix && pnpm lint:eslint:fix",
-    "lint:prettier:fix": "prettier --write **.{sol,js,ts}",
-    "lint:eslint:fix": "eslint --fix .  --ext js,ts"
+    "lint:fix": "pnpm lint:eslint:fix",
+    "lint:eslint:fix": "eslint --fix .  --ext js,ts",
+    "format": "prettier --check **.{sol,js,ts}",
+    "format:fix": "prettier --write **.{sol,js,ts}"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
