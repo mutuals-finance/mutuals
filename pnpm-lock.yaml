@@ -301,14 +301,17 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       prettier-plugin-solidity:
-        specifier: ^1.1.3
+        specifier: ^1.3.1
         version: 1.3.1(prettier@3.3.3)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
       solhint:
-        specifier: ^5.0.2
+        specifier: ^5.0.3
         version: 5.0.3(typescript@5.5.4)
+      solhint-plugin-prettier:
+        specifier: ^0.1.0
+        version: 0.1.0(prettier-plugin-solidity@1.3.1)(prettier@3.3.3)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.2(@types/node@20.14.14)(typescript@5.5.4)
@@ -5749,6 +5752,14 @@ packages:
   /@popperjs/core@2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
     dev: false
+
+  /@prettier/sync@0.3.0(prettier@3.3.3):
+    resolution: {integrity: sha512-3dcmCyAxIcxy036h1I7MQU/uEEBq8oLwf1CE3xeze+MPlgkdlb/+w6rGR/1dhp6Hqi17fRS6nvwnOzkESxEkOw==}
+    peerDependencies:
+      prettier: ^3.0.0
+    dependencies:
+      prettier: 3.3.3
+    dev: true
 
   /@protobufjs/aspromise@1.1.2:
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -15565,6 +15576,13 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
+  /prettier-linter-helpers@1.0.0:
+    resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      fast-diff: 1.3.0
+    dev: true
+
   /prettier-plugin-solidity@1.3.1(prettier@3.3.3):
     resolution: {integrity: sha512-MN4OP5I2gHAzHZG1wcuJl0FsLS3c4Cc5494bbg+6oQWBPuEamjwDvmGfFMZ6NFzsh3Efd9UUxeT7ImgjNH4ozA==}
     engines: {node: '>=16'}
@@ -17039,6 +17057,18 @@ packages:
       tmp: 0.0.33
     transitivePeerDependencies:
       - debug
+    dev: true
+
+  /solhint-plugin-prettier@0.1.0(prettier-plugin-solidity@1.3.1)(prettier@3.3.3):
+    resolution: {integrity: sha512-SDOTSM6tZxZ6hamrzl3GUgzF77FM6jZplgL2plFBclj/OjKP8Z3eIPojKU73gRr0MvOS8ACZILn8a5g0VTz/Gw==}
+    peerDependencies:
+      prettier: ^3.0.0
+      prettier-plugin-solidity: ^1.0.0
+    dependencies:
+      '@prettier/sync': 0.3.0(prettier@3.3.3)
+      prettier: 3.3.3
+      prettier-linter-helpers: 1.0.0
+      prettier-plugin-solidity: 1.3.1(prettier@3.3.3)
     dev: true
 
   /solhint@5.0.3(typescript@5.5.4):
