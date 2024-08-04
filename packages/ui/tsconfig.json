@@ -1,5 +1,5 @@
 {
-  "extends": "@mutuals/typescript-config/react-library.json",
+  "extends": "@mutuals/typescript-config/react.json",
   "compilerOptions": {
     "baseUrl": "./src",
     "outDir": "dist",
@@ -9,6 +9,8 @@
       ]
     }
   },
+  // filenames are resolved relative to the directory containing the tsconfig.json file.
+  // https://www.typescriptlang.org/tsconfig/#include
   "include": ["src", "turbo"],
   "exclude": ["node_modules", "dist"]
 }
