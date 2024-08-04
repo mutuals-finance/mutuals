@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "build:app": "turbo build -F @mutuals/app",
+    "build:contracts": "turbo build -F @mutuals/contracts",
     "build:landing": "turbo build -F @mutuals/landing",
     "build:docs": "turbo build -F @mutuals/docs",
     "dev": "turbo dev",
@@ -16,6 +17,7 @@
     "lint:fix": "turbo lint -- --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
+  "dependencies": {},
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
@@ -26,6 +28,5 @@
   "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {}
+  }
 }

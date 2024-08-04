@@ -6,7 +6,7 @@
 - `@mutuals/app`: Mutuals app interface
 - `@mutuals/contracts`: Mutuals smart contracts
 - `@mutuals/docs`: Mutuals documentation
-- `@mutuals/ui`: a shared stub component library
+- `@mutuals/ui`: shared stub component and theme library
 - `@mutuals/eslint-config`: shared `eslint` configurations
 - `@mutuals/typescript-config`: shared `tsconfig.json`s
 

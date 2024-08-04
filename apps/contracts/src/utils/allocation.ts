@@ -1,4 +1,4 @@
-import { Allocation } from '#/types/typechain/contracts/Pool';
+import { type Allocation } from '#/types/typechain/contracts/Pool';
 import { SimpleMerkleTree } from '@openzeppelin/merkle-tree';
 import { solidityPackedKeccak256 } from 'ethers';
 
