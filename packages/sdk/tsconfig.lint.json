@@ -1,5 +1,0 @@
-{
-  "extends": "@mutuals/typescript-config/nextjs.json",
-  "include": ["src"],
-  "exclude": ["node_modules"]
-}

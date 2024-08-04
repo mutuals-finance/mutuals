@@ -23,6 +23,8 @@
     "lint:eslint:fix": "eslint --fix . --ext js,ts"
   },
   "devDependencies": {
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.7",
     "@nomicfoundation/hardhat-ethers": "^3.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",

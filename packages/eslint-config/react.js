@@ -1,7 +1,3 @@
-const { resolve } = require("node:path");
-
-const project = resolve(process.cwd(), "tsconfig.json");
-
 /*
  * This is a custom ESLint configuration for use with
  * internal (bundled by their consumer) libraries
@@ -9,22 +5,14 @@ const project = resolve(process.cwd(), "tsconfig.json");
  */
 
 /** @type {import("eslint").Linter.Config} */
-const config = {
-  extends: ["eslint:recommended", "prettier", "eslint-config-turbo"],
-  plugins: ["only-warn"],
+module.exports = {
+  extends: ["./base.js"],
   globals: {
     React: true,
     JSX: true,
   },
   env: {
     browser: true,
-  },
-  settings: {
-    "import/resolver": {
-      typescript: {
-        project,
-      },
-    },
   },
   ignorePatterns: [
     // Ignore dotfiles
@@ -37,5 +25,3 @@ const config = {
     { files: ["*.js?(x)", "*.ts?(x)"] },
   ],
 };
-
-module.exports = config;

@@ -15,7 +15,6 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.2.3",
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
     "@types/eslint": "^8.56.10",

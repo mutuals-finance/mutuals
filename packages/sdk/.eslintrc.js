@@ -1,14 +1,9 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
-  extends: ["@mutuals/eslint-config/react-internal.js"],
+  extends: ["@mutuals/eslint-config/react.js"],
   env: {
     node: true,
     browser: true,
-  },
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    project: "./tsconfig.lint.json",
-    tsconfigRootDir: __dirname,
   },
 };
