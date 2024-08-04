@@ -5,7 +5,7 @@ const project = resolve(process.cwd(), "tsconfig.json");
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "only-warn", "unused-imports"],
+  plugins: ["@typescript-eslint/eslint-plugin", "only-warn", "unused-imports"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -25,6 +25,7 @@ module.exports = {
     },
   ],
   rules: {
+    "import/no-unused-modules": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
