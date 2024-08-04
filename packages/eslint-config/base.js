@@ -3,16 +3,15 @@ const { resolve } = require("node:path");
 const project = resolve(process.cwd(), "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
-const config = {
-  extends: ["eslint:recommended", "prettier", "eslint-config-turbo"],
-  plugins: ["only-warn"],
-  globals: {
-    React: true,
-    JSX: true,
-  },
-  env: {
-    node: true,
-  },
+module.exports = {
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint/eslint-plugin", "only-warn", "unused-imports"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "eslint-config-turbo",
+  ],
   settings: {
     "import/resolver": {
       typescript: {
@@ -20,18 +19,13 @@ const config = {
       },
     },
   },
-  ignorePatterns: [
-    // Ignore dotfiles
-    ".*.js",
-    "node_modules/",
-    "dist/",
-  ],
   overrides: [
     {
       files: ["*.js?(x)", "*.ts?(x)"],
     },
   ],
   rules: {
+    "import/no-unused-modules": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -43,5 +37,3 @@ const config = {
     ],
   },
 };
-
-module.exports = config;

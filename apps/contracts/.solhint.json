@@ -1,0 +1,14 @@
+{
+  "extends": ["solhint:default", "solhint:recommended"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "ordering": "error",
+    "private-vars-leading-underscore": ["warn", { "strict": false }],
+    "function-max-lines": ["warn", 120],
+    "max-line-length": ["error", 120],
+    "code-complexity": ["warn", 7],
+    "compiler-version": ["error", "^0.8.0"],
+    "no-inline-assembly": "off"
+  }
+}

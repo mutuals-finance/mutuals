@@ -24,7 +24,7 @@ remix-compiler.config.js
 #foundry files
 cache
 out
-cache_hh
+hh-cache
 broadcast
 .gas-snapshot-test
 optimized-out

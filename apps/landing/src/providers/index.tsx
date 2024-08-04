@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { UIProvider } from "@mutuals/ui";
 
 import "keen-slider/keen-slider.min.css";
-import HeaderObserverProvider from "providers/HeaderObserver";
+import HeaderObserverProvider from "./HeaderObserver";
 
 export default function Providers({ children }: PropsWithChildren) {
   return (

@@ -1,16 +1,16 @@
 {
-  "extends": "@mutuals/typescript-config/nextjs.json",
+  "extends": "@mutuals/typescript-config/next.json",
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     }
   },
+  // filenames are resolved relative to the directory containing the tsconfig.json file.
+  // https://www.typescriptlang.org/tsconfig/#include
   "include": [
-    "next-env.d.ts",
-    "next.config.js",
     "next-sitemap.config.js",
     "**/*.ts",
     "**/*.tsx",

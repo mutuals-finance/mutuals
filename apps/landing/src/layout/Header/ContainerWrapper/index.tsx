@@ -5,7 +5,7 @@ import { DarkMode, LightMode, useBreakpointValue } from "@mutuals/ui";
 import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
 import { Fragment, useCallback, useEffect, useState } from "react";
 
-import { useHeaderObserver } from "providers/HeaderObserver";
+import { useHeaderObserver } from "@/providers/HeaderObserver";
 
 const variants = {
   visibility: {

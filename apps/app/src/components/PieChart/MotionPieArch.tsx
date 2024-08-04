@@ -4,7 +4,7 @@ import { DeepPartial } from "#/partial";
 
 export type ArchData = {
   id?: string;
-  value?: DeepPartial<BigInt>;
+  value?: DeepPartial<bigint>;
   isActive?: boolean;
 };
 

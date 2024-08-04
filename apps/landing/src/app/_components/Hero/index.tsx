@@ -1,13 +1,19 @@
 "use client";
 
-import { Box, Stack, Button, IconButton } from "@mutuals/ui";
+import {
+  Box,
+  Stack,
+  Button,
+  Container,
+  DarkMode,
+  useColorModeValue,
+} from "@mutuals/ui";
 import { useMotionValueEvent, useScroll, MotionConfig } from "framer-motion";
 import { useState } from "react";
 
-import HomeHeroBgImage from "@/app/_components/Hero/BgImage";
 import HomeHeroHeading from "@/app/_components/Hero/Heading";
 import HomeHeroSlider from "@/app/_components/Hero/Slider";
-import { IoArrowDown } from "react-icons/io5";
+import { IoPlayCircleOutline, IoPlayOutline } from "react-icons/io5";
 
 export type HomeHeroAnimBaseType = {
   animLabel: "grow" | "shrink";
@@ -30,9 +36,7 @@ export default function HomeHero() {
   return (
     <MotionConfig transition={{ duration: 0.8, ease: [0.72, 0, 0.12, 1] }}>
       <Box position={"relative"}>
-        <HomeHeroBgImage animLabel={animLabel} top="0" />
-
-        <Box position="relative" py="32">
+        <Box position="relative" pt={{ base: "12", lg: "32" }} pb={"32"}>
           <HomeHeroHeading
             animLabel={animLabel}
             zIndex={"2"}
@@ -42,34 +46,25 @@ export default function HomeHero() {
 
         <HomeHeroSlider animLabel={animLabel} />
 
-        <Stack
-          position={"sticky"}
-          top={"50vh"}
-          left={"0"}
-          w={"full"}
-          align={"center"}
-          p={"12"}
-          mt={"6"}
-        >
-          <Button
-            variant={"unstyled"}
-            color={"color.1"}
-            size={"lg"}
-            rightIcon={
-              <IconButton
-                as={Box}
-                rounded={"full"}
-                variant={"outline"}
-                aria-label={"Scroll down for more"}
-                icon={<IoArrowDown />}
-              >
-                Scroll down for more
-              </IconButton>
-            }
+        <Container maxW="container.xl" mt={"12"} px={{ base: 3, md: 12 }}>
+          <Stack
+            w={"full"}
+            shadow={"sm"}
+            align={"center"}
+            p={"1.5"}
+            bgGradient={useColorModeValue(
+              "linear(to-r, bg.3, primary.300, bg.3)",
+              "linear(to-r, bg.3, color.primary, bg.3)",
+            )}
+            rounded={"lg"}
           >
-            Scroll down for more
-          </Button>
-        </Stack>
+            <DarkMode>
+              <Button rightIcon={<IoPlayOutline />} variant="ghost">
+                Explore The Demo
+              </Button>
+            </DarkMode>
+          </Stack>
+        </Container>
       </Box>
     </MotionConfig>
   );

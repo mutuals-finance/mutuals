@@ -1,12 +1,8 @@
+/* eslint-env node */
+
 // This configuration only applies to the package manager root.
 /** @type {import("eslint").Linter.Config} */
-const config = {
+module.exports = {
   ignorePatterns: ["apps/**", "packages/**"],
-  extends: ["@mutuals/eslint-config/library.js"],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    project: true,
-  },
+  extends: ["@mutuals/eslint-config/base.js"],
 };
-
-module.exports = config;

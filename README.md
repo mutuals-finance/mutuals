@@ -2,23 +2,13 @@
 
 ### Apps and Packages
 
-- `@mutuals/landing`: Mutuals [Next.js](https://nextjs.org/) landing page
-- `@mutuals/app`: Mutuals [Next.js](https://nextjs.org/) app interface
+- `@mutuals/landing`: Mutuals landing page
+- `@mutuals/app`: Mutuals app interface
 - `@mutuals/contracts`: Mutuals smart contracts
-- `@mutuals/docs`: Mutuals [Next.js](https://nextjs.org/) docs
-- `@mutuals/ui`: a stub React component library shared by both `app` and `docs` applications
-- `@mutuals/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@mutuals/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- `@mutuals/docs`: Mutuals documentation
+- `@mutuals/ui`: shared stub component and theme library
+- `@mutuals/eslint-config`: shared `eslint` configurations
+- `@mutuals/typescript-config`: shared `tsconfig.json`s
 
 ### Build
 

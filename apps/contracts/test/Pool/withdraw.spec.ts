@@ -2,8 +2,11 @@ import hre from 'hardhat';
 import { Pool, PoolFactory } from '#/types/typechain';
 import { expect } from 'chai';
 import { withSnapshot } from '#/test/utils';
-import { solidityPackedKeccak256, toBigInt } from 'ethers';
 import Allocation from '@/utils/allocation';
+import { MultiProof } from '@openzeppelin/merkle-tree/dist/core';
+import { BytesLike, toBigInt, ZeroAddress } from 'ethers';
+import { HexString } from 'ethers/lib.esm/utils/data';
+import { MerkleTree } from '#/types/typechain/contracts/Pool';
 
 const salt = toBigInt(hre.ethers.randomBytes(16));
 const allocationRoot = hre.ethers.randomBytes(32);
@@ -33,43 +36,88 @@ const setupTest = withSnapshot(['pool'], async (hre) => {
   const pool = (await hre.ethers.getContractAt(
     'Pool',
     poolAddress
-  )) as InstanceOfContract<Pool>;
+  )) as unknown as Pool;
 
-  const tree = Allocation.buildTree(
-    Allocation.from({
-      [recipient0.address]: 50,
-      [recipient1.address]: 50,
-    })
-  );
+  const allocations = Allocation.from({
+    [recipient0.address]: 50,
+    [recipient1.address]: 50,
+  });
+  const tree = Allocation.buildTree(allocations);
+  const { proof, proofFlags } = tree.getMultiProof([recipientPosition]);
+  const proofParams = {
+    value: proof,
+    flags: proofFlags,
+  } as MerkleTree.MultiProofStruct;
 
   return {
     poolFactory,
     pool,
-    tree,
+    proofParams,
+    allocations,
     recipient0,
     recipient1,
     recipient2,
   };
 });
 
+const recipientPosition = 0;
+const wrongRecipientPosition = 1;
+
 describe('Pool.withdraw', () => {
   context('When a user withdraws with valid parameters', () => {
-    let proof: string[];
-    let pool1Address: string;
-    let pool2Address: string;
-
     before(async () => {
-      const { poolFactory, poolOwnerHonest } = await setupTest();
-      proof = merkleTree.hexProofForPayee(payee, paymentCycle);
+      // const { allocations, proofParams } = await setupTest();
     });
 
     it('should successfully execute the withdrawal up to the allotted amount for a recipient', async () => {
-      const { poolFactory, poolOwnerHonest } = await setupTest();
+      const { pool, proofParams, allocations, recipient0 } = await setupTest();
+      const request = {
+        allocations: [[allocations[recipientPosition]]],
+        amounts: [0],
+      } as Allocation.BatchRequestStruct;
       expect(
-        poolFactory
-          .connect(poolOwnerHonest)
-          .createPool(poolOwnerHonest.address, allocationRoot, salt1)
+        pool
+          .connect(recipient0)
+          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
       ).to.not.reverted;
+    });
+  });
+  context('When a user withdraws with invalid parameters', () => {
+    it('should revert for a negative amount for a recipient', async () => {
+      const { pool, proofParams, allocations, recipient0 } = await setupTest();
+      const request = {
+        allocations: [[allocations[recipientPosition]]],
+        amounts: [-1],
+      } as Allocation.BatchRequestStruct;
+      expect(
+        pool
+          .connect(recipient0)
+          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
+      ).to.be.reverted;
+    });
+    it('should revert for submitting a wrong proof', async () => {
+      const { pool, proofParams, allocations, recipient0 } = await setupTest();
+      const request = {
+        allocations: [[allocations[wrongRecipientPosition]]],
+        amounts: [0],
+      } as Allocation.BatchRequestStruct;
+      expect(
+        pool
+          .connect(recipient0)
+          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
+      ).to.be.reverted;
+    });
+    it('should revert for a too high amount for a recipient', async () => {
+      const { pool, proofParams, allocations, recipient0 } = await setupTest();
+      const request = {
+        allocations: [[allocations[recipientPosition]]],
+        amounts: [1],
+      } as Allocation.BatchRequestStruct;
+      expect(
+        pool
+          .connect(recipient0)
+          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
+      ).to.be.reverted;
     });
   });
 });

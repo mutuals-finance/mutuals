@@ -26,7 +26,7 @@ export default function HomeFeatures() {
         <Grid
           gap={"3"}
           templateColumns={{
-            base: "repeat(4, 1fr)",
+            base: "repeat(8, 1fr)",
             lg: "repeat(6, 1fr)",
           }}
         >
@@ -34,7 +34,7 @@ export default function HomeFeatures() {
             index={1}
             heading="All fungible assets"
             description="Major ERC20s tokens and ETH are supported. Allows for importing custom ERC20 tokens."
-            colSpan={{ base: 4, lg: 4 }}
+            colSpan={{ base: 8, lg: 4 }}
           ></FeatureCard>
 
           <FeatureCard
@@ -55,14 +55,14 @@ export default function HomeFeatures() {
             index={4}
             heading="Free To Use"
             description="Zero protocol fees. Optional donation based funding program with special rewards."
-            colSpan={{ base: 4, lg: 2 }}
+            colSpan={{ base: 8, lg: 2 }}
           ></FeatureCard>
 
           <FeatureCard
             index={5}
             heading="Gnosis Safe"
             description="Connect multiple wallets at once. Intuitive multi-account overview about incoming and outgoing funds."
-            colSpan={{ base: 4, lg: 2 }}
+            colSpan={{ base: 8, lg: 2 }}
           ></FeatureCard>
         </Grid>
       </Container>
