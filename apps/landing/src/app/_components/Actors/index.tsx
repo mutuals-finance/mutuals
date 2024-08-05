@@ -31,24 +31,27 @@ export default function HomeActors() {
             direction="row"
             wrap={{ base: "wrap", lg: "nowrap" }}
           >
-            <DarkMode>
-              <ActorCard
-                animate={active === "owners" ? "grow" : "shrink"}
-                title="For Owners"
-                description="Mutuals lets you automate and distribute your project earnings."
-                bg={useColorModeValue("gray.900", "bg.2")}
-                color={"white"}
-                image={ownersImage}
-                benefits={[
-                  "Highly customizable, gas-efficient smart contracts",
-                  "No need to worry about distributing token payments",
-                  "Automate income streams and track project earnings",
-                ]}
-                iconProps={{ color: "whiteAlpha.300" }}
-                buttonProps={{ variant: "blackWhite" }}
-                onHoverStart={() => setActive("owners")}
-              />
-            </DarkMode>
+            <ActorCard
+              animate={active === "owners" ? "grow" : "shrink"}
+              title="For Owners"
+              description="Mutuals lets you automate and distribute your project earnings."
+              bg={useColorModeValue("gray.900", "bg.3")}
+              benefitsProps={{
+                color: useColorModeValue("whiteAlpha.500", "whiteAlpha.500"),
+              }}
+              color={"white"}
+              image={ownersImage}
+              benefits={[
+                "Highly customizable, gas-efficient smart contracts",
+                "No need to worry about distributing token payments",
+                "Automate income streams and track project earnings",
+              ]}
+              iconProps={{
+                color: useColorModeValue("gray.600", "gray.600"),
+              }}
+              buttonProps={{ colorScheme: "accent", bg: "accent.600" }}
+              onHoverStart={() => setActive("owners")}
+            />
 
             <ActorCard
               animate={active === "partners" ? "grow" : "shrink"}
