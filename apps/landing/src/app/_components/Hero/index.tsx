@@ -49,20 +49,14 @@ export default function HomeHero() {
         <Container maxW="container.xl" mt={"12"} px={{ base: 3, md: 12 }}>
           <Stack
             w={"full"}
-            shadow={"sm"}
             align={"center"}
             p={"1.5"}
-            bgGradient={useColorModeValue(
-              "linear(to-r, bg.3, primary.300, bg.3)",
-              "linear(to-r, bg.3, color.primary, bg.3)",
-            )}
+            bg={"bg.3"}
             rounded={"lg"}
           >
-            <DarkMode>
-              <Button rightIcon={<IoPlayOutline />} variant="ghost">
-                Explore The Demo
-              </Button>
-            </DarkMode>
+            <Button variant="ghost" rightIcon={<IoPlayOutline />}>
+              Explore The Demo
+            </Button>
           </Stack>
         </Container>
       </Box>

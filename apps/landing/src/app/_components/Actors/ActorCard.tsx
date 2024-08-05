@@ -19,6 +19,7 @@ import {
   ListIcon,
   MotionBox,
   Heading,
+  ListProps,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoCheckboxOutline, IoArrowUpCircle } from "react-icons/io5";
@@ -31,6 +32,7 @@ export interface ActorCardProps extends CardProps {
   image?: ImageProps["src"];
   iconProps?: IconProps;
   buttonProps?: ButtonProps;
+  benefitsProps?: ListProps;
   animate?: "grow" | "shrink";
   onHoverStart?: (event: MouseEvent, info: EventInfo) => void;
   onHoverEnd?: (event: MouseEvent, info: EventInfo) => void;
@@ -43,6 +45,7 @@ export default function ActorCard({
   animate,
   iconProps,
   buttonProps,
+  benefitsProps,
   onHoverStart,
   onHoverEnd,
   image,
@@ -100,6 +103,7 @@ export default function ActorCard({
             <CardHeader
               as={Stack}
               gap={"3"}
+              justify={{ base: "space-between", lg: "unset" }}
               direction={{ base: "row", lg: "column" }}
               px={{ base: "6", lg: "12" }}
               pt={{ base: "6", lg: "12" }}
@@ -108,14 +112,14 @@ export default function ActorCard({
               <Heading
                 fontSize={"inherit"}
                 lineHeight="1"
-                mt={{ base: "1.5", lg: "unset" }}
+                mt={{ base: "-1", lg: "unset" }}
               >
                 {title}
               </Heading>
 
               <Icon
                 as={IoArrowUpCircle}
-                fontSize={{ base: "1.6em", lg: "inherit" }}
+                fontSize={{ base: "1em", lg: "inherit" }}
                 transform={"rotate(45deg)"}
                 order={{ lg: "-1" }}
                 {...iconProps}
@@ -145,7 +149,7 @@ export default function ActorCard({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <List spacing={"1"} color={"alpha.2"}>
+                    <List spacing={"1"} color={"alpha.2"} {...benefitsProps}>
                       {benefits?.map((b) => (
                         <ListItem key={b} as={Flex} alignItems={"flex-start"}>
                           <ListIcon
@@ -172,11 +176,7 @@ export default function ActorCard({
             pb={{ base: "6", lg: "12" }}
             pt={"0"}
           >
-            <Button
-              size={"lg"}
-              w={{ base: "full", lg: "auto" }}
-              {...buttonProps}
-            >
+            <Button w={{ base: "full", lg: "auto" }} {...buttonProps}>
               Get Started For Free
             </Button>
           </CardFooter>
