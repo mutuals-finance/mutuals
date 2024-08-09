@@ -1,13 +1,13 @@
 "use client";
 
-import { useQuery } from "@mutuals/sdk";
+import { useQuery } from "@mutuals/graphql-client-nextjs";
 import { Container, Heading, SimpleGrid } from "@mutuals/ui";
 import React from "react";
 import { useAccount } from "wagmi";
 
 import { TreasurySearchAndCreate } from "./SearchAndCreate";
 import PoolCard from "@/features/Pool/Card";
-import { PoolListByRecipientDocument } from "@mutuals/sdk/thegraph";
+import { PoolListByRecipientDocument } from "@mutuals/graphql-client-nextjs/thegraph";
 
 export default function PoolList() {
   const { address, isConnected } = useAccount();

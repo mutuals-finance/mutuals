@@ -1,4 +1,4 @@
-import { ViewerQuery } from "@mutuals/sdk";
+import { ViewerQuery } from "@mutuals/graphql-client-nextjs";
 import { getAddress } from "ethers";
 
 export function partition<T>(

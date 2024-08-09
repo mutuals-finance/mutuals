@@ -16,9 +16,9 @@ import {
 import { useRouter } from "next/navigation";
 import React, { PropsWithChildren, useCallback } from "react";
 import Form from "@/components/Form";
-import { Chain } from "@mutuals/sdk";
+import { Chain } from "@mutuals/graphql-client-nextjs";
 import { useSignMessage } from "@/features/Wallet/SignProvider";
-import { addWallet } from "@mutuals/sdk/server";
+import { addWallet } from "@mutuals/graphql-client-nextjs/server";
 
 type WalletData = {
   name: string;

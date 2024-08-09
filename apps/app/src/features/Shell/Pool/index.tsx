@@ -2,7 +2,7 @@ import React from "react";
 import { HStack, Text } from "@mutuals/ui";
 import ShellPage, { ShellPageProps } from "@/features/Shell/Page";
 import { ipfsResolveData } from "@/utils";
-import { SplitMetadata } from "@mutuals/sdk/thegraph";
+import { SplitMetadata } from "@mutuals/graphql-client-nextjs/thegraph";
 import PoolCard from "@/features/Pool/Card";
 
 export interface ShellPoolProps extends ShellPageProps {

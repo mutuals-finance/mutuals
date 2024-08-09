@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { useSignMessage, UseSignMessageReturnType } from "wagmi";
 
-import { useCreateNonce } from "@mutuals/sdk/client";
+import { useCreateNonce } from "@mutuals/graphql-client-nextjs/client";
 import { Address } from "viem";
 import useAbortController, { AbortFn } from "@/hooks/useAbortController";
 

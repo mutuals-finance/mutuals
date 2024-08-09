@@ -1,5 +1,5 @@
 import { ipfsUrlFromUri } from "src/utils";
-import { SplitMetadata } from "@mutuals/sdk/thegraph";
+import { SplitMetadata } from "@mutuals/graphql-client-nextjs/thegraph";
 
 export const fetcher = <TResponse = unknown>(
   url: string,

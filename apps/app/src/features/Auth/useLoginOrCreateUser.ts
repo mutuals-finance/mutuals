@@ -2,12 +2,12 @@
 
 import { useCallback } from "react";
 
-import { AuthMechanism, Chain } from "@mutuals/sdk";
+import { AuthMechanism, Chain } from "@mutuals/graphql-client-nextjs";
 import {
   useCreateUser,
   useLazyGetUserByWalletAddress,
   useLogin,
-} from "@mutuals/sdk/client";
+} from "@mutuals/graphql-client-nextjs/client";
 import type { Address } from "viem";
 import useAbortController, { AbortFn } from "@/hooks/useAbortController";
 

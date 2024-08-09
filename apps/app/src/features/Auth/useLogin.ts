@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { Chain } from "@mutuals/sdk";
+import { Chain } from "@mutuals/graphql-client-nextjs";
 import { type Address } from "viem";
 import { useStateList } from "react-use";
 import useAuthLoginOrCreateUser from "@/features/Auth/useLoginOrCreateUser";

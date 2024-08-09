@@ -1,5 +1,5 @@
 {
-  "name": "@mutuals/sdk",
+  "name": "@mutuals/graphql-client-nextjs",
   "version": "0.0.0",
   "private": true,
   "exports": {

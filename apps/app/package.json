@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@mutuals/ui": "workspace:*",
-    "@mutuals/sdk": "workspace:*",
+    "@mutuals/graphql-client-nextjs": "workspace:*",
     "@ankr.com/ankr.js": "^0.5.0",
     "@coinbase/wallet-sdk": "^4.0.0",
     "@emotion/react": "^11.11.4",
