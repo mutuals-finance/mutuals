@@ -40,8 +40,7 @@ export const verifyContracts = async ({
   contracts: Contracts;
 }): Promise<void> => {
   const taskName = 'verify:verify';
-  const isLocalNetwork = ['localhost', 'hardhat'].includes(hre.network.name);
-  if (isLocalNetwork) {
+  if (hre.isNetworkLocal()) {
     hre.trace(`not executing task ${taskName} for network ${hre.network.name}`);
     return;
   }
@@ -90,8 +89,8 @@ export const configureDeploymentSettings = async ({
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }): Promise<void> => {
-  if (hre.network.name === 'hardhat' || hre.network.name === 'localhost') {
-    //await hre.run('deploy:erc1820');
+  if (hre.isNetworkLocal()) {
+    // currently, it's a noop (there might be somewhat in the future)
   }
 };
 
