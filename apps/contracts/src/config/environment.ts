@@ -3,7 +3,6 @@ import dotenvParseVariables from 'dotenv-parse-variables';
 
 const loadEnvironment = (): void => {
   const defaults = dotenvDefaults.config();
-
   if (defaults.error !== undefined || defaults.parsed === undefined) {
     throw defaults.error;
   }

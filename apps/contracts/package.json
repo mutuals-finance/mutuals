@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "hardhat node --watch",
+    "dev": "hardhat node",
     "build": "hardhat compile --config ./hardhat.config.ts",
     "build:clean": "cross-env pnpm clean && pnpm build",
     "clean": "cross-env hardhat clean && rimraf .deps cache hh-cache",
@@ -11,7 +11,7 @@
     "test:clean": "cross-env pnpm clean && pnpm test",
     "typechain": "hardhat typechain",
     "deploy:local": "hardhat deploy --network localhost",
-    "deploy:staging": "hardhat deploy --network amoy",
+    "deploy:staging": "cross-env SOLC_PROFILE=production hardhat deploy --network polygonAmoy",
     "deploy:production": "hardhat deploy --network mainnet",
     "task:accounts": "hardhat accounts",
     "lint": "cross-env pnpm lint:solhint && pnpm lint:eslint",

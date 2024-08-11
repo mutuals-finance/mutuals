@@ -39,28 +39,33 @@ export const verifyContracts = async ({
   hre: CustomHardHatRuntimeEnvironment;
   contracts: Contracts;
 }): Promise<void> => {
-  if (!['localhost', 'hardhat'].includes(hre.network.name)) {
-    hre.trace('Verifying contracts');
-    const results = await Promise.allSettled(
-      Object.entries(contracts)
-        .filter((_, value) => value !== undefined)
-        .map(async ([_name, { address }]) => {
-          return hre.run('verify:verify', {
-            address:
-              await hre.upgrades.erc1967.getImplementationAddress(address),
-            constructorArguments: [],
-          } as never);
-        })
-    );
-    for (const { reason } of results.filter(
-      ({ status }) => status === 'rejected'
-    ) as PromiseRejectedResult[]) {
-      if (!reason.message.toLowerCase().includes('already verified')) {
-        throw new Error(reason);
-      }
-    }
-    hre.trace('Verified contracts');
+  const taskName = 'verify:verify';
+  const isLocalNetwork = ['localhost', 'hardhat'].includes(hre.network.name);
+  if (isLocalNetwork) {
+    hre.trace(`not executing task ${taskName} for network ${hre.network.name}`);
+    return;
   }
+
+  hre.trace(`executing task ${taskName} for network ${hre.network.name}`);
+
+  const results = await Promise.allSettled(
+    Object.entries(contracts)
+      .filter((_, value) => value !== undefined)
+      .map(async ([_name, contract]) =>
+        hre.run(taskName, {
+          address: contract.target,
+          constructorArgsParams: [],
+        })
+      )
+  );
+  for (const { reason } of results.filter(
+    ({ status }) => status === 'rejected'
+  ) as PromiseRejectedResult[]) {
+    if (!reason.message.toLowerCase().includes('already verified')) {
+      throw new Error(reason);
+    }
+  }
+  hre.trace('Verified contracts');
 };
 
 export const writeContractsConfig = ({
@@ -129,35 +134,7 @@ export const deployPoolBeaconContract = async ({
     contractName: 'Pool',
   });
 };
-/*
 
-export const deployTestContracts = async ({
-	hre,
-	contractNames: contracts,
-}: {
-	hre: CustomHardHatRuntimeEnvironment;
-	contractNames: (keyof Contracts)[];
-}): Promise<Contracts> => {
-	const isTestnet = ['amoy', 'goerli'].includes(hre.network.name);
-	const scheduleTestHarnessInstance =
-		isTestnet !== null && contracts.includes('PoolLibTestHarness')
-			? await hre.deployNonUpgradeable<
-					PoolLibTestHarness,
-					PoolLibTestHarness__factory
-				>({
-					contractName: 'PoolLibTestHarness',
-					args: [],
-				})
-			: undefined;
-	return {
-		...(scheduleTestHarnessInstance !== null && {
-			PoolLibTestHarness: scheduleTestHarnessInstance,
-		}),
-	};
-};
-*/
-
-// TODO: Would like to store more details of the deployment here like ABI
 export const saveDeployments = async ({
   hre,
   contracts,
@@ -184,7 +161,6 @@ export const saveDeployments = async ({
   hre.trace('saved deployments');
 };
 
-// TODO: These could all operate on a single contract at a time now.
 export const finalizeDeployments = async ({
   hre,
   contracts,

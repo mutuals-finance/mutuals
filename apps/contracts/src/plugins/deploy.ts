@@ -13,11 +13,13 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
   contractName,
   deployFn,
   upgradeFn,
+  getImplementationAddressFn,
   args,
   options,
 }: (DeployOrUpgradeProxyFunctionArgs | DeployOrUpgradeBeaconFunctionArgs) & {
   upgradeFn: GenericUpgradeFunction;
   deployFn: GenericDeployFunction;
+  getImplementationAddressFn: (proxyAddress: string) => Promise<string>;
 }): Promise<InstanceOfContract<TContract>> => {
   if (options === undefined) {
     options = {};
@@ -44,7 +46,13 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
     process.env.FORCE_PROXY_DEPLOYMENT ||
     typeof maybeDeployedAddress !== 'string';
 
-  const [signer]: Signer[] = await hre.getSigners();
+  const signer: Signer = await hre.ethers.getNamedSigner(
+    'mutualsStagingDeployer'
+  );
+
+  if (!signer) {
+    throw new Error(`Signer could not be found`);
+  }
 
   hre.trace(
     `deployOrUpgrade: ${contractName} from address ${await signer.getAddress()}`
@@ -67,9 +75,7 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
         contractName
       );
       const existingImplAddress =
-        await hre.upgrades.erc1967.getImplementationAddress(
-          maybeDeployedAddress
-        );
+        await getImplementationAddressFn(maybeDeployedAddress);
       hre.trace('Existing implementation at:', existingImplAddress);
       const artifact = await hre.deployments.getArtifact(contractName);
       if (deployment?.bytecode === artifact.bytecode) {
@@ -111,6 +117,7 @@ export const deployOrUpgradeProxy: DeployOrUpgradeProxyFunction =
       ...args,
       deployFn: hre.upgrades.deployProxy,
       upgradeFn: hre.upgrades.upgradeProxy,
+      getImplementationAddressFn: hre.upgrades.erc1967.getImplementationAddress,
     });
   };
 
@@ -122,6 +129,7 @@ export const deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction =
       ...args,
       upgradeFn: hre.upgrades.upgradeBeacon,
       deployFn: hre.upgrades.deployBeacon,
+      getImplementationAddressFn: hre.upgrades.beacon.getImplementationAddress,
     });
   };
 
@@ -139,7 +147,7 @@ export const deployNonUpgradeable = async <
 }): Promise<InstanceOfContract<TContract>> => {
   const [signer] = await hre.getSigners();
   hre.log(
-    `deployNonUpgradeable: ${contractName} from address ${await signer.getAddress()}`
+    `deployNonUpgradeable: ${contractName} from address ${await signer?.getAddress()}`
   );
   const contractFactory = await hre.ethers.getContractFactory<TFactory>(
     contractName,
