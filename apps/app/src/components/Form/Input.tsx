@@ -1,6 +1,6 @@
 "use client";
 
-import { Input as ChakraInput } from "@chakra-ui/react";
+import { Input as ChakraInput } from "@mutuals/ui";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 

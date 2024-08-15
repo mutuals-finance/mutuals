@@ -1,9 +1,9 @@
-import { Box, BoxProps, Heading, Text, VStack } from "@chakra-ui/react";
-import React from "react";
+import { Box, BoxProps, Heading, Text, VStack } from "@mutuals/ui";
+import { isValidElement, PropsWithChildren, ReactNode } from "react";
 
 interface FormGroupProps extends BoxProps {
   title?: string;
-  description?: React.ReactNode | string;
+  description?: ReactNode | string;
 }
 
 export default function FormGroup({
@@ -11,20 +11,22 @@ export default function FormGroup({
   description,
   children,
   ...props
-}: React.PropsWithChildren<FormGroupProps>) {
+}: PropsWithChildren<FormGroupProps>) {
   return (
     <Box {...props}>
       <VStack spacing={"6"} alignItems={"start"}>
         {!!title && (
-          <Heading as={"h3"} size={"sm"}>
+          <Heading as={"h3"} size={"lg"}>
             {title}
           </Heading>
         )}
         {!!description &&
-          (React.isValidElement(description) ? (
+          (isValidElement(description) ? (
             description
           ) : (
-            <Text>{description}</Text>
+            <Text color={"alpha.3"} fontWeight={"500"}>
+              {description}
+            </Text>
           ))}
         {children}
       </VStack>

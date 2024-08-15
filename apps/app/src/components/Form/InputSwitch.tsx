@@ -1,4 +1,4 @@
-import { Switch, SwitchProps } from "@chakra-ui/react";
+import { Switch, SwitchProps } from "@mutuals/ui";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 

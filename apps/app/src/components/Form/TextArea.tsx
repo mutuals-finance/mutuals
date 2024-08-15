@@ -1,7 +1,7 @@
 import {
   Textarea as ChakraTextarea,
   TextareaProps as ChakraTextareaProps,
-} from "@chakra-ui/react";
+} from "@mutuals/ui";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
