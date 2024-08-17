@@ -12,6 +12,14 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc -b"
   },
+  "peerDependencies": {
+    "viem": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "viem": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
