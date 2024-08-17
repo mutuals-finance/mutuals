@@ -1,6 +1,6 @@
 "use client";
 
-import { StackProps, VStack } from "@chakra-ui/react";
+import { StackProps, VStack } from "@mutuals/ui";
 import React from "react";
 import {
   FieldValues,

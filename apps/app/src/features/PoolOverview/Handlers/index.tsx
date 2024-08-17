@@ -8,7 +8,7 @@ import {
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import Link from "next/link";
-import { Split } from "@mutuals/sdk/thegraph";
+import { Split } from "@mutuals/graphql-client-nextjs/thegraph";
 import { type DeepPartial } from "#/partial";
 
 interface PoolHandlersProps {

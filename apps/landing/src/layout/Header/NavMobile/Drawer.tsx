@@ -12,7 +12,7 @@ import {
   Link,
   Stack,
   StackDivider,
-  DrawerFooter,
+  Box,
 } from "@mutuals/ui";
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/layout/Header/NavWrapper";
@@ -23,17 +23,9 @@ interface MobileNavProps
   links?: LinkProps[];
 }
 
-function MobileNavItem({ children, ...props }: ListItemProps) {
-  return (
-    <ListItem w={"full"} {...props}>
-      {children}
-    </ListItem>
-  );
-}
-
 export default function NavMobileDrawer({ links, ...props }: MobileNavProps) {
   return (
-    <Drawer size={"full"} blockScrollOnMount={false} {...props}>
+    <Drawer size={"full"} {...props}>
       <DrawerContent gap={"0"}>
         <DrawerHeader p={"0"}>
           <NavWrapper
@@ -59,23 +51,15 @@ export default function NavMobileDrawer({ links, ...props }: MobileNavProps) {
             divider={<StackDivider />}
           >
             {(links || []).map(({ ...link }, index) => (
-              <Link
-                key={index}
-                p={"6"}
-                w={"full"}
-                fontSize={"lg"}
-                color={"color.1"}
-                fontWeight={"500"}
-                {...link}
-              />
+              <Link key={index} p={"6"} w={"full"} fontSize={"lg"} {...link} />
             ))}
+            <Box p={"6"}>
+              <Button colorScheme={"primary"} size="lg" w={"full"}>
+                Launch App
+              </Button>
+            </Box>
           </Stack>
         </DrawerBody>
-        <DrawerFooter p={"6"} borderTop={"1px solid"} borderColor={"border.1"}>
-          <Button colorScheme={"primary"} size="lg" w={"full"}>
-            Launch App
-          </Button>
-        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

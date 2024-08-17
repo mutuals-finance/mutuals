@@ -9,9 +9,9 @@ import React, {
 import useAuthLogin from "@/features/Auth/useLogin";
 import { useRouter } from "next/navigation";
 import { Connector, useAccountEffect, useConnect, useDisconnect } from "wagmi";
-import { ViewerQuery } from "@mutuals/sdk";
+import { ViewerQuery } from "@mutuals/graphql-client-nextjs";
 import { Address } from "viem";
-import { useLogout } from "@mutuals/sdk/client";
+import { useLogout } from "@mutuals/graphql-client-nextjs/client";
 import { walletMapFromViewerQuery } from "@/utils";
 
 type AuthContextType = {

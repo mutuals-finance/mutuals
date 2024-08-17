@@ -3,7 +3,10 @@
 import React, { PropsWithChildren } from "react";
 import { useAccount } from "wagmi";
 import WalletForm from "@/features/Wallet/Form";
-import { ApolloQueryResult, ViewerWalletsQuery } from "@mutuals/sdk";
+import {
+  ApolloQueryResult,
+  ViewerWalletsQuery,
+} from "@mutuals/graphql-client-nextjs";
 import { walletMapFromViewerQuery } from "@/utils";
 import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@mutuals/ui";
 

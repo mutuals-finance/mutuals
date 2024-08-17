@@ -1,4 +1,15 @@
-import { Box, Button, Grid, GridItem, Stack, Text } from "@mutuals/ui";
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  Stack,
+  Text,
+  MenuList,
+  MenuItem,
+  MenuButton,
+  Menu,
+} from "@mutuals/ui";
 import { UseFormReturn } from "react-hook-form";
 
 import FormGroup from "@/components/Form/FormGroup";
@@ -12,6 +23,8 @@ import InputBase from "@/components/Form/InputBase";
 import PoolAddFormPayees from "@/features/PoolAdd/Payees";
 import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddModal from "@/features/PoolAdd/Modal";
+import Select from "@/components/Form/InputSelect";
+import { IoAdd } from "react-icons/io5";
 
 interface PoolAddFormContentProps extends UseFormReturn<PoolAddData, never> {
   onModalClose: () => void;
@@ -51,9 +64,20 @@ export default function PoolAddFormContent({
           </FormGroup>
 
           <FormGroup
-            title={`Payees`}
+            title={`Allocation`}
             description={`Please define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
           >
+            <Menu>
+              <MenuButton as={Button} rightIcon={<IoAdd />}>
+                Add allocation
+              </MenuButton>
+              <MenuList>
+                <MenuItem>Percentage</MenuItem>
+                <MenuItem>Fixed</MenuItem>
+                <MenuItem>Prioritized</MenuItem>
+                <MenuItem>Timed</MenuItem>
+              </MenuList>
+            </Menu>
             <PoolAddFormPayees id={"payees"} />
           </FormGroup>
 

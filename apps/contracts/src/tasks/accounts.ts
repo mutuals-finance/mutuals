@@ -21,8 +21,8 @@ export const TASK = {
           name,
           {
             address,
-            privateKey: account.privateKey,
-            balance: formatEther(account.balance).toString(),
+            privateKey: account?.privateKey,
+            balance: formatEther(account?.balance ?? '0').toString(),
           },
         ];
       })

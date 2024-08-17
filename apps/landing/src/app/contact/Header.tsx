@@ -15,7 +15,8 @@ export default function ContactHeader() {
   return (
     <Box as="header" pt={"20"}>
       <Container
-        my="20"
+        mt="20"
+        mb="32"
         maxW={{ base: "container.sm", lg: "container.lg" }}
         px={{ base: "3", lg: "12" }}
       >

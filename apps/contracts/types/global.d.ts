@@ -36,6 +36,12 @@ import {
   HardhatEthersSigner,
   HardhatEthersHelpers,
 } from '@nomicfoundation/hardhat-ethers/types';
+import { lazyFunction } from 'hardhat/plugins';
+import {
+  isNetworkLocal,
+  isNetworkProduction,
+  isNetworkStaging,
+} from '@/plugins/network';
 
 declare module 'hardhat/config' {
   type EnvironmentExtender = (
@@ -217,12 +223,16 @@ declare global {
       taskArguments?: Parameters<(typeof TASKS)[typeof name]['run']>[0]
     ) => Promise<ReturnType<(typeof TASKS)[typeof name]['run']>>;
     upgrades: CustomHardhatUpgrades;
+    defender: CustomHardhatUpgrades;
     network: Omit<Network, 'name'> & { name: keyof typeof networks };
     ethers: typeof ethers;
     getSigners: () => Promise<SignerWithAddress[]>;
     deployOrUpgradeProxy: DeployOrUpgradeProxyFunction;
     deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction;
     deployNonUpgradeable: DeployNonUpgradeableFunction;
+    isNetworkStaging: () => boolean;
+    isNetworkLocal: () => boolean;
+    isNetworkProduction: () => boolean;
     log: Console['log'];
     trace: Console['log'];
   };

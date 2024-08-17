@@ -1,6 +1,6 @@
 "use client";
 
-import { BoxProps, MotionBox } from "@mutuals/ui";
+import { Box, BoxProps, MotionBox } from "@mutuals/ui";
 import { DarkMode, LightMode, useBreakpointValue } from "@mutuals/ui";
 import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
 import { Fragment, useCallback, useEffect, useState } from "react";
@@ -11,14 +11,6 @@ const variants = {
   visibility: {
     visible: { y: 0 },
     invisible: { y: "-100%" },
-  },
-  transparency: {
-    transparent: {
-      background: "transparent",
-    },
-    opaque: {
-      background: "var(--chakra-colors-bgAlpha-1)",
-    },
   },
 };
 
@@ -88,19 +80,15 @@ export default function HeaderContainerWrapper({
         {...props}
       >
         <ThemeComponent>
-          <MotionBox
+          <Box
             flex={"1"}
             display="flex"
             alignItems="stretch"
             justifyContent="stretch"
-            animate={isTransparent ? "transparent" : "opaque"}
-            variants={variants.transparency}
-            transition={{
-              duration: 0.1,
-            }}
+            bg={"bgAlpha.2"}
           >
             {children}
-          </MotionBox>
+          </Box>
         </ThemeComponent>
       </MotionBox>
     </MotionConfig>

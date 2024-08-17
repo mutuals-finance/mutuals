@@ -14,7 +14,8 @@ export default function FooterFooter() {
   return (
     <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
       <Stack
-        py={6}
+        pt={6}
+        pb={20}
         direction={{ base: "column", md: "row" }}
         spacing={6}
         justify={{ md: "space-between" }}
@@ -29,7 +30,8 @@ export default function FooterFooter() {
           color="alpha.3"
           order={{ base: "3", lg: "0" }}
         >
-          &copy; {new Date().getFullYear()} SplifFi, Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} Mutuals Finance, All rights
+          reserved.
         </Text>
         <Stack direction="row" spacing={6} justify={"space-between"}>
           <ButtonGroup variant="ghost" size={"sm"}>

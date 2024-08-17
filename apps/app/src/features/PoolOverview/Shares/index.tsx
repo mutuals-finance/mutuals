@@ -2,7 +2,7 @@ import ContentCard from "@/components/ContentCard";
 
 import Content from "@/features/PoolOverview/Shares/Content";
 import { Stack } from "@mutuals/ui";
-import { Share } from "@mutuals/sdk/thegraph";
+import { Share } from "@mutuals/graphql-client-nextjs/thegraph";
 
 interface PoolOverviewSharesProps {
   shares?: Partial<Share>[];

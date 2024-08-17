@@ -11,11 +11,13 @@ import { default as Stat } from "./stat";
 import { default as Heading } from "./heading";
 import { default as Breadcrumb } from "./breadcrumb";
 import { default as Table } from "./table";
+import { default as Link } from "./link";
 
 export default {
   Button,
   Container,
   Card,
+  Link,
   Tabs,
   Form,
   Text: ChakraText,

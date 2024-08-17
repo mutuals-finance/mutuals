@@ -1,4 +1,12 @@
-import { Box, Container, Grid, IconButton, Input, Stack } from "@mutuals/ui";
+import {
+  Box,
+  Container,
+  Grid,
+  IconButton,
+  Input,
+  SplitFiLogo,
+  Stack,
+} from "@mutuals/ui";
 import { IoSend } from "react-icons/io5";
 import ListBox from "@/layout/Footer/ListBox";
 import Footer from "@/layout/Footer/Footer";
@@ -14,8 +22,9 @@ export default function LayoutFooter() {
         color="color.1"
       >
         <Grid
-          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
-          gap={{ base: "6", lg: "6" }}
+          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(6, 1fr)" }}
+          templateRows={{ lg: "2" }}
+          gap={{ base: "12", lg: "12" }}
         >
           <ListBox
             title={"Company"}
@@ -35,6 +44,7 @@ export default function LayoutFooter() {
               { children: "Community Guidelines", href: "/" },
             ]}
           />
+
           <ListBox
             title={"Legal"}
             links={[
@@ -44,8 +54,20 @@ export default function LayoutFooter() {
               { children: "Law Enforcement", href: "/" },
             ]}
           />
-          <ListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 1 }}>
-            <Stack direction="row">
+
+          <ListBox
+            colSpan={{ base: 2, lg: 3 }}
+            rowSpan={{ lg: 2 }}
+            alignItems={"flex-end"}
+            justifyContent={"flex-start"}
+          >
+            <Box>
+              <SplitFiLogo maxW={{ base: "32", lg: "48" }} />
+            </Box>
+          </ListBox>
+
+          <ListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 3 }}>
+            <Stack direction="row" w={"full"}>
               <Input variant="filled" placeholder="Your Email Address" />
               <IconButton aria-label="Subscribe" icon={<IoSend />} />
             </Stack>

@@ -4,11 +4,11 @@ import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { config } from "@/lib/wagmi";
 import { UIProvider } from "@mutuals/ui";
-import { ApolloProvider } from "@mutuals/sdk/providers";
+import { ApolloProvider } from "@mutuals/graphql-client-nextjs/providers";
 import WagmiProvider from "@/providers/WagmiProvider";
 import AuthProvider from "@/features/Auth/Provider";
 import SignMessageProvider from "@/features/Wallet/SignProvider";
-import { getViewer } from "@mutuals/sdk/server";
+import { getViewer } from "@mutuals/graphql-client-nextjs/server";
 
 export default async function Providers({ children }: PropsWithChildren) {
   const redirectURL = "/";

@@ -19,6 +19,11 @@ import {
   deployOrUpgradeBeacon,
   deployOrUpgradeProxy,
 } from '@/plugins/deploy';
+import {
+  isNetworkLocal,
+  isNetworkProduction,
+  isNetworkStaging,
+} from '@/plugins/network';
 
 /**
  * Note: extendEnvironment cannot take async functions
@@ -34,6 +39,9 @@ extendEnvironment((hre) => {
     hre.log('Using hardhat signer');
   }
   hre.getSigners = lazyFunction(() => hre.ethers.getSigners);
+  hre.isNetworkStaging = lazyFunction(() => isNetworkStaging);
+  hre.isNetworkLocal = lazyFunction(() => isNetworkLocal);
+  hre.isNetworkProduction = lazyFunction(() => isNetworkProduction);
   hre.deployNonUpgradeable = lazyFunction(() => deployNonUpgradeable);
   hre.deployOrUpgradeProxy = lazyFunction(() => deployOrUpgradeProxy);
   hre.deployOrUpgradeBeacon = lazyFunction(() => deployOrUpgradeBeacon);

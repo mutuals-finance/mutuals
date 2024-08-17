@@ -11,7 +11,7 @@ import {
 
 import { formatUSDPrice, ipfsResolveData } from "src/utils";
 
-import { Split } from "@mutuals/sdk/thegraph";
+import { Split } from "@mutuals/graphql-client-nextjs/thegraph";
 import { type DeepPartial } from "#/partial";
 import PoolCard from "@/features/Pool/Card";
 

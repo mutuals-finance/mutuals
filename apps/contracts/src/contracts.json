@@ -1,7 +1,7 @@
 {
   "hardhat": {
     "Pool": {
-      "proxyAddress": "0x6c0fE0b32116843B60b8c7E682B9e1B0Cc310783"
+      "proxyAddress": "0x28f282C3df413C9b0A5301DF875Df3b0955731a8"
     },
     "PoolFactory": {
       "proxyAddress": "0xa1c2079DE8F5a431a38b0540F53d075A89D57e82"
@@ -13,6 +13,14 @@
     },
     "PoolFactory": {
       "proxyAddress": "0xb3117660142EB09172F8703975976703150656eB"
+    }
+  },
+  "polygonAmoy": {
+    "Pool": {
+      "proxyAddress": "0xA1B80af7772729b4f7626fAed4cEcDA98B9d3f44"
+    },
+    "PoolFactory": {
+      "proxyAddress": "0xbC4BFa087473C516A04D720Ac6301BF8981177FA"
     }
   }
 }

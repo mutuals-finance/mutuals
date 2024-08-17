@@ -9,14 +9,14 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@mutuals/ui": "workspace:*",
-    "@mutuals/sdk": "workspace:*",
     "@ankr.com/ankr.js": "^0.5.0",
     "@coinbase/wallet-sdk": "^4.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^2.0.3",
     "@metamask/detect-provider": "^2.0.0",
+    "@mutuals/graphql-client-nextjs": "workspace:*",
+    "@mutuals/ui": "workspace:*",
     "@supabase/supabase-js": "^2.43.2",
     "@tanstack/react-query": "^5.36.2",
     "@tanstack/react-table": "^8.17.3",
@@ -30,7 +30,7 @@
     "@visx/tooltip": "^3.3.0",
     "@walletconnect/ethereum-provider": "^2.13.0",
     "ankr-react": "^0.3.0",
-    "chakra-react-select": "^4.7.6",
+    "chakra-react-select": "^4.9.1",
     "date-fns": "^3.6.0",
     "deepmerge": "^4.3.1",
     "ethers": "^6.12.1",
@@ -52,10 +52,10 @@
     "wagmi": "^2.9.2"
   },
   "devDependencies": {
-    "@mutuals/eslint-config": "workspace:*",
-    "@mutuals/typescript-config": "workspace:*",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",

@@ -36,7 +36,7 @@ import {
 } from "@/utils";
 
 import PoolCardLogo from "@/features/Pool/Card/Logo";
-import { Split } from "@mutuals/sdk/thegraph";
+import { Split } from "@mutuals/graphql-client-nextjs/thegraph";
 
 export type PoolCardProps = Partial<Split>;
 

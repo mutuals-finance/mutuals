@@ -50,7 +50,7 @@ const goerli: NetworkUserConfig = {
   }),
 };
 
-const amoy: NetworkUserConfig = {
+const polygonAmoy: NetworkUserConfig = {
   chainId: 80_002,
   url: AMOY_RPC_URL,
   gasPrice: 35_000_000_000,
@@ -87,7 +87,7 @@ export const networks = {
   hardhat,
   ...(Boolean(MNEMONIC) && { localhost }),
   ...(Boolean(GOERLI_RPC_URL) && { goerli }),
-  ...(Boolean(AMOY_RPC_URL) && { amoy }),
+  ...(Boolean(AMOY_RPC_URL) && { polygonAmoy }),
   ...(Boolean(ETHEREUM_RPC_URL) && { mainnet }),
   ...(Boolean(POLYGON_RPC_URL) && { polygon }),
 } as const;

@@ -7,6 +7,5 @@ export const defender: HardhatUserConfig['defender'] =
     ? {
         apiKey: DEFENDER_API_KEY,
         apiSecret: DEFENDER_API_SECRET,
-        useDefenderDeploy: true,
       }
     : undefined;
