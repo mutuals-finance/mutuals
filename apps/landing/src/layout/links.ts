@@ -5,8 +5,9 @@ const links: LinkProps[] = [
     href: "/pricing",
     children: "Pricing",
   },
-  { children: "Contact", href: "/contact" },
-  { children: "Support", href: "/support" },
+  { children: "Company", href: "/contact" },
+  { children: "Community", href: "/support" },
+  { children: "Blog", href: "/blog" },
   { children: "Docs", href: "/docs" },
 ];
 

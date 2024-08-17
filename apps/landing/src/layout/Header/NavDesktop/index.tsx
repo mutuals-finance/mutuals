@@ -9,7 +9,7 @@ interface NavDesktopProps extends NavWrapperProps {
 export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
   return (
     <NavWrapper {...props}>
-      <HStack ml={"auto"} spacing="12" justify="center">
+      <HStack ml={"auto"} spacing="6" justify="center">
         {links.map((props, index) => (
           <NavLink key={index} {...props} />
         ))}
