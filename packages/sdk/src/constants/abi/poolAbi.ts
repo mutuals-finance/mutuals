@@ -1,3 +1,5 @@
+import { Abi } from "viem";
+
 export const poolAbi = [
   {
     inputs: [],
@@ -6,7 +8,44 @@ export const poolAbi = [
   },
   {
     inputs: [],
+    name: "EnforcedPause",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ExpectedPause",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "InvalidAllocation",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "InvalidAllocationState",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "InvalidInitialization",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidProof",
     type: "error",
   },
   {
@@ -42,6 +81,36 @@ export const poolAbi = [
     type: "error",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "UnauthorizedRecipient",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "oldAllocationRoot",
+        type: "bytes32",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "newAllocationRoot",
+        type: "bytes32",
+      },
+    ],
+    name: "AllocationUpdated",
+    type: "event",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -74,6 +143,57 @@ export const poolAbi = [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Paused",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Unpaused",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "Withdraw",
+    type: "event",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -92,29 +212,6 @@ export const poolAbi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address[]",
-        name: "_receivers",
-        type: "address[]",
-      },
-      {
-        internalType: "address",
-        name: "currency",
-        type: "address",
-      },
-      {
-        internalType: "uint256[]",
-        name: "_amounts",
-        type: "uint256[]",
-      },
-    ],
-    name: "batchDeposit",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "owner",
     outputs: [
@@ -129,7 +226,40 @@ export const poolAbi = [
   },
   {
     inputs: [],
+    name: "pause",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "paused",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "_newAllocationRoot",
+        type: "bytes32",
+      },
+    ],
+    name: "setAllocation",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -148,6 +278,13 @@ export const poolAbi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "unpause",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -156,7 +293,7 @@ export const poolAbi = [
       },
       {
         internalType: "address",
-        name: "currency",
+        name: "token",
         type: "address",
       },
       {
@@ -213,26 +350,26 @@ export const poolAbi = [
             name: "amounts",
             type: "uint256[]",
           },
+          {
+            components: [
+              {
+                internalType: "bytes32[]",
+                name: "value",
+                type: "bytes32[]",
+              },
+              {
+                internalType: "bool[]",
+                name: "flags",
+                type: "bool[]",
+              },
+            ],
+            internalType: "struct MerkleTree.MultiProof",
+            name: "proof",
+            type: "tuple",
+          },
         ],
-        internalType: "struct Allocation.BatchRequest",
+        internalType: "struct PoolLib.WithdrawRequest",
         name: "request",
-        type: "tuple",
-      },
-      {
-        components: [
-          {
-            internalType: "bytes32[]",
-            name: "value",
-            type: "bytes32[]",
-          },
-          {
-            internalType: "bool[]",
-            name: "flags",
-            type: "bool[]",
-          },
-        ],
-        internalType: "struct MerkleTree.MultiProof",
-        name: "proof",
         type: "tuple",
       },
     ],
@@ -247,4 +384,4 @@ export const poolAbi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as Abi;

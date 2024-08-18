@@ -1,3 +1,5 @@
+import { Abi } from "viem";
+
 export const poolFactoryAbi = [
   {
     inputs: [],
@@ -88,31 +90,6 @@ export const poolFactoryAbi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: "address",
-        name: "pool",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "root",
-        type: "bytes32",
-      },
-    ],
-    name: "CreatePool",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: false,
         internalType: "uint64",
         name: "version",
@@ -139,6 +116,31 @@ export const poolFactoryAbi = [
       },
     ],
     name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "pool",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "root",
+        type: "bytes32",
+      },
+    ],
+    name: "PoolCreated",
     type: "event",
   },
   {
@@ -314,4 +316,4 @@ export const poolFactoryAbi = [
     stateMutability: "payable",
     type: "function",
   },
-];
+] as Abi;

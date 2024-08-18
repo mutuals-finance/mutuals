@@ -27,7 +27,7 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     /*                                   EVENTS                                   */
     /* -------------------------------------------------------------------------- */
 
-    event PoolCreated(address indexed pool, address owner, bytes32 root);
+    event PoolCreated(address indexed pool, address indexed owner, bytes32 indexed root);
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                             */

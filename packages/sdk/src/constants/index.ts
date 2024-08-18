@@ -174,3 +174,5 @@ export enum TransactionType {
   GasEstimate = "GasEstimate",
   Signature = "Signature",
 }
+
+export const ZERO = BigInt(0);

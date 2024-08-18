@@ -20,6 +20,9 @@
       "optional": true
     }
   },
+  "dependencies": {
+    "@openzeppelin/merkle-tree": "^1.0.7"
+  },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
