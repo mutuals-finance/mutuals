@@ -1,4 +1,4 @@
-import { AllocationInput, AllocationType } from "@/types";
+import { Allocation, AllocationType } from "@/types";
 import { isAddress } from "viem";
 import { InvalidArgumentError } from "@/errors";
 
@@ -7,7 +7,7 @@ export const validateAddress = (address: string): void => {
     throw new InvalidArgumentError(`Invalid address: ${address}`);
 };
 
-export const validateAllocations = (allocations: AllocationInput[]): void => {
+export const validateAllocations = (allocations: Allocation[]): void => {
   validateNumAllocations(allocations.length);
   allocations.forEach((allocation, index) => {
     if (!isAddress(allocation.recipient))
@@ -27,7 +27,7 @@ const validateNumAllocations = (numAllocations: number): void => {
   }
 };
 
-const validateAllocation = (allocation: AllocationInput): void => {
+const validateAllocation = (allocation: Allocation): void => {
   if (
     allocation.allocationType == AllocationType.PercentagePrioritized ||
     allocation.allocationType == AllocationType.FixedPrioritized ||

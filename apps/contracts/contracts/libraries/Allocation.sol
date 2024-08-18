@@ -3,7 +3,7 @@
 pragma solidity ^0.8.20;
 
 /**
- * @title Executor - A contract that executes operations
+ * @title Allocation - A contract that executes operations
  * @author Fabian Piper - @fapiper
  */
 library Allocation {

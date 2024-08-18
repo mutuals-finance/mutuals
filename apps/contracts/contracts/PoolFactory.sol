@@ -27,7 +27,7 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     /*                                   EVENTS                                   */
     /* -------------------------------------------------------------------------- */
 
-    event CreatePool(address indexed pool, address owner, bytes32 root);
+    event PoolCreated(address indexed pool, address indexed owner, bytes32 indexed root);
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                             */
@@ -65,7 +65,7 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
      */
     function createPool(address _initialOwner, bytes32 _root, uint _salt) external {
         address beaconProxy = _deployProxy(_getData(_initialOwner, _root), _salt);
-        emit CreatePool(beaconProxy, _initialOwner, _root);
+        emit PoolCreated(beaconProxy, _initialOwner, _root);
     }
 
     //returns address that contract with such arguments will be deployed on

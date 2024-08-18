@@ -8,8 +8,8 @@ import "./Allocation.sol";
  * @title Executor - A contract that executes operations
  * @author Fabian Piper - @fapiper
  */
-library AllocationState {
-    using AllocationState for Data;
+library State {
+    using State for Data;
     using Allocation for Allocation.Data;
 
     /**
@@ -17,6 +17,7 @@ library AllocationState {
      */
     struct Data {
         uint256 initializedAtTimestamp;
+        uint256 updatedAtTimestamp;
         // token -> recipient -> withdrawn
         mapping(address => mapping(uint160 => uint256)) totalWithdrawn;
         // token -> recipient -> period -> withdrawn
@@ -30,6 +31,14 @@ library AllocationState {
      */
     function initialize(Data storage self) internal {
         self.initializedAtTimestamp = block.timestamp;
+        self.updatedAtTimestamp = block.timestamp;
+    }
+
+    /**
+     * @dev Update the library state variables
+     */
+    function update(Data storage self) internal {
+        self.updatedAtTimestamp = block.timestamp;
     }
 
     function verify(

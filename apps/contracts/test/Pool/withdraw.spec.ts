@@ -3,10 +3,8 @@ import { Pool, PoolFactory } from '#/types/typechain';
 import { expect } from 'chai';
 import { withSnapshot } from '#/test/utils';
 import Allocation from '@/utils/allocation';
-import { MultiProof } from '@openzeppelin/merkle-tree/dist/core';
-import { BytesLike, toBigInt, ZeroAddress } from 'ethers';
-import { HexString } from 'ethers/lib.esm/utils/data';
-import { MerkleTree } from '#/types/typechain/contracts/Pool';
+import { toBigInt, ZeroAddress } from 'ethers';
+import { MerkleTree, PoolLib } from '#/types/typechain/contracts/Pool';
 
 const salt = toBigInt(hre.ethers.randomBytes(16));
 const allocationRoot = hre.ethers.randomBytes(32);
@@ -20,7 +18,7 @@ const setupTest = withSnapshot(['pool'], async (hre) => {
   const poolFactory = (await hre.ethers.getContract(
     'PoolFactory'
   )) as PoolFactory;
-  const args = [recipient0.address, allocationRoot, salt] as [
+  const args = [recipient0!.address, allocationRoot, salt] as [
     string,
     Uint8Array,
     bigint,
@@ -39,8 +37,8 @@ const setupTest = withSnapshot(['pool'], async (hre) => {
   )) as unknown as Pool;
 
   const allocations = Allocation.from({
-    [recipient0.address]: 50,
-    [recipient1.address]: 50,
+    [recipient0!.address]: 50,
+    [recipient1!.address]: 50,
   });
   const tree = Allocation.buildTree(allocations);
   const { proof, proofFlags } = tree.getMultiProof([recipientPosition]);
@@ -74,11 +72,12 @@ describe('Pool.withdraw', () => {
       const request = {
         allocations: [[allocations[recipientPosition]]],
         amounts: [0],
-      } as Allocation.BatchRequestStruct;
+        proof: proofParams,
+      } as PoolLib.WithdrawRequestStruct;
       expect(
         pool
           .connect(recipient0)
-          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
+          .withdraw(recipient0!.address, ZeroAddress, request)
       ).to.not.reverted;
     });
   });
@@ -88,11 +87,12 @@ describe('Pool.withdraw', () => {
       const request = {
         allocations: [[allocations[recipientPosition]]],
         amounts: [-1],
-      } as Allocation.BatchRequestStruct;
+        proof: proofParams,
+      } as PoolLib.WithdrawRequestStruct;
       expect(
         pool
           .connect(recipient0)
-          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
+          .withdraw(recipient0!.address, ZeroAddress, request)
       ).to.be.reverted;
     });
     it('should revert for submitting a wrong proof', async () => {
@@ -100,11 +100,12 @@ describe('Pool.withdraw', () => {
       const request = {
         allocations: [[allocations[wrongRecipientPosition]]],
         amounts: [0],
-      } as Allocation.BatchRequestStruct;
+        proof: proofParams,
+      } as PoolLib.WithdrawRequestStruct;
       expect(
         pool
           .connect(recipient0)
-          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
+          .withdraw(recipient0!.address, ZeroAddress, request)
       ).to.be.reverted;
     });
     it('should revert for a too high amount for a recipient', async () => {
@@ -112,11 +113,12 @@ describe('Pool.withdraw', () => {
       const request = {
         allocations: [[allocations[recipientPosition]]],
         amounts: [1],
-      } as Allocation.BatchRequestStruct;
+        proof: proofParams,
+      } as PoolLib.WithdrawRequestStruct;
       expect(
         pool
           .connect(recipient0)
-          .withdraw(recipient0.address, ZeroAddress, request, proofParams)
+          .withdraw(recipient0!.address, ZeroAddress, request)
       ).to.be.reverted;
     });
   });

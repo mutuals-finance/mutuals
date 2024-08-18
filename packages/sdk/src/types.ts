@@ -1,6 +1,7 @@
 import {
   AccessList,
   Account,
+  Address,
   Chain,
   Hash,
   Hex,
@@ -57,85 +58,88 @@ export enum AllocationType {
   PercentageTimed = 5,
 }
 
-export type AllocationInput =
-  | AllocationInputFixed
-  | AllocationInputPercentage
-  | AllocationInputFixedPrioritized
-  | AllocationInputFixedTimed
-  | AllocationInputPercentagePrioritized
-  | AllocationInputPercentageTimed;
+export type Allocation =
+  | AllocationFixed
+  | AllocationPercentage
+  | AllocationFixedPrioritized
+  | AllocationFixedTimed
+  | AllocationPercentagePrioritized
+  | AllocationPercentageTimed;
 
-export type Allocation = {
-  id: bigint;
-  version: bigint;
-  allocationType: bigint;
-  target: bigint;
-  recipient: bigint;
-  amountOrShare: bigint;
-  position: bigint;
-  timespan: bigint;
-};
+type AllocationBase =
+  | ({
+      id: bigint;
+      version: string;
+    } & {
+      recipient: Address;
+    })
+  | { target: bigint };
 
-type AllocationInputBase = {
-  id: string;
-  version: string;
-  recipient: string;
-  target: string;
-};
-
-export type AllocationInputFixedBase = {
+export type AllocationFixedBase = {
   amount: bigint;
-};
+} & AllocationBase;
 
-export type AllocationInputPercentageBase = {
+export type AllocationPercentageBase = {
   share: bigint;
-};
+} & AllocationBase;
 
-export type AllocationInputFixed = {
+export type AllocationFixed = {
   allocationType: AllocationType.Fixed;
-} & AllocationInputFixedBase &
-  AllocationInputBase;
+} & AllocationFixedBase;
 
-export type AllocationInputPercentage = {
+export type AllocationPercentage = {
   allocationType: AllocationType.Percentage;
-} & AllocationInputPercentageBase &
-  AllocationInputBase;
+} & AllocationPercentageBase;
 
-export type AllocationInputFixedPrioritized = {
+export type AllocationFixedPrioritized = {
   allocationType: AllocationType.FixedPrioritized;
   position: number;
-} & AllocationInputFixedBase &
-  AllocationInputBase;
+} & AllocationFixedBase;
 
-export type AllocationInputPercentagePrioritized = {
+export type AllocationPercentagePrioritized = {
   allocationType: AllocationType.PercentagePrioritized;
   position: number;
-} & AllocationInputPercentageBase &
-  AllocationInputBase;
+} & AllocationPercentageBase;
 
-export type AllocationInputFixedTimed = {
+export type AllocationFixedTimed = {
   allocationType: AllocationType.FixedTimed;
   timespan: number;
-} & AllocationInputFixedBase &
-  AllocationInputBase;
+} & AllocationFixedBase;
 
-export type AllocationInputPercentageTimed = {
+export type AllocationPercentageTimed = {
   allocationType: AllocationType.PercentageTimed;
   timespan: number;
-} & AllocationInputPercentageBase &
-  AllocationInputBase;
+} & AllocationPercentageBase;
 
 export type CreatePoolConfig = {
-  allocations: AllocationInput[];
-  owner: string;
+  allocations: Allocation[];
+  ownerAddress: string;
+  salt: bigint;
 } & TransactionOverridesDict;
 
-export type StorePoolConfig = {
-  title: string;
-  description: string;
-  allocations: AllocationInput[];
-  owner: string;
-};
+export type SetPoolAllocationConfig = {
+  poolAddress: Address;
+  poolAllocation: Allocation[];
+} & TransactionOverridesDict;
+
+export type WithdrawConfig = {
+  poolAddress: Address;
+  recipientAddress?: Address;
+  tokenAddress: Address;
+  poolAllocations: Allocation[];
+  indices: number[];
+  amounts: number[];
+} & TransactionOverridesDict;
+
+export type TransferOwnershipConfig = {
+  poolAddress: Address;
+  newOwner: Address;
+} & TransactionOverridesDict;
+
+export type SetPausedConfig = {
+  poolAddress: Address;
+  paused: boolean;
+} & TransactionOverridesDict;
 
 export type CallData = {
   address: string;

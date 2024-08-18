@@ -10,6 +10,7 @@ import {
   Transport,
   Chain,
   Account,
+  Client,
 } from "viem";
 
 import { MULTICALL_3_ADDRESS, TransactionType } from "@/constants";
@@ -35,7 +36,7 @@ class BaseClient {
   readonly _chainId: number;
   readonly _ensPublicClient: PublicClient<Transport, Chain> | undefined;
   readonly _walletClient: WalletClient<Transport, Chain, Account> | undefined;
-  readonly _publicClient: PublicClient<Transport, Chain> | undefined;
+  readonly _publicClient: Client<Transport, Chain> | undefined;
   readonly _apiConfig: ApiConfig | undefined;
   readonly _includeEnsNames: boolean;
   readonly _dataClient: DataClient | undefined;
@@ -235,7 +236,7 @@ export class BaseClientMixin extends BaseTransactions {
     includeAll,
   }: {
     txHash: Hash;
-    eventTopics: Hex[];
+    eventTopics: Hex[] | undefined;
     includeAll?: boolean;
   }): Promise<Log[]> {
     if (!this._publicClient)
@@ -247,7 +248,7 @@ export class BaseClientMixin extends BaseTransactions {
     if (transaction.status === "success") {
       const events = transaction.logs?.filter((log) => {
         if (includeAll) return true;
-        if (log.topics[0]) return eventTopics.includes(log.topics[0]);
+        if (log.topics[0]) return eventTopics?.includes(log.topics[0]);
 
         return false;
       });
