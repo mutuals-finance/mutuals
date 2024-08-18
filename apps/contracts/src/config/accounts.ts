@@ -43,8 +43,6 @@ export const accounts: HardhatNetworkAccountUserConfig[] | undefined =
     : Array.from({ length: 10 }).map((_, index) => {
         return {
           privateKey: getWallet(MNEMONIC, index).privateKey.toString(),
-          balance: ethers
-            .parseEther([7, 9].includes(index) ? '0.0' : '1000000.0') // accounts 7 and 9 are given 0.0 ETH
-            .toString(),
+          balance: ethers.parseEther('1000000.0').toString(),
         };
       });

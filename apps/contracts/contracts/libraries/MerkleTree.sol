@@ -23,6 +23,17 @@ library MerkleTree {
     }
 
     /**
+     * @dev Update the library state variables
+     */
+    function update(Data storage self, bytes32 root) internal {
+        self.root = root;
+    }
+
+    function getRoot(Data storage self) internal view returns (bytes32) {
+        return self.root;
+    }
+
+    /**
      * @dev Returns true if the `leaves` can be simultaneously proven to be a part of a Merkle tree defined by
      * `root`, according to `proof` and `proofFlags` as described in {processMultiProof}.
      *

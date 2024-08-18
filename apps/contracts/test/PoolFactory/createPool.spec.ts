@@ -54,14 +54,14 @@ describe('PoolFactory.createPool', () => {
       ).to.not.reverted;
     });
 
-    it('should emit a valid CreatePool event', async () => {
+    it('should emit a valid PoolCreated event', async () => {
       const { poolFactory, poolOwnerHonest } = await setupTest();
 
       await expect(
         poolFactory
           .connect(poolOwnerHonest)
-          .createPool(poolOwnerHonest.address, allocationRoot, salt1)
-      ).to.emit(poolFactory, 'CreatePool');
+          .createPool(poolOwnerHonest.address, allocationRoot, salt2)
+      ).to.emit(poolFactory, 'PoolCreated');
     });
 
     it('should initialize the proxy', async () => {

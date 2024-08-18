@@ -3,19 +3,31 @@
 pragma solidity ^0.8.20;
 
 import { Currency } from "./libraries/Currency.sol";
-import { Verifier } from "./libraries/Verifier.sol";
+import { PoolLib } from "./libraries/PoolLib.sol";
 import { Allocation } from "./libraries/Allocation.sol";
 import { MerkleTree } from "./libraries/MerkleTree.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 
-contract Pool is OwnableUpgradeable {
+contract Pool is OwnableUpgradeable, PausableUpgradeable {
     using Currency for address;
-    using Verifier for Verifier.Data;
+    using PoolLib for PoolLib.Data;
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   EVENTS                                   */
+    /* -------------------------------------------------------------------------- */
+
+    event AllocationUpdated(bytes32 indexed oldAllocationRoot, bytes32 indexed newAllocationRoot);
+    event Withdraw(address indexed recipient, address indexed token, uint256 amount);
+
+    /* -------------------------------------------------------------------------- */
+    /*                            STORAGE                                         */
+    /* -------------------------------------------------------------------------- */
 
     /**
-     * @dev Verifier data
+     * @dev Allocation data
      */
-    Verifier.Data internal verifier;
+    PoolLib.Data internal pool;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                             */
@@ -26,66 +38,68 @@ contract Pool is OwnableUpgradeable {
         _disableInitializers();
     }
 
+    /**
+     * @dev Initializes the contract and its extended storage.
+     */
     function __Pool_init(address _initialOwner, bytes32 _allocationRoot) external initializer {
         __Context_init_unchained();
         __Ownable_init_unchained(_initialOwner);
+        __Pausable_init_unchained();
         __Pool_init_unchained(_allocationRoot);
     }
 
     /**
-     * @dev Initializes the contract.
+     * @dev Initializes only the contract specific storage.
      */
     function __Pool_init_unchained(bytes32 _allocationRoot) internal onlyInitializing {
-        verifier.initialize(_allocationRoot);
+        pool.initialize(_allocationRoot);
     }
 
     /* -------------------------------------------------------------------------- */
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function batchDeposit(address[] calldata _receivers, address currency, uint256[] calldata _amounts) external payable {
-        //if (_receivers.length != _amounts.length) revert LengthMismatch();
-
-        uint256 sum;
-        uint256 amount;
-        uint256 length = _receivers.length;
-
-        for (uint256 i; i < length; ++i) {
-            amount = _amounts[i];
-            sum += amount;
-            //_mint(_receivers[i], currency, amount);
-            currency.transfer(address(this), sum);
-        }
+    function pause() external onlyOwner {
+        _pause();
     }
 
+    function unpause() external onlyOwner {
+        _unpause();
+    }
+
+    /**
+     * @notice Withdraws token from the pool for recipient.
+     * @param recipient The address whose tokens are withdrawn.
+     * @param token The address of the token to be withdrawn.
+     * @param request The withdraw request to perform proof verification.
+     */
     function withdraw(
         address recipient,
-        address currency,
-        Allocation.BatchRequest calldata request,
-        MerkleTree.MultiProof calldata proof
-    ) external returns (bool) {
-        uint256 totalAmount = verifier.verifyWithdraw(recipient, currency, request, proof);
-        _withdraw(recipient, currency, totalAmount);
+        address token,
+        PoolLib.WithdrawRequest calldata request
+    ) external whenNotPaused returns (bool) {
+        uint256 totalAmount = pool.verifyWithdraw(recipient, token, request);
+        _withdraw(recipient, token, totalAmount);
         return true;
+    }
+
+    /**
+     * @notice Updates the pool allocation.
+     * @dev Only the owner can call this function.
+     * @param _newAllocationRoot The new allocation merkle tree root.
+     */
+    function setAllocation(bytes32 _newAllocationRoot) external onlyOwner {
+        bytes32 oldAllocationRoot = pool.getAllocationRoot();
+        pool.setAllocationRoot(_newAllocationRoot);
+        emit AllocationUpdated(oldAllocationRoot, _newAllocationRoot);
     }
 
     /* -------------------------------------------------------------------------- */
     /*                              INTERNAL/PRIVATE                              */
     /* -------------------------------------------------------------------------- */
 
-    function _deposit(
-        //address receiver,
-        address currency,
-        uint256 amount
-    ) internal {
-        currency.transfer(address(this), amount);
-        // solhint-disable-next-line
-        //emit Deposit(_receiver, currency, _amount);
-    }
-
-    function _withdraw(address owner, address currency, uint256 amount) internal {
-        currency.transfer(owner, amount);
-        // solhint-disable-next-line
-        //emit Withdraw(owner, currency, amount);
+    function _withdraw(address owner, address token, uint256 amount) internal {
+        token.transfer(owner, amount);
+        emit Withdraw(owner, token, amount);
     }
 }
