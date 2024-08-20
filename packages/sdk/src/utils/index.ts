@@ -1,15 +1,15 @@
-import { Allocation } from "@/types";
+import { Allocation, RawAllocation } from "@/types";
 import { SimpleMerkleTree } from "@openzeppelin/merkle-tree";
-import { encodePacked, fromHex, hexToBytes, keccak256 } from "viem";
+import { encodePacked, hexToBytes, keccak256 } from "viem";
 import { ZERO } from "@/constants";
-import { BytesLike } from "@openzeppelin/merkle-tree/src/bytes";
+import { InvalidAllocationIndicesLengthError } from "@/errors";
 
 export const getAllocationConfig = (
   poolAllocations: Allocation[],
   indices: number[],
 ) => {
   if (indices.length > poolAllocations.length) {
-    throw new InvalidIndicesLength();
+    throw new InvalidAllocationIndicesLengthError();
   }
 
   const allocations = indices.map(
@@ -26,37 +26,29 @@ export const getAllocationConfig = (
 };
 
 export const getAllocationTree = (allocations: Allocation[]) => {
-  const types = [
-    "uint256",
-    "uint256",
-    "uint256",
-    "uint256",
-    "uint256",
-    "uint256",
-    "uint256",
-    "uint256",
-  ];
-  const rawAllocations = getRawAllocations(allocations);
-
   return SimpleMerkleTree.of(
-    hexToBytes(
-      keccak256(encodePacked(types, rawAllocations)),
-    ) as unknown as BytesLike[],
+    allocations.map((a) =>
+      hexToBytes(
+        keccak256(
+          encodePacked(
+            new Array(8).fill("uint256"),
+            Object.values(getRawAllocation(a)),
+          ),
+        ),
+      ),
+    ),
   );
 };
 
-export const getRawAllocations = (allocations: Allocation[]) => {
-  return allocations.map((a) => ({
-    ...a,
+export const getRawAllocation = (a: Allocation): RawAllocation => {
+  return {
+    id: a.id,
+    version: BigInt(a.version),
     allocationType: BigInt(a.allocationType),
     target: "target" in a ? a.target : ZERO,
     recipient: "recipient" in a ? BigInt(a.recipient) : ZERO,
     amountOrShare: "amount" in a ? a.amount : a.share,
-    position: "position" in a ? a.position : ZERO,
-    timespan: "timespan" in a ? a.timespan : ZERO,
-  }));
-};
-
-export const getAllocationRoot = (allocations: Allocation[]): string => {
-  return getAllocationTree(allocations).root;
+    position: "position" in a ? BigInt(a.position) : ZERO,
+    timespan: "timespan" in a ? BigInt(a.timespan) : ZERO,
+  };
 };

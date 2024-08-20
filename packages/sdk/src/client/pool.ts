@@ -30,12 +30,12 @@ import {
   WithdrawConfig,
   TransactionConfig,
   TransactionFormat,
-  PoolClientConfig,
+  MutualsClientConfig,
   TransferOwnershipConfig,
   SetPausedConfig,
   SetPoolAllocationConfig,
 } from "@/types";
-import { getAllocationConfig, getAllocationRoot } from "@/utils";
+import { getAllocationConfig, getAllocationTree } from "@/utils";
 import {
   BaseClientMixin,
   BaseGasEstimatesMixin,
@@ -56,7 +56,7 @@ class PoolTransactions extends BaseTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig & TransactionConfig) {
+  }: MutualsClientConfig & TransactionConfig) {
     super({
       transactionType,
       chainId,
@@ -76,13 +76,13 @@ class PoolTransactions extends BaseTransactions {
   }: CreatePoolConfig): Promise<TransactionFormat> {
     validateAddress(ownerAddress);
 
-    const allocationRoot = getAllocationRoot(allocations);
+    const allocationTree = getAllocationTree(allocations);
 
     this._requirePublicClient();
     if (this._shouldRequireWalletClient) this._requireWalletClient();
 
     const functionName = "createPool";
-    const functionArgs = [ownerAddress, allocationRoot, salt];
+    const functionArgs = [ownerAddress, allocationTree.root, salt];
 
     return this._executeContractFunction({
       contractAddress: getPoolFactoryAddress(this._chainId),
@@ -139,7 +139,7 @@ class PoolTransactions extends BaseTransactions {
     poolAllocation,
     transactionOverrides = {},
   }: SetPoolAllocationConfig): Promise<TransactionFormat> {
-    const newAllocationRoot = getAllocationRoot(poolAllocation);
+    const newAllocationRoot = getAllocationTree(poolAllocation);
 
     validateAddress(poolAddress);
 
@@ -253,7 +253,7 @@ export class PoolClient extends PoolTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig) {
+  }: MutualsClientConfig) {
     super({
       transactionType: TransactionType.Transaction,
       chainId,
@@ -472,12 +472,12 @@ export class PoolClient extends PoolTransactions {
 
     const events = await this.getTransactionEvents({
       txHash,
-      eventTopics: this.eventTopics.poolUpdated,
+      eventTopics: this.eventTopics.allocationUpdated,
     });
-    const event = events.length > 0 ? events[0] : undefined;
-    if (event) {
+
+    if (events.length > 0) {
       return {
-        event,
+        event: events[0]!,
       };
     }
 
@@ -490,7 +490,7 @@ export class PoolClient extends PoolTransactions {
     if (!createPoolArgs.ownerAddress) createPoolArgs.ownerAddress = zeroAddress;
     if (!createPoolArgs.allocations) createPoolArgs.allocations = [];
 
-    const allocationRoot = getAllocationRoot(createPoolArgs.allocations);
+    const allocationTree = getAllocationTree(createPoolArgs.allocations);
 
     validateAddress(createPoolArgs.ownerAddress);
 
@@ -499,7 +499,7 @@ export class PoolClient extends PoolTransactions {
     const factory = this._getPoolFactoryContract();
 
     const poolAddress = (await factory.read.getAddress!([
-      allocationRoot,
+      allocationTree.root,
       createPoolArgs.ownerAddress,
       createPoolArgs.salt,
     ])) as Address;
@@ -537,7 +537,7 @@ class PoolGasEstimates extends PoolTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig) {
+  }: MutualsClientConfig) {
     super({
       transactionType: TransactionType.GasEstimate,
       chainId,
@@ -601,7 +601,7 @@ class PoolCallData extends PoolTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig) {
+  }: MutualsClientConfig) {
     super({
       transactionType: TransactionType.CallData,
       chainId,

@@ -1,11 +1,4 @@
-import { PoolClient } from "./client/pool";
-import { MutualsClient } from "./client";
-
-export { PoolClient, MutualsClient };
-
-export * from "./errors";
-
-export { SUPPORTED_CHAIN_IDS } from "./constants";
+export { MutualsClient } from "@mutuals/sdk";
 export type {
   MutualsClientConfig,
   DataClientConfig,
@@ -22,4 +15,12 @@ export type {
   AllocationFixedTimed,
   AllocationPercentagePrioritized,
   AllocationPercentageTimed,
-} from "./types";
+} from "@mutuals/sdk";
+export { MutualsProvider } from "./context";
+export {
+  useCreatePool,
+  useWithdraw,
+  useSetPause,
+  useTransferOwnership,
+  useSetPoolAllocation,
+} from "./hooks";

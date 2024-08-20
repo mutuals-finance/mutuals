@@ -36,7 +36,7 @@ export type DataClientConfig = {
   ensPublicClient?: PublicClient<Transport, Chain>;
 };
 
-export type PoolClientConfig = {
+export type MutualsClientConfig = {
   chainId: number;
   publicClient?: PublicClient<Transport, Chain>;
   walletClient?: WalletClient<Transport, Chain, Account>;
@@ -58,6 +58,17 @@ export enum AllocationType {
   PercentageTimed = 5,
 }
 
+export type RawAllocation = {
+  id: bigint;
+  version: bigint;
+  recipient: bigint;
+  target: bigint;
+  amountOrShare: bigint;
+  allocationType: bigint;
+  position: bigint;
+  timespan: bigint;
+};
+
 export type Allocation =
   | AllocationFixed
   | AllocationPercentage
@@ -66,14 +77,15 @@ export type Allocation =
   | AllocationPercentagePrioritized
   | AllocationPercentageTimed;
 
-type AllocationBase =
-  | ({
-      id: bigint;
-      version: string;
-    } & {
+type AllocationBase = {
+  id: bigint;
+  version: string;
+} & (
+  | {
       recipient: Address;
-    })
-  | { target: bigint };
+    }
+  | { target: bigint }
+);
 
 export type AllocationFixedBase = {
   amount: bigint;

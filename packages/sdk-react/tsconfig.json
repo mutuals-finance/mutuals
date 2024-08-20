@@ -1,0 +1,16 @@
+{
+  "extends": "@mutuals/typescript-config/react.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "dist",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  // filenames are resolved relative to the directory containing the tsconfig.json file.
+  // https://www.typescriptlang.org/tsconfig/#include
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

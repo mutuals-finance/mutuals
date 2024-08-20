@@ -1,8 +1,3 @@
-import { SUBGRAPH_CHAIN_IDS } from "./constants";
-
-// Manually setting the prototype in the constructor with setPrototypeOf fixes a typescript issue so that the
-// unit tests can detect the error class
-
 export class UnsupportedChainIdError extends Error {
   name = "UnsupportedChainIdError";
 
@@ -14,32 +9,12 @@ export class UnsupportedChainIdError extends Error {
   }
 }
 
-export class UnsupportedSubgraphChainIdError extends Error {
-  name = "UnsupportedSubgraphChainIdError";
-
-  constructor() {
-    super(
-      `Unsupported subgraph chain. Supported subgraph chains are: ${SUBGRAPH_CHAIN_IDS}`,
-    );
-    Object.setPrototypeOf(this, UnsupportedSubgraphChainIdError.prototype);
-  }
-}
-
-export class InvalidRecipientsError extends Error {
-  name = "InvalidRecipientsError";
+export class InvalidAllocationIndicesLengthError extends Error {
+  name = "InvalidAllocationIndicesLengthError";
 
   constructor(m?: string) {
     super(m);
-    Object.setPrototypeOf(this, InvalidRecipientsError.prototype);
-  }
-}
-
-export class InvalidDistributorFeePercentError extends Error {
-  name = "InvalidDistributorFeePercent";
-
-  constructor(m?: string) {
-    super(m);
-    Object.setPrototypeOf(this, InvalidDistributorFeePercentError.prototype);
+    Object.setPrototypeOf(this, InvalidAllocationIndicesLengthError.prototype);
   }
 }
 
@@ -103,47 +78,5 @@ export class InvalidConfigError extends Error {
   constructor(m?: string) {
     super(m);
     Object.setPrototypeOf(this, InvalidConfigError.prototype);
-  }
-}
-
-export class AccountNotFoundError extends Error {
-  name = "AccountNotFoundError";
-
-  constructor(moduleType: string, address: string, chainId: number) {
-    const message = `No ${moduleType} found at address ${address} on chain ${chainId}, please confirm you have entered the correct address. There may just be a delay in subgraph indexing.`;
-    super(message);
-    Object.setPrototypeOf(this, AccountNotFoundError.prototype);
-  }
-}
-
-export class InvalidDistributorFeePercentErrorV2 extends Error {
-  name = "InvalidDistributorFeePercentErrorV2";
-
-  constructor(distributorFeePercent: number) {
-    const message = `Distributor Fee ${distributorFeePercent} should be less than ${MAX_V2_DISTRIBUTION_INCENTIVE}`;
-    super(message);
-    Object.setPrototypeOf(this, InvalidDistributorFeePercentErrorV2.prototype);
-  }
-}
-
-export class InvalidTotalAllocation extends Error {
-  name = "InvalidTotalAllocation";
-
-  constructor(totalAllocationPercent?: number) {
-    const message = totalAllocationPercent
-      ? `Specified total allocation ${totalAllocationPercent} should be the sum of all of recipient allocations`
-      : `Total allocation of all the recipients should be equal to 100`;
-    super(message);
-    Object.setPrototypeOf(this, InvalidTotalAllocation.prototype);
-  }
-}
-
-export class SaltRequired extends Error {
-  name = "SaltRequired";
-
-  constructor() {
-    const message = `Salt required`;
-    super(message);
-    Object.setPrototypeOf(this, SaltRequired.prototype);
   }
 }

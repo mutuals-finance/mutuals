@@ -1,6 +1,7 @@
 import { Allocation, AllocationType } from "@/types";
 import { isAddress } from "viem";
 import { InvalidArgumentError } from "@/errors";
+import { ZERO } from "@/constants";
 
 export const validateAddress = (address: string): void => {
   if (!isAddress(address))
@@ -9,8 +10,8 @@ export const validateAddress = (address: string): void => {
 
 export const validateAllocations = (allocations: Allocation[]): void => {
   validateNumAllocations(allocations.length);
-  allocations.forEach((allocation, index) => {
-    if (!isAddress(allocation.recipient))
+  allocations.forEach((allocation) => {
+    if ("recipient" in allocation && !isAddress(allocation.recipient))
       throw new InvalidArgumentError(
         `Invalid recipient address: ${allocation.recipient}`,
       );
@@ -34,12 +35,17 @@ const validateAllocation = (allocation: Allocation): void => {
     allocation.allocationType == AllocationType.PercentageTimed ||
     allocation.allocationType == AllocationType.FixedTimed
   ) {
-    if (!isAddress(allocation.recipient) && !isAddress(allocation.target))
+    if (
+      "recipient" in allocation &&
+      !isAddress(allocation.recipient) &&
+      "target" in allocation &&
+      allocation.target === ZERO
+    )
       throw new InvalidArgumentError(
         `Invalid recipient or target address: ${allocation.recipient}`,
       );
   } else {
-    if (!isAddress(allocation.recipient))
+    if ("recipient" in allocation && !isAddress(allocation.recipient))
       throw new InvalidArgumentError(
         `Invalid recipient address: ${allocation.recipient}`,
       );

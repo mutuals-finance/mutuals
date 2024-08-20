@@ -512,6 +512,34 @@ importers:
         specifier: ^5.4.5
         version: 5.5.4
 
+  packages/sdk-react:
+    dependencies:
+      '@mutuals/sdk':
+        specifier: workspace:*
+        version: link:../sdk
+      react:
+        specifier: '>= 18.0.0'
+        version: 18.3.1
+      viem:
+        specifier: '>=2.0.0'
+        version: 2.18.8(typescript@5.5.4)
+    devDependencies:
+      '@mutuals/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@mutuals/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^18.3.2
+        version: 18.3.3
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.5.4
+
   packages/typescript-config: {}
 
   packages/ui:

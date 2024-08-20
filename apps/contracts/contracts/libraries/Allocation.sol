@@ -36,22 +36,6 @@ library Allocation {
     }
 
     /**
-     * @dev Request
-     */
-    struct Request {
-        Data[] allocation;
-        uint256 amount;
-    }
-
-    /**
-     * @dev BatchRequest
-     */
-    struct BatchRequest {
-        Data[][] allocations;
-        uint256[] amounts;
-    }
-
-    /**
      * @dev Context
      */
     struct Context {
