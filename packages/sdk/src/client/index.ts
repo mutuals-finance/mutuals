@@ -1,10 +1,6 @@
-import { SUPPORTED_CHAIN_IDS, TransactionType } from "@/constants";
-import { MutualsClientConfig } from "@/types";
-import {
-  BaseClientMixin,
-  BaseGasEstimatesMixin,
-  BaseTransactions,
-} from "./base";
+import { SUPPORTED_CHAIN_IDS, TransactionType } from "../constants";
+import { MutualsClientConfig } from "../types";
+import { BaseClientMixin, BaseTransactions } from "./base";
 import { applyMixins } from "./mixin";
 import { PoolClient } from "./pool";
 
@@ -77,7 +73,3 @@ class MutualsClientGasEstimates extends BaseTransactions {
     });
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-interface MutualsClientGasEstimates extends BaseGasEstimatesMixin {}
-applyMixins(MutualsClientGasEstimates, [BaseGasEstimatesMixin]);

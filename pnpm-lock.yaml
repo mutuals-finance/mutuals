@@ -47,6 +47,9 @@ importers:
       '@mutuals/graphql-client-nextjs':
         specifier: workspace:*
         version: link:../../packages/graphql-client-nextjs
+      '@mutuals/sdk-react':
+        specifier: workspace:*
+        version: link:../../packages/sdk-react
       '@mutuals/ui':
         specifier: workspace:*
         version: link:../../packages/ui

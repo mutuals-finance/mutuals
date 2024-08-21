@@ -1,8 +1,8 @@
-import { Allocation, RawAllocation } from "@/types";
+import { Allocation, RawAllocation } from "../types";
 import { SimpleMerkleTree } from "@openzeppelin/merkle-tree";
 import { encodePacked, hexToBytes, keccak256 } from "viem";
-import { ZERO } from "@/constants";
-import { InvalidAllocationIndicesLengthError } from "@/errors";
+import { ZERO } from "../constants";
+import { InvalidAllocationIndicesLengthError } from "../errors";
 
 export const getAllocationConfig = (
   poolAllocations: Allocation[],

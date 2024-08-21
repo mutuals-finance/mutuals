@@ -17,13 +17,13 @@ import {
   TransactionType,
   getPoolFactoryAddress,
   ZERO,
-} from "@/constants";
-import { poolAbi, poolFactoryAbi } from "@/constants/abi";
+} from "../constants";
+import { poolAbi, poolFactoryAbi } from "../constants/abi";
 import {
   InvalidAuthError,
   TransactionFailedError,
   UnsupportedChainIdError,
-} from "@/errors";
+} from "../errors";
 import {
   CallData,
   CreatePoolConfig,
@@ -34,15 +34,11 @@ import {
   TransferOwnershipConfig,
   SetPausedConfig,
   SetPoolAllocationConfig,
-} from "@/types";
-import { getAllocationConfig, getAllocationTree } from "@/utils";
-import {
-  BaseClientMixin,
-  BaseGasEstimatesMixin,
-  BaseTransactions,
-} from "./base";
+} from "../types";
+import { getAllocationConfig, getAllocationTree } from "../utils";
+import { BaseClientMixin, BaseTransactions } from "./base";
 import { applyMixins } from "./mixin";
-import { validateAddress } from "@/utils/validation";
+import { validateAddress } from "../utils/validation";
 
 type PoolFactoryABI = typeof poolFactoryAbi;
 type PoolABI = typeof poolAbi;
@@ -295,7 +291,7 @@ export class PoolClient extends PoolTransactions {
       setPaused: [
         encodeEventTopics({
           abi: poolAbi,
-          eventName: "SetPaused",
+          eventName: "Paused",
         })[0],
       ],
     };
@@ -589,10 +585,6 @@ class PoolGasEstimates extends PoolTransactions {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-interface PoolGasEstimates extends BaseGasEstimatesMixin {}
-applyMixins(PoolGasEstimates, [BaseGasEstimatesMixin]);
-
 class PoolCallData extends PoolTransactions {
   constructor({
     chainId,
@@ -613,7 +605,9 @@ class PoolCallData extends PoolTransactions {
     });
   }
 
-  async createPool(createPoolArgs: CreatePoolConfig): Promise<CallData> {
+  async createPool(
+    createPoolArgs: CreatePoolConfig,
+  ): Promise<TransactionFormat> {
     const callData = await this._createPool(createPoolArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
@@ -622,21 +616,21 @@ class PoolCallData extends PoolTransactions {
 
   async transferOwnership(
     transferOwnershipArgs: TransferOwnershipConfig,
-  ): Promise<CallData> {
+  ): Promise<TransactionFormat> {
     const callData = await this._transferOwnership(transferOwnershipArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
     return callData;
   }
 
-  async setPaused(setPausedArgs: SetPausedConfig): Promise<CallData> {
+  async setPaused(setPausedArgs: SetPausedConfig): Promise<TransactionFormat> {
     const callData = await this._setPaused(setPausedArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
     return callData;
   }
 
-  async withdraw(withdrawArgs: WithdrawConfig): Promise<CallData> {
+  async withdraw(withdrawArgs: WithdrawConfig): Promise<TransactionFormat> {
     const callData = await this._withdraw(withdrawArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
@@ -645,14 +639,10 @@ class PoolCallData extends PoolTransactions {
 
   async setPoolAllocation(
     setPoolAllocationArgs: SetPoolAllocationConfig,
-  ): Promise<CallData> {
+  ): Promise<TransactionFormat> {
     const callData = await this._setPoolAllocation(setPoolAllocationArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
     return callData;
   }
 }
-
-const poolUpdatedEvent = poolAbi[28];
-
-const poolCreatedEvent = poolFactoryAbi[8];

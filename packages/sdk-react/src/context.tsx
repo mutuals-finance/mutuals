@@ -1,4 +1,9 @@
-import React, { createContext, useState, useMemo } from "react";
+import React, {
+  createContext,
+  useState,
+  useMemo,
+  PropsWithChildren,
+} from "react";
 import { MutualsClient, MutualsClientConfig } from "@mutuals/sdk";
 
 export type MutualsReactSdkContext = {
@@ -10,15 +15,12 @@ export const MutualsContext = createContext<MutualsReactSdkContext | undefined>(
   undefined,
 );
 
-interface Props {
-  config?: MutualsClientConfig;
-  children: React.ReactNode;
-}
-
-export const MutualsProvider: React.FC<Props> = ({
+export const MutualsProvider = ({
   config = { chainId: 1 },
   children,
-}) => {
+}: PropsWithChildren<{
+  config?: MutualsClientConfig;
+}>) => {
   const [mutualsClient, setMutualsClient] = useState<MutualsClient>(
     () => new MutualsClient(config),
   );

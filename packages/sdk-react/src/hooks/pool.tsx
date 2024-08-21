@@ -9,9 +9,9 @@ import {
 } from "@mutuals/sdk";
 import { poolFactoryAbi } from "@mutuals/sdk/constants/abi";
 
-import { MutualsContext } from "@/context";
-import { ContractExecutionStatus, RequestError } from "@/types";
-import { getMutualsClient } from "@/utils";
+import { MutualsContext } from "../context";
+import { ContractExecutionStatus, RequestError } from "../types";
+import { getMutualsClient } from "../utils";
 
 export const useCreatePool = (): {
   createPool: (arg0: CreatePoolConfig) => Promise<Log[] | undefined>;

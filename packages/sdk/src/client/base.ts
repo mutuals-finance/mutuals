@@ -10,36 +10,31 @@ import {
   Transport,
   Chain,
   Account,
-  Client,
+  TransactionType,
 } from "viem";
 
-import { MULTICALL_3_ADDRESS, TransactionType } from "@/constants";
 import {
   InvalidConfigError,
-  MissingDataClientError,
   MissingPublicClientError,
   MissingWalletClientError,
-} from "@/errors";
+} from "../errors";
 import type {
   ApiConfig,
   CallData,
-  MulticallConfig,
-  SplitsClientConfig,
+  MutualsClientConfig,
   TransactionConfig,
   TransactionFormat,
   TransactionOverrides,
-} from "@/types";
-
-import { DataClient } from "./data";
+} from "../types";
+import { TransactionType as MutualsTransactionType } from "../constants";
 
 class BaseClient {
   readonly _chainId: number;
   readonly _ensPublicClient: PublicClient<Transport, Chain> | undefined;
   readonly _walletClient: WalletClient<Transport, Chain, Account> | undefined;
-  readonly _publicClient: Client<Transport, Chain> | undefined;
+  readonly _publicClient: PublicClient<Transport, Chain> | undefined;
   readonly _apiConfig: ApiConfig | undefined;
   readonly _includeEnsNames: boolean;
-  readonly _dataClient: DataClient | undefined;
 
   constructor({
     chainId,
@@ -48,34 +43,17 @@ class BaseClient {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: SplitsClientConfig) {
+  }: MutualsClientConfig) {
     if (includeEnsNames && !publicClient && !ensPublicClient)
       throw new InvalidConfigError(
         "Must include a mainnet public client if includeEnsNames is set to true",
       );
-
     this._ensPublicClient = ensPublicClient ?? publicClient;
     this._publicClient = publicClient;
     this._chainId = chainId;
     this._walletClient = walletClient;
     this._includeEnsNames = includeEnsNames;
     this._apiConfig = apiConfig;
-
-    if (apiConfig) {
-      this._dataClient = new DataClient({
-        publicClient,
-        ensPublicClient,
-        apiConfig,
-        includeEnsNames,
-      });
-    }
-  }
-
-  protected _requireDataClient() {
-    if (!this._dataClient)
-      throw new MissingDataClientError(
-        "API config required to perform this action, please update your call to the constructor",
-      );
   }
 
   protected _requirePublicClient() {
@@ -110,7 +88,7 @@ export class BaseTransactions extends BaseClient {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: SplitsClientConfig & TransactionConfig) {
+  }: MutualsClientConfig & TransactionConfig) {
     super({
       chainId,
       publicClient,
@@ -122,9 +100,9 @@ export class BaseTransactions extends BaseClient {
 
     this._transactionType = transactionType;
     this._shouldRequireWalletClient = [
-      TransactionType.GasEstimate,
-      TransactionType.Transaction,
-    ].includes(transactionType);
+      MutualsTransactionType.GasEstimate,
+      MutualsTransactionType.Transaction,
+    ].includes(transactionType as MutualsTransactionType);
   }
 
   protected async _executeContractFunction({
@@ -148,19 +126,7 @@ export class BaseTransactions extends BaseClient {
       this._requireWalletClient();
     }
 
-    if (this._transactionType === TransactionType.GasEstimate) {
-      if (!this._walletClient?.account) throw new Error();
-      const gasEstimate = await this._publicClient.estimateContractGas({
-        address: contractAddress,
-        abi: contractAbi,
-        functionName,
-        account: this._walletClient.account,
-        args: functionArgs ?? [],
-        value,
-        ...transactionOverrides,
-      });
-      return gasEstimate;
-    } else if (this._transactionType === TransactionType.CallData) {
+    if (this._transactionType === MutualsTransactionType.CallData) {
       const calldata = encodeFunctionData({
         abi: contractAbi,
         functionName,
@@ -172,7 +138,7 @@ export class BaseTransactions extends BaseClient {
         data: calldata,
         value,
       };
-    } else if (this._transactionType === TransactionType.Transaction) {
+    } else if (this._transactionType === MutualsTransactionType.Transaction) {
       if (!this._walletClient?.account) throw new Error();
       const { request } = await this._publicClient.simulateContract({
         address: contractAddress,
@@ -202,30 +168,6 @@ export class BaseTransactions extends BaseClient {
     if (typeof callData === "string") return false;
 
     return true;
-  }
-
-  async _multicallTransaction({
-    calls,
-    transactionOverrides = {},
-  }: MulticallConfig): Promise<TransactionFormat> {
-    this._requireWalletClient();
-    if (!this._walletClient) throw new Error();
-
-    const callRequests = calls.map((call) => {
-      return {
-        target: call.address,
-        callData: call.data,
-      };
-    });
-
-    const result = await this._executeContractFunction({
-      contractAddress: MULTICALL_3_ADDRESS,
-      contractAbi: multicallAbi,
-      functionName: "aggregate",
-      functionArgs: [callRequests],
-      transactionOverrides,
-    });
-    return result;
   }
 }
 
@@ -257,37 +199,5 @@ export class BaseClientMixin extends BaseTransactions {
     }
 
     return [];
-  }
-
-  async submitMulticallTransaction(multicallArgs: MulticallConfig): Promise<{
-    txHash: Hash;
-  }> {
-    const multicallResult = await this._multicallTransaction(multicallArgs);
-    if (!this._isContractTransaction(multicallResult))
-      throw new Error("Invalid response");
-
-    return { txHash: multicallResult };
-  }
-
-  async multicall(multicallArgs: MulticallConfig): Promise<{ events: Log[] }> {
-    this._requirePublicClient();
-    if (!this._publicClient) throw new Error();
-
-    const { txHash } = await this.submitMulticallTransaction(multicallArgs);
-    const events = await this.getTransactionEvents({
-      txHash,
-      eventTopics: [],
-      includeAll: true,
-    });
-    return { events };
-  }
-}
-
-export class BaseGasEstimatesMixin extends BaseTransactions {
-  async multicall(multicallArgs: MulticallConfig): Promise<bigint> {
-    const gasEstimate = await this._multicallTransaction(multicallArgs);
-    if (!this._isBigInt(gasEstimate)) throw new Error("Invalid response");
-
-    return gasEstimate;
   }
 }

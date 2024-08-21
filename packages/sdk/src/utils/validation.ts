@@ -1,7 +1,7 @@
-import { Allocation, AllocationType } from "@/types";
+import { Allocation, AllocationType } from "../types";
 import { isAddress } from "viem";
-import { InvalidArgumentError } from "@/errors";
-import { ZERO } from "@/constants";
+import { InvalidArgumentError } from "../errors";
+import { ZERO } from "../constants";
 
 export const validateAddress = (address: string): void => {
   if (!isAddress(address))
