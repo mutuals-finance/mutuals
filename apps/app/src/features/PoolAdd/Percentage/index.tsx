@@ -7,28 +7,31 @@ import { formatRoundNumber } from "@/utils";
 import Input from "@/components/Form/Input";
 import InputFieldArray from "@/components/Form/InputFieldArray";
 import InputNumber from "@/components/Form/InputNumber";
-import PoolAddPayeesFooter from "@/features/PoolAdd/Payees/Footer";
-import { PoolAddPayee } from "@/features/PoolAdd/types";
+import PoolAddPercentageFooter from "@/features/PoolAdd/Payees/Footer";
+import { AllocationPercentage, AllocationType } from "@mutuals/sdk-react";
 
-interface PoolAddPayeesProps {
+interface PoolAddPercentageProps {
   id: string;
 }
 
-export const defaultPayee: PoolAddPayee = {
-  id: "",
-  value: "0.0",
+export const defaultRecipient: AllocationPercentage = {
+  id: 0n,
+  share: 0n,
+  allocationType: AllocationType.Percentage,
+  version: "1",
+  recipient: "0x",
 };
 
-export default function PoolAddPayees({ id }: PoolAddPayeesProps) {
+export default function PoolAddPercentage({ id }: PoolAddPercentageProps) {
   const maxShares = 100.0;
 
   const { watch, setValue } = useFormContext();
 
-  const payees = watch(id, []) as PoolAddPayee[];
+  const payees = watch(id) as AllocationPercentage[];
 
   const totalShares = payees.reduce(
-    (total, p) => (total * 100 + Number(p.value) * 100) / 100,
-    0.0,
+    (total, p) => (total * 100 + Number(p.share) * 100) / 100,
+    0,
   );
   const totalPayees = payees.length;
 
@@ -51,7 +54,7 @@ export default function PoolAddPayees({ id }: PoolAddPayeesProps) {
       maxShares - totalShares,
       payees
         .map((p, index) => ({ index, ...p }))
-        .filter((p: PoolAddPayee) => Number(p.value) <= 0)
+        .filter((p: AllocationPercentage) => Number(p.share) <= 0)
         .map((p) => p.index),
     );
   }
@@ -64,17 +67,17 @@ export default function PoolAddPayees({ id }: PoolAddPayeesProps) {
   }
 
   return (
-    <InputFieldArray<PoolAddPayee>
+    <InputFieldArray<AllocationPercentage>
       id={id}
-      defaultItem={defaultPayee}
+      defaultItem={defaultRecipient}
       hideAdd={true}
       validation={{ minLength: 2 }}
       contentAfter={({ append }) => (
-        <PoolAddPayeesFooter
+        <PoolAddPercentageFooter
           totalShares={totalShares}
           maxShares={maxShares}
           totalPayees={totalPayees}
-          onAppendRecipient={() => append(defaultPayee)}
+          onAppendRecipient={() => append(defaultRecipient)}
           onSetValuesRemaining={onSetValuesRemaining}
           onSetValuesEvenly={onSetValuesEvenly}
         />

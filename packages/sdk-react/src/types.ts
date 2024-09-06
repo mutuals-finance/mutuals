@@ -1,3 +1,5 @@
+import { AllocationItem, AllocationNode, AllocationType } from "@mutuals/sdk";
+
 export type ContractExecutionStatus =
   | "pendingApproval"
   | "txInProgress"

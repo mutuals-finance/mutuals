@@ -25,7 +25,6 @@ import {
   UnsupportedChainIdError,
 } from "../errors";
 import {
-  CallData,
   CreatePoolConfig,
   WithdrawConfig,
   TransactionConfig,
@@ -35,7 +34,7 @@ import {
   SetPausedConfig,
   SetPoolAllocationConfig,
 } from "../types";
-import { getAllocationConfig, getAllocationTree } from "../utils";
+import { allocation as allocationUtils } from "../utils";
 import { BaseClientMixin, BaseTransactions } from "./base";
 import { applyMixins } from "./mixin";
 import { validateAddress } from "../utils/validation";
@@ -72,7 +71,7 @@ class PoolTransactions extends BaseTransactions {
   }: CreatePoolConfig): Promise<TransactionFormat> {
     validateAddress(ownerAddress);
 
-    const allocationTree = getAllocationTree(allocations);
+    const allocationTree = allocationUtils.getTree(allocations);
 
     this._requirePublicClient();
     if (this._shouldRequireWalletClient) this._requireWalletClient();
@@ -135,7 +134,7 @@ class PoolTransactions extends BaseTransactions {
     poolAllocation,
     transactionOverrides = {},
   }: SetPoolAllocationConfig): Promise<TransactionFormat> {
-    const newAllocationRoot = getAllocationTree(poolAllocation);
+    const newAllocationRoot = allocationUtils.getTree(poolAllocation);
 
     validateAddress(poolAddress);
 
@@ -168,7 +167,7 @@ class PoolTransactions extends BaseTransactions {
     this._requirePublicClient();
     if (this._shouldRequireWalletClient) this._requireWalletClient();
 
-    const { allocations, proof } = getAllocationConfig(
+    const { allocations, proof } = allocationUtils.getConfig(
       poolAllocations,
       indices,
     );
@@ -486,7 +485,7 @@ export class PoolClient extends PoolTransactions {
     if (!createPoolArgs.ownerAddress) createPoolArgs.ownerAddress = zeroAddress;
     if (!createPoolArgs.allocations) createPoolArgs.allocations = [];
 
-    const allocationTree = getAllocationTree(createPoolArgs.allocations);
+    const allocationTree = allocationUtils.getTree(createPoolArgs.allocations);
 
     validateAddress(createPoolArgs.ownerAddress);
 

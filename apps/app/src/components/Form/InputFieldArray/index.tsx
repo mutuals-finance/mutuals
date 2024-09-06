@@ -1,66 +1,30 @@
-import { VStack } from "@mutuals/ui";
 import React from "react";
-import {
-  FieldValues,
-  get,
-  useFieldArray,
-  UseFieldArrayReturn,
-  useFormContext,
-} from "react-hook-form";
 
-import BaseFeedback from "@/components/Form/InputBase/BaseFeedback";
-import { BaseFieldProps } from "@/components/Form/types";
+import InputFieldArrayItem from "./Item";
+import InputFieldArrayGroup, {
+  InputFieldArrayGroupProps,
+} from "@/components/Form/InputFieldArray/Group";
 
-import { InputFieldArrayItem } from "./InputFieldArrayItem";
-
-type FieldArrayBaseFieldProps = Pick<
-  BaseFieldProps,
-  "id" | "validation" | "helperText" | "hideError"
->;
-
-interface InputFieldArrayProps<TFieldValue> extends FieldArrayBaseFieldProps {
+interface InputFieldArrayProps<TFieldValue>
+  extends Omit<InputFieldArrayGroupProps<TFieldValue>, "children"> {
   defaultItem: TFieldValue;
   removeDisabled?: boolean;
   hideAdd?: boolean;
   children: (id: string) => React.ReactNode;
-  contentBefore?: (
-    method: UseFieldArrayReturn<FieldValues, string, "id">,
-  ) => React.ReactNode;
-  contentAfter?: (
-    method: UseFieldArrayReturn<FieldValues, string, "id">,
-  ) => React.ReactNode;
 }
 
 export default function InputFieldArray<TFieldValue>({
-  id = "",
-  validation,
-  children,
   defaultItem,
-  helperText,
+  hideAdd,
   removeDisabled,
-  hideError = false,
-  hideAdd = false,
-  contentBefore,
-  contentAfter,
+  children,
+  ...props
 }: InputFieldArrayProps<TFieldValue>) {
-  const {
-    formState: { errors },
-  } = useFormContext();
-
-  const error = get(errors, id);
-
-  const method = useFieldArray({
-    name: id,
-    rules: validation,
-  });
-
-  const { fields, append, remove } = method;
+  const { validation } = props;
   return (
-    <VStack spacing={"6"} flex={"1"} w={"100%"} alignItems={"stretch"}>
-      {contentBefore?.(method)}
-
-      <VStack spacing={"3"} alignItems={"stretch"}>
-        {fields.map((field, index) => (
+    <InputFieldArrayGroup<TFieldValue> {...props}>
+      {({ fields, append, remove }) =>
+        fields.map((field, index) => (
           <InputFieldArrayItem
             key={field.id}
             removeDisabled={
@@ -71,14 +35,10 @@ export default function InputFieldArray<TFieldValue>({
             onAdd={!hideAdd ? () => append(defaultItem) : undefined}
             onRemove={() => remove(index)}
           >
-            {children(`${id}.${index}`)}
+            {children(`${props.id}.${index}`)}
           </InputFieldArrayItem>
-        ))}
-      </VStack>
-
-      <BaseFeedback {...{ error, hideError, helperText }} />
-
-      {contentAfter?.(method)}
-    </VStack>
+        ))
+      }
+    </InputFieldArrayGroup>
   );
 }

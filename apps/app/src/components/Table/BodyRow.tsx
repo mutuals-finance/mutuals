@@ -9,7 +9,7 @@ export default function BodyRow<TData extends RowData>(
   return (
     <Tr>
       {row.getVisibleCells().map((cell) => (
-        <Td py={"2"} key={cell.id}>
+        <Td py={"2"} width={`${cell.column.getSize()}px`} key={cell.id}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </Td>
       ))}

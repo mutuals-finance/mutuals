@@ -8,6 +8,12 @@ export type {
   WithdrawConfig,
   TransferOwnershipConfig,
   SetPausedConfig,
+  Node,
+  AllocationNode,
+  AllocationGroup,
+  AllocationGroupNode,
+  AllocationItem,
+  AllocationItemNode,
   Allocation,
   AllocationFixed,
   AllocationPercentage,
@@ -16,6 +22,7 @@ export type {
   AllocationPercentagePrioritized,
   AllocationPercentageTimed,
 } from "@mutuals/sdk";
+export { AllocationType } from "@mutuals/sdk";
 export { MutualsProvider } from "./context";
 export {
   useCreatePool,
@@ -23,4 +30,6 @@ export {
   useSetPause,
   useTransferOwnership,
   useSetPoolAllocation,
+  useAllocationUtils,
+  useDefaultAllocation,
 } from "./hooks";

@@ -1,5 +1,7 @@
 import { Address } from "viem";
 
+export * from "./allocation";
+
 export const PERCENTAGE_SCALE = BigInt(1e6);
 
 const POOL_FACTORY_ADDRESS = "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE";

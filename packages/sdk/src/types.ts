@@ -60,7 +60,6 @@ export enum AllocationType {
 
 export type RawAllocation = {
   id: bigint;
-  version: bigint;
   recipient: bigint;
   target: bigint;
   amountOrShare: bigint;
@@ -77,40 +76,30 @@ export type Allocation =
   | AllocationPercentagePrioritized
   | AllocationPercentageTimed;
 
-type AllocationBase = {
-  id: bigint;
-  version: string;
-} & (
-  | {
-      recipient: Address;
-    }
-  | { target: bigint }
-);
-
 export type AllocationFixedBase = {
   amount: bigint;
-} & AllocationBase;
+};
 
 export type AllocationPercentageBase = {
   share: bigint;
-} & AllocationBase;
+};
 
 export type AllocationFixed = {
   allocationType: AllocationType.Fixed;
+  recipient: Address;
 } & AllocationFixedBase;
 
 export type AllocationPercentage = {
   allocationType: AllocationType.Percentage;
+  recipient: Address;
 } & AllocationPercentageBase;
 
 export type AllocationFixedPrioritized = {
   allocationType: AllocationType.FixedPrioritized;
-  position: number;
 } & AllocationFixedBase;
 
 export type AllocationPercentagePrioritized = {
   allocationType: AllocationType.PercentagePrioritized;
-  position: number;
 } & AllocationPercentageBase;
 
 export type AllocationFixedTimed = {
@@ -122,6 +111,23 @@ export type AllocationPercentageTimed = {
   allocationType: AllocationType.PercentageTimed;
   timespan: number;
 } & AllocationPercentageBase;
+
+export type Node<TNode, TChildren = TNode> = {
+  node: TNode;
+  children?: Array<Node<TChildren>>;
+};
+
+export type AllocationGroup =
+  | AllocationFixedPrioritized
+  | AllocationPercentagePrioritized
+  | AllocationFixedTimed
+  | AllocationPercentageTimed;
+
+export type AllocationItem = AllocationFixed | AllocationPercentage;
+
+export type AllocationNode = Node<Allocation>;
+export type AllocationGroupNode = Node<AllocationGroup>;
+export type AllocationItemNode = Node<AllocationItem>;
 
 export type CreatePoolConfig = {
   allocations: Allocation[];
@@ -152,6 +158,10 @@ export type SetPausedConfig = {
   poolAddress: Address;
   paused: boolean;
 } & TransactionOverridesDict;
+
+export type CreateDefaultAllocationFn = (
+  allocationType: AllocationItem["allocationType"],
+) => AllocationGroupNode;
 
 export type CallData = {
   address: string;

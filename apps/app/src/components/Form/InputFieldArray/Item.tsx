@@ -8,7 +8,7 @@ interface InputFieldArrayItemProps {
   onRemove(): void;
 }
 
-export function InputFieldArrayItem({
+export default function InputFieldArrayItem({
   children,
   removeDisabled,
   onAdd,
@@ -29,6 +29,7 @@ export function InputFieldArrayItem({
         <IconButton
           aria-label={"Remove item"}
           isDisabled={removeDisabled}
+          size={"sm"}
           type={"button"}
           onClick={() => onRemove()}
           icon={<IoTrashOutline />}

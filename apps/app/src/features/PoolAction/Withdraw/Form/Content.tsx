@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Stack, VStack } from "@mutuals/ui";
+import { Box, Button, Stack, VStack, StackProps } from "@mutuals/ui";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { useToggle } from "react-use";
@@ -17,7 +17,6 @@ import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
 import { type Split } from "@mutuals/graphql-client-nextjs/thegraph";
 import { WithdrawData } from "@/features/PoolAction/types";
-import { StackProps } from "@chakra-ui/react";
 
 export interface WithdrawFormContentProps extends StackProps {
   balance?: GetAccountBalanceReply;

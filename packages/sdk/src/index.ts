@@ -5,7 +5,7 @@ export { PoolClient, MutualsClient };
 
 export * from "./errors";
 
-export { SUPPORTED_CHAIN_IDS } from "./constants";
+export { SUPPORTED_CHAIN_IDS, DEFAULT_ALLOCATION_NODE } from "./constants";
 export type {
   MutualsClientConfig,
   DataClientConfig,
@@ -22,4 +22,12 @@ export type {
   AllocationFixedTimed,
   AllocationPercentagePrioritized,
   AllocationPercentageTimed,
+  Node,
+  AllocationNode,
+  AllocationGroup,
+  AllocationGroupNode,
+  AllocationItem,
+  AllocationItemNode,
 } from "./types";
+
+export { AllocationType } from "./types";
