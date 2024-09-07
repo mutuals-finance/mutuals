@@ -1,22 +1,31 @@
-import { CacheProvider, type CacheProviderProps } from "@chakra-ui/next-js";
 import { ChakraProvider, type ChakraProviderProps } from "@chakra-ui/react";
-import defaultTheme from "../../theme";
+import system from "../../theme";
+import { ThemeProvider } from "next-themes";
+import { ThemeProviderProps } from "next-themes/dist/types";
 
 export interface UIProviderProps extends ChakraProviderProps {
-  cacheProps?: CacheProviderProps;
+  themeProps?: Omit<ThemeProviderProps, "children">;
 }
 
 export function UIProvider({
   children,
-  theme = defaultTheme,
-  cacheProps,
+  value = system,
+  themeProps: {
+    attribute = "class",
+    disableTransitionOnChange = true,
+    ...themeProps
+  } = {},
   ...props
 }: UIProviderProps) {
   return (
-    <CacheProvider {...cacheProps}>
-      <ChakraProvider theme={theme} {...props}>
+    <ChakraProvider value={value} {...props}>
+      <ThemeProvider
+        attribute={attribute}
+        disableTransitionOnChange={disableTransitionOnChange}
+        {...themeProps}
+      >
         {children}
-      </ChakraProvider>
-    </CacheProvider>
+      </ThemeProvider>
+    </ChakraProvider>
   );
 }

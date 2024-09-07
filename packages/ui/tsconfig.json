@@ -2,6 +2,7 @@
   "extends": "@mutuals/typescript-config/react.json",
   "compilerOptions": {
     "baseUrl": "./src",
+    "moduleResolution": "bundler",
     "outDir": "dist",
     "paths": {
       "@/*": [

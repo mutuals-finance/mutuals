@@ -1,27 +1,12 @@
 /**
- * Client-side rendering of all chakra ui components.
- * Unnecessary hydration and needs to be removed in the long run.
- */
-"use client";
-
-/**
  * Unmodified Components
- * These components are exported directly from ChakraUI.
+ * These recipes are exported directly from ChakraUI.
  */
 export * from "@chakra-ui/react";
 
-export {
-  Image,
-  type ImageProps,
-  Link,
-  type LinkProps,
-  CacheProvider,
-  type CacheProviderProps,
-} from "@chakra-ui/next-js";
-
 /**
  * Custom Components
- * These components are custom to @mutuals/ui and are not included in ChakraUI, although they may rely on ChakraUI components.
+ * These recipes are custom to @mutuals/ui and are not included in ChakraUI, although they may rely on ChakraUI recipes.
  */
 
 export { UIProvider } from "./components/UIProvider";

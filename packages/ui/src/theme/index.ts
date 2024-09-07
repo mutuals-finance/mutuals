@@ -1,20 +1,28 @@
-import { extendTheme } from "@chakra-ui/react";
+import {
+  createSystem,
+  defaultBaseConfig,
+  defineConfig,
+  mergeConfigs,
+} from "@chakra-ui/react";
 
-import components from "./components";
-import semanticTokens from "./foundations/tokens";
-import colors from "./foundations/colors";
-import config from "./foundations/config";
-import styles from "./foundations/styles";
-import typography from "./foundations/typography";
+import recipes from "./recipes";
+import slotRecipes from "./slot-recipes";
+import semanticTokens from "./foundations/semantic-tokens";
+// import colors from "./foundations/colors";
+// import styles from "./foundations/styles";
+import textStyles from "./foundations/text-styles";
 
-const { fonts, fontSizes } = typography;
-
-export default extendTheme({
-  styles,
-  fonts,
-  fontSizes,
-  colors,
-  config,
-  semanticTokens,
-  components,
+const customConfig = defineConfig({
+  theme: {
+    // styles,
+    //colors,
+    textStyles,
+    semanticTokens,
+    recipes,
+    slotRecipes,
+  },
 });
+
+const systemConfig = mergeConfigs(defaultBaseConfig, customConfig);
+
+export default createSystem(systemConfig);

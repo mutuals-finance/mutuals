@@ -1,12 +1,11 @@
 "use client";
 
 import { motion, MotionProps } from "framer-motion";
-import { chakra, ChakraProps, forwardRef } from "@chakra-ui/react";
+import { chakra } from "@chakra-ui/react";
+import { forwardRef } from "react";
 
 export const MotionBox = motion(
-  forwardRef<MotionProps & ChakraProps, "div">(
-    ({ layoutId: _, ...rest }, ref) => (
-      <chakra.div ref={ref} {...(rest as ChakraProps)} />
-    ),
-  ),
+  forwardRef<"div", Omit<MotionProps, "children">>((props, ref) => {
+    return <chakra.div ref={ref} {...props} />;
+  }),
 );
