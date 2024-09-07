@@ -11,7 +11,7 @@ import {
   MenuItem,
   MenuList,
   Button,
-  ButtonGroup,
+  Group,
   IconButton,
 } from "@mutuals/ui";
 import AllocationTable from "@/features/PoolAdd/AllocationTable";
@@ -53,7 +53,7 @@ export default function PoolAddAllocations({
         description={`Please define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
       >
         <AllocationTable data={fields} />
-        <ButtonGroup size="sm">
+        <Group size="sm">
           <Button
             rightIcon={<IoAddCircle />}
             onClick={() => appendAllocation(lastItem)}
@@ -74,7 +74,7 @@ export default function PoolAddAllocations({
               ))}
             </MenuList>
           </Menu>
-        </ButtonGroup>
+        </Group>
       </FormGroup>
     </>
   );

@@ -29,9 +29,11 @@ export default defineRecipe({
   variants: {
     size: {
       xl: {
-        fontSize: "xl",
-        px: "6",
-        h: "16",
+        extend: {
+          fontSize: "xl",
+          px: "6",
+          h: "16",
+        },
       },
     },
   },

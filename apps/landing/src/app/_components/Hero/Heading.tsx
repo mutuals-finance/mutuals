@@ -1,14 +1,13 @@
 import {
   Button,
-  ButtonGroup,
+  Group,
   Container,
   ContainerProps,
   Heading,
   Stack,
-  MotionBox,
   Text,
   Tag,
-  TagLabel,
+  MotionBox,
 } from "@mutuals/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/_components/Hero/index";
@@ -45,16 +44,14 @@ export default function HomeHeroHeading({
             border={"1px solid"}
             borderColor={"border.1"}
           >
-            <TagLabel>
-              <Text
-                variant={"tag"}
-                bgGradient="linear(to-bl, pink.400, purple.400, primary.400)"
-                bgClip="text"
-                fontSize={"sm"}
-              >
-                Join now for free
-              </Text>
-            </TagLabel>
+            <Text
+              variant={"tag"}
+              bgGradient="linear(to-bl, pink.400, purple.400, primary.400)"
+              bgClip="text"
+              fontSize={"sm"}
+            >
+              Join now for free
+            </Text>
           </Tag>
           <Heading
             as="h1"
@@ -64,16 +61,16 @@ export default function HomeHeroHeading({
             The best way to manage on-chain payments
           </Heading>
 
-          <ButtonGroup
+          <Group
             position={{ lg: "absolute" }}
             size="lg"
             bottom={{ lg: "5" }}
             right={{ lg: "0" }}
-            spacing="3"
+            gap="3"
           >
             <Button>Learn More</Button>
             <Button variant={"blackWhite"}>Start For Free</Button>
-          </ButtonGroup>
+          </Group>
         </Stack>
       </MotionBox>
     </Container>

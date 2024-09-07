@@ -1,20 +1,9 @@
-"use client";
+import { Text, Card, Icon, Flex, IconProps } from "@mutuals/ui";
 
-import {
-  Text,
-  Card,
-  CardHeader,
-  CardProps,
-  CardBody,
-  Icon,
-  Flex,
-  type As,
-} from "@mutuals/ui";
-
-interface ValueCardProps extends CardProps {
+interface ValueCardProps extends Card.RootProps {
   heading: string;
   description: string;
-  icon?: As;
+  icon?: IconProps["as"];
 }
 
 export default function ValueCard({
@@ -24,7 +13,7 @@ export default function ValueCard({
   ...props
 }: ValueCardProps) {
   return (
-    <Card
+    <Card.Root
       variant="filled"
       bg="transparent"
       borderLeft={{ lg: "2px solid" }}
@@ -36,7 +25,7 @@ export default function ValueCard({
       {...props}
     >
       {!!icon && (
-        <CardHeader
+        <Card.Header
           px="0"
           pb={{ base: "6", lg: "12" }}
           pt={{ base: "6", lg: "0" }}
@@ -52,16 +41,16 @@ export default function ValueCard({
           >
             <Icon as={icon} boxSize={5} />
           </Flex>
-        </CardHeader>
+        </Card.Header>
       )}
 
-      <CardBody p={"0"}>
+      <Card.Body p={"0"}>
         <Text as="h3" mb="3" variant={"tag"} fontSize={"xs"}>
           {heading}
         </Text>
 
         <Text>{description}</Text>
-      </CardBody>
-    </Card>
+      </Card.Body>
+    </Card.Root>
   );
 }

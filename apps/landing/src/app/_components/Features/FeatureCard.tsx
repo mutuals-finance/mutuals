@@ -1,13 +1,12 @@
-import { GridItemProps } from "@mutuals/ui";
 import {
   GridItem,
   Stack,
-  CardBody,
   Card,
   StackProps,
   Heading,
   Text,
   Box,
+  GridItemProps,
 } from "@mutuals/ui";
 
 interface FeatureCardProps extends StackProps, GridItemProps {
@@ -24,8 +23,8 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <GridItem as={Card} variant={"outline"} borderWidth={"2px"} {...props}>
-      <CardBody
+    <GridItem as={Card.Root} variant={"outline"} borderWidth={"2px"} {...props}>
+      <Card.Body
         as={Stack}
         direction={"column"}
         justify={"space-between"}
@@ -65,7 +64,7 @@ export default function FeatureCard({
             {description}
           </Text>
         </Box>
-      </CardBody>
+      </Card.Body>
     </GridItem>
   );
 }

@@ -1,5 +1,5 @@
 import ContentCard from "@/components/ContentCard";
-import { Box, Button, Heading, Stack, StackDivider, Text } from "@mutuals/ui";
+import { Box, Button, Heading, Stack, StackSeparator, Text } from "@mutuals/ui";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default async function PoolSettingsSecurityPage() {
 
   return (
     <ContentCard title={"Danger Zone"} borderColor={"red.400"}>
-      <Stack spacing={"6"} divider={<StackDivider />}>
+      <Stack gap={"6"} separator={<StackSeparator />}>
         <Stack direction={{ base: "column", md: "row" }} flex={"1"}>
           <Box flex={"1"}>
             <Heading size="sm" lineHeight={"2"}>
@@ -37,7 +37,7 @@ export default async function PoolSettingsSecurityPage() {
             </Text>
           </Box>
           <Box>
-            <Button colorScheme={"orange"}>Disable this Payment Pool</Button>
+            <Button colorPalette={"orange"}>Disable this Payment Pool</Button>
           </Box>
         </Stack>
         <Stack direction={{ base: "column", md: "row" }} flex={"1"}>
@@ -50,7 +50,7 @@ export default async function PoolSettingsSecurityPage() {
             </Text>
           </Box>
           <Box>
-            <Button colorScheme={"red"}>Delete this Payment Pool</Button>
+            <Button colorPalette={"red"}>Delete this Payment Pool</Button>
           </Box>
         </Stack>
       </Stack>

@@ -33,7 +33,7 @@ export default function ShellDashboardHeader() {
       w={"100%"}
       align={"center"}
       justify={"space-between"}
-      spacing={{ base: "3", lg: "12" }}
+      gap={{ base: "3", lg: "12" }}
       borderBottom="1px solid"
       borderColor={"border.1"}
       bg={"bg.1"}
@@ -57,7 +57,7 @@ export default function ShellDashboardHeader() {
         <SplitFiLogo w={"24"} mr={"auto"} />
       </Show>
 
-      <Stack direction={"row"} spacing={6} ml={"auto"}>
+      <Stack direction={"row"} gap={6} ml={"auto"}>
         <Chain />
         <User />
       </Stack>

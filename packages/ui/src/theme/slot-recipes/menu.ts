@@ -16,7 +16,7 @@ const baseStyle = {
       bg: "bg.2",
     },
   },
-  divider: {
+  separator: {
     borderColor: "border.1",
   },
 };

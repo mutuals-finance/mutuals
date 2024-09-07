@@ -1,10 +1,8 @@
-"use client";
-
 import KeenSlider, {
   type KeenSliderProps,
 } from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
-import { Stack, Card, Heading, CardBody } from "@mutuals/ui";
+import { Stack, Card, Heading } from "@mutuals/ui";
 import NextImage, { type ImageProps } from "next/image";
 
 const animation = { duration: 4 * 10000, easing: (t: number) => t };
@@ -25,10 +23,10 @@ export default function PartnerSlider({
         drag: false,
         breakpoints: {
           "(min-width: 800px)": {
-            slides: { perView: 4, spacing: 6 },
+            slides: { perView: 4, gap: 6 },
           },
           "(min-width: 1200px)": {
-            slides: { perView: 6, spacing: 12 },
+            slides: { perView: 6, gap: 12 },
           },
         },
         slides: { perView: 3 },
@@ -46,9 +44,9 @@ export default function PartnerSlider({
       {...props}
     >
       {networks.map((network) => (
-        <KeenSliderSlide>
-          <Card variant={"transparent"}>
-            <CardBody
+        <KeenSliderSlide key={network.name}>
+          <Card.Root variant={"transparent"}>
+            <Card.Body
               as={Stack}
               gap={"3"}
               alignItems={"center"}
@@ -63,8 +61,8 @@ export default function PartnerSlider({
               <Heading as={"h4"} size={"xs"}>
                 {network.name}
               </Heading>
-            </CardBody>
-          </Card>
+            </Card.Body>
+          </Card.Root>
         </KeenSliderSlide>
       ))}
     </KeenSlider>

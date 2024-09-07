@@ -33,7 +33,7 @@ export default function BreadcrumbsInner({
   return (
     <Breadcrumb
       fontSize={"sm"}
-      spacing="3"
+      gap="3"
       separator={<Icon as={RxSlash} boxSize={"0.6rem"} />}
       {...props}
     >

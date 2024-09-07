@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, BoxProps, MotionBox } from "@mutuals/ui";
-import { DarkMode, LightMode, useBreakpointValue } from "@mutuals/ui";
+import { useBreakpointValue } from "@mutuals/ui";
 import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useHeaderObserver } from "@/providers/HeaderObserver";
 
@@ -51,13 +51,6 @@ export default function HeaderContainerWrapper({
 
   const { headerTheme } = useHeaderObserver();
 
-  const ThemeComponent =
-    headerTheme === "dark"
-      ? DarkMode
-      : headerTheme === "light"
-        ? LightMode
-        : Fragment;
-
   return (
     <MotionConfig
       transition={{
@@ -79,17 +72,16 @@ export default function HeaderContainerWrapper({
         variants={variants.visibility}
         {...props}
       >
-        <ThemeComponent>
-          <Box
-            flex={"1"}
-            display="flex"
-            alignItems="stretch"
-            justifyContent="stretch"
-            bg={"bgAlpha.2"}
-          >
-            {children}
-          </Box>
-        </ThemeComponent>
+        <Box
+          flex={"1"}
+          display="flex"
+          alignItems="stretch"
+          justifyContent="stretch"
+          bg={"bgAlpha.2"}
+          className={headerTheme}
+        >
+          {children}
+        </Box>
       </MotionBox>
     </MotionConfig>
   );

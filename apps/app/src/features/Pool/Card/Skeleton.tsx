@@ -1,9 +1,6 @@
 import {
   Box,
   Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Flex,
   Skeleton,
   SkeletonCircle,
@@ -12,8 +9,8 @@ import {
 
 export default function SplitCardSkeleton() {
   return (
-    <Card variant={"outline"} bg={"bg.1"} size={"sm"}>
-      <CardHeader as={Flex} alignItems={"center"} gap={"3"}>
+    <Card.Root variant={"outline"} bg={"bg.1"} size={"sm"}>
+      <Card.Header as={Flex} alignItems={"center"} gap={"3"}>
         <Box flexShrink={0}>
           <SkeletonCircle size="3.2rem" />
         </Box>
@@ -21,13 +18,13 @@ export default function SplitCardSkeleton() {
         <Box flex="1" py={"6"}>
           <SkeletonText noOfLines={2} />
         </Box>
-      </CardHeader>
-      <CardBody>
+      </Card.Header>
+      <Card.Body>
         <SkeletonText noOfLines={2} />
-      </CardBody>
-      <CardFooter>
+      </Card.Body>
+      <Card.Footer>
         <Skeleton height="16" w={"full"} />
-      </CardFooter>
-    </Card>
+      </Card.Footer>
+    </Card.Root>
   );
 }

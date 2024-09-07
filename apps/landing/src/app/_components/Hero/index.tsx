@@ -1,19 +1,12 @@
 "use client";
 
-import {
-  Box,
-  Stack,
-  Button,
-  Container,
-  DarkMode,
-  useColorModeValue,
-} from "@mutuals/ui";
+import { Box, Stack, Button, Container } from "@mutuals/ui";
 import { useMotionValueEvent, useScroll, MotionConfig } from "framer-motion";
 import { useState } from "react";
 
 import HomeHeroHeading from "@/app/_components/Hero/Heading";
 import HomeHeroSlider from "@/app/_components/Hero/Slider";
-import { IoPlayCircleOutline, IoPlayOutline } from "react-icons/io5";
+import { IoPlayOutline } from "react-icons/io5";
 
 export type HomeHeroAnimBaseType = {
   animLabel: "grow" | "shrink";

@@ -10,7 +10,7 @@ export default function NavWrapper({ children, ...props }: NavWrapperProps) {
       h="20"
       alignItems="center"
       w={"full"}
-      spacing="12"
+      gap="12"
       px={{ base: "6", lg: "12" }}
       position="relative"
       {...props}

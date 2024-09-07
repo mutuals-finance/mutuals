@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Box,
-  DarkMode,
-  Container,
-  Stack,
-  useColorModeValue,
-} from "@mutuals/ui";
+import { Box, Container, Stack } from "@mutuals/ui";
 
 import ActorCard from "@/app/_components/Actors/ActorCard";
 import SectionHeader from "@/components/SectionHeader";
@@ -35,9 +29,9 @@ export default function HomeActors() {
               animate={active === "owners" ? "grow" : "shrink"}
               title="For Owners"
               description="Mutuals lets you automate and distribute your project earnings."
-              bg={useColorModeValue("gray.900", "bg.3")}
+              bg={{ base: "gray.900", _dark: "bg.3" }}
               benefitsProps={{
-                color: useColorModeValue("whiteAlpha.500", "whiteAlpha.500"),
+                color: { base: "whiteAlpha.500", _dark: "whiteAlpha.500" },
               }}
               color={"white"}
               image={ownersImage}
@@ -47,9 +41,9 @@ export default function HomeActors() {
                 "Automate income streams and track project earnings",
               ]}
               iconProps={{
-                color: useColorModeValue("gray.600", "gray.600"),
+                color: { base: "gray.600", _dark: "gray.600" },
               }}
-              buttonProps={{ colorScheme: "accent", bg: "accent.600" }}
+              buttonProps={{ colorPalette: "accent", bg: "accent.600" }}
               onHoverStart={() => setActive("owners")}
             />
 
@@ -63,8 +57,8 @@ export default function HomeActors() {
                 "Clean and easy-to-use interface for analyzing project earnings",
               ]}
               image={partnersImage}
-              bg={useColorModeValue("blue.100", "blue.900")}
-              buttonProps={{ colorScheme: "primary" }}
+              bg={{ base: "blue.100", _dark: "blue.900" }}
+              buttonProps={{ colorPalette: "primary" }}
               onHoverStart={() => setActive("partners")}
             />
           </Stack>

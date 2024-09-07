@@ -27,7 +27,7 @@ export default function PoolList() {
       <TreasurySearchAndCreate />
       <SimpleGrid
         templateColumns={"repeat(auto-fit, minmax(22rem, 1fr))"}
-        spacing={6}
+        gap={6}
       >
         {!!data?.splits && data.splits.length > 0
           ? Array(4)

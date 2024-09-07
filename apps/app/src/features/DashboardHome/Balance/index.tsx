@@ -3,7 +3,7 @@
 import {
   Box,
   Button,
-  ButtonGroup,
+  Group,
   Container,
   Stack,
   StatGroup,
@@ -53,10 +53,10 @@ export default function DashboardBalance() {
             </Stat>
           </StatGroup>
 
-          <ButtonGroup>
+          <Group>
             <Button variant={"blackWhite"}>Withdraw All</Button>
             <Button variant={"outline"}>My Pools</Button>
-          </ButtonGroup>
+          </Group>
         </Stack>
       </ContentCard>
     </Container>

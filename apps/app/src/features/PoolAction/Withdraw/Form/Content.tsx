@@ -97,7 +97,7 @@ export default function PoolActionWithdrawFormContent({
         />
 
         <Button
-          colorScheme="primary"
+          colorPalette="primary"
           disabled={!isValid || tx.isError || tx.isLoading}
           type={"button"}
           w={"full"}

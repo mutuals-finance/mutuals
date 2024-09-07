@@ -42,7 +42,7 @@ export default function Form<
       <VStack
         as={"form"}
         align={"stretch"}
-        spacing={"6"}
+        gap={"6"}
         onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}
         {...props}
       >

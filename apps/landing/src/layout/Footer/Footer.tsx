@@ -1,14 +1,14 @@
 import {
   Link,
-  ButtonGroup,
+  Group,
   Container,
   IconButton,
   Stack,
   Text,
+  ColorModeMenu,
 } from "@mutuals/ui";
 import { BiLogoTelegram } from "react-icons/bi";
 import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
-import ThemeToggle from "@/layout/Footer/ThemeToggle";
 
 export default function FooterFooter() {
   return (
@@ -17,7 +17,7 @@ export default function FooterFooter() {
         pt={6}
         pb={20}
         direction={{ base: "column", md: "row" }}
-        spacing={6}
+        gap={6}
         justify={{ md: "space-between" }}
         align={{ md: "center" }}
         borderTopWidth={1}
@@ -33,8 +33,8 @@ export default function FooterFooter() {
           &copy; {new Date().getFullYear()} Mutuals Finance, All rights
           reserved.
         </Text>
-        <Stack direction="row" spacing={6} justify={"space-between"}>
-          <ButtonGroup variant="ghost" size={"sm"}>
+        <Stack direction="row" gap={6} justify={"space-between"}>
+          <Group variant="ghost" size={"sm"}>
             <IconButton
               as={Link}
               aria-label="Twitter"
@@ -53,9 +53,9 @@ export default function FooterFooter() {
               href="/#"
               icon={<BiLogoTelegram />}
             />
-          </ButtonGroup>
+          </Group>
 
-          <ThemeToggle />
+          <ColorModeMenu variant="outline" size="sm" />
         </Stack>
       </Stack>
     </Container>

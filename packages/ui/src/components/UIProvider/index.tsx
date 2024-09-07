@@ -1,3 +1,5 @@
+"use client";
+
 import { ChakraProvider, type ChakraProviderProps } from "@chakra-ui/react";
 import system from "../../theme";
 import { ThemeProvider } from "next-themes";

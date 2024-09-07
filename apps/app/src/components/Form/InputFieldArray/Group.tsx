@@ -56,13 +56,13 @@ export default function InputFieldArrayGroup<TFieldValue>({
   const { fields } = method;
 
   return (
-    <VStack spacing={"6"} flex={"1"} w={"100%"} alignItems={"stretch"}>
+    <VStack gap={"6"} flex={"1"} w={"100%"} alignItems={"stretch"}>
       {contentBefore?.(method)}
 
       {!!contentEmpty && fields.length <= 0 && contentEmpty?.(method)}
 
       {!!children && (
-        <VStack spacing={"3"} alignItems={"stretch"}>
+        <VStack gap={"3"} alignItems={"stretch"}>
           {children(method)}
         </VStack>
       )}

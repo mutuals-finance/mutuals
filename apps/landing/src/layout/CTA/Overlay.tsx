@@ -1,8 +1,11 @@
-"use client";
-
-import { Box, useColorModeValue } from "@mutuals/ui";
+import { Box } from "@mutuals/ui";
 
 export default function CTAOverlay() {
-  const bg = useColorModeValue("transparent", "blackAlpha.600");
-  return <Box position={"absolute"} inset={"0"} bg={bg} />;
+  return (
+    <Box
+      position={"absolute"}
+      inset={"0"}
+      bg={{ base: "transparent", _dark: "blackAlpha.600" }}
+    />
+  );
 }

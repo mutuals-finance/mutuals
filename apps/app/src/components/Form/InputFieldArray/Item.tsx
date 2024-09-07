@@ -15,9 +15,9 @@ export default function InputFieldArrayItem({
   onRemove,
 }: React.PropsWithChildren<InputFieldArrayItemProps>) {
   return (
-    <HStack alignItems={"flex-end"} spacing={"3"} flex={"1"}>
+    <HStack alignItems={"flex-end"} gap={"3"} flex={"1"}>
       {children}
-      <HStack alignItems="center" spacing={"1"}>
+      <HStack alignItems="center" gap={"1"}>
         {!!onAdd && (
           <IconButton
             aria-label={"Add item"}

@@ -1,7 +1,8 @@
-import localFont from "next/font/local";
-import { Inter } from "next/font/google";
+// import localFont from "next/font/local";
+// import { Inter } from "next/font/google";
 import { defineTextStyles } from "@chakra-ui/react";
 
+/*
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -46,8 +47,10 @@ const cabinet = localFont({
     },
   ],
 });
+*/
 
 const textStyles = defineTextStyles({
+  /*
   body: {
     description: "The body text style - used in paragraphs",
     value: {
@@ -60,6 +63,7 @@ const textStyles = defineTextStyles({
       fontFamily: cabinet.style.fontFamily,
     },
   },
+*/
 }) as Record<string, Object>;
 
 export default textStyles;

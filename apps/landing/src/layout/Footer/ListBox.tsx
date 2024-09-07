@@ -19,7 +19,7 @@ export default function FooterListBox({
   ...props
 }: FooterListBoxProps) {
   return (
-    <GridItem as={Stack} align="flex-start" spacing={"3"} {...props}>
+    <GridItem as={Stack} align="flex-start" gap={"3"} {...props}>
       {!!title && (
         <Text mb="3" variant={"tag"} fontSize={"xs"}>
           {title}

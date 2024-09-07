@@ -102,7 +102,7 @@ export default function ShellDashboardSidebarContent({
                   fontSize={"sm"}
                   textAlign={"left"}
                   leftIcon={<navItem.icon />}
-                  iconSpacing={"4"}
+                  icongap={"4"}
                   sx={{ textDecoration: "none !important" }}
                   overflow={"hidden"}
                 >

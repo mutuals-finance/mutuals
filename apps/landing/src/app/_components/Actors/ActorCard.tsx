@@ -2,37 +2,30 @@
 
 import {
   Button,
-  CardProps,
   useBreakpointValue,
   Card,
-  CardBody,
-  CardHeader,
   Stack,
   Text,
-  ListItem,
   ButtonProps,
   IconProps,
   Flex,
-  CardFooter,
   Icon,
-  List,
-  ListIcon,
   MotionBox,
+  List,
   Heading,
-  ListProps,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoCheckboxOutline, IoArrowUpCircle } from "react-icons/io5";
 import { AnimatePresence, EventInfo } from "framer-motion";
 
-export interface ActorCardProps extends CardProps {
+export interface ActorCardProps extends Card.RootProps {
   title: string;
   description: string;
   benefits?: string[];
   image?: ImageProps["src"];
   iconProps?: IconProps;
   buttonProps?: ButtonProps;
-  benefitsProps?: ListProps;
+  benefitsProps?: List.RootProps;
   animate?: "grow" | "shrink";
   onHoverStart?: (event: MouseEvent, info: EventInfo) => void;
   onHoverEnd?: (event: MouseEvent, info: EventInfo) => void;
@@ -75,7 +68,7 @@ export default function ActorCard({
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
     >
-      <Card
+      <Card.Root
         variant="filled"
         overflow="hidden"
         size={"lg"}
@@ -100,7 +93,7 @@ export default function ActorCard({
               },
             })}
           >
-            <CardHeader
+            <Card.Header
               as={Stack}
               gap={"3"}
               justify={{ base: "space-between", lg: "unset" }}
@@ -124,10 +117,10 @@ export default function ActorCard({
                 order={{ lg: "-1" }}
                 {...iconProps}
               />
-            </CardHeader>
+            </Card.Header>
           </MotionBox>
 
-          <CardBody
+          <Card.Body
             as={Stack}
             flex={"1"}
             gap={"6"}
@@ -149,26 +142,26 @@ export default function ActorCard({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <List spacing={"1"} color={"alpha.2"} {...benefitsProps}>
+                    <List.Root gap={"1"} color={"alpha.2"} {...benefitsProps}>
                       {benefits?.map((b) => (
-                        <ListItem key={b} as={Flex} alignItems={"flex-start"}>
-                          <ListIcon
+                        <List.Item key={b} as={Flex} alignItems={"flex-start"}>
+                          <List.Indicator
                             w="5"
                             h={"5"}
                             as={IoCheckboxOutline}
                             mt={"1"}
                           />
                           <Text fontWeight="500">{b}</Text>
-                        </ListItem>
+                        </List.Item>
                       ))}
-                    </List>
+                    </List.Root>
                   </MotionBox>
                 )}
               </AnimatePresence>
             )}
-          </CardBody>
+          </Card.Body>
 
-          <CardFooter
+          <Card.Footer
             as={Stack}
             gap={"6"}
             align={"flex-start"}
@@ -179,7 +172,7 @@ export default function ActorCard({
             <Button w={{ base: "full", lg: "auto" }} {...buttonProps}>
               Get Started For Free
             </Button>
-          </CardFooter>
+          </Card.Footer>
         </Stack>
         {image && (
           <AnimatePresence>
@@ -211,7 +204,7 @@ export default function ActorCard({
             )}
           </AnimatePresence>
         )}
-      </Card>
+      </Card.Root>
     </MotionBox>
   );
 }

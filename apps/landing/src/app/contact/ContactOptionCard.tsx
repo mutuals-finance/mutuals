@@ -1,19 +1,8 @@
 "use client";
 
-import {
-  Text,
-  Card,
-  CardHeader,
-  CardProps,
-  CardBody,
-  Icon,
-  Flex,
-  type As,
-  Heading,
-  Stack,
-} from "@mutuals/ui";
+import { Text, Card, Icon, Flex, type As, Heading, Stack } from "@mutuals/ui";
 
-interface ContactOptionCardProps extends CardProps {
+interface ContactOptionCardProps extends Card.RootProps {
   heading: string;
   description?: string[];
   icon?: As;
@@ -27,7 +16,7 @@ export default function ContactOptionCard({
   ...props
 }: ContactOptionCardProps) {
   return (
-    <Card
+    <Card.Root
       variant="filled"
       bg="transparent"
       borderLeft={"2px solid"}
@@ -40,7 +29,7 @@ export default function ContactOptionCard({
       {...props}
     >
       {!!icon && (
-        <CardHeader px="0" pb={{ base: "6", lg: "12" }} pt={0}>
+        <Card.Header px="0" pb={{ base: "6", lg: "12" }} pt={0}>
           <Flex
             align={"center"}
             justify={"center"}
@@ -52,10 +41,10 @@ export default function ContactOptionCard({
           >
             <Icon as={icon} boxSize={6} />
           </Flex>
-        </CardHeader>
+        </Card.Header>
       )}
 
-      <CardBody p={"0"}>
+      <Card.Body p={"0"}>
         <Heading mb="6" size={"xl"}>
           {heading}
         </Heading>
@@ -71,7 +60,7 @@ export default function ContactOptionCard({
         )}
 
         {children}
-      </CardBody>
-    </Card>
+      </Card.Body>
+    </Card.Root>
   );
 }

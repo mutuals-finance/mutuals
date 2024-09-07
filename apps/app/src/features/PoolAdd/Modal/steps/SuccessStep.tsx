@@ -35,7 +35,7 @@ export function SuccessStep({
         to withdraw and deposit funds.
       </AlertDescription>
 
-      <Button variant={"outline"} colorScheme={"green"}>
+      <Button variant={"outline"} colorPalette={"green"}>
         View more
       </Button>
     </Alert>

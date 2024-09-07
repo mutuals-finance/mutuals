@@ -1,34 +1,25 @@
 "use client";
 
 import {
-  CardFooter,
-  CardHeader,
-  CardProps,
-  Flex,
-  useColorModeValue,
-} from "@mutuals/ui";
-import {
   Box,
   Button,
   Card,
+  Flex,
   Heading,
-  CardBody,
   Container,
   List,
-  ListIcon,
-  ListItem,
   SimpleGrid,
   Stack,
   Text,
 } from "@mutuals/ui";
 import { IoCheckboxOutline } from "react-icons/io5";
 
-interface PricingCardProps extends CardProps {
+interface PricingCardProps extends Card.RootProps {
   heading: string;
   label: string;
   description: string;
   features?: string[];
-  colorScheme?: string;
+  colorPalette?: string;
 }
 
 function PricingCard({
@@ -45,8 +36,8 @@ function PricingCard({
   ];
 
   return (
-    <Card variant={variant} size={"lg"}>
-      <CardHeader minH={{ md: "40" }}>
+    <Card.Root variant={variant} size={"lg"}>
+      <Card.Header minH={{ md: "40" }}>
         <Heading size={"xl"} mb={"3"} fontWeight={"600"}>
           {heading}
         </Heading>
@@ -54,8 +45,8 @@ function PricingCard({
         <Text fontWeight={"500"} color={"alpha.2"}>
           {description}
         </Text>
-      </CardHeader>
-      <CardBody>
+      </Card.Header>
+      <Card.Body>
         <Heading as={"h3"} size={"xl"} fontWeight={"600"}>
           $0.00
         </Heading>
@@ -69,16 +60,21 @@ function PricingCard({
         <Button variant="blackWhite" w="full" size={"lg"} mt="6">
           Get Started
         </Button>
-      </CardBody>
-      <CardFooter as={Stack}>
+      </Card.Body>
+      <Card.Footer as={Stack}>
         <Text fontSize="xs" variant={"tag"} as="h3">
           Includes
         </Text>
 
-        <List gap={"0.5"} as={Stack}>
+        <List.Root gap={"0.5"} as={Stack}>
           {[...features, ...baseFeatures].map((feature) => (
-            <ListItem key={feature} as={Flex} gap="0" alignItems={"flex-start"}>
-              <ListIcon
+            <List.Item
+              key={feature}
+              as={Flex}
+              gap="0"
+              alignItems={"flex-start"}
+            >
+              <List.Indicator
                 w="4"
                 h={"4"}
                 as={IoCheckboxOutline}
@@ -86,11 +82,11 @@ function PricingCard({
                 color={"alpha.2"}
               />
               <Text>{feature}</Text>
-            </ListItem>
+            </List.Item>
           ))}
-        </List>
-      </CardFooter>
-    </Card>
+        </List.Root>
+      </Card.Footer>
+    </Card.Root>
   );
 }
 
@@ -103,7 +99,7 @@ export default function PricingInfo() {
             heading="Regular Usage"
             label="for free"
             description="There is no fee for using Mutuals."
-            colorScheme={useColorModeValue("primary.100", "primary.900")}
+            colorPalette={{ base: "primary.100", _dark: "primary.900" }}
           />
           <PricingCard
             heading="Donation"
@@ -113,7 +109,7 @@ export default function PricingInfo() {
               "Custom donation per withdrawal",
               "Publicly visible donation badge",
             ]}
-            colorScheme={useColorModeValue("primary.600", "primary.700")}
+            colorPalette={{ base: "primary.600", _dark: "primary.700" }}
           />
         </SimpleGrid>
       </Container>

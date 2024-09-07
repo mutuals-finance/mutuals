@@ -1,6 +1,6 @@
 import {
   createSystem,
-  defaultBaseConfig,
+  defaultConfig,
   defineConfig,
   mergeConfigs,
 } from "@chakra-ui/react";
@@ -23,6 +23,6 @@ const customConfig = defineConfig({
   },
 });
 
-const systemConfig = mergeConfigs(defaultBaseConfig, customConfig);
+const systemConfig = mergeConfigs(defaultConfig, customConfig);
 
 export default createSystem(systemConfig);

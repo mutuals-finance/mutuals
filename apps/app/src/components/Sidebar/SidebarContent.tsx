@@ -6,7 +6,7 @@ export function SidebarContent({ children, ...props }: StackProps) {
     <VStack
       flex={"1 0 auto"}
       p={"6"}
-      spacing={3}
+      gap={3}
       overflowY={"auto"}
       overflowX={"hidden"}
       justifyContent={"space-between"}

@@ -20,7 +20,7 @@ export default function ShellPool({
         overwrite: {
           pool: false,
           id: (
-            <HStack spacing="1" alignItems={"center"}>
+            <HStack gap="1" alignItems={"center"}>
               <PoolCard.Logo
                 src={ipfsResolveData(metaData?.image)}
                 alt={metaData?.name ?? "Unknown Payment Pool"}
