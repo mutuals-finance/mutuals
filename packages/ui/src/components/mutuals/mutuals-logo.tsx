@@ -1,8 +1,8 @@
 import { Icon, IconProps } from "@chakra-ui/react";
 
-export type SplitFiLogoProps = IconProps;
+export type MutualsLogoProps = IconProps;
 
-export function SplitFiLogo({ ...props }: SplitFiLogoProps) {
+export function MutualsLogo({ ...props }: MutualsLogoProps) {
   return (
     <Icon
       width="100%"

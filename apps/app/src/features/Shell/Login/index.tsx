@@ -4,7 +4,7 @@ import {
   GridItem,
   Hide,
   Show,
-  SplitFiLogo,
+  MutualsLogo,
   Text,
   Box,
 } from "@mutuals/ui";
@@ -17,7 +17,7 @@ import NextLink from "next/link";
 function LogoWithLink() {
   return (
     <NextLink href={"/"}>
-      <SplitFiLogo w={"28"} />
+      <MutualsLogo w={"28"} />
     </NextLink>
   );
 }

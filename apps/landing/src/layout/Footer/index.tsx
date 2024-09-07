@@ -4,7 +4,7 @@ import {
   Grid,
   IconButton,
   Input,
-  SplitFiLogo,
+  MutualsLogo,
   Stack,
 } from "@mutuals/ui";
 import { IoSend } from "react-icons/io5";
@@ -62,7 +62,7 @@ export default function LayoutFooter() {
             justifyContent={"flex-start"}
           >
             <Box>
-              <SplitFiLogo maxW={{ base: "32", lg: "48" }} />
+              <MutualsLogo maxW={{ base: "32", lg: "48" }} />
             </Box>
           </ListBox>
 

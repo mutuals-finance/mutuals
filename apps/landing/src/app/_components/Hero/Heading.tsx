@@ -63,13 +63,12 @@ export default function HomeHeroHeading({
 
           <Group
             position={{ lg: "absolute" }}
-            size="lg"
             bottom={{ lg: "5" }}
             right={{ lg: "0" }}
             gap="3"
           >
-            <Button>Learn More</Button>
-            <Button variant={"blackWhite"}>Start For Free</Button>
+            <Button variant={"ghost"}>Learn More</Button>
+            <Button>Start For Free</Button>
           </Group>
         </Stack>
       </MotionBox>

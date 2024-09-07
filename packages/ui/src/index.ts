@@ -11,10 +11,13 @@ export * from "@chakra-ui/react";
 export * from "next-themes";
 
 /**
- * Custom Chakra Components
+ * Custom Components
  */
-export { CloseButton } from "./components/ui/close-button";
 export {
+  MotionBox,
+  MutualsLogo,
+  UIProvider,
+  CloseButton,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
@@ -24,35 +27,20 @@ export {
   DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
-} from "./components/ui/drawer";
-export { Tag } from "./components/ui/tag";
-export {
   MenuContent,
   MenuRadioItem,
   MenuRadioItemGroup,
   MenuRoot,
   MenuTrigger,
-} from "./components/ui/menu";
-export {
   ColorModeProvider,
   useColorMode,
   useColorModeValue,
   ColorModeButton,
   ColorModeMenu,
-} from "./components/ui/color-mode";
-export {
   AccordionItem,
   AccordionItemContent,
   AccordionItemTrigger,
   AccordionRoot,
-} from "./components/ui/accordion";
-export { Alert } from "./components/ui/alert";
-
-/**
- * Custom Components
- * These recipes are custom to @mutuals/ui and are not included in ChakraUI, although they may rely on ChakraUI recipes.
- */
-
-export { UIProvider } from "./components/UIProvider";
-export { SplitFiLogo } from "./components/SplitFiLogo";
-export { MotionBox } from "./components/MotionBox";
+  Alert,
+  Tag,
+} from "./components";

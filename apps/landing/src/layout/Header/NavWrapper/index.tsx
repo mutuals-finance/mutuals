@@ -1,4 +1,4 @@
-import { HStack, SplitFiLogo, StackProps } from "@mutuals/ui";
+import { HStack, MutualsLogo, StackProps } from "@mutuals/ui";
 
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ export default function NavWrapper({ children, ...props }: NavWrapperProps) {
       {...props}
     >
       <Link href={"/"}>
-        <SplitFiLogo color="color.1" w={{ base: "24", lg: "24" }} />
+        <MutualsLogo color="color.1" w={{ base: "24", lg: "24" }} />
       </Link>
       {children}
     </HStack>

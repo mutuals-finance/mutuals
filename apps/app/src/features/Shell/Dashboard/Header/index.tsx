@@ -7,7 +7,7 @@ import {
   Show,
   Stack,
   useColorModeValue,
-  SplitFiLogo,
+  MutualsLogo,
 } from "@mutuals/ui";
 import React from "react";
 import { IoSearch } from "react-icons/io5";
@@ -54,7 +54,7 @@ export default function ShellDashboardHeader() {
       </Show>
 
       <Show below="lg">
-        <SplitFiLogo w={"24"} mr={"auto"} />
+        <MutualsLogo w={"24"} mr={"auto"} />
       </Show>
 
       <Stack direction={"row"} gap={6} ml={"auto"}>

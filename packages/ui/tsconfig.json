@@ -1,8 +1,7 @@
 {
-  "extends": "@mutuals/typescript-config/react.json",
+  "extends": "@mutuals/typescript-config/next.json",
   "compilerOptions": {
     "baseUrl": "./src",
-    "moduleResolution": "bundler",
     "outDir": "dist",
     "paths": {
       "@/*": [

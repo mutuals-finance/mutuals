@@ -17,7 +17,7 @@ import { useToggle } from "react-use";
 
 import Sidebar from "@/components/Sidebar";
 
-import { SplitFiLogo } from "@mutuals/ui";
+import { MutualsLogo } from "@mutuals/ui";
 import navItems from "@/features/Shell/Dashboard/Sidebar/nav-items";
 import { siteCopyrightText } from "@/config";
 
@@ -56,7 +56,7 @@ export default function ShellDashboardSidebarContent({
         bg={"bg.1"}
         header={
           <HStack justifyContent={"flex-end"} gap={"3"}>
-            {isOpen && <SplitFiLogo w={"24"} mr={"auto"} />}
+            {isOpen && <MutualsLogo w={"24"} mr={"auto"} />}
 
             <IconButton
               icon={<IoMenuSharp display={"block"} />}
