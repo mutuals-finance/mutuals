@@ -5,8 +5,9 @@ import system from "../../theme";
 import { ThemeProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 
-export interface UIProviderProps extends ChakraProviderProps {
+export interface UIProviderProps extends Omit<ChakraProviderProps, "value"> {
   themeProps?: Omit<ThemeProviderProps, "children">;
+  value?: ChakraProviderProps["value"];
 }
 
 export function UIProvider({

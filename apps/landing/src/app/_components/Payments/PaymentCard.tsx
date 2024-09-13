@@ -27,7 +27,12 @@ export default function PaymentCard({
   ...props
 }: PaymentOptionSlideProps) {
   return (
-    <Collapsible.Root as={Card} variant="filled" bg="transparent" {...props}>
+    <Collapsible.Root
+      as={Card.Root}
+      variant="filled"
+      bg="transparent"
+      {...props}
+    >
       {!!image && (
         <Card.Header p="0" position="relative">
           <AspectRatio
@@ -64,10 +69,12 @@ export default function PaymentCard({
           as={IconButton}
           mt={"6"}
           rounded={"full"}
-          icon={isOpen ? <IoRemove /> : <IoAdd />}
           fontSize={"xl"}
+          asChild
           aria-label={"Toggle description"}
-        />
+        >
+          {false ? <IoRemove /> : <IoAdd />}
+        </Collapsible.Trigger>
       </Card.Body>
     </Collapsible.Root>
   );

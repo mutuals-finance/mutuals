@@ -1,9 +1,4 @@
-import {
-  IconButton,
-  Box,
-  type IconButtonProps,
-  DrawerTrigger,
-} from "@mutuals/ui";
+import { IconButton, Box, type IconButtonProps } from "@mutuals/ui";
 
 import NavWrapper, { NavWrapperProps } from "@/layout/Header/NavWrapper";
 import { VscMenu } from "react-icons/vsc";
