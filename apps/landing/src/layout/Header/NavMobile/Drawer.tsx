@@ -3,7 +3,6 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerHeader,
-  DrawerCloseTrigger,
   Button,
   type LinkProps,
   Link,
@@ -11,7 +10,7 @@ import {
   Box,
   StackSeparator,
   CloseButton,
-  CloseButtonProps,
+  ButtonProps,
 } from "@mutuals/ui";
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/layout/Header/NavWrapper";
@@ -21,7 +20,7 @@ interface MobileNavProps
   extends Omit<Drawer.ContentProps, "children">,
     PropsWithChildren {
   links?: LinkProps[];
-  closeButtonProps?: CloseButtonProps;
+  closeButtonProps?: ButtonProps;
 }
 
 export default function NavMobileDrawer({

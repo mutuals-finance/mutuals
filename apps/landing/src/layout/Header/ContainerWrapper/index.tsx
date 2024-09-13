@@ -16,6 +16,7 @@ const variants = {
 
 export default function HeaderContainerWrapper({
   children,
+  transition: _,
   ...props
 }: BoxProps) {
   const { scrollY } = useScroll();
@@ -72,7 +73,6 @@ export default function HeaderContainerWrapper({
         borderColor={"border"}
         animate={isHidden ? "invisible" : "visible"}
         variants={variants.visibility}
-        {...props}
       >
         <Box
           flex={"1"}

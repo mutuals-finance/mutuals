@@ -18,7 +18,6 @@ export {
   MutualsLogo,
   UIProvider,
   CloseButton,
-  CloseButtonProps,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
