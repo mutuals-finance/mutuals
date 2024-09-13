@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 const items = [
   {
     title: "Questions? We're glad you asked.",
-    roundedTop: "2xl",
     children: (
       <>
         <Text>
@@ -65,7 +64,6 @@ const items = [
   {
     title:
       "Is it possible to change the donation portion after creating my split?",
-    roundedBottom: "2xl",
     children: (
       <>
         <Text>

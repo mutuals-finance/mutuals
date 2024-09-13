@@ -39,16 +39,16 @@ export default function HomeHero() {
 
         <HomeHeroSlider animLabel={animLabel} />
 
-        <Container maxW="container.xl" mt={"12"} px={{ base: 3, md: 12 }}>
+        <Container maxW="7xl" mt={"12"}>
           <Stack
             w={"full"}
             align={"center"}
             p={"1.5"}
-            bg={"bg.3"}
+            bg={"bg.muted"}
             rounded={"lg"}
           >
-            <Button variant="ghost" rightIcon={<IoPlayOutline />}>
-              Explore The Demo
+            <Button variant="subtle">
+              Explore The Demo <IoPlayOutline />
             </Button>
           </Stack>
         </Container>

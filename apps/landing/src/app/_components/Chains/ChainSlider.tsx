@@ -25,10 +25,10 @@ export default function ChainSlider({
         drag: false,
         breakpoints: {
           "(min-width: 800px)": {
-            slides: { perView: 4, gap: 6 },
+            slides: { perView: 4, spacing: 6 },
           },
           "(min-width: 1200px)": {
-            slides: { perView: 6, gap: 12 },
+            slides: { perView: 6, spacing: 12 },
           },
         },
         slides: { perView: 3 },
@@ -47,24 +47,17 @@ export default function ChainSlider({
     >
       {networks.map((network) => (
         <KeenSliderSlide key={network.name}>
-          <Card.Root variant={"transparent"}>
-            <Card.Body
-              as={Stack}
-              gap={"3"}
-              alignItems={"center"}
-              justifyContent={"center"}
-            >
-              <NextImage
-                src={network.icon}
-                alt={network.name}
-                height={"64"}
-                style={{ objectFit: "cover" }}
-              />
-              <Heading as={"h4"} size={"xs"}>
-                {network.name}
-              </Heading>
-            </Card.Body>
-          </Card.Root>
+          <Stack gap={"3"} alignItems={"center"} justifyContent={"center"}>
+            <NextImage
+              src={network.icon}
+              alt={network.name}
+              height={"64"}
+              style={{ objectFit: "cover" }}
+            />
+            <Heading as={"h4"} size={"xs"}>
+              {network.name}
+            </Heading>
+          </Stack>
         </KeenSliderSlide>
       ))}
     </KeenSlider>

@@ -14,32 +14,32 @@ const values = [
   {
     heading: "Split tokens",
     description:
-      "SplitFi integrates with your clients systems and connects with a range of data sources",
+      "Mutuals integrates with your clients systems and connects with a range of data sources",
     icon: RiExchange2Line,
   },
   {
     heading: "Automate payments",
     description:
-      "SplitFi integrates with your clients systems and connects with a range of data sources",
+      "Mutuals integrates with your clients systems and connects with a range of data sources",
     icon: IoCodeWorkingOutline,
   },
   {
     heading: "Track earnings",
     description:
-      "SplitFi integrates with your clients systems and connects with a range of data sources",
+      "Mutuals integrates with your clients systems and connects with a range of data sources",
     icon: IoTimerOutline,
   },
   {
     heading: "Accelerate partnerships",
     description:
-      "SplitFi integrates with your clients systems and connects with a range of data sources",
+      "Mutuals integrates with your clients systems and connects with a range of data sources",
     icon: IoTrendingUpOutline,
   },
 ];
 export default function HomeValue() {
   return (
-    <Box bg={"bg.1"} my="48">
-      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
+    <Box my="48">
+      <Container maxW="7xl">
         <SectionHeader>Financial management for on-chain teams</SectionHeader>
 
         <SimpleGrid

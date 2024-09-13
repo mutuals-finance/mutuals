@@ -5,12 +5,12 @@ import {
   ContainerProps,
   Heading,
   Stack,
-  Text,
   Tag,
   MotionBox,
 } from "@mutuals/ui";
 
 import type { HomeHeroAnimBaseType } from "@/app/_components/Hero/index";
+import { IoSparklesOutline } from "react-icons/io5";
 
 type HomeHeroHeadingProps = ContainerProps & HomeHeroAnimBaseType;
 
@@ -19,13 +19,7 @@ export default function HomeHeroHeading({
   ...props
 }: HomeHeroHeadingProps) {
   return (
-    <Container
-      maxW="container.xl"
-      mr="auto"
-      py="24"
-      px={{ base: 0, sm: 12 }}
-      {...props}
-    >
+    <Container maxW="8xl" mr="auto" py="24" {...props}>
       <MotionBox
         animate={animLabel}
         variants={{ shrink: { scale: 0.8 }, grow: { scale: 1 } }}
@@ -34,30 +28,18 @@ export default function HomeHeroHeading({
           direction="column"
           gap="6"
           position={"relative"}
-          align={{ base: "center", lg: "center" }}
-          textAlign={{ base: "center", lg: "left" }}
+          alignItems={{ base: "flex-start", lg: "center" }}
+          textAlign={{ lg: "left" }}
         >
           <Tag
             size="lg"
-            borderRadius="md"
-            bg={"bgAlpha.4"}
-            border={"1px solid"}
-            borderColor={"border.1"}
+            colorPalette={"purple"}
+            endElement={<IoSparklesOutline />}
           >
-            <Text
-              variant={"tag"}
-              bgGradient="linear(to-bl, pink.400, purple.400, primary.400)"
-              bgClip="text"
-              fontSize={"sm"}
-            >
-              Join now for free
-            </Text>
+            Celebrating our Alpha Launch
           </Tag>
-          <Heading
-            as="h1"
-            fontSize="clamp(3.4rem,6.4vw,5.6rem)"
-            color={"color.1"}
-          >
+
+          <Heading as="h1" fontSize="clamp(3rem,6vw,5.6rem)">
             The best way to manage on-chain payments
           </Heading>
 
@@ -67,8 +49,10 @@ export default function HomeHeroHeading({
             right={{ lg: "0" }}
             gap="3"
           >
-            <Button variant={"ghost"}>Learn More</Button>
-            <Button>Start For Free</Button>
+            <Button size={{ base: "md", lg: "lg" }} variant={"subtle"}>
+              Learn More
+            </Button>
+            <Button size={{ base: "md", lg: "lg" }}>Start For Free</Button>
           </Group>
         </Stack>
       </MotionBox>

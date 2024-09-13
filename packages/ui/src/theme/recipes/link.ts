@@ -4,27 +4,28 @@ export default defineRecipe({
   variants: {
     visual: {
       dense: {
-        color: "alpha.2",
+        color: "fg.muted",
         _hover: {
           color: "color.1",
         },
         _active: {
-          color: "alpha.1",
+          color: "fg.subtle",
         },
       },
     },
   },
   base: {
-    fontWeight: "600",
-    color: "color.1",
+    fontWeight: "medium",
     textDecoration: "none",
-    fontFamily: "var(--chakra-fonts-heading)",
+    textDecorationLine: "none",
+    fontFamily: "{fonts.heading}",
     _hover: {
-      color: "alpha.2",
+      color: "fg.subtle",
       textDecoration: "none",
+      textDecorationLine: "none",
     },
     _active: {
-      color: "alpha.1",
+      color: "fg.muted",
     },
   },
 });

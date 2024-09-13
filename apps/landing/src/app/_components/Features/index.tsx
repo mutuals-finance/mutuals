@@ -6,22 +6,10 @@ import FeatureCard from "@/app/_components/Features/FeatureCard";
 export default function HomeFeatures() {
   return (
     <Box my="48">
-      <Container
-        maxW="container.xl"
-        px={{ base: "3", lg: "12" }}
-        position={"relative"}
-      >
+      <Container maxW="6xl" position={"relative"}>
         <SectionHeader label={"Embeddable Features"}>
           A Few More Things You’re Going To Love
         </SectionHeader>
-
-        {/*
-        <Text color={"color.1"} opacity={"0.6"}>
-          SplitFi is open source and decentralized, with no owner,
-          upgradability, or special privileges. Your payments are fully
-          trusted and independent from intermediaries.
-        </Text>
-*/}
 
         <Grid
           gap={"3"}
@@ -41,14 +29,14 @@ export default function HomeFeatures() {
             index={2}
             heading="Open Source"
             description="Mutuals is open source and decentralized, with no owner, upgradability, or special privileges."
-            colSpan={{ base: 4, lg: 2 }}
+            colSpan={{ base: 8, lg: 2 }}
           ></FeatureCard>
 
           <FeatureCard
             index={3}
             heading="Multiple Wallets"
             description="Connect multiple wallets at once. Intuitive multi-account overview about incoming and outgoing funds."
-            colSpan={{ base: 4, lg: 2 }}
+            colSpan={{ base: 8, lg: 2 }}
           ></FeatureCard>
 
           <FeatureCard

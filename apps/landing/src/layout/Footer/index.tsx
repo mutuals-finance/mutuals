@@ -6,6 +6,7 @@ import {
   Input,
   MutualsLogo,
   Stack,
+  InputGroup,
 } from "@mutuals/ui";
 import { IoSend } from "react-icons/io5";
 import ListBox from "@/layout/Footer/ListBox";
@@ -14,13 +15,7 @@ import Footer from "@/layout/Footer/Footer";
 export default function LayoutFooter() {
   return (
     <Box as="footer" role="contentinfo" maxW="100%" w="100%" pt="24">
-      <Container
-        as={Stack}
-        maxW="container.xl"
-        py={{ base: 6, lg: 12 }}
-        px={{ base: "6", lg: "12" }}
-        color="color.1"
-      >
+      <Container as={Stack} maxW="7xl" py={{ base: 6, lg: 12 }}>
         <Grid
           templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(6, 1fr)" }}
           templateRows={{ lg: "2" }}
@@ -67,10 +62,17 @@ export default function LayoutFooter() {
           </ListBox>
 
           <ListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 3 }}>
-            <Stack direction="row" w={"full"}>
-              <Input variant="filled" placeholder="Your Email Address" />
-              <IconButton aria-label="Subscribe" icon={<IoSend />} />
-            </Stack>
+            <InputGroup
+              w={"full"}
+              flex="1"
+              endElement={
+                <IconButton size="sm" variant={"ghost"} aria-label="Subscribe">
+                  <IoSend />
+                </IconButton>
+              }
+            >
+              <Input placeholder="Your Email Address" />
+            </InputGroup>
           </ListBox>
         </Grid>
       </Container>

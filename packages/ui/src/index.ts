@@ -18,6 +18,7 @@ export {
   MutualsLogo,
   UIProvider,
   CloseButton,
+  CloseButtonProps,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
@@ -43,4 +44,5 @@ export {
   AccordionRoot,
   Alert,
   Tag,
+  InputGroup,
 } from "./components";

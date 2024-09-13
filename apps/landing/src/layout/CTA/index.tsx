@@ -4,7 +4,7 @@ import ctaBgImage from "@/assets/background-primary.png";
 
 export default function CTA() {
   return (
-    <Box as="section" position="relative">
+    <Box as="section" position="relative" className={"dark"}>
       <NextImage
         src={ctaBgImage}
         alt={"CTA bg"}
@@ -15,19 +15,19 @@ export default function CTA() {
       <Container
         position={"relative"}
         as={Stack}
-        className={"dark"}
-        align="center"
-        justify="center"
+        alignItems="center"
+        justifyContent="center"
         textAlign={"center"}
-        maxW="container.md"
+        maxW="2xl"
         py="24"
         gap={"6"}
-        px={{ base: "3", lg: "12" }}
       >
-        <Heading size="2xl" color={"color.1"} lineHeight={"1.4"}>
+        <Heading size="5xl" color={"fg"}>
           Starting with Mutuals is simple, fast, and free.
         </Heading>
-        <Button size="lg">Get Started For Free</Button>
+        <Button size="lg" colorPalette={"blue"}>
+          Get Started For Free
+        </Button>
       </Container>
     </Box>
   );

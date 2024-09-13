@@ -1,4 +1,4 @@
-import { Text, Card, Icon, Flex, IconProps } from "@mutuals/ui";
+import { Text, Heading, Card, Icon, Flex, IconProps } from "@mutuals/ui";
 
 interface ValueCardProps extends Card.RootProps {
   heading: string;
@@ -14,14 +14,14 @@ export default function ValueCard({
 }: ValueCardProps) {
   return (
     <Card.Root
-      variant="filled"
+      variant="subtle"
       bg="transparent"
-      borderLeft={{ lg: "2px solid" }}
-      borderColor={{ lg: "border.1" }}
+      borderLeftWidth={{ lg: "2px" }}
+      borderColor="border"
       rounded={"none"}
       pl={{ lg: "6" }}
       textAlign={{ base: "center", lg: "left" }}
-      align={{ base: "center", lg: "flex-start" }}
+      alignItems={{ base: "center", lg: "flex-start" }}
       {...props}
     >
       {!!icon && (
@@ -31,13 +31,15 @@ export default function ValueCard({
           pt={{ base: "6", lg: "0" }}
         >
           <Flex
-            align={"center"}
-            justify={"center"}
+            alignItems={"center"}
+            justifyContent={"center"}
             color={"white"}
             rounded="lg"
             w={"12"}
             h={"12"}
-            bgGradient={"linear(to-br, primary.100, primary.500)"}
+            bgGradient="to-br"
+            gradientFrom="blue.300"
+            gradientTo="blue.600"
           >
             <Icon as={icon} boxSize={5} />
           </Flex>
@@ -45,9 +47,9 @@ export default function ValueCard({
       )}
 
       <Card.Body p={"0"}>
-        <Text as="h3" mb="3" variant={"tag"} fontSize={"xs"}>
+        <Heading as="h3" mb="3" variant={"subtag"} size={"xs"}>
           {heading}
-        </Text>
+        </Heading>
 
         <Text>{description}</Text>
       </Card.Body>

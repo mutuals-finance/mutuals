@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, BoxProps, MotionBox } from "@mutuals/ui";
+import { Box, BoxProps, Container, HStack, MotionBox } from "@mutuals/ui";
 import { useBreakpointValue } from "@mutuals/ui";
 import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
@@ -65,9 +65,11 @@ export default function HeaderContainerWrapper({
         left="0"
         zIndex={10}
         w="full"
-        backdropFilter={"auto"}
-        backdropBlur={"12px"}
-        shadow={"sm"}
+        backdropFilter="auto"
+        backdropBlur="sm"
+        bgColor={"bg"}
+        borderBottom={"1px solid"}
+        borderColor={"border"}
         animate={isHidden ? "invisible" : "visible"}
         variants={variants.visibility}
         {...props}
@@ -77,10 +79,18 @@ export default function HeaderContainerWrapper({
           display="flex"
           alignItems="stretch"
           justifyContent="stretch"
-          bg={"bgAlpha.2"}
           className={headerTheme}
         >
-          {children}
+          <Container
+            as={HStack}
+            size="2xl"
+            alignItems="center"
+            position="relative"
+            gap="12"
+            px={0}
+          >
+            {children}
+          </Container>
         </Box>
       </MotionBox>
     </MotionConfig>

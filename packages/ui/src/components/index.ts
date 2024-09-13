@@ -8,6 +8,7 @@ export * from "./ui/menu";
 export * from "./ui/color-mode";
 export * from "./ui/accordion";
 export * from "./ui/alert";
+export * from "./ui/input-group";
 
 /**
  * Custom Components

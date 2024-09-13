@@ -13,6 +13,7 @@ import {
   MotionBox,
   List,
   Heading,
+  Box,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoCheckboxOutline, IoArrowUpCircle } from "react-icons/io5";
@@ -49,7 +50,6 @@ export default function ActorCard({
 
   return (
     <MotionBox
-      display={"flex"}
       alignItems={"stretch"}
       justifyContent={"stretch"}
       animate={animate}
@@ -58,7 +58,7 @@ export default function ActorCard({
       variants={useBreakpointValue({
         lg: {
           shrink: {
-            width: "52%",
+            width: "54%",
           },
           grow: {
             width: "100%",
@@ -69,7 +69,7 @@ export default function ActorCard({
       onHoverEnd={onHoverEnd}
     >
       <Card.Root
-        variant="filled"
+        variant={"subtle"}
         overflow="hidden"
         size={"lg"}
         w={"full"}
@@ -78,45 +78,45 @@ export default function ActorCard({
         minH={{ lg: "2xl" }}
         {...props}
       >
-        <Stack gap={"0"} maxW={{ sm: "xl" }}>
+        <Stack flex={"1"} gap={"0"} maxW={{ sm: "xl" }}>
           <MotionBox
-            fontSize={"5xl"}
+            fontSize={"4xl"}
             animate={animate}
             variants={useBreakpointValue({
               lg: {
                 shrink: {
-                  fontSize: "var(--chakra-fontSizes-4xl)",
+                  fontSize: "var(--chakra-font-sizes-4xl)",
                 },
                 grow: {
-                  fontSize: "var(--chakra-fontSizes-6xl)",
+                  fontSize: "var(--chakra-font-sizes-6xl)",
                 },
               },
             })}
           >
             <Card.Header
               as={Stack}
-              gap={"3"}
-              justify={{ base: "space-between", lg: "unset" }}
-              direction={{ base: "row", lg: "column" }}
               px={{ base: "6", lg: "12" }}
               pt={{ base: "6", lg: "12" }}
               pb={"0"}
             >
-              <Heading
-                fontSize={"inherit"}
-                lineHeight="1"
-                mt={{ base: "-1", lg: "unset" }}
+              <Stack
+                justifyContent={{ base: "space-between", lg: "unset" }}
+                direction={{ base: "row", lg: "column" }}
+                gap={"3"}
               >
-                {title}
-              </Heading>
-
-              <Icon
-                as={IoArrowUpCircle}
-                fontSize={{ base: "1em", lg: "inherit" }}
-                transform={"rotate(45deg)"}
-                order={{ lg: "-1" }}
-                {...iconProps}
-              />
+                <Heading fontSize={"inherit"} mt={{ base: "-1", lg: "unset" }}>
+                  {title}
+                </Heading>
+                <Icon
+                  fontSize={{ base: "1.2em", lg: "inherit" }}
+                  asChild
+                  transform={"rotate(45deg)"}
+                  order={{ lg: "-1" }}
+                  {...iconProps}
+                >
+                  <IoArrowUpCircle />
+                </Icon>
+              </Stack>
             </Card.Header>
           </MotionBox>
 
@@ -129,7 +129,7 @@ export default function ActorCard({
             pb={{ base: "6", lg: "6" }}
             justifyContent={"space-between"}
           >
-            <Text fontSize="xl" maxW={{ sm: "xs" }}>
+            <Text fontSize="lg" maxW={{ sm: "xs" }}>
               {description}
             </Text>
 
@@ -142,16 +142,19 @@ export default function ActorCard({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <List.Root gap={"1"} color={"alpha.2"} {...benefitsProps}>
+                    <List.Root
+                      gap={"1"}
+                      color={"fg/60"}
+                      variant="plain"
+                      {...benefitsProps}
+                    >
                       {benefits?.map((b) => (
                         <List.Item key={b} as={Flex} alignItems={"flex-start"}>
-                          <List.Indicator
-                            w="5"
-                            h={"5"}
-                            as={IoCheckboxOutline}
-                            mt={"1"}
-                          />
-                          <Text fontWeight="500">{b}</Text>
+                          <List.Indicator asChild w="5" h={"5"}>
+                            <IoCheckboxOutline />
+                          </List.Indicator>
+
+                          <Text fontWeight="medium">{b}</Text>
                         </List.Item>
                       ))}
                     </List.Root>
@@ -164,7 +167,7 @@ export default function ActorCard({
           <Card.Footer
             as={Stack}
             gap={"6"}
-            align={"flex-start"}
+            alignItems={"flex-start"}
             px={{ base: "6", lg: "12" }}
             pb={{ base: "6", lg: "12" }}
             pt={"0"}

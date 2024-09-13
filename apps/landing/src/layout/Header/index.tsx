@@ -7,31 +7,33 @@ import NavDesktop from "@/layout/Header/NavDesktop";
 import HeaderContainerWrapper from "@/layout/Header/ContainerWrapper";
 import links from "@/layout/links";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export type HeaderProps = Omit<BoxProps, "children">;
 
 export default function Header(props: HeaderProps) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <Box as="header" {...props}>
-      <HeaderContainerWrapper>
-        <Container
-          as={HStack}
-          size="2xl"
-          alignItems="center"
-          position="relative"
-          gap="12"
-          px={0}
-        >
+      <NavMobile.Root open={open}>
+        <HeaderContainerWrapper>
           <NavDesktop hideBelow="lg" links={links} />
           <NavMobile.Navbar
             hideFrom="lg"
-            buttonProps={{ onClick: () => console.log("open") }}
+            buttonProps={{ onClick: () => setOpen(true) }}
           />
-        </Container>
-      </HeaderContainerWrapper>
-      <NavMobile.Drawer links={links} isOpen={false} />
+        </HeaderContainerWrapper>
+        <NavMobile.Drawer
+          links={links}
+          closeButtonProps={{ onClick: () => setOpen(false) }}
+        />
+      </NavMobile.Root>
     </Box>
   );
 }

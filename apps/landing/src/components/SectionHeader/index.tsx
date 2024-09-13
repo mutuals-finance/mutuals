@@ -20,11 +20,11 @@ export default function SectionHeader({
   return (
     <Box maxW="2xl" mx="auto" textAlign={"center"} mb="12" {...props}>
       {!!label && (
-        <Text mb="6" variant={"tag"} fontSize={"xs"}>
+        <Heading as={"h4"} variant={"subtag"} size={"xs"} mb="6">
           {label}
-        </Text>
+        </Heading>
       )}
-      <Heading size="2xl" lineHeight="1.2" color={"color.1"} {...headingProps}>
+      <Heading size="5xl" {...headingProps}>
         {children}
       </Heading>
     </Box>

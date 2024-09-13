@@ -7,7 +7,7 @@ const baseStyle = {
     fontWeight: "400",
   },
   label: {
-    color: "alpha.2",
+    color: "fg.muted",
     fontWeight: "400",
   },
 };

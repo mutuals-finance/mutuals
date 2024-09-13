@@ -1,4 +1,4 @@
-import { Box, Container, Text } from "@mutuals/ui";
+import { Box, Container, Heading } from "@mutuals/ui";
 import ChainSlider from "@/app/_components/Chains/ChainSlider";
 import EthereumIcon from "@/assets/networks/Etherium.svg";
 import PolygonIcon from "@/assets/networks/Polygon.svg";
@@ -25,23 +25,14 @@ const networks = [
 export default function HomeChains() {
   return (
     <Box mt={"48"} mb={"6"}>
-      <Container maxW="container.xl" px={{ base: "6", lg: "12" }}>
-        <Text variant={"tag"} mb={"6"} fontSize={"xs"}>
+      <Container maxW="7xl">
+        <Heading as={"h2"} variant={"subtag"} mb={"6"} fontSize={"xs"}>
           Available on {networks.length - 1}+ networks
-        </Text>
+        </Heading>
       </Container>
 
       <Box position={"relative"}>
         <ChainSlider networks={networks} />
-
-        <Box
-          position={"absolute"}
-          w="full"
-          h="full"
-          top="0"
-          right={"0"}
-          bgGradient="linear(to-r, bg.1,transparent,transparent,transparent,transparent, bg.1)"
-        />
       </Box>
     </Box>
   );

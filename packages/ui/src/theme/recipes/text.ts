@@ -1,23 +1,20 @@
-import { defineRecipe, defineStyle } from "@chakra-ui/react";
+import { defineRecipe } from "@chakra-ui/react";
 
 export default defineRecipe({
   variants: {
-    visual: {
-      "slashed-zero": {
-        fontFamily: "monospace",
-        fontVariantNumeric: "slashed-zero",
+    variant: {
+      muted: {
+        color: "fg.muted",
+        fontWeight: "medium",
       },
-      label: {
-        color: "alpha.2",
-        fontWeight: "500",
-      },
-      tag: defineStyle({
-        fontFamily: "var(--chakra-fonts-heading)",
-        color: "alpha.3",
+      subtag: {
+        color: "fg.muted",
+        fontFamily: "heading",
         textTransform: "uppercase",
-        fontWeight: "600",
-        letterSpacing: "0.075em",
-      }),
+        letterSpacing: "widest",
+        lineHeight: "widest",
+        fontWeight: "medium",
+      },
     },
   },
   base: {
