@@ -17,7 +17,7 @@ export default function WalletListContent({}: WalletListContentProps) {
         options={{
           mode: "free",
           rubberband: false,
-          slides: { perView: "auto", spacing: 16 },
+          slides: { perView: "auto", gap: 16 },
         }}
       >
         {data.viewer.user?.wallets?.map((wallet) => (

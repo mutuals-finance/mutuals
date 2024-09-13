@@ -1,8 +1,12 @@
 import { Address } from "viem";
 
+export * from "./allocation";
+
 export const PERCENTAGE_SCALE = BigInt(1e6);
 
 const POOL_FACTORY_ADDRESS = "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE";
+const POOL_FACTORY_ADDRESS_POLYGON_AMOY =
+  "0xbC4BFa087473C516A04D720Ac6301BF8981177FA";
 const POOL_FACTORY_ADDRESS_BSC = "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE";
 const POOL_FACTORY_ADDRESS_HOLESKY =
   "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE";
@@ -26,6 +30,7 @@ export enum ChainId {
   SEPOLIA = 11155111,
   HOLESKY = 17000,
   POLYGON = 137,
+  POLYGON_AMOY = 80002,
   OPTIMISM = 10,
   OPTIMISM_SEPOLIA = 11155420,
   ARBITRUM = 42161,
@@ -41,7 +46,7 @@ export enum ChainId {
 
 export const ETHEREUM_CHAIN_IDS = [ChainId.MAINNET];
 export const ETHEREUM_TEST_CHAIN_IDS = [ChainId.SEPOLIA, ChainId.HOLESKY];
-export const POLYGON_CHAIN_IDS = [ChainId.POLYGON];
+export const POLYGON_CHAIN_IDS = [ChainId.POLYGON, ChainId.POLYGON_AMOY];
 export const OPTIMISM_CHAIN_IDS = [ChainId.OPTIMISM, ChainId.OPTIMISM_SEPOLIA];
 export const ARBITRUM_CHAIN_IDS = [ChainId.ARBITRUM];
 export const GNOSIS_CHAIN_IDS = [ChainId.GNOSIS];
@@ -66,21 +71,7 @@ const ALL_CHAIN_IDS = [
 export const SUPPORTED_CHAIN_IDS = [3, 4, 42, ...ALL_CHAIN_IDS];
 
 export const SUBGRAPH_CHAIN_IDS = ALL_CHAIN_IDS.slice();
-export const POOL_FACTORY_CHAIN_IDS = ALL_CHAIN_IDS.slice().filter(
-  (id) =>
-    id !== ChainId.ZORA_SEPOLIA &&
-    id !== ChainId.BASE_SEPOLIA &&
-    id !== ChainId.BLAST,
-);
-
-export const SWAPPER_CHAIN_IDS = [
-  ChainId.MAINNET,
-  ChainId.SEPOLIA,
-  ChainId.BASE,
-  ChainId.POLYGON,
-  ChainId.OPTIMISM,
-  ChainId.ARBITRUM,
-];
+export const POOL_FACTORY_CHAIN_IDS = ALL_CHAIN_IDS.slice();
 
 export const CHAIN_INFO: {
   [chainId: number]: {
@@ -107,6 +98,12 @@ export const CHAIN_INFO: {
     },
   },
   [ChainId.POLYGON]: {
+    startBlock: 25303316,
+    nativeCurrency: {
+      symbol: "MATIC",
+    },
+  },
+  [ChainId.POLYGON_AMOY]: {
     startBlock: 25303316,
     nativeCurrency: {
       symbol: "MATIC",
@@ -172,7 +169,6 @@ export enum TransactionType {
   Transaction = "Transaction",
   CallData = "CallData",
   GasEstimate = "GasEstimate",
-  Signature = "Signature",
 }
 
 export const ZERO = BigInt(0);

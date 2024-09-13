@@ -16,7 +16,7 @@ export default function AssetTableBalanceCell({
       <Text as={"span"} {...props}>
         {formatCurrencyAmount(getValue())}
       </Text>{" "}
-      <Tag size="sm" rounded={"md"} colorScheme={"primary"}>
+      <Tag size="sm" rounded={"md"} colorPalette={"primary"}>
         <TagLabel fontSize={"2xs"}>{tokenSymbol}</TagLabel>
       </Tag>
     </Stack>

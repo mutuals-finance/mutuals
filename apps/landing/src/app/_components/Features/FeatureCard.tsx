@@ -1,16 +1,15 @@
-import { GridItemProps } from "@mutuals/ui";
 import {
   GridItem,
   Stack,
-  CardBody,
   Card,
-  StackProps,
   Heading,
   Text,
   Box,
+  GridItemProps,
+  Badge,
 } from "@mutuals/ui";
 
-interface FeatureCardProps extends StackProps, GridItemProps {
+interface FeatureCardProps extends GridItemProps {
   heading: string;
   description: string;
   index?: number;
@@ -24,48 +23,43 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <GridItem as={Card} variant={"outline"} borderWidth={"2px"} {...props}>
-      <CardBody
-        as={Stack}
-        direction={"column"}
-        justify={"space-between"}
-        minH={{ base: "unset", md: "xs" }}
-        gap={"6"}
-      >
-        {/*
-              <Box position={"absolute"} rounded={"lg"} overflow={"hidden"}>
-                <Image
-                  src={featureImage}
-                  alt={"SplitFi features"}
-                  width={"32"}
-                  style={{ objectFit: "contain" }}
-                />
-              </Box>
-*/}
-        {children}
+    <GridItem
+      display={"flex"}
+      alignItems={"stretch"}
+      justifyContent={"stretch"}
+      {...props}
+    >
+      <Card.Root variant={"outline"} w={"full"}>
+        <Card.Body
+          as={Stack}
+          direction={"column"}
+          justifyContent={"space-between"}
+          gap={"6"}
+        >
+          {children}
 
-        <Box>
-          {index && index >= 0 && (
-            <Text variant={"tag"} mb={"3"} fontSize={"xs"}>
-              0{index}
+          <Box>
+            {index && index >= 0 && (
+              <Heading as={"h4"} variant={"subtag"} size={"xs"} mb="6">
+                0{index}
+              </Heading>
+            )}
+            <Heading as={"h3"} size={"3xl"}>
+              {heading}
+            </Heading>
+          </Box>
+
+          <Box position={"relative"} w={"full"} maxW={"xs"}>
+            <Text
+              fontSize={{ base: "sm", md: "md" }}
+              color={"fg.muted"}
+              fontWeight={"500"}
+            >
+              {description}
             </Text>
-          )}
-
-          <Heading as={"h4"} size={"lg"}>
-            {heading}
-          </Heading>
-        </Box>
-
-        <Box position={"relative"} w={"full"} maxW={"xs"}>
-          <Text
-            fontSize={{ base: "sm", md: "md" }}
-            color={"alpha.2"}
-            fontWeight={"500"}
-          >
-            {description}
-          </Text>
-        </Box>
-      </CardBody>
+          </Box>
+        </Card.Body>
+      </Card.Root>
     </GridItem>
   );
 }

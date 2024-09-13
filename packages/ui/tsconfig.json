@@ -1,5 +1,5 @@
 {
-  "extends": "@mutuals/typescript-config/react.json",
+  "extends": "@mutuals/typescript-config/next.json",
   "compilerOptions": {
     "baseUrl": "./src",
     "outDir": "dist",

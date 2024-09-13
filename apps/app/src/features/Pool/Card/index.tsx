@@ -2,8 +2,6 @@ import {
   Box,
   Button,
   Card,
-  CardBody,
-  CardHeader,
   Flex,
   Heading,
   HStack,
@@ -43,8 +41,8 @@ export type PoolCardProps = Partial<Split>;
 function PoolCard({ id, metaData, address }: PoolCardProps) {
   return (
     <LinkBox as="article" rounded={"md"}>
-      <Card variant={"outline"} bg={"bg.1"} size={"sm"}>
-        <CardHeader as={Flex} alignItems={"center"} gap={"3"}>
+      <Card.Root variant={"outline"} bg={"bg.1"} size={"sm"}>
+        <Card.Header as={Flex} alignItems={"center"} gap={"3"}>
           <Box flexShrink={0}>
             {
               <PoolCardLogo
@@ -81,9 +79,9 @@ function PoolCard({ id, metaData, address }: PoolCardProps) {
               <MenuItem icon={<IoEyeOffOutline />}>Hide</MenuItem>
             </MenuList>
           </Menu>
-        </CardHeader>
-        <CardBody pt={"0"}>
-          <Stack spacing="3">
+        </Card.Header>
+        <Card.Body pt={"0"}>
+          <Stack gap="3">
             <Text noOfLines={2} fontSize={"sm"}>
               {metaData?.description}
             </Text>
@@ -111,8 +109,8 @@ function PoolCard({ id, metaData, address }: PoolCardProps) {
               </Button>
             </HStack>
           </Stack>
-        </CardBody>
-      </Card>
+        </Card.Body>
+      </Card.Root>
       {!!id && (
         <LinkOverlay
           as={NextLink}

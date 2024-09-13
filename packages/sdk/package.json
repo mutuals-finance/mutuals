@@ -4,8 +4,12 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
+    "./constants": "./src/constants/index.ts",
+    "./constants/abi": "./src/constants/abi/index.ts",
+    "./errors": "./src/errors.ts",
     "./types": "./src/types.ts",
-    "./utils": "./src/utils/index.ts"
+    "./utils": "./src/utils/index.ts",
+    "./utils/validation": "./src/utils/validation.ts"
   },
   "scripts": {
     "build": "tsc -b",

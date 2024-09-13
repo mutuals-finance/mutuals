@@ -1,4 +1,9 @@
-import { IconButton, Box, type IconButtonProps } from "@mutuals/ui";
+import {
+  IconButton,
+  Box,
+  type IconButtonProps,
+  DrawerTrigger,
+} from "@mutuals/ui";
 
 import NavWrapper, { NavWrapperProps } from "@/layout/Header/NavWrapper";
 import { VscMenu } from "react-icons/vsc";
@@ -15,13 +20,13 @@ export default function NavMobileNavbar({
     <NavWrapper {...props}>
       <Box ml={"auto"}>
         <IconButton
-          fontSize="2xl"
-          color={"color.1"}
-          icon={<VscMenu />}
-          variant="transparent"
+          fontSize={"2xl"}
+          variant={"ghost"}
           aria-label="Toggle Navigation"
           {...buttonProps}
-        />
+        >
+          <VscMenu />
+        </IconButton>
       </Box>
     </NavWrapper>
   );

@@ -27,7 +27,7 @@ export default function PoolOverviewDescription({
       <Stack
         direction={{ base: "row", lg: "row" }}
         alignItems={"center"}
-        spacing={"3"}
+        gap={"3"}
         w={"full"}
       >
         <PoolCard.Logo

@@ -11,8 +11,8 @@ import {
 import { useTheme } from "@mutuals/ui";
 
 type ContextT = {
-  headerTheme: "dark" | "light" | "system";
-  setHeaderTheme: (theme: "dark" | "light" | "system") => void;
+  headerTheme: string;
+  setHeaderTheme: (theme: string) => void;
 };
 const Context = createContext<ContextT>({
   headerTheme: "system",
@@ -27,14 +27,12 @@ export default function HeaderObserverProvider({
   children,
 }: HeaderIntersectionObserverProps) {
   const { theme } = useTheme();
-  const [headerTheme, setHeaderTheme] = useState<"dark" | "light" | "system">(
-    theme,
-  );
+  const [headerTheme, setHeaderTheme] = useState(theme ?? "light");
   const pathname = usePathname();
 
   useEffect(() => {
-    setHeaderTheme(theme);
-  }, [pathname]);
+    setHeaderTheme(theme ?? "light");
+  }, [pathname, theme]);
 
   return (
     <Context.Provider

@@ -17,7 +17,7 @@ function AssetCard({
 }: AssetCardProps) {
   return (
     <HStack
-      spacing={"3"}
+      gap={"3"}
       alignItems={"center"}
       justifyContent={"space-between"}
       w={"100%"}

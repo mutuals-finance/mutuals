@@ -1,3 +1,5 @@
+"use client";
+
 import type { BoxProps } from "@mutuals/ui";
 import { Box } from "@mutuals/ui";
 import type { KeenSliderOptions, KeenSliderPlugin } from "keen-slider/react";

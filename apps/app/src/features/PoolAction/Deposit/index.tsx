@@ -6,13 +6,11 @@ import {
   TagLabel,
   Center,
   IconButton,
-  ButtonGroup,
+  Group,
   Button,
   Alert,
   Box,
   Card,
-  CardHeader,
-  CardBody,
 } from "@mutuals/ui";
 import {
   IoCopyOutline,
@@ -32,7 +30,7 @@ export default async function PoolActionDeposit({
 }: PoolActionDepositProps) {
   return (
     <>
-      <Stack overflowY={"auto"} flex={"1"} p="6" spacing={"3"}>
+      <Stack overflowY={"auto"} flex={"1"} p="6" gap={"3"}>
         <Text>
           Use the address below to receive funds to this Payment Pool.
         </Text>
@@ -45,8 +43,8 @@ export default async function PoolActionDeposit({
           </Alert>
         </Box>
 
-        <Card size={"sm"} variant={"outline"}>
-          <CardHeader
+        <Card.Root size={"sm"} variant={"outline"}>
+          <Card.Header
             as={Flex}
             w={"full"}
             alignItems={"center"}
@@ -59,17 +57,17 @@ export default async function PoolActionDeposit({
 
             <IconButton
               variant="ghost"
-              colorScheme="gray"
+              colorPalette="gray"
               aria-label="See menu"
               icon={<IoEllipsisHorizontal />}
             />
-          </CardHeader>
-          <CardBody>
+          </Card.Header>
+          <Card.Body>
             <Center>
               <QRCode text={pool?.address} />
             </Center>
-          </CardBody>
-        </Card>
+          </Card.Body>
+        </Card.Root>
       </Stack>
 
       <Stack
@@ -79,7 +77,7 @@ export default async function PoolActionDeposit({
         borderColor={"border.1"}
       >
         <Text fontSize={"sm"}>Pool address</Text>
-        <ButtonGroup size="md" variant="outline" isAttached>
+        <Group size="md" variant="outline" isAttached>
           <Button
             w={"full"}
             rightIcon={<IoCopyOutline />}
@@ -90,7 +88,7 @@ export default async function PoolActionDeposit({
             </Text>
           </Button>
           <IconButton aria-label="View on Etherscan" icon={<IoOpenOutline />} />
-        </ButtonGroup>
+        </Group>
       </Stack>
     </>
   );

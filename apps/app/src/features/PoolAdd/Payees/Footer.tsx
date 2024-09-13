@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, HStack, Progress, Text } from "@mutuals/ui";
+import { Box, Button, Group, HStack, Progress, Text } from "@mutuals/ui";
 
 interface PayeeListFooterProps {
   totalShares: number;
@@ -24,7 +24,7 @@ export default function PoolAddPayeesFooter({
 
       <Box>
         <Progress
-          colorScheme={
+          colorPalette={
             totalShares > maxShares
               ? "red"
               : totalShares == maxShares
@@ -35,19 +35,19 @@ export default function PoolAddPayeesFooter({
           value={totalShares}
           mb={"3"}
         />
-        <HStack w="100%" spacing={"6"} alignItems={"flex-start"}>
+        <HStack w="100%" gap={"6"} alignItems={"flex-start"}>
           <Box flex={"1"}>
             <Text>{totalShares.toFixed(2)} %</Text>
           </Box>
 
-          <ButtonGroup size="sm" flexShrink={"0"}>
+          <Group size="sm" flexShrink={"0"}>
             <Button type="button" onClick={() => onSetValuesRemaining()}>
               Split Remaining
             </Button>
             <Button type="button" onClick={() => onSetValuesEvenly()}>
               Split Evenly
             </Button>
-          </ButtonGroup>
+          </Group>
         </HStack>
       </Box>
     </>

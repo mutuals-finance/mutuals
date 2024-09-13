@@ -24,7 +24,7 @@ export default function PoolAddPayees({ id }: PoolAddPayeesProps) {
 
   const { watch, setValue } = useFormContext();
 
-  const payees = watch(id) as PoolAddPayee[];
+  const payees = watch(id, []) as PoolAddPayee[];
 
   const totalShares = payees.reduce(
     (total, p) => (total * 100 + Number(p.value) * 100) / 100,
@@ -32,13 +32,13 @@ export default function PoolAddPayees({ id }: PoolAddPayeesProps) {
   );
   const totalPayees = payees.length;
 
-  function _setValues(total: number, indices: number[]) {
-    const value = formatRoundNumber(total / indices.length, {
+  function _setValues(total: number, children: number[]) {
+    const value = formatRoundNumber(total / children.length, {
       round: Math.floor,
     });
-    const diff = formatRoundNumber(total % (value * indices.length));
+    const diff = formatRoundNumber(total % (value * children.length));
     let steps = diff * 100;
-    indices.forEach((index) => {
+    children.forEach((index) => {
       setValue(
         `${id}.${index}.value`,
         formatRoundNumber(steps > 0 ? steps-- && value + 0.01 : value),

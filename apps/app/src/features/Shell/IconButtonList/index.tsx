@@ -21,7 +21,7 @@ export default function ShellIconButtonList({
         options={{
           mode: "free",
           rubberband: false,
-          slides: { perView: "auto", spacing: 24 },
+          slides: { perView: "auto", gap: 24 },
         }}
       >
         {items.map((props, i) => (

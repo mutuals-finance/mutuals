@@ -13,7 +13,7 @@ export default function PoolAddPage() {
       <Container variant={"shell"}>
         <Box maxW={"xl"} mb={"12"}>
           <Heading as={"h1"} size={"2xl"} lineHeight={"1.2"} mb={"6"}>
-            Create New Payment Pool
+            New Payment Pool
           </Heading>
           <Text fontSize={"lg"} color={"color.3"}>
             A payment pool smart contract automatically routes on-chain payments

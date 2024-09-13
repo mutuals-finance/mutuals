@@ -1,0 +1,32 @@
+{
+  "name": "@mutuals/sdk-react",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b"
+  },
+  "peerDependencies": {
+    "react": ">= 18.0.0",
+    "viem": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "viem": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@mutuals/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
+    "@types/react": "^18.3.2",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5"
+  }
+}

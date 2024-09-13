@@ -1,20 +1,9 @@
-"use client";
+import { Text, Heading, Card, Icon, Flex, IconProps } from "@mutuals/ui";
 
-import {
-  Text,
-  Card,
-  CardHeader,
-  CardProps,
-  CardBody,
-  Icon,
-  Flex,
-  type As,
-} from "@mutuals/ui";
-
-interface ValueCardProps extends CardProps {
+interface ValueCardProps extends Card.RootProps {
   heading: string;
   description: string;
-  icon?: As;
+  icon?: IconProps["as"];
 }
 
 export default function ValueCard({
@@ -24,44 +13,46 @@ export default function ValueCard({
   ...props
 }: ValueCardProps) {
   return (
-    <Card
-      variant="filled"
+    <Card.Root
+      variant="subtle"
       bg="transparent"
-      borderLeft={{ lg: "2px solid" }}
-      borderColor={{ lg: "border.1" }}
+      borderLeftWidth={{ lg: "2px" }}
+      borderColor="border"
       rounded={"none"}
       pl={{ lg: "6" }}
       textAlign={{ base: "center", lg: "left" }}
-      align={{ base: "center", lg: "flex-start" }}
+      alignItems={{ base: "center", lg: "flex-start" }}
       {...props}
     >
       {!!icon && (
-        <CardHeader
+        <Card.Header
           px="0"
           pb={{ base: "6", lg: "12" }}
           pt={{ base: "6", lg: "0" }}
         >
           <Flex
-            align={"center"}
-            justify={"center"}
+            alignItems={"center"}
+            justifyContent={"center"}
             color={"white"}
             rounded="lg"
             w={"12"}
             h={"12"}
-            bgGradient={"linear(to-br, primary.100, primary.500)"}
+            bgGradient="to-br"
+            gradientFrom="blue.300"
+            gradientTo="blue.600"
           >
             <Icon as={icon} boxSize={5} />
           </Flex>
-        </CardHeader>
+        </Card.Header>
       )}
 
-      <CardBody p={"0"}>
-        <Text as="h3" mb="3" variant={"tag"} fontSize={"xs"}>
+      <Card.Body p={"0"}>
+        <Heading as="h3" mb="3" variant={"subtag"} size={"xs"}>
           {heading}
-        </Text>
+        </Heading>
 
         <Text>{description}</Text>
-      </CardBody>
-    </Card>
+      </Card.Body>
+    </Card.Root>
   );
 }

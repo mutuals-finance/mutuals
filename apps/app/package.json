@@ -16,6 +16,7 @@
     "@headlessui/react": "^2.0.3",
     "@metamask/detect-provider": "^2.0.0",
     "@mutuals/graphql-client-nextjs": "workspace:*",
+    "@mutuals/sdk-react": "workspace:*",
     "@mutuals/ui": "workspace:*",
     "@supabase/supabase-js": "^2.43.2",
     "@tanstack/react-query": "^5.36.2",

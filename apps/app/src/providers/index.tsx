@@ -9,6 +9,7 @@ import WagmiProvider from "@/providers/WagmiProvider";
 import AuthProvider from "@/features/Auth/Provider";
 import SignMessageProvider from "@/features/Wallet/SignProvider";
 import { getViewer } from "@mutuals/graphql-client-nextjs/server";
+import MutualsProvider from "@/providers/MutualsProvider";
 
 export default async function Providers({ children }: PropsWithChildren) {
   const redirectURL = "/";
@@ -23,7 +24,9 @@ export default async function Providers({ children }: PropsWithChildren) {
         <WagmiProvider initialState={wagmiInitialState}>
           <SignMessageProvider>
             <AuthProvider redirectTo={redirectURL} query={data}>
-              <AnkrProvider>{children}</AnkrProvider>
+              <AnkrProvider>
+                <MutualsProvider>{children}</MutualsProvider>
+              </AnkrProvider>
             </AuthProvider>
           </SignMessageProvider>
         </WagmiProvider>

@@ -40,7 +40,7 @@ export default function RouterTabs({
             <Tab
               href={href}
               key={title}
-              color={"alpha.1"}
+              color={"fg.subtle"}
               _focus={{ outline: "0", boxShadow: "none" }}
               _selected={{ color: "color.1" }}
               _hover={{ color: "color.1" }}

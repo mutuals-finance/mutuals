@@ -20,7 +20,7 @@ export default function PoolActionWithdrawForm(props: WithdrawFormProps) {
       values={{ assets, distribute: false }}
       flex={"1"}
       overflow={"hidden"}
-      spacing={"0"}
+      gap={"0"}
     >
       <WithdrawFormContent {...props} />
     </Form>

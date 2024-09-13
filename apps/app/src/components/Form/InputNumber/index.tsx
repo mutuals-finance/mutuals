@@ -31,10 +31,12 @@ export default function InputNumber({ ...props }: InputNumberBaseProps) {
         aria-label="Decrease value"
         icon={<IoRemove />}
         type={"button"}
+        size={"sm"}
         {...dec}
       />
-      <Input hideWrapper={true} textAlign={"center"} {...input} />
+      <Input size={"sm"} hideWrapper={true} textAlign={"center"} {...input} />
       <IconButton
+        size={"sm"}
         aria-label="Increase value"
         icon={<IoAdd />}
         type={"button"}

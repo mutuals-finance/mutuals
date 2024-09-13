@@ -16,7 +16,7 @@ export default function SharesTableCell({
   const { href, shortAddress } = useExplorerLink({ address });
 
   return (
-    <HStack alignItems={"center"} spacing={"3"}>
+    <HStack alignItems={"center"} gap={"3"}>
       <UserAvatar address={address} />
       <Text
         as={Link}

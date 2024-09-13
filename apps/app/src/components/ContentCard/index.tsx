@@ -1,23 +1,19 @@
 import {
   Card,
-  CardBody,
-  CardBodyProps,
-  CardHeader,
-  type CardProps,
   Heading,
   AccordionItem,
   Accordion,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Stack,
 } from "@mutuals/ui";
 import { Fragment, PropsWithChildren, type ReactNode } from "react";
-import { Stack } from "@chakra-ui/react";
 
-export interface ContentCardProps extends Omit<CardProps, "title"> {
+export interface ContentCardProps extends Omit<Card.RootProps, "title"> {
   title?: string;
   titleAfter?: ReactNode;
-  bodyProps?: CardBodyProps;
+  bodyProps?: Card.BodyProps;
   enableAccordion?: boolean;
 }
 
@@ -48,10 +44,15 @@ export default function ContentCard({
 
   return (
     <ContentCardWrapper>
-      <Card variant={variant} rounded={rounded} overflow={"hidden"} {...props}>
+      <Card.Root
+        variant={variant}
+        rounded={rounded}
+        overflow={"hidden"}
+        {...props}
+      >
         {(!!title || !!titleAfter) && (
           <ContentCardButton p={"0"}>
-            <CardHeader
+            <Card.Header
               as={Stack}
               direction={"row"}
               align={"center"}
@@ -66,19 +67,19 @@ export default function ContentCard({
                 {titleAfter}
               </Stack>
               {_enableAccordion && <AccordionIcon />}
-            </CardHeader>
+            </Card.Header>
           </ContentCardButton>
         )}
         <ContentCardPanel p={"0"}>
-          <CardBody
+          <Card.Body
             borderTop={"1px solid"}
             borderColor={"border.1"}
             {...bodyProps}
           >
             {children}
-          </CardBody>
+          </Card.Body>
         </ContentCardPanel>
-      </Card>
+      </Card.Root>
     </ContentCardWrapper>
   );
 }

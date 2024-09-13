@@ -33,7 +33,7 @@ export default function BreadcrumbsInner({
   return (
     <Breadcrumb
       fontSize={"sm"}
-      spacing="3"
+      gap="3"
       separator={<Icon as={RxSlash} boxSize={"0.6rem"} />}
       {...props}
     >
@@ -51,7 +51,7 @@ export default function BreadcrumbsInner({
               <Box
                 as={Link}
                 href={href}
-                color={!isCurrentPage ? "alpha.2" : "inherit"}
+                color={!isCurrentPage ? "fg.muted" : "inherit"}
                 _hover={{ color: "color.1" }}
               >
                 {children}

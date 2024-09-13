@@ -13,7 +13,7 @@ import Input from "@/components/Form/Input";
 
 export function TreasurySearchAndCreate() {
   return (
-    <HStack mb={"6"} spacing={"6"} alignItems={"center"}>
+    <HStack mb={"6"} gap={"6"} alignItems={"center"}>
       <Form flex={"1"}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">

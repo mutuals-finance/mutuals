@@ -16,13 +16,13 @@ export function WalletSelectionWallet() {
   );
 
   return (
-    <VStack spacing={"6"} alignItems={"stretch"}>
+    <VStack gap={"6"} alignItems={"stretch"}>
       {(recentConnectors?.length ?? 0) > 0 && (
         <Box>
           <Text variant={"label"} fontSize="sm" mb={"3"}>
             Recent
           </Text>
-          <VStack spacing={"3"}>
+          <VStack gap={"3"}>
             {recentConnectors?.map((connector) => (
               <WalletSelectionButton
                 key={connector.id}
@@ -38,7 +38,7 @@ export function WalletSelectionWallet() {
         <Text variant={"label"} fontSize="sm" mb={"3"}>
           Popular
         </Text>
-        <VStack spacing={"3"}>
+        <VStack gap={"3"}>
           {popularConnectors?.map((connector) => (
             <WalletSelectionButton
               key={connector.id}

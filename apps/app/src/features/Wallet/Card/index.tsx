@@ -1,9 +1,6 @@
 import {
   Button,
   Card,
-  CardFooter,
-  CardHeader,
-  CardProps,
   Heading,
   IconButton,
   Menu,
@@ -12,7 +9,7 @@ import {
   MenuList,
   Stack,
   Text,
-  ButtonGroup,
+  Group,
 } from "@mutuals/ui";
 import React from "react";
 import { shortenAddress } from "@/utils";
@@ -27,7 +24,7 @@ import {
   IoOpenOutline,
 } from "react-icons/io5";
 
-interface WalletCardProps extends DeepPartial<Wallet>, CardProps {
+interface WalletCardProps extends DeepPartial<Wallet>, Card.RootProps {
   isPrimaryWallet: boolean;
 }
 
@@ -41,10 +38,10 @@ export default function WalletCard({
   const name = hasName ? "Company Multisig" : shortAddress;
 
   return (
-    <Card as="article" variant={"outline"} bg={"transparent"} {...props}>
-      <CardHeader
+    <Card.Root as="article" variant={"outline"} bg={"transparent"} {...props}>
+      <Card.Header
         as={Stack}
-        spacing={"3"}
+        gap={"3"}
         pb={"3"}
         alignItems={"center"}
         textAlign={"center"}
@@ -65,11 +62,11 @@ export default function WalletCard({
             </Text>
           )}
         </Stack>
-      </CardHeader>
+      </Card.Header>
 
-      <CardFooter pt={"0"}>
+      <Card.Footer pt={"0"}>
         <Menu size={"sm"}>
-          <ButtonGroup w={"full"} size={"sm"} spacing={"0.5"}>
+          <Group w={"full"} size={"sm"} gap={"0.5"}>
             <Button
               flex={"1"}
               as={Link}
@@ -90,9 +87,9 @@ export default function WalletCard({
               <MenuItem icon={<IoOpenOutline />}>Etherscan</MenuItem>
               <MenuItem icon={<IoEyeOffOutline />}>Hide</MenuItem>
             </MenuList>
-          </ButtonGroup>
+          </Group>
         </Menu>
-      </CardFooter>
-    </Card>
+      </Card.Footer>
+    </Card.Root>
   );
 }

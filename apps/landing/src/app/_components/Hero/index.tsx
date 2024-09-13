@@ -1,19 +1,12 @@
 "use client";
 
-import {
-  Box,
-  Stack,
-  Button,
-  Container,
-  DarkMode,
-  useColorModeValue,
-} from "@mutuals/ui";
+import { Box, Stack, Button, Container } from "@mutuals/ui";
 import { useMotionValueEvent, useScroll, MotionConfig } from "framer-motion";
 import { useState } from "react";
 
 import HomeHeroHeading from "@/app/_components/Hero/Heading";
 import HomeHeroSlider from "@/app/_components/Hero/Slider";
-import { IoPlayCircleOutline, IoPlayOutline } from "react-icons/io5";
+import { IoPlayOutline } from "react-icons/io5";
 
 export type HomeHeroAnimBaseType = {
   animLabel: "grow" | "shrink";
@@ -46,16 +39,16 @@ export default function HomeHero() {
 
         <HomeHeroSlider animLabel={animLabel} />
 
-        <Container maxW="container.xl" mt={"12"} px={{ base: 3, md: 12 }}>
+        <Container maxW="7xl" mt={"12"}>
           <Stack
             w={"full"}
             align={"center"}
             p={"1.5"}
-            bg={"bg.3"}
+            bg={"bg.muted"}
             rounded={"lg"}
           >
-            <Button variant="ghost" rightIcon={<IoPlayOutline />}>
-              Explore The Demo
+            <Button variant="subtle">
+              Explore The Demo <IoPlayOutline />
             </Button>
           </Stack>
         </Container>

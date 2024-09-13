@@ -1,30 +1,14 @@
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Stack,
-  Text,
-  MenuList,
-  MenuItem,
-  MenuButton,
-  Menu,
-} from "@mutuals/ui";
+import { Button, Stack } from "@mutuals/ui";
 import { UseFormReturn } from "react-hook-form";
 
 import FormGroup from "@/components/Form/FormGroup";
 import Input from "@/components/Form/Input";
 import InputImage from "@/components/Form/InputImage";
-import InputSwitch from "@/components/Form/InputSwitch";
 import TextArea from "@/components/Form/TextArea";
-import SplitCard from "@/features/Pool/Card";
-import InputBase from "@/components/Form/InputBase";
 
-import PoolAddFormPayees from "@/features/PoolAdd/Payees";
+import Allocations from "@/features/PoolAdd/Allocations";
 import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddModal from "@/features/PoolAdd/Modal";
-import Select from "@/components/Form/InputSelect";
-import { IoAdd } from "react-icons/io5";
 
 interface PoolAddFormContentProps extends UseFormReturn<PoolAddData, never> {
   onModalClose: () => void;
@@ -32,80 +16,35 @@ interface PoolAddFormContentProps extends UseFormReturn<PoolAddData, never> {
 }
 
 export default function PoolAddFormContent({
-  getValues,
   isModalOpen,
   onModalClose,
+  ...props
 }: PoolAddFormContentProps) {
+  const { getValues } = props;
   const data = getValues();
-
-  const previewData = {
-    ...data,
-    image: data.image?.preview?.toString(),
-    id: "id",
-  };
 
   return (
     <>
       <PoolAddModal data={data} open={isModalOpen} onClose={onModalClose} />
-      <Grid templateColumns={"1fr 24rem"} gap={{ base: "6", lg: "12" }}>
-        <GridItem as={Stack} gap={"6"}>
-          <FormGroup>
-            <InputImage id="image" label="Image" />
+      <FormGroup>
+        <InputImage id="image" label="Image" />
 
-            <Input
-              label="Name"
-              id="name"
-              validation={{ required: "Please enter a name" }}
-            />
+        <Input
+          label="Name"
+          id="name"
+          validation={{ required: "Please enter a name" }}
+        />
 
-            <TextArea label="Description" id="description" />
+        <TextArea label="Description" id="description" />
+      </FormGroup>
 
-            <InputSwitch label={"Metadata Locked"} id={"metadataLocked"} />
-          </FormGroup>
+      <Allocations {...props} />
 
-          <FormGroup
-            title={`Allocation`}
-            description={`Please define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
-          >
-            <Menu>
-              <MenuButton as={Button} rightIcon={<IoAdd />}>
-                Add allocation
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Percentage</MenuItem>
-                <MenuItem>Fixed</MenuItem>
-                <MenuItem>Prioritized</MenuItem>
-                <MenuItem>Timed</MenuItem>
-              </MenuList>
-            </Menu>
-            <PoolAddFormPayees id={"payees"} />
-          </FormGroup>
-
-          <Stack direction="row" justify={"space-between"}>
-            <Button variant={"blackWhite"} type="submit">
-              Create Pool
-            </Button>
-          </Stack>
-        </GridItem>
-
-        <GridItem>
-          <Box position={"sticky"} top={"20"}>
-            <InputBase label={`Preview`}>
-              <SplitCard metaData={previewData!} />
-            </InputBase>
-
-            <Stack direction={"row"} mt={"6"} justify={"space-between"}>
-              <Box>
-                <InputSwitch label={"Auto Save"} />
-              </Box>
-
-              <Box>
-                <Text variant={"label"}>Unsaved changes</Text>
-              </Box>
-            </Stack>
-          </Box>
-        </GridItem>
-      </Grid>
+      <Stack direction="row" justify={"space-between"}>
+        <Button variant={"blackWhite"} type="submit">
+          Create Pool
+        </Button>
+      </Stack>
     </>
   );
 }

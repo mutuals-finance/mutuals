@@ -1,66 +1,72 @@
 import {
   Drawer,
   DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  type DrawerProps,
-  ListItem,
-  type ListItemProps,
+  DrawerCloseTrigger,
   Button,
   type LinkProps,
   Link,
   Stack,
-  StackDivider,
   Box,
+  StackSeparator,
+  CloseButton,
+  CloseButtonProps,
 } from "@mutuals/ui";
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/layout/Header/NavWrapper";
+import NextLink from "next/link";
 
 interface MobileNavProps
-  extends Omit<DrawerProps, "children">,
+  extends Omit<Drawer.ContentProps, "children">,
     PropsWithChildren {
   links?: LinkProps[];
+  closeButtonProps?: CloseButtonProps;
 }
 
-export default function NavMobileDrawer({ links, ...props }: MobileNavProps) {
+export default function NavMobileDrawer({
+  links,
+  closeButtonProps,
+  ...props
+}: MobileNavProps) {
   return (
-    <Drawer size={"full"} {...props}>
-      <DrawerContent gap={"0"}>
-        <DrawerHeader p={"0"}>
-          <NavWrapper
-            justifyContent="space-between"
-            borderBottom={"1px solid"}
-            borderColor={"border.1"}
-          >
-            <DrawerCloseButton
-              position={"static"}
-              display={"block"}
-              variant={"transparent"}
-              fontSize="xs"
-              color={"color.1"}
-            />
-          </NavWrapper>
-        </DrawerHeader>
+    <DrawerContent gap={"0"} {...props}>
+      <DrawerHeader p={"0"}>
+        <NavWrapper
+          justifyContent="space-between"
+          borderBottomWidth={"1px"}
+          borderColor={"border"}
+        >
+          <CloseButton
+            fontSize={"2xl"}
+            aria-label="Close Navigation"
+            {...closeButtonProps}
+          />
+        </NavWrapper>
+      </DrawerHeader>
 
-        <DrawerBody p="0">
-          <Stack
-            direction={"column"}
-            gap={"0"}
-            spacing={"0"}
-            divider={<StackDivider />}
-          >
-            {(links || []).map(({ ...link }, index) => (
-              <Link key={index} p={"6"} w={"full"} fontSize={"lg"} {...link} />
-            ))}
-            <Box p={"6"}>
-              <Button colorScheme={"primary"} size="lg" w={"full"}>
-                Launch App
-              </Button>
-            </Box>
-          </Stack>
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
+      <DrawerBody p="0">
+        <Stack direction={"column"} gap={"0"} separator={<StackSeparator />}>
+          {(links || []).map(({ href = "/", children, ...link }, index) => (
+            <Link
+              key={index}
+              p={"6"}
+              w={"full"}
+              fontSize={"lg"}
+              asChild
+              focusRing={"none"}
+              {...link}
+            >
+              <NextLink href={href}>{children}</NextLink>
+            </Link>
+          ))}
+          <Box p={"6"}>
+            <Button size="lg" w={"full"}>
+              Launch App
+            </Button>
+          </Box>
+        </Stack>
+      </DrawerBody>
+    </DrawerContent>
   );
 }

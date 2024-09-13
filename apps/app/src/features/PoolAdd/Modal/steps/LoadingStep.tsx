@@ -72,7 +72,7 @@ export function LoadingStep({
   ...props
 }: LoadingStepProps) {
   return (
-    <VStack spacing={"6"} alignItems={"stretch"}>
+    <VStack gap={"6"} alignItems={"stretch"}>
       <LoadingStepIndicator {...props} />
       <Box>
         {!!error && (

@@ -4,7 +4,7 @@ import {
   Link,
   type LinkProps,
   GridItem,
-  Text,
+  Heading,
 } from "@mutuals/ui";
 
 interface FooterListBoxProps extends GridItemProps {
@@ -19,11 +19,11 @@ export default function FooterListBox({
   ...props
 }: FooterListBoxProps) {
   return (
-    <GridItem as={Stack} align="flex-start" spacing={"3"} {...props}>
+    <GridItem as={Stack} alignItems="flex-start" gap={"3"} {...props}>
       {!!title && (
-        <Text mb="3" variant={"tag"} fontSize={"xs"}>
+        <Heading as={"h4"} variant={"subtag"} size={"xs"} mb="3">
           {title}
-        </Text>
+        </Heading>
       )}
       {links.length > 0 &&
         links.map((props, index) => (

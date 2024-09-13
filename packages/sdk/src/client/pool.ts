@@ -17,32 +17,27 @@ import {
   TransactionType,
   getPoolFactoryAddress,
   ZERO,
-} from "@/constants";
-import { poolAbi, poolFactoryAbi } from "@/constants/abi";
+} from "../constants";
+import { poolAbi, poolFactoryAbi } from "../constants/abi";
 import {
   InvalidAuthError,
   TransactionFailedError,
   UnsupportedChainIdError,
-} from "@/errors";
+} from "../errors";
 import {
-  CallData,
   CreatePoolConfig,
   WithdrawConfig,
   TransactionConfig,
   TransactionFormat,
-  PoolClientConfig,
+  MutualsClientConfig,
   TransferOwnershipConfig,
   SetPausedConfig,
   SetPoolAllocationConfig,
-} from "@/types";
-import { getAllocationConfig, getAllocationRoot } from "@/utils";
-import {
-  BaseClientMixin,
-  BaseGasEstimatesMixin,
-  BaseTransactions,
-} from "./base";
+} from "../types";
+import { allocation as allocationUtils } from "../utils";
+import { BaseClientMixin, BaseTransactions } from "./base";
 import { applyMixins } from "./mixin";
-import { validateAddress } from "@/utils/validation";
+import { validateAddress } from "../utils/validation";
 
 type PoolFactoryABI = typeof poolFactoryAbi;
 type PoolABI = typeof poolAbi;
@@ -56,7 +51,7 @@ class PoolTransactions extends BaseTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig & TransactionConfig) {
+  }: MutualsClientConfig & TransactionConfig) {
     super({
       transactionType,
       chainId,
@@ -76,13 +71,13 @@ class PoolTransactions extends BaseTransactions {
   }: CreatePoolConfig): Promise<TransactionFormat> {
     validateAddress(ownerAddress);
 
-    const allocationRoot = getAllocationRoot(allocations);
+    const allocationTree = allocationUtils.getTree(allocations);
 
     this._requirePublicClient();
     if (this._shouldRequireWalletClient) this._requireWalletClient();
 
     const functionName = "createPool";
-    const functionArgs = [ownerAddress, allocationRoot, salt];
+    const functionArgs = [ownerAddress, allocationTree.root, salt];
 
     return this._executeContractFunction({
       contractAddress: getPoolFactoryAddress(this._chainId),
@@ -139,7 +134,7 @@ class PoolTransactions extends BaseTransactions {
     poolAllocation,
     transactionOverrides = {},
   }: SetPoolAllocationConfig): Promise<TransactionFormat> {
-    const newAllocationRoot = getAllocationRoot(poolAllocation);
+    const newAllocationRoot = allocationUtils.getTree(poolAllocation);
 
     validateAddress(poolAddress);
 
@@ -172,7 +167,7 @@ class PoolTransactions extends BaseTransactions {
     this._requirePublicClient();
     if (this._shouldRequireWalletClient) this._requireWalletClient();
 
-    const { allocations, proof } = getAllocationConfig(
+    const { allocations, proof } = allocationUtils.getConfig(
       poolAllocations,
       indices,
     );
@@ -253,7 +248,7 @@ export class PoolClient extends PoolTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig) {
+  }: MutualsClientConfig) {
     super({
       transactionType: TransactionType.Transaction,
       chainId,
@@ -295,7 +290,7 @@ export class PoolClient extends PoolTransactions {
       setPaused: [
         encodeEventTopics({
           abi: poolAbi,
-          eventName: "SetPaused",
+          eventName: "Paused",
         })[0],
       ],
     };
@@ -472,12 +467,12 @@ export class PoolClient extends PoolTransactions {
 
     const events = await this.getTransactionEvents({
       txHash,
-      eventTopics: this.eventTopics.poolUpdated,
+      eventTopics: this.eventTopics.allocationUpdated,
     });
-    const event = events.length > 0 ? events[0] : undefined;
-    if (event) {
+
+    if (events.length > 0) {
       return {
-        event,
+        event: events[0]!,
       };
     }
 
@@ -490,7 +485,7 @@ export class PoolClient extends PoolTransactions {
     if (!createPoolArgs.ownerAddress) createPoolArgs.ownerAddress = zeroAddress;
     if (!createPoolArgs.allocations) createPoolArgs.allocations = [];
 
-    const allocationRoot = getAllocationRoot(createPoolArgs.allocations);
+    const allocationTree = allocationUtils.getTree(createPoolArgs.allocations);
 
     validateAddress(createPoolArgs.ownerAddress);
 
@@ -499,7 +494,7 @@ export class PoolClient extends PoolTransactions {
     const factory = this._getPoolFactoryContract();
 
     const poolAddress = (await factory.read.getAddress!([
-      allocationRoot,
+      allocationTree.root,
       createPoolArgs.ownerAddress,
       createPoolArgs.salt,
     ])) as Address;
@@ -537,7 +532,7 @@ class PoolGasEstimates extends PoolTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig) {
+  }: MutualsClientConfig) {
     super({
       transactionType: TransactionType.GasEstimate,
       chainId,
@@ -589,10 +584,6 @@ class PoolGasEstimates extends PoolTransactions {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-interface PoolGasEstimates extends BaseGasEstimatesMixin {}
-applyMixins(PoolGasEstimates, [BaseGasEstimatesMixin]);
-
 class PoolCallData extends PoolTransactions {
   constructor({
     chainId,
@@ -601,7 +592,7 @@ class PoolCallData extends PoolTransactions {
     walletClient,
     apiConfig,
     includeEnsNames = false,
-  }: PoolClientConfig) {
+  }: MutualsClientConfig) {
     super({
       transactionType: TransactionType.CallData,
       chainId,
@@ -613,7 +604,9 @@ class PoolCallData extends PoolTransactions {
     });
   }
 
-  async createPool(createPoolArgs: CreatePoolConfig): Promise<CallData> {
+  async createPool(
+    createPoolArgs: CreatePoolConfig,
+  ): Promise<TransactionFormat> {
     const callData = await this._createPool(createPoolArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
@@ -622,21 +615,21 @@ class PoolCallData extends PoolTransactions {
 
   async transferOwnership(
     transferOwnershipArgs: TransferOwnershipConfig,
-  ): Promise<CallData> {
+  ): Promise<TransactionFormat> {
     const callData = await this._transferOwnership(transferOwnershipArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
     return callData;
   }
 
-  async setPaused(setPausedArgs: SetPausedConfig): Promise<CallData> {
+  async setPaused(setPausedArgs: SetPausedConfig): Promise<TransactionFormat> {
     const callData = await this._setPaused(setPausedArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
     return callData;
   }
 
-  async withdraw(withdrawArgs: WithdrawConfig): Promise<CallData> {
+  async withdraw(withdrawArgs: WithdrawConfig): Promise<TransactionFormat> {
     const callData = await this._withdraw(withdrawArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
@@ -645,14 +638,10 @@ class PoolCallData extends PoolTransactions {
 
   async setPoolAllocation(
     setPoolAllocationArgs: SetPoolAllocationConfig,
-  ): Promise<CallData> {
+  ): Promise<TransactionFormat> {
     const callData = await this._setPoolAllocation(setPoolAllocationArgs);
     if (!this._isCallData(callData)) throw new Error("Invalid response");
 
     return callData;
   }
 }
-
-const poolUpdatedEvent = poolAbi[28];
-
-const poolCreatedEvent = poolFactoryAbi[8];

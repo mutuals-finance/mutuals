@@ -1,22 +1,18 @@
 "use client";
 
-import type { CardProps } from "@mutuals/ui";
 import {
   AspectRatio,
   Card,
-  CardBody,
-  CardHeader,
   Text,
   IconButton,
   Heading,
-  Collapse,
-  useDisclosure,
+  Collapsible,
 } from "@mutuals/ui";
 import type { ImageProps } from "next/image";
 import Image from "next/image";
 import { IoAdd, IoRemove } from "react-icons/io5";
 
-interface PaymentOptionSlideProps extends CardProps {
+interface PaymentOptionSlideProps extends Card.RootProps {
   tag: string;
   headline: string;
   description: string;
@@ -30,12 +26,10 @@ export default function PaymentCard({
   image,
   ...props
 }: PaymentOptionSlideProps) {
-  const { isOpen, onToggle } = useDisclosure();
-
   return (
-    <Card variant="filled" bg="transparent" {...props}>
+    <Collapsible.Root as={Card} variant="filled" bg="transparent" {...props}>
       {!!image && (
-        <CardHeader p="0" position="relative">
+        <Card.Header p="0" position="relative">
           <AspectRatio
             w="full"
             rounded="lg"
@@ -53,29 +47,28 @@ export default function PaymentCard({
               style={{ objectFit: "contain" }}
             />
           </AspectRatio>
-        </CardHeader>
+        </Card.Header>
       )}
 
-      <CardBody px="0">
+      <Card.Body px="0">
         <Heading as={"h5"} size={"sm"} mb={"3"}>
           {tag}
         </Heading>
         <Text fontSize={"lg"}>{headline}</Text>
-        <Collapse in={isOpen}>
+        <Collapsible.Content>
           <Text fontSize={"lg"} color={"color.3"}>
-            {" "}
             {description}
           </Text>
-        </Collapse>
-        <IconButton
+        </Collapsible.Content>
+        <Collapsible.Trigger
+          as={IconButton}
           mt={"6"}
           rounded={"full"}
           icon={isOpen ? <IoRemove /> : <IoAdd />}
           fontSize={"xl"}
           aria-label={"Toggle description"}
-          onClick={onToggle}
         />
-      </CardBody>
-    </Card>
+      </Card.Body>
+    </Collapsible.Root>
   );
 }

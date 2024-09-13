@@ -39,7 +39,7 @@ export default function Table<TData extends RowData>({
   });
 
   return (
-    <ChakraTableContainer {...containerProps}>
+    <ChakraTableContainer w={"full"} {...containerProps}>
       <ChakraTable {...tableProps}>
         {!headerHidden && (
           <Thead

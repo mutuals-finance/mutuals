@@ -25,7 +25,7 @@ export default function ActivityTable({
       id: "eventIcon",
       header: "Event",
       cell: (context) => (
-        <Stack direction="row" alignItems={"center"} spacing={"3"}>
+        <Stack direction="row" alignItems={"center"} gap={"3"}>
           <EventIconCell {...context} address={payee} />
           <EventDescriptionCell {...context} address={payee} />
         </Stack>

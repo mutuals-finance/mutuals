@@ -38,9 +38,6 @@ const Allocation = {
       )
     );
   },
-  buildTreeFrom(config: AllocationConfig) {
-    return Allocation.buildTree(Allocation.from(config));
-  },
 };
 
 export default Allocation;

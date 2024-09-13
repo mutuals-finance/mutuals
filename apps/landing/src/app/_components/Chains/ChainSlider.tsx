@@ -4,7 +4,7 @@ import KeenSlider, {
   type KeenSliderProps,
 } from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
-import { Stack, Card, Heading, CardBody } from "@mutuals/ui";
+import { Stack, Card, Heading } from "@mutuals/ui";
 import NextImage, { type ImageProps } from "next/image";
 
 const animation = { duration: 4 * 10000, easing: (t: number) => t };
@@ -46,25 +46,18 @@ export default function ChainSlider({
       {...props}
     >
       {networks.map((network) => (
-        <KeenSliderSlide>
-          <Card variant={"transparent"}>
-            <CardBody
-              as={Stack}
-              gap={"3"}
-              alignItems={"center"}
-              justifyContent={"center"}
-            >
-              <NextImage
-                src={network.icon}
-                alt={network.name}
-                height={"64"}
-                style={{ objectFit: "cover" }}
-              />
-              <Heading as={"h4"} size={"xs"}>
-                {network.name}
-              </Heading>
-            </CardBody>
-          </Card>
+        <KeenSliderSlide key={network.name}>
+          <Stack gap={"3"} alignItems={"center"} justifyContent={"center"}>
+            <NextImage
+              src={network.icon}
+              alt={network.name}
+              height={"64"}
+              style={{ objectFit: "cover" }}
+            />
+            <Heading as={"h4"} size={"xs"}>
+              {network.name}
+            </Heading>
+          </Stack>
         </KeenSliderSlide>
       ))}
     </KeenSlider>

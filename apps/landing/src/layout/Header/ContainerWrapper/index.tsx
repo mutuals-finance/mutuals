@@ -1,9 +1,9 @@
 "use client";
 
-import { Box, BoxProps, MotionBox } from "@mutuals/ui";
-import { DarkMode, LightMode, useBreakpointValue } from "@mutuals/ui";
+import { Box, BoxProps, Container, HStack, MotionBox } from "@mutuals/ui";
+import { useBreakpointValue } from "@mutuals/ui";
 import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useHeaderObserver } from "@/providers/HeaderObserver";
 
@@ -51,13 +51,6 @@ export default function HeaderContainerWrapper({
 
   const { headerTheme } = useHeaderObserver();
 
-  const ThemeComponent =
-    headerTheme === "dark"
-      ? DarkMode
-      : headerTheme === "light"
-        ? LightMode
-        : Fragment;
-
   return (
     <MotionConfig
       transition={{
@@ -72,24 +65,33 @@ export default function HeaderContainerWrapper({
         left="0"
         zIndex={10}
         w="full"
-        backdropFilter={"auto"}
-        backdropBlur={"12px"}
-        shadow={"sm"}
+        backdropFilter="auto"
+        backdropBlur="sm"
+        bgColor={"bg"}
+        borderBottom={"1px solid"}
+        borderColor={"border"}
         animate={isHidden ? "invisible" : "visible"}
         variants={variants.visibility}
         {...props}
       >
-        <ThemeComponent>
-          <Box
-            flex={"1"}
-            display="flex"
-            alignItems="stretch"
-            justifyContent="stretch"
-            bg={"bgAlpha.2"}
+        <Box
+          flex={"1"}
+          display="flex"
+          alignItems="stretch"
+          justifyContent="stretch"
+          className={headerTheme}
+        >
+          <Container
+            as={HStack}
+            size="2xl"
+            alignItems="center"
+            position="relative"
+            gap="12"
+            px={0}
           >
             {children}
-          </Box>
-        </ThemeComponent>
+          </Container>
+        </Box>
       </MotionBox>
     </MotionConfig>
   );
