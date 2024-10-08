@@ -1,19 +1,15 @@
 "use client";
 
-import {
-  Tab,
-  TabIndicator,
-  TabList,
-  TabProps,
-  Tabs,
-  TabsProps,
-} from "@mutuals/ui";
-import Link, { LinkProps } from "next/link";
+import { Tabs, Link, LinkProps } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
 
-export type RouterTabProps = { title: string } & LinkProps & TabProps;
+export type RouterTabProps = {
+  title: string;
+} & Pick<Tabs.TriggerProps, "value"> & {
+    tabProps?: Omit<Tabs.TriggerProps, "asChild" | "value">;
+  } & LinkProps;
 
-interface RouterTabsProps extends TabsProps {
+interface RouterTabsProps extends Tabs.RootProps {
   tabs?: RouterTabProps[];
 }
 
@@ -23,38 +19,38 @@ export default function RouterTabs({
   ...props
 }: RouterTabsProps) {
   const pathname = usePathname();
-  const index = tabs?.findIndex((t) => pathname == t.href.toString());
+  const current = tabs?.find((t) => pathname == t.href);
 
   return (
     <>
-      <Tabs
-        index={index}
-        position="relative"
-        variant="unstyled"
-        borderBottom={"1px solid"}
-        borderColor={"border.1"}
+      <Tabs.Root
+        value={current?.value}
+        onValueChange={(e) => console.log(e.value)}
         {...props}
       >
-        <TabList>
-          {tabs?.map(({ title, href, ..._props }) => (
-            <Tab
-              href={href}
-              key={title}
-              color={"fg.subtle"}
-              _focus={{ outline: "0", boxShadow: "none" }}
-              _selected={{ color: "color.1" }}
-              _hover={{ color: "color.1" }}
-              as={Link}
-              {..._props}
+        <Tabs.List
+          position="relative"
+          borderBottomWidth={"1px"}
+          borderColor={"border"}
+        >
+          {tabs?.map(({ title, value, tabProps, ..._props }) => (
+            <Tabs.Trigger
+              asChild
+              key={"trigger" + "-" + value}
+              value={value}
+              {...tabProps}
             >
-              {title}
-            </Tab>
+              <Link {..._props}>{title}</Link>
+            </Tabs.Trigger>
           ))}
-        </TabList>
 
-        <TabIndicator mt="-1.5px" height="2px" bg="color.1" />
-      </Tabs>
+          <Tabs.Indicator />
+        </Tabs.List>
 
+        {tabs?.map(({ value }) => (
+          <Tabs.Content key={"content" + "-" + value} value={value} />
+        ))}
+      </Tabs.Root>
       {children}
     </>
   );

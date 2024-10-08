@@ -3,29 +3,29 @@ import { defineRecipe } from "@chakra-ui/react";
 export default defineRecipe({
   variants: {
     visual: {
-      dense: {
+      solid: {
+        textStyle: "link",
+        _hover: {
+          color: "fg.subtle",
+        },
+        _active: {
+          color: "fg.muted",
+        },
+      },
+      subtle: {
+        textStyle: "link",
         color: "fg.muted",
         _hover: {
-          color: "color.1",
+          color: "fg",
         },
         _active: {
           color: "fg.subtle",
         },
       },
+      plain: {},
     },
   },
-  base: {
-    fontWeight: "medium",
-    textDecoration: "none",
-    textDecorationLine: "none",
-    fontFamily: "{fonts.heading}",
-    _hover: {
-      color: "fg.subtle",
-      textDecoration: "none",
-      textDecorationLine: "none",
-    },
-    _active: {
-      color: "fg.muted",
-    },
+  defaultVariants: {
+    visual: "solid",
   },
 });

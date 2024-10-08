@@ -1,8 +1,8 @@
-import React from "react";
+import { ReactNode } from "react";
 
 export interface StepperItemState {
   id: string;
-  title: React.ReactNode | string;
+  title: ReactNode | string;
   disabled?: boolean;
   onNext?: (
     current: StepperModalStep,
@@ -13,7 +13,7 @@ export interface StepperItemState {
 }
 
 export interface StepperModalStep extends StepperItemState {
-  children: (state: ItemState) => React.ReactNode;
+  children: (state: ItemState) => ReactNode;
 }
 
 export interface ItemState extends StepperItemState {
@@ -22,7 +22,7 @@ export interface ItemState extends StepperItemState {
 }
 
 interface StepperItemProps extends ItemState {
-  children: (state: ItemState) => React.ReactNode;
+  children: (state: ItemState) => ReactNode;
 }
 
 export default function StepperItem({ children, ...props }: StepperItemProps) {

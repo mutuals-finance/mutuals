@@ -1,46 +1,48 @@
 import {
   Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalOverlay,
+  DialogRoot,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
   Spinner,
   Stack,
   Heading,
-  ModalProps,
+  DialogRootProps,
   Text,
+  DialogBackdrop,
+  DialogCloseTrigger,
 } from "@mutuals/ui";
 
-export interface WalletSignModalProps extends Omit<ModalProps, "children"> {
+export interface WalletSignDialogProps
+  extends Omit<DialogRootProps, "children"> {
   prompt?: string;
 }
 
-export default function WalletSignModal({
-  onClose,
-  isOpen,
+export default function WalletSignDialog({
   size = "sm",
   prompt = "Please sign the message in your wallet.",
   ...props
-}: WalletSignModalProps) {
+}: WalletSignDialogProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={size} {...props}>
-      <ModalOverlay />
-      <ModalContent textAlign={"center"}>
-        <ModalBody>
-          <Stack align={"center"} textAlign={"center"} gap={"6"} pt={"6"}>
-            <Spinner speed="0.65s" size="xl" />
+    <DialogRoot size={size} {...props}>
+      <DialogBackdrop />
+      <DialogContent textAlign={"center"}>
+        <DialogBody>
+          <Stack alignItems={"center"} textAlign={"center"} gap={"6"} pt={"6"}>
+            <Spinner size="xl" />
             <Heading size={"md"}>Loading</Heading>
-            <Text variant={"label"}>{prompt}</Text>
+            <Text variant={"muted"}>{prompt}</Text>
           </Stack>
-        </ModalBody>
+        </DialogBody>
 
-        <ModalFooter>
-          <Button w="full" onClick={() => onClose()}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+        <DialogFooter>
+          <DialogCloseTrigger>
+            <Button w="full" variant={"subtle"}>
+              Cancel
+            </Button>
+          </DialogCloseTrigger>
+        </DialogFooter>
+      </DialogContent>
+    </DialogRoot>
   );
 }

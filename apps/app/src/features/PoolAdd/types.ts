@@ -3,23 +3,30 @@ import { AllocationNode } from "@mutuals/sdk-react";
 
 import { CellContext } from "@tanstack/react-table";
 import type { TableProps } from "@/components/Table";
-import { UseFieldArrayReturn } from "react-hook-form";
+import { FieldArrayWithId, UseFieldArrayReturn } from "react-hook-form";
 
-export type AllocationTableProps = Omit<TableProps<AllocationNode>, "columns">;
+export type AllocationDataItem = FieldArrayWithId<
+  PoolAddData,
+  "allocations",
+  "id"
+>;
 
-export type AllocationTableCellProps = CellContext<AllocationNode, unknown> &
-  UseFieldArrayReturn<PoolAddData>;
+export type AllocationTableProps = Omit<
+  TableProps<AllocationDataItem>,
+  "columns"
+>;
 
-export type PoolAddPayee = {
-  id: string;
-  value: string;
-};
+export type AllocationTableCellProps<TValue = unknown> = CellContext<
+  AllocationDataItem,
+  TValue
+> &
+  UseFieldArrayReturn<PoolAddData> & { id?: string };
 
 export type PoolAddData = {
   image: FileWithPreview;
   name: string;
   description: string;
-  metadataLocked: boolean;
-  payees: PoolAddPayee[];
   allocations: AllocationNode[];
 };
+
+export type ActionWithLabel = [string, () => void];

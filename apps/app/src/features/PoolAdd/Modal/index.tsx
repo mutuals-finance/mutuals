@@ -1,5 +1,4 @@
-import { useSteps } from "@mutuals/ui";
-import { useUpdateEffect } from "react-use";
+import { useStateList, useUpdateEffect } from "react-use";
 import useCreateSplitFull from "@/hooks/useCreateSplitFull";
 import StepperModal from "@/components/StepperModal";
 import { LoadingStep, ReviewStep, SuccessStep } from "./steps";
@@ -83,12 +82,16 @@ export default function PoolAddModal({
       title: "Congratulations",
       disabled: true,
       children: () =>
-        SuccessStep({ contractAddress: tx.data?.contractAddress! }),
+        SuccessStep({ contractAddress: tx.data!.contractAddress! }),
     },
   ];
-  const { activeStep, setActiveStep, goToNext } = useSteps({
-    count: steps.length,
-  });
+
+  const {
+    currentIndex: activeStepIndex,
+    state: _,
+    next: goToNext,
+    setStateAt: setActiveStep,
+  } = useStateList(steps);
 
   const deps = [storage.isSuccess, tx.isSuccess, tx.isSuccess];
 
@@ -113,11 +116,13 @@ export default function PoolAddModal({
         execute();
         goToNext();
       }}
-      onClose={() => {
-        onClose();
-        reset();
+      onOpenChange={({ open }) => {
+        if (!open) {
+          onClose();
+          reset();
+        }
       }}
-      activeStep={activeStep}
+      activeStep={activeStepIndex}
       open={open}
     />
   );

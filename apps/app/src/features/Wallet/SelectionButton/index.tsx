@@ -10,27 +10,23 @@ export default function WalletConnectButton({
   connector,
   ...props
 }: WalletSelectionButtonProps) {
-  if (connector?.icon) {
-    props.leftIcon = (
-      <NextImage
-        src={connector.icon}
-        alt={connector?.name}
-        width={"24"}
-        height={"24"}
-      />
-    );
-  }
-
   return (
     <Button
-      w={"100%"}
+      w={"full"}
       size={"lg"}
-      py={"7"}
       justifyContent={"flex-start"}
       variant="outline"
-      spinnerPlacement="end"
+      minH={"16"}
       {...props}
     >
+      {connector?.icon && (
+        <NextImage
+          src={connector.icon}
+          alt={connector?.name}
+          width={"24"}
+          height={"24"}
+        />
+      )}
       {connector?.name}
     </Button>
   );

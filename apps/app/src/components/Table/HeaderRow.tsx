@@ -1,4 +1,4 @@
-import { Tr, Th } from "@mutuals/ui";
+import { Table as ChakraTable } from "@mutuals/ui";
 import { flexRender, HeaderGroup, type RowData } from "@tanstack/react-table";
 import React from "react";
 
@@ -8,14 +8,17 @@ export default function HeaderRow<TData extends RowData>(
   headerGroup: HeaderRowProps<TData>,
 ) {
   return (
-    <Tr>
+    <ChakraTable.Row>
       {headerGroup.headers.map((header) => (
-        <Th key={header.id} py={"3"}>
+        <ChakraTable.ColumnHeader
+          key={header.id}
+          css={{ width: `${header.getSize()}px` }}
+        >
           {header.isPlaceholder
             ? null
             : flexRender(header.column.columnDef.header, header.getContext())}
-        </Th>
+        </ChakraTable.ColumnHeader>
       ))}
-    </Tr>
+    </ChakraTable.Row>
   );
 }

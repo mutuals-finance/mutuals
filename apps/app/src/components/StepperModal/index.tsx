@@ -1,43 +1,40 @@
 import {
   Box,
   Button,
-  Divider,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Progress,
-  Step,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  Stepper,
-  StepStatus,
+  DialogBody,
+  DialogBackdrop,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
+  ProgressCircleRing,
+  ProgressCircleRoot,
+  ProgressCircleValueText,
+  Separator,
+  DialogRootProps,
+  StepsRoot,
+  StepsItem,
+  StepsList,
 } from "@mutuals/ui";
-import React from "react";
-
 import StepperItem, {
   StepperModalStep,
 } from "@/components/StepperModal/StepperItem";
 
-interface StepperModalProps {
-  open: boolean;
-  onClose: () => void;
+interface StepperDialogProps extends Omit<DialogRootProps, "children"> {
   onNext: (step: StepperModalStep, index: number) => void | Promise<void>;
   activeStep: number;
   steps: StepperModalStep[];
 }
 
-export default function StepperModal({
-  onClose,
+export default function StepperDialog({
+  onOpenChange,
   onNext,
-  open,
   activeStep,
   steps,
-}: StepperModalProps) {
+  size = "xl",
+  ...props
+}: StepperDialogProps) {
   const activeStepContent = steps[activeStep];
   const activeStepTitle = activeStepContent?.title;
 
@@ -45,68 +42,75 @@ export default function StepperModal({
   const progressPercent = (activeStep / max) * 100;
 
   return (
-    <Modal isOpen={open} onClose={onClose} size={"xl"}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{activeStepTitle}</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Box position="relative" mb={"6"}>
-            <Stepper size="sm" index={activeStep} gap="0">
-              {steps.map((_, index) => (
-                <Step key={index}>
-                  <StepIndicator bg="white">
-                    <StepStatus
-                      complete={<StepIcon />}
-                      incomplete={<StepNumber />}
-                      active={<StepNumber />}
-                    />
-                  </StepIndicator>
-                </Step>
-              ))}
-            </Stepper>
-            <Progress
-              value={progressPercent}
-              position="absolute"
-              height="3px"
-              width="full"
-              top="10px"
-              zIndex={-1}
-            />
-          </Box>
+    <DialogRoot onOpenChange={onOpenChange} size={size} {...props}>
+      <DialogBackdrop />
+      <DialogContent>
+        <StepsRoot
+          defaultValue={0}
+          count={steps.length}
+          size="sm"
+          step={activeStep}
+          linear={true}
+        >
+          <DialogHeader>{activeStepTitle}</DialogHeader>
+          <DialogCloseTrigger />
+          <DialogBody>
+            <Box position="relative" mb={"6"}>
+              <StepsList>
+                {steps.map((step, index) => (
+                  <StepsItem key={step.id} index={index} title={step.title} />
+                ))}
+              </StepsList>
 
-          <Divider my={"6"} />
+              <ProgressCircleRoot
+                position="absolute"
+                top="10px"
+                zIndex={-1}
+                value={progressPercent}
+                size="lg"
+              >
+                <ProgressCircleValueText />
+                <ProgressCircleRing />
+              </ProgressCircleRoot>
+            </Box>
 
-          {steps.map(({ children, ...item }, index) => {
-            return (
-              <Box key={item.id}>
-                <StepperItem
-                  {...item}
-                  isActive={index === activeStep}
-                  index={index}
-                >
-                  {children}
-                </StepperItem>
-              </Box>
-            );
-          })}
-        </ModalBody>
+            <Separator my={"6"} />
 
-        <ModalFooter>
-          <Button variant="ghost" onClick={() => onClose()} mr={3}>
-            Cancel
-          </Button>
+            {steps.map(({ children, ...item }, index) => {
+              return (
+                <Box key={item.id}>
+                  <StepperItem
+                    {...item}
+                    isActive={index === activeStep}
+                    index={index}
+                  >
+                    {children}
+                  </StepperItem>
+                </Box>
+              );
+            })}
+          </DialogBody>
 
-          <Button
-            isDisabled={activeStepContent?.disabled}
-            onClick={() =>
-              !!activeStepContent && onNext(activeStepContent, activeStep)
-            }
-          >
-            Next
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+          <DialogFooter>
+            <Button
+              variant="ghost"
+              onClick={() => onOpenChange?.({ open: false })}
+              mr={3}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              disabled={activeStepContent?.disabled}
+              onClick={() =>
+                !!activeStepContent && onNext(activeStepContent, activeStep)
+              }
+            >
+              Next
+            </Button>
+          </DialogFooter>
+        </StepsRoot>
+      </DialogContent>
+    </DialogRoot>
   );
 }

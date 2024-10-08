@@ -2,24 +2,23 @@
 
 import {
   Button,
-  Menu,
-  MenuButton,
-  MenuDivider,
+  MenuContent,
   MenuItem,
-  MenuList,
+  MenuItemGroup,
+  MenuRoot,
+  MenuArrow,
+  MenuTrigger,
   Text,
   useColorMode,
+  MenuSeparator,
+  ClientOnly,
 } from "@mutuals/ui";
-import React from "react";
 import {
-  IoChevronDown,
-  IoChevronUp,
   IoHelpOutline,
   IoLogInOutline,
   IoLogOutOutline,
   IoMegaphoneOutline,
   IoMoonOutline,
-  IoPersonCircle,
   IoSunnyOutline,
 } from "react-icons/io5";
 import { useAccount } from "wagmi";
@@ -37,61 +36,58 @@ export default function ShellDashboardHeaderUser() {
   const { colorMode, toggleColorMode } = useColorMode();
   const router = useRouter();
 
-  const avatarIcon = (size = "xs") =>
-    isConnected ? (
-      <UserAvatar address={address} size={size} />
-    ) : (
-      <IoPersonCircle />
-    );
-
   return (
-    <>
-      <Menu closeOnSelect={false}>
-        {({ isOpen }) => (
-          <>
-            <MenuButton
-              as={Button}
-              leftIcon={avatarIcon()}
-              rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
-              isLoading={isConnecting}
-            >
-              {isConnected ? (
-                <Text as={"span"} fontFamily={"monospace"}>
-                  {shortenAddress(address)}
-                </Text>
-              ) : (
-                "Not Connected"
-              )}
-            </MenuButton>
+    <MenuRoot closeOnSelect={false}>
+      <MenuTrigger asChild>
+        <Button hideBelow={"lg"} variant={"ghost"} loading={isConnecting}>
+          <UserAvatar address={address} size={"xs"} />
+          {isConnected ? (
+            <Text as={"span"} fontFamily={"mono"}>
+              {shortenAddress(address)}
+            </Text>
+          ) : (
+            "Not Connected"
+          )}
+          <MenuArrow />
+        </Button>
+      </MenuTrigger>
 
-            <MenuList>
-              <MenuItem icon={<IoMegaphoneOutline />}>Feedback</MenuItem>
-              <MenuItem icon={<IoHelpOutline />}>Help</MenuItem>
-              <MenuDivider />
-              <MenuItem
-                fontWeight={"500"}
-                icon={
-                  colorMode === `light` ? <IoMoonOutline /> : <IoSunnyOutline />
-                }
-                onClick={toggleColorMode}
-              >
-                {colorMode === `light` ? `Dark Mode` : `Light Mode`}
-              </MenuItem>
-              <MenuItem
-                icon={isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
-                onClick={() =>
-                  isConnected
-                    ? disconnectAndLogout()
-                    : router.push("/auth/login")
-                }
-                fontWeight={"500"}
-              >
-                {isConnected ? `Logout` : `Login`}
-              </MenuItem>
-            </MenuList>
-          </>
-        )}
-      </Menu>
-    </>
+      <MenuContent>
+        <MenuItemGroup>
+          <MenuItem value={"Feedback"}>
+            <IoMegaphoneOutline />
+            Feedback
+          </MenuItem>
+          <MenuItem value={"Help"}>
+            <IoHelpOutline />
+            Help
+          </MenuItem>
+        </MenuItemGroup>
+        <MenuSeparator />
+        <MenuItemGroup>
+          <ClientOnly>
+            <MenuItem
+              value="Mode"
+              fontWeight={"medium"}
+              onClick={toggleColorMode}
+            >
+              {colorMode === `light` ? <IoMoonOutline /> : <IoSunnyOutline />}
+              {colorMode === `light` ? `Dark Mode` : `Light Mode`}
+            </MenuItem>
+
+            <MenuItem
+              fontWeight={"medium"}
+              value={"auth"}
+              onClick={() =>
+                isConnected ? disconnectAndLogout() : router.push("/auth/login")
+              }
+            >
+              {isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
+              {isConnected ? `Logout` : `Login`}
+            </MenuItem>
+          </ClientOnly>
+        </MenuItemGroup>
+      </MenuContent>
+    </MenuRoot>
   );
 }

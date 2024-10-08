@@ -39,14 +39,22 @@ export const useDefaultAllocation = () => {
 
   const items: Record<string, AllocationNode> = useMemo(
     () => ({
-      Percentage: buildItem(AllocationType.Percentage),
-      Fixed: buildItem(AllocationType.Fixed),
-      Timed: buildGroup(
+      "Default Item (Percentage)": buildItem(AllocationType.Percentage),
+      "Timed Group (Percentage)": buildGroup(
         AllocationType.PercentageTimed,
         lastItem.node.allocationType,
       ),
-      Prioritized: buildGroup(
+      "Prioritized Group (Percentage)": buildGroup(
         AllocationType.PercentagePrioritized,
+        lastItem.node.allocationType,
+      ),
+      "Default Item (Fixed)": buildItem(AllocationType.Fixed),
+      "Timed Group (Fixed)": buildGroup(
+        AllocationType.FixedTimed,
+        lastItem.node.allocationType,
+      ),
+      "Prioritized Group (Fixed)": buildGroup(
+        AllocationType.FixedPrioritized,
         lastItem.node.allocationType,
       ),
     }),
@@ -56,7 +64,7 @@ export const useDefaultAllocation = () => {
   const updateLastItem = useCallback(
     (value: AllocationNode) => {
       if (
-        isItem(value.node) &&
+        //isItem(value.node) &&
         value.node.allocationType != lastItem.node.allocationType
       ) {
         setLastItem(value as AllocationItemNode);

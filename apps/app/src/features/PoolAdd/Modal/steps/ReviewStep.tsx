@@ -16,7 +16,7 @@ function PoolReviewCard({ image, name, description }: PoolAddData) {
       metaData={{
         id: "id",
         name: name,
-        image: image?.preview.toString(),
+        image: image!.preview!.toString(),
         description: description,
       }}
     />

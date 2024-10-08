@@ -41,7 +41,7 @@ export default function Form<
     <FormProvider {...methods}>
       <VStack
         as={"form"}
-        align={"stretch"}
+        alignItems={"stretch"}
         gap={"6"}
         onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}
         {...props}

@@ -1,8 +1,22 @@
 import { Icon, IconProps } from "@chakra-ui/react";
+import { Link, LinkProps } from "./link";
 
-export type MutualsLogoProps = IconProps;
+type MutualsLogoIconProps = IconProps;
 
-export function MutualsLogo({ ...props }: MutualsLogoProps) {
+export type MutualsLogoProps = MutualsLogoIconProps &
+  Partial<Pick<LinkProps, "href">> & { linkProps?: Omit<LinkProps, "href"> };
+
+export function MutualsLogo({ href, linkProps, ...props }: MutualsLogoProps) {
+  return !href ? (
+    <MutualsLogoIcon {...props} />
+  ) : (
+    <Link color={"currentColor"} href={href} {...linkProps}>
+      <MutualsLogoIcon {...props} />
+    </Link>
+  );
+}
+
+function MutualsLogoIcon({ ...props }: IconProps) {
   return (
     <Icon
       width="100%"

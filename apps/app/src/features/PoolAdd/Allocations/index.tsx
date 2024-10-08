@@ -1,81 +1,76 @@
-import { useFieldArray, UseFormReturn } from "react-hook-form";
+import { useFieldArray, UseFormReturn, useWatch } from "react-hook-form";
 
 import FormGroup from "@/components/Form/FormGroup";
-
 import { PoolAddData } from "@/features/PoolAdd/types";
-import React, { useCallback } from "react";
-import { AllocationNode, useDefaultAllocation } from "@mutuals/sdk-react";
 import {
-  Menu,
-  MenuButton,
   MenuItem,
-  MenuList,
   Button,
   Group,
+  Card,
   IconButton,
+  MenuTrigger,
+  MenuRoot,
+  MenuContent,
 } from "@mutuals/ui";
 import AllocationTable from "@/features/PoolAdd/AllocationTable";
 import { IoAddCircle, IoEllipsisHorizontal } from "react-icons/io5";
+import AllocationProvider from "@/features/PoolAdd/AllocationProvider";
+import { useAllocationData } from "@/features/PoolAdd/Allocations/useAllocationData";
+import { useEffect } from "react";
 
-interface PoolAddAllocationProps extends UseFormReturn<PoolAddData> {}
+export interface PoolAddAllocationProps extends UseFormReturn<PoolAddData> {}
 
-export default function PoolAddAllocations({
-  ...props
-}: PoolAddAllocationProps) {
-  const { control } = props;
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "allocations",
-    },
+export default function PoolAddAllocations(_: PoolAddAllocationProps) {
+  return (
+    <AllocationProvider>
+      <PoolAddAllocationsCard />
+    </AllocationProvider>
   );
+}
 
-  const {
-    items: defaultItems,
-    updateLastItem,
-    lastItem,
-  } = useDefaultAllocation();
-
-  const appendAllocation = useCallback(
-    (value?: AllocationNode) => {
-      if (value) {
-        updateLastItem(value);
-        append(value);
-      }
-    },
-    [append, updateLastItem],
-  );
+function PoolAddAllocationsCard() {
+  const { append, defaultItems, fields } = useAllocationData();
 
   return (
-    <>
-      <FormGroup
-        title={`Allocations`}
-        description={`Please define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
-      >
-        <AllocationTable data={fields} />
-        <Group size="sm">
+    <Card.Root>
+      <Card.Body>
+        <FormGroup
+          title={`Allocations`}
+          description={`Please define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
+        >
+          <AllocationTable data={fields} />
+        </FormGroup>
+      </Card.Body>
+      <Card.Footer>
+        <Group w={"full"}>
           <Button
-            rightIcon={<IoAddCircle />}
-            onClick={() => appendAllocation(lastItem)}
+            variant="subtle"
+            size="sm"
+            flex={"1"}
+            onClick={() => append()}
           >
-            Append Allocation
+            Add Allocation <IoAddCircle />
           </Button>
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              icon={<IoEllipsisHorizontal />}
-              aria-label={"Append Select Allocation"}
-            />
-            <MenuList>
+          <MenuRoot>
+            <MenuTrigger asChild>
+              <IconButton
+                variant="subtle"
+                size="sm"
+                aria-label={"Add Allocation"}
+              >
+                <IoEllipsisHorizontal />
+              </IconButton>
+            </MenuTrigger>
+            <MenuContent>
               {Object.entries(defaultItems).map(([key, value]) => (
-                <MenuItem key={key} onClick={() => appendAllocation(value)}>
+                <MenuItem key={key} value={key} onClick={() => append(value)}>
                   {key}
                 </MenuItem>
               ))}
-            </MenuList>
-          </Menu>
+            </MenuContent>
+          </MenuRoot>
         </Group>
-      </FormGroup>
-    </>
+      </Card.Footer>
+    </Card.Root>
   );
 }
