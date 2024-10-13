@@ -6,8 +6,8 @@ import WalletListContent from "@/features/Wallet/List/Content";
 export default function WalletList() {
   return (
     <Box overflow={"hidden"} my={"12"}>
-      <Container variant={"shell"} my={"0"}>
-        <Heading as={"h2"} size={"lg"} mb={"6"}>
+      <Container maxW={"7xl"}>
+        <Heading as={"h2"} size={"2xl"} mb={"3"}>
           Wallets
         </Heading>
 

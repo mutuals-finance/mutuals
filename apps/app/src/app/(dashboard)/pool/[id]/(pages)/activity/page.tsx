@@ -27,7 +27,7 @@ export default async function PoolActivityPage() {
       <Container as={"section"} variant={"shell"}>
         <ActivityTableCard
           cardProps={{
-            sx: { overflow: "auto !important" },
+            css: { overflow: "auto !important" },
             bodyProps: { p: "0" },
           }}
           transfers={activity?.transfers ?? []}

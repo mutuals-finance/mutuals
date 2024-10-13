@@ -1,12 +1,4 @@
-import {
-  Table as ChakraTable,
-  TableContainer as ChakraTableContainer,
-  TableContainerProps as ChakraTableContainerProps,
-  TableHeadProps as ChakraTableHeadProps,
-  TableProps as ChakraTableProps,
-  Tbody,
-  Thead,
-} from "@mutuals/ui";
+import { Table as ChakraTable } from "@mutuals/ui";
 import {
   getCoreRowModel,
   useReactTable,
@@ -20,9 +12,9 @@ import HeaderRow from "@/components/Table/HeaderRow";
 
 export interface TableProps<TData extends RowData>
   extends Omit<TableOptions<TData>, "getCoreRowModel"> {
-  containerProps?: ChakraTableContainerProps;
-  headProps?: ChakraTableHeadProps;
-  tableProps?: ChakraTableProps;
+  containerProps?: ChakraTable.ScrollAreaProps;
+  headProps?: ChakraTable.HeaderProps;
+  tableProps?: ChakraTable.RootProps & { showRowBorder?: boolean };
   headerHidden?: boolean;
 }
 
@@ -39,32 +31,29 @@ export default function Table<TData extends RowData>({
   });
 
   return (
-    <ChakraTableContainer w={"full"} {...containerProps}>
-      <ChakraTable {...tableProps}>
+    <ChakraTable.ScrollArea w="full" {...containerProps}>
+      <ChakraTable.Root w="full" {...tableProps}>
         {!headerHidden && (
-          <Thead
-            position={"sticky"}
-            top={"0"}
-            left={"0"}
-            zIndex={"1"}
-            bg={"bg.1"}
-            borderBottom={"1px"}
-            borderColor={"border.1"}
-            {...headProps}
-          >
+          <ChakraTable.Header {...headProps}>
             {table
               ?.getHeaderGroups()
               ?.map((headerGroup) => (
                 <HeaderRow<TData> {...headerGroup} key={headerGroup.id} />
               ))}
-          </Thead>
+          </ChakraTable.Header>
         )}
-        <Tbody>
+        <ChakraTable.Body>
           {table
             ?.getRowModel()
-            ?.rows?.map((row) => <BodyRow<TData> {...row} key={row.id} />)}
-        </Tbody>
-      </ChakraTable>
-    </ChakraTableContainer>
+            ?.rows?.map((row) => (
+              <BodyRow<TData>
+                {...row}
+                showRowBorder={tableProps?.showRowBorder}
+                key={row.id}
+              />
+            ))}
+        </ChakraTable.Body>
+      </ChakraTable.Root>
+    </ChakraTable.ScrollArea>
   );
 }

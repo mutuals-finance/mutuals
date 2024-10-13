@@ -44,7 +44,7 @@ export const allocation = {
       allocationType: BigInt(a.allocationType),
       target: "recipient" in a ? BigInt(a.recipient) : ZERO,
       recipient: "recipient" in a ? BigInt(a.recipient) : ZERO,
-      amountOrShare: "amount" in a ? a.amount : a.share,
+      amountOrShare: BigInt("amount" in a ? a.amount : a.share),
       position: ZERO,
       timespan: "timespan" in a ? BigInt(a.timespan) : ZERO,
     };
@@ -56,6 +56,22 @@ export const allocation = {
 
   isItem: (a?: Allocation): boolean => {
     return !allocation.isGroup(a);
+  },
+
+  isFixed: (a?: Allocation): boolean => {
+    return (
+      a?.allocationType == AllocationType.Fixed ||
+      a?.allocationType == AllocationType.FixedTimed ||
+      a?.allocationType == AllocationType.FixedPrioritized
+    );
+  },
+
+  isPercentage: (a?: Allocation): boolean => {
+    return (
+      a?.allocationType == AllocationType.Percentage ||
+      a?.allocationType == AllocationType.PercentageTimed ||
+      a?.allocationType == AllocationType.PercentagePrioritized
+    );
   },
 
   isPrioritized: (a?: Allocation): boolean => {

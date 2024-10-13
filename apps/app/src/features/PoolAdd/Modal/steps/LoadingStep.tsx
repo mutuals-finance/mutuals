@@ -1,11 +1,12 @@
-import { Icon } from "@mutuals/ui";
 import {
   Box,
-  CircularProgress,
-  Divider,
   Flex,
   Text,
   VStack,
+  Icon,
+  ProgressCircleRing,
+  ProgressCircleRoot,
+  Separator,
 } from "@mutuals/ui";
 import { IoAlertCircle, IoCheckmarkCircle } from "react-icons/io5";
 
@@ -33,7 +34,9 @@ function LoadingStepIndicator({
       ) : isSuccess ? (
         <Icon as={IoCheckmarkCircle} color={"green"} />
       ) : (
-        <CircularProgress isIndeterminate color={"gray.900"} />
+        <ProgressCircleRoot value={null} size="sm">
+          <ProgressCircleRing cap="round" />
+        </ProgressCircleRoot>
       )}
     </Box>
   );
@@ -46,7 +49,7 @@ function LoadingStepStatus({
 }: LoadingStepStatusProps) {
   return (
     <Box>
-      <Divider />
+      <Separator />
       <Flex alignItems={"center"} justifyContent={"space-between"} py="3">
         <Text display={"block"} fontSize={"sm"}>
           Status
@@ -61,7 +64,7 @@ function LoadingStepStatus({
         </Text>
       </Flex>
 
-      <Divider />
+      <Separator />
     </Box>
   );
 }

@@ -1,61 +1,59 @@
-"use client";
-
 import {
-  Box,
   Button,
-  Group,
   Container,
+  Group,
   Stack,
-  StatGroup,
-  StatNumber,
-  useColorModeValue,
+  StatRoot,
+  StatHelpText,
+  StatValueText,
+  StatLabel,
+  ProgressRoot,
+  ProgressBar,
 } from "@mutuals/ui";
-import { Stat, StatLabel } from "@mutuals/ui";
-import { formatUSDPrice } from "@/utils";
 import ContentCard from "@/components/ContentCard";
 
 export default function DashboardBalance() {
   return (
-    <Container variant={"shell"}>
-      <ContentCard>
-        <Box
-          position="relative"
-          w={"full"}
-          h={"3"}
-          bg={"bg.2"}
-          rounded={"md"}
-          mb={"6"}
-        >
-          <Box
-            bg={useColorModeValue("primary.100", "primary.500")}
-            position={"absolute"}
-            top={"0"}
-            left={"0"}
-            h={"full"}
-            w={"42%"}
-            rounded={"md"}
-          />
-        </Box>
+    <Container maxW={"7xl"} my={"16"}>
+      <ContentCard w={"full"} enableAccordion={false}>
+        <ProgressRoot w={"full"} mb={"6"}>
+          <ProgressBar />
+        </ProgressRoot>
 
-        <Stack direction={"row"}>
-          <StatGroup gap={"12"} flex={"1"}>
-            <Stat flex={"0"}>
-              <StatLabel>Pools Balance</StatLabel>
-              <StatNumber fontSize={"3xl"}>
-                {formatUSDPrice((902834.48 - 40022.34).toString())}
-              </StatNumber>
-            </Stat>
-            <Stat flex={"1"}>
-              <StatLabel>Your Balance</StatLabel>
-              <StatNumber fontSize={"3xl"}>
-                {formatUSDPrice("40022.34")}
-              </StatNumber>
-            </Stat>
-          </StatGroup>
+        <Stack
+          direction={"row"}
+          alignItems={"flex-start"}
+          justifyContent={"space-between"}
+        >
+          <Group gap={"12"}>
+            <StatRoot>
+              <StatLabel>Pools balance</StatLabel>
+              <StatValueText
+                value={902834.48 - 40022.34}
+                formatOptions={{
+                  currency: "USD",
+                  style: "currency",
+                }}
+              />
+              <StatHelpText>+12% from last week</StatHelpText>
+            </StatRoot>
+
+            <StatRoot>
+              <StatLabel>Your balance</StatLabel>
+              <StatValueText
+                value={40022.34}
+                formatOptions={{
+                  currency: "USD",
+                  style: "currency",
+                }}
+              />
+              <StatHelpText>+12% from last week</StatHelpText>
+            </StatRoot>
+          </Group>
 
           <Group>
-            <Button variant={"blackWhite"}>Withdraw All</Button>
-            <Button variant={"outline"}>My Pools</Button>
+            <Button>Withdraw</Button>
+            <Button variant={"outline"}>View Pools</Button>
           </Group>
         </Stack>
       </ContentCard>

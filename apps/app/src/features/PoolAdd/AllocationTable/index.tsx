@@ -1,9 +1,5 @@
-"use client";
-
 import {
-  ColumnDef,
   createColumnHelper,
-  ExpandedState,
   getCoreRowModel,
   getExpandedRowModel,
   getFilteredRowModel,
@@ -11,20 +7,13 @@ import {
 
 import Table from "@/components/Table";
 
-import type {
-  AllocationTableProps,
-  PoolAddData,
-} from "@/features/PoolAdd/types";
+import type { AllocationTableProps } from "@/features/PoolAdd/types";
 import {
   ActionCell,
-  AddressCell,
-  GroupCell,
-  ShareOrAmountCell,
+  CheckboxCell,
+  ValueCell,
 } from "@/features/PoolAdd/AllocationTable/cells";
-import { Box, Checkbox, HStack } from "@mutuals/ui";
-import React, { useMemo, useState } from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
-import { AllocationNode, useAllocationUtils } from "@mutuals/sdk-react";
+import { AllocationNode } from "@mutuals/sdk-react";
 
 const columnHelper = createColumnHelper<AllocationNode>();
 
@@ -32,51 +21,25 @@ export default function AllocationTable({
   data = [],
   ...props
 }: AllocationTableProps) {
-  const { control } = useFormContext<PoolAddData>();
-  const methods = useFieldArray({
-    control,
-    name: "allocations",
-  });
+  const id = "allocations";
 
-  const { isGroup } = useAllocationUtils();
-  const columns = useMemo<ColumnDef<AllocationNode>[]>(
-    () => [
-      columnHelper.accessor("node.recipient", {
-        header: ({ table }) => (
-          <>
-            <HStack>
-              <Checkbox
-                ml={"8"}
-                {...{
-                  checked: table.getIsAllRowsSelected(),
-                  indeterminate: table.getIsSomeRowsSelected(),
-                  onChange: table.getToggleAllRowsSelectedHandler(),
-                }}
-              />
-              <Box>Setup Allocations</Box>
-            </HStack>
-          </>
-        ),
-        cell: (context) =>
-          isGroup(context.row.original.node) ? (
-            <GroupCell {...context} {...methods} />
-          ) : (
-            <AddressCell {...context} {...methods} />
-          ),
-      }),
-      columnHelper.accessor("node.share", {
-        header: "",
-        cell: (context) => <ShareOrAmountCell {...context} {...methods} />,
-      }),
-      columnHelper.display({
-        id: "actions",
-        cell: (context) => <ActionCell {...context} {...methods} />,
-      }),
-    ],
-    [isGroup, methods],
-  );
+  const columns = [
+    columnHelper.accessor("node", {
+      cell: (context) => <CheckboxCell {...context} id={id} />,
+      size: 500,
+    }),
+    columnHelper.accessor("node.value", {
+      cell: (context) => <ValueCell {...context} id={id} />,
+      size: 158,
+    }),
 
-  const [expanded, setExpanded] = useState<ExpandedState>({});
+    columnHelper.display({
+      id: "actions",
+      cell: (context) => <ActionCell {...context} id={id} />,
+      enableResizing: false,
+      size: 58,
+    }),
+  ];
 
   return (
     <Table<AllocationNode>
@@ -84,15 +47,16 @@ export default function AllocationTable({
         data,
         columns,
         state: {
-          expanded,
+          expanded: true,
         },
-        onExpandedChange: setExpanded,
         getSubRows: (row) => row.children,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
         debugTable: true,
       }}
+      headerHidden={true}
+      tableProps={{ showRowBorder: false }}
       {...props}
     />
   );

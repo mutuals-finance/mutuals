@@ -3,14 +3,14 @@
 import {
   Button,
   Drawer,
+  DrawerBackdrop,
   DrawerBody,
-  DrawerCloseButton,
+  DrawerCloseTrigger,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay,
-  DrawerProps,
-  useDisclosure,
+  DrawerRoot,
+  DrawerRootProps,
   VStack,
 } from "@mutuals/ui";
 import { useRouter } from "next/navigation";
@@ -25,11 +25,7 @@ type WalletData = {
   address: string;
 };
 
-interface WalletFormDrawerProps
-  extends Omit<
-    DrawerProps,
-    "isOpen" | "onClose" | "onCloseComplete" | "children"
-  > {
+interface WalletFormDrawerProps extends Omit<DrawerRootProps, "children"> {
   title?: string;
   defaultValues?: WalletData;
 }
@@ -39,7 +35,6 @@ export function WalletFormDrawer({
   defaultValues,
   ...props
 }: PropsWithChildren<WalletFormDrawerProps>) {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const router = useRouter();
   const { signMessage } = useSignMessage();
 
@@ -85,44 +80,40 @@ export function WalletFormDrawer({
   );
 
   return (
-    <Drawer
-      placement="right"
+    <DrawerRoot
+      placement="end"
       size={"sm"}
-      isOpen={isOpen}
-      onClose={onClose}
-      onCloseComplete={() => router.push(`/`, { scroll: false })}
+      onExitComplete={() => router.push(`/`, { scroll: false })}
       {...props}
     >
-      <DrawerOverlay />
+      <DrawerBackdrop />
       <DrawerContent>
-        <DrawerHeader borderBottomWidth="1px" flexShrink={"0"}>
-          {title}
-          <DrawerCloseButton />
-        </DrawerHeader>
+        <DrawerCloseTrigger />
+
+        <DrawerHeader flexShrink={"0"}>{title}</DrawerHeader>
         <Form<WalletData>
           flex={"1"}
           onSubmit={(data) => onSubmit(data)}
           defaultValues={defaultValues}
         >
-          <DrawerBody as={VStack} gap={"6"} py={"6"} alignItems={"stretch"}>
+          <DrawerBody as={VStack} alignItems={"stretch"}>
             {children}
           </DrawerBody>
 
-          <DrawerFooter borderTopWidth="1px">
+          <DrawerFooter>
             <Button
               type="button"
               variant="outline"
-              mr={3}
-              onClick={() => onClose?.()}
+              onClick={() => props.onOpenChange?.({ open: false })}
             >
               Cancel
             </Button>
-            <Button isLoading={false} type={"submit"} variant="blackWhite">
+            <Button loading={false} type={"submit"}>
               Submit
             </Button>
           </DrawerFooter>
         </Form>
       </DrawerContent>
-    </Drawer>
+    </DrawerRoot>
   );
 }

@@ -1,7 +1,6 @@
-import { Heading, HeadingProps, VStack, Text } from "@mutuals/ui";
+import { Heading, HeadingProps, VStack, StackProps, Text } from "@mutuals/ui";
 import React from "react";
 import RouterTabs, { RouterTabProps } from "@/components/RouterTabs";
-import { StackProps } from "@chakra-ui/react";
 
 interface WalletSelectionWrapperProps extends StackProps {
   heading?: string;
@@ -20,11 +19,9 @@ export function WalletSelectionWrapper({
 }: WalletSelectionWrapperProps) {
   return (
     <VStack gap={"6"} alignItems={"stretch"} {...props}>
-      <Heading size={"2xl"} {...headingProps}>
-        {heading}
-      </Heading>
+      <Heading {...headingProps}>{heading}</Heading>
 
-      <Text fontSize={"lg"} variant={"label"}>
+      <Text fontSize={"lg"} variant={"muted"}>
         {description}
       </Text>
 

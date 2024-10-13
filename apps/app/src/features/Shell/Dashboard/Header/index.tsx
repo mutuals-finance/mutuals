@@ -1,23 +1,13 @@
 "use client";
 
-import {
-  Icon,
-  InputGroup,
-  InputLeftElement,
-  Show,
-  Stack,
-  useColorModeValue,
-  MutualsLogo,
-} from "@mutuals/ui";
-import React from "react";
-import { IoSearch } from "react-icons/io5";
+import { InputGroup, Stack, MutualsLogo, IconButton } from "@mutuals/ui";
+import { IoMenuSharp, IoSearch } from "react-icons/io5";
 
 import Form from "@/components/Form";
 import Input from "@/components/Form/Input";
 
 import Chain from "./Chain";
 import User from "./User";
-import MobileMenuButton from "./MobileMenuButton";
 
 export default function ShellDashboardHeader() {
   return (
@@ -31,39 +21,35 @@ export default function ShellDashboardHeader() {
       top={"0"}
       left={"0"}
       w={"100%"}
-      align={"center"}
-      justify={"space-between"}
+      alignItems={"center"}
+      justifyContent={"space-between"}
       gap={{ base: "3", lg: "12" }}
-      borderBottom="1px solid"
-      borderColor={"border.1"}
-      bg={"bg.1"}
+      borderBottomWidth="1px"
+      borderColor={"border"}
+      bg={"bg"}
       direction={"row"}
     >
-      <Show above={"lg"}>
-        <Form>
-          <InputGroup size={"sm"}>
-            <InputLeftElement pointerEvents="none">
-              <Icon
-                as={IoSearch}
-                color={useColorModeValue("gray.400", "gray.600")}
-              />
-            </InputLeftElement>
-            <Input hideWrapper={true} placeholder="Search..." pl={"10"} />
-          </InputGroup>
-        </Form>
-      </Show>
+      <Form hideBelow={"lg"}>
+        <InputGroup startElement={<IoSearch />}>
+          <Input size={"sm"} hideWrapper={true} placeholder="Search..." />
+        </InputGroup>
+      </Form>
 
-      <Show below="lg">
-        <MutualsLogo w={"24"} mr={"auto"} />
-      </Show>
+      <MutualsLogo hideFrom={"lg"} w={"24"} mr={"auto"} />
 
       <Stack direction={"row"} gap={6} ml={"auto"}>
         <Chain />
         <User />
       </Stack>
-      <Show below="lg">
-        <MobileMenuButton />
-      </Show>
+
+      <IconButton
+        fontSize={"2xl"}
+        aria-label={"Toggle Menu"}
+        variant={"ghost"}
+        hideFrom={"lg"}
+      >
+        <IoMenuSharp />
+      </IconButton>
     </Stack>
   );
 }

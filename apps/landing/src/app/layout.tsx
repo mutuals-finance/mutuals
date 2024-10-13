@@ -3,6 +3,7 @@ import type { PropsWithChildren } from "react";
 
 import Providers from "@/providers";
 import Layout from "@/layout";
+import fonts from "@mutuals/ui/font";
 
 type RootLayoutProps = PropsWithChildren;
 
@@ -40,7 +41,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${fonts.Inter.variable} ${fonts.GeneralSans.variable}`}
+    >
       <body>
         <Providers>
           <Layout>{children}</Layout>

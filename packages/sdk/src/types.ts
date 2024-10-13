@@ -76,41 +76,39 @@ export type Allocation =
   | AllocationPercentagePrioritized
   | AllocationPercentageTimed;
 
-export type AllocationFixedBase = {
-  amount: bigint;
+export type AllocationBase = {
+  value: number;
 };
 
-export type AllocationPercentageBase = {
-  share: bigint;
-};
+export type AllocationItemBase = {
+  recipient: Address;
+} & AllocationBase;
 
 export type AllocationFixed = {
   allocationType: AllocationType.Fixed;
-  recipient: Address;
-} & AllocationFixedBase;
+} & AllocationItemBase;
 
 export type AllocationPercentage = {
   allocationType: AllocationType.Percentage;
-  recipient: Address;
-} & AllocationPercentageBase;
+} & AllocationItemBase;
 
 export type AllocationFixedPrioritized = {
   allocationType: AllocationType.FixedPrioritized;
-} & AllocationFixedBase;
+} & AllocationBase;
 
 export type AllocationPercentagePrioritized = {
   allocationType: AllocationType.PercentagePrioritized;
-} & AllocationPercentageBase;
+} & AllocationBase;
 
 export type AllocationFixedTimed = {
   allocationType: AllocationType.FixedTimed;
   timespan: number;
-} & AllocationFixedBase;
+} & AllocationBase;
 
 export type AllocationPercentageTimed = {
   allocationType: AllocationType.PercentageTimed;
   timespan: number;
-} & AllocationPercentageBase;
+} & AllocationBase;
 
 export type Node<TNode, TChildren = TNode> = {
   node: TNode;

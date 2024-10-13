@@ -36,19 +36,24 @@ export default function Page({
   return (
     <Box {...props}>
       {(breadcrumbsEnabled || !!title || !!description) && (
-        <Container as={"header"} variant={"shell"} {...headerContainerProps}>
+        <Container
+          as={"header"}
+          my={"12"}
+          maxW={"7xl"}
+          {...headerContainerProps}
+        >
           <VStack gap={"6"} mb={"6"} alignItems={"flex-start"}>
             {breadcrumbsEnabled && <Breadcrumbs {...breadcrumbsProps} />}
 
             {!!title && (
-              <Heading as={"h1"} size={"2xl"} {...headingProps}>
+              <Heading as={"h1"} size={"5xl"} {...headingProps}>
                 {title}
               </Heading>
             )}
             {!!description && (
               <Text
-                size={"lg"}
-                variant={"light"}
+                fontSize={"lg"}
+                variant={"muted"}
                 maxW={"xl"}
                 {...descriptionProps}
               >

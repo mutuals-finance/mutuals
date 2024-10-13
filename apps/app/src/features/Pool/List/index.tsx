@@ -1,13 +1,21 @@
 "use client";
 
 import { useQuery } from "@mutuals/graphql-client-nextjs";
-import { Container, Heading, SimpleGrid } from "@mutuals/ui";
+import {
+  Container,
+  Heading,
+  SimpleGrid,
+  EmptyState,
+  Group,
+  Button,
+} from "@mutuals/ui";
 import React from "react";
 import { useAccount } from "wagmi";
 
 import { TreasurySearchAndCreate } from "./SearchAndCreate";
 import PoolCard from "@/features/Pool/Card";
 import { PoolListByRecipientDocument } from "@mutuals/graphql-client-nextjs/thegraph";
+import { HiViewGridAdd } from "react-icons/hi";
 
 export default function PoolList() {
   const { address, isConnected } = useAccount();
@@ -19,24 +27,37 @@ export default function PoolList() {
   });
 
   return (
-    <Container variant={"shell"}>
-      <Heading as={"h2"} size={"lg"} mb={"6"}>
+    <Container maxW={"7xl"}>
+      <Heading as={"h2"} size={"2xl"} mb={"3"}>
         Payment Pools
       </Heading>
 
-      <TreasurySearchAndCreate />
-      <SimpleGrid
-        templateColumns={"repeat(auto-fit, minmax(22rem, 1fr))"}
-        gap={6}
-      >
-        {!!data?.splits && data.splits.length > 0
-          ? Array(4)
+      {!!data?.splits && data.splits.length > 0 ? (
+        <>
+          <TreasurySearchAndCreate />
+          <SimpleGrid
+            templateColumns={"repeat(auto-fit, minmax(22rem, 1fr))"}
+            gap={6}
+          >
+            {Array(4)
               .fill(data?.splits[0])
               .map((split, key) => {
                 return <PoolCard key={key} {...split} />;
-              })
-          : "No data"}
-      </SimpleGrid>
+              })}
+          </SimpleGrid>
+        </>
+      ) : (
+        <EmptyState
+          icon={<HiViewGridAdd />}
+          title="Start receiving funds"
+          description="Add a new payment pool to get started"
+        >
+          <Group>
+            <Button>Create Payment Pool</Button>
+            <Button variant="outline">Import</Button>
+          </Group>
+        </EmptyState>
+      )}
     </Container>
   );
 }

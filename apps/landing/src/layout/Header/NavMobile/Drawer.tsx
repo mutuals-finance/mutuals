@@ -14,7 +14,6 @@ import {
 } from "@mutuals/ui";
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/layout/Header/NavWrapper";
-import NextLink from "next/link";
 
 interface MobileNavProps
   extends Omit<Drawer.ContentProps, "children">,
@@ -49,6 +48,7 @@ export default function NavMobileDrawer({
           {(links || []).map(({ href = "/", children, ...link }, index) => (
             <Link
               key={index}
+              href={href}
               p={"6"}
               w={"full"}
               fontSize={"lg"}
@@ -56,7 +56,7 @@ export default function NavMobileDrawer({
               focusRing={"none"}
               {...link}
             >
-              <NextLink href={href}>{children}</NextLink>
+              {children}
             </Link>
           ))}
           <Box p={"6"}>

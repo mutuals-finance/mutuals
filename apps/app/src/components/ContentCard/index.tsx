@@ -1,30 +1,11 @@
-import {
-  Card,
-  Heading,
-  AccordionItem,
-  Accordion,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Stack,
-} from "@mutuals/ui";
-import { Fragment, PropsWithChildren, type ReactNode } from "react";
+import { Card, Heading, Collapsible, Stack } from "@mutuals/ui";
+import { Fragment, type ReactNode } from "react";
 
 export interface ContentCardProps extends Omit<Card.RootProps, "title"> {
   title?: string;
   titleAfter?: ReactNode;
   bodyProps?: Card.BodyProps;
   enableAccordion?: boolean;
-}
-
-function AccordionWrapper({ children }: PropsWithChildren) {
-  return (
-    <Accordion allowToggle as={"article"} defaultIndex={[0]}>
-      <AccordionItem sx={{ border: "none !important" }}>
-        {children}
-      </AccordionItem>
-    </Accordion>
-  );
 }
 
 export default function ContentCard({
@@ -38,9 +19,12 @@ export default function ContentCard({
   ...props
 }: ContentCardProps) {
   const _enableAccordion = !(!(!!title || !!titleAfter) || !enableAccordion);
-  const ContentCardWrapper = !_enableAccordion ? Fragment : AccordionWrapper;
-  const ContentCardButton = !_enableAccordion ? Fragment : AccordionButton;
-  const ContentCardPanel = !_enableAccordion ? Fragment : AccordionPanel;
+
+  const ContentCardWrapper = !_enableAccordion ? Fragment : Collapsible.Root;
+  const ContentCardButton = !_enableAccordion ? Fragment : Collapsible.Trigger;
+  const ContentCardPanel = !_enableAccordion ? Fragment : Collapsible.Content;
+
+  const _showHeader = !!title || !!titleAfter;
 
   return (
     <ContentCardWrapper>
@@ -50,12 +34,12 @@ export default function ContentCard({
         overflow={"hidden"}
         {...props}
       >
-        {(!!title || !!titleAfter) && (
-          <ContentCardButton p={"0"}>
+        {_showHeader && (
+          <ContentCardButton>
             <Card.Header
               as={Stack}
               direction={"row"}
-              align={"center"}
+              alignItems={"center"}
               flex={"1"}
             >
               <Stack flex={"1"} direction={"row"}>
@@ -66,14 +50,17 @@ export default function ContentCard({
                 )}
                 {titleAfter}
               </Stack>
-              {_enableAccordion && <AccordionIcon />}
+              {/*
+              {_enableAccordion && <Collapsible.Icon />}
+*/}
             </Card.Header>
           </ContentCardButton>
         )}
         <ContentCardPanel p={"0"}>
           <Card.Body
-            borderTop={"1px solid"}
-            borderColor={"border.1"}
+            borderTopWidth={_showHeader ? "1px" : "0px"}
+            borderColor={"border"}
+            alignItems={"stretch"}
             {...bodyProps}
           >
             {children}

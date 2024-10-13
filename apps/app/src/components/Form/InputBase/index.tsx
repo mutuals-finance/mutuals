@@ -1,40 +1,29 @@
-import { FormControlProps } from "@mutuals/ui";
 import React from "react";
-import { get, useFormContext } from "react-hook-form";
+import { get, RegisterOptions, useFormContext } from "react-hook-form";
 
-import BaseFeedback from "@/components/Form/InputBase/BaseFeedback";
-import BaseLabel from "@/components/Form/InputBase/BaseLabel";
-import BaseWrapper from "@/components/Form/InputBase/BaseWrapper";
-import { BaseFeedbackProps, BaseLabelProps } from "@/components/Form/types";
+import { Field, FieldProps } from "@mutuals/ui";
 
-type BaseWrapperProps = BaseFeedbackProps & BaseLabelProps & FormControlProps;
+type BaseWrapperProps = FieldProps & {
+  hideError?: boolean;
+  validation?: RegisterOptions;
+};
 
 export default function InputBase({
   id,
-  label,
   children,
   validation,
-  helperText,
-  hideError,
+  hideError: _,
   ...props
 }: BaseWrapperProps) {
   const {
     formState: { errors },
   } = useFormContext();
 
-  const error = get(errors, id);
+  const errorText = get(errors, id);
 
   return (
-    <BaseWrapper {...props}>
-      <BaseLabel label={label!} validation={validation!} id={id!} />
-
+    <Field asterisk={!!validation?.required} errorText={errorText} {...props}>
       {children}
-
-      <BaseFeedback
-        error={error}
-        helperText={helperText!}
-        hideError={hideError!}
-      />
-    </BaseWrapper>
+    </Field>
   );
 }

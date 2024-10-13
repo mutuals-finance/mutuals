@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 
 const font = localFont({
+  variable: "--font-general-sans",
   src: [
     {
       path: "./src/GeneralSans-Extralight.woff2",

@@ -6,7 +6,6 @@ import { formatRoundNumber } from "@/utils";
 
 import Input from "@/components/Form/Input";
 import InputFieldArray from "@/components/Form/InputFieldArray";
-import InputNumber from "@/components/Form/InputNumber";
 import PoolAddPayeesFooter from "@/features/PoolAdd/Payees/Footer";
 import { PoolAddPayee } from "@/features/PoolAdd/types";
 

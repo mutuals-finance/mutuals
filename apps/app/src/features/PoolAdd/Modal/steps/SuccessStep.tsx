@@ -1,11 +1,4 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Button,
-  Tooltip,
-} from "@mutuals/ui";
+import { Alert, Button, ClipboardRoot, ClipboardLink } from "@mutuals/ui";
 
 export function SuccessStep({
   contractAddress = "",
@@ -13,28 +6,12 @@ export function SuccessStep({
   contractAddress?: string;
 }) {
   return (
-    <Alert
-      status="success"
-      variant="subtle"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      textAlign="center"
-      p={"6"}
-    >
-      <AlertIcon boxSize="6" mr={0} />
-      <AlertTitle my={3} mb={1} fontSize="lg">
-        Congratulations
-      </AlertTitle>
-      <AlertDescription maxWidth="sm" my={"3"}>
-        Your split was successfully created. You can now use its associated
-        address{" "}
-        <Tooltip label="Copy address" aria-label="Copy address">
-          {contractAddress}
-        </Tooltip>{" "}
-        to withdraw and deposit funds.
-      </AlertDescription>
-
+    <Alert status="success" title={"Congratulations"}>
+      Your split was successfully created. You can now use its address{" "}
+      <ClipboardRoot value={contractAddress}>
+        <ClipboardLink />
+      </ClipboardRoot>{" "}
+      to withdraw and deposit funds.
       <Button variant={"outline"} colorPalette={"green"}>
         View more
       </Button>

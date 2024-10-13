@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useToggle } from "react-use";
 import SignModal, {
-  type WalletSignModalProps,
+  type WalletSignDialogProps,
 } from "@/features/Wallet/SignModal";
 import useSignRemoteMessage, {
   SignMessageResult,
@@ -17,7 +17,7 @@ import useSignRemoteMessage, {
 } from "../useSignRemoteMessage";
 
 export type WalletSignOptions = {
-  modalProps?: Partial<WalletSignModalProps>;
+  modalProps?: Partial<WalletSignDialogProps>;
 };
 
 type WalletSignContextType = {
@@ -39,9 +39,13 @@ export default function SignMessageProvider({ children }: PropsWithChildren) {
   const [doSignRemoteMessage, doAbortSignRemoteMessage, state] =
     useSignRemoteMessage();
   const [
-    { isOpen: modalPropsIsOpen, onClose: modalPropsOnClose, ...modalProps },
+    {
+      open: modalPropsIsOpen,
+      onOpenChange: modalPropsOnOpenChange,
+      ...modalProps
+    },
     setModalProps,
-  ] = useState<Partial<WalletSignModalProps>>({});
+  ] = useState<Partial<WalletSignDialogProps>>({});
 
   const signMessage = useCallback(
     async (options?: WalletSignOptions) => {
@@ -70,11 +74,14 @@ export default function SignMessageProvider({ children }: PropsWithChildren) {
   return (
     <WalletSignContext.Provider value={value}>
       <SignModal
-        isOpen={modalPropsIsOpen || isModalOpen}
-        onClose={() => {
-          abort();
-          modalPropsOnClose?.();
-          setModalProps({});
+        open={modalPropsIsOpen || isModalOpen}
+        onOpenChange={(details) => {
+          modalPropsOnOpenChange?.(details);
+
+          if (!details.open) {
+            abort();
+            setModalProps({});
+          }
         }}
         {...modalProps}
       />
