@@ -56,6 +56,7 @@ interface SelectValueTextProps
 
 export const SelectValueText = (props: SelectValueTextProps) => {
   const { children, ...rest } = props;
+
   return (
     <ChakraSelect.ValueText {...rest}>
       <ChakraSelect.Context>
