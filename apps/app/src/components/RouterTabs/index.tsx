@@ -23,33 +23,27 @@ export default function RouterTabs({
 
   return (
     <>
-      <Tabs.Root
-        value={current?.value}
-        onValueChange={(e) => console.log(e.value)}
-        {...props}
-      >
-        <Tabs.List
-          position="relative"
-          borderBottomWidth={"1px"}
-          borderColor={"border"}
-        >
+      <Tabs.Root value={current?.value} fitted={true} {...props}>
+        <Tabs.List>
           {tabs?.map(({ title, value, tabProps, ..._props }) => (
             <Tabs.Trigger
-              asChild
               key={"trigger" + "-" + value}
               value={value}
+              p={"0"}
               {...tabProps}
             >
-              <Link {..._props}>{title}</Link>
+              <Link
+                unstyled={true}
+                w={"full"}
+                alignSelf={"stretch"}
+                p={"2"}
+                {..._props}
+              >
+                {title}
+              </Link>
             </Tabs.Trigger>
           ))}
-
-          <Tabs.Indicator />
         </Tabs.List>
-
-        {tabs?.map(({ value }) => (
-          <Tabs.Content key={"content" + "-" + value} value={value} />
-        ))}
       </Tabs.Root>
       {children}
     </>

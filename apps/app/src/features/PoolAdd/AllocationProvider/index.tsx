@@ -10,7 +10,7 @@ import {
 type AllocationContextType = {
   items: Record<string, AllocationNode>;
   updateLastItem: (value: AllocationNode) => void;
-  lastItem: AllocationItemNode | null;
+  lastItem: AllocationNode | null;
 };
 
 const AllocationContext = createContext<AllocationContextType>({

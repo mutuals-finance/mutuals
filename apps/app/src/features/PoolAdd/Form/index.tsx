@@ -14,6 +14,7 @@ export default function PoolAdd() {
     <Form<PoolAddData>
       onSubmit={() => toggleIsModalOpen()}
       onSubmitInvalid={(errors, data) => console.log("INVALID", errors, data)}
+      defaultValues={{ allocations: [] }}
     >
       {(props) => (
         <PoolAddFormContent

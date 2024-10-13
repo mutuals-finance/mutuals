@@ -9,51 +9,61 @@ type UseAllocationDataArgs = {
 };
 
 export function useAllocationData(
-  { id = "allocations" } = {
+  { id: _id = "allocations" } = {
     id: "allocations",
   } as UseAllocationDataArgs,
 ) {
-  const { control } = useFormContext<PoolAddData>();
+  const id = _id as "allocations";
+
+  const { getValues, setValue } = useFormContext<PoolAddData>();
+
+  const values = getValues(id);
 
   const { items: defaultItems, updateLastItem, lastItem } = useAllocation();
 
-  const {
-    append: appendField,
-    prepend: prependField,
-    ...method
-  } = useFieldArray({
-    control,
-    name: id as "allocations",
-  });
-
-  const append = useCallback(
-    (value = lastItem as AllocationNode) => {
-      console.log("append", { value });
-      if (value) {
-        updateLastItem(value);
-        appendField(value);
-      }
+  const remove = useCallback(
+    (index: number) => {
+      setValue(
+        id,
+        values.filter((_, i) => i !== index),
+      );
     },
-    [appendField, lastItem, updateLastItem],
+    [values, setValue, id],
   );
 
-  const prepend = useCallback(
-    (value = lastItem as AllocationNode) => {
-      console.log("prepend", { value });
-
+  const append = useCallback(
+    (props?: { index?: number; value?: AllocationNode }) => {
+      const value = props?.value ?? lastItem;
+      const index = props?.index ?? values.length;
       if (value) {
-        updateLastItem(value);
-        prependField(value);
+        if (value.node.allocationType !== lastItem?.node.allocationType) {
+          updateLastItem(value);
+        }
+        if (index < values.length) {
+          const after = [
+            ...values.slice(0, index),
+            value,
+            ...values.slice(index),
+          ];
+          setValue(`${id}`, after);
+        } else {
+          setValue(`${id}.${index}`, value);
+        }
       }
     },
-    [lastItem, prependField, updateLastItem],
+    [lastItem, values, updateLastItem, setValue, id],
+  );
+
+  const appendLast = useCallback(
+    (props?: { index?: number }) => append(props),
+    [append],
   );
 
   return {
     append,
-    prepend,
+    appendLast,
+    remove,
     defaultItems,
     lastItem,
-    ...method,
   };
 }

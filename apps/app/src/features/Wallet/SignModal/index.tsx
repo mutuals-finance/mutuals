@@ -28,18 +28,18 @@ export default function WalletSignDialog({
       <DialogBackdrop />
       <DialogContent textAlign={"center"}>
         <DialogBody>
-          <Stack alignItems={"center"} textAlign={"center"} gap={"6"} pt={"6"}>
-            <Spinner size="xl" />
-            <Heading size={"md"}>Loading</Heading>
-            <Text variant={"muted"}>{prompt}</Text>
+          <Stack alignItems={"center"} textAlign={"center"} gap={"4"} pt={"8"}>
+            <Spinner size="lg" animationDuration="0.8s" />
+            <Heading size={"lg"}>Loading</Heading>
+            <Text variant={"muted"} fontSize={"md"}>
+              {prompt}
+            </Text>
           </Stack>
         </DialogBody>
 
         <DialogFooter>
-          <DialogCloseTrigger>
-            <Button w="full" variant={"subtle"}>
-              Cancel
-            </Button>
+          <DialogCloseTrigger w="full" position={"static"}>
+            <Button w="full">Cancel</Button>
           </DialogCloseTrigger>
         </DialogFooter>
       </DialogContent>
