@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, type AvatarProps } from "@mutuals/ui";
+import { Box, type AvatarProps } from "@mutuals/ui";
 import React from "react";
 import dynamic from "next/dynamic";
 
@@ -19,6 +19,8 @@ export default function WalletAvatar({
   ...props
 }: WalletAvatarProps) {
   return (
+    <Box />
+    /*
     <Avatar
       as={JazzIcon}
       address={address}
@@ -26,5 +28,6 @@ export default function WalletAvatar({
       size={size!}
       {...props}
     />
+*/
   );
 }

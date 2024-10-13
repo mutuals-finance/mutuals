@@ -24,7 +24,7 @@ export default async function PoolAssetsPage() {
       <Container as={"section"} variant={"shell"}>
         <ContentCard
           bodyProps={{ p: "0" }}
-          sx={{ overflow: "auto !important" }}
+          css={{ overflow: "auto !important" }}
         >
           <AssetTable assets={balance?.assets} tableProps={{ size: "sm" }} />
         </ContentCard>

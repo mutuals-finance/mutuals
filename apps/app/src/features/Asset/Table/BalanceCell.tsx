@@ -12,7 +12,7 @@ export default function AssetTableBalanceCell({
 }: AssetTableBalanceCellProps) {
   const { tokenSymbol } = row.original;
   return (
-    <Stack direction={"row"} align={"center"}>
+    <Stack direction={"row"} alignItems={"center"}>
       <Text as={"span"} {...props}>
         {formatCurrencyAmount(getValue())}
       </Text>{" "}

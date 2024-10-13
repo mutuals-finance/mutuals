@@ -1,18 +1,23 @@
-import { Td, Tr } from "@mutuals/ui";
+import { Table as ChakraTable } from "@mutuals/ui";
 import { flexRender, Row, type RowData } from "@tanstack/react-table";
 
 type BodyRowProps<TData extends RowData> = Row<TData>;
 
-export default function BodyRow<TData extends RowData>(
-  row: BodyRowProps<TData>,
-) {
+export default function BodyRow<TData extends RowData>({
+  showRowBorder = true,
+  ...row
+}: BodyRowProps<TData> & { showRowBorder?: boolean }) {
   return (
-    <Tr>
+    <ChakraTable.Row>
       {row.getVisibleCells().map((cell) => (
-        <Td py={"2"} width={`${cell.column.getSize()}px`} key={cell.id}>
+        <ChakraTable.Cell
+          key={cell.id}
+          css={{ width: `${cell.column.getSize()}px` }}
+          borderBottomWidth={!showRowBorder ? "0px" : "1px"}
+        >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </Td>
+        </ChakraTable.Cell>
       ))}
-    </Tr>
+    </ChakraTable.Row>
   );
 }

@@ -5,30 +5,18 @@ import {
   Flex,
   Heading,
   HStack,
-  IconButton,
   LinkBox,
   LinkOverlay,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Stack,
-  StatNumber,
   Text,
-  Stat,
+  StatRoot,
   StatLabel,
+  StatValueText,
 } from "@mutuals/ui";
 import NextLink from "next/link";
-import {
-  IoEllipsisHorizontal,
-  IoEyeOffOutline,
-  IoOpenOutline,
-  IoSettingsOutline,
-} from "react-icons/io5";
 
 import {
   formatPrefixedAddress,
-  formatUSDPrice,
   getShortNameByChainId,
   shortenAddress,
 } from "@/utils";
@@ -40,8 +28,8 @@ export type PoolCardProps = Partial<Split>;
 
 function PoolCard({ id, metaData, address }: PoolCardProps) {
   return (
-    <LinkBox as="article" rounded={"md"}>
-      <Card.Root variant={"outline"} bg={"bg.1"} size={"sm"}>
+    <LinkBox as="article">
+      <Card.Root>
         <Card.Header as={Flex} alignItems={"center"} gap={"3"}>
           <Box flexShrink={0}>
             {
@@ -59,52 +47,37 @@ function PoolCard({ id, metaData, address }: PoolCardProps) {
               {metaData?.name === "" ? "Unknown" : metaData?.name}
             </Heading>
 
-            <Text variant={"label-mono"} fontSize={"xs"}>
+            <Text fontFamily={"mono"} fontSize={"xs"}>
               {shortenAddress(address)}
             </Text>
           </Box>
-
-          <Menu size={"sm"}>
-            <MenuButton
-              zIndex={10}
-              flexShrink={"0"}
-              as={IconButton}
-              aria-label="Split Options"
-              icon={<IoEllipsisHorizontal />}
-              variant="ghost"
-            />
-            <MenuList>
-              <MenuItem icon={<IoSettingsOutline />}>Settings</MenuItem>
-              <MenuItem icon={<IoOpenOutline />}>Etherscan</MenuItem>
-              <MenuItem icon={<IoEyeOffOutline />}>Hide</MenuItem>
-            </MenuList>
-          </Menu>
         </Card.Header>
         <Card.Body pt={"0"}>
           <Stack gap="3">
-            <Text noOfLines={2} fontSize={"sm"}>
+            <Text lineClamp={2} fontSize={"sm"}>
               {metaData?.description}
             </Text>
 
             <HStack
               flex={"1"}
-              align={"flex-end"}
+              alignItems={"flex-end"}
               gap={"6"}
               p={"3"}
               bg={"bg.2"}
               rounded={"md"}
             >
-              <Stat flex={"1"}>
-                <StatLabel fontSize={"xs"}>Your Balance</StatLabel>
-                <StatNumber fontSize={"lg"}>
-                  {formatUSDPrice("493123.24")}
-                </StatNumber>
-              </Stat>
-              <Button
-                size={"sm"}
-                variant={"ghost"}
-                _hover={{ cursor: "default" }}
-              >
+              <StatRoot maxW="240px">
+                <StatLabel>Your balance</StatLabel>
+                <StatValueText
+                  value={493123.24}
+                  formatOptions={{
+                    currency: "USD",
+                    style: "currency",
+                  }}
+                />
+              </StatRoot>
+
+              <Button size={"sm"} _hover={{ cursor: "default" }}>
                 View More
               </Button>
             </HStack>

@@ -8,7 +8,7 @@ import {
   ViewerWalletsQuery,
 } from "@mutuals/graphql-client-nextjs";
 import { walletMapFromViewerQuery } from "@/utils";
-import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@mutuals/ui";
+import { Alert } from "@mutuals/ui";
 
 interface WalletAddProps
   extends PropsWithChildren,
@@ -35,24 +35,10 @@ export default function WalletAdd({ children, data }: WalletAddProps) {
           {children}
         </WalletForm.Content>
       ) : (
-        <Alert
-          status="info"
-          variant="subtle"
-          flexDirection="column"
-          alignItems={"center"}
-          justifyContent={"center"}
-          textAlign={"center"}
-          size={"lg"}
-        >
-          <AlertIcon boxSize={"6"} />
-          <AlertTitle fontWeight={"600"} mt={3} mb={1}>
-            Account already in use
-          </AlertTitle>
-          <AlertDescription maxWidth="sm">
-            Your selected account is already linked with your profile. Please
-            switch the account inside your wallet app or select another wallet
-            provider and try again.
-          </AlertDescription>
+        <Alert status="info" size={"lg"} title={"Account already in use"}>
+          Your selected account is already linked with your profile. Please
+          switch the account inside your wallet app or select another wallet
+          provider and try again.
         </Alert>
       )}
     </WalletForm.Drawer>

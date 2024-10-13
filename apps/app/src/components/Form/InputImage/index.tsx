@@ -118,7 +118,7 @@ export default function InputImage({
           <Box
             {...getRootProps()}
             ref={dropzoneRef}
-            __css={fieldStyles}
+            css={fieldStyles}
             {...dragActiveStyles}
             p={"0"}
             w={"48"}

@@ -1,7 +1,5 @@
 import { HStack, MutualsLogo, StackProps } from "@mutuals/ui";
 
-import Link from "next/link";
-
 export type NavWrapperProps = StackProps;
 
 export default function NavWrapper({ children, ...props }: NavWrapperProps) {
@@ -15,9 +13,7 @@ export default function NavWrapper({ children, ...props }: NavWrapperProps) {
       position="relative"
       {...props}
     >
-      <Link href={"/"}>
-        <MutualsLogo color="color.1" w={{ base: "24", lg: "24" }} />
-      </Link>
+      <MutualsLogo href={"/"} w={{ base: "24", lg: "24" }} />
       {children}
     </HStack>
   );

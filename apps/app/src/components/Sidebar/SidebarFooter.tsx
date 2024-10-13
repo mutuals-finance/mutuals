@@ -1,4 +1,4 @@
-import { Stack, StackProps, useColorModeValue } from "@mutuals/ui";
+import { Stack, StackProps } from "@mutuals/ui";
 import React from "react";
 
 export function SidebarFooter({ children, ...props }: StackProps) {
@@ -6,8 +6,8 @@ export function SidebarFooter({ children, ...props }: StackProps) {
     <Stack
       flexShrink={"0"}
       p={"6"}
-      borderTop={"1px"}
-      borderColor={useColorModeValue("gray.200", "gray.600")}
+      borderTopWidth={"1px"}
+      borderColor={"border"}
       {...props}
     >
       {children}

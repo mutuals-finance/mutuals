@@ -1,15 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import {
   Box,
   Button,
+  Field,
   HStack,
   IconButton,
   Stack,
   Text,
   useBreakpointValue,
-  VStack,
+  Link,
+  LinkButton,
 } from "@mutuals/ui";
 import { PropsWithChildren, useEffect } from "react";
 import { IoMenuSharp } from "react-icons/io5";
@@ -20,6 +21,7 @@ import Sidebar from "@/components/Sidebar";
 import { MutualsLogo } from "@mutuals/ui";
 import navItems from "@/features/Shell/Dashboard/Sidebar/nav-items";
 import { siteCopyrightText } from "@/config";
+import { VscMenu } from "react-icons/vsc";
 
 export default function ShellDashboardSidebarContent({
   children,
@@ -52,19 +54,24 @@ export default function ShellDashboardSidebarContent({
         w={w}
         minW={{ base: "0", lg: "5.6rem" }}
         isOpen={isOpen}
-        borderColor={{ base: "transparent", lg: "border.1" }}
-        bg={"bg.1"}
+        borderColor={{ base: "transparent", lg: "border" }}
+        bg={"bg"}
         header={
           <HStack justifyContent={"flex-end"} gap={"3"}>
-            {isOpen && <MutualsLogo w={"24"} mr={"auto"} />}
+            {isOpen && (
+              <Box mr={"auto"}>
+                <MutualsLogo w={"24"} href={"/"} />
+              </Box>
+            )}
 
             <IconButton
-              icon={<IoMenuSharp display={"block"} />}
-              fontSize={"xl"}
+              fontSize={"lg"}
               aria-label={"Toggle Sidebar"}
               onClick={() => toggleIsOpen()}
               variant={"ghost"}
-            />
+            >
+              <VscMenu />
+            </IconButton>
           </HStack>
         }
         footer={
@@ -73,10 +80,10 @@ export default function ShellDashboardSidebarContent({
             fontSize={"xs"}
             visibility={isOpen ? "inherit" : "hidden"}
           >
-            <Text noOfLines={1}>
+            <Text truncate>
               &copy; {new Date().getFullYear()} {siteCopyrightText}
             </Text>
-            <Text noOfLines={1}>
+            <Text truncate>
               <Link href={"/"}>Privacy Policy</Link> /{" "}
               <Link href={"/"}>Terms</Link>
             </Text>
@@ -84,33 +91,33 @@ export default function ShellDashboardSidebarContent({
         }
       >
         {Object.keys(navItems).map((section) => (
-          <VStack alignItems={"stretch"} key={section} gap={"3"}>
-            <Text fontSize={"sm"} variant={"label"} noOfLines={1}>
-              {section}
-            </Text>
-            <Stack gap={1.5} w={"full"}>
+          <Field
+            label={section}
+            truncate
+            alignItems={"stretch"}
+            key={section}
+            gap={"3"}
+          >
+            <Stack gap={2} w={"full"}>
               {navItems[section]?.map((navItem) => (
-                <Button
+                <LinkButton
                   key={navItem.label}
-                  size={"md"}
+                  href={navItem.href}
+                  variant={"outline"}
                   w={"full"}
                   justifyContent={"flex-start"}
                   px={"3.5"}
-                  as={Link}
-                  href={navItem.href}
-                  fontWeight={"500"}
+                  size={"lg"}
                   fontSize={"sm"}
                   textAlign={"left"}
-                  leftIcon={<navItem.icon />}
-                  icongap={"4"}
-                  sx={{ textDecoration: "none !important" }}
                   overflow={"hidden"}
                 >
+                  <navItem.icon />
                   {navItem.label}
-                </Button>
+                </LinkButton>
               ))}
             </Stack>
-          </VStack>
+          </Field>
         ))}
       </Sidebar>
 

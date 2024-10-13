@@ -7,27 +7,29 @@ import KeenSlider from "@/components/KeenSlider/KeenSlider";
 
 interface WalletListContentProps {}
 
-export default function WalletListContent({}: WalletListContentProps) {
+export default function WalletListContent(_: WalletListContentProps) {
   const { data } = useViewerWallets({});
+
   if (data?.viewer && "user" in data.viewer) {
     const primaryWallet = data.viewer.user?.primaryWallet;
     return (
       <KeenSlider
-        sx={{ overflow: "visible !important" }}
+        css={{ overflow: "visible !important" }}
         options={{
           mode: "free",
           rubberband: false,
-          slides: { perView: "auto", gap: 16 },
+          slides: { perView: "auto", spacing: 16 },
         }}
       >
         {data.viewer.user?.wallets?.map((wallet) => (
           <KeenSliderSlide
             key={wallet?.dbid}
             flexShrink={"0"}
-            sx={{ w: "2xs !important" }}
+            css={{ w: "2xs !important" }}
           >
             <WalletCard
               {...wallet}
+              w={"full"}
               isPrimaryWallet={primaryWallet?.dbid === wallet?.dbid}
             />
           </KeenSliderSlide>

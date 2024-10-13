@@ -1,9 +1,9 @@
-import { BoxProps, DrawerProps, VStack, MotionBox } from "@mutuals/ui";
+import { BoxProps, Drawer, VStack, MotionBox } from "@mutuals/ui";
 import React from "react";
 
 export interface SidebarWrapperProps extends BoxProps {
   isOpen?: boolean;
-  placement?: DrawerProps["placement"];
+  placement?: Drawer.RootProps["placement"];
 }
 
 export function SidebarWrapper({
@@ -11,7 +11,7 @@ export function SidebarWrapper({
   children,
   width,
   w,
-  placement = "left",
+  placement = "start",
   ...props
 }: SidebarWrapperProps) {
   return (
@@ -23,12 +23,12 @@ export function SidebarWrapper({
       display={"flex"}
       flex={"0 0 auto"}
       overflow={"hidden"}
-      bg={"bg.1"}
-      borderRight={placement === "left" ? "1px" : "0px"}
-      borderLeft={placement === "right" ? "1px" : "0px"}
-      borderTop={placement === "bottom" ? "1px" : "0px"}
-      borderBottom={placement === "top" ? "1px" : "0px"}
-      borderColor={"border.1"}
+      bg={"bg"}
+      borderRightWidth={placement === "start" ? "1px" : "0px"}
+      borderLeftWidth={placement === "end" ? "1px" : "0px"}
+      borderTopWidth={placement === "bottom" ? "1px" : "0px"}
+      borderBottomWidth={placement === "top" ? "1px" : "0px"}
+      borderColor={"border"}
       animate={isOpen ? "open" : "closed"}
       variants={{
         open: {

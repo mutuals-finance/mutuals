@@ -3,15 +3,15 @@
 import {
   Box,
   Button,
-  Menu,
-  MenuButton,
-  MenuGroup,
+  MenuContent,
   MenuItem,
-  MenuList,
+  MenuItemGroup,
+  MenuRoot,
+  MenuArrow,
+  MenuTrigger,
   Spinner,
 } from "@mutuals/ui";
 import NextImage from "next/image";
-import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { useAccount, useSwitchChain } from "wagmi";
 
 import { getAvailableChains, getLogoByChainId } from "@/utils";
@@ -25,58 +25,51 @@ export default function ShellDashboardHeaderChain() {
   }
 
   return (
-    <Menu closeOnSelect={false}>
-      {({ isOpen }) => (
-        <>
-          {isConnected && (
-            <MenuButton
-              as={Button}
-              display={{ base: "none", lg: "flex" }}
-              leftIcon={
-                <Box w="4" h={"4"} position={"relative"}>
-                  <NextImage
-                    src={getLogoByChainId(currentChain?.id)}
-                    alt={currentChain?.name || "UNKNOWN"}
-                    fill={true}
-                  />
-                </Box>
-              }
-              rightIcon={isOpen ? <IoChevronUp /> : <IoChevronDown />}
-              variant={"ghost"}
-              isLoading={isPending}
-            >
+    <MenuRoot closeOnSelect={false}>
+      <>
+        {isConnected && (
+          <MenuTrigger asChild>
+            <Button hideBelow={"lg"} variant={"ghost"} loading={!!isPending}>
+              <Box w="4" h={"4"} position={"relative"}>
+                <NextImage
+                  src={getLogoByChainId(currentChain?.id)}
+                  alt={currentChain?.name || "UNKNOWN"}
+                  fill={true}
+                />
+              </Box>
               {currentChain?.name || "Unknown"}
-            </MenuButton>
-          )}
+              <MenuArrow />
+            </Button>
+          </MenuTrigger>
+        )}
+        <MenuContent>
+          <MenuItemGroup title="Choose Your Network">
+            {getAvailableChains().map(
+              (chain) =>
+                chain.id !== currentChain?.id && (
+                  <MenuItem
+                    onClick={() => onSelectChain(chain.id)}
+                    key={chain.id}
+                    value={chain.id.toString()}
+                  >
+                    <Box w="3" h="3" position={"relative"} mr={"1"}>
+                      <NextImage
+                        src={chain.logo}
+                        alt={chain.name}
+                        fill={true}
+                      />
+                    </Box>
 
-          <MenuList>
-            <MenuGroup title="Choose Your Network">
-              {getAvailableChains().map(
-                (chain) =>
-                  chain.id !== currentChain?.id && (
-                    <MenuItem
-                      onClick={() => onSelectChain(chain.id)}
-                      key={chain.id}
-                    >
-                      <Box w="3" h="3" position={"relative"} mr={"1"}>
-                        <NextImage
-                          src={chain.logo}
-                          alt={chain.name}
-                          fill={true}
-                        />
-                      </Box>
-
-                      {chain.name}
-                      {isPending && variables?.chainId === chain.id && (
-                        <Spinner size="xs" ml={"1"} />
-                      )}
-                    </MenuItem>
-                  ),
-              )}
-            </MenuGroup>
-          </MenuList>
-        </>
-      )}
-    </Menu>
+                    {chain.name}
+                    {isPending && variables?.chainId === chain.id && (
+                      <Spinner size="xs" ml={"1"} />
+                    )}
+                  </MenuItem>
+                ),
+            )}
+          </MenuItemGroup>
+        </MenuContent>
+      </>
+    </MenuRoot>
   );
 }

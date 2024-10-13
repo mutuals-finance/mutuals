@@ -1,4 +1,4 @@
-import { VStack } from "@mutuals/ui";
+import { Field, VStack } from "@mutuals/ui";
 import React from "react";
 import {
   FieldValues,
@@ -8,7 +8,6 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import BaseFeedback from "@/components/Form/InputBase/BaseFeedback";
 import { BaseFieldProps } from "@/components/Form/types";
 
 type FieldArrayBaseFieldProps = Pick<
@@ -46,7 +45,7 @@ export default function InputFieldArrayGroup<TFieldValue>({
     formState: { errors },
   } = useFormContext();
 
-  const error = get(errors, id);
+  const errorText = get(errors, id);
 
   const method = useFieldArray({
     name: id,
@@ -61,13 +60,13 @@ export default function InputFieldArrayGroup<TFieldValue>({
 
       {!!contentEmpty && fields.length <= 0 && contentEmpty?.(method)}
 
-      {!!children && (
-        <VStack gap={"3"} alignItems={"stretch"}>
-          {children(method)}
-        </VStack>
-      )}
-
-      <BaseFeedback {...{ error, hideError, helperText }} />
+      <Field {...{ errorText, helperText }}>
+        {!!children && (
+          <VStack gap={"3"} alignItems={"stretch"}>
+            {children(method)}
+          </VStack>
+        )}
+      </Field>
 
       {contentAfter?.(method)}
     </VStack>

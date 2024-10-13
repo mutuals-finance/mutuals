@@ -1,20 +1,19 @@
 import { defineTextStyles } from "@chakra-ui/react";
 
 const textStyles = defineTextStyles({
-  /*
-    body: {
-      description: "The body text style - used in paragraphs",
-      value: {
-        fontFamily: interFont.style.fontFamily,
+  link: {
+    description: "The link style - used for links",
+    value: {
+      fontWeight: "medium",
+      textDecoration: "none",
+      textDecorationLine: "none",
+      fontFamily: "{fonts.heading}",
+      _hover: {
+        textDecoration: "none",
+        textDecorationLine: "none",
       },
     },
-    heading: {
-      description: "The heading text style - used in heading",
-      value: {
-        fontFamily: generalSansFont.style.fontFamily,
-      },
-    },
-  */
+  },
 }) as Record<string, NonNullable<unknown>>;
 
 export default textStyles;

@@ -14,9 +14,9 @@ export default function FormGroup({
 }: PropsWithChildren<FormGroupProps>) {
   return (
     <Box {...props}>
-      <VStack gap={"6"} alignItems={"start"}>
+      <VStack gap={"4"} alignItems={"start"}>
         {!!title && (
-          <Heading as={"h3"} size={"lg"}>
+          <Heading as={"h3"} size={"3xl"}>
             {title}
           </Heading>
         )}
@@ -24,9 +24,7 @@ export default function FormGroup({
           (isValidElement(description) ? (
             description
           ) : (
-            <Text color={"alpha.3"} fontWeight={"500"}>
-              {description}
-            </Text>
+            <Text variant={"muted"}>{description}</Text>
           ))}
         {children}
       </VStack>

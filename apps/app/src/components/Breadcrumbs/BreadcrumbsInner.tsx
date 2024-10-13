@@ -1,12 +1,12 @@
 import {
   Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbItemProps,
-  BreadcrumbProps,
+  BreadcrumbRoot,
+  type BreadcrumbRootProps,
+  BreadcrumbLink,
+  type BreadcrumbLinkProps,
+  BreadcrumbCurrentLink,
 } from "@mutuals/ui";
 import { ReactNode } from "react";
-import Link from "next/link";
 import { Icon } from "@mutuals/ui";
 import { RxSlash } from "react-icons/rx";
 
@@ -14,15 +14,15 @@ function BreadcrumbsInnerItem({
   children,
   isCurrentPage,
   ...props
-}: BreadcrumbItemProps) {
-  return (
-    <BreadcrumbItem isCurrentPage={isCurrentPage} fontWeight={"400"} {...props}>
-      {children}
-    </BreadcrumbItem>
+}: BreadcrumbLinkProps & { isCurrentPage?: boolean }) {
+  return !isCurrentPage ? (
+    <BreadcrumbLink {...props}>{children}</BreadcrumbLink>
+  ) : (
+    <BreadcrumbCurrentLink {...props}>{children}</BreadcrumbCurrentLink>
   );
 }
 
-interface BreadcrumbsInnerProps extends BreadcrumbProps {
+interface BreadcrumbsInnerProps extends BreadcrumbRootProps {
   items: { href: string; children: ReactNode }[];
 }
 
@@ -31,7 +31,7 @@ export default function BreadcrumbsInner({
   ...props
 }: BreadcrumbsInnerProps) {
   return (
-    <Breadcrumb
+    <BreadcrumbRoot
       fontSize={"sm"}
       gap="3"
       separator={<Icon as={RxSlash} boxSize={"0.6rem"} />}
@@ -45,21 +45,10 @@ export default function BreadcrumbsInner({
             key={`${href}-${i}`}
             isCurrentPage={isCurrentPage}
           >
-            {isCurrentPage ? (
-              <Box>{children}</Box>
-            ) : (
-              <Box
-                as={Link}
-                href={href}
-                color={!isCurrentPage ? "fg.muted" : "inherit"}
-                _hover={{ color: "color.1" }}
-              >
-                {children}
-              </Box>
-            )}
+            {children}
           </BreadcrumbsInnerItem>
         );
       })}
-    </Breadcrumb>
+    </BreadcrumbRoot>
   );
 }

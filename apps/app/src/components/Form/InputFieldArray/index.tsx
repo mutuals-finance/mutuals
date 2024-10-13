@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode } from "react";
 
 import InputFieldArrayItem from "./Item";
 import InputFieldArrayGroup, {
@@ -10,7 +10,7 @@ interface InputFieldArrayProps<TFieldValue>
   defaultItem: TFieldValue;
   removeDisabled?: boolean;
   hideAdd?: boolean;
-  children: (id: string) => React.ReactNode;
+  children: (id: string) => ReactNode;
 }
 
 export default function InputFieldArray<TFieldValue>({

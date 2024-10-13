@@ -1,9 +1,5 @@
-import { ImageProps } from "@mutuals/ui";
-import {
-  InputProps as ChakraInputProps,
-  UseNumberInputProps,
-} from "@mutuals/ui";
-import { HTMLProps } from "react";
+import { FieldProps, ImageProps, NumberInputRootProps } from "@mutuals/ui";
+import { InputProps as ChakraInputProps } from "@mutuals/ui";
 import { FieldError, RegisterOptions } from "react-hook-form";
 
 export interface BaseLabelProps {
@@ -24,10 +20,7 @@ export interface BaseFeedbackProps {
   error?: FieldError;
 }
 
-export interface BaseFieldProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "size">,
-    BaseLabelProps,
-    BaseFeedbackProps {
+export interface BaseFieldProps extends FieldProps {
   /** Disables the input and shows defaultValue (can be set from React Hook Form) */
   readOnly?: boolean;
   /** Manual validation using RHF, it is encouraged to use yup resolver instead */
@@ -37,11 +30,10 @@ export interface BaseFieldProps
 export type InputBaseProps = ChakraInputProps &
   BaseFieldProps & { hideWrapper?: boolean };
 
-export type InputNumberBaseProps = InputBaseProps &
-  UseNumberInputProps & {
-    addDisabled?: boolean;
-    removeDisabled?: boolean;
-  };
+export type InputNumberBaseProps = InputBaseProps & {
+  wrapperHidden?: boolean;
+  inputProps?: NumberInputRootProps;
+};
 
 export interface FileWithPreview extends Partial<File> {
   preview: ImageProps["src"];

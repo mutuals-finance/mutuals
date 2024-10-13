@@ -1,4 +1,5 @@
 export * from "./AddressCell";
-export * from "./ShareOrAmountCell";
+export * from "./ValueCell";
 export * from "./GroupCell";
 export * from "./ActionCell";
+export * from "./CheckboxCell";

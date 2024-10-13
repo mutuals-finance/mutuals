@@ -24,7 +24,7 @@ export default function PoolCardLogo({
       bg={"alpha.4"}
       boxSize={boxSize}
       p={p}
-      align={"stretch"}
+      alignItems={"stretch"}
       justify={"stretch"}
     >
       <>
