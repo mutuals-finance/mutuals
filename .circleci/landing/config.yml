@@ -22,7 +22,7 @@ workflows:
     jobs:
       - lint
       - test
-      - deploy_preview_landing: &base
+      - deploy: &base
           vercel-project-id: $VERCEL_PROJECT_ID_LANDING
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
@@ -33,7 +33,7 @@ workflows:
           filters:
             branches:
               ignore: /main/
-      - deploy_production_landing:
+      - deploy:
           <<: *base
           vercel-environment: production
           filters:
