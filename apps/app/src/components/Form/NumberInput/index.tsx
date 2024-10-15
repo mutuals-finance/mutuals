@@ -6,15 +6,19 @@ import {
   NumberInputProps,
   NumberInputRoot,
 } from "@mutuals/ui";
-import React from "react";
+import React, { forwardRef } from "react";
 
-function InnerNumberInput(props?: NumberInputProps) {
-  return (
-    <NumberInputRoot {...props}>
-      <NumberInputField />
-    </NumberInputRoot>
-  );
-}
+const InnerNumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
+  (props, ref) => {
+    return (
+      <NumberInputRoot ref={ref} {...props}>
+        <NumberInputField />
+      </NumberInputRoot>
+    );
+  },
+);
+
+InnerNumberInput.displayName = "InputNumberInput";
 
 export default function NumberInput({
   id = "",
@@ -39,11 +43,19 @@ export default function NumberInput({
                 id={id}
                 size={size}
                 {...inputProps}
-                {...field}
+                value={field.value}
+                onValueChange={({ value }) => {
+                  field.onChange(value);
+                }}
               />
             </InputBase>
           ) : (
-            <InnerNumberInput id={id} size={size} {...inputProps} {...field} />
+            <InnerNumberInput
+              id={id}
+              size={size}
+              {...inputProps}
+              onBlur={field.onBlur}
+            />
           )}
         </>
       )}

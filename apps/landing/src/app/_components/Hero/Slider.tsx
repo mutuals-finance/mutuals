@@ -49,7 +49,7 @@ export default function HomeHeroSlider({
     >
       <MotionBox
         position="relative"
-        minW={{ base: "160vh", md: "150%", lg: "133%" }}
+        minW={{ base: "180vh", md: "150%", lg: "133%" }}
         mt={-1 * animSpace}
         scale={0.92}
         animate={animLabel}

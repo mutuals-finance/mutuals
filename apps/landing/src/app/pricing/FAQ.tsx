@@ -2,7 +2,6 @@ import {
   AccordionItem,
   Box,
   Container,
-  Text,
   AccordionItemContent,
   AccordionItemTrigger,
   AccordionRoot,
@@ -10,7 +9,6 @@ import {
 } from "@mutuals/ui";
 
 import SectionHeader from "@/components/SectionHeader";
-import HeaderObserverChange from "@/providers/HeaderObserver/Change";
 import faqItems from "@/app/pricing/faq-items";
 
 export default function PricingFAQ() {
@@ -24,7 +22,7 @@ export default function PricingFAQ() {
         <AccordionRoot multiple size={"lg"}>
           {faqItems.map(({ title, children, ...props }, i) => (
             <AccordionItem key={i} value={title} {...props}>
-              <AccordionItemTrigger>
+              <AccordionItemTrigger py={"6"}>
                 <Heading as={"h5"} size="xl">
                   {title}
                 </Heading>

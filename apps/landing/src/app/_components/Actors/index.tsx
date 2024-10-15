@@ -14,8 +14,8 @@ export default function HomeActors() {
 
   return (
     <MotionConfig transition={{ type: "spring", mass: 0.5 }}>
-      <Box my="48">
-        <Container maxW="7xl" px={{ base: "3", lg: "6" }}>
+      <Box my="32">
+        <Container maxW="7xl">
           <SectionHeader label={"Explore Mutuals"}>
             Versatile Solutions For Everyone
           </SectionHeader>

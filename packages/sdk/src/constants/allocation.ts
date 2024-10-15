@@ -10,7 +10,7 @@ export const DEFAULT_ALLOCATION_NODE: Record<
 > = {
   [AllocationType.Fixed]: {
     node: {
-      value: 0,
+      value: 1,
       allocationType: AllocationType.Fixed,
       recipient: "0x",
     },
@@ -31,7 +31,7 @@ export const DEFAULT_ALLOCATION_NODE: Record<
   }),
   [AllocationType.FixedPrioritized]: (allocationType) => ({
     node: {
-      value: 0,
+      value: 1,
       allocationType: AllocationType.FixedPrioritized,
     },
     children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
@@ -46,7 +46,7 @@ export const DEFAULT_ALLOCATION_NODE: Record<
   }),
   [AllocationType.FixedTimed]: (allocationType) => ({
     node: {
-      value: 0,
+      value: 1,
       allocationType: AllocationType.FixedTimed,
       timespan: 0,
     },

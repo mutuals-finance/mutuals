@@ -53,20 +53,23 @@ const payments = [
 export default function HomePayments() {
   const payment = payments[0] as (typeof payments)[0];
   return (
-    <Box mb="48" mt="12" py={"48"} layerStyle="fill.muted">
+    <Box mb="32" mt="12" py={"32"} layerStyle="fill.muted">
       <Container maxW="6xl">
         <SectionHeader label={"Flexible Setup"}>
           Payments For Every Use Case
         </SectionHeader>
-        <AspectRatio ratio={7 / 3}>
-          <Stack direction={"row"} flex={"1"} gap={"3"}>
+        <AspectRatio ratio={{ base: 4 / 3, md: 7 / 3 }}>
+          <Stack direction={"row"} flex={"1"} gap={{ base: "1", md: "3" }}>
             {payments.map(({ bgImage, image, tag, isActive, ...payment }) => (
               <Stack
                 key={tag}
-                flex={isActive ? "1" : "0 12.5%"}
+                flex={{
+                  base: isActive ? "1" : "0 2%",
+                  md: isActive ? "1" : "0 12.5%",
+                }}
                 align={"center"}
                 justify={"center"}
-                p={"12"}
+                p={{ base: "2", md: "12" }}
                 position={"relative"}
                 rounded={"lg"}
                 overflow={"hidden"}
@@ -104,7 +107,6 @@ export default function HomePayments() {
               flex={isActive ? "1" : "0 20%"}
               rounded={"lg"}
               h={"0.2rem"}
-              bg={"bg.3"}
             ></Box>
           ))}
         </Stack>
@@ -113,17 +115,19 @@ export default function HomePayments() {
           <Box>
             <Icon
               as={IoArrowUpCircle}
-              fontSize={"5xl"}
+              fontSize={"6xl"}
               transform={"rotate(45deg)"}
             />
           </Box>
 
           <Stack gap={"3"}>
-            <Heading as="h3" size="xl" mt={"1"}>
+            <Heading as="h3" size={"3xl"}>
               {payment.tag}
             </Heading>
 
-            <Text fontSize={"lg"}>{payment.description}</Text>
+            <Text fontSize={"lg"} variant={"muted"}>
+              {payment.description}
+            </Text>
           </Stack>
         </Stack>
         {/*

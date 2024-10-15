@@ -38,7 +38,7 @@ const values = [
 ];
 export default function HomeValue() {
   return (
-    <Box my="48">
+    <Box my="32">
       <Container maxW="7xl">
         <SectionHeader>Financial management for on-chain teams</SectionHeader>
 

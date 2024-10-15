@@ -81,7 +81,7 @@ export type AllocationBase = {
 };
 
 export type AllocationItemBase = {
-  recipient: Address;
+  recipient: string;
 } & AllocationBase;
 
 export type AllocationFixed = {

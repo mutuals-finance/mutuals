@@ -22,23 +22,25 @@ import { IoAddCircle, IoEllipsisHorizontal } from "react-icons/io5";
 import AllocationProvider from "@/features/PoolAdd/AllocationProvider";
 import { useAllocationData } from "@/features/PoolAdd/Allocations/useAllocationData";
 
-export interface PoolAddAllocationProps extends UseFormReturn<PoolAddData> {}
+export type PoolAddAllocationsProps = PoolAddAllocationsCardProps;
 
-export default function PoolAddAllocations(_: PoolAddAllocationProps) {
+export default function PoolAddAllocations(props?: PoolAddAllocationsProps) {
   return (
     <AllocationProvider>
-      <PoolAddAllocationsCard />
+      <PoolAddAllocationsCard {...props} />
     </AllocationProvider>
   );
 }
 
-function PoolAddAllocationsCard() {
+type PoolAddAllocationsCardProps = Card.RootProps;
+
+function PoolAddAllocationsCard(props?: PoolAddAllocationsCardProps) {
   const { append, appendLast, defaultItems } = useAllocationData();
   const { control } = useFormContext<PoolAddData>();
   const data = useWatch({ defaultValue: [], control, name: "allocations" });
 
   return (
-    <Card.Root>
+    <Card.Root {...props}>
       <Card.Body>
         <FormGroup
           title={`Allocations`}
@@ -50,7 +52,7 @@ function PoolAddAllocationsCard() {
       <Card.Footer>
         <Group w={"full"}>
           <Button
-            variant="subtle"
+            variant="outline"
             flex={"1"}
             onClick={() => appendLast()}
             roundedRight={0}
@@ -60,7 +62,7 @@ function PoolAddAllocationsCard() {
           <MenuRoot>
             <MenuTrigger asChild>
               <IconButton
-                variant="subtle"
+                variant="outline"
                 aria-label={"Select allocation to add"}
                 roundedLeft={0}
               >

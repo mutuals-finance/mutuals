@@ -64,7 +64,7 @@ export const useDefaultAllocation = () => {
   const updateLastItem = useCallback(
     (value: AllocationNode) => {
       if (
-        //isItem(value.node) &&
+        isItem(value.node) &&
         value.node.allocationType != lastItem.node.allocationType
       ) {
         setLastItem(value as AllocationItemNode);

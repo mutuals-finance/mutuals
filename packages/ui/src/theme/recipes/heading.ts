@@ -13,5 +13,5 @@ export default defineRecipe({
       },
     },
   },
-  base: { fontWeight: "500" },
+  base: { fontWeight: "medium" },
 });

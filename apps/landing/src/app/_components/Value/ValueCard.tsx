@@ -46,7 +46,7 @@ export default function ValueCard({
         </Card.Header>
       )}
 
-      <Card.Body p={"0"}>
+      <Card.Body p={"0"} alignItems={{ base: "center", lg: "flex-start" }}>
         <Heading as="h3" mb="3" variant={"subtag"} size={"xs"}>
           {heading}
         </Heading>

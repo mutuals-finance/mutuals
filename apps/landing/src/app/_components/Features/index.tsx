@@ -5,7 +5,7 @@ import FeatureCard from "@/app/_components/Features/FeatureCard";
 
 export default function HomeFeatures() {
   return (
-    <Box my="48">
+    <Box my="32">
       <Container maxW="6xl" position={"relative"}>
         <SectionHeader label={"Embeddable Features"}>
           A Few More Things You’re Going To Love

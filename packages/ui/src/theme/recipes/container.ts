@@ -15,6 +15,6 @@ export default defineRecipe({
     },
   },
   base: {
-    px: { base: "3", lg: "12" },
+    px: { base: "6", lg: "12" },
   },
 });

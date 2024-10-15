@@ -24,7 +24,7 @@ const networks = [
 
 export default function HomeChains() {
   return (
-    <Box mt={"48"} mb={"6"}>
+    <Box mt={"32"} mb={"6"}>
       <Container maxW="7xl">
         <Heading as={"h2"} variant={"subtag"} mb={"6"} fontSize={"xs"}>
           Available on {networks.length - 1}+ networks

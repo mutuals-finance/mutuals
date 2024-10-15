@@ -18,10 +18,11 @@ export function ValueCell({ id: rootId, ...context }: ValueCellProps) {
       id={id}
       wrapperHidden={true}
       inputProps={{
+        allowMouseWheel: true,
         step: isFixedAllocation ? 1 : 0.01,
-        formatOptions: isFixedAllocation
-          ? { style: "decimal", unitDisplay: "long" }
-          : { style: "percent" },
+        formatOptions: isFixedAllocation ? {} : { style: "percent" },
+        defaultValue: "0",
+        min: 0,
       }}
       size={"sm"}
       w="full"

@@ -1,6 +1,6 @@
 import React from "react";
 import { AllocationTableCellProps } from "@/features/PoolAdd/types";
-import { Box, Checkbox, HStack, Separator, Heading } from "@mutuals/ui";
+import { Box, HStack, Separator, Heading } from "@mutuals/ui";
 import Input from "@/components/Form/Input";
 import { getNodeIdFromCellContext } from "@/features/PoolAdd/AllocationTable/utils";
 import { useAllocationUtils } from "@mutuals/sdk-react";
@@ -34,23 +34,8 @@ export function CheckboxCell({ id: rootId, ...context }: CheckboxCellProps) {
         </Box>
       ))}
 
-      <Checkbox
-        {...{
-          checked: row.getIsSelected(),
-          disabled: !row.getCanSelect(),
-          indeterminate: row.getIsSomeSelected(),
-          onChange: row.getToggleSelectedHandler(),
-        }}
-        ml={"2"}
-        mr={"6"}
-      />
-
       {!isGroup(row.original.node) ? (
-        <Input
-          placeholder={"0x0000...0000"}
-          id={`${id}.recipient`}
-          size={"sm"}
-        />
+        <Input placeholder={"0x000...000"} id={`${id}.recipient`} size={"sm"} />
       ) : (
         <Box>
           <Heading variant={"subtag"} size={"xs"}>

@@ -5,6 +5,7 @@ import "keen-slider/keen-slider.min.css";
 import Providers from "@/providers";
 import { siteDescription, siteName, siteUrl } from "@/config";
 import { Metadata } from "next";
+import fonts from "@mutuals/ui/font";
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +26,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${fonts.Inter.variable} ${fonts.GeneralSans.variable}`}
+    >
       <body>
         <Providers>{children}</Providers>
       </body>

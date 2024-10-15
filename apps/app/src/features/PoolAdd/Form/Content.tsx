@@ -19,33 +19,5 @@ export default function PoolAddFormContent({
   onModalClose,
   ...props
 }: PoolAddFormContentProps) {
-  const { getValues } = props;
-  const data = getValues();
-
-  return (
-    <>
-      {/*
-      <PoolAddModal data={data} open={isModalOpen} onClose={onModalClose} />
-*/}
-
-      <FormGroup>
-        <FileUpload label="Image" id="image" inputProps={{ maxW: "2xs" }} />
-
-        <Input
-          label="Name"
-          id="name"
-          validation={{ required: "Please enter a name" }}
-        />
-        <TextArea label="Description" id="description" />
-      </FormGroup>
-
-      <Allocations {...props} />
-
-      <Stack direction="row">
-        <Button size="lg" type="submit">
-          Create Pool
-        </Button>
-      </Stack>
-    </>
-  );
+  return <></>;
 }
