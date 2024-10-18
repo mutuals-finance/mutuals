@@ -40,8 +40,11 @@ export default function HomeActors() {
                 "No need to worry about distributing token payments",
                 "Automate income streams and track project earnings",
               ]}
+              iconBoxProps={{
+                bg: "gray.50",
+              }}
               iconProps={{
-                color: "gray.50/20",
+                color: "gray.900",
               }}
               buttonProps={{ colorPalette: "orange" }}
               onHoverStart={() => setActive("owners")}
@@ -57,7 +60,13 @@ export default function HomeActors() {
                 "Clean and easy-to-use interface for analyzing project earnings",
               ]}
               image={partnersImage}
-              bg={{ base: "blue.300", _dark: "blue.950" }}
+              bg={{ base: "blue.400", _dark: "blue.700" }}
+              iconBoxProps={{
+                bg: "gray.900",
+              }}
+              iconProps={{
+                color: "gray.50",
+              }}
               onHoverStart={() => setActive("partners")}
             />
           </Stack>

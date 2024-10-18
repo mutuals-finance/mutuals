@@ -13,10 +13,10 @@ import {
   MotionBox,
   List,
   Heading,
-  Box,
+  FlexProps,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
-import { IoCheckboxOutline, IoArrowUpCircle } from "react-icons/io5";
+import { IoCheckboxOutline, IoArrowUp } from "react-icons/io5";
 import { AnimatePresence, EventInfo } from "framer-motion";
 
 export interface ActorCardProps extends Card.RootProps {
@@ -25,6 +25,7 @@ export interface ActorCardProps extends Card.RootProps {
   benefits?: string[];
   image?: ImageProps["src"];
   iconProps?: IconProps;
+  iconBoxProps?: FlexProps;
   buttonProps?: ButtonProps;
   benefitsProps?: List.RootProps;
   animate?: "grow" | "shrink";
@@ -38,6 +39,7 @@ export default function ActorCard({
   benefits,
   animate,
   iconProps,
+  iconBoxProps,
   buttonProps,
   benefitsProps,
   onHoverStart,
@@ -85,7 +87,7 @@ export default function ActorCard({
             variants={useBreakpointValue({
               lg: {
                 shrink: {
-                  fontSize: "var(--chakra-font-sizes-4xl)",
+                  fontSize: "var(--chakra-font-sizes-5xl)",
                 },
                 grow: {
                   fontSize: "var(--chakra-font-sizes-6xl)",
@@ -101,21 +103,31 @@ export default function ActorCard({
             >
               <Stack
                 justifyContent={{ base: "space-between", lg: "unset" }}
+                alignItems={"flex-start"}
                 direction={{ base: "row", lg: "column" }}
                 gap={"3"}
               >
                 <Heading fontSize={"inherit"} mt={{ base: "-1", lg: "unset" }}>
                   {title}
                 </Heading>
-                <Icon
-                  fontSize={{ base: "1.2em", lg: "inherit" }}
-                  asChild
-                  transform={"rotate(45deg)"}
+                <Flex
                   order={{ lg: "-1" }}
-                  {...iconProps}
+                  w={{ base: "1em", lg: "0.8em" }}
+                  h={{ base: "1em", lg: "0.8em" }}
+                  rounded={"md"}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  {...iconBoxProps}
                 >
-                  <IoArrowUpCircle />
-                </Icon>
+                  <Icon
+                    asChild
+                    transform={"rotate(45deg)"}
+                    fontSize={{ base: "0.6em", lg: "0.4em" }}
+                    {...iconProps}
+                  >
+                    <IoArrowUp />
+                  </Icon>
+                </Flex>
               </Stack>
             </Card.Header>
           </MotionBox>
@@ -129,9 +141,7 @@ export default function ActorCard({
             pb={{ base: "6", lg: "6" }}
             justifyContent={"space-between"}
           >
-            <Text fontSize="lg" maxW={{ sm: "xs" }}>
-              {description}
-            </Text>
+            <Text maxW={{ sm: "xs" }}>{description}</Text>
 
             {benefits && (
               <AnimatePresence>
@@ -144,7 +154,7 @@ export default function ActorCard({
                   >
                     <List.Root
                       gap={"1"}
-                      color={"fg/60"}
+                      color={"fg/50"}
                       variant="plain"
                       {...benefitsProps}
                     >

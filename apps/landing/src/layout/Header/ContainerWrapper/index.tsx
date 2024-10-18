@@ -26,11 +26,13 @@ export default function HeaderContainerWrapper({
   const [isHidden, setHidden] = useState(false);
   const [prevScroll, setPrevScroll] = useState<number | null>(null);
 
+  const transparentThreshold = 1;
+
   const onUpdate = useCallback(
     (latest: number, prev: number | null) => {
-      if (!isTransparent && latest <= 100) {
+      if (!isTransparent && latest <= transparentThreshold) {
         setTransparent(true);
-      } else if (isTransparent && latest > 100) {
+      } else if (isTransparent && latest > transparentThreshold) {
         setTransparent(false);
       }
 
@@ -53,46 +55,41 @@ export default function HeaderContainerWrapper({
   const { headerTheme } = useHeaderObserver();
 
   return (
-    <MotionConfig
+    <MotionBox
+      display={"flex"}
+      position="fixed"
+      top="0"
+      left="0"
+      zIndex={10}
+      w="full"
+      bgColor={isTransparent ? "transparent" : "bg"}
+      borderBottom={"1px solid"}
+      borderColor={isTransparent ? "transparent" : "border"}
+      animate={isHidden ? "invisible" : "visible"}
+      variants={variants.visibility}
       transition={{
         ease: "easeInOut",
         duration: 0.2,
       }}
     >
-      <MotionBox
-        display={"flex"}
-        position="fixed"
-        top="0"
-        left="0"
-        zIndex={10}
-        w="full"
-        backdropFilter="auto"
-        backdropBlur="sm"
-        bgColor={"bg"}
-        borderBottom={"1px solid"}
-        borderColor={"border"}
-        animate={isHidden ? "invisible" : "visible"}
-        variants={variants.visibility}
+      <Box
+        flex={"1"}
+        display="flex"
+        alignItems="stretch"
+        justifyContent="stretch"
+        className={headerTheme}
       >
-        <Box
-          flex={"1"}
-          display="flex"
-          alignItems="stretch"
-          justifyContent="stretch"
-          className={headerTheme}
+        <Container
+          as={HStack}
+          size="2xl"
+          alignItems="center"
+          position="relative"
+          gap="12"
+          px={0}
         >
-          <Container
-            as={HStack}
-            size="2xl"
-            alignItems="center"
-            position="relative"
-            gap="12"
-            px={0}
-          >
-            {children}
-          </Container>
-        </Box>
-      </MotionBox>
-    </MotionConfig>
+          {children}
+        </Container>
+      </Box>
+    </MotionBox>
   );
 }
