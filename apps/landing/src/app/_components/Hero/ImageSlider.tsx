@@ -4,19 +4,15 @@ import KeenSlider, {
   type KeenSliderProps,
 } from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
-import { Stack, Card, Heading } from "@mutuals/ui";
-import NextImage, { type ImageProps } from "next/image";
+import NextImage from "next/image";
 import aboutImage from "@/assets/hero.png";
 
 const animation = { duration: 7 * 10000, easing: (t: number) => t };
 
-interface HeroImageSliderProps extends KeenSliderProps {
-  networks: Array<{ name: string; icon: ImageProps["src"] }>;
-}
+interface HeroImageSliderProps extends KeenSliderProps {}
 
 export default function HeroImageSlider({
   options,
-  networks,
   ...props
 }: HeroImageSliderProps) {
   return (
