@@ -7,7 +7,7 @@ import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
 import NextImage from "next/image";
 import aboutImage from "@/assets/hero.png";
 
-const animation = { duration: 7 * 10000, easing: (t: number) => t };
+const animation = { duration: 12 * 10000, easing: (t: number) => t };
 
 interface HeroImageSliderProps extends KeenSliderProps {}
 
@@ -22,10 +22,10 @@ export default function HeroImageSlider({
         drag: false,
         breakpoints: {
           "(min-width: 800px)": {
-            slides: { perView: 2, spacing: 12 },
+            slides: { perView: 2, spacing: 32 },
           },
           "(min-width: 1200px)": {
-            slides: { perView: 2, spacing: 12 },
+            slides: { perView: 2, spacing: 64 },
           },
         },
         slides: { perView: 1, spacing: 12 },

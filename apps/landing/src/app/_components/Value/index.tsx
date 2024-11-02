@@ -1,14 +1,17 @@
 "use client";
 
-import { Box, Container, SimpleGrid } from "@mutuals/ui";
+import { Box, Button, Container, SimpleGrid, Stack } from "@mutuals/ui";
 import SectionHeader from "@/components/SectionHeader";
 import {
   IoCodeWorkingOutline,
+  IoPlayOutline,
   IoTimerOutline,
   IoTrendingUpOutline,
 } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
 import ValueCard from "./ValueCard";
+import NextImage from "next/image";
+import transitionImage from "@/assets/bg-hero-bottom-right.png";
 
 const values = [
   {
@@ -29,23 +32,28 @@ const values = [
       "Mutuals integrates with your clients systems and connects with a range of data sources",
     icon: IoTimerOutline,
   },
-  {
-    heading: "Accelerate partnerships",
-    description:
-      "Mutuals integrates with your clients systems and connects with a range of data sources",
-    icon: IoTrendingUpOutline,
-  },
 ];
 export default function HomeValue() {
   return (
-    <Box my="32">
+    <Box my={"32"} py={"32"} position={"relative"}>
+      <NextImage
+        src={transitionImage}
+        alt={"Mutuals values"}
+        fill={true}
+        style={{
+          objectFit: "contain",
+          objectPosition: "bottom right",
+        }}
+      />
       <Container maxW="7xl">
-        <SectionHeader>Financial management for on-chain teams</SectionHeader>
+        <SectionHeader label={"Explore Mutuals"}>
+          Financial management for on-chain teams
+        </SectionHeader>
 
         <SimpleGrid
           columns={{
-            base: 2,
-            lg: 4,
+            base: 1,
+            lg: 3,
           }}
           gap={{ base: "6", lg: "12" }}
         >
@@ -53,6 +61,10 @@ export default function HomeValue() {
             <ValueCard key={value.heading} {...value} />
           ))}
         </SimpleGrid>
+
+        <Stack align={"center"} mt={"12"}>
+          <Button size={"lg"}>Explore the Platform</Button>
+        </Stack>
       </Container>
     </Box>
   );

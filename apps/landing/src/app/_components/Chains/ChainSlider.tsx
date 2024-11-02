@@ -4,7 +4,7 @@ import KeenSlider, {
   type KeenSliderProps,
 } from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
-import { Stack, Card, Heading } from "@mutuals/ui";
+import { Stack, Text, Heading } from "@mutuals/ui";
 import NextImage, { type ImageProps } from "next/image";
 
 const animation = { duration: 4 * 10000, easing: (t: number) => t };
@@ -54,9 +54,9 @@ export default function ChainSlider({
               height={"64"}
               style={{ objectFit: "cover" }}
             />
-            <Heading as={"h4"} size={"xs"}>
+            <Text as={"h4"} fontSize={"xs"}>
               {network.name}
-            </Heading>
+            </Text>
           </Stack>
         </KeenSliderSlide>
       ))}

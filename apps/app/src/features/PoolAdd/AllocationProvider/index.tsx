@@ -4,17 +4,21 @@ import React, { createContext, PropsWithChildren, useContext } from "react";
 import {
   AllocationItemNode,
   AllocationNode,
+  DefaultAllocationItems,
   useDefaultAllocation,
 } from "@mutuals/sdk-react";
 
 type AllocationContextType = {
-  items: Record<string, AllocationNode>;
+  items?: DefaultAllocationItems;
   updateLastItem: (value: AllocationNode) => void;
   lastItem: AllocationNode | null;
 };
 
 const AllocationContext = createContext<AllocationContextType>({
-  items: {},
+  items: {
+    Percentage: { Item: {}, Group: {} },
+    Fixed: { Item: {}, Group: {} },
+  },
   updateLastItem: () => {},
   lastItem: null,
 });

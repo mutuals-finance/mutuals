@@ -32,4 +32,5 @@ export {
   useSetPoolAllocation,
   useAllocationUtils,
   useDefaultAllocation,
+  type DefaultAllocationItems,
 } from "./hooks";

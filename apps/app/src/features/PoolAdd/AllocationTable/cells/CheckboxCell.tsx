@@ -35,7 +35,11 @@ export function CheckboxCell({ id: rootId, ...context }: CheckboxCellProps) {
       ))}
 
       {!isGroup(row.original.node) ? (
-        <Input placeholder={"0x000...000"} id={`${id}.recipient`} size={"sm"} />
+        <Input
+          placeholder={"0x0000...0000"}
+          id={`${id}.recipient`}
+          size={"sm"}
+        />
       ) : (
         <Box>
           <Heading variant={"subtag"} size={"xs"}>

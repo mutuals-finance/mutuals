@@ -1,8 +1,8 @@
 import { CellContext } from "@tanstack/react-table";
-import { AllocationDataItem } from "@/features/PoolAdd/types";
+import { AllocationNode } from "@mutuals/sdk-react";
 
 export const getIdPartsFromCellContext = (
-  { column, row }: CellContext<AllocationDataItem, unknown>,
+  { column, row }: CellContext<AllocationNode, unknown>,
   id = "",
 ) => [
   ...(id == "" ? [] : [id]),
@@ -17,17 +17,12 @@ export const getIdPartsFromCellContext = (
 ];
 
 export const getNodeIdFromCellContext = (
-  context: CellContext<AllocationDataItem, unknown>,
+  context: CellContext<AllocationNode, unknown>,
   id = "",
-) => {
-  const parentRows = context.row.getParentRows();
-  const parts = getIdPartsFromCellContext(context, id);
-  console.log("parts", { parentRows, context, parts });
-  return parts.join(".");
-};
+) => getIdPartsFromCellContext(context, id).join(".");
 
 export const getParentIdFromCellContext = (
-  context: CellContext<AllocationDataItem, unknown>,
+  context: CellContext<AllocationNode, unknown>,
   id = "",
 ) => {
   const parts = getIdPartsFromCellContext(context, id);

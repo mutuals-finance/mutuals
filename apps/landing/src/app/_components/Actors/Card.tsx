@@ -22,7 +22,7 @@ import { AnimatePresence, EventInfo } from "framer-motion";
 export interface ActorCardProps extends Card.RootProps {
   title: string;
   description: string;
-  benefits?: string[];
+  benefit?: string;
   image?: ImageProps["src"];
   iconProps?: IconProps;
   iconBoxProps?: FlexProps;
@@ -36,7 +36,7 @@ export interface ActorCardProps extends Card.RootProps {
 export default function ActorCard({
   title,
   description,
-  benefits,
+  benefit,
   animate,
   iconProps,
   iconBoxProps,
@@ -71,63 +71,58 @@ export default function ActorCard({
       onHoverEnd={onHoverEnd}
     >
       <Card.Root
-        variant={"subtle"}
-        overflow="hidden"
         size={"lg"}
         w={"full"}
         direction={{ base: "column", sm: "row" }}
         gap={"6"}
-        minH={{ lg: "2xl" }}
+        minH={{ lg: "lg" }}
         {...props}
       >
         <Stack flex={"1"} gap={"0"} maxW={{ sm: "xl" }}>
           <MotionBox
-            fontSize={"4xl"}
+            fontSize={"3xl"}
             animate={animate}
             variants={useBreakpointValue({
               lg: {
                 shrink: {
-                  fontSize: "var(--chakra-font-sizes-5xl)",
+                  fontSize: "var(--chakra-font-sizes-xl)",
                 },
                 grow: {
-                  fontSize: "var(--chakra-font-sizes-6xl)",
+                  fontSize: "var(--chakra-font-sizes-3xl)",
                 },
               },
             })}
           >
-            <Card.Header
-              as={Stack}
-              px={{ base: "6", lg: "12" }}
-              pt={{ base: "6", lg: "12" }}
-              pb={"0"}
-            >
-              <Stack
-                justifyContent={{ base: "space-between", lg: "unset" }}
-                alignItems={"flex-start"}
-                direction={{ base: "row", lg: "column" }}
-                gap={"3"}
-              >
-                <Heading fontSize={"inherit"} mt={{ base: "-1", lg: "unset" }}>
-                  {title}
-                </Heading>
+            <Card.Header>
+              <Stack direction={"column"} gap={"3"}>
                 <Flex
-                  order={{ lg: "-1" }}
-                  w={{ base: "1em", lg: "0.8em" }}
-                  h={{ base: "1em", lg: "0.8em" }}
+                  hideBelow="md"
+                  w={"1.6em"}
+                  h={"1.6em"}
                   rounded={"md"}
                   alignItems={"center"}
                   justifyContent={"center"}
+                  bg={"bg.inverted"}
+                  color={"fg.inverted"}
                   {...iconBoxProps}
                 >
                   <Icon
                     asChild
                     transform={"rotate(45deg)"}
-                    fontSize={{ base: "0.6em", lg: "0.4em" }}
+                    fontSize={{ base: "0.8em", lg: "0.8em" }}
                     {...iconProps}
                   >
                     <IoArrowUp />
                   </Icon>
                 </Flex>
+
+                <Text fontSize="xs" mt="3" variant="subtag">
+                  {description}
+                </Text>
+
+                <Heading maxW={"sm"} fontSize={"inherit"}>
+                  {title}
+                </Heading>
               </Stack>
             </Card.Header>
           </MotionBox>
@@ -136,14 +131,9 @@ export default function ActorCard({
             as={Stack}
             flex={"1"}
             gap={"6"}
-            px={{ base: "6", lg: "12" }}
-            pt={{ base: "3", lg: "3" }}
-            pb={{ base: "6", lg: "6" }}
-            justifyContent={"space-between"}
+            justifyContent={"flex-end"}
           >
-            <Text maxW={{ sm: "xs" }}>{description}</Text>
-
-            {benefits && (
+            {benefit && (
               <AnimatePresence>
                 {isGrown && (
                   <MotionBox
@@ -152,38 +142,21 @@ export default function ActorCard({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <List.Root
-                      gap={"1"}
-                      color={"fg/50"}
-                      variant="plain"
-                      {...benefitsProps}
-                    >
-                      {benefits?.map((b) => (
-                        <List.Item key={b} as={Flex} alignItems={"flex-start"}>
-                          <List.Indicator asChild w="5" h={"5"}>
-                            <IoCheckboxOutline />
-                          </List.Indicator>
-
-                          <Text fontWeight="medium">{b}</Text>
-                        </List.Item>
-                      ))}
-                    </List.Root>
+                    <Text variant={"muted"}>{benefit}</Text>
                   </MotionBox>
                 )}
               </AnimatePresence>
             )}
           </Card.Body>
 
-          <Card.Footer
-            as={Stack}
-            gap={"6"}
-            alignItems={"flex-start"}
-            px={{ base: "6", lg: "12" }}
-            pb={{ base: "6", lg: "12" }}
-            pt={"0"}
-          >
-            <Button w={{ base: "full", lg: "auto" }} {...buttonProps}>
-              Get Started For Free
+          <Card.Footer as={Stack} gap={"6"} alignItems={"flex-start"}>
+            <Button
+              size="lg"
+              w={{ base: "full", lg: "auto" }}
+              variant={"subtle"}
+              {...buttonProps}
+            >
+              Learn More
             </Button>
           </Card.Footer>
         </Stack>
@@ -195,9 +168,10 @@ export default function ActorCard({
                 w={"full"}
                 order={"-1"}
                 maxW={{ base: "full", sm: "2xs", lg: "xs" }}
-                top={{ lg: "0" }}
-                right={{ lg: "0" }}
-                h={{ base: "sm", lg: "full" }}
+                right={{ lg: "6" }}
+                top={{ lg: "6" }}
+                bottom={{ lg: "6" }}
+                h={{ base: "sm", lg: "unset" }}
                 rounded={"lg"}
                 overflow={"hidden"}
                 initial={{ opacity: 0 }}
@@ -209,8 +183,8 @@ export default function ActorCard({
                   alt={"Mutuals for " + title}
                   fill={true}
                   style={{
-                    objectFit: isLargerLg ? "contain" : "cover",
-                    objectPosition: isLargerLg ? "top right" : "center top",
+                    objectFit: isLargerLg ? "cover" : "cover",
+                    objectPosition: isLargerLg ? "center" : "center top",
                   }}
                 />
               </MotionBox>

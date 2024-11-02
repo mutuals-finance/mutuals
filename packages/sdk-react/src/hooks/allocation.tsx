@@ -10,6 +10,11 @@ import { AllocationType } from "@mutuals/sdk";
 import { CreateDefaultAllocationFn } from "@mutuals/sdk/types";
 import { useCallback, useMemo, useState } from "react";
 
+export type DefaultAllocationItems = Record<
+  "Percentage" | "Fixed",
+  Record<"Item" | "Group", Record<string, AllocationNode>>
+>;
+
 export const useAllocationUtils = () => {
   return allocationUtils;
 };
@@ -37,26 +42,34 @@ export const useDefaultAllocation = () => {
     )(buildAllocationType);
   };
 
-  const items: Record<string, AllocationNode> = useMemo(
+  const items: DefaultAllocationItems = useMemo(
     () => ({
-      "Default Item (Percentage)": buildItem(AllocationType.Percentage),
-      "Timed Group (Percentage)": buildGroup(
-        AllocationType.PercentageTimed,
-        lastItem.node.allocationType,
-      ),
-      "Prioritized Group (Percentage)": buildGroup(
-        AllocationType.PercentagePrioritized,
-        lastItem.node.allocationType,
-      ),
-      "Default Item (Fixed)": buildItem(AllocationType.Fixed),
-      "Timed Group (Fixed)": buildGroup(
-        AllocationType.FixedTimed,
-        lastItem.node.allocationType,
-      ),
-      "Prioritized Group (Fixed)": buildGroup(
-        AllocationType.FixedPrioritized,
-        lastItem.node.allocationType,
-      ),
+      Percentage: {
+        Item: { "Default Recipient": buildItem(AllocationType.Percentage) },
+        Group: {
+          "Timed Group": buildGroup(
+            AllocationType.PercentageTimed,
+            lastItem.node.allocationType,
+          ),
+          "Prioritized Group": buildGroup(
+            AllocationType.PercentagePrioritized,
+            lastItem.node.allocationType,
+          ),
+        },
+      },
+      Fixed: {
+        Item: { "Default Recipient": buildItem(AllocationType.Fixed) },
+        Group: {
+          "Timed Group": buildGroup(
+            AllocationType.FixedTimed,
+            lastItem.node.allocationType,
+          ),
+          "Prioritized Group": buildGroup(
+            AllocationType.FixedPrioritized,
+            lastItem.node.allocationType,
+          ),
+        },
+      },
     }),
     [lastItem],
   );

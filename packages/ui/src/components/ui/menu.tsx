@@ -61,10 +61,13 @@ export const MenuTrigger = (props: ChakraMenu.TriggerProps) => {
   return <ChakraMenu.Trigger {...props} />;
 };
 
-export const MenuItemGroup = (props: ChakraMenu.ItemGroupProps) => {
+export const MenuItemGroup = forwardRef<
+  HTMLDivElement,
+  ChakraMenu.ItemGroupProps
+>(function MenuItemGroup(props, ref) {
   const { title, children, ...rest } = props;
   return (
-    <ChakraMenu.ItemGroup {...rest}>
+    <ChakraMenu.ItemGroup ref={ref} {...rest}>
       {title && (
         <ChakraMenu.ItemGroupLabel userSelect="none">
           {title}
@@ -73,7 +76,7 @@ export const MenuItemGroup = (props: ChakraMenu.ItemGroupProps) => {
       {children}
     </ChakraMenu.ItemGroup>
   );
-};
+});
 
 export const MenuRoot = ChakraMenu.Root;
 export const MenuSeparator = ChakraMenu.Separator;

@@ -1,4 +1,4 @@
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { useCallback } from "react";
 import { AllocationNode } from "@mutuals/sdk-react";
 import { useAllocation } from "@/features/PoolAdd/AllocationProvider";
@@ -15,9 +15,10 @@ export function useAllocationData(
 ) {
   const id = _id as "allocations";
 
-  const { getValues, setValue } = useFormContext<PoolAddData>();
+  const { control, setValue, getValues } = useFormContext<PoolAddData>();
 
   const values = getValues(id);
+  const data = useWatch({ name: id, control });
 
   const { items: defaultItems, updateLastItem, lastItem } = useAllocation();
 
@@ -28,10 +29,10 @@ export function useAllocationData(
         values.filter((_, i) => i !== index),
       );
     },
-    [values, setValue, id],
+    [id, values, setValue],
   );
 
-  const append = useCallback(
+  const insert = useCallback(
     (props?: { index?: number; value?: AllocationNode }) => {
       const value = props?.value ?? lastItem;
       const index = props?.index ?? values.length;
@@ -54,14 +55,15 @@ export function useAllocationData(
     [lastItem, values, updateLastItem, setValue, id],
   );
 
-  const appendLast = useCallback(
-    (props?: { index?: number }) => append(props),
-    [append],
+  const insertCached = useCallback(
+    (props?: { index?: number }) => insert(props),
+    [insert],
   );
 
   return {
-    append,
-    appendLast,
+    insert,
+    insertCached,
+    data,
     remove,
     defaultItems,
     lastItem,

@@ -13,23 +13,9 @@ export default function ValueCard({
   ...props
 }: ValueCardProps) {
   return (
-    <Card.Root
-      variant="subtle"
-      bg="transparent"
-      borderLeftWidth={{ lg: "2px" }}
-      borderColor="border"
-      rounded={"none"}
-      pl={{ lg: "6" }}
-      textAlign={{ base: "center", lg: "left" }}
-      alignItems={{ base: "center", lg: "flex-start" }}
-      {...props}
-    >
+    <Card.Root {...props}>
       {!!icon && (
-        <Card.Header
-          px="0"
-          pb={{ base: "6", lg: "12" }}
-          pt={{ base: "6", lg: "0" }}
-        >
+        <Card.Header>
           <Flex
             alignItems={"center"}
             justifyContent={"center"}
@@ -46,7 +32,7 @@ export default function ValueCard({
         </Card.Header>
       )}
 
-      <Card.Body p={"0"} alignItems={{ base: "center", lg: "flex-start" }}>
+      <Card.Body>
         <Heading as="h3" mb="3" variant={"subtag"} size={"xs"}>
           {heading}
         </Heading>

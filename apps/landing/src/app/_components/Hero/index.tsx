@@ -11,11 +11,12 @@ import {
   Heading,
   Text,
   Group,
+  VStack,
 } from "@mutuals/ui";
 
 import { IoPlayOutline, IoSparkles } from "react-icons/io5";
 import NextImage from "next/image";
-import heroRightImage from "@/assets/bg-hero-bottom-right.png";
+import gridIcon from "@/assets/grid.svg";
 import aboutImage from "@/assets/hero.png";
 import KeenSlider from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
@@ -23,79 +24,32 @@ import HeroImageSlider from "@/app/_components/Hero/ImageSlider";
 
 export default function HomeHero() {
   return (
-    <>
-      <Container maxW="7xl">
-        <Grid
-          pt={"48"}
-          mb={"12"}
-          gap={"6"}
-          templateColumns={{ lg: "repeat(5, 1fr)" }}
-          alignItems={"flex-end"}
-        >
-          <GridItem
-            colSpan={{ lg: 3 }}
-            direction="column"
-            alignItems={"flex-start"}
+    <VStack position={"relative"} pt={"32"}>
+      <Container maxW="4xl" mb={"24"}>
+        <VStack align={"center"} textAlign={"center"} gap={"6"}>
+          <Heading
+            as="h1"
+            size={{ base: "5xl", lg: "7xl" }}
+            fontWeight={"semibold"}
           >
-            <Tag colorPalette={"purple"} startElement={<IoSparkles />} mb={"6"}>
-              Celebrating our Alpha Launch
-            </Tag>
+            The best way to manage on-chain payments.
+          </Heading>
 
-            <Heading as="h1" size={{ base: "5xl", lg: "6xl" }}>
-              The best way to manage on-chain payments.
-            </Heading>
-          </GridItem>
+          <Text variant={"muted"} fontSize={"xl"}>
+            Mutuals enables automated and trustless revenue distribution without
+            reliance on intermediaries.
+          </Text>
 
-          <GridItem colSpan={{ lg: 2 }} direction="column">
-            <Text variant={"muted"} fontSize={"lg"} mb={"6"}>
-              Trustless revenue distribution with powerful configuration
-              options.
-            </Text>
-
-            <Group gap="3">
-              <Button>Start For Free</Button>
-              <Button variant={"subtle"}>Learn More</Button>
-            </Group>
-          </GridItem>
-        </Grid>
+          <Group gap="6">
+            <Button size={"lg"}>Start For Free</Button>
+            <Button size={"lg"} variant={"subtle"}>
+              Learn More
+            </Button>
+          </Group>
+        </VStack>
       </Container>
 
       <HeroImageSlider />
-
-      <Container maxW="7xl" my={"12"}>
-        <Stack
-          position={"relative"}
-          w={"full"}
-          align={"center"}
-          p={"2"}
-          bg={"bg.muted"}
-          rounded={"lg"}
-          overflow={"hidden"}
-        >
-          <Button variant="subtle">
-            Explore The Demo <IoPlayOutline />
-          </Button>
-
-          <Box
-            position={"absolute"}
-            bottom={"0"}
-            right={"0"}
-            w={"full"}
-            h={{ base: "lg", md: "8xl" }}
-            opacity={"0.6"}
-          >
-            <NextImage
-              src={heroRightImage}
-              alt={"Mutuals CTA Background"}
-              fill={true}
-              style={{
-                objectFit: "contain",
-                objectPosition: "bottom right",
-              }}
-            />
-          </Box>
-        </Stack>
-      </Container>
-    </>
+    </VStack>
   );
 }

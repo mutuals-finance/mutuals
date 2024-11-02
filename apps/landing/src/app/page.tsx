@@ -9,11 +9,11 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <Value />
       <Actors />
       {/*<Partners />*/}
-      <Value />
-      <Chains />
       <Payments />
+      <Chains />
       <Features />
     </>
   );

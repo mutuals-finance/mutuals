@@ -34,7 +34,7 @@ export function ActionCell({ id: rootId, ...context }: ActionCellProps) {
   const isCurrentGroup = isGroup(allocation);
 
   const parentId = getParentIdFromCellContext(context, rootId);
-  const { append, remove, defaultItems } = useAllocationData({ id: parentId });
+  const { insert, remove, defaultItems } = useAllocationData({ id: parentId });
 
   return (
     <MenuRoot>
@@ -71,21 +71,39 @@ export function ActionCell({ id: rootId, ...context }: ActionCellProps) {
             </MenuItem>
           </MenuContent>
         </MenuRoot>
-        <MenuRoot positioning={{ placement: "right-start", gutter: 2 }}>
-          <MenuTriggerItem>Append</MenuTriggerItem>
-          <MenuContent>
-            {Object.entries(defaultItems).map(([key, value]) => (
-              <MenuItem
-                key={key}
-                value={key}
-                onClick={() => append({ index, value })}
-              >
-                {key}
-              </MenuItem>
-            ))}
-          </MenuContent>
-        </MenuRoot>
-
+        {!!defaultItems && (
+          <MenuRoot positioning={{ placement: "right-start", gutter: 2 }}>
+            <MenuTriggerItem>Insert</MenuTriggerItem>
+            <MenuContent>
+              {Object.entries(defaultItems).map(([calculation, types]) => (
+                <MenuRoot
+                  key={calculation}
+                  positioning={{ placement: "right-start", gutter: 2 }}
+                >
+                  <MenuTriggerItem>{calculation}</MenuTriggerItem>
+                  <MenuContent>
+                    {Object.entries(types).map(([type, items]) => (
+                      <MenuItemGroup
+                        key={calculation + "-" + type}
+                        title={type}
+                      >
+                        {Object.entries(items).map(([key, value]) => (
+                          <MenuItem
+                            key={calculation + "-" + type + "-" + key}
+                            value={calculation + "-" + type + "-" + key}
+                            onClick={() => insert({ index, value })}
+                          >
+                            {key}
+                          </MenuItem>
+                        ))}
+                      </MenuItemGroup>
+                    ))}
+                  </MenuContent>
+                </MenuRoot>
+              ))}
+            </MenuContent>
+          </MenuRoot>
+        )}
         <MenuItem value={"remove"} onClick={() => remove(context.row.index)}>
           Remove
         </MenuItem>
