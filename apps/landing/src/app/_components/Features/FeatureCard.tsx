@@ -37,7 +37,6 @@ export default function FeatureCard({
           gap={"6"}
         >
           {children}
-
           <Box>
             {index && index >= 0 && (
               <Heading as={"h4"} variant={"subtag"} size={"xs"} mb="6">
