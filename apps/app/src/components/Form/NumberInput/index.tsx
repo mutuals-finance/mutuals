@@ -35,7 +35,7 @@ export default function NumberInput({
       control={control}
       name={id}
       rules={validation}
-      render={({ field }) => (
+      render={({ field: { onChange, ...field } }) => (
         <>
           {!wrapperHidden ? (
             <InputBase id={id} {...props}>
@@ -43,9 +43,9 @@ export default function NumberInput({
                 id={id}
                 size={size}
                 {...inputProps}
-                value={field.value}
+                {...field}
                 onValueChange={({ value }) => {
-                  field.onChange(value);
+                  onChange(value);
                 }}
               />
             </InputBase>
@@ -53,8 +53,12 @@ export default function NumberInput({
             <InnerNumberInput
               id={id}
               size={size}
+              {...(props as NumberInputProps)}
               {...inputProps}
-              onBlur={field.onBlur}
+              {...field}
+              onValueChange={({ value }) => {
+                onChange(value);
+              }}
             />
           )}
         </>

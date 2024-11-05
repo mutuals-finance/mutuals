@@ -2,6 +2,13 @@ import { FileWithPreview } from "@/components/Form/types";
 import { AllocationNode } from "@mutuals/sdk-react";
 import { CellContext } from "@tanstack/react-table";
 import type { TableProps } from "@/components/Table";
+import { FieldArrayWithId } from "react-hook-form";
+
+export type AllocationItemRecipientOrGroupBaseProps = FieldArrayWithId<
+  PoolAddData,
+  "allocations",
+  "id"
+>;
 
 export type AllocationTableBaseProps = { id?: string };
 

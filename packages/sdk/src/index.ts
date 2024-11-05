@@ -4,6 +4,7 @@ import { MutualsClient } from "./client";
 export { PoolClient, MutualsClient };
 
 export * from "./errors";
+//export * from "./entities";
 
 export { SUPPORTED_CHAIN_IDS, DEFAULT_ALLOCATION_NODE } from "./constants";
 export type {

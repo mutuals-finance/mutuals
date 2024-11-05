@@ -33,10 +33,11 @@ export default function RouterTabs({
               {...tabProps}
             >
               <Link
-                unstyled={true}
+                textAlign="center"
+                justifyContent="center"
                 w={"full"}
                 alignSelf={"stretch"}
-                p={"2"}
+                p={"3"}
                 {..._props}
               >
                 {title}

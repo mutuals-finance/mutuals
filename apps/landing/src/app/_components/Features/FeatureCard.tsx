@@ -44,17 +44,13 @@ export default function FeatureCard({
                 0{index}
               </Heading>
             )}
-            <Heading as={"h3"} size={"3xl"}>
+            <Heading as={"h3"} size={"xl"}>
               {heading}
             </Heading>
           </Box>
 
           <Box position={"relative"} w={"full"} maxW={"xs"}>
-            <Text
-              fontSize={{ base: "sm", md: "md" }}
-              color={"fg.muted"}
-              fontWeight={"500"}
-            >
+            <Text fontSize={{ base: "sm", md: "md" }} variant={"muted"}>
               {description}
             </Text>
           </Box>

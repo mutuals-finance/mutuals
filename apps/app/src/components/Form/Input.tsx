@@ -11,8 +11,7 @@ export default function Input({
   id = "",
   validation,
   hideWrapper = false,
-  label,
-  ...props
+  ...rest
 }: InputBaseProps) {
   const { control } = useFormContext();
   return (
@@ -20,31 +19,14 @@ export default function Input({
       control={control}
       name={id}
       rules={validation}
-      render={({
-        field: { onChange, onBlur, value, name, ref },
-        fieldState: { invalid, isTouched, isDirty, error },
-      }) => (
+      render={({ field }) => (
         <>
           {!hideWrapper ? (
-            <InputBase
-              id={id}
-              label={label}
-              {...{ invalid, isTouched, isDirty, error }}
-            >
-              <ChakraInput
-                id={id}
-                {...props}
-                {...{ onChange, onBlur, value, name, ref }}
-                {...{ error }}
-              />
+            <InputBase id={id} validation={validation} {...rest}>
+              <ChakraInput id={id} {...rest} {...field} />
             </InputBase>
           ) : (
-            <ChakraInput
-              id={id}
-              {...props}
-              {...{ onChange, onBlur, value, name, ref }}
-              {...{ error }}
-            />
+            <ChakraInput id={id} {...rest} {...field} />
           )}
         </>
       )}

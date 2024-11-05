@@ -1,10 +1,24 @@
-import { useFormContext, useWatch } from "react-hook-form";
+import {
+  FieldArrayWithId,
+  useFieldArray,
+  useFormContext,
+} from "react-hook-form";
 import { useCallback } from "react";
-import { AllocationNode } from "@mutuals/sdk-react";
+import { AllocationNode, DefaultAllocationItems } from "@mutuals/sdk-react";
 import { useAllocation } from "@/features/PoolAdd/AllocationProvider";
 import type { PoolAddData } from "@/features/PoolAdd/types";
 
-type UseAllocationDataArgs = {
+export type UseAllocationData = {
+  lastItem: AllocationNode | null;
+  defaultItems: DefaultAllocationItems | undefined;
+  insert: (props?: { index?: number; value?: AllocationNode }) => void;
+  insertCached: (props?: { index?: number }) => void;
+  fields: FieldArrayWithId<PoolAddData, "allocations", "id">[];
+  append: (props?: { value?: AllocationNode }) => void;
+  remove: (index?: number | number[]) => void;
+};
+
+export type UseAllocationDataArgs = {
   id?: string;
 };
 
@@ -12,47 +26,41 @@ export function useAllocationData(
   { id: _id = "allocations" } = {
     id: "allocations",
   } as UseAllocationDataArgs,
-) {
+): UseAllocationData {
   const id = _id as "allocations";
 
-  const { control, setValue, getValues } = useFormContext<PoolAddData>();
-
-  const values = getValues(id);
-  const data = useWatch({ name: id, control });
+  const { control } = useFormContext<PoolAddData>();
+  const {
+    fields,
+    insert: _insert,
+    append: _append,
+    remove,
+  } = useFieldArray({ control, name: id });
 
   const { items: defaultItems, updateLastItem, lastItem } = useAllocation();
-
-  const remove = useCallback(
-    (index: number) => {
-      setValue(
-        id,
-        values.filter((_, i) => i !== index),
-      );
-    },
-    [id, values, setValue],
-  );
 
   const insert = useCallback(
     (props?: { index?: number; value?: AllocationNode }) => {
       const value = props?.value ?? lastItem;
-      const index = props?.index ?? values.length;
+
       if (value) {
         if (value.node.allocationType !== lastItem?.node.allocationType) {
           updateLastItem(value);
         }
-        if (index < values.length) {
-          const after = [
-            ...values.slice(0, index),
-            value,
-            ...values.slice(index),
-          ];
-          setValue(`${id}`, after);
+        console.log("insert", { props, value });
+        if (props?.index) {
+          _insert(props?.index, value);
         } else {
-          setValue(`${id}.${index}`, value);
+          _append(value);
         }
       }
     },
-    [lastItem, values, updateLastItem, setValue, id],
+    [lastItem, _insert, _append, updateLastItem],
+  );
+
+  const append = useCallback(
+    (props?: { value?: AllocationNode }) => insert(props),
+    [insert],
   );
 
   const insertCached = useCallback(
@@ -63,9 +71,10 @@ export function useAllocationData(
   return {
     insert,
     insertCached,
-    data,
-    remove,
+    append,
     defaultItems,
     lastItem,
+    remove,
+    fields,
   };
 }

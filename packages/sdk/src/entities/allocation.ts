@@ -8,12 +8,10 @@ export interface AllocationBaseConstructorArgs {
 /**
  * Represents an allocation in a Mutuals Pool
  */
-export abstract class Allocation {
+export class Allocation {
   public readonly recipient: string;
-
-  private _allocationType: AllocationType;
-  private _share: number | null;
-  private _amount: number | null;
+  public readonly value: number;
+  public readonly allocationType: AllocationType;
 
   /**
    * Constructs an allocation for a given pool with the given liquidity
@@ -24,11 +22,38 @@ export abstract class Allocation {
     recipient,
     allocationType,
   }: AllocationBaseConstructorArgs) {
-    this._allocationType = allocationType;
+    this.allocationType = allocationType;
     this.recipient = recipient;
-    this._share = null;
-    this._amount = null;
     this.value = 0;
+  }
+
+  /**
+   * Returns the name of the allocation
+   */
+  public get name(): string {
+    switch (this.allocationType) {
+      case AllocationType.Fixed:
+        return "Fixed Recipient";
+      case AllocationType.Percentage:
+        return "Percentage Recipient";
+      case AllocationType.FixedTimed:
+        return "Fixed Timed Group";
+      case AllocationType.FixedPrioritized:
+        return "Fixed Prioritized Group";
+      case AllocationType.PercentageTimed:
+        return "Percentage Timed Group";
+      case AllocationType.PercentagePrioritized:
+        return "Percentage Prioritized Group";
+      default:
+        return "Unknown";
+    }
+  }
+
+  /**
+   * Returns the price of token0 at the lower tick
+   */
+  public get isRecipient(): boolean {
+    return !this.isGroup;
   }
 
   /**
@@ -56,42 +81,6 @@ export abstract class Allocation {
       this.allocationType == AllocationType.PercentageTimed ||
       this.allocationType == AllocationType.FixedTimed
     );
-  }
-
-  /**
-   * Returns the price of token0 at the lower tick
-   */
-  public get allocationType(): AllocationType {
-    return this._allocationType;
-  }
-
-  /**
-   * Returns the price of token0 at the lower tick
-   */
-  public set allocationType(newAllocationType) {
-    const isPrevPercentage = this.isPercentage;
-    this._allocationType = newAllocationType;
-    if (isPrevPercentage && this.isFixed) {
-      this._amount = this._share;
-      this._share = null;
-    } else if (!isPrevPercentage && this.isPercentage) {
-      this._share = this._amount;
-      this._amount = null;
-    }
-  }
-
-  /**
-   * Returns the price of token0 at the lower tick
-   */
-  public get value(): number {
-    return (this.isPercentage ? this._share : this._amount) as number;
-  }
-
-  /**
-   * Returns the price of token0 at the lower tick
-   */
-  public set value(newValue: number) {
-    this.isPercentage ? (this._share = newValue) : (this._amount = newValue);
   }
 
   /**

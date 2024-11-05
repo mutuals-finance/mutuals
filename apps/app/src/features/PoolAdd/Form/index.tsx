@@ -11,38 +11,26 @@ import Input from "@/components/Form/Input";
 import TextArea from "@/components/Form/TextArea";
 import Allocations from "@/features/PoolAdd/Allocations";
 import { Button, Stack } from "@mutuals/ui";
+import PoolAddFormContent from "@/features/PoolAdd/Form/Content";
 
 export default function PoolAdd() {
   const [isModalOpen, toggleIsModalOpen] = useToggle(false);
 
   return (
     <Form<PoolAddData>
-      onSubmit={() => toggleIsModalOpen()}
-      onSubmitInvalid={(errors, data) => console.log("INVALID", errors, data)}
+      onSubmit={(data) => {
+        console.log("Submit: valid", { data });
+      }}
+      onSubmitInvalid={() => {
+        console.log("Submit: invalid");
+      }}
       defaultValues={{ allocations: [] }}
     >
-      {/*
+      <PoolAddFormContent>
+        {/*
       <PoolAddModal data={data} open={isModalOpen} onClose={onModalClose} />
 */}
-
-      <FormGroup>
-        <FileUpload label="Image" id="image" inputProps={{ maxW: "2xs" }} />
-
-        <Input
-          label="Name"
-          id="name"
-          validation={{ required: "Please enter a name" }}
-        />
-        <TextArea label="Description" id="description" />
-      </FormGroup>
-
-      <Allocations />
-
-      <Stack direction="row">
-        <Button size="lg" type="submit">
-          Create Pool
-        </Button>
-      </Stack>
+      </PoolAddFormContent>
     </Form>
   );
 }

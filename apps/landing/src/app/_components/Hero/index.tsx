@@ -13,19 +13,17 @@ import {
   Group,
   VStack,
 } from "@mutuals/ui";
-
-import { IoPlayOutline, IoSparkles } from "react-icons/io5";
-import NextImage from "next/image";
-import gridIcon from "@/assets/grid.svg";
-import aboutImage from "@/assets/hero.png";
-import KeenSlider from "@/components/KeenSlider/KeenSlider";
-import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
 import HeroImageSlider from "@/app/_components/Hero/ImageSlider";
 
 export default function HomeHero() {
   return (
-    <VStack position={"relative"} pt={"32"}>
-      <Container maxW="4xl" mb={"24"}>
+    <VStack
+      position={"relative"}
+      pt={"44"}
+      minH={{ base: "100vh", lg: "unset" }}
+      justifyContent="center"
+    >
+      <Container maxW={{ base: "xl", lg: "4xl" }} mb={{ base: "12", lg: "24" }}>
         <VStack align={"center"} textAlign={"center"} gap={"6"}>
           <Heading
             as="h1"
@@ -35,7 +33,7 @@ export default function HomeHero() {
             The best way to manage on-chain payments.
           </Heading>
 
-          <Text variant={"muted"} fontSize={"xl"}>
+          <Text variant={"muted"} fontSize={{ base: "lg", lg: "xl" }}>
             Mutuals enables automated and trustless revenue distribution without
             reliance on intermediaries.
           </Text>

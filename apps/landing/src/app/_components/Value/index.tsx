@@ -35,7 +35,7 @@ const values = [
 ];
 export default function HomeValue() {
   return (
-    <Box my={"32"} py={"32"} position={"relative"}>
+    <Box my={"16"} py={"16"} position={"relative"}>
       <NextImage
         src={transitionImage}
         alt={"Mutuals values"}
@@ -43,6 +43,7 @@ export default function HomeValue() {
         style={{
           objectFit: "contain",
           objectPosition: "bottom right",
+          opacity: "0.3",
         }}
       />
       <Container maxW="7xl">

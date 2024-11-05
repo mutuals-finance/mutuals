@@ -1,7 +1,7 @@
 "use client";
 
 import { StackProps, VStack } from "@mutuals/ui";
-import React from "react";
+import React, { FormEvent, useCallback } from "react";
 import {
   FieldValues,
   FormProvider,
@@ -39,15 +39,11 @@ export default function Form<
 
   return (
     <FormProvider {...methods}>
-      <VStack
-        as={"form"}
-        alignItems={"stretch"}
-        gap={"6"}
-        onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}
-        {...props}
-      >
-        {typeof children == "function" ? children(methods) : children}
-      </VStack>
+      <form onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}>
+        <VStack alignItems={"stretch"} gap={"6"} {...props}>
+          {typeof children == "function" ? children(methods) : children}
+        </VStack>
+      </form>
     </FormProvider>
   );
 }
