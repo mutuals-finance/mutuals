@@ -7,22 +7,21 @@ import fonts from "@mutuals/ui/font";
 
 type RootLayoutProps = PropsWithChildren;
 
-const APP_NAME = "Mutuals";
-
 export const metadata: Metadata = {
   title: {
-    default: `${APP_NAME} – The best way to manage on-chain payments`,
+    default: `Mutuals – The best way to manage on-chain payments`,
     template: "%s – Mutuals",
   },
   description: "The best way to manage on-chain payments",
-  applicationName: APP_NAME,
+  applicationName: "Mutuals",
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
-      lang="en"
-      className={`${fonts.Inter.variable} ${fonts.GeneralSans.variable}`}
+      className={Object.values(fonts)
+        .map((f) => f.variable)
+        .join(" ")}
     >
       <body>
         <Providers>

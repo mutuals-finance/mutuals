@@ -62,7 +62,8 @@ export default function HeaderContainerWrapper({
       left="0"
       zIndex={10}
       w="full"
-      bgColor={isTransparent ? "transparent" : "bg"}
+      bgColor={isTransparent ? "transparent" : "bg/70"}
+      style={{ backdropFilter: isTransparent ? "none" : "blur(12px)" }}
       borderBottom={"1px solid"}
       borderColor={isTransparent ? "transparent" : "border"}
       animate={isHidden ? "invisible" : "visible"}

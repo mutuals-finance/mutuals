@@ -48,7 +48,7 @@ export default function FeatureCard({
             </Heading>
           </Box>
 
-          <Box position={"relative"} w={"full"} maxW={"xs"}>
+          <Box w={"full"} maxW={"xs"}>
             <Text fontSize={{ base: "sm", md: "md" }} variant={"muted"}>
               {description}
             </Text>
