@@ -27,7 +27,7 @@ export default function PageHeader({
           </Tag>
         )}
 
-        <Heading size={"5xl"} as="h1" {...headingProps}>
+        <Heading size={{ base: "5xl", lg: "5xl" }} as="h1" {...headingProps}>
           {children}
         </Heading>
       </Container>

@@ -6,7 +6,7 @@ import ContactOptionCard from "@/app/contact/Card";
 export default function ContactPage() {
   return (
     <>
-      <PageHeader tag={"Contact"}>Reach Out to Us</PageHeader>
+      <PageHeader tag={"Contact"}>Reach Out</PageHeader>
       <Container mt="20" mb="32" maxW="6xl">
         <Stack textAlign={"center"} alignItems={"center"}>
           <SimpleGrid

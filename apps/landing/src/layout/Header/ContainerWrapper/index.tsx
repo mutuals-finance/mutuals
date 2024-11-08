@@ -21,8 +21,7 @@ export default function HeaderContainerWrapper({
 }: BoxProps) {
   const { scrollY } = useScroll();
 
-  const isLargerLg = useBreakpointValue({ base: false, lg: true });
-  const [isTransparent, setTransparent] = useState(false);
+  const [isTransparent, setTransparent] = useState(true);
   const [isHidden, setHidden] = useState(false);
   const [prevScroll, setPrevScroll] = useState<number | null>(null);
 
@@ -38,11 +37,11 @@ export default function HeaderContainerWrapper({
 
       if (!prev || (isHidden && latest <= prev)) {
         setHidden(false);
-      } else if (!isLargerLg && !isHidden && latest > prev) {
+      } else if (!isHidden && latest > prev) {
         setHidden(true);
       }
     },
-    [isTransparent, isHidden, isLargerLg],
+    [isTransparent, isHidden],
   );
 
   useEffect(() => onUpdate(0, null), []);
@@ -62,10 +61,10 @@ export default function HeaderContainerWrapper({
       left="0"
       zIndex={10}
       w="full"
-      bgColor={isTransparent ? "transparent" : "bg/70"}
-      style={{ backdropFilter: isTransparent ? "none" : "blur(12px)" }}
+      bgColor={!isTransparent ? "bg/80" : "transparent"}
+      style={{ backdropFilter: !isTransparent ? "blur(12px)" : "none" }}
       borderBottom={"1px solid"}
-      borderColor={isTransparent ? "transparent" : "border"}
+      borderColor={!isTransparent ? "border" : "transparent"}
       animate={isHidden ? "invisible" : "visible"}
       variants={variants.visibility}
       transition={{

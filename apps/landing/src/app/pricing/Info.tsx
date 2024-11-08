@@ -38,14 +38,10 @@ function PricingCard({
 
   return (
     <Card.Root variant={variant} size={"lg"}>
-      <Card.Header minH={{ md: "40" }}>
-        <Heading size={"4xl"} mb={"3"}>
-          {heading}
-        </Heading>
+      <Card.Header>
+        <Heading size={"3xl"}>{heading}</Heading>
 
-        <Text fontWeight={"500"} color={"fg.muted"}>
-          {description}
-        </Text>
+        <Text variant={"muted"}>{description}</Text>
       </Card.Header>
       <Card.Body>
         <Heading as={"h3"} size={"2xl"}>
@@ -58,7 +54,7 @@ function PricingCard({
           </Text>
         </Box>
 
-        <Button w="full" mt="6">
+        <Button w="full" mt="6" size={"lg"} variant={"subtle"}>
           Get Started
         </Button>
       </Card.Body>
