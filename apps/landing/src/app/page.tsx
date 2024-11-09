@@ -1,9 +1,9 @@
-import Actors from "@/app/_components/Actors";
-import Features from "@/app/_components/Features";
-import Hero from "@/app/_components/Hero";
-import Payments from "@/app/_components/Payments";
-import Value from "@/app/_components/Value";
-import Chains from "@/app/_components/Chains";
+import Actors from "src/features/Home/Actors";
+import Features from "src/features/Home/Features";
+import Hero from "src/features/Home/Hero";
+import Payments from "src/features/Home/Payments";
+import Value from "src/features/Home/Value";
+import Chains from "src/features/Home/Chains";
 
 export default function HomePage() {
   return (
@@ -11,7 +11,6 @@ export default function HomePage() {
       <Hero />
       <Value />
       <Actors />
-      {/*<Partners />*/}
       <Payments />
       <Chains />
       <Features />

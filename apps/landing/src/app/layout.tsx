@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
 
 import Providers from "@/providers";
-import Layout from "@/layout";
+import Layout from "@/features/Layout";
 import fonts from "@mutuals/ui/font";
 
 type RootLayoutProps = PropsWithChildren;
