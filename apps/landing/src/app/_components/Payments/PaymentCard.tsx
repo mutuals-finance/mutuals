@@ -27,55 +27,55 @@ export default function PaymentCard({
   ...props
 }: PaymentOptionSlideProps) {
   return (
-    <Collapsible.Root
-      as={Card.Root}
-      variant="filled"
-      bg="transparent"
-      {...props}
-    >
-      {!!image && (
-        <Card.Header p="0" position="relative">
-          <AspectRatio
-            w="full"
-            rounded="lg"
-            bg={"bg.1"}
-            border={"1px solid"}
-            borderColor={"border.1"}
-            overflow={"hidden"}
-            ratio={5 / 3}
-            position="relative"
-          >
-            <Image
-              src={image}
-              alt={tag}
-              fill
-              style={{ objectFit: "contain" }}
-            />
-          </AspectRatio>
-        </Card.Header>
-      )}
+    <Collapsible.Root asChild>
+      <Card.Root variant="subtle" bg="transparent" {...props}>
+        {!!image && (
+          <Card.Header p="0" position="relative">
+            <AspectRatio
+              w="full"
+              rounded="lg"
+              bg={"bg"}
+              border={"1px solid"}
+              borderColor={"border"}
+              overflow={"hidden"}
+              ratio={5 / 3}
+              position="relative"
+            >
+              <Image
+                src={image}
+                alt={tag}
+                fill
+                style={{ objectFit: "contain" }}
+              />
+            </AspectRatio>
+          </Card.Header>
+        )}
 
-      <Card.Body px="0">
-        <Heading as={"h5"} size={"sm"} mb={"3"}>
-          {tag}
-        </Heading>
-        <Text fontSize={"lg"}>{headline}</Text>
-        <Collapsible.Content>
-          <Text fontSize={"lg"} color={"color.3"}>
-            {description}
-          </Text>
-        </Collapsible.Content>
-        <Collapsible.Trigger
-          as={IconButton}
-          mt={"6"}
-          rounded={"full"}
-          fontSize={"xl"}
-          asChild
-          aria-label={"Toggle description"}
-        >
-          {false ? <IoRemove /> : <IoAdd />}
-        </Collapsible.Trigger>
-      </Card.Body>
+        <Card.Body px="0">
+          <Heading as={"h5"} size={"sm"} mb={"3"}>
+            {tag}
+          </Heading>
+          <Text fontSize={"lg"}>{headline}</Text>
+          <Collapsible.Content>
+            <Text fontSize={"lg"} color={"color.3"}>
+              {description}
+            </Text>
+          </Collapsible.Content>
+          <Collapsible.Trigger asChild>
+            <IconButton
+              mt={"6"}
+              rounded={"full"}
+              fontSize={"xl"}
+              aria-label={"Toggle description"}
+            >
+              {
+                //false ? <IoRemove /> : <IoAdd />
+              }
+              <IoAdd />
+            </IconButton>
+          </Collapsible.Trigger>
+        </Card.Body>
+      </Card.Root>
     </Collapsible.Root>
   );
 }

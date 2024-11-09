@@ -51,7 +51,7 @@ export const SelectItem = (props: ChakraSelect.ItemProps) => {
 
 interface SelectValueTextProps
   extends Omit<ChakraSelect.ValueTextProps, "children"> {
-  children?(items: ChakraSelect.CollectionItem[]): React.ReactNode;
+  children?(items: unknown[]): React.ReactNode;
 }
 
 export const SelectValueText = (props: SelectValueTextProps) => {

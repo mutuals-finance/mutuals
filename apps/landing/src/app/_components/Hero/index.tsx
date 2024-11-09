@@ -1,5 +1,6 @@
 import {
   Button,
+  Box,
   Container,
   Heading,
   Text,
@@ -19,7 +20,7 @@ export default function HomeHero() {
   return (
     <VStack
       position={"relative"}
-      pt={"44"}
+      pt={{ base: "24", lg: "44" }}
       minH={{ base: "100vh", lg: "unset" }}
       justifyContent="center"
     >
@@ -33,6 +34,10 @@ export default function HomeHero() {
         >
           <MotionBox {...transitionProps}>
             <Heading
+              bgImage={
+                "linear-gradient(to right bottom, {colors.fg}, {colors.fg/50})"
+              }
+              bgClip={"text"}
               as="h1"
               size={{ base: "5xl", lg: "7xl" }}
               fontWeight={"semibold"}
@@ -48,11 +53,12 @@ export default function HomeHero() {
             </Text>
           </MotionBox>
 
-          <MotionBox as={Group} gap="6" {...transitionProps}>
-            <Button size={"lg"}>Start For Free</Button>
-            <Button size={"lg"} variant={"subtle"}>
-              Learn More
-            </Button>
+          <MotionBox w={"full"} maxW={{ md: "xs" }} {...transitionProps}>
+            <Group gap="6" w={"full"}>
+              <Button size={"lg"} w={"full"}>
+                Start For Free
+              </Button>
+            </Group>
           </MotionBox>
         </MotionBox>
       </Container>

@@ -23,7 +23,7 @@ export default function PricingFAQ() {
           {faqItems.map(({ title, children, ...props }, i) => (
             <AccordionItem key={i} value={title} {...props}>
               <AccordionItemTrigger py={"6"}>
-                <Heading as={"h5"} size="xl">
+                <Heading as={"h5"} size="2xl">
                   {title}
                 </Heading>
               </AccordionItemTrigger>

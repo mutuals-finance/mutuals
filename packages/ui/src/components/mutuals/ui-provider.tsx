@@ -2,8 +2,7 @@
 
 import { ChakraProvider, type ChakraProviderProps } from "@chakra-ui/react";
 import system from "../../theme";
-import { ThemeProvider } from "next-themes";
-import { ThemeProviderProps } from "next-themes/dist/types";
+import { ThemeProvider, ThemeProviderProps } from "next-themes";
 
 export interface UIProviderProps extends Omit<ChakraProviderProps, "value"> {
   themeProps?: Omit<ThemeProviderProps, "children">;

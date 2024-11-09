@@ -1,10 +1,8 @@
 "use client";
 
-import { Box, BoxProps, Container, HStack, MotionBox } from "@mutuals/ui";
-import { useBreakpointValue } from "@mutuals/ui";
-import { MotionConfig, useMotionValueEvent, useScroll } from "framer-motion";
+import { Flex, BoxProps, Container, HStack, MotionBox } from "@mutuals/ui";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
-
 import { useHeaderObserver } from "@/providers/HeaderObserver";
 
 const variants = {
@@ -72,12 +70,12 @@ export default function HeaderContainerWrapper({
         duration: 0.2,
       }}
     >
-      <Box
+      <Flex
         flex={"1"}
-        display="flex"
         alignItems="stretch"
         justifyContent="stretch"
         className={headerTheme}
+        suppressHydrationWarning={true}
       >
         <Container
           as={HStack}
@@ -89,7 +87,7 @@ export default function HeaderContainerWrapper({
         >
           {children}
         </Container>
-      </Box>
+      </Flex>
     </MotionBox>
   );
 }

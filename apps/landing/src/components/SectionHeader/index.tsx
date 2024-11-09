@@ -24,7 +24,7 @@ export default function SectionHeader({
           {label}
         </Heading>
       )}
-      <Heading size="5xl" {...headingProps}>
+      <Heading size={{ base: "4xl", lg: "5xl" }} {...headingProps}>
         {children}
       </Heading>
     </Box>

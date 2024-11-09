@@ -113,11 +113,9 @@ export default function HomePayments() {
 
         <Stack direction={"row"} gap={"3"} maxW={"xl"} mt={"9"}>
           <Box>
-            <Icon
-              as={IoArrowUpCircle}
-              fontSize={"6xl"}
-              transform={"rotate(45deg)"}
-            />
+            <Icon fontSize={"6xl"} transform={"rotate(45deg)"}>
+              <IoArrowUpCircle />
+            </Icon>
           </Box>
 
           <Stack gap={"3"}>

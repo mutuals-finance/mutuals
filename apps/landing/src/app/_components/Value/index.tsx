@@ -18,19 +18,19 @@ const values = [
     heading: "Split tokens",
     description:
       "Mutuals integrates with your clients systems and connects with a range of data sources",
-    icon: RiExchange2Line,
+    icon: <RiExchange2Line />,
   },
   {
     heading: "Automate payments",
     description:
       "Mutuals integrates with your clients systems and connects with a range of data sources",
-    icon: IoCodeWorkingOutline,
+    icon: <IoCodeWorkingOutline />,
   },
   {
     heading: "Track earnings",
     description:
       "Mutuals integrates with your clients systems and connects with a range of data sources",
-    icon: IoTimerOutline,
+    icon: <IoTimerOutline />,
   },
 ];
 export default function HomeValue() {

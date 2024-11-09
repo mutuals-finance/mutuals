@@ -22,6 +22,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={Object.values(fonts)
         .map((f) => f.variable)
         .join(" ")}
+      suppressHydrationWarning={true}
     >
       <body>
         <Providers>

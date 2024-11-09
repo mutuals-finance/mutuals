@@ -3,7 +3,7 @@ import { Text, Heading, Card, Icon, Flex, IconProps } from "@mutuals/ui";
 interface ValueCardProps extends Card.RootProps {
   heading: string;
   description: string;
-  icon?: IconProps["as"];
+  icon?: IconProps["children"];
 }
 
 export default function ValueCard({
@@ -27,7 +27,7 @@ export default function ValueCard({
             gradientFrom="blue.300"
             gradientTo="blue.600"
           >
-            <Icon as={icon} boxSize={5} />
+            <Icon boxSize={5}>{icon}</Icon>
           </Flex>
         </Card.Header>
       )}

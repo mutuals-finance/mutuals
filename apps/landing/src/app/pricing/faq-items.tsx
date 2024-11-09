@@ -1,14 +1,15 @@
 import { AccordionItemProps, List, Text } from "@mutuals/ui";
-import { ReactNode } from "react";
 
 const items = [
   {
     title: "How to withdraw funds?",
     children: (
-      <Text variant={"muted"}>
-        Withdrawing funds from Splits will transfer your balance(s) from the
-        Splits ecosystem into your wallet. To withdraw funds, follow these
-        steps:
+      <>
+        <Text>
+          Withdrawing funds from Splits will transfer your balance(s) from the
+          Splits ecosystem into your wallet. To withdraw funds, follow these
+          steps:
+        </Text>
         <List.Root as="ol" gap={1} p={3}>
           <List.Item>
             Click the &apos;Connect Wallet&apos; button to connect your wallet
@@ -31,13 +32,16 @@ const items = [
             Click “Withdraw Tokens” and approve the transaction in your wallet.
           </List.Item>
         </List.Root>
-        When you withdraw funds from Splits, you are withdrawing your balance(s)
-        across all the Splits you earn from that have been distributed, not just
-        from a specific Split. This is done to maximize efficiency and reduce
-        costs, since if you receive a very small portion of a Split and had to
-        withdraw for that specific Split, there’s a good chance it would cost
-        more to withdraw than the amount you’re withdrawing.
-      </Text>
+        <Text>
+          When you withdraw funds from Splits, you are withdrawing your
+          balance(s) across all the Splits you earn from that have been
+          distributed, not just from a specific Split. This is done to maximize
+          efficiency and reduce costs, since if you receive a very small portion
+          of a Split and had to withdraw for that specific Split, there’s a good
+          chance it would cost more to withdraw than the amount you’re
+          withdrawing.
+        </Text>
+      </>
     ),
   },
   ...[
@@ -48,7 +52,7 @@ const items = [
   ].map((title) => ({
     title,
     children: (
-      <Text variant={"muted"}>
+      <Text>
         To get started with Chakra UI, you can install it via npm or yarn, and
         then import the components you need in your project. The Chakra UI
         documentation is also a great resource for getting started and learning
@@ -60,7 +64,7 @@ const items = [
     title:
       "Is it possible to change the donation portion after creating my split?",
     children: (
-      <Text variant={"muted"}>
+      <Text>
         When you withdraw funds from Splits, you are withdrawing your balance(s)
         across all the Splits you earn from that have been distributed, not just
         from a specific Split. This is done to maximize efficiency and reduce
