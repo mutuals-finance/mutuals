@@ -53,10 +53,11 @@ export default function HomeHero() {
             </Text>
           </MotionBox>
 
-          <MotionBox w={"full"} maxW={{ md: "xs" }} {...transitionProps}>
-            <Group gap="6" w={"full"}>
-              <Button size={"lg"} w={"full"}>
-                Start For Free
+          <MotionBox {...transitionProps}>
+            <Group gap="6">
+              <Button size={"xl"}>Start for free</Button>
+              <Button size={"xl"} variant={"subtle"}>
+                Learn more
               </Button>
             </Group>
           </MotionBox>
