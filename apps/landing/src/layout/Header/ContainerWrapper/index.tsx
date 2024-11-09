@@ -66,8 +66,9 @@ export default function HeaderContainerWrapper({
       animate={isHidden ? "invisible" : "visible"}
       variants={variants.visibility}
       transition={{
-        ease: "easeInOut",
-        duration: 0.2,
+        type: "spring",
+        bounce: 0,
+        duration: 0.3,
       }}
     >
       <Flex

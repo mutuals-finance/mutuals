@@ -16,7 +16,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
       </HStack>
 
       <Box>
-        <Button>Launch App</Button>
+        <Button variant={"subtle"}>Launch App</Button>
       </Box>
     </NavWrapper>
   );

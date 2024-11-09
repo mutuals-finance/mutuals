@@ -15,7 +15,6 @@ export default function NavMobileNavbar({
     <NavWrapper {...props}>
       <Box ml={"auto"}>
         <IconButton
-          fontSize={"2xl"}
           variant={"ghost"}
           aria-label="Toggle Navigation"
           {...buttonProps}

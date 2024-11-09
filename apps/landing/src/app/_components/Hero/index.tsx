@@ -35,7 +35,7 @@ export default function HomeHero() {
           <MotionBox {...transitionProps}>
             <Heading
               bgImage={
-                "linear-gradient(to right bottom, {colors.fg}, {colors.fg/50})"
+                "linear-gradient(to right bottom, {colors.fg/90} 40%, {colors.fg/60})"
               }
               bgClip={"text"}
               as="h1"
