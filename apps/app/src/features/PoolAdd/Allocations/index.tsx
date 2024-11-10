@@ -10,7 +10,7 @@ import {
 } from "@mutuals/ui";
 import AllocationProvider from "@/features/PoolAdd/AllocationProvider";
 import PoolAddAllocationsItem from "@/features/PoolAdd/Allocations/Item";
-import { IoEllipsisHorizontal } from "react-icons/io5";
+import { IoEllipsisHorizontal, IoEllipsisVerticalSharp } from "react-icons/io5";
 import PoolAddAllocationMenu from "@/features/PoolAdd/Allocations/Menu";
 import React from "react";
 
@@ -42,7 +42,7 @@ function PoolAddAllocationsCard(props?: PoolAddAllocationsCardProps) {
               <Group alignItems={"stretch"} mt={"4"}>
                 <Button
                   flex={"1"}
-                  variant="outline"
+                  variant="subtle"
                   onClick={() => methods.insertCached()}
                   roundedRight={0}
                 >
@@ -51,11 +51,11 @@ function PoolAddAllocationsCard(props?: PoolAddAllocationsCardProps) {
                 <MenuRoot>
                   <MenuTrigger asChild>
                     <IconButton
-                      variant="outline"
+                      variant="subtle"
                       aria-label={"Select allocation to add"}
                       roundedLeft={0}
                     >
-                      <IoEllipsisHorizontal />
+                      <IoEllipsisVerticalSharp />
                     </IconButton>
                   </MenuTrigger>
                   <MenuContent>

@@ -18,10 +18,6 @@ const customConfig = defineConfig({
   theme: {
     // styles,
     //colors,
-    // @ts-expect-error: css typing error not valid
-    cursor: {
-      button: { value: "pointer" },
-    },
     textStyles,
     layerStyles,
     tokens,

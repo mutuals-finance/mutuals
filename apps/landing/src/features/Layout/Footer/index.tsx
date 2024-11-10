@@ -57,7 +57,7 @@ export default function LayoutFooter() {
             justifyContent={"flex-start"}
           >
             <Box>
-              <MutualsLogo maxW={{ base: "32", lg: "48" }} />
+              <MutualsLogo href={"/"} maxW={{ base: "32", lg: "48" }} />
             </Box>
           </ListBox>
 

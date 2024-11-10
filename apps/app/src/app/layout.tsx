@@ -27,8 +27,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html
-      lang="en"
-      className={`${fonts.Inter.variable} ${fonts.GeneralSans.variable}`}
+      className={Object.values(fonts)
+        .map((f) => f.variable)
+        .join(" ")}
+      suppressHydrationWarning={true}
     >
       <body>
         <Providers>{children}</Providers>

@@ -4,7 +4,7 @@ export default defineRecipe({
   variants: {
     variant: {
       subtag: {
-        color: "fg.muted",
+        color: "fg.subtle",
         fontFamily: "heading",
         textTransform: "uppercase",
         letterSpacing: "widest",

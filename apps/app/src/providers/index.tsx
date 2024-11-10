@@ -15,7 +15,7 @@ export default async function Providers({ children }: PropsWithChildren) {
   const redirectURL = "/";
   const { data } = await getViewer();
 
-  const cookie = headers().get("cookie") ?? "";
+  const cookie = await headers().then((h) => h.get("cookie") ?? "");
   const wagmiInitialState = cookieToInitialState(config, cookie);
 
   return (

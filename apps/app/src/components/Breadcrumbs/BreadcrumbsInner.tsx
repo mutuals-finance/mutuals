@@ -39,7 +39,11 @@ export default function BreadcrumbsInner({
   return (
     <BreadcrumbRoot
       gap="3"
-      separator={<Icon as={RxSlash} boxSize={"0.6rem"} />}
+      separator={
+        <Icon boxSize={"0.6rem"}>
+          <RxSlash />
+        </Icon>
+      }
       {...props}
     >
       {items.map(function ({ children, href, ...innerProps }, i) {

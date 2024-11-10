@@ -46,7 +46,7 @@ export default function Page({
             {breadcrumbsEnabled && <Breadcrumbs {...breadcrumbsProps} />}
 
             {!!title && (
-              <Heading as={"h1"} size={"5xl"} {...headingProps}>
+              <Heading as={"h1"} size={"4xl"} {...headingProps}>
                 {title}
               </Heading>
             )}

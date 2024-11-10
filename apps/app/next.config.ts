@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-module.exports = {
+import { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   webpack: (config) => {
@@ -58,3 +59,5 @@ module.exports = {
     ],
   },
 };
+
+export default nextConfig;

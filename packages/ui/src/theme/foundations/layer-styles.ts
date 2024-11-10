@@ -1,4 +1,4 @@
-import { defineLayerStyles, Token } from "@chakra-ui/react";
+import { defineLayerStyles } from "@chakra-ui/react";
 
 const layerStyles = defineLayerStyles({
   "fill.muted": {
