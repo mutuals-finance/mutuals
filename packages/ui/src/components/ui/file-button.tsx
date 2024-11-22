@@ -40,7 +40,7 @@ export const FileUploadDropzone = forwardRef<
       <Icon fontSize="md" color="fg.subtle">
         <RiUploadLine />
       </Icon>
-      <VStack gap="1" mt="1" p={"4"}>
+      <VStack gap="1" mt="1" p={"2"}>
         <Text fontSize="sm" textAlign={"center"}>
           Drag and drop here or{" "}
           <ChakraFileUpload.Trigger color="blue.solid">
@@ -76,12 +76,12 @@ const FileUploadItem = (props: FileUploadItemProps) => {
       </ChakraFileUpload.ItemPreview>
 
       {showSize ? (
-        <Stack gap="0.5" flex="1" pe="4">
+        <Stack gap="0.5" flex="1" pe="2">
           <ChakraFileUpload.ItemName lineClamp="1" />
           <ChakraFileUpload.ItemSizeText />
         </Stack>
       ) : (
-        <ChakraFileUpload.ItemName lineClamp="1" flex="1" pe="4" />
+        <ChakraFileUpload.ItemName lineClamp="1" flex="1" pe="2" />
       )}
 
       {showDelete && (

@@ -17,7 +17,8 @@ import bg3Image from "@/assets/pay-3-bg.png";
 import prioritizedImage from "@/assets/prioritized.webp";
 import SectionHeader from "@/components/SectionHeader";
 import NextImage from "next/image";
-import { IoArrowUpCircle } from "react-icons/io5";
+import { IoArrowUp, IoArrowUpCircle } from "react-icons/io5";
+import IconBox from "@/components/IconBox";
 
 const payments = [
   {
@@ -71,7 +72,7 @@ export default function HomePayments() {
                 justify={"center"}
                 p={{ base: "2", md: "12" }}
                 position={"relative"}
-                rounded={"lg"}
+                rounded={"xl"}
                 overflow={"hidden"}
                 h={"full"}
               >
@@ -82,7 +83,7 @@ export default function HomePayments() {
                   style={{ objectFit: "cover" }}
                 />
                 {isActive && (
-                  <Box position={"relative"} rounded={"lg"} overflow={"hidden"}>
+                  <Box position={"relative"} rounded={"xl"} overflow={"hidden"}>
                     <NextImage
                       src={image}
                       alt={tag + "image"}
@@ -113,13 +114,15 @@ export default function HomePayments() {
 
         <Stack direction={"row"} gap={"3"} maxW={"xl"} mt={"9"}>
           <Box>
-            <Icon fontSize={"6xl"} transform={"rotate(45deg)"}>
-              <IoArrowUpCircle />
-            </Icon>
+            <IconBox size="lg" color={"fg.inverted"} bg={"bg.inverted"}>
+              <Box transform={"rotate(45deg)"}>
+                <IoArrowUp />
+              </Box>
+            </IconBox>
           </Box>
 
           <Stack gap={"3"}>
-            <Heading as="h3" size={"3xl"}>
+            <Heading as="h3" size={"4xl"}>
               {payment.tag}
             </Heading>
 

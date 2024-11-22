@@ -73,6 +73,7 @@ export const MenuItemGroup = forwardRef<
           {title}
         </ChakraMenu.ItemGroupLabel>
       )}
+      Title
       {children}
     </ChakraMenu.ItemGroup>
   );

@@ -31,7 +31,6 @@ export type InputBaseProps = ChakraInputProps &
   BaseFieldProps & { hideWrapper?: boolean };
 
 export type InputNumberBaseProps = InputBaseProps & {
-  wrapperHidden?: boolean;
   inputProps?: NumberInputRootProps;
 };
 

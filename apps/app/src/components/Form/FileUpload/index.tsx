@@ -30,7 +30,7 @@ export default function FileUpload({
         <>
           <InputBase {...props} id={id}>
             <FileUploadRoot {...inputProps} {...field}>
-              <FileUploadDropzone />
+              <FileUploadDropzone minH={"3xs"} />
               <FileUploadList />
             </FileUploadRoot>
           </InputBase>

@@ -76,7 +76,6 @@ export default function AuthProvider({
 
   useAccountEffect({
     onConnect(data) {
-      console.log("trigger account effect", { ...data });
       if (!walletMap[data.address]) {
         login(data.address);
       }

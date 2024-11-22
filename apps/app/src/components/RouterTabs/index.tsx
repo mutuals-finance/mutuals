@@ -38,6 +38,7 @@ export default function RouterTabs({
                 w={"full"}
                 alignSelf={"stretch"}
                 p={"3"}
+                fontFamily={"font.body"}
                 {..._props}
               >
                 {title}

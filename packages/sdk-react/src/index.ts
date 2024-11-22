@@ -1,4 +1,20 @@
-export { MutualsClient } from "@mutuals/sdk";
+export {
+  MutualsClient,
+  RECIPIENT_TYPE_KEY,
+  CALCULATION_TYPE_KEY,
+  RECIPIENT_TYPE_CONFIG,
+  CALCULATION_TYPE_CONFIG,
+} from "@mutuals/sdk";
+
+export {
+  getAllocationDefaults,
+  getAllocationRecipientOptions,
+  getRecipientAllocationOption,
+  getGroupAllocationOption,
+  recipientTypeName,
+  calculationTypeName,
+} from "@mutuals/sdk/utils";
+
 export type {
   MutualsClientConfig,
   DataClientConfig,
@@ -8,21 +24,11 @@ export type {
   WithdrawConfig,
   TransferOwnershipConfig,
   SetPausedConfig,
-  Node,
-  AllocationNode,
-  AllocationGroup,
-  AllocationGroupNode,
-  AllocationItem,
-  AllocationItemNode,
+  RecipientType,
+  CalculationType,
   Allocation,
-  AllocationFixed,
-  AllocationPercentage,
-  AllocationFixedPrioritized,
-  AllocationFixedTimed,
-  AllocationPercentagePrioritized,
-  AllocationPercentageTimed,
 } from "@mutuals/sdk";
-export { AllocationType } from "@mutuals/sdk";
+
 export { MutualsProvider } from "./context";
 export {
   useCreatePool,
@@ -31,6 +37,6 @@ export {
   useTransferOwnership,
   useSetPoolAllocation,
   useAllocationUtils,
-  useDefaultAllocation,
-  type DefaultAllocationItems,
+  useAllocationDefaults,
+  type UseAllocationDefaults,
 } from "./hooks";

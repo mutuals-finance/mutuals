@@ -12,7 +12,7 @@ export type MutualsReactSdkContext = {
 };
 
 export const MutualsContext = createContext<MutualsReactSdkContext | undefined>(
-  undefined,
+    undefined,
 );
 
 export const MutualsProvider = ({

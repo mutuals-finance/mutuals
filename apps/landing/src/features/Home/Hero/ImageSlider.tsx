@@ -18,7 +18,7 @@ export default function HeroImageSlider({
   options,
   ...props
 }: HeroImageSliderProps) {
-  const [isShown, setIsShown] = useState(false);
+  const [isCreated, setIsCreated] = useState(false);
 
   const variants = {
     hide: transitionProps.initial,
@@ -31,10 +31,9 @@ export default function HeroImageSlider({
   return (
     <MotionBox
       w="full"
-      animate={isShown ? "show" : "hide"}
+      animate={isCreated ? "show" : "hide"}
       initial={"hide"}
       variants={variants}
-      transition={transitionProps.transition}
     >
       <KeenSlider
         options={{
@@ -52,7 +51,7 @@ export default function HeroImageSlider({
           },
           slides: { perView: 1, spacing: 12 },
           created(s) {
-            setIsShown(true);
+            setIsCreated(true);
             s.moveToIdx(5, true, animation);
             created?.(s);
           },

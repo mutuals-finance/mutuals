@@ -10,6 +10,9 @@ import {
   Transport,
   WalletClient,
 } from "viem";
+import { CALCULATION_TYPE_KEY, RECIPIENT_TYPE_KEY } from "./constants";
+
+export type ValueOf<T> = T[keyof T];
 
 export type TransactionOverrides = {
   accessList?: AccessList;
@@ -50,12 +53,12 @@ export type TransactionConfig = {
 };
 
 export enum AllocationType {
-  Fixed = 0,
-  Percentage = 1,
-  FixedPrioritized = 2,
-  FixedTimed = 3,
-  PercentagePrioritized = 4,
-  PercentageTimed = 5,
+  Fixed = "0",
+  Percentage = "1",
+  FixedPrioritized = "2",
+  FixedTimed = "3",
+  PercentagePrioritized = "4",
+  PercentageTimed = "5",
 }
 
 export type RawAllocation = {
@@ -68,64 +71,17 @@ export type RawAllocation = {
   timespan: bigint;
 };
 
-export type Allocation =
-  | AllocationFixed
-  | AllocationPercentage
-  | AllocationFixedPrioritized
-  | AllocationFixedTimed
-  | AllocationPercentagePrioritized
-  | AllocationPercentageTimed;
-
-export type AllocationBase = {
+export type Allocation = {
   value: number;
+  calculationType: CalculationType[];
+  recipientType: RecipientType[];
+  recipient?: string;
+  timespan?: number;
+  children?: Allocation[];
 };
 
-export type AllocationItemBase = {
-  recipient: string;
-} & AllocationBase;
-
-export type AllocationFixed = {
-  allocationType: AllocationType.Fixed;
-} & AllocationItemBase;
-
-export type AllocationPercentage = {
-  allocationType: AllocationType.Percentage;
-} & AllocationItemBase;
-
-export type AllocationFixedPrioritized = {
-  allocationType: AllocationType.FixedPrioritized;
-} & AllocationBase;
-
-export type AllocationPercentagePrioritized = {
-  allocationType: AllocationType.PercentagePrioritized;
-} & AllocationBase;
-
-export type AllocationFixedTimed = {
-  allocationType: AllocationType.FixedTimed;
-  timespan: number;
-} & AllocationBase;
-
-export type AllocationPercentageTimed = {
-  allocationType: AllocationType.PercentageTimed;
-  timespan: number;
-} & AllocationBase;
-
-export type Node<TNode, TChildren = TNode> = {
-  node: TNode;
-  children?: Array<Node<TChildren>>;
-};
-
-export type AllocationGroup =
-  | AllocationFixedPrioritized
-  | AllocationPercentagePrioritized
-  | AllocationFixedTimed
-  | AllocationPercentageTimed;
-
-export type AllocationItem = AllocationFixed | AllocationPercentage;
-
-export type AllocationNode = Node<Allocation>;
-export type AllocationGroupNode = Node<AllocationGroup>;
-export type AllocationItemNode = Node<AllocationItem>;
+export type RecipientType = ValueOf<typeof RECIPIENT_TYPE_KEY>;
+export type CalculationType = ValueOf<typeof CALCULATION_TYPE_KEY>;
 
 export type CreatePoolConfig = {
   allocations: Allocation[];
@@ -158,8 +114,9 @@ export type SetPausedConfig = {
 } & TransactionOverridesDict;
 
 export type CreateDefaultAllocationFn = (
-  allocationType: AllocationItem["allocationType"],
-) => AllocationGroupNode;
+  calculationType: CalculationType,
+  recipientType: RecipientType,
+) => Allocation;
 
 export type CallData = {
   address: string;

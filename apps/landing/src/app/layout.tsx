@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { PropsWithChildren } from "react";
 
 import Providers from "@/providers";
@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   },
   description: "The best way to manage on-chain payments",
   applicationName: "Mutuals",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#09090b",
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {

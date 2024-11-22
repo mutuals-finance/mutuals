@@ -34,3 +34,4 @@ export * from "./mutuals/ui-provider";
 export * from "./mutuals/mutuals-logo";
 export * from "./mutuals/motion";
 export * from "./mutuals/link";
+export * from "./mutuals/icon-text-button";

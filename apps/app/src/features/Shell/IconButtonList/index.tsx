@@ -2,10 +2,12 @@
 
 import KeenSlider from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
-import IconTextButton, {
+import {
+  Box,
+  BoxProps,
+  IconTextButton,
   IconTextButtonProps,
-} from "@/components/IconTextButton";
-import { Box, BoxProps } from "@mutuals/ui";
+} from "@mutuals/ui";
 
 interface ShellIconButtonListProps extends BoxProps {
   items: IconTextButtonProps[];

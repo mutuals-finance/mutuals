@@ -16,7 +16,7 @@ export default function FormGroup({
     <Box {...props}>
       <VStack gap={"4"} alignItems={"start"}>
         {!!title && (
-          <Heading as={"h3"} size={"3xl"}>
+          <Heading as={"h3"} size={"2xl"}>
             {title}
           </Heading>
         )}

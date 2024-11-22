@@ -14,8 +14,8 @@ interface PoolAddFormContentProps {
 export default function PoolAddFormContent({}: PoolAddFormContentProps) {
   return (
     <>
-      <FormGroup>
-        <FileUpload label="Image" id="image" inputProps={{ maxW: "2xs" }} />
+      <FormGroup maxW={"xl"}>
+        <FileUpload label="Image" id="image" inputProps={{ maxW: "3xs" }} />
 
         <Input label="Name" id="name" />
         <TextArea label="Description" id="description" />
@@ -24,8 +24,8 @@ export default function PoolAddFormContent({}: PoolAddFormContentProps) {
       <Allocations />
 
       <Box>
-        <Button size="lg" type="submit">
-          Create Pool
+        <Button size="xl" type="submit">
+          Confirm and review
         </Button>
       </Box>
     </>

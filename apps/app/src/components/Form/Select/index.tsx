@@ -12,49 +12,84 @@ import {
   SelectValueText,
   SelectContent,
   SelectItem,
+  ListCollection,
 } from "@mutuals/ui";
 
+type ReactNodeOrFn<TItem> =
+  | ReactNode
+  | ((value: TItem, index: number) => ReactNode);
+
+type SelectCollectionItemProps<TItem> = {
+  value: TItem;
+  children: ReactNodeOrFn<TItem>;
+};
+
 type SelectProps<TItem> = Omit<InputBaseProps, "children"> & {
-  items?: TItem[];
+  collection: ListCollection<SelectCollectionItemProps<TItem>>;
   placeholder?: ChakraSelect.ValueTextProps["placeholder"];
-  children?: ReactNode | ((item: TItem, index: number) => ReactNode);
-  inputProps?: Omit<ChakraSelect.RootProps, "items">;
+  children?: ReactNodeOrFn<TItem>;
+  inputProps?: Omit<ChakraSelect.RootProps, "collection">;
   labelProps?: ChakraSelect.LabelProps;
 };
 
 export default function Select<TItem = string>({
   id = "",
   validation,
-  items = [],
+  collection,
   children,
   placeholder,
   label,
   inputProps,
   labelProps,
   size,
+  hideWrapper,
   ...props
 }: SelectProps<TItem>) {
   const { control } = useFormContext();
 
   return (
-    <InputBase id={id!} validation={validation!} label={label} {...props}>
+    <InputBase
+      id={id!}
+      validation={validation!}
+      label={label}
+      hideWrapper={hideWrapper}
+      {...props}
+    >
       <Controller
         control={control}
         name={id}
         rules={validation!}
-        render={({ field }) => (
-          <SelectRoot items={items} size={size} {...inputProps} {...field}>
-            <SelectLabel {...labelProps}>
-              {labelProps?.children || label}
-            </SelectLabel>
+        render={({ field: { onChange, onBlur, ...field } }) => (
+          <SelectRoot
+            size={size as ChakraSelect.RootProps["size"]}
+            {...props}
+            {...inputProps}
+            id={id}
+            onValueChange={({ value }) => onChange(value)}
+            onInteractOutside={() => onBlur()}
+            collection={collection!}
+            {...field}
+          >
+            {/*<SelectLabel {...labelProps}>*/}
+            {/*  {labelProps?.children || label}*/}
+            {/*</SelectLabel>*/}
             <SelectTrigger>
-              <SelectValueText placeholder={placeholder} />
+              <SelectValueText placeholder={placeholder}>
+                {(items: Array<SelectCollectionItemProps<TItem>>) => {
+                  const item = items[0]!;
+                  return typeof children == "function"
+                    ? children(item.value, 0)
+                    : !children
+                      ? typeof item == "string" && item
+                      : collection.stringifyItem(item);
+                }}
+              </SelectValueText>
             </SelectTrigger>
             <SelectContent>
-              {items.map((item, i) => (
+              {collection?.items.map((item, i) => (
                 <SelectItem key={i} item={item}>
                   {typeof children == "function"
-                    ? children(item, i)
+                    ? children(item.value, i)
                     : !children
                       ? typeof item == "string" && item
                       : children}

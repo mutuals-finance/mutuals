@@ -2,71 +2,68 @@ import {
   MenuContent,
   MenuItem,
   MenuItemGroup,
-  MenuRoot,
-  MenuSeparator,
-  MenuTriggerItem,
+  MenuContentProps,
 } from "@mutuals/ui";
-import { ActionWithLabel } from "@/features/PoolAdd/types";
-import { UseAllocationData } from "@/features/PoolAdd/Allocations/useAllocationData";
+import { useAllocation } from "@/features/PoolAdd/AllocationProvider";
+import {
+  Allocation,
+  CalculationType,
+  calculationTypeName,
+  RecipientType,
+  recipientTypeName,
+} from "@mutuals/sdk-react";
 
-interface PoolAddAllocationMenuProps {
-  index?: number;
-  methods: UseAllocationData;
-}
+export type PoolAddAllocationMenuMethodProps = {
+  onInsert?: (props: {
+    value?: Allocation;
+    cached?: boolean;
+    amount?: number;
+  }) => void;
+};
+
+interface PoolAddAllocationMenuProps
+  extends MenuContentProps,
+    PoolAddAllocationMenuMethodProps {}
 
 export default function PoolAddAllocationMenu({
-  index,
-  methods,
+  onInsert,
+  ...props
 }: PoolAddAllocationMenuProps) {
-  const { insert, defaultItems } = methods;
+  const { defaults } = useAllocation();
 
   return (
-    <>
-      {!!defaultItems && (
-        <MenuRoot positioning={{ placement: "right-start", gutter: 2 }}>
-          <MenuTriggerItem>Insert</MenuTriggerItem>
-          <MenuContent>
-            {Object.entries(defaultItems).map(([calculation, types]) => (
-              <MenuRoot
-                key={calculation}
-                positioning={{ placement: "right-start", gutter: 2 }}
-              >
-                <MenuTriggerItem>{calculation}</MenuTriggerItem>
-                <MenuContent>
-                  {Object.entries(types).map(([type, items]) => (
-                    <MenuItemGroup key={calculation + "-" + type} title={type}>
-                      {Object.entries(items).map(([key, value]) => (
-                        <MenuItem
-                          key={calculation + "-" + type + "-" + key}
-                          value={calculation + "-" + type + "-" + key}
-                          onClick={() => insert({ value, index })}
-                        >
-                          {key}
-                        </MenuItem>
-                      ))}
-                    </MenuItemGroup>
-                  ))}
-                </MenuContent>
-              </MenuRoot>
-            ))}
-          </MenuContent>
-        </MenuRoot>
-      )}
-
-      <MenuSeparator />
-
-      <MenuItemGroup title="Group Action">
-        {(
-          [
-            ["Distribute Evenly", () => {}],
-            ["Distribute Remaining", () => {}],
-          ] as ActionWithLabel[]
-        ).map(([type, fn]) => (
-          <MenuItem key={type} value={type} onClick={() => fn()}>
-            {type}
-          </MenuItem>
-        ))}
-      </MenuItemGroup>
-    </>
+    <MenuContent {...props}>
+      {Object.entries(defaults).map(([calculationType, recipients]) => {
+        const names = {
+          recipientType: "",
+          calculationType: calculationTypeName(
+            calculationType as CalculationType,
+          ),
+        };
+        return (
+          <MenuItemGroup key={calculationType} title={"test"}>
+            {Object.entries(recipients).map(
+              ([recipientType, value], _index) => {
+                names.recipientType = recipientTypeName(
+                  recipientType as RecipientType,
+                );
+                console.log(`${calculationType}-${recipientType}-${_index}`, {
+                  value,
+                });
+                return (
+                  <MenuItem
+                    key={`${calculationType}-${recipientType}-${_index}`}
+                    value={`${calculationType}-${recipientType}-${_index}`}
+                    onClick={() => onInsert?.({ value, cached: false })}
+                  >
+                    {names.calculationType} {names.recipientType}
+                  </MenuItem>
+                );
+              },
+            )}
+          </MenuItemGroup>
+        );
+      })}
+    </MenuContent>
   );
 }

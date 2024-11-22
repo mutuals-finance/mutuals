@@ -1,21 +1,14 @@
-"use client";
-
+import { IconButton, IconButtonProps, Stack, Text } from "@chakra-ui/react";
 import {
-  IconButton,
-  IconButtonProps,
-  Stack,
-  Text,
-  LinkButton,
-  LinkButtonProps,
-} from "@mutuals/ui";
-import React, {
   forwardRef,
   ForwardRefExoticComponent,
   MutableRefObject,
   RefAttributes,
 } from "react";
+import { LinkButton, LinkButtonProps } from "../ui/link-button";
 
-export type IconTextButtonProps = IconButtonProps | LinkButtonProps;
+type IconTextButtonProps = IconButtonProps | LinkButtonProps;
+
 const IconTextButton = forwardRef(function (
   { size = "lg", w = "16", rounded = "md", ...props }: IconTextButtonProps,
   ref,
@@ -35,7 +28,7 @@ const IconTextButton = forwardRef(function (
           ref={ref as MutableRefObject<HTMLButtonElement>}
         />
       )}
-      <Text fontWeight={"medium"}>{props["aria-label"]}</Text>
+      <Text>{props["aria-label"]}</Text>
     </Stack>
   );
 }) as ForwardRefExoticComponent<
@@ -44,4 +37,4 @@ const IconTextButton = forwardRef(function (
 >;
 
 IconTextButton.displayName = "IconTextButton";
-export default IconTextButton;
+export { IconTextButton, type IconTextButtonProps };

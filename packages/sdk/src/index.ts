@@ -4,9 +4,14 @@ import { MutualsClient } from "./client";
 export { PoolClient, MutualsClient };
 
 export * from "./errors";
-//export * from "./entities";
 
-export { SUPPORTED_CHAIN_IDS, DEFAULT_ALLOCATION_NODE } from "./constants";
+export {
+  SUPPORTED_CHAIN_IDS,
+  RECIPIENT_TYPE_KEY,
+  CALCULATION_TYPE_KEY,
+  RECIPIENT_TYPE_CONFIG,
+  CALCULATION_TYPE_CONFIG,
+} from "./constants";
 export type {
   MutualsClientConfig,
   DataClientConfig,
@@ -17,18 +22,6 @@ export type {
   TransferOwnershipConfig,
   SetPausedConfig,
   Allocation,
-  AllocationFixed,
-  AllocationPercentage,
-  AllocationFixedPrioritized,
-  AllocationFixedTimed,
-  AllocationPercentagePrioritized,
-  AllocationPercentageTimed,
-  Node,
-  AllocationNode,
-  AllocationGroup,
-  AllocationGroupNode,
-  AllocationItem,
-  AllocationItemNode,
+  CalculationType,
+  RecipientType,
 } from "./types";
-
-export { AllocationType } from "./types";

@@ -5,7 +5,7 @@ import {
   MutualsClientConfig,
   MutualsProvider as Provider,
 } from "@mutuals/sdk-react";
-import { useClient, usePublicClient, useWalletClient } from "wagmi";
+import { useClient } from "wagmi";
 
 export default function MutualsProvider({ children }: PropsWithChildren) {
   const client = useClient();

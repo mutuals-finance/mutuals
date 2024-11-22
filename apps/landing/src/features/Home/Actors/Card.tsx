@@ -120,7 +120,7 @@ export default function ActorCard({
                   {description}
                 </Text>
 
-                <Heading maxW={"sm"} fontSize={"inherit"}>
+                <Heading maxW={"sm"} fontSize={"inherit"} lineHeight={"1.2"}>
                   {title}
                 </Heading>
               </Stack>

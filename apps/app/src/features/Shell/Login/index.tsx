@@ -60,7 +60,7 @@ export default function ShellLogin({ children }: PropsWithChildren) {
 
           <WalletSelector.Wrapper
             heading="Connect to Mutuals"
-            headingProps={{ as: "h1", size: "4xl" }}
+            headingProps={{ as: "h1", size: "5xl" }}
             description={
               "Choose your favourite method to sign in. You can always add more methods later."
             }

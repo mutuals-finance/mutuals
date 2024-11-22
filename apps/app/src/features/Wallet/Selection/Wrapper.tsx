@@ -25,7 +25,9 @@ export function WalletSelectionWrapper({
         {description}
       </Text>
 
-      <RouterTabs tabs={tabs}>{children}</RouterTabs>
+      <RouterTabs size={"lg"} tabs={tabs}>
+        {children}
+      </RouterTabs>
     </VStack>
   );
 }

@@ -2,25 +2,17 @@
 
 import React, { createContext, PropsWithChildren, useContext } from "react";
 import {
-  AllocationItemNode,
-  AllocationNode,
-  DefaultAllocationItems,
-  useDefaultAllocation,
+  type UseAllocationDefaults,
+  useAllocationDefaults,
+  getAllocationDefaults,
 } from "@mutuals/sdk-react";
 
-type AllocationContextType = {
-  items?: DefaultAllocationItems;
-  updateLastItem: (value: AllocationNode) => void;
-  lastItem: AllocationNode | null;
-};
+type AllocationContextType = UseAllocationDefaults;
 
 const AllocationContext = createContext<AllocationContextType>({
-  items: {
-    Percentage: { Item: {}, Group: {} },
-    Fixed: { Item: {}, Group: {} },
-  },
-  updateLastItem: () => {},
-  lastItem: null,
+  defaults: getAllocationDefaults(),
+  setCached: () => {},
+  cached: null,
 });
 
 export function useAllocation() {
@@ -32,10 +24,10 @@ interface AllocationProviderContextProps extends PropsWithChildren {}
 export default function AllocationProvider({
   children,
 }: AllocationProviderContextProps) {
-  const defaultAllocationContext = useDefaultAllocation();
+  const defaultsContext = useAllocationDefaults();
 
   const value = {
-    ...defaultAllocationContext,
+    ...defaultsContext,
   };
 
   return (

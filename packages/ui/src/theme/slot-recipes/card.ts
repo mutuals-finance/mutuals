@@ -32,4 +32,5 @@ const defaultProps = {};
 
 export default defineSlotRecipe({
   slots: cardAnatomy.keys(),
+  variants: {},
 });

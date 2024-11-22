@@ -1,55 +1,41 @@
-import {
-  AllocationItemNode,
-  AllocationType,
-  CreateDefaultAllocationFn,
-} from "../types";
+export const RECIPIENT_TYPE_KEY = {
+  DEFAULT_RECIPIENT: "DEFAULT_RECIPIENT",
+  DEFAULT_GROUP: "DEFAULT_GROUP",
+  TIMED_GROUP: "TIMED_GROUP",
+  PRIORITIZED_GROUP: "PRIORITIZED_GROUP",
+} as const;
 
-export const DEFAULT_ALLOCATION_NODE: Record<
-  AllocationType,
-  AllocationItemNode | CreateDefaultAllocationFn
-> = {
-  [AllocationType.Fixed]: {
-    node: {
-      value: 1,
-      allocationType: AllocationType.Fixed,
-      recipient: "0x",
-    },
+export const CALCULATION_TYPE_KEY = {
+  FIXED: "FIXED",
+  PERCENTAGE: "PERCENTAGE",
+} as const;
+
+export const RECIPIENT_TYPE_CONFIG = {
+  [RECIPIENT_TYPE_KEY.DEFAULT_RECIPIENT]: {
+    key: RECIPIENT_TYPE_KEY.DEFAULT_RECIPIENT,
+    name: "Default Recipient",
   },
-  [AllocationType.Percentage]: {
-    node: {
-      value: 0,
-      allocationType: AllocationType.Percentage,
-      recipient: "0x",
-    },
+  [RECIPIENT_TYPE_KEY.DEFAULT_GROUP]: {
+    key: RECIPIENT_TYPE_KEY.DEFAULT_GROUP,
+    name: "Default Group",
   },
-  [AllocationType.PercentagePrioritized]: (allocationType) => ({
-    node: {
-      value: 0,
-      allocationType: AllocationType.PercentagePrioritized,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
-  [AllocationType.FixedPrioritized]: (allocationType) => ({
-    node: {
-      value: 1,
-      allocationType: AllocationType.FixedPrioritized,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
-  [AllocationType.PercentageTimed]: (allocationType) => ({
-    node: {
-      value: 0,
-      allocationType: AllocationType.PercentageTimed,
-      timespan: 0,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
-  [AllocationType.FixedTimed]: (allocationType) => ({
-    node: {
-      value: 1,
-      allocationType: AllocationType.FixedTimed,
-      timespan: 0,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
+  [RECIPIENT_TYPE_KEY.TIMED_GROUP]: {
+    key: RECIPIENT_TYPE_KEY.TIMED_GROUP,
+    name: "Timed Group",
+  },
+  [RECIPIENT_TYPE_KEY.PRIORITIZED_GROUP]: {
+    key: RECIPIENT_TYPE_KEY.PRIORITIZED_GROUP,
+    name: "Prioritized Group",
+  },
+};
+
+export const CALCULATION_TYPE_CONFIG = {
+  [CALCULATION_TYPE_KEY.PERCENTAGE]: {
+    key: CALCULATION_TYPE_KEY.PERCENTAGE,
+    name: "Percentage",
+  },
+  [CALCULATION_TYPE_KEY.FIXED]: {
+    key: CALCULATION_TYPE_KEY.FIXED,
+    name: "Fixed",
+  },
 };

@@ -1,4 +1,5 @@
 import { Text, Heading, Card, Icon, Flex, IconProps } from "@mutuals/ui";
+import IconBox from "@/components/IconBox";
 
 interface ValueCardProps extends Card.RootProps {
   heading: string;
@@ -16,19 +17,14 @@ export default function ValueCard({
     <Card.Root {...props}>
       {!!icon && (
         <Card.Header>
-          <Flex
-            alignItems={"center"}
-            justifyContent={"center"}
+          <IconBox
             color={"white"}
-            rounded="lg"
-            w={"12"}
-            h={"12"}
             bgGradient="to-br"
             gradientFrom="blue.300"
             gradientTo="blue.600"
           >
             <Icon boxSize={5}>{icon}</Icon>
-          </Flex>
+          </IconBox>
         </Card.Header>
       )}
 

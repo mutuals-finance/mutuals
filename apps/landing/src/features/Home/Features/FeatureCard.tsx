@@ -8,6 +8,7 @@ import {
   GridItemProps,
   Badge,
 } from "@mutuals/ui";
+import IconBox from "@/components/IconBox";
 
 interface FeatureCardProps extends GridItemProps {
   heading: string;
@@ -39,9 +40,11 @@ export default function FeatureCard({
           {children}
           <Box>
             {index && index >= 0 && (
-              <Heading as={"h4"} variant={"subtag"} size={"xs"} mb="6">
-                0{index}
-              </Heading>
+              <IconBox mb="6" size={"sm"} bg={"bg.muted"} color={"fg.subtle"}>
+                <Heading as={"h4"} size={"xs"}>
+                  0{index}
+                </Heading>
+              </IconBox>
             )}
             <Heading as={"h3"} size={"xl"}>
               {heading}

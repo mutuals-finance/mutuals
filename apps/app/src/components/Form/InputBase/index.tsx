@@ -6,6 +6,7 @@ import { Field, FieldProps } from "@mutuals/ui";
 type BaseWrapperProps = FieldProps & {
   hideError?: boolean;
   validation?: RegisterOptions;
+  hideWrapper?: boolean;
 };
 
 export default function InputBase({
@@ -13,6 +14,7 @@ export default function InputBase({
   children,
   validation,
   hideError: _,
+  hideWrapper = false,
   ...props
 }: BaseWrapperProps) {
   const {
@@ -21,9 +23,11 @@ export default function InputBase({
 
   const errorText = get(errors, id);
 
-  return (
+  return !hideWrapper ? (
     <Field asterisk={!!validation?.required} errorText={errorText} {...props}>
       {children}
     </Field>
+  ) : (
+    children
   );
 }

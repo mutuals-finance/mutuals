@@ -6,26 +6,15 @@ import {
   NumberInputProps,
   NumberInputRoot,
 } from "@mutuals/ui";
-import React, { forwardRef } from "react";
-
-const InnerNumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
-  (props, ref) => {
-    return (
-      <NumberInputRoot ref={ref} {...props}>
-        <NumberInputField />
-      </NumberInputRoot>
-    );
-  },
-);
-
-InnerNumberInput.displayName = "InputNumberInput";
+import React from "react";
 
 export default function NumberInput({
   id = "",
   validation,
   inputProps,
-  wrapperHidden,
   size,
+  hideWrapper,
+  label,
   ...props
 }: InputNumberBaseProps) {
   const { control } = useFormContext();
@@ -36,32 +25,20 @@ export default function NumberInput({
       name={id}
       rules={validation}
       render={({ field: { onChange, ...field } }) => (
-        <>
-          {!wrapperHidden ? (
-            <InputBase id={id} {...props}>
-              <InnerNumberInput
-                id={id}
-                size={size}
-                {...inputProps}
-                {...field}
-                onValueChange={({ value }) => {
-                  onChange(value);
-                }}
-              />
-            </InputBase>
-          ) : (
-            <InnerNumberInput
-              id={id}
-              size={size}
-              {...(props as NumberInputProps)}
-              {...inputProps}
-              {...field}
-              onValueChange={({ value }) => {
-                onChange(value);
-              }}
-            />
-          )}
-        </>
+        <InputBase id={id} hideWrapper={hideWrapper} label={label} {...props}>
+          <NumberInputRoot
+            id={id}
+            size={size as NumberInputProps["size"]}
+            onValueChange={({ value }) => {
+              onChange(value);
+            }}
+            {...inputProps}
+            {...field}
+            {...props}
+          >
+            <NumberInputField />
+          </NumberInputRoot>
+        </InputBase>
       )}
     />
   );

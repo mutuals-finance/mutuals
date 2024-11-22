@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "The best way to manage on-chain payments.",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#000000",
+    background_color: "#09090b",
+    theme_color: "#09090b",
     icons: [
       {
         src: "windows11/SmallTile.scale-100.png",
