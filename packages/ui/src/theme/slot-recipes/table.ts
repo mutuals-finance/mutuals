@@ -1,4 +1,4 @@
-import { statAnatomy, tableAnatomy } from "@chakra-ui/react/anatomy";
+import { tableAnatomy } from "@chakra-ui/react/anatomy";
 import { defineSlotRecipe } from "@chakra-ui/react";
 
 /*

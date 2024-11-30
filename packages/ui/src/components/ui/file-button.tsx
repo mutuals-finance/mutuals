@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Box,
   FileUpload as ChakraFileUpload,
   Icon,
   IconButton,
