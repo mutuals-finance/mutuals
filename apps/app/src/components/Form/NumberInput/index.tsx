@@ -11,13 +11,15 @@ import React from "react";
 export default function NumberInput({
   id = "",
   validation,
-  inputProps,
+  inputProps: _inputProps = { inputInputProps: {} },
   size,
   hideWrapper,
   label,
   ...props
 }: InputNumberBaseProps) {
   const { control } = useFormContext();
+
+  const { inputInputProps, ...inputProps } = _inputProps;
 
   return (
     <Controller
@@ -36,7 +38,7 @@ export default function NumberInput({
             {...field}
             {...props}
           >
-            <NumberInputField />
+            <NumberInputField {...inputInputProps} />
           </NumberInputRoot>
         </InputBase>
       )}

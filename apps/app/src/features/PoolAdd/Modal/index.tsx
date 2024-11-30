@@ -1,88 +1,72 @@
-import { useStateList, useUpdateEffect } from "react-use";
-import useCreateSplitFull from "@/hooks/useCreateSplitFull";
-import StepperModal from "@/components/StepperModal";
+import { useStateList } from "react-use";
+import StepperModal, { StepperDialogProps } from "@/components/StepperModal";
 import { LoadingStep, ReviewStep, SuccessStep } from "./steps";
 import { PoolAddData } from "@/features/PoolAdd/types";
+import { useCallback } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { useCreatePool } from "@mutuals/sdk-react";
 
-interface PoolAddModalProps {
-  onClose: () => void;
-  open: boolean;
-  data: PoolAddData;
-}
+interface PoolAddModalProps
+  extends Omit<StepperDialogProps, "activeStep" | "steps" | "onNext">,
+    UseFormReturn<PoolAddData, unknown> {}
 
 export default function PoolAddModal({
   open,
-  onClose,
-  data,
+  onOpenChange,
+  ...methods
 }: PoolAddModalProps) {
-  const payees = data.payees.filter((p) => p.id !== "" && !!p.value);
-
-  const { execute, tx, storage } = useCreateSplitFull({
-    ...data,
-    payees: payees.map((p) => p.id),
-    shares: payees.map((p) => Number(p.value) * 100),
-  });
+  const { getValues } = methods;
+  const { status, error, createPool, poolAddress } = useCreatePool();
 
   const steps = [
     {
       id: "review",
-      title: "Review your Split",
-      children: () => ReviewStep({ data }),
-    },
-    {
-      id: "save",
-      title: "Saving Split Metadata",
-      disabled: true,
-      children: () =>
-        LoadingStep({
-          ...storage,
-          description:
-            "Uploading your Split Metadata on the decentralized IPFS network.",
-          status: storage.isError
-            ? "Upload finished with errors"
-            : storage.isSuccess
-              ? "Upload finished successfully"
-              : "Waiting for upload to finish",
-        }),
+      title: "Review",
+      children: () => ReviewStep(methods),
     },
     {
       id: "sign",
-      title: "Confirm in Wallet",
+      title: "Approve",
       disabled: true,
       children: () =>
         LoadingStep({
-          ...tx,
+          error,
+          isError: status == "error",
+          isSuccess: status == "txInProgress",
           description:
             "Please confirm the transaction in your wallet. This will create your Split.",
-          status: tx.isError
-            ? "Confirmation error"
-            : tx.isSuccess
-              ? "Successfully confirmed"
-              : "Waiting for you to confirm",
+          status:
+            status == "error"
+              ? "Confirmation error"
+              : status == "txInProgress"
+                ? "Successfully confirmed"
+                : "Waiting for you to confirm",
         }),
     },
     {
       id: "wait",
-      title: "Waiting for Confirmation",
+      title: "Wait",
       disabled: true,
       children: () =>
         LoadingStep({
-          ...tx,
+          error,
+          isError: status == "error",
+          isSuccess: status == "complete",
           description:
             "Please wait for the transaction to be confirmed by the network. This may take a moment, depending on the current workload.",
-          status: tx.isError
-            ? "Confirmation error"
-            : tx.isSuccess
-              ? "Successfully confirmed"
-              : "Waiting for transaction confirmation",
+          status:
+            status == "error"
+              ? "Confirmation error"
+              : status == "complete"
+                ? "Successfully confirmed"
+                : "Waiting for transaction confirmation",
         }),
     },
     {
       id: "success",
-      title: "Congratulations",
+      title: "End",
       disabled: true,
-      children: () =>
-        SuccessStep({ contractAddress: tx.data!.contractAddress! }),
+      children: () => SuccessStep({ contractAddress: poolAddress }),
     },
   ];
 
@@ -93,34 +77,32 @@ export default function PoolAddModal({
     setStateAt: setActiveStep,
   } = useStateList(steps);
 
-  const deps = [storage.isSuccess, tx.isSuccess, tx.isSuccess];
-
   function reset() {
     setTimeout(() => {
-      storage.reset();
-      tx.reset();
+      // resetCreatePoolTx ();
       setActiveStep(0);
     }, 200);
   }
 
-  useUpdateEffect(() => {
-    if (deps.includes(true)) {
-      goToNext();
-    }
-  }, deps);
+  const onNext = useCallback(async () => {
+    const data = getValues();
+    await createPool({
+      ownerAddress: data.ownerAddress,
+      salt: BigInt(0),
+      allocations: data.allocations,
+    });
+    goToNext();
+  }, [getValues, createPool, goToNext]);
 
   return (
     <StepperModal
       steps={steps}
-      onNext={() => {
-        execute();
-        goToNext();
-      }}
+      onNext={onNext}
       onOpenChange={({ open }) => {
         if (!open) {
-          onClose();
           reset();
         }
+        onOpenChange?.({ open });
       }}
       activeStep={activeStepIndex}
       open={open}

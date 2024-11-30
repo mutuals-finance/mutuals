@@ -13,6 +13,7 @@ export {
   getGroupAllocationOption,
   recipientTypeName,
   calculationTypeName,
+  buildMerkleTree,
 } from "@mutuals/sdk/utils";
 
 export type {

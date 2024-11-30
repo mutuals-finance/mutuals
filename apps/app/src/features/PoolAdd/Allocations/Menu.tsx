@@ -47,9 +47,6 @@ export default function PoolAddAllocationMenu({
                 names.recipientType = recipientTypeName(
                   recipientType as RecipientType,
                 );
-                console.log(`${calculationType}-${recipientType}-${_index}`, {
-                  value,
-                });
                 return (
                   <MenuItem
                     key={`${calculationType}-${recipientType}-${_index}`}

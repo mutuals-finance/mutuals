@@ -5,6 +5,7 @@ import {
   createListCollection,
   MenuRoot,
   MenuTrigger,
+  InputGroup,
 } from "@mutuals/ui";
 import {
   RECIPIENT_TYPE_CONFIG,
@@ -125,27 +126,25 @@ export default function PoolAddAllocationsItem({
           />
         )}
 
-        <NumberInput
+        <InputGroup
           ml={"auto"}
-          flexBasis={"24"}
+          flexBasis={"32"}
           flexShrink={"0"}
-          id={`${id}.value`}
-          hideWrapper={true}
-          inputProps={
-            !isFixed
-              ? {
-                  allowMouseWheel: true,
-                  step: 0.01,
-                  min: 0,
-                }
-              : {
-                  allowMouseWheel: true,
-                  step: 1,
-                  min: 0,
-                }
-          }
-          size={"sm"}
-        />
+          startElement={isFixed ? "#" : "%"}
+        >
+          <NumberInput
+            id={`${id}.value`}
+            hideWrapper={true}
+            inputProps={{
+              allowMouseWheel: true,
+              step: !isFixed ? 0.1 : 1,
+              min: 0,
+              max: !isFixed ? 100 : 9999,
+              inputInputProps: { ps: "2.2em" },
+            }}
+            size={"sm"}
+          />
+        </InputGroup>
 
         <Group flexShrink={"0"}>
           <IconButton size={"sm"} variant={"outline"}>

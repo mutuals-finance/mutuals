@@ -8,20 +8,18 @@ import {
   DialogFooter,
   DialogHeader,
   DialogRoot,
-  ProgressCircleRing,
-  ProgressCircleRoot,
-  ProgressCircleValueText,
-  Separator,
   DialogRootProps,
   StepsRoot,
   StepsItem,
   StepsList,
+  Stack,
+  DialogTitle,
 } from "@mutuals/ui";
 import StepperItem, {
   StepperModalStep,
 } from "@/components/StepperModal/StepperItem";
 
-interface StepperDialogProps extends Omit<DialogRootProps, "children"> {
+export interface StepperDialogProps extends Omit<DialogRootProps, "children"> {
   onNext: (step: StepperModalStep, index: number) => void | Promise<void>;
   activeStep: number;
   steps: StepperModalStep[];
@@ -32,84 +30,74 @@ export default function StepperDialog({
   onNext,
   activeStep,
   steps,
-  size = "xl",
+  size = "md",
   ...props
 }: StepperDialogProps) {
   const activeStepContent = steps[activeStep];
   const activeStepTitle = activeStepContent?.title;
 
-  const max = steps.length - 1;
-  const progressPercent = (activeStep / max) * 100;
-
   return (
     <DialogRoot onOpenChange={onOpenChange} size={size} {...props}>
       <DialogBackdrop />
+
       <DialogContent>
-        <StepsRoot
-          defaultValue={0}
-          count={steps.length}
-          size="sm"
-          step={activeStep}
-          linear={true}
-        >
-          <DialogHeader>{activeStepTitle}</DialogHeader>
-          <DialogCloseTrigger />
-          <DialogBody>
-            <Box position="relative" mb={"6"}>
-              <StepsList>
-                {steps.map((step, index) => (
-                  <StepsItem key={step.id} index={index} title={step.title} />
-                ))}
-              </StepsList>
+        <DialogHeader>
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            <DialogTitle fontWeight={"medium"}>{activeStepTitle}</DialogTitle>
 
-              <ProgressCircleRoot
-                position="absolute"
-                top="10px"
-                zIndex={-1}
-                value={progressPercent}
-                size="lg"
-              >
-                <ProgressCircleValueText />
-                <ProgressCircleRing />
-              </ProgressCircleRoot>
-            </Box>
-
-            <Separator my={"6"} />
-
+            <DialogCloseTrigger />
+          </Stack>
+        </DialogHeader>
+        <DialogBody>
+          <StepsRoot
+            orientation="vertical"
+            defaultValue={0}
+            count={steps.length}
+            size="sm"
+            step={activeStep}
+            minH={"xs"}
+          >
+            <StepsList>
+              {steps.map((step, index) => (
+                <StepsItem key={step.id} index={index} />
+              ))}
+            </StepsList>
             {steps.map(({ children, ...item }, index) => {
               return (
-                <Box key={item.id}>
-                  <StepperItem
-                    {...item}
-                    isActive={index === activeStep}
-                    index={index}
-                  >
-                    {children}
-                  </StepperItem>
-                </Box>
+                <StepperItem
+                  key={item.id}
+                  {...item}
+                  isActive={index === activeStep}
+                  index={index}
+                >
+                  {children}
+                </StepperItem>
               );
             })}
-          </DialogBody>
+          </StepsRoot>
+        </DialogBody>
 
-          <DialogFooter>
-            <Button
-              variant="ghost"
-              onClick={() => onOpenChange?.({ open: false })}
-              mr={3}
-            >
-              Cancel
-            </Button>
+        <DialogFooter>
+          <Button
+            variant="ghost"
+            onClick={() => onOpenChange?.({ open: false })}
+          >
+            Cancel
+          </Button>
 
-            <Button
-              disabled={activeStepContent?.disabled}
-              onClick={() =>
-                !!activeStepContent && onNext(activeStepContent, activeStep)
-              }
-            >
-              Next
-            </Button>
-          </DialogFooter>
-        </StepsRoot>
+          <Button
+            disabled={activeStepContent?.disabled}
+            onClick={() =>
+              !!activeStepContent && onNext(activeStepContent, activeStep)
+            }
+          >
+            Next
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </DialogRoot>
   );

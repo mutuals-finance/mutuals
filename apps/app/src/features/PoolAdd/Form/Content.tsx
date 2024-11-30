@@ -15,6 +15,8 @@ export default function PoolAddFormContent({}: PoolAddFormContentProps) {
   return (
     <>
       <FormGroup maxW={"xl"}>
+        <Input label="Owner" id="ownerAddress" />
+
         <FileUpload label="Image" id="image" inputProps={{ maxW: "3xs" }} />
 
         <Input label="Name" id="name" />

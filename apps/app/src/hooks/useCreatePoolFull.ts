@@ -1,14 +1,14 @@
 import { useUpdateEffect } from "react-use";
 
-import useCreateSplit, { UseCreateSplitProps } from "@/hooks/useCreateSplit";
+import { useCreatePool } from "@mutuals/sdk-react";
 import { Metadata, useMetadata } from "@/hooks/useMetadata";
 
-type CreateSplitFullProps = Omit<UseCreateSplitProps, "uri"> & Metadata;
+type CreatePoolFullProps = Metadata;
 
-export default function useCreateSplitFull(props: CreateSplitFullProps) {
+export default function useCreatePoolFull(props: CreatePoolFullProps) {
   const storage = useMetadata();
 
-  const { writeContract, ...tx } = useCreateSplit({
+  const { writeContract, ...tx } = useCreatePool({
     uri: storage.value,
     ...props,
   });

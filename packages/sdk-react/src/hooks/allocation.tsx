@@ -1,17 +1,19 @@
-import { Allocation, CalculationType, RecipientType } from "@mutuals/sdk";
-import { getAllocationDefaults } from "@mutuals/sdk/utils";
-
 import { Dispatch, useCallback, useMemo, useState } from "react";
-import { useAllocationUtils } from "./allocation-utils";
+
+import { Allocation, CalculationType, RecipientType } from "@mutuals/sdk/types";
+import {
+  allocation as allocationUtils,
+  getAllocationDefaults,
+} from "@mutuals/sdk/utils";
 
 export type UseAllocationDefaults = {
   defaults: Record<CalculationType, Record<RecipientType, Allocation>>;
   setCached: Dispatch<Allocation>;
-  cached: Allocation | null;
+  cached: Allocation | undefined;
 };
 
 export const useAllocationDefaults = (): UseAllocationDefaults => {
-  const [_cached, _setCached] = useState<Allocation | null>();
+  const [_cached, _setCached] = useState<Allocation | undefined>();
 
   const { isItem } = useAllocationUtils();
 
@@ -32,4 +34,8 @@ export const useAllocationDefaults = (): UseAllocationDefaults => {
   );
 
   return { defaults, setCached, cached: _cached };
+};
+
+export const useAllocationUtils = () => {
+  return allocationUtils;
 };

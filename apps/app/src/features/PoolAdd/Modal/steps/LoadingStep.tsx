@@ -7,6 +7,7 @@ import {
   ProgressCircleRing,
   ProgressCircleRoot,
   Separator,
+  Alert,
 } from "@mutuals/ui";
 import { IoAlertCircle, IoCheckmarkCircle } from "react-icons/io5";
 
@@ -28,15 +29,17 @@ function LoadingStepIndicator({
   isSuccess,
 }: LoadingStepIndicatorProps) {
   return (
-    <Box pb={"6"}>
-      {isError ? (
-        <Icon as={IoAlertCircle} color={"red"} />
-      ) : isSuccess ? (
-        <Icon as={IoCheckmarkCircle} color={"green"} />
+    <Box>
+      {isSuccess ? (
+        <Icon size="xl" color={"fg.success"}>
+          <IoCheckmarkCircle />
+        </Icon>
       ) : (
-        <ProgressCircleRoot value={null} size="sm">
-          <ProgressCircleRing cap="round" />
-        </ProgressCircleRoot>
+        !isError && (
+          <ProgressCircleRoot value={null} size="sm">
+            <ProgressCircleRing cap="round" />
+          </ProgressCircleRoot>
+        )
       )}
     </Box>
   );
@@ -57,14 +60,12 @@ function LoadingStepStatus({
         <Text
           display={"block"}
           color={isError ? "red" : isSuccess ? "green" : "inherit"}
-          fontWeight={"500"}
+          fontWeight={"medium"}
           fontSize={"sm"}
         >
           {status}
         </Text>
       </Flex>
-
-      <Separator />
     </Box>
   );
 }
@@ -75,16 +76,14 @@ export function LoadingStep({
   ...props
 }: LoadingStepProps) {
   return (
-    <VStack gap={"6"} alignItems={"stretch"}>
+    <VStack gap={"2"} alignItems={"stretch"}>
       <LoadingStepIndicator {...props} />
+
+      {!!error && (
+        <Alert status="error">{error?.message || "Unknown Error"}</Alert>
+      )}
+
       <Box>
-        {!!error && (
-          <Box>
-            <Text color={"red"} pt={"1"} fontSize={"xs"}>
-              {error?.message || "Unknown Error"}
-            </Text>
-          </Box>
-        )}
         <Text>{description}</Text>
       </Box>
       <LoadingStepStatus {...props} />

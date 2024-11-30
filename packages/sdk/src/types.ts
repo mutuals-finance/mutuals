@@ -11,6 +11,7 @@ import {
   WalletClient,
 } from "viem";
 import { CALCULATION_TYPE_KEY, RECIPIENT_TYPE_KEY } from "./constants";
+import { SimpleMerkleTree } from "@openzeppelin/merkle-tree";
 
 export type ValueOf<T> = T[keyof T];
 
@@ -72,7 +73,7 @@ export type RawAllocation = {
 };
 
 export type Allocation = {
-  value: number;
+  value: string;
   calculationType: CalculationType[];
   recipientType: RecipientType[];
   recipient?: string;

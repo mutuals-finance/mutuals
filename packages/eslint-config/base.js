@@ -25,7 +25,8 @@ module.exports = {
     },
   ],
   rules: {
-    "import/no-unused-modules": "off",
+    "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

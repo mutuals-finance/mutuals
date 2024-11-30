@@ -26,7 +26,7 @@ export interface FormProps<
 
 export default function Form<
   TFieldValues extends FieldValues = FieldValues,
-  TContext = never,
+  TContext = unknown,
 >({
   children,
   onSubmit,

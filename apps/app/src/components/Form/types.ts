@@ -1,5 +1,8 @@
 import { FieldProps, ImageProps, NumberInputRootProps } from "@mutuals/ui";
-import { InputProps as ChakraInputProps } from "@mutuals/ui";
+import {
+  InputProps as ChakraInputProps,
+  NumberInputInputProps as ChakraNumberInputInputProps,
+} from "@mutuals/ui";
 import { FieldError, RegisterOptions } from "react-hook-form";
 
 export interface BaseLabelProps {
@@ -31,7 +34,9 @@ export type InputBaseProps = ChakraInputProps &
   BaseFieldProps & { hideWrapper?: boolean };
 
 export type InputNumberBaseProps = InputBaseProps & {
-  inputProps?: NumberInputRootProps;
+  inputProps?: NumberInputRootProps & {
+    inputInputProps?: ChakraNumberInputInputProps;
+  };
 };
 
 export interface FileWithPreview extends Partial<File> {

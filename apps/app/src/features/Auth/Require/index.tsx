@@ -17,7 +17,7 @@ export default async function AuthRequire({
   if (!isLoggedIn) {
     const pathname = (children as any).props?.childProp?.segment;
     if (pathname) {
-      cookies().set("redirectURL", pathname);
+      await cookies().then((c) => c.set("redirectURL", pathname));
     }
 
     redirect(`/auth/login`);

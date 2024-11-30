@@ -10,7 +10,6 @@ import {
   DialogRootProps,
   Text,
   DialogBackdrop,
-  DialogCloseTrigger,
 } from "@mutuals/ui";
 
 export interface WalletSignDialogProps
@@ -19,7 +18,7 @@ export interface WalletSignDialogProps
 }
 
 export default function WalletSignDialog({
-  size = "sm",
+  size = "xs",
   prompt = "Please sign the message in your wallet.",
   ...props
 }: WalletSignDialogProps) {
@@ -38,9 +37,7 @@ export default function WalletSignDialog({
         </DialogBody>
 
         <DialogFooter>
-          <DialogCloseTrigger w="full" position={"static"}>
-            <Button w="full">Cancel</Button>
-          </DialogCloseTrigger>
+          <Button w="full">Cancel</Button>
         </DialogFooter>
       </DialogContent>
     </DialogRoot>

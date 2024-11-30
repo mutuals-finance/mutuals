@@ -50,7 +50,6 @@ export default function ShellDashboardSidebarContent({
   return (
     <Stack gap="0" direction={"row"}>
       <Sidebar
-        zIndex={"1"}
         w={w}
         minW={{ base: "0", lg: "5.6rem" }}
         isOpen={isOpen}
