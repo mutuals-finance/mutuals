@@ -41,7 +41,7 @@ export default function PoolAddAllocationMenu({
           ),
         };
         return (
-          <MenuItemGroup key={calculationType} title={"test"}>
+          <MenuItemGroup key={calculationType} title={names.calculationType}>
             {Object.entries(recipients).map(
               ([recipientType, value], _index) => {
                 names.recipientType = recipientTypeName(
@@ -53,7 +53,7 @@ export default function PoolAddAllocationMenu({
                     value={`${calculationType}-${recipientType}-${_index}`}
                     onClick={() => onInsert?.({ value, cached: false })}
                   >
-                    {names.calculationType} {names.recipientType}
+                    {names.recipientType}
                   </MenuItem>
                 );
               },

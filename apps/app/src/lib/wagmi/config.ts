@@ -1,15 +1,8 @@
-import {
-  coinbaseWallet,
-  metaMask,
-  safe,
-  walletConnect,
-} from "wagmi/connectors";
-
 import { type CreateConnectorFn } from "wagmi";
 
 import { Chain, http } from "viem";
 
-import { CHAINS_MAP, IS_DEV, WALLETCONNECT_PROJECT_ID } from "@/constants";
+import { CHAINS_MAP } from "@/constants";
 
 const prodChains = [
   CHAINS_MAP.mainnet,
@@ -29,14 +22,15 @@ const devChains = [
 ];
 
 const connectors = [
-  metaMask({ dappMetadata: { name: "SplitFi" } }),
-  coinbaseWallet({
-    appName: "SplitFi",
-  }),
-  walletConnect({
-    projectId: WALLETCONNECT_PROJECT_ID,
-  }),
-  safe({ debug: IS_DEV }),
+  // injected(),
+  //metaMask({ dappMetadata: { name: "Mutuals" } }),
+  // coinbaseWallet({
+  //   appName: "Mutuals",
+  // }),
+  // walletConnect({
+  //   projectId: WALLETCONNECT_PROJECT_ID,
+  // }),
+  // safe({ debug: IS_DEV }),
 ] as CreateConnectorFn[];
 
 const chains = ({

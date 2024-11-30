@@ -32,7 +32,6 @@ import PoolAddAllocationMenu, {
   PoolAddAllocationMenuMethodProps,
 } from "@/features/PoolAdd/Allocations/Menu";
 import { useWatch } from "react-hook-form";
-import { useEffect } from "react";
 import { PoolAddData } from "@/features/PoolAdd/types";
 
 interface PoolAddAllocationsItemProps
