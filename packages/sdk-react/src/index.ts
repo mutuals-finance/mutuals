@@ -29,9 +29,11 @@ export type {
   CalculationType,
   Allocation,
 } from "@mutuals/sdk";
+export { ChainId } from "@mutuals/sdk/constants";
 
 export { MutualsProvider } from "./context";
 export {
+  useMutualsClient,
   useCreatePool,
   useWithdraw,
   useSetPause,

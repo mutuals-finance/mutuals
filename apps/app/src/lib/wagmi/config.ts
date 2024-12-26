@@ -1,8 +1,15 @@
 import { type CreateConnectorFn } from "wagmi";
+import {
+  coinbaseWallet,
+  injected,
+  metaMask,
+  safe,
+  walletConnect,
+} from "wagmi/connectors";
 
 import { Chain, http } from "viem";
 
-import { CHAINS_MAP } from "@/constants";
+import { CHAINS_MAP, IS_DEV, WALLETCONNECT_PROJECT_ID } from "@/constants";
 
 const prodChains = [
   CHAINS_MAP.mainnet,
@@ -14,6 +21,7 @@ const prodChains = [
 const devChains = [
   ...prodChains,
   CHAINS_MAP.sepolia,
+  CHAINS_MAP.polygonAmoy,
   CHAINS_MAP.polygonMumbai,
   CHAINS_MAP.arbitrumGoerli,
   CHAINS_MAP.optimismGoerli,
@@ -21,16 +29,18 @@ const devChains = [
   CHAINS_MAP.localhost,
 ];
 
+const appName = "Mutuals";
+
 const connectors = [
-  // injected(),
-  //metaMask({ dappMetadata: { name: "Mutuals" } }),
-  // coinbaseWallet({
-  //   appName: "Mutuals",
-  // }),
-  // walletConnect({
-  //   projectId: WALLETCONNECT_PROJECT_ID,
-  // }),
-  // safe({ debug: IS_DEV }),
+  injected(),
+  metaMask({ dappMetadata: { name: appName } }),
+  coinbaseWallet({
+    appName: appName,
+  }),
+  walletConnect({
+    projectId: WALLETCONNECT_PROJECT_ID,
+  }),
+  safe({ debug: IS_DEV }),
 ] as CreateConnectorFn[];
 
 const chains = ({

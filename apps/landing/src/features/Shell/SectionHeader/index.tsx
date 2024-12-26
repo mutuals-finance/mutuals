@@ -1,22 +1,16 @@
-import {
-  type BoxProps,
-  type HeadingProps,
-  Text,
-  Box,
-  Heading,
-} from "@mutuals/ui";
+import { type BoxProps, type HeadingProps, Box, Heading } from "@mutuals/ui";
 
-interface SectionHeaderProps extends BoxProps {
+export interface ShellSectionHeaderProps extends BoxProps {
   label?: string;
   headingProps?: HeadingProps;
 }
 
-export default function SectionHeader({
+export default function ShellSectionHeader({
   children,
   label,
   headingProps,
   ...props
-}: SectionHeaderProps) {
+}: ShellSectionHeaderProps) {
   return (
     <Box maxW="2xl" mx="auto" textAlign={"center"} mb="12" {...props}>
       {!!label && (
@@ -24,7 +18,7 @@ export default function SectionHeader({
           {label}
         </Heading>
       )}
-      <Heading size={{ base: "4xl", lg: "5xl" }} {...headingProps}>
+      <Heading size={{ base: "4xl", lg: "5xl" }} color={"fg"} {...headingProps}>
         {children}
       </Heading>
     </Box>

@@ -45,7 +45,7 @@ export default function HeroImageSlider({
               slides: { perView: 2, spacing: 32 },
             },
             "(min-width: 1200px)": {
-              slides: { perView: 2, spacing: 64 },
+              slides: { perView: 3, spacing: 64 },
             },
             ...breakpoints,
           },

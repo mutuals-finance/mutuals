@@ -3,7 +3,7 @@ import { Box, Container, SimpleGrid } from "@mutuals/ui";
 import PaymentCard from "@/features/Home/Payments/PaymentCard";
 import percentImage from "@/assets/percent.webp";
 import prioritizedImage from "@/assets/prioritized.webp";
-import SectionHeader from "@/components/SectionHeader";
+import SectionHeader from "src/features/Shell/SectionHeader";
 
 const payments = [
   {

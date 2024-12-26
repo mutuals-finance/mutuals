@@ -3,13 +3,10 @@
 import { Box, Container, Stack } from "@mutuals/ui";
 
 import ActorCard from "@/features/Home/Actors/Card";
-import SectionHeader from "@/components/SectionHeader";
+import SectionHeader from "src/features/Shell/SectionHeader";
 import { useState } from "react";
-import { MotionConfig } from "framer-motion";
 import ownersImage from "@/assets/owners-product-slider.webp";
 import partnersImage from "@/assets/partners-product-slider.webp";
-import NextImage from "next/image";
-import transitionImage from "@/assets/bg-hero-bottom-right.png";
 
 export default function HomeActors() {
   const [active, setActive] = useState<"owners" | "partners">("owners");

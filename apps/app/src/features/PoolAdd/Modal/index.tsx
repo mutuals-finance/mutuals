@@ -1,8 +1,6 @@
-import { useStateList } from "react-use";
 import StepperModal, { StepperDialogProps } from "@/components/StepperModal";
 import { LoadingStep, ReviewStep, SuccessStep } from "./steps";
 import { PoolAddData } from "@/features/PoolAdd/types";
-import { useCallback } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useCreatePool } from "@mutuals/sdk-react";
 
@@ -16,6 +14,7 @@ export default function PoolAddModal({
   ...methods
 }: PoolAddModalProps) {
   const { getValues } = methods;
+
   const { status, error, createPool, poolAddress } = useCreatePool();
 
   const steps = [
@@ -23,6 +22,14 @@ export default function PoolAddModal({
       id: "review",
       title: "Review",
       children: () => ReviewStep(methods),
+      onNext: async () => {
+        const data = getValues();
+        await createPool({
+          ownerAddress: data.ownerAddress,
+          salt: BigInt(0),
+          allocations: data.allocations,
+        });
+      },
     },
     {
       id: "sign",
@@ -34,7 +41,7 @@ export default function PoolAddModal({
           isError: status == "error",
           isSuccess: status == "txInProgress",
           description:
-            "Please confirm the transaction in your wallet. This will create your Split.",
+            "Please confirm the transaction in your wallet. This will create your Payment Pool.",
           status:
             status == "error"
               ? "Confirmation error"
@@ -70,41 +77,12 @@ export default function PoolAddModal({
     },
   ];
 
-  const {
-    currentIndex: activeStepIndex,
-    state: _,
-    next: goToNext,
-    setStateAt: setActiveStep,
-  } = useStateList(steps);
-
-  function reset() {
-    setTimeout(() => {
-      // resetCreatePoolTx ();
-      setActiveStep(0);
-    }, 200);
-  }
-
-  const onNext = useCallback(async () => {
-    const data = getValues();
-    await createPool({
-      ownerAddress: data.ownerAddress,
-      salt: BigInt(0),
-      allocations: data.allocations,
-    });
-    goToNext();
-  }, [getValues, createPool, goToNext]);
-
   return (
     <StepperModal
       steps={steps}
-      onNext={onNext}
       onOpenChange={({ open }) => {
-        if (!open) {
-          reset();
-        }
         onOpenChange?.({ open });
       }}
-      activeStep={activeStepIndex}
       open={open}
     />
   );

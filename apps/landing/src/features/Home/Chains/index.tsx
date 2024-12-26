@@ -9,8 +9,6 @@ import ZoraIcon from "@/assets/networks/Zora.svg";
 import BNBIcon from "@/assets/networks/BNB.svg";
 import ZkSyncIcon from "@/assets/networks/zkSync.svg";
 import BaseIcon from "@/assets/networks/Base.svg";
-import transitionImage from "@/assets/transition.jpg";
-import NextImage from "next/image";
 
 const networks = [
   { name: "Ethereum", icon: EthereumIcon },
@@ -26,7 +24,7 @@ const networks = [
 
 export default function HomeChains() {
   return (
-    <Box mb={"32"} py={"12"} layerStyle={"fill.muted"}>
+    <Box my={"32"}>
       <Container maxW="7xl">
         <Heading as={"h2"} variant={"subtag"} mb={"6"} fontSize={"xs"}>
           Available on {networks.length - 1}+ networks

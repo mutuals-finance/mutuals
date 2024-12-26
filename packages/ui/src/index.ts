@@ -65,7 +65,11 @@ export {
   DialogActionTrigger,
   Avatar,
   type AvatarProps,
+  AvatarFallback,
   AvatarGroup,
+  AvatarRoot,
+  AvatarImage,
+  AvatarIcon,
   StatLabel,
   StatRoot,
   StatValueText,
@@ -115,4 +119,6 @@ export {
   SelectRoot,
   SelectTrigger,
   SelectValueText,
+  DataListRoot,
+  DataListItem,
 } from "./components";

@@ -7,9 +7,11 @@ import Form from "@/components/Form";
 import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddFormContent from "@/features/PoolAdd/Form/Content";
 import PoolAddModal from "@/features/PoolAdd/Modal";
+import { useAccount } from "wagmi";
 
 export default function PoolAdd() {
   const [modalOpen, setModalOpen] = useToggle(false);
+  const { address } = useAccount();
 
   return (
     <Form<PoolAddData>
@@ -17,7 +19,7 @@ export default function PoolAdd() {
       onSubmitInvalid={() => {
         console.log("Submit: invalid");
       }}
-      defaultValues={{ allocations: [] }}
+      defaultValues={{ ownerAddress: address, allocations: [] }}
     >
       {(methods) => (
         <>

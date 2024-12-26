@@ -1,14 +1,4 @@
-import {
-  GridItem,
-  Stack,
-  Card,
-  Heading,
-  Text,
-  Box,
-  GridItemProps,
-  Badge,
-} from "@mutuals/ui";
-import IconBox from "@/components/IconBox";
+import { Stack, Card, Heading, Text, GridItemProps } from "@mutuals/ui";
 
 interface FeatureCardProps extends GridItemProps {
   heading: string;
@@ -24,40 +14,27 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <GridItem
-      display={"flex"}
-      alignItems={"stretch"}
-      justifyContent={"stretch"}
+    <Card.Root
+      variant={"subtle"}
+      size={"md"}
+      bg="transparent"
+      w={"full"}
       {...props}
     >
-      <Card.Root variant={"outline"} w={"full"}>
-        <Card.Body
-          as={Stack}
-          direction={"column"}
-          justifyContent={"space-between"}
-          gap={"6"}
-        >
-          {children}
-          <Box>
-            {index && index >= 0 && (
-              <IconBox mb="6" size={"sm"} bg={"bg.muted"} color={"fg.subtle"}>
-                <Heading as={"h4"} size={"xs"}>
-                  0{index}
-                </Heading>
-              </IconBox>
-            )}
-            <Heading as={"h3"} size={"xl"}>
-              {heading}
-            </Heading>
-          </Box>
+      <Card.Body
+        as={Stack}
+        direction={"column"}
+        justifyContent={"space-between"}
+        alignItems={"flex-start"}
+        gap={"2"}
+      >
+        {children}
+        <Heading as={"h3"} size={"xs"} variant={"subtag"}>
+          {heading}
+        </Heading>
 
-          <Box w={"full"} maxW={"xs"}>
-            <Text fontSize={{ base: "sm", md: "md" }} variant={"muted"}>
-              {description}
-            </Text>
-          </Box>
-        </Card.Body>
-      </Card.Root>
-    </GridItem>
+        <Text>{description}</Text>
+      </Card.Body>
+    </Card.Root>
   );
 }

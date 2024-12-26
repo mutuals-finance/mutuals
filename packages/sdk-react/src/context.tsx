@@ -12,11 +12,11 @@ export type MutualsReactSdkContext = {
 };
 
 export const MutualsContext = createContext<MutualsReactSdkContext | undefined>(
-    undefined,
+  undefined,
 );
 
 export const MutualsProvider = ({
-  config = { chainId: 1 },
+  config = { chainId: 80002 },
   children,
 }: PropsWithChildren<{
   config?: MutualsClientConfig;
@@ -24,6 +24,7 @@ export const MutualsProvider = ({
   const [mutualsClient, setMutualsClient] = useState<MutualsClient>(
     () => new MutualsClient(config),
   );
+
   const initClient = (config: MutualsClientConfig) => {
     setMutualsClient(new MutualsClient(config));
   };

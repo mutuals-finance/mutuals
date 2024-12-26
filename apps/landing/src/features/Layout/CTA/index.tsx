@@ -1,18 +1,10 @@
-import {
-  Box,
-  CardRoot,
-  CardBody,
-  Button,
-  Heading,
-  Container,
-  Stack,
-} from "@mutuals/ui";
+import { Box, Button, Heading, Container, Stack } from "@mutuals/ui";
 import NextImage from "next/image";
 import ctaBgImage from "@/assets/background-primary.png";
 
 export default function CTA() {
   return (
-    <Container as="section" fluid={true}>
+    <Container maxW="7xl">
       <Box
         rounded={"lg"}
         position="relative"

@@ -1,4 +1,4 @@
-import { Text, Heading, Card, Icon, Flex, IconProps } from "@mutuals/ui";
+import { Text, Heading, Card, Icon, IconProps } from "@mutuals/ui";
 import IconBox from "@/components/IconBox";
 
 interface ValueCardProps extends Card.RootProps {
@@ -20,8 +20,8 @@ export default function ValueCard({
           <IconBox
             color={"white"}
             bgGradient="to-br"
-            gradientFrom="blue.300"
-            gradientTo="blue.600"
+            gradientFrom="blue.400"
+            gradientTo="blue.800"
           >
             <Icon boxSize={5}>{icon}</Icon>
           </IconBox>

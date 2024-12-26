@@ -1,7 +1,7 @@
 import { Flex, FlexProps } from "@mutuals/ui";
 
 interface IconBoxProps extends FlexProps {
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 export default function IconBox({
   children,
@@ -9,10 +9,11 @@ export default function IconBox({
   ...props
 }: IconBoxProps) {
   const sizeProps = {
-    sm: { w: "8", h: "8", rounded: "md", fontSize: "lg" },
+    xs: { w: "8", h: "8", rounded: "lg", fontSize: "md" },
+    sm: { w: "10", h: "10", rounded: "lg", fontSize: "lg" },
     md: { w: "12", h: "12", rounded: "lg", fontSize: "xl" },
     lg: { w: "14", h: "14", rounded: "lg", fontSize: "2xl" },
-    xl: { w: "14", h: "14", rounded: "xl", fontSize: "3xl" },
+    xl: { w: "16", h: "16", rounded: "xl", fontSize: "3xl" },
   }[size];
 
   return (

@@ -1,8 +1,6 @@
 import {
-  Box,
   Button,
   DialogBody,
-  DialogBackdrop,
   DialogCloseTrigger,
   DialogContent,
   DialogFooter,
@@ -18,86 +16,97 @@ import {
 import StepperItem, {
   StepperModalStep,
 } from "@/components/StepperModal/StepperItem";
+import { useStateList } from "react-use";
 
 export interface StepperDialogProps extends Omit<DialogRootProps, "children"> {
-  onNext: (step: StepperModalStep, index: number) => void | Promise<void>;
-  activeStep: number;
   steps: StepperModalStep[];
 }
 
 export default function StepperDialog({
   onOpenChange,
-  onNext,
-  activeStep,
   steps,
   size = "md",
   ...props
 }: StepperDialogProps) {
-  const activeStepContent = steps[activeStep];
-  const activeStepTitle = activeStepContent?.title;
+  const { currentIndex, state, next, setStateAt } = useStateList(steps);
+
+  function reset() {
+    setTimeout(() => {
+      // resetCreatePoolTx ();
+      setStateAt(0);
+    }, 200);
+  }
 
   return (
-    <DialogRoot onOpenChange={onOpenChange} size={size} {...props}>
-      <DialogBackdrop />
-
-      <DialogContent>
-        <DialogHeader>
-          <Stack
-            direction={"row"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
-            <DialogTitle fontWeight={"medium"}>{activeStepTitle}</DialogTitle>
-
-            <DialogCloseTrigger />
-          </Stack>
-        </DialogHeader>
-        <DialogBody>
-          <StepsRoot
-            orientation="vertical"
-            defaultValue={0}
-            count={steps.length}
-            size="sm"
-            step={activeStep}
-            minH={"xs"}
-          >
+    <DialogRoot
+      onOpenChange={onOpenChange}
+      size={size}
+      scrollBehavior="inside"
+      {...props}
+    >
+      <DialogContent backdrop={true}>
+        <StepsRoot
+          w={"full"}
+          defaultValue={0}
+          count={steps.length}
+          size="sm"
+          step={currentIndex}
+        >
+          <DialogHeader>
+            <Stack
+              direction={"row"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+              mb={"4"}
+            >
+              <DialogTitle fontWeight={"medium"}>{state.title}</DialogTitle>
+            </Stack>
             <StepsList>
               {steps.map((step, index) => (
                 <StepsItem key={step.id} index={index} />
               ))}
             </StepsList>
+          </DialogHeader>
+
+          <DialogCloseTrigger />
+
+          <DialogBody w={"full"}>
             {steps.map(({ children, ...item }, index) => {
               return (
                 <StepperItem
                   key={item.id}
-                  {...item}
-                  isActive={index === activeStep}
+                  isActive={index === currentIndex}
                   index={index}
+                  {...item}
                 >
                   {children}
                 </StepperItem>
               );
             })}
-          </StepsRoot>
-        </DialogBody>
+          </DialogBody>
 
-        <DialogFooter>
-          <Button
-            variant="ghost"
-            onClick={() => onOpenChange?.({ open: false })}
-          >
-            Cancel
-          </Button>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                reset();
+                onOpenChange?.({ open: false });
+              }}
+            >
+              Cancel
+            </Button>
 
-          <Button
-            disabled={activeStepContent?.disabled}
-            onClick={() =>
-              !!activeStepContent && onNext(activeStepContent, activeStep)
-            }
-          >
-            Next
-          </Button>
-        </DialogFooter>
+            <Button
+              disabled={state?.disabled}
+              onClick={() => {
+                next();
+                state.onNext?.(state, currentIndex);
+              }}
+            >
+              Next
+            </Button>
+          </DialogFooter>
+        </StepsRoot>
       </DialogContent>
     </DialogRoot>
   );

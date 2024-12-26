@@ -8,6 +8,7 @@ export default async function AuthRequire({
   children,
 }: React.PropsWithChildren) {
   const query = await getViewerWallets();
+  const redirectUrl = `/auth/login`;
 
   const isLoggedIn =
     query.data?.viewer &&
@@ -20,8 +21,12 @@ export default async function AuthRequire({
       await cookies().then((c) => c.set("redirectURL", pathname));
     }
 
-    redirect(`/auth/login`);
+    redirect(`${redirectUrl}`);
   }
 
-  return <RequireWallet query={query}>{children}</RequireWallet>;
+  return (
+    <RequireWallet query={query} redirectArgs={[redirectUrl]}>
+      {children}
+    </RequireWallet>
+  );
 }

@@ -1,7 +1,6 @@
 import {
   FieldArrayWithId,
   useFieldArray,
-  UseFieldArrayInsert,
   useFormContext,
 } from "react-hook-form";
 import { useCallback } from "react";
@@ -26,36 +25,12 @@ type AllocationInsertCachedProps = {
 type AllocationInsertProps = AllocationInsertCachedProps &
   AllocationAppendProps;
 
-type Stack = Array<{ children: Array<any> }>;
-
-function dfs(
-  stack: Stack,
-  options?: { condition?: (stack: Stack) => boolean },
-) {
-  const flat = [];
-  const _stack = stack;
-
-  const condition = options?.condition ?? ((s) => s.length > 0);
-
-  while (condition(_stack)) {
-    const cur = _stack.shift();
-    flat.push(cur);
-
-    if (cur.children) {
-      cur.children.reverse().forEach((child) => stack.unshift(child));
-    }
-  }
-
-  return flat;
-}
-
 export type UseAllocationGroup = Omit<UseAllocationDefaults, "setCached"> & {
   insert: (props?: AllocationInsertProps) => void;
   insertCached: (props?: AllocationInsertCachedProps) => void;
   fields: FieldArrayWithId<PoolAddData, "allocations", "id">[];
   append: (props?: AllocationAppendProps) => void;
   remove: (index?: number | number[]) => void;
-  computeMerkleRoot: () => void;
 };
 
 export type UseAllocationDataArgs = {
@@ -117,11 +92,6 @@ export function useAllocationData(
     [insert],
   );
 
-  const computeMerkleRoot = useCallback(() => {
-    const flat = dfs(fields);
-    console.log("got flat nodes", flat);
-  }, [fields]);
-
   return {
     insert,
     insertCached,
@@ -129,7 +99,6 @@ export function useAllocationData(
     defaults,
     cached: cachedAllocation,
     remove,
-    computeMerkleRoot,
     fields,
   };
 }

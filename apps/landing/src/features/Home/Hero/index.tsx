@@ -1,6 +1,5 @@
 import {
   Button,
-  Box,
   Container,
   Heading,
   Text,
@@ -8,6 +7,7 @@ import {
   VStack,
   MotionBox,
   For,
+  Box,
 } from "@mutuals/ui";
 import HeroImageSlider from "@/features/Home/Hero/ImageSlider";
 import { MotionConfig } from "framer-motion";
@@ -22,7 +22,8 @@ export default function HomeHero() {
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 3 }}>
       <VStack
         position={"relative"}
-        pt={{ base: "24", lg: "44" }}
+        pt={{ base: "16", lg: "36" }}
+        mb={"16"}
         minH={{ base: "100vh", lg: "unset" }}
         justifyContent="center"
       >
@@ -48,16 +49,21 @@ export default function HomeHero() {
                       size={{ base: "5xl", lg: "7xl" }}
                       fontWeight={"semibold"}
                     >
-                      The best way to manage on-chain payments.
+                      The best way to manage onchain payments.
                     </Heading>
                   ),
                 },
                 {
                   children: (
-                    <Text variant={"muted"} fontSize={{ base: "lg", lg: "xl" }}>
-                      Mutuals enables automated and trustless revenue
-                      distribution without reliance on intermediaries.
-                    </Text>
+                    <Box maxW={"lg"}>
+                      <Text
+                        variant={"muted"}
+                        fontSize={{ base: "lg", lg: "xl" }}
+                      >
+                        Automated and trustless revenue distribution without
+                        reliance on intermediaries
+                      </Text>
+                    </Box>
                   ),
                 },
                 {

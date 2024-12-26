@@ -1,7 +1,7 @@
 "use client";
 
 import { StackProps, VStack } from "@mutuals/ui";
-import React, { FormEvent, useCallback } from "react";
+import React from "react";
 import {
   FieldValues,
   FormProvider,
@@ -31,10 +31,9 @@ export default function Form<
   children,
   onSubmit,
   onSubmitInvalid,
-  defaultValues,
   ...props
 }: FormProps<TFieldValues, TContext>) {
-  const methods = useForm<TFieldValues, TContext>({ defaultValues, ...props });
+  const methods = useForm<TFieldValues, TContext>({ ...props });
   const { handleSubmit } = methods;
 
   return (

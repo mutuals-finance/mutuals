@@ -4,7 +4,7 @@ export * from "./allocation";
 
 export const PERCENTAGE_SCALE = BigInt(1e6);
 
-const POOL_FACTORY_ADDRESS = "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE";
+const POOL_FACTORY_ADDRESS = "0xbC4BFa087473C516A04D720Ac6301BF8981177FA";
 const POOL_FACTORY_ADDRESS_POLYGON_AMOY =
   "0xbC4BFa087473C516A04D720Ac6301BF8981177FA";
 const POOL_FACTORY_ADDRESS_BSC = "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE";
@@ -17,6 +17,8 @@ export const getPoolFactoryAddress = (chainId: number): Address => {
   if (chainId === ChainId.BSC) return POOL_FACTORY_ADDRESS_BSC;
   if (chainId === ChainId.HOLESKY) return POOL_FACTORY_ADDRESS_HOLESKY;
   if (chainId === ChainId.SEPOLIA) return POOL_FACTORY_ADDRESS_SEPOLIA;
+  if (chainId === ChainId.POLYGON_AMOY)
+    return POOL_FACTORY_ADDRESS_POLYGON_AMOY;
   return POOL_FACTORY_ADDRESS;
 };
 

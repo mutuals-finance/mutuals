@@ -1,10 +1,10 @@
-import PageHeader from "@/components/PageHeader";
+import ShellPageHeader from "src/features/Shell/PageHeader";
 import ContactOptions from "@/features/Contact/Options";
 
 export default function ContactPage() {
   return (
     <>
-      <PageHeader tag={"Contact"}>Reach Out</PageHeader>
+      <ShellPageHeader tag={"Contact"}>Reach Out</ShellPageHeader>
       <ContactOptions />
     </>
   );

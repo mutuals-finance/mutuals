@@ -1,13 +1,8 @@
 "use client";
 
 import { Box, Button, Container, SimpleGrid, Stack } from "@mutuals/ui";
-import SectionHeader from "@/components/SectionHeader";
-import {
-  IoCodeWorkingOutline,
-  IoPlayOutline,
-  IoTimerOutline,
-  IoTrendingUpOutline,
-} from "react-icons/io5";
+import SectionHeader from "src/features/Shell/SectionHeader";
+import { IoCodeWorkingOutline, IoTimerOutline } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
 import ValueCard from "./ValueCard";
 import NextImage from "next/image";

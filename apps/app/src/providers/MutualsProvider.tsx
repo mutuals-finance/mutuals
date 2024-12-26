@@ -1,23 +1,33 @@
 "use client";
 
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren } from "react";
+import { usePublicClient, useAccount, useWalletClient } from "wagmi";
 import {
-  MutualsClientConfig,
   MutualsProvider as Provider,
+  useMutualsClient,
 } from "@mutuals/sdk-react";
-import { useClient } from "wagmi";
+
+function MutualsProviderInner({ children }: PropsWithChildren) {
+  const { chainId } = useAccount();
+  const publicClient = usePublicClient({ chainId });
+  const { data: walletClient } = useWalletClient({
+    chainId,
+  });
+
+  useMutualsClient({
+    // NOTE: existing wallet connection must not be checked, since its done by `AuthRequireWallet`
+    chainId: chainId!,
+    publicClient,
+    walletClient,
+  });
+
+  return children;
+}
 
 export default function MutualsProvider({ children }: PropsWithChildren) {
-  const client = useClient();
-
-  const config = useMemo<MutualsClientConfig>(
-    () => ({
-      chainId: client?.chain.id ?? 1,
-      client,
-    }),
-    [client],
+  return (
+    <Provider>
+      <MutualsProviderInner>{children}</MutualsProviderInner>
+    </Provider>
   );
-
-  if (!client?.chain.id) return children;
-  return <Provider config={config}>{children}</Provider>;
 }

@@ -7,29 +7,33 @@ import {
   AccordionRoot,
   Heading,
 } from "@mutuals/ui";
-import SectionHeader from "@/components/SectionHeader";
 import items from "@/features/Pricing/FAQ/items";
+import ShellSectionCard from "@/features/Shell/SectionCard";
 
 export default function PricingFAQ() {
   return (
-    <Box py="32" mt="32" layerStyle="fill.muted">
+    <Box mt="32" mb={"16"}>
       <Container maxW="7xl">
-        <SectionHeader mx="unset" textAlign={"left"} label={"Mutuals FAQ"}>
-          Questions? We're glad you asked.
-        </SectionHeader>
-
-        <AccordionRoot multiple size={"lg"}>
-          {items.map(({ title, children, ...props }, i) => (
-            <AccordionItem key={i} value={title} {...props}>
-              <AccordionItemTrigger py={"6"}>
-                <Heading as={"h5"} size="2xl">
-                  {title}
-                </Heading>
-              </AccordionItemTrigger>
-              <AccordionItemContent>{children}</AccordionItemContent>
-            </AccordionItem>
-          ))}
-        </AccordionRoot>
+        <ShellSectionCard
+          variant={"subtle"}
+          sectionHeaderProps={{
+            children: "Questions? We're glad you asked.",
+            label: "Mutuals FAQ",
+          }}
+        >
+          <AccordionRoot multiple size={"lg"}>
+            {items.map(({ title, children, ...props }, i) => (
+              <AccordionItem key={i} value={title} {...props}>
+                <AccordionItemTrigger py={"6"}>
+                  <Heading as={"h5"} size="xl">
+                    {title}
+                  </Heading>
+                </AccordionItemTrigger>
+                <AccordionItemContent>{children}</AccordionItemContent>
+              </AccordionItem>
+            ))}
+          </AccordionRoot>
+        </ShellSectionCard>
       </Container>
     </Box>
   );

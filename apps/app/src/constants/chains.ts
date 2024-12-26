@@ -5,11 +5,12 @@ import {
   optimismGoerli,
   polygon,
   polygonMumbai,
+  polygonAmoy,
   hardhat,
   localhost,
   arbitrum,
   optimism,
-} from "viem/chains";
+} from "wagmi/chains";
 
 import * as ARBITRUM_LOGO from "@/assets/svg/arbitrum-logo.svg";
 import * as ETH_LOGO from "@/assets/svg/ethereum-logo.svg";
@@ -25,6 +26,7 @@ const _chains = {
   optimismGoerli,
   polygon,
   polygonMumbai,
+  polygonAmoy,
   hardhat,
   localhost,
   arbitrum,
@@ -36,6 +38,7 @@ export { ARBITRUM_LOGO, ETH_LOGO, MATIC_LOGO };
 export const CHAIN_LOGO_URI_MAP: Record<number, typeof import("*.svg")> = {
   [mainnet.id]: ETH_LOGO, // mainnet
   [polygon.id]: MATIC_LOGO, // polygon
+  [polygonAmoy.id]: MATIC_LOGO, // polygon amoy
   [polygonMumbai.id]: MATIC_LOGO, // polygon mumbai
   [arbitrum.id]: ARBITRUM_LOGO, // Arbitrum One
   [optimism.id]: OPTIMISM_LOGO, // Optimism
@@ -49,6 +52,7 @@ export const CHAIN_LOGO_URI_MAP: Record<number, typeof import("*.svg")> = {
 export const CHAIN_SHORT_NAME_MAP: Record<number, string> = {
   [mainnet.id]: "eth", // mainnet
   [polygon.id]: "matic", // polygon
+  [polygonAmoy.id]: "amoy", // polygon mumbai
   [polygonMumbai.id]: "maticmum", // polygon mumbai
   [arbitrum.id]: "arb1", // Arbitrum One
   [optimism.id]: "o", // Optimism

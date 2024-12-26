@@ -72,7 +72,6 @@ class PoolTransactions extends BaseTransactions {
     validateAddress(ownerAddress);
 
     const allocationTree = buildMerkleTree(allocations);
-
     this._requirePublicClient();
     if (this._shouldRequireWalletClient) this._requireWalletClient();
 

@@ -1,7 +1,6 @@
 import {
   Card,
   Container,
-  Flex,
   Heading,
   Icon,
   SimpleGrid,
@@ -9,6 +8,7 @@ import {
   Text,
 } from "@mutuals/ui";
 import items from "@/features/Contact/Options/items";
+import IconBox from "@/components/IconBox";
 
 export default function ContactOptions() {
   return (
@@ -24,13 +24,9 @@ export default function ContactOptions() {
             >
               {!!icon && (
                 <Card.Header>
-                  <Flex
-                    alignItems={"center"}
-                    justifyContent={"center"}
+                  <IconBox
+                    size={"xl"}
                     color={"white"}
-                    rounded="lg"
-                    w={"16"}
-                    h={"16"}
                     bgGradient="to-br"
                     gradientFrom="blue.300"
                     gradientTo="blue.600"
@@ -38,11 +34,11 @@ export default function ContactOptions() {
                     <Icon asChild boxSize={6}>
                       {icon}
                     </Icon>
-                  </Flex>
+                  </IconBox>
                 </Card.Header>
               )}
 
-              <Card.Body>
+              <Card.Body alignItems={"flex-start"}>
                 <Heading mb="6" size={"xl"}>
                   {heading}
                 </Heading>

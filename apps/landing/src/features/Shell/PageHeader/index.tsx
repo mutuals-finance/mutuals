@@ -12,7 +12,7 @@ interface PageHeaderProps extends BoxProps {
   headingProps?: HeadingProps;
 }
 
-export default function PageHeader({
+export default function ShellPageHeader({
   children,
   tag,
   headingProps,
@@ -27,7 +27,7 @@ export default function PageHeader({
           </Tag>
         )}
 
-        <Heading size={{ base: "5xl", lg: "5xl" }} as="h1" {...headingProps}>
+        <Heading size={{ base: "4xl", lg: "5xl" }} as="h1" {...headingProps}>
           {children}
         </Heading>
       </Container>

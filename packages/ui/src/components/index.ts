@@ -26,6 +26,7 @@ export * from "./ui/file-button";
 export * from "./ui/number-input";
 export * from "./ui/stepper-input";
 export * from "./ui/select";
+export * from "./ui/data-list";
 
 /**
  * Custom Components

@@ -1,23 +1,15 @@
 "use client";
 
-import {
-  Box,
-  Container,
-  AspectRatio,
-  Stack,
-  Icon,
-  Heading,
-  Text,
-} from "@mutuals/ui";
+import { Box, Container, AspectRatio, Stack, Heading, Text } from "@mutuals/ui";
 
 import percentImage from "@/assets/percent.webp";
 import bg1Image from "@/assets/pay-1-bg.png";
 import bg2Image from "@/assets/pay-2-bg.png";
 import bg3Image from "@/assets/pay-3-bg.png";
 import prioritizedImage from "@/assets/prioritized.webp";
-import SectionHeader from "@/components/SectionHeader";
+import SectionHeader from "src/features/Shell/SectionHeader";
 import NextImage from "next/image";
-import { IoArrowUp, IoArrowUpCircle } from "react-icons/io5";
+import { IoArrowUp } from "react-icons/io5";
 import IconBox from "@/components/IconBox";
 
 const payments = [
@@ -54,7 +46,7 @@ const payments = [
 export default function HomePayments() {
   const payment = payments[0] as (typeof payments)[0];
   return (
-    <Box mt="32" py={"32"} layerStyle={"fill.muted"}>
+    <Box my="32">
       <Container maxW="7xl">
         <SectionHeader label={"Flexible Setup"}>
           Payments For Every Use Case
@@ -114,7 +106,7 @@ export default function HomePayments() {
 
         <Stack direction={"row"} gap={"3"} maxW={"xl"} mt={"9"}>
           <Box>
-            <IconBox size="lg" color={"fg.inverted"} bg={"bg.inverted"}>
+            <IconBox size="md" color={"fg.inverted"} bg={"bg.inverted"}>
               <Box transform={"rotate(45deg)"}>
                 <IoArrowUp />
               </Box>

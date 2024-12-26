@@ -15,7 +15,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         {children ? (
           <Stack gap="1">
             <ChakraAlert.Title>{title}</ChakraAlert.Title>
-            <ChakraAlert.Description>{children}</ChakraAlert.Description>
+            <ChakraAlert.Description w={"full"}>
+              {children}
+            </ChakraAlert.Description>
           </Stack>
         ) : (
           <ChakraAlert.Title>{title}</ChakraAlert.Title>
