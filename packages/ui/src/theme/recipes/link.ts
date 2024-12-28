@@ -6,20 +6,20 @@ export default defineRecipe({
       solid: {
         textStyle: "link",
         _hover: {
-          color: "fg.subtle",
+          color: "fg.muted",
         },
         _active: {
-          color: "fg.muted",
+          color: "fg.subtle",
         },
       },
       subtle: {
         textStyle: "link",
-        color: "fg.muted",
+        color: "fg.subtle",
         _hover: {
           color: "fg",
         },
         _active: {
-          color: "fg.subtle",
+          color: "fg.muted",
         },
       },
       plain: {},

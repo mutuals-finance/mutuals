@@ -5,6 +5,7 @@ const items = [
     label: "for free",
     heading: "Regular Usage",
     description: "There is no fee for using Mutuals.",
+    variant: "outline",
   },
   {
     label: "your preferred amount",
@@ -15,6 +16,20 @@ const items = [
       "Custom donation per withdrawal",
       "Publicly visible donation badge",
     ],
+    variant: "outline",
+  },
+  {
+    label: "for free, but additional costs possible",
+    heading: "Customized",
+    description:
+      "Connect with our team for larger projects with dedicated requirements, annual contracts, and more.",
+    features: [
+      "Custom donation per withdrawal",
+      "Publicly visible donation badge",
+      "Dedicated requirements",
+    ],
+    variant: "subtle",
+    bg: "transparent",
   },
 ].map((i) => ({
   ...i,

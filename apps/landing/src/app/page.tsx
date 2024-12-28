@@ -4,15 +4,18 @@ import Hero from "src/features/Home/Hero";
 import Payments from "src/features/Home/Payments";
 import Value from "src/features/Home/Value";
 import Chains from "src/features/Home/Chains";
-import { Box } from "@mutuals/ui";
+import { Theme } from "@mutuals/ui";
+import HeaderObserverChange from "@/providers/HeaderObserver/Change";
 
 export default function HomePage() {
   return (
     <>
-      <Box className={"dark"} bg={"bg"}>
-        <Hero />
-        <Value />
-      </Box>
+      <Theme appearance="dark">
+        <HeaderObserverChange theme={"dark"}>
+          <Hero />
+          <Value />
+        </HeaderObserverChange>
+      </Theme>
 
       <Actors />
       <Payments />

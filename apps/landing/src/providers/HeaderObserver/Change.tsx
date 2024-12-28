@@ -16,12 +16,10 @@ export default function HeaderObserverChange({
   const { setHeaderTheme } = useHeaderObserver();
 
   const onViewportEnter = (entry: IntersectionObserverEntry | null) => {
-    console.log("onViewportEnter", entry);
     setHeaderTheme(theme);
   };
 
   const onViewportLeave = (entry: IntersectionObserverEntry | null) => {
-    console.log("onViewportLeave", entry);
     setHeaderTheme("system");
   };
 

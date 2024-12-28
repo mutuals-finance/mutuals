@@ -12,7 +12,7 @@ import IconBox from "@/components/IconBox";
 
 export default function ContactOptions() {
   return (
-    <Container mt="20" mb="32" maxW="6xl">
+    <Container mt="16" mb="32" maxW="5xl">
       <Stack textAlign={"center"} alignItems={"center"}>
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "6", lg: "12" }}>
           {items.map(({ icon, heading, description, children, ...props }) => (
@@ -22,29 +22,18 @@ export default function ContactOptions() {
               key={heading}
               {...props}
             >
-              {!!icon && (
-                <Card.Header>
-                  <IconBox
-                    size={"xl"}
-                    color={"white"}
-                    bgGradient="to-br"
-                    gradientFrom="blue.300"
-                    gradientTo="blue.600"
-                  >
-                    <Icon asChild boxSize={6}>
+              <Card.Body alignItems={"flex-start"}>
+                {!!icon && (
+                  <IconBox mb="4" size={"lg"} color={"white"} bg="blue.600">
+                    <Icon asChild boxSize={5}>
                       {icon}
                     </Icon>
                   </IconBox>
-                </Card.Header>
-              )}
-
-              <Card.Body alignItems={"flex-start"}>
-                <Heading mb="6" size={"xl"}>
-                  {heading}
-                </Heading>
+                )}
+                <Heading size={"xl"}>{heading}</Heading>
 
                 {!!description?.length && description.length > 0 && (
-                  <Stack gap={"3"}>
+                  <Stack gap={"1"} mt={"4"}>
                     {description.map((paragraph, i) => (
                       <Text key={i} variant={"muted"}>
                         {paragraph}

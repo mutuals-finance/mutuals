@@ -1,15 +1,12 @@
 import {
-  Link,
   Group,
   Container,
   IconButton,
   Stack,
   Text,
   ColorModeMenu,
-  Heading,
 } from "@mutuals/ui";
-import { BiLogoTelegram } from "react-icons/bi";
-import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
+import { socialLinks } from "@/features/Layout/links";
 
 export default function FooterFooter() {
   return (
@@ -35,11 +32,7 @@ export default function FooterFooter() {
         </Text>
         <Stack direction="row" gap={6} justify={"space-between"}>
           <Group>
-            {[
-              { "aria-label": "Twitter", children: <IoLogoTwitter /> },
-              { "aria-label": "Discord", children: <IoLogoDiscord /> },
-              { "aria-label": "Telegram", children: <BiLogoTelegram /> },
-            ].map(({ children, ...props }, i) => (
+            {socialLinks.map(({ children, href: _variant, ...props }) => (
               <IconButton
                 size={"sm"}
                 variant="ghost"

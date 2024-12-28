@@ -18,59 +18,56 @@ import items from "@/features/Pricing/Options/items";
 
 export default function PricingOptions() {
   return (
-    <Box mt="16" mb={"32"} position={"relative"}>
-      <Container maxW="6xl">
-        <SimpleGrid gap={{ base: 6, lg: 12 }} columns={{ base: 1, md: 2 }}>
-          {items.map(({ heading, label, description, features, ...props }) => (
-            <Card.Root size={"lg"} key={label} {...props}>
-              <Card.Header>
-                <Heading size={"3xl"}>{heading}</Heading>
+    <Container maxW="7xl" mt="16" mb={"32"} position={"relative"}>
+      <SimpleGrid gap={{ base: 6, lg: 12 }} columns={{ base: 1, md: 3 }}>
+        {items.map(({ heading, label, description, features, ...props }) => (
+          <Card.Root size={"lg"} key={label} {...props}>
+            <Card.Header>
+              <Heading size={"3xl"}>{heading}</Heading>
+              <Text variant={"muted"}>{description}</Text>
+            </Card.Header>
+            <Card.Body>
+              <Heading as={"h3"} size={"2xl"}>
+                <FormatNumber value={0.0} style="currency" currency="USD" />
+              </Heading>
 
-                <Text variant={"muted"}>{description}</Text>
-              </Card.Header>
-              <Card.Body>
-                <Heading as={"h3"} size={"2xl"}>
-                  <FormatNumber value={0.0} style="currency" currency="USD" />
-                </Heading>
+              <Box>
+                <Text color={"fg.muted"} fontWeight={"500"} fontSize={"sm"}>
+                  {label}
+                </Text>
+              </Box>
 
-                <Box>
-                  <Text color={"fg.muted"} fontWeight={"500"} fontSize={"sm"}>
-                    {label}
-                  </Text>
-                </Box>
+              <Button w="full" mt="6" size={"lg"} variant={"subtle"}>
+                Get Started
+              </Button>
+            </Card.Body>
+            <Card.Footer as={Stack} alignItems={"flex-start"}>
+              <Heading size="xs" variant={"subtag"} as="h3">
+                Includes
+              </Heading>
 
-                <Button w="full" mt="6" size={"lg"} variant={"subtle"}>
-                  Get Started
-                </Button>
-              </Card.Body>
-              <Card.Footer as={Stack} alignItems={"flex-start"}>
-                <Heading size="xs" variant={"subtag"} as="h3">
-                  Includes
-                </Heading>
-
-                <List.Root gap={"0.5"} as={Stack} variant="plain">
-                  {features.map((feature) => (
-                    <List.Item
-                      key={feature}
-                      as={Flex}
-                      gap="0"
-                      alignItems={"flex-start"}
-                    >
-                      <List.Indicator
-                        w="4"
-                        h={"4"}
-                        as={IoCheckboxOutline}
-                        color={"fg.muted"}
-                      />
-                      <Text>{feature}</Text>
-                    </List.Item>
-                  ))}
-                </List.Root>
-              </Card.Footer>
-            </Card.Root>
-          ))}
-        </SimpleGrid>
-      </Container>
-    </Box>
+              <List.Root gap={"0.5"} as={Stack} variant="plain">
+                {features.map((feature) => (
+                  <List.Item
+                    key={feature}
+                    as={Flex}
+                    gap="0"
+                    alignItems={"flex-start"}
+                  >
+                    <List.Indicator
+                      w="4"
+                      h={"4"}
+                      as={IoCheckboxOutline}
+                      color={"fg.muted"}
+                    />
+                    <Text>{feature}</Text>
+                  </List.Item>
+                ))}
+              </List.Root>
+            </Card.Footer>
+          </Card.Root>
+        ))}
+      </SimpleGrid>
+    </Container>
   );
 }

@@ -6,15 +6,21 @@ import {
   Button,
   type LinkProps,
   Link,
-  Stack,
   Box,
+  Center,
+  Icon,
+  Stack,
   StackSeparator,
   CloseButton,
   ButtonProps,
-  DrawerRoot,
+  Group,
+  IconButton,
+  ColorModeButton,
 } from "@mutuals/ui";
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/features/Layout/Header/NavWrapper";
+import { socialLinks } from "@/features/Layout/links";
+import { IoArrowForward } from "react-icons/io5";
 
 interface MobileNavProps
   extends Omit<Drawer.ContentProps, "children">,
@@ -57,14 +63,42 @@ export default function NavMobileDrawer({
               focusRing={"none"}
               {...link}
             >
-              {children}
+              <Center
+                inline
+                gap="6"
+                flex={"1"}
+                justifyContent={"space-between"}
+              >
+                <Box>{children}</Box>
+                <Icon color={"fg.subtle"}>
+                  <IoArrowForward />
+                </Icon>
+              </Center>
             </Link>
           ))}
-          <Box p={"6"}>
-            <Button size="lg" w={"full"}>
+          <Stack gap={6} p={"6"}>
+            <Button variant={"subtle"} size="xl" w={"full"}>
+              Reach out
+            </Button>
+            <Button variant="solid" size="xl" w={"full"}>
               Launch App
             </Button>
-          </Box>
+            <Stack direction="row" gap={6} justify={"space-between"}>
+              <Group>
+                {socialLinks.map(({ children, href: _href, ...props }) => (
+                  <IconButton
+                    size={"sm"}
+                    variant="outline"
+                    key={props["aria-label"]}
+                    {...props}
+                  >
+                    {children}
+                  </IconButton>
+                ))}
+              </Group>
+              <ColorModeButton variant="outline" />
+            </Stack>
+          </Stack>
         </Stack>
       </DrawerBody>
     </DrawerContent>

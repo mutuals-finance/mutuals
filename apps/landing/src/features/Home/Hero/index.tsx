@@ -32,8 +32,8 @@ export default function HomeHero() {
           mb={{ base: "12", lg: "24" }}
         >
           <VStack
-            alignItems={{ base: "flex-start", md: "center" }}
-            textAlign={{ base: "left", md: "center" }}
+            alignItems={{ base: "center", md: "center" }}
+            textAlign={{ base: "center", md: "center" }}
             gap={"6"}
           >
             <For
@@ -55,7 +55,7 @@ export default function HomeHero() {
                 },
                 {
                   children: (
-                    <Box maxW={"lg"}>
+                    <Box maxW={"xl"}>
                       <Text
                         variant={"muted"}
                         fontSize={{ base: "lg", lg: "xl" }}
@@ -69,8 +69,8 @@ export default function HomeHero() {
                 {
                   children: (
                     <Group gap="6">
-                      <Button size={"lg"}>Start for free</Button>
-                      <Button size={"lg"} variant={"subtle"}>
+                      <Button size={"xl"}>Start for free</Button>
+                      <Button size={"xl"} variant={"subtle"}>
                         Learn more
                       </Button>
                     </Group>

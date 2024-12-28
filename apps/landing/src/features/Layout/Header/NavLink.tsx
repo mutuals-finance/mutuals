@@ -8,5 +8,14 @@ export interface NavLinkProps extends LinkProps {}
 export default function NavLink(props: NavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === props.href;
-  return <Link opacity={!isActive ? 0.7 : 1} {...props} />;
+  return (
+    <Link
+      color={isActive ? "fg" : "fg.muted"}
+      _hover={{ color: "fg" }}
+      fontSize={"xs"}
+      textTransform="uppercase"
+      letterSpacing={"wide"}
+      {...props}
+    />
+  );
 }

@@ -1,4 +1,10 @@
-import { Button, HStack, Box, type LinkProps } from "@mutuals/ui";
+import {
+  Button,
+  Group,
+  AbsoluteCenter,
+  HStack,
+  type LinkProps,
+} from "@mutuals/ui";
 
 import NavLink from "@/features/Layout/Header/NavLink";
 import NavWrapper, {
@@ -11,15 +17,18 @@ interface NavDesktopProps extends NavWrapperProps {
 export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
   return (
     <NavWrapper {...props}>
-      <HStack ml={"auto"} gap="6" justify="center">
-        {links.map((props, index) => (
-          <NavLink key={index} {...props} />
-        ))}
-      </HStack>
+      <AbsoluteCenter>
+        <HStack textAlign={"center"} gap="6" justifyContent="center">
+          {links.map((props, index) => (
+            <NavLink key={index} {...props} />
+          ))}
+        </HStack>
+      </AbsoluteCenter>
 
-      <Box>
-        <Button variant={"subtle"}>Launch App</Button>
-      </Box>
+      <Group gap={"6"} ml={"auto"}>
+        <Button variant={"subtle"}>Reach out</Button>
+        <Button variant={"solid"}>Launch app</Button>
+      </Group>
     </NavWrapper>
   );
 }

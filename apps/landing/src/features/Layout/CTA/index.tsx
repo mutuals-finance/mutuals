@@ -1,15 +1,15 @@
-import { Box, Button, Heading, Container, Stack } from "@mutuals/ui";
+import { Theme, Button, Heading, Container, Stack } from "@mutuals/ui";
 import NextImage from "next/image";
 import ctaBgImage from "@/assets/background-primary.png";
 
 export default function CTA() {
   return (
     <Container maxW="7xl">
-      <Box
-        rounded={"lg"}
+      <Theme
+        rounded={"xl"}
         position="relative"
         overflow="hidden"
-        className={"dark"}
+        appearance="dark"
       >
         <NextImage
           src={ctaBgImage}
@@ -34,7 +34,7 @@ export default function CTA() {
             Get Started For Free
           </Button>
         </Container>
-      </Box>
+      </Theme>
     </Container>
   );
 }
