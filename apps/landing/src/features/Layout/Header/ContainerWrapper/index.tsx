@@ -59,7 +59,7 @@ export default function HeaderContainerWrapper({
   });
 
   return (
-    <Theme appearance={headerTheme}>
+    <Theme appearance={headerTheme as "light" | "dark"}>
       <MotionBox
         display={"flex"}
         position="fixed"
