@@ -5,10 +5,11 @@ export const metadata: Metadata = {
   title: "Manage Wallet",
 };
 
-export default function WalletUpdatePage({
+export default async function WalletUpdatePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  return <WalletUpdate address={params.id} />;
+  const { id } = await params;
+  return <WalletUpdate address={id} />;
 }

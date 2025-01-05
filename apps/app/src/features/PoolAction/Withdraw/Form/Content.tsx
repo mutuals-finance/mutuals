@@ -10,8 +10,6 @@ import { DeepPartial } from "#/partial";
 
 import useWithdrawSplit from "@/hooks/useWithdrawSplit";
 
-import FormGroup from "@/components/Form/FormGroup";
-import InputSwitch from "@/components/Form/InputSwitch";
 import WithdrawModal from "@/features/PoolAction/Withdraw/Modal";
 import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
@@ -60,27 +58,23 @@ export default function PoolActionWithdrawFormContent({
       >
         <Box px="6">{children}</Box>
 
-        <FormGroup px="6">
-          <InputSwitch label={"Distribute"} id={"distribute"} />
-        </FormGroup>
+        {/*<InputSwitch label={"Distribute"} id={"distribute"} />*/}
 
-        <FormGroup>
-          <WithdrawTable
-            data={data}
-            state={{
-              rowSelection: selectedAssets,
-            }}
-            onRowSelectionChange={(updaterOrValue) => {
-              const isUpdaterFn = typeof updaterOrValue == "function";
-              setValue(
-                "assets",
-                isUpdaterFn
-                  ? updaterOrValue(selectedAssets ?? {})
-                  : updaterOrValue,
-              );
-            }}
-          />
-        </FormGroup>
+        <WithdrawTable
+          data={data}
+          state={{
+            rowSelection: selectedAssets,
+          }}
+          onRowSelectionChange={(updaterOrValue) => {
+            const isUpdaterFn = typeof updaterOrValue == "function";
+            setValue(
+              "assets",
+              isUpdaterFn
+                ? updaterOrValue(selectedAssets ?? {})
+                : updaterOrValue,
+            );
+          }}
+        />
       </VStack>
 
       <Stack

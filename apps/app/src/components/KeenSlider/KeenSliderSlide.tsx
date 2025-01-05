@@ -1,5 +1,4 @@
-import type { BoxProps } from "@mutuals/ui";
-import { Box } from "@chakra-ui/react";
+import { Box, type BoxProps } from "@mutuals/ui";
 
 export default function KeenSliderSlide({
   className = "",

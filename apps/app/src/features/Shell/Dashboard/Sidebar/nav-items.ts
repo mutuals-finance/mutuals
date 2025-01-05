@@ -1,8 +1,8 @@
 import { IconType } from "react-icons";
 import {
-  IoAppsOutline,
   IoGridOutline,
   IoHelpCircleOutline,
+  IoHomeOutline,
   IoPeopleOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
@@ -12,7 +12,7 @@ export default {
     {
       label: "Dashboard",
       href: "/",
-      icon: IoAppsOutline,
+      icon: IoHomeOutline,
     },
     {
       label: "Payment Pools",

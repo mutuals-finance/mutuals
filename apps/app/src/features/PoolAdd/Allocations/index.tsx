@@ -1,8 +1,9 @@
-import FormGroup from "@/components/Form/FormGroup";
 import {
   Button,
   Card,
   Group,
+  Stack,
+  Fieldset,
   IconButton,
   MenuContent,
   MenuItem,
@@ -37,63 +38,74 @@ function PoolAddAllocationsCard(props?: PoolAddAllocationsCardProps) {
   return (
     <Card.Root {...props}>
       <Card.Body>
-        <FormGroup
-          title={`Allocations`}
-          description={`Please define each recipient’s wallet address and split amount. The overall split amount must total 100.`}
-        >
-          <PoolAddAllocationsGroup w={"full"} allocationDataArgs={{ id }}>
-            {(methods) => (
-              <Group mt={"4"}>
-                <Button
-                  variant="subtle"
-                  onClick={() => methods.insertCached()}
-                  roundedRight={0}
-                >
-                  Add Allocation
-                </Button>
-                <MenuRoot>
-                  <MenuTrigger asChild>
-                    <IconButton
-                      variant="subtle"
-                      aria-label={"Select allocation to add"}
-                      roundedLeft={0}
-                    >
-                      <IoEllipsisVerticalSharp />
-                    </IconButton>
-                  </MenuTrigger>
-                  <MenuContent>
-                    <MenuRoot
-                      positioning={{ placement: "right-start", gutter: 2 }}
-                    >
-                      <MenuTriggerItem>Insert</MenuTriggerItem>
-                      <PoolAddAllocationMenu
-                        onInsert={({ value, cached }) =>
-                          cached
-                            ? methods.insertCached()
-                            : methods.insert({ value })
-                        }
-                      />
-                    </MenuRoot>
-                    <MenuSeparator />
+        <Fieldset.Root>
+          <Stack>
+            <Fieldset.Legend>Allocations</Fieldset.Legend>
+            <Fieldset.HelperText>
+              Please define each recipient’s wallet address and split amount.
+              The overall split amount must total 100.
+            </Fieldset.HelperText>
+          </Stack>
+          <Fieldset.Content>
+            <PoolAddAllocationsGroup w={"full"} allocationDataArgs={{ id }}>
+              {(methods) => (
+                <Group mt={"2"} w={"full"}>
+                  <Button
+                    flex={"1"}
+                    variant="subtle"
+                    onClick={() => methods.insertCached()}
+                    roundedRight={0}
+                  >
+                    Add Allocation
+                  </Button>
+                  <MenuRoot>
+                    <MenuTrigger asChild>
+                      <IconButton
+                        variant="subtle"
+                        aria-label={"Select allocation to add"}
+                        roundedLeft={0}
+                      >
+                        <IoEllipsisVerticalSharp />
+                      </IconButton>
+                    </MenuTrigger>
+                    <MenuContent>
+                      <MenuRoot
+                        positioning={{ placement: "right-start", gutter: 2 }}
+                      >
+                        <MenuTriggerItem>Insert</MenuTriggerItem>
+                        <PoolAddAllocationMenu
+                          onInsert={({ value, cached }) =>
+                            cached
+                              ? methods.insertCached()
+                              : methods.insert({ value })
+                          }
+                        />
+                      </MenuRoot>
+                      <MenuSeparator />
 
-                    <MenuItemGroup title="Group Action">
-                      {(
-                        [
-                          ["Distribute Evenly", () => {}],
-                          ["Distribute Remaining", () => {}],
-                        ] as ActionWithLabel[]
-                      ).map(([type, fn]) => (
-                        <MenuItem key={type} value={type} onClick={() => fn()}>
-                          {type}
-                        </MenuItem>
-                      ))}
-                    </MenuItemGroup>
-                  </MenuContent>
-                </MenuRoot>
-              </Group>
-            )}
-          </PoolAddAllocationsGroup>
-        </FormGroup>
+                      <MenuItemGroup title="Group Action">
+                        {(
+                          [
+                            ["Distribute Evenly", () => {}],
+                            ["Distribute Remaining", () => {}],
+                          ] as ActionWithLabel[]
+                        ).map(([type, fn]) => (
+                          <MenuItem
+                            key={type}
+                            value={type}
+                            onClick={() => fn()}
+                          >
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </MenuItemGroup>
+                    </MenuContent>
+                  </MenuRoot>
+                </Group>
+              )}
+            </PoolAddAllocationsGroup>
+          </Fieldset.Content>
+        </Fieldset.Root>
       </Card.Body>
     </Card.Root>
   );

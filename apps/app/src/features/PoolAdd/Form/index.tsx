@@ -2,7 +2,7 @@
 
 import { useToggle } from "react-use";
 
-import Form from "@/components/Form";
+import { Form } from "@mutuals/ui";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddFormContent from "@/features/PoolAdd/Form/Content";

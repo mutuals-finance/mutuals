@@ -6,6 +6,9 @@ import {
   MenuRoot,
   MenuTrigger,
   InputGroup,
+  Input,
+  Select,
+  NumberInput,
 } from "@mutuals/ui";
 import {
   RECIPIENT_TYPE_CONFIG,
@@ -21,9 +24,6 @@ import {
   IoEllipsisVerticalSharp,
   IoTrashBinOutline,
 } from "react-icons/io5";
-import Input from "@/components/Form/Input";
-import NumberInput from "@/components/Form/NumberInput";
-import Select from "@/components/Form/Select";
 import PoolAddAllocationsGroup, {
   PoolAddAllocationsGroupSharedItemProps,
 } from "@/features/PoolAdd/Allocations/Group";
@@ -104,9 +104,8 @@ export default function PoolAddAllocationsItem({
             flexBasis: "44",
           },
         ].map(({ children: selectChildren, ...selectProps }, i) => (
-          <Select<any>
+          <Select
             key={selectProps.id + "-" + i}
-            hideWrapper={true}
             size={"sm"}
             flexShrink={"0"}
             {...selectProps}
@@ -117,7 +116,6 @@ export default function PoolAddAllocationsItem({
 
         {isRecipient && (
           <Input
-            hideWrapper={true}
             placeholder={"0x0000...0000"}
             id={`${id}.recipient`}
             size={"sm"}
@@ -133,15 +131,14 @@ export default function PoolAddAllocationsItem({
         >
           <NumberInput
             id={`${id}.value`}
-            hideWrapper={true}
-            inputProps={{
-              allowMouseWheel: true,
-              step: !isFixed ? 0.1 : 1,
-              min: 0,
-              max: !isFixed ? 100 : 9999,
-              inputInputProps: { ps: "2.2em" },
-            }}
+            allowMouseWheel={true}
+            step={!isFixed ? 0.1 : 1}
+            max={!isFixed ? 100 : 9999}
+            min={0}
             size={"sm"}
+            inputProps={{
+              ps: "2.2em",
+            }}
           />
         </InputGroup>
 

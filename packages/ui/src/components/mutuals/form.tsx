@@ -1,6 +1,6 @@
 "use client";
 
-import { StackProps, VStack } from "@mutuals/ui";
+import { StackProps, Stack } from "@chakra-ui/react";
 import React from "react";
 import {
   FieldValues,
@@ -24,7 +24,7 @@ export interface FormProps<
     | ((method: UseFormReturn<TFieldValues, TContext>) => React.ReactNode);
 }
 
-export default function Form<
+export function Form<
   TFieldValues extends FieldValues = FieldValues,
   TContext = unknown,
 >({
@@ -38,11 +38,14 @@ export default function Form<
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}>
-        <VStack alignItems={"stretch"} gap={"6"} {...props}>
-          {typeof children == "function" ? children(methods) : children}
-        </VStack>
-      </form>
+      <Stack
+        as="form"
+        alignItems={"stretch"}
+        onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}
+        {...props}
+      >
+        {typeof children == "function" ? children(methods) : children}
+      </Stack>
     </FormProvider>
   );
 }

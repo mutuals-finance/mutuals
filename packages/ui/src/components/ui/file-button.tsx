@@ -94,7 +94,7 @@ const FileUploadItem = (props: FileUploadItemProps) => {
   );
 };
 
-interface FileUploadListProps
+export interface FileUploadListProps
   extends VisibilityProps,
     ChakraFileUpload.ItemGroupProps {}
 

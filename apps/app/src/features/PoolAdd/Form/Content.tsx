@@ -1,10 +1,14 @@
-import { Box, Button, Stack } from "@mutuals/ui";
-import FormGroup from "@/components/Form/FormGroup";
-import Input from "@/components/Form/Input";
-import TextArea from "@/components/Form/TextArea";
+import {
+  Textarea,
+  Button,
+  Input,
+  Group,
+  Field,
+  Fieldset,
+  FileUpload,
+} from "@mutuals/ui";
 
 import Allocations from "@/features/PoolAdd/Allocations";
-import FileUpload from "@/components/Form/FileUpload";
 
 interface PoolAddFormContentProps {
   onModalClose?: () => void;
@@ -14,22 +18,37 @@ interface PoolAddFormContentProps {
 export default function PoolAddFormContent({}: PoolAddFormContentProps) {
   return (
     <>
-      <FormGroup maxW={"xl"}>
-        <Input label="Owner" id="ownerAddress" />
-
-        <FileUpload label="Image" id="image" inputProps={{ maxW: "3xs" }} />
-
-        <Input label="Name" id="name" />
-        <TextArea label="Description" id="description" />
-      </FormGroup>
+      <Fieldset.Root maxW={"xl"}>
+        <Fieldset.Content>
+          <Field label={"Owner"} id={"ownerAddress"}>
+            <Input id="ownerAddress" />
+          </Field>
+          <Field id={"image"} label={"Image"}>
+            <FileUpload
+              id="image"
+              maxW={"3xs"}
+              dropzoneProps={{ maxW: "3xs", minH: "3xs" }}
+            />
+          </Field>
+          <Field id={"name"} label={"Name"}>
+            <Input id="name" />
+          </Field>
+          <Field id={"description"} label={"Description"}>
+            <Textarea id="description" />
+          </Field>
+        </Fieldset.Content>
+      </Fieldset.Root>
 
       <Allocations />
 
-      <Box>
+      <Group gap={"6"}>
+        <Button size="xl" type="button" variant={"subtle"}>
+          Save draft
+        </Button>
         <Button size="xl" type="submit">
           Confirm and review
         </Button>
-      </Box>
+      </Group>
     </>
   );
 }

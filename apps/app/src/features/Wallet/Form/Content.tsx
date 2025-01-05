@@ -1,28 +1,23 @@
 "use client";
 
 import React, { PropsWithChildren } from "react";
-import FormGroup from "@/components/Form/FormGroup";
-import Input from "@/components/Form/Input";
+import { Input } from "@mutuals/ui";
 
 export function WalletDrawerContent({ children }: PropsWithChildren) {
   return (
     <>
       {children}
 
-      <FormGroup>
-        <Input label="Name" id="name" />
-      </FormGroup>
+      <Input id="name" label={"Name"} />
 
-      <FormGroup>
-        <Input
-          disabled={true}
-          label="Address"
-          id="address"
-          validation={{
-            required: "Please enter an address",
-          }}
-        />
-      </FormGroup>
+      <Input
+        label={"Address"}
+        disabled={true}
+        id="address"
+        rules={{
+          required: "Please enter an address",
+        }}
+      />
     </>
   );
 }

@@ -2,8 +2,6 @@
 
 import {
   Box,
-  Button,
-  Field,
   HStack,
   IconButton,
   Stack,
@@ -13,7 +11,6 @@ import {
   LinkButton,
 } from "@mutuals/ui";
 import { PropsWithChildren, useEffect } from "react";
-import { IoMenuSharp } from "react-icons/io5";
 import { useToggle } from "react-use";
 
 import Sidebar from "@/components/Sidebar";
@@ -90,33 +87,32 @@ export default function ShellDashboardSidebarContent({
         }
       >
         {Object.keys(navItems).map((section) => (
-          <Field
-            label={section}
-            truncate
-            alignItems={"stretch"}
-            key={section}
-            gap={"3"}
-          >
+          <Stack key={section} gap={"2"}>
+            <Text fontWeight="medium" fontSize={"sm"} truncate>
+              {section}
+            </Text>
             <Stack gap={2} w={"full"}>
               {navItems[section]?.map((navItem) => (
                 <LinkButton
                   key={navItem.label}
                   href={navItem.href}
-                  variant={"outline"}
+                  variant={"subtle"}
                   w={"full"}
                   justifyContent={"flex-start"}
                   px={"3.5"}
-                  size={"lg"}
+                  size={"xl"}
                   fontSize={"sm"}
                   textAlign={"left"}
                   overflow={"hidden"}
                 >
                   <navItem.icon />
-                  {navItem.label}
+                  <Text as={"span"} ml={"2"}>
+                    {navItem.label}
+                  </Text>
                 </LinkButton>
               ))}
             </Stack>
-          </Field>
+          </Stack>
         ))}
       </Sidebar>
 
