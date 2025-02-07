@@ -3,34 +3,17 @@ import { Allocation } from "@mutuals/sdk-react";
 import { useAllocation } from "@/features/Allocation/useAllocation";
 import TreeTableRow, { TreeTableRowProps } from "@/components/TreeTable/Row";
 
-export type AllocationTableRowProps = Omit<
-  TreeTableRowProps<Allocation>,
-  "children" | "nodes"
->;
+export type AllocationTableRowProps = TreeTableRowProps<Allocation>;
 
-export default function AllocationTableRow({
-  render: _,
-  ...props
-}: AllocationTableRowProps) {
+export default function AllocationTableRow(props: AllocationTableRowProps) {
+  const { render: _, ...innerProps } = props;
   const { recipientAddress, children } = useAllocation(props.value);
 
   return (
     <TreeTableRow
-      {...props}
-      nodes={
-        (children ?? props.depth < 2)
-          ? [
-              {
-                id: "1",
-                recipientAddress: "Test",
-                value: 1,
-                calculationType: [],
-                recipientType: [],
-              },
-            ]
-          : []
-      }
-      render={(p) => <AllocationTableRow {...p} />}
+      {...innerProps}
+      render={(_props) => <AllocationTableRow {..._props} />}
+      values={children ?? []}
     >
       <Stack direction={"row"}>{recipientAddress}</Stack>
     </TreeTableRow>

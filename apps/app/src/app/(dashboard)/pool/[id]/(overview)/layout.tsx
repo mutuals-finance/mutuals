@@ -54,10 +54,10 @@ export default async function PoolOverviewLayout({
           <PoolOverviewDescription {...props} />
           <PoolOverviewHandlers {...props} />
           <AllocationTableCard {...props} />
-          <AssetTableCard assets={props.balance?.assets?.slice(0, 6)} />
+          <AssetTableCard assets={props.balance?.assets?.slice(0, 10)} />
           <ActivityTableCard
             payee={address}
-            transfers={props.activity.transfers.slice(0, 6)}
+            transfers={props.activity.transfers.slice(0, 10)}
           />
         </Stack>
       }

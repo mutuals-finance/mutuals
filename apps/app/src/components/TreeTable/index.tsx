@@ -2,23 +2,27 @@ import { TreeTableRowProps } from "@/components/TreeTable/Row";
 
 export type TreeTableNode<TNode> = {
   value?: TNode;
-  id: string;
-  index: number;
-  depth: number;
+  id?: string;
+  index?: number;
+  depth?: number;
 };
 
-export type TreeTableProps<TNode> = Omit<
-  TreeTableRowProps<TNode>,
-  "id" | "depth" | "value" | "index" | "render" | "children" | "nodes"
-> & {
-  id?: string;
-  children?: TreeTableRowProps<TNode>["render"];
-};
+export type TreeTableProps<TNode> = TreeTableRowProps<TNode>;
 
 export default function TreeTable<TNode>({
   id = "",
-  children,
+  values,
   ...props
 }: TreeTableProps<TNode>) {
-  return children?.({ id, index: 0, depth: -1, ...props });
+  const { children, index = 0, depth = -1 } = props;
+
+  if (!!values && values?.length > 0) {
+    return <></>;
+  }
+
+  if (!!children && typeof children == "function") {
+    return children?.({ id, index, depth, ...props });
+  }
+
+  return children;
 }

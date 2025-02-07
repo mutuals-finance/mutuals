@@ -3,18 +3,16 @@ import { TreeTableNode } from "@/components/TreeTable";
 import { Separator, Stack } from "@mutuals/ui";
 
 export type TreeTableRowProps<TNode> = {
-  render?: (props: Omit<TreeTableRowProps<TNode>, "nodes">) => ReactNode;
-  children?:
-    | ReactNode
-    | ((props: Omit<TreeTableRowProps<TNode>, "nodes">) => ReactNode);
-  getKey?: (props: Omit<TreeTableRowProps<TNode>, "nodes">) => string;
-  nodes: TNode[];
+  render?: (props: TreeTableRowProps<TNode>) => ReactNode;
+  children?: ReactNode | ((props: TreeTableRowProps<TNode>) => ReactNode);
+  values?: TNode[];
+  getKey?: (props: TreeTableRowProps<TNode>) => string;
 } & TreeTableNode<TNode>;
 
 export default function TreeTableRow<TNode>({
-  nodes,
+  values,
   id,
-  depth,
+  depth = 0,
   value,
   index,
   ...props
@@ -43,7 +41,7 @@ export default function TreeTableRow<TNode>({
           : typeof children == "function"
             ? children?.({ ...props, ...parent })
             : children}
-        {nodes.map((_value, j) => {
+        {values?.map((_value, j) => {
           const _props = {
             ...props,
             id: `${id}.${j}`,

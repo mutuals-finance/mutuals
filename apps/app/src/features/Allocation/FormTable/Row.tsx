@@ -46,20 +46,20 @@ const SELECT_ITEMS = {
   })),
 };
 
-export type AllocationFormTableRowProps = Omit<
-  TreeTableRowProps<Allocation>,
-  "children" | "nodes"
-> & {
+export type AllocationFormTableRowProps = TreeTableRowProps<Allocation> & {
   footer?: ReactNode | ((methods: UseAllocationGroup) => ReactNode);
 };
 
 export default function AllocationFormTableRow({
   footer,
-  render: _,
   id,
+  depth = 0,
+  value,
   ...props
 }: AllocationFormTableRowProps) {
-  const groupId = `${id}${props.depth >= 0 ? ".children" : ""}`;
+  const { render: _render, children: _children, ...innerProps } = props;
+
+  const groupId = `${id}${depth >= 0 ? ".children" : ""}`;
   const methods = useAllocationData({
     id: `${groupId}`,
   });
@@ -72,7 +72,7 @@ export default function AllocationFormTableRow({
   }) as [CalculationType, RecipientType];
 
   const { isFixed, isRecipient, isGroup } = useAllocation(
-    props.value,
+    value,
     calculationType,
     recipientType,
   );
@@ -80,10 +80,12 @@ export default function AllocationFormTableRow({
   return (
     <>
       <TreeTableRow
-        nodes={isGroup ? fields : []}
+        {...innerProps}
+        depth={depth}
+        value={value}
+        values={isGroup ? fields : []}
         id={groupId}
         render={(p) => <AllocationFormTableRow {...p} />}
-        {...props}
       >
         {({ index }) => (
           <Stack direction={"row"}>

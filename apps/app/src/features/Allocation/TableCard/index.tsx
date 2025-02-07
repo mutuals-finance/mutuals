@@ -4,9 +4,10 @@ import AllocationTable, {
   AllocationTableProps,
 } from "@/features/Allocation/Table";
 import type { Split } from "@mutuals/graphql-client-nextjs";
+import { Allocation } from "@mutuals/sdk-react";
 
 export type AllocationTableCardProps = Omit<ContentCardProps, "children"> & {
-  tableProps?: AllocationTableProps;
+  tableProps?: Omit<AllocationTableProps, "values">;
   pool?: Split;
   children?: ReactNode | ((table?: ReactNode) => ReactNode);
 };
@@ -18,7 +19,9 @@ export default function AllocationTableCard({
   pool,
   ...props
 }: AllocationTableCardProps) {
-  const table = <AllocationTable {...tableProps} />;
+  const allocations = (pool?.allocations ?? []) as unknown as Allocation[];
+
+  const table = <AllocationTable values={allocations} {...tableProps} />;
 
   return (
     <ContentCard title={title} {...props}>

@@ -5,9 +5,9 @@ import React from "react";
 import TreeTable from "@/components/TreeTable";
 import AllocationFormTableRow from "@/features/Allocation/FormTable/Row";
 
-export default function AllocationTable() {
+export default function AllocationFormTable() {
   return (
-    <TreeTable<Allocation> id={"allocations"} getKey={({ id }) => id}>
+    <TreeTable<Allocation> id={"allocations"} getKey={({ id }) => `${id}`}>
       {(props) => (
         <AllocationFormTableRow
           footer={(methods) => <AllocationFormTableControl {...methods} />}
