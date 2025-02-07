@@ -1,13 +1,13 @@
 import React, { PropsWithChildren } from "react";
 import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
-import PoolOverviewShares from "@/features/PoolOverview/Shares";
 import ActivityTableCard from "@/features/Activity/TableCard";
 import AssetTableCard from "@/features/Asset/TableCard";
 import PoolOverviewDescription from "@/features/PoolOverview/Description";
 import ShellPoolOverview from "@/features/Shell/PoolOverview";
 import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
 import { Stack } from "@mutuals/ui";
+import AllocationTableCard from "@/features/Allocation/TableCard";
 
 const tabs = [
   {
@@ -42,7 +42,6 @@ export default async function PoolOverviewLayout({
 
   const props = {
     pool,
-    shares: [],
     balance: queries[1]!,
     activity: queries[2]!,
   };
@@ -54,7 +53,7 @@ export default async function PoolOverviewLayout({
         <Stack gap={"4"}>
           <PoolOverviewDescription {...props} />
           <PoolOverviewHandlers {...props} />
-          <PoolOverviewShares {...props} />
+          <AllocationTableCard {...props} />
           <AssetTableCard assets={props.balance?.assets?.slice(0, 6)} />
           <ActivityTableCard
             payee={address}

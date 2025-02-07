@@ -16,12 +16,12 @@ import AllocationMenu from "@/features/Allocation/Menu";
 import { ActionWithLabel } from "@/features/Allocation/types";
 import { UseAllocationGroup } from "@/features/Allocation/useAllocationGroup";
 
-type AllocationControlProps = GroupProps & UseAllocationGroup;
+type AllocationFormTableControlProps = GroupProps & UseAllocationGroup;
 
-export default function AllocationControl({
+export default function AllocationFormTableControl({
   insert,
   insertCached,
-}: AllocationControlProps) {
+}: AllocationFormTableControlProps) {
   return (
     <Group mt={"2"} w={"full"}>
       <Button

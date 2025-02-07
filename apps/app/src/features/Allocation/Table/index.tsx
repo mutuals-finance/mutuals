@@ -1,22 +1,14 @@
-import React from "react";
-import AllocationGroup, {
-  AllocationGroupProps,
-} from "@/features/Allocation/Group";
-import AllocationControl from "@/features/Allocation/Control";
+import { Allocation } from "@mutuals/sdk-react";
 
-export type AllocationTableProps = AllocationGroupProps;
+import TreeTable, { TreeTableProps } from "@/components/TreeTable";
+import AllocationTableRow from "@/features/Allocation/Table/Row";
 
-export default function AllocationTable({
-  allocationDataArgs,
-  ...props
-}: AllocationTableProps) {
+export type AllocationTableProps = TreeTableProps<Allocation>;
+
+export default function AllocationTable({ ...props }: AllocationTableProps) {
   return (
-    <AllocationGroup
-      w={"full"}
-      allocationDataArgs={allocationDataArgs}
-      {...props}
-    >
-      {(methods) => <AllocationControl {...methods} />}
-    </AllocationGroup>
+    <TreeTable<Allocation> {...props}>
+      {(_props) => <AllocationTableRow {..._props} />}
+    </TreeTable>
   );
 }
