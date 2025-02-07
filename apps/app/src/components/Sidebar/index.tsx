@@ -17,14 +17,13 @@ export interface SidebarProps extends SidebarWrapperProps {
 }
 
 export default function Sidebar({
-  isOpen,
   header,
   footer,
   children,
   ...props
 }: SidebarProps) {
   return (
-    <SidebarWrapper isOpen={isOpen!} {...props}>
+    <SidebarWrapper {...props}>
       {header && <SidebarHeader>{header}</SidebarHeader>}
       {children && <SidebarContent>{children}</SidebarContent>}
       {footer && <SidebarFooter>{footer}</SidebarFooter>}

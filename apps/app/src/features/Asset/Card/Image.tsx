@@ -52,7 +52,9 @@ export default function AssetCardLogo({
             sizes={"22"}
           />
         ) : (
-          <Icon as={IoHelp} />
+          <Icon>
+            <IoHelp />
+          </Icon>
         )}
       </Flex>
     </Flex>

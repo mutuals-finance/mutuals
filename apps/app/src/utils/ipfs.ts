@@ -1,11 +1,13 @@
 import { ImageProps } from "@mutuals/ui";
 
-export function ipfsResolveData(data?: ImageProps["src"] | null) {
+export function ipfsResolveData(
+  data: ImageProps["src"] = "bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu",
+) {
   switch (typeof data) {
     case "string":
       return ipfsUrlFromUri(data);
     case "object":
-      return data || "";
+      return data as ImageProps["src"];
     default:
       return "";
   }

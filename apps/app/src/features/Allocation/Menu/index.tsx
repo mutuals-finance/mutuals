@@ -4,7 +4,7 @@ import {
   MenuItemGroup,
   MenuContentProps,
 } from "@mutuals/ui";
-import { useAllocation } from "@/features/PoolAdd/AllocationProvider";
+import { useAllocation } from "@/features/Allocation/Provider";
 import {
   Allocation,
   CalculationType,
@@ -13,7 +13,7 @@ import {
   recipientTypeName,
 } from "@mutuals/sdk-react";
 
-export type PoolAddAllocationMenuMethodProps = {
+export type AllocationMenuMethodProps = {
   onInsert?: (props: {
     value?: Allocation;
     cached?: boolean;
@@ -21,25 +21,25 @@ export type PoolAddAllocationMenuMethodProps = {
   }) => void;
 };
 
-interface PoolAddAllocationMenuProps
-  extends MenuContentProps,
-    PoolAddAllocationMenuMethodProps {}
+export type AllocationMenuProps = MenuContentProps & AllocationMenuMethodProps;
 
-export default function PoolAddAllocationMenu({
+export default function AllocationMenu({
   onInsert,
   ...props
-}: PoolAddAllocationMenuProps) {
+}: AllocationMenuProps) {
   const { defaults } = useAllocation();
+  const defaultEntries = Object.entries(defaults);
 
   return (
     <MenuContent {...props}>
-      {Object.entries(defaults).map(([calculationType, recipients]) => {
+      {defaultEntries.map(([calculationType, recipients]) => {
         const names = {
           recipientType: "",
           calculationType: calculationTypeName(
             calculationType as CalculationType,
           ),
         };
+
         return (
           <MenuItemGroup key={calculationType} title={names.calculationType}>
             {Object.entries(recipients).map(

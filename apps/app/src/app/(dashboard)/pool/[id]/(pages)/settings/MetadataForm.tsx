@@ -10,12 +10,11 @@ import {
   Field,
   Form,
 } from "@mutuals/ui";
-import { FileWithPreview } from "@/components/Form/types";
 
 type PoolMetadataEditType = {
-  name?: string | null;
-  description?: string | null;
-  image?: FileWithPreview | null;
+  name?: string;
+  description?: string;
+  image?: any;
 };
 
 interface PoolMetadataFormProps {

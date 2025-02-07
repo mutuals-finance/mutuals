@@ -1,9 +1,8 @@
-import AssetTable from "src/features/Asset/Table";
 import ContentCard, { type ContentCardProps } from "@/components/ContentCard";
 
-import { Box, Button, ButtonProps } from "@mutuals/ui";
-import Link from "next/link";
+import { Box, LinkButton, ButtonProps } from "@mutuals/ui";
 import { AssetTableProps } from "@/features/Asset/types";
+import AssetTable from "@/features/Asset/Table";
 
 export interface AssetTableCardProps extends AssetTableProps {
   cardProps?: ContentCardProps;
@@ -24,10 +23,10 @@ export default function AssetTableCard({
     >
       <AssetTable tableProps={{ size, ...tableProps }} {...props} />
 
-      <Box p={"3"}>
-        <Button as={Link} href={"id/assets"} size={size}>
+      <Box p={"var(--card-padding)"} alignSelf={"flex-end"}>
+        <LinkButton href={"/assets"} size={size} variant={"subtle"}>
           Show all
-        </Button>
+        </LinkButton>
       </Box>
     </ContentCard>
   );

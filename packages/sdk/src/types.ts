@@ -10,12 +10,14 @@ import {
   Transport,
   WalletClient,
 } from "viem";
-import { CALCULATION_TYPE_KEY, RECIPIENT_TYPE_KEY } from "./constants";
-import { SimpleMerkleTree } from "@openzeppelin/merkle-tree";
 
-export type ValueOf<T> = T[keyof T];
+import {
+  CalculationType,
+  RecipientType,
+  SplitAllocationInput,
+} from "@mutuals/graphql-client-nextjs";
 
-export type TransactionOverrides = {
+type TransactionOverrides = {
   accessList?: AccessList;
   gas?: bigint;
   maxFeePerGas?: bigint;
@@ -28,19 +30,19 @@ interface TransactionOverridesDict {
   transactionOverrides?: TransactionOverrides;
 }
 
-export type ApiConfig = {
+type ApiConfig = {
   apiKey: string;
   serverURL?: string;
 };
 
-export type DataClientConfig = {
+type DataClientConfig = {
   publicClient?: PublicClient<Transport, Chain>;
   apiConfig: ApiConfig;
   includeEnsNames?: boolean;
   ensPublicClient?: PublicClient<Transport, Chain>;
 };
 
-export type MutualsClientConfig = {
+type MutualsClientConfig = {
   chainId: number;
   publicClient?: PublicClient<Transport, Chain>;
   walletClient?: WalletClient<Transport, Chain, Account>;
@@ -49,20 +51,11 @@ export type MutualsClientConfig = {
   ensPublicClient?: PublicClient<Transport, Chain>;
 };
 
-export type TransactionConfig = {
+type TransactionConfig = {
   transactionType: TransactionType;
 };
 
-export enum AllocationType {
-  Fixed = "0",
-  Percentage = "1",
-  FixedPrioritized = "2",
-  FixedTimed = "3",
-  PercentagePrioritized = "4",
-  PercentageTimed = "5",
-}
-
-export type RawAllocation = {
+type RawAllocation = {
   id: bigint;
   recipient: bigint;
   target: bigint;
@@ -72,30 +65,20 @@ export type RawAllocation = {
   timespan: bigint;
 };
 
-export type Allocation = {
-  value: string;
-  calculationType: CalculationType[];
-  recipientType: RecipientType[];
-  recipient?: string;
-  timespan?: number;
-  children?: Allocation[];
-};
+type Allocation = SplitAllocationInput;
 
-export type RecipientType = ValueOf<typeof RECIPIENT_TYPE_KEY>;
-export type CalculationType = ValueOf<typeof CALCULATION_TYPE_KEY>;
-
-export type CreatePoolConfig = {
+type CreatePoolConfig = {
   allocations: Allocation[];
   ownerAddress: string;
   salt: bigint;
 } & TransactionOverridesDict;
 
-export type SetPoolAllocationConfig = {
+type SetPoolAllocationConfig = {
   poolAddress: Address;
   poolAllocation: Allocation[];
 } & TransactionOverridesDict;
 
-export type WithdrawConfig = {
+type WithdrawConfig = {
   poolAddress: Address;
   recipientAddress?: Address;
   tokenAddress: Address;
@@ -104,24 +87,44 @@ export type WithdrawConfig = {
   amounts: number[];
 } & TransactionOverridesDict;
 
-export type TransferOwnershipConfig = {
+type TransferOwnershipConfig = {
   poolAddress: Address;
   newOwner: Address;
 } & TransactionOverridesDict;
 
-export type SetPausedConfig = {
+type SetPausedConfig = {
   poolAddress: Address;
   paused: boolean;
 } & TransactionOverridesDict;
 
-export type CreateDefaultAllocationFn = (
+type CreateDefaultAllocationFn = (
   calculationType: CalculationType,
   recipientType: RecipientType,
 ) => Allocation;
 
-export type CallData = {
+type CallData = {
   address: string;
   data: Hex;
 };
 
-export type TransactionFormat = Hash | bigint | CallData;
+type TransactionFormat = Hash | bigint | CallData;
+
+export { CalculationType, RecipientType };
+
+export type {
+  TransactionOverrides,
+  ApiConfig,
+  DataClientConfig,
+  MutualsClientConfig,
+  TransactionConfig,
+  RawAllocation,
+  Allocation,
+  CreatePoolConfig,
+  SetPoolAllocationConfig,
+  WithdrawConfig,
+  TransferOwnershipConfig,
+  SetPausedConfig,
+  CreateDefaultAllocationFn,
+  CallData,
+  TransactionFormat,
+};

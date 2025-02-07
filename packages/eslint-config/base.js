@@ -10,7 +10,6 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "eslint-config-turbo",
   ],
   settings: {
     "import/resolver": {

@@ -2,11 +2,16 @@ import { Box, BoxProps, Stack } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoImage } from "react-icons/io5";
 import { ipfsResolveData } from "@/utils";
+import { Split } from "@mutuals/graphql-client-nextjs";
 
-export type PoolCardLogoProps = Omit<BoxProps, "fill"> & ImageProps;
+export type PoolCardLogoProps = Omit<BoxProps, "fill"> &
+  Omit<ImageProps, "alt" | "src"> & {
+    alt?: Split["name"];
+    src?: ImageProps["src"];
+  };
 
 export default function PoolCardLogo({
-  src = "",
+  src = "bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu",
   alt = "Unknown Pool",
   boxSize = "2.4rem",
   p = "0.5",
@@ -21,11 +26,11 @@ export default function PoolCardLogo({
       borderRadius={borderRadius!}
       overflow={"hidden"}
       borderWidth={"1px"}
-      bg={"alpha.4"}
       boxSize={boxSize}
       p={p}
       alignItems={"stretch"}
-      justify={"stretch"}
+      justifyContent={"stretch"}
+      bg={bg}
     >
       <>
         {!src || src === "" ? (

@@ -35,6 +35,8 @@ export {
   type FileUploadProps,
   Form,
   type FormProps,
+  FormErrorAlert,
+  type FormErrorAlertProps,
   CloseButton,
   DrawerBackdrop,
   DrawerBody,

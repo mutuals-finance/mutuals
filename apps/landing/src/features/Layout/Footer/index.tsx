@@ -7,6 +7,8 @@ import {
   MutualsLogo,
   Stack,
   InputGroup,
+  Form,
+  Field,
 } from "@mutuals/ui";
 import { IoSend } from "react-icons/io5";
 import ListBox from "@/features/Layout/Footer/ListBox";
@@ -62,17 +64,25 @@ export default function LayoutFooter() {
           </ListBox>
 
           <ListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 3 }}>
-            <InputGroup
-              w={"full"}
-              flex="1"
-              endElement={
-                <IconButton size="sm" variant={"ghost"} aria-label="Subscribe">
-                  <IoSend />
-                </IconButton>
-              }
-            >
-              <Input placeholder="Your Email Address" />
-            </InputGroup>
+            <Form>
+              <Field id={"email"} label={"Email address"}>
+                <InputGroup
+                  w={"full"}
+                  flex="1"
+                  endElement={
+                    <IconButton
+                      size="sm"
+                      variant={"ghost"}
+                      aria-label="Subscribe"
+                    >
+                      <IoSend />
+                    </IconButton>
+                  }
+                >
+                  <Input id="email" placeholder="Your Email Address" />
+                </InputGroup>
+              </Field>
+            </Form>
           </ListBox>
         </Grid>
       </Container>

@@ -24,31 +24,30 @@ import {
   IoEllipsisVerticalSharp,
   IoTrashBinOutline,
 } from "react-icons/io5";
-import PoolAddAllocationsGroup, {
-  PoolAddAllocationsGroupSharedItemProps,
-} from "@/features/PoolAdd/Allocations/Group";
-import { useAllocation } from "@/features/PoolAdd/Allocations/useAllocation";
-import PoolAddAllocationMenu, {
-  PoolAddAllocationMenuMethodProps,
-} from "@/features/PoolAdd/Allocations/Menu";
+import AllocationGroup from "@/features/Allocation/Group";
+import { useAllocation } from "@/features/Allocation/useAllocation";
+import AllocationMenu, {
+  AllocationMenuMethodProps,
+} from "@/features/Allocation/Menu";
 import { useWatch } from "react-hook-form";
 import { PoolAddData } from "@/features/PoolAdd/types";
+import { AllocationItemBaseProps } from "@/features/Allocation/types";
 
-interface PoolAddAllocationsItemProps
-  extends PoolAddAllocationsGroupSharedItemProps,
-    PoolAddAllocationMenuMethodProps,
+interface AllocationRecipientProps
+  extends AllocationItemBaseProps,
+    AllocationMenuMethodProps,
     Allocation {
   id?: string;
   onRemove?: () => void;
 }
 
-export default function PoolAddAllocationsItem({
+export default function AllocationRecipient({
   depth = 0,
   id: _id,
   onRemove,
   onInsert,
   ...allocation
-}: PoolAddAllocationsItemProps) {
+}: AllocationRecipientProps) {
   const id = _id as `allocations.${number}`;
   const [calculationType, recipientType] = useWatch<PoolAddData>({
     name: [`${id}.calculationType.0`, `${id}.recipientType.0`],
@@ -83,7 +82,7 @@ export default function PoolAddAllocationsItem({
               <IoAddCircleOutline />
             </IconButton>
           </MenuTrigger>
-          <PoolAddAllocationMenu onInsert={onInsert} />
+          <AllocationMenu onInsert={onInsert} />
         </MenuRoot>
 
         {[
@@ -117,7 +116,7 @@ export default function PoolAddAllocationsItem({
         {isRecipient && (
           <Input
             placeholder={"0x0000...0000"}
-            id={`${id}.recipient`}
+            id={`${id}.recipientAddress`}
             size={"sm"}
             flex={"1"}
           />
@@ -159,7 +158,7 @@ export default function PoolAddAllocationsItem({
       </Stack>
 
       {isGroup && allocation?.children && allocation?.children.length > 0 && (
-        <PoolAddAllocationsGroup
+        <AllocationGroup
           allocationDataArgs={{
             id: `${id}.children`,
           }}

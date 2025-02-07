@@ -2,9 +2,11 @@ import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  experimental: {
-    optimizePackageImports: ["@mutuals/ui"],
+  eslint: {
+    dirs: ["src"],
   },
+  experimental: {},
+  transpilePackages: ["@mutuals/ui"],
   images: {
     remotePatterns: [
       {

@@ -5,11 +5,11 @@ import {
 } from "react-hook-form";
 import { useCallback } from "react";
 import {
-  Allocation,
   UseAllocationDefaults,
   getRecipientAllocationOption,
+  Allocation,
 } from "@mutuals/sdk-react";
-import { useAllocation } from "@/features/PoolAdd/AllocationProvider";
+import { useAllocation } from "@/features/Allocation/Provider";
 import type { PoolAddData } from "@/features/PoolAdd/types";
 
 type AllocationAppendProps = {
@@ -64,13 +64,13 @@ export function useAllocationData(
     ) => {
       const allocation =
         amount != 1
-          ? Array(amount).fill(_allocation)
+          ? (Array(amount).fill(_allocation) as Allocation[])
           : (_allocation as Allocation);
 
       const isArray = "length" in allocation;
 
       if (isArray ? allocation.length > 0 : !!allocation) {
-        setCached(isArray ? allocation[0] : allocation);
+        setCached(isArray ? (allocation[0] as Allocation) : allocation);
 
         if (props?.index) {
           _insert(props?.index, allocation);

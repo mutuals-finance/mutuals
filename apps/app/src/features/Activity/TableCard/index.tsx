@@ -1,8 +1,7 @@
 import ActivityTable from "@/features/Activity/Table";
 import ContentCard, { type ContentCardProps } from "@/components/ContentCard";
 
-import { Box, Button, ButtonProps } from "@mutuals/ui";
-import Link from "next/link";
+import { Box, ButtonProps, LinkButton } from "@mutuals/ui";
 import { ActivityTableProps } from "@/features/Activity/types";
 
 export interface ActivityTableCardProps extends ActivityTableProps {
@@ -23,10 +22,10 @@ export default function ActivityTableCard({
       bodyProps={{ p: "0", ...cardProps.bodyProps }}
     >
       <ActivityTable tableProps={{ size, ...tableProps }} {...props} />
-      <Box p={"3"}>
-        <Button as={Link} href={"id/activity"} size={size}>
+      <Box p={"var(--card-padding)"} alignSelf={"flex-end"}>
+        <LinkButton href={"/activity"} size={size} variant={"subtle"}>
           Show all
-        </Button>
+        </LinkButton>
       </Box>
     </ContentCard>
   );

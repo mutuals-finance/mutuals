@@ -12,7 +12,7 @@ type AllocationContextType = UseAllocationDefaults;
 const AllocationContext = createContext<AllocationContextType>({
   defaults: getAllocationDefaults(),
   setCached: () => {},
-  cached: null,
+  cached: undefined,
 });
 
 export function useAllocation() {

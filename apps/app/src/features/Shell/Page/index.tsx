@@ -46,15 +46,15 @@ export default function Page({
             {breadcrumbsEnabled && <Breadcrumbs {...breadcrumbsProps} />}
 
             {!!title && (
-              <Heading as={"h1"} size={"4xl"} {...headingProps}>
+              <Heading as={"h1"} size={"5xl"} {...headingProps}>
                 {title}
               </Heading>
             )}
             {!!description && (
               <Text
-                fontSize={"lg"}
-                variant={"muted"}
+                fontSize={"md"}
                 maxW={"xl"}
+                variant={"muted"}
                 {...descriptionProps}
               >
                 {description}

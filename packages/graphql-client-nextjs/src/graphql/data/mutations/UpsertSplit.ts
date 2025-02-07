@@ -1,27 +1,29 @@
 import { graphql } from "../__generated__";
 
 export const UPSERT_SPLIT = graphql(/* GraphQL */ `
-  mutation UpsertSplit(
-    $chainAddress: ChainAddressInput!
-    $authMechanism: AuthMechanism!
-  ) {
-    upsertSplit(chainAddress: $chainAddress, authMechanism: $authMechanism) {
-      ... on AddUserWalletPayload {
+  mutation UpsertSplit($input: UpsertSplitInput!) {
+    upsertSplit(input: $input) {
+      __typename
+      ... on UpsertSplitPayload {
         __typename
-        viewer {
-          user {
-            primaryWallet {
-              __typename
-            }
-            wallets {
-              dbid
-              chainAddress {
-                address
-                chain
-              }
-            }
-          }
+        split {
+          id
+          dbid
+          version
+          status
+          name
+          description
+          address
+          ownerAddress
+          creatorAddress
+          chain
         }
+      }
+      ... on ErrInvalidInput {
+        __typename
+      }
+      ... on ErrNotAuthorized {
+        __typename
       }
     }
   }

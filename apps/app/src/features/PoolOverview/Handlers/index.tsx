@@ -7,45 +7,43 @@ import {
 } from "react-icons/io5";
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
-import Link from "next/link";
-import { Split } from "@mutuals/graphql-client-nextjs/thegraph";
-import { type DeepPartial } from "#/partial";
+import { Split } from "@mutuals/graphql-client-nextjs";
 
 interface PoolHandlersProps {
-  pool?: DeepPartial<Split>;
+  pool?: Split;
 }
 
 export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
   const items = [
     {
       "aria-label": "Withdraw",
-      icon: <IoPushOutline />,
-      as: Link,
-      href: `/pool/maticmum:${pool?.address}/withdraw`,
+      children: <IoPushOutline />,
+      href: `/pool/${pool?.dbid}/withdraw`,
+      variant: "subtle",
     },
     {
       "aria-label": "Deposit",
-      icon: <IoDownloadOutline />,
-      as: Link,
-      href: `/pool/maticmum:${pool?.address}/deposit`,
+      children: <IoDownloadOutline />,
+      href: `/pool/${pool?.dbid}/deposit`,
+      variant: "subtle",
     },
     {
       "aria-label": "Settings",
-      icon: <IoSettingsOutline />,
-      as: Link,
-      href: `/pool/maticmum:${pool?.address}/settings`,
+      children: <IoSettingsOutline />,
+      href: `/pool/${pool?.dbid}/settings`,
+      variant: "subtle",
     },
     {
       "aria-label": "Activity",
-      icon: <IoSwapHorizontalOutline />,
-      as: Link,
-      href: `/pool/maticmum:${pool?.address}/activity`,
+      children: <IoSwapHorizontalOutline />,
+      href: `/pool/${pool?.dbid}/activity`,
+      variant: "subtle",
     },
     {
       "aria-label": "Assets",
-      icon: <IoWalletOutline />,
-      as: Link,
-      href: `/pool/maticmum:${pool?.address}/assets`,
+      children: <IoWalletOutline />,
+      href: `/pool/${pool?.dbid}/assets`,
+      variant: "subtle",
     },
   ];
 
@@ -53,7 +51,7 @@ export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
     <ShellIconButtonList
       items={items}
       as={"article"}
-      my={"3"}
+      my={"12"}
       ml={{ base: -6, lg: -12 }}
       px={{ base: 6, lg: 12 }}
       w={{

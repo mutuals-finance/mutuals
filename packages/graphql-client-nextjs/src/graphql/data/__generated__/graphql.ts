@@ -18,6 +18,7 @@ export type Scalars = {
   DBID: { input: any; output: any; }
   Email: { input: any; output: any; }
   FieldSet: { input: any; output: any; }
+  HexString: { input: any; output: any; }
   PubKey: { input: any; output: any; }
   Time: { input: any; output: any; }
   _Any: { input: any; output: any; }
@@ -25,10 +26,11 @@ export type Scalars = {
   federation__Scope: { input: any; output: any; }
 };
 
-export enum Action {
-  UserCreated = 'UserCreated'
-}
+export const Action = {
+  UserCreated: 'UserCreated'
+} as const;
 
+export type Action = typeof Action[keyof typeof Action];
 export type AddRolesToUserPayloadOrError = ErrNotAuthorized | SplitFiUser;
 
 export type AddUserWalletPayload = {
@@ -49,8 +51,30 @@ export type AdminAddWalletPayload = {
 
 export type AdminAddWalletPayloadOrError = AdminAddWalletPayload | ErrAddressOwnedByUser | ErrNotAuthorized | ErrUserNotFound;
 
+export type Allocation = Node & {
+  creationTime?: Maybe<Scalars['Time']['output']>;
+  dbid: Scalars['DBID']['output'];
+  id: Scalars['ID']['output'];
+  lastUpdated?: Maybe<Scalars['Time']['output']>;
+  recipientAddress?: Maybe<Scalars['Address']['output']>;
+  split?: Maybe<Split>;
+  value?: Maybe<Scalars['HexString']['output']>;
+  version?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AllocationAggregation = Node & {
+  creationTime?: Maybe<Scalars['Time']['output']>;
+  dbid: Scalars['DBID']['output'];
+  expression?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lastUpdated?: Maybe<Scalars['Time']['output']>;
+  recipientAddress?: Maybe<Scalars['Address']['output']>;
+  split?: Maybe<Split>;
+  version?: Maybe<Scalars['Int']['output']>;
+};
+
 export type Asset = Node & {
-  balance?: Maybe<Scalars['Int']['output']>;
+  balance?: Maybe<Scalars['HexString']['output']>;
   dbid: Scalars['DBID']['output'];
   id: Scalars['ID']['output'];
   ownerAddress?: Maybe<ChainAddress>;
@@ -74,18 +98,26 @@ export type AuthNonce = {
 
 export type AuthorizationError = ErrDoesNotOwnRequiredToken | ErrInvalidToken | ErrNoCookie | ErrSessionInvalidated;
 
-export enum BasicAuthType {
-  Monitoring = 'Monitoring',
-  Retool = 'Retool'
-}
+export const BasicAuthType = {
+  Monitoring: 'Monitoring',
+  Retool: 'Retool'
+} as const;
 
-export enum Chain {
-  Arbitrum = 'Arbitrum',
-  Ethereum = 'Ethereum',
-  Optimism = 'Optimism',
-  Polygon = 'Polygon'
-}
+export type BasicAuthType = typeof BasicAuthType[keyof typeof BasicAuthType];
+export const CalculationType = {
+  Fixed: 'Fixed',
+  Percentage: 'Percentage'
+} as const;
 
+export type CalculationType = typeof CalculationType[keyof typeof CalculationType];
+export const Chain = {
+  Arbitrum: 'Arbitrum',
+  Ethereum: 'Ethereum',
+  Optimism: 'Optimism',
+  Polygon: 'Polygon'
+} as const;
+
+export type Chain = typeof Chain[keyof typeof Chain];
 export type ChainAddress = {
   address?: Maybe<Scalars['Address']['output']>;
   chain?: Maybe<Chain>;
@@ -161,18 +193,20 @@ export type EmailNotificationSettings = {
   unsubscribedFromNotifications: Scalars['Boolean']['output'];
 };
 
-export enum EmailUnsubscriptionType {
-  All = 'All',
-  Notifications = 'Notifications'
-}
+export const EmailUnsubscriptionType = {
+  All: 'All',
+  Notifications: 'Notifications'
+} as const;
 
-export enum EmailVerificationStatus {
-  Admin = 'Admin',
-  Failed = 'Failed',
-  Unverified = 'Unverified',
-  Verified = 'Verified'
-}
+export type EmailUnsubscriptionType = typeof EmailUnsubscriptionType[keyof typeof EmailUnsubscriptionType];
+export const EmailVerificationStatus = {
+  Admin: 'Admin',
+  Failed: 'Failed',
+  Unverified: 'Unverified',
+  Verified: 'Verified'
+} as const;
 
+export type EmailVerificationStatus = typeof EmailVerificationStatus[keyof typeof EmailVerificationStatus];
 export type EoaAuth = {
   chainPubKey: ChainPubKeyInput;
   message: Scalars['String']['input'];
@@ -316,13 +350,12 @@ export type Mutation = {
   updateEmailNotificationSettings?: Maybe<UpdateEmailNotificationSettingsPayloadOrError>;
   updateNotificationSettings?: Maybe<NotificationSettings>;
   updatePrimaryWallet?: Maybe<UpdatePrimaryWalletPayloadOrError>;
-  updateSplit?: Maybe<UpdateSplitPayloadOrError>;
   updateSplitHidden?: Maybe<UpdateSplitHiddenPayloadOrError>;
-  updateSplitInfo?: Maybe<UpdateSplitInfoPayloadOrError>;
   updateSplitOrder?: Maybe<UpdateSplitOrderPayloadOrError>;
   updateUserExperience?: Maybe<UpdateUserExperiencePayloadOrError>;
   updateUserInfo?: Maybe<UpdateUserInfoPayloadOrError>;
   uploadPersistedQueries?: Maybe<UploadPersistedQueriesPayloadOrError>;
+  upsertSplit?: Maybe<UpsertSplitPayloadOrError>;
   verifyEmail?: Maybe<VerifyEmailPayloadOrError>;
   verifyEmailMagicLink?: Maybe<VerifyEmailMagicLinkPayloadOrError>;
 };
@@ -437,18 +470,8 @@ export type MutationUpdatePrimaryWalletArgs = {
 };
 
 
-export type MutationUpdateSplitArgs = {
-  input: UpdateSplitInput;
-};
-
-
 export type MutationUpdateSplitHiddenArgs = {
   input: UpdateSplitHiddenInput;
-};
-
-
-export type MutationUpdateSplitInfoArgs = {
-  input: UpdateSplitInfoInput;
 };
 
 
@@ -469,6 +492,11 @@ export type MutationUpdateUserInfoArgs = {
 
 export type MutationUploadPersistedQueriesArgs = {
   input?: InputMaybe<UploadPersistedQueriesInput>;
+};
+
+
+export type MutationUpsertSplitArgs = {
+  input: UpsertSplitInput;
 };
 
 
@@ -547,12 +575,13 @@ export type PreverifyEmailPayload = {
 
 export type PreverifyEmailPayloadOrError = ErrInvalidInput | PreverifyEmailPayload;
 
-export enum PreverifyEmailResult {
-  Invalid = 'Invalid',
-  Risky = 'Risky',
-  Valid = 'Valid'
-}
+export const PreverifyEmailResult = {
+  Invalid: 'Invalid',
+  Risky: 'Risky',
+  Valid: 'Valid'
+} as const;
 
+export type PreverifyEmailResult = typeof PreverifyEmailResult[keyof typeof PreverifyEmailResult];
 export type PrivyAuth = {
   token: Scalars['String']['input'];
 };
@@ -656,17 +685,14 @@ export type QueryViewerSplitByIdArgs = {
   id: Scalars['DBID']['input'];
 };
 
-export type Recipient = Node & {
-  address?: Maybe<Scalars['Address']['output']>;
-  creationTime?: Maybe<Scalars['Time']['output']>;
-  dbid: Scalars['DBID']['output'];
-  id: Scalars['ID']['output'];
-  lastUpdated?: Maybe<Scalars['Time']['output']>;
-  ownership?: Maybe<Scalars['Int']['output']>;
-  split?: Maybe<Split>;
-  version?: Maybe<Scalars['Int']['output']>;
-};
+export const RecipientType = {
+  DefaultGroup: 'DefaultGroup',
+  DefaultItem: 'DefaultItem',
+  PrioritizedGroup: 'PrioritizedGroup',
+  TimedGroup: 'TimedGroup'
+} as const;
 
+export type RecipientType = typeof RecipientType[keyof typeof RecipientType];
 export type RegisterUserPushTokenPayload = {
   viewer?: Maybe<Viewer>;
 };
@@ -679,12 +705,13 @@ export type RemoveUserWalletsPayload = {
 
 export type RemoveUserWalletsPayloadOrError = ErrInvalidInput | ErrNotAuthorized | RemoveUserWalletsPayload;
 
-export enum ReportWindow {
-  AllTime = 'ALL_TIME',
-  Last_5Days = 'LAST_5_DAYS',
-  Last_7Days = 'LAST_7_DAYS'
-}
+export const ReportWindow = {
+  AllTime: 'ALL_TIME',
+  Last_5Days: 'LAST_5_DAYS',
+  Last_7Days: 'LAST_7_DAYS'
+} as const;
 
+export type ReportWindow = typeof ReportWindow[keyof typeof ReportWindow];
 export type ResendVerificationEmailPayload = {
   viewer?: Maybe<Viewer>;
 };
@@ -693,12 +720,13 @@ export type ResendVerificationEmailPayloadOrError = ErrInvalidInput | ResendVeri
 
 export type RevokeRolesFromUserPayloadOrError = ErrNotAuthorized | SplitFiUser;
 
-export enum Role {
-  Admin = 'ADMIN',
-  BetaTester = 'BETA_TESTER',
-  EarlyAccess = 'EARLY_ACCESS'
-}
+export const Role = {
+  Admin: 'ADMIN',
+  BetaTester: 'BETA_TESTER',
+  EarlyAccess: 'EARLY_ACCESS'
+} as const;
 
+export type Role = typeof Role[keyof typeof Role];
 export type SearchSplitsPayload = {
   results?: Maybe<Array<SplitSearchResult>>;
 };
@@ -712,16 +740,18 @@ export type SearchUsersPayload = {
 export type SearchUsersPayloadOrError = ErrInvalidInput | SearchUsersPayload;
 
 export type Split = Node & {
+  address?: Maybe<Scalars['Address']['output']>;
+  allocationAggregation?: Maybe<Array<AllocationAggregation>>;
+  allocations?: Maybe<Array<Maybe<Allocation>>>;
   assets?: Maybe<Array<Maybe<Asset>>>;
-  badgeURL?: Maybe<Scalars['String']['output']>;
-  bannerURL?: Maybe<Scalars['String']['output']>;
   chain?: Maybe<Chain>;
+  creatorAddress?: Maybe<Scalars['Address']['output']>;
   dbid: Scalars['DBID']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  logoURL?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  shares?: Maybe<Array<Maybe<Recipient>>>;
+  ownerAddress?: Maybe<Scalars['Address']['output']>;
+  status: SplitStatus;
   version?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -730,9 +760,13 @@ export type SplitAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
-export type SplitSharesArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
+export type SplitAllocationInput = {
+  calculationType: Array<CalculationType>;
+  children?: InputMaybe<Array<SplitAllocationInput>>;
+  id?: InputMaybe<Scalars['DBID']['input']>;
+  recipientAddress?: InputMaybe<Scalars['Address']['input']>;
+  recipientType: Array<RecipientType>;
+  value: Scalars['HexString']['input'];
 };
 
 export type SplitByIdPayloadOrError = ErrSplitNotFound | Split;
@@ -768,12 +802,13 @@ export type SplitSearchResult = {
   split?: Maybe<Split>;
 };
 
-export type SplitShareInput = {
-  ownership: Scalars['Int']['input'];
-  recipientAddress: Scalars['Address']['input'];
-  splitId: Scalars['DBID']['input'];
-};
+export const SplitStatus = {
+  Active: 'Active',
+  Draft: 'Draft',
+  Paused: 'Paused'
+} as const;
 
+export type SplitStatus = typeof SplitStatus[keyof typeof SplitStatus];
 export type Subscription = {
   newNotification?: Maybe<Notification>;
   notificationUpdated?: Maybe<Notification>;
@@ -797,10 +832,11 @@ export type Token = Node & {
   version?: Maybe<Scalars['Int']['output']>;
 };
 
-export enum TokenType {
-  Erc20 = 'ERC20'
-}
+export const TokenType = {
+  Erc20: 'ERC20'
+} as const;
 
+export type TokenType = typeof TokenType[keyof typeof TokenType];
 export type UnregisterUserPushTokenPayload = {
   viewer?: Maybe<Viewer>;
 };
@@ -867,12 +903,6 @@ export type UpdateSplitInfoInput = {
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type UpdateSplitInfoPayload = {
-  split?: Maybe<Split>;
-};
-
-export type UpdateSplitInfoPayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpdateSplitInfoPayload;
-
 export type UpdateSplitInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   editId: Scalars['String']['input'];
@@ -928,6 +958,19 @@ export type UploadPersistedQueriesPayload = {
 
 export type UploadPersistedQueriesPayloadOrError = ErrNotAuthorized | UploadPersistedQueriesPayload;
 
+export type UpsertSplitInput = {
+  allocations?: InputMaybe<Array<SplitAllocationInput>>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  splitId?: InputMaybe<Scalars['DBID']['input']>;
+};
+
+export type UpsertSplitPayload = {
+  split?: Maybe<Split>;
+};
+
+export type UpsertSplitPayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpsertSplitPayload;
+
 export type UserByAddressOrError = ErrInvalidInput | ErrUserNotFound | SplitFiUser;
 
 export type UserByIdOrError = ErrInvalidInput | ErrUserNotFound | SplitFiUser;
@@ -950,13 +993,14 @@ export type UserExperience = {
   type: UserExperienceType;
 };
 
-export enum UserExperienceType {
-  EmailUpsell = 'EmailUpsell',
-  MaintenanceFeb2023 = 'MaintenanceFeb2023',
-  TwitterConnectionOnboardingUpsell = 'TwitterConnectionOnboardingUpsell',
-  UpsellMintMemento4 = 'UpsellMintMemento4'
-}
+export const UserExperienceType = {
+  EmailUpsell: 'EmailUpsell',
+  MaintenanceFeb2023: 'MaintenanceFeb2023',
+  TwitterConnectionOnboardingUpsell: 'TwitterConnectionOnboardingUpsell',
+  UpsellMintMemento4: 'UpsellMintMemento4'
+} as const;
 
+export type UserExperienceType = typeof UserExperienceType[keyof typeof UserExperienceType];
 export type UserSearchResult = {
   user?: Maybe<SplitFiUser>;
 };
@@ -1025,11 +1069,12 @@ export type Wallet = Node & {
   walletType?: Maybe<WalletType>;
 };
 
-export enum WalletType {
-  Eoa = 'EOA',
-  GnosisSafe = 'GnosisSafe'
-}
+export const WalletType = {
+  Eoa: 'EOA',
+  GnosisSafe: 'GnosisSafe'
+} as const;
 
+export type WalletType = typeof WalletType[keyof typeof WalletType];
 export type _Service = {
   sdl?: Maybe<Scalars['String']['output']>;
 };
@@ -1067,6 +1112,20 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { logout?: { __typename: 'LogoutPayload' } | null };
 
+export type UpsertSplitMutationVariables = Exact<{
+  input: UpsertSplitInput;
+}>;
+
+
+export type UpsertSplitMutation = { upsertSplit?: { __typename: 'ErrInvalidInput' } | { __typename: 'ErrNotAuthorized' } | { __typename: 'UpsertSplitPayload', split?: { id: string, dbid: any, version?: number | null, status: SplitStatus, name?: string | null, description?: string | null, address?: any | null, ownerAddress?: any | null, creatorAddress?: any | null, chain?: Chain | null } | null } | null };
+
+export type PoolByIdQueryVariables = Exact<{
+  id: Scalars['DBID']['input'];
+}>;
+
+
+export type PoolByIdQuery = { splitById?: { id: string, dbid: any, version?: number | null, status: SplitStatus, name?: string | null, description?: string | null, address?: any | null, ownerAddress?: any | null, creatorAddress?: any | null, chain?: Chain | null } | {} | null };
+
 export type UserByAddressQueryVariables = Exact<{
   chainAddress: ChainAddressInput;
 }>;
@@ -1074,15 +1133,20 @@ export type UserByAddressQueryVariables = Exact<{
 
 export type UserByAddressQuery = { userByAddress?: { __typename: 'ErrInvalidInput' } | { __typename: 'ErrUserNotFound' } | { __typename: 'SplitFiUser', dbid: any, universal?: boolean | null } | null };
 
-export type ViewerWalletsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ViewerWalletsQuery = { viewer?: { user?: { wallets?: Array<{ dbid: any, chainAddress?: { chain?: Chain | null, address?: any | null } | null } | null> | null, primaryWallet?: { dbid: any, chainAddress?: { chain?: Chain | null, address?: any | null } | null } | null } | null } | {} | null };
-
 export type ViewerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ViewerQuery = { viewer?: { __typename: 'Viewer', id: string, user?: { wallets?: Array<{ chainAddress?: { address?: any | null } | null } | null> | null } | null } | {} | null };
+
+export type ViewerSplitsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ViewerSplitsQuery = { viewer?: { viewerSplits?: Array<{ split?: { id: string, dbid: any, version?: number | null, status: SplitStatus, name?: string | null, description?: string | null, address?: any | null, ownerAddress?: any | null, creatorAddress?: any | null, chain?: Chain | null } | null } | null> | null } | {} | null };
+
+export type ViewerWalletsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ViewerWalletsQuery = { viewer?: { user?: { wallets?: Array<{ dbid: any, chainAddress?: { chain?: Chain | null, address?: any | null } | null } | null> | null, primaryWallet?: { dbid: any, chainAddress?: { chain?: Chain | null, address?: any | null } | null } | null } | null } | {} | null };
 
 
 export const AddWalletDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddWallet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChainAddressInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addUserWallet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"chainAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}}},{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AddUserWalletPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"primaryWallet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"Field","name":{"kind":"Name","value":"wallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AddWalletMutation, AddWalletMutationVariables>;
@@ -1090,6 +1154,9 @@ export const CreateNonceDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrAuthenticationFailed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrDoesNotOwnRequiredToken"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrUserAlreadyExists"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrUsernameNotAvailable"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrInvalidInput"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mechanism"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"LoginPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrUserNotFound"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrAuthenticationFailed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrDoesNotOwnRequiredToken"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
+export const UpsertSplitDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpsertSplit"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpsertSplitInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertSplit"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UpsertSplitPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ownerAddress"}},{"kind":"Field","name":{"kind":"Name","value":"creatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrInvalidInput"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrNotAuthorized"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]}}]} as unknown as DocumentNode<UpsertSplitMutation, UpsertSplitMutationVariables>;
+export const PoolByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PoolById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DBID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"splitById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Split"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ownerAddress"}},{"kind":"Field","name":{"kind":"Name","value":"creatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}}]}}]} as unknown as DocumentNode<PoolByIdQuery, PoolByIdQueryVariables>;
 export const UserByAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserByAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChainAddressInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"chainAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SplitFiUser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"universal"}}]}}]}}]}}]} as unknown as DocumentNode<UserByAddressQuery, UserByAddressQueryVariables>;
-export const ViewerWalletsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ViewerWallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chain"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"primaryWallet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chain"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ViewerWalletsQuery, ViewerWalletsQueryVariables>;
 export const ViewerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ViewerQuery, ViewerQueryVariables>;
+export const ViewerSplitsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ViewerSplits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewerSplits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"split"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ownerAddress"}},{"kind":"Field","name":{"kind":"Name","value":"creatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ViewerSplitsQuery, ViewerSplitsQueryVariables>;
+export const ViewerWalletsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ViewerWallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chain"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"primaryWallet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chain"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ViewerWalletsQuery, ViewerWalletsQueryVariables>;

@@ -1,6 +1,6 @@
 "use client";
 
-import { Field, VStack } from "@mutuals/ui";
+import { Stack, Heading } from "@mutuals/ui";
 import { Connector, useConnect } from "wagmi";
 import WalletSelectionButton from "@/features/Wallet/SelectionButton";
 import { partition } from "@/utils";
@@ -16,9 +16,12 @@ export function WalletSelectionWallet() {
   );
 
   return (
-    <VStack gap={"6"} alignItems={"stretch"}>
+    <Stack gap={"6"} alignItems={"stretch"}>
       {(recentConnectors?.length ?? 0) > 0 && (
-        <Field label={"Recent"} gap={"3"}>
+        <Stack>
+          <Heading as={"h4"} variant={"subtag"} fontSize={"xs"}>
+            Recent
+          </Heading>
           {recentConnectors?.map((connector) => (
             <WalletSelectionButton
               key={connector.id}
@@ -26,10 +29,13 @@ export function WalletSelectionWallet() {
               connector={connector}
             />
           ))}
-        </Field>
+        </Stack>
       )}
 
-      <Field label={"Popular"} gap={"3"}>
+      <Stack>
+        <Heading as={"h4"} variant={"subtag"} fontSize={"xs"}>
+          Popular
+        </Heading>
         {popularConnectors?.map((connector) => (
           <WalletSelectionButton
             key={connector.id}
@@ -37,7 +43,7 @@ export function WalletSelectionWallet() {
             connector={connector}
           />
         ))}
-      </Field>
-    </VStack>
+      </Stack>
+    </Stack>
   );
 }

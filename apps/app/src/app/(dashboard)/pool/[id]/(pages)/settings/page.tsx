@@ -1,5 +1,3 @@
-import { ipfsResolveData } from "@/utils";
-import { FileWithPreview } from "@/components/Form/types";
 import PoolMetadataForm from "@/app/(dashboard)/pool/[id]/(pages)/settings/MetadataForm";
 import ContentCard from "@/components/ContentCard";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
@@ -16,13 +14,12 @@ export const metadata: Metadata = {
 export default async function PoolSettingsPage({
   params,
 }: PoolSettingsPageProps) {
-  const pool = await getPoolDetailsFromRouteParams(params);
+  const { name, description } = await getPoolDetailsFromRouteParams(params);
 
   const defaultValues = {
-    ...pool.metaData,
-    image: (pool.metaData.image
-      ? { preview: ipfsResolveData(pool.metaData.image) }
-      : undefined) as FileWithPreview,
+    name,
+    description,
+    image: undefined,
   };
 
   return (

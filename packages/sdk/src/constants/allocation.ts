@@ -1,41 +1,31 @@
-export const RECIPIENT_TYPE_KEY = {
-  DEFAULT_RECIPIENT: "DEFAULT_RECIPIENT",
-  DEFAULT_GROUP: "DEFAULT_GROUP",
-  TIMED_GROUP: "TIMED_GROUP",
-  PRIORITIZED_GROUP: "PRIORITIZED_GROUP",
-} as const;
-
-export const CALCULATION_TYPE_KEY = {
-  FIXED: "FIXED",
-  PERCENTAGE: "PERCENTAGE",
-} as const;
+import { CalculationType, RecipientType } from "../types";
 
 export const RECIPIENT_TYPE_CONFIG = {
-  [RECIPIENT_TYPE_KEY.DEFAULT_RECIPIENT]: {
-    key: RECIPIENT_TYPE_KEY.DEFAULT_RECIPIENT,
+  [RecipientType.DefaultItem]: {
+    key: RecipientType.DefaultItem,
     name: "Default Recipient",
   },
-  [RECIPIENT_TYPE_KEY.DEFAULT_GROUP]: {
-    key: RECIPIENT_TYPE_KEY.DEFAULT_GROUP,
+  [RecipientType.DefaultGroup]: {
+    key: RecipientType.DefaultGroup,
     name: "Default Group",
   },
-  [RECIPIENT_TYPE_KEY.TIMED_GROUP]: {
-    key: RECIPIENT_TYPE_KEY.TIMED_GROUP,
+  [RecipientType.TimedGroup]: {
+    key: RecipientType.TimedGroup,
     name: "Timed Group",
   },
-  [RECIPIENT_TYPE_KEY.PRIORITIZED_GROUP]: {
-    key: RECIPIENT_TYPE_KEY.PRIORITIZED_GROUP,
+  [RecipientType.PrioritizedGroup]: {
+    key: RecipientType.PrioritizedGroup,
     name: "Prioritized Group",
   },
 };
 
 export const CALCULATION_TYPE_CONFIG = {
-  [CALCULATION_TYPE_KEY.PERCENTAGE]: {
-    key: CALCULATION_TYPE_KEY.PERCENTAGE,
+  [CalculationType.Percentage]: {
+    key: CalculationType.Percentage,
     name: "Percentage",
   },
-  [CALCULATION_TYPE_KEY.FIXED]: {
-    key: CALCULATION_TYPE_KEY.FIXED,
+  [CalculationType.Fixed]: {
+    key: CalculationType.Fixed,
     name: "Fixed",
   },
 };

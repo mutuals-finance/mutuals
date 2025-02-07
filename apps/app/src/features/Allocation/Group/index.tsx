@@ -4,26 +4,23 @@ import {
   UseAllocationGroup,
   useAllocationData,
   UseAllocationDataArgs,
-} from "@/features/PoolAdd/Allocations/useAllocationGroup";
-import PoolAddAllocationsGroupItem from "@/features/PoolAdd/Allocations/Item";
+} from "@/features/Allocation/useAllocationGroup";
+import AllocationRecipient from "@/features/Allocation/Recipient";
+import { AllocationItemBaseProps } from "@/features/Allocation/types";
 
-export type PoolAddAllocationsGroupSharedItemProps = {
-  depth?: number;
-};
-
-interface PoolAddAllocationsGroupProps
+export interface AllocationGroupProps
   extends Omit<StackProps, "children">,
-    PoolAddAllocationsGroupSharedItemProps {
+    AllocationItemBaseProps {
   allocationDataArgs: UseAllocationDataArgs;
   children?: ReactNode | ((method: UseAllocationGroup) => ReactNode);
 }
 
-export default function PoolAddAllocationsGroup({
+export default function AllocationGroup({
   depth = 0,
   allocationDataArgs,
   children,
   ...props
-}: PoolAddAllocationsGroupProps) {
+}: AllocationGroupProps) {
   const methods = useAllocationData(allocationDataArgs);
 
   return (
@@ -39,7 +36,7 @@ export default function PoolAddAllocationsGroup({
 
       <Stack flex={"1"}>
         {methods.fields.map(({ id: fieldArrayId, ...item }, index) => (
-          <PoolAddAllocationsGroupItem
+          <AllocationRecipient
             key={fieldArrayId}
             id={`${allocationDataArgs.id}.${index}`}
             onRemove={() => methods.remove(index)}

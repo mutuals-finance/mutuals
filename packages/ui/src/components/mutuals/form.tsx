@@ -40,7 +40,6 @@ export function Form<
     <FormProvider {...methods}>
       <Stack
         as="form"
-        alignItems={"stretch"}
         onSubmit={onSubmit && handleSubmit(onSubmit, onSubmitInvalid)}
         {...props}
       >

@@ -1,6 +1,7 @@
-"use client";
-
-import { useQuery } from "@mutuals/graphql-client-nextjs";
+import {
+  ApolloQueryResult,
+  ViewerSplitsQuery,
+} from "@mutuals/graphql-client-nextjs";
 import {
   Container,
   Heading,
@@ -10,21 +11,18 @@ import {
   Button,
 } from "@mutuals/ui";
 import React from "react";
-import { useAccount } from "wagmi";
 
 import { TreasurySearchAndCreate } from "./SearchAndCreate";
 import PoolCard from "@/features/Pool/Card";
-import { PoolListByRecipientDocument } from "@mutuals/graphql-client-nextjs/thegraph";
 import { HiViewGridAdd } from "react-icons/hi";
 
-export default function PoolList() {
-  const { address, isConnected } = useAccount();
-
-  const { data } = useQuery(PoolListByRecipientDocument, {
-    variables: { recipient: address?.toString() ?? "" },
-    context: { clientName: "thegraph" },
-    skip: !isConnected,
-  });
+export default function PoolList({
+  data,
+}: ApolloQueryResult<ViewerSplitsQuery>) {
+  const viewerPools =
+    data?.viewer && "viewerSplits" in data.viewer
+      ? data.viewer.viewerSplits
+      : [];
 
   return (
     <Container maxW={"7xl"}>
@@ -32,18 +30,16 @@ export default function PoolList() {
         Payment Pools
       </Heading>
 
-      {!!data?.splits && data.splits.length > 0 ? (
+      {!!viewerPools && viewerPools.length > 0 ? (
         <>
           <TreasurySearchAndCreate />
           <SimpleGrid
-            templateColumns={"repeat(auto-fit, minmax(22rem, 1fr))"}
-            gap={6}
+            templateColumns={"repeat(auto-fill, minmax(16rem, 1fr))"}
+            gap={4}
           >
-            {Array(4)
-              .fill(data?.splits[0])
-              .map((split, key) => {
-                return <PoolCard key={key} {...split} />;
-              })}
+            {viewerPools.map((viewerPool, key) => {
+              return <PoolCard key={key} {...viewerPool?.split} />;
+            })}
           </SimpleGrid>
         </>
       ) : (

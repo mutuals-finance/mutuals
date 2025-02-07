@@ -21,13 +21,12 @@ export function EventDescriptionCell({
     <Stack alignItems={"flex-start"} gap={"1"}>
       <Text fontSize={"sm"}>{type}</Text>
       <Tag size={"sm"}>
-        <TagLabel
-          as={Date}
-          fontWeight={"500"}
-          fontSize={"2xs"}
-          formatString="LLLL dd, yyyy"
-          timestamp={row.original.timestamp.toString()}
-        ></TagLabel>
+        <TagLabel asChild fontWeight={"500"} fontSize={"2xs"}>
+          <Date
+            formatString="LLLL dd, yyyy"
+            timestamp={row.original.timestamp.toString()}
+          />
+        </TagLabel>
       </Tag>
     </Stack>
   );

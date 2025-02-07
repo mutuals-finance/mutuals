@@ -9,6 +9,7 @@ import {
   useBreakpointValue,
   Link,
   LinkButton,
+  Icon,
 } from "@mutuals/ui";
 import { PropsWithChildren, useEffect } from "react";
 import { useToggle } from "react-use";
@@ -100,15 +101,16 @@ export default function ShellDashboardSidebarContent({
                   w={"full"}
                   justifyContent={"flex-start"}
                   px={"3.5"}
+                  gap={"4"}
                   size={"xl"}
                   fontSize={"sm"}
                   textAlign={"left"}
                   overflow={"hidden"}
                 >
-                  <navItem.icon />
-                  <Text as={"span"} ml={"2"}>
-                    {navItem.label}
-                  </Text>
+                  <Icon boxSize={"4"}>
+                    <navItem.icon />
+                  </Icon>
+                  {navItem.label}
                 </LinkButton>
               ))}
             </Stack>

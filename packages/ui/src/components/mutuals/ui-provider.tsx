@@ -15,6 +15,8 @@ export function UIProvider({
   themeProps: {
     attribute = "class",
     disableTransitionOnChange = true,
+    defaultTheme = "system",
+    enableSystem = true,
     ...themeProps
   } = {},
   ...props
@@ -24,6 +26,8 @@ export function UIProvider({
       <ThemeProvider
         attribute={attribute}
         disableTransitionOnChange={disableTransitionOnChange}
+        defaultTheme={defaultTheme}
+        enableSystem={enableSystem}
         {...themeProps}
       >
         {children}

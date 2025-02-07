@@ -1,11 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import type { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 
 import Providers from "@/providers";
 import Layout from "@/features/Layout";
 import fonts from "@mutuals/ui/font";
-
-type RootLayoutProps = PropsWithChildren;
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +18,7 @@ export const viewport: Viewport = {
   themeColor: "#09090b",
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html
       className={Object.values(fonts)

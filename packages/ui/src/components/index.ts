@@ -40,3 +40,4 @@ export * from "./mutuals/input";
 export * from "./mutuals/field";
 export * from "./mutuals/file-upload";
 export * from "./mutuals/form";
+export * from "./mutuals/form-error-alert";

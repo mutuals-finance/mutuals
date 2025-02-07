@@ -1,7 +1,5 @@
 import React, { PropsWithChildren } from "react";
 
-import "keen-slider/keen-slider.min.css";
-
 import Providers from "@/providers";
 import { siteDescription, siteName, siteUrl } from "@/config";
 import { Metadata } from "next";

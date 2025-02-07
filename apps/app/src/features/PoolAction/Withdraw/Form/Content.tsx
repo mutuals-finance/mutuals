@@ -6,19 +6,17 @@ import { useFormContext } from "react-hook-form";
 import { useToggle } from "react-use";
 import { GetAccountBalanceReply } from "@ankr.com/ankr.js";
 
-import { DeepPartial } from "#/partial";
-
 import useWithdrawSplit from "@/hooks/useWithdrawSplit";
 
 import WithdrawModal from "@/features/PoolAction/Withdraw/Modal";
 import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
-import { type Split } from "@mutuals/graphql-client-nextjs/thegraph";
+import { type Split } from "@mutuals/graphql-client-nextjs";
 import { WithdrawData } from "@/features/PoolAction/types";
 
 export interface WithdrawFormContentProps extends StackProps {
   balance?: GetAccountBalanceReply;
-  pool?: DeepPartial<Split>;
+  pool?: Split;
 }
 
 export default function PoolActionWithdrawFormContent({

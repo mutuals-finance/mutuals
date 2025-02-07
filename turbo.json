@@ -14,7 +14,7 @@
     "NEXT_PUBLIC_ANKR_API_KEY",
     "SOLC_PROFILE"
   ],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": [
         "^build"
