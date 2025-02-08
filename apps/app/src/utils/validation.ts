@@ -45,11 +45,11 @@ export const uniqueAddress =
     return addressExists ? ADDRESS_REPEATED_ERROR : undefined;
   };
 
-export const addressIsNotCurrentSplit =
+export const addressIsNotCurrentPool =
   (splitAddress: string) =>
   (address: string): string | undefined => {
     const OWNER_ADDRESS_IS_SPLIT_ADDRESS_ERROR =
-      "Cannot use Split itself as owner.";
+      "Cannot use Pool itself as owner.";
     return sameAddress(splitAddress, address)
       ? OWNER_ADDRESS_IS_SPLIT_ADDRESS_ERROR
       : undefined;

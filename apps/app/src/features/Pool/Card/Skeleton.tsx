@@ -7,7 +7,7 @@ import {
   SkeletonText,
 } from "@mutuals/ui";
 
-export default function SplitCardSkeleton() {
+export default function PoolCardSkeleton() {
   return (
     <Card.Root variant={"outline"} bg={"bg.1"} size={"sm"}>
       <Card.Header as={Flex} alignItems={"center"} gap={"3"}>

@@ -21,7 +21,7 @@ import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddModal from "@/features/PoolAdd/Modal";
 import { useAccount } from "wagmi";
 import { useUpsertPool } from "@mutuals/graphql-client-nextjs/client";
-import { SplitStatus } from "@mutuals/graphql-client-nextjs";
+import { PoolStatus } from "@mutuals/graphql-client-nextjs";
 import React, { useCallback, useEffect } from "react";
 import AllocationInput from "@/features/PoolAdd/AllocationInput";
 
@@ -33,9 +33,9 @@ export default function PoolAdd() {
   const onSubmit = useCallback(
     (
       { image: _image, ownerAddress: _ownerAddress, ...input }: PoolAddData,
-      status: SplitStatus,
+      status: PoolStatus,
     ) => {
-      if (status == SplitStatus.Active) {
+      if (status == PoolStatus.Active) {
         setModalOpen(true);
       } else {
         void upsertPool({
@@ -43,6 +43,7 @@ export default function PoolAdd() {
           variables: {
             input,
           },
+          onCompleted: (d) => console.log("onCompleted: upsertPool", d),
         });
       }
     },
@@ -53,7 +54,7 @@ export default function PoolAdd() {
 
   return (
     <Form<PoolAddData>
-      onSubmit={(values) => onSubmit(values, SplitStatus.Active)}
+      onSubmit={(values) => onSubmit(values, PoolStatus.Active)}
       onSubmitInvalid={() => {
         console.log("Submit: invalid");
       }}
@@ -120,7 +121,7 @@ export default function PoolAdd() {
                     size="xl"
                     type="button"
                     onClick={() =>
-                      onSubmit(methods.getValues(), SplitStatus.Draft)
+                      onSubmit(methods.getValues(), PoolStatus.Draft)
                     }
                     variant={"subtle"}
                     loading={loading}

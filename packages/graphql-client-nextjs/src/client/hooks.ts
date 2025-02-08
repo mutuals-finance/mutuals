@@ -14,12 +14,12 @@ import {
   Exact,
   LoginMutationVariables,
   LogoutMutationVariables,
+  UpsertPoolMutation,
+  UpsertPoolMutationVariables,
   UserByAddressQuery,
   UserByAddressQueryVariables,
   ViewerWalletsQuery,
   ViewerWalletsQueryVariables,
-  UpsertSplitMutation,
-  UpsertSplitMutationVariables,
 } from "../graphql/data/__generated__/graphql";
 import { CREATE_NONCE } from "../graphql/data/mutations/CreateNonce";
 import { GET_USER_BY_WALLET_ADDRESS } from "../graphql/data/queries/GetUserByWalletAddress";
@@ -28,7 +28,7 @@ import { ADD_WALLET } from "../graphql/data/mutations/AddWallet";
 import { LOGOUT } from "../graphql/data/mutations/Logout";
 import { GET_VIEWER_WALLETS } from "../graphql/data/queries/GetViewerWallets";
 import { TMutationOptions } from "../types";
-import { UPSERT_SPLIT } from "../graphql/data/mutations/UpsertSplit";
+import { UPSERT_SPLIT } from "../graphql/data/mutations/UpsertPool";
 
 export function useLazyGetUserByWalletAddress(
   options?: QueryHookOptions<
@@ -75,7 +75,7 @@ export function useCreateNonce(
 }
 
 export function useUpsertPool(
-  options?: TMutationOptions<UpsertSplitMutation, UpsertSplitMutationVariables>,
+  options?: TMutationOptions<UpsertPoolMutation, UpsertPoolMutationVariables>,
 ) {
   return useMutation(UPSERT_SPLIT, {
     ...options,

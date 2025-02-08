@@ -11,12 +11,12 @@ import useWithdrawSplit from "@/hooks/useWithdrawSplit";
 import WithdrawModal from "@/features/PoolAction/Withdraw/Modal";
 import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
-import { type Split } from "@mutuals/graphql-client-nextjs";
+import { type Pool } from "@mutuals/graphql-client-nextjs";
 import { WithdrawData } from "@/features/PoolAction/types";
 
 export interface WithdrawFormContentProps extends StackProps {
   balance?: GetAccountBalanceReply;
-  pool?: Split;
+  pool?: Pool;
 }
 
 export default function PoolActionWithdrawFormContent({
@@ -80,7 +80,7 @@ export default function PoolActionWithdrawFormContent({
         p={"6"}
         gap={"6"}
         borderTop={"1px solid"}
-        borderColor={"border.1"}
+        borderColor={"border"}
       >
         <SummaryTable
           data={data}

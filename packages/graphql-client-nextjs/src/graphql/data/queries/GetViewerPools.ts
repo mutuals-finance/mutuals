@@ -1,11 +1,11 @@
 import { graphql } from "../__generated__";
 
-export const GET_VIEWER_SPLITS = graphql(/* GraphQL */ `
-  query ViewerSplits {
+export const GET_VIEWER_POOLS = graphql(/* GraphQL */ `
+  query ViewerPools {
     viewer {
       ... on Viewer {
-        viewerSplits {
-          split {
+        viewerPools {
+          pool {
             id
             dbid
             version

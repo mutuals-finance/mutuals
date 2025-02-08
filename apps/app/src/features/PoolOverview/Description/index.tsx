@@ -11,11 +11,11 @@ import {
 
 import { formatUSDPrice, ipfsResolveData } from "src/utils";
 
-import { type Split } from "@mutuals/graphql-client-nextjs";
+import { type Pool } from "@mutuals/graphql-client-nextjs";
 import PoolCard from "@/features/Pool/Card";
 
 interface PoolOverviewDescriptionProps {
-  pool?: Split;
+  pool?: Pool;
 }
 
 export default function PoolOverviewDescription({

@@ -45,7 +45,7 @@ export default function useAuthLoginOrCreateUser() {
         throw new Error(error.message);
       }
 
-      const userExists = data?.userByAddress?.__typename == "SplitFiUser";
+      const userExists = data?.userByAddress?.__typename == "MutualsUser";
 
       if (userExists) {
         const { errors, data } = await login({

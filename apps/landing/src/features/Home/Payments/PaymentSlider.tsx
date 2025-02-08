@@ -17,7 +17,7 @@ const payments = [
     tag: "Prioritized allocation",
     headline: "Optimize strategic asset distribution for maximum efficiency.",
     description:
-      "Limited cashflow with unsupervised distribution? Use SplitFi's account-based priorization engine to predetermine allowed withdraws.",
+      "Limited cashflow with unsupervised distribution? Use Mutual's account-based priorization engine to predetermine allowed withdraws.",
     image: prioritizedImage,
   },
   {

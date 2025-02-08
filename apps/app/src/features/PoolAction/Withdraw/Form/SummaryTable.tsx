@@ -49,7 +49,7 @@ export default function SummaryTable({
   };
 
   return (
-    <DataListRoot>
+    <DataListRoot orientation="horizontal" size={"sm"} divideY="0">
       {Object.keys(rows).map((col) => (
         <DataListItem
           key={col}

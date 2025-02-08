@@ -1,12 +1,4 @@
-import {
-  Container,
-  Grid,
-  GridItem,
-  MutualsLogo,
-  Text,
-  Box,
-  Link,
-} from "@mutuals/ui";
+import { Container, Grid, GridItem, MutualsLogo, Text, Box } from "@mutuals/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.jpg";
 import { PropsWithChildren } from "react";
@@ -46,7 +38,7 @@ export default function ShellLogin({ children }: PropsWithChildren) {
 
         <Image
           src={signInImage}
-          alt={"Connect to SplitFi"}
+          alt={"Connect to Mutuals"}
           fill={true}
           style={{ objectFit: "cover" }}
         />
@@ -82,7 +74,7 @@ export default function ShellLogin({ children }: PropsWithChildren) {
             {children}
 
             <Text fontSize="sm">
-              By connecting, you agree to SplitFi’s Terms of Service and
+              By connecting, you agree to Mutual’s Terms of Service and
               acknowledge that you have read and understand the SplitFi
               Disclaimer.
             </Text>

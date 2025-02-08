@@ -1,12 +1,12 @@
 import { graphql } from "../__generated__";
 
 export const UPSERT_SPLIT = graphql(/* GraphQL */ `
-  mutation UpsertSplit($input: UpsertSplitInput!) {
-    upsertSplit(input: $input) {
+  mutation UpsertPool($input: UpsertPoolInput!) {
+    upsertPool(input: $input) {
       __typename
-      ... on UpsertSplitPayload {
+      ... on UpsertPoolPayload {
         __typename
-        split {
+        pool {
           id
           dbid
           version

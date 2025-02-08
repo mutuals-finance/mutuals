@@ -16,10 +16,10 @@ import {
   IoOpenOutline,
 } from "react-icons/io5";
 import QRCode from "@/components/QRCode";
-import { Split } from "@mutuals/graphql-client-nextjs";
+import { Pool } from "@mutuals/graphql-client-nextjs";
 
 interface PoolActionDepositProps {
-  pool?: Split;
+  pool?: Pool;
 }
 
 export default async function PoolActionDeposit({

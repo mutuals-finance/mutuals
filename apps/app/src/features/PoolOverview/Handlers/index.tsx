@@ -7,10 +7,10 @@ import {
 } from "react-icons/io5";
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
-import { Split } from "@mutuals/graphql-client-nextjs";
+import { Pool } from "@mutuals/graphql-client-nextjs";
 
 interface PoolHandlersProps {
-  pool?: Split;
+  pool?: Pool;
 }
 
 export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {

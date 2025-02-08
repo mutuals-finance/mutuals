@@ -2,8 +2,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 const defaultMeta = {
-  title: "SplitFi — Trustless Multiparty Payment Distribution",
-  siteName: "SplitFi — Trustless Multiparty Payment Distribution",
+  title: "Mutuals — Trustless Multiparty Payment Distribution",
+  siteName: "Mutuals — Trustless Multiparty Payment Distribution",
   description:
     "SplitFi distributes your payment streams based on predefined conditions — Trustless and Automated.",
   /** Without additional '/' on the end, e.g. https://decentum.co */

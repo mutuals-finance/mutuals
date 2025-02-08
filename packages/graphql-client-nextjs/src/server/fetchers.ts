@@ -16,14 +16,14 @@ import {
   PoolByIdQueryVariables,
   ViewerQuery,
   ViewerQueryVariables,
-  ViewerSplitsQuery,
-  ViewerSplitsQueryVariables,
+  ViewerPoolsQuery,
+  ViewerPoolsQueryVariables,
   ViewerWalletsQuery,
   ViewerWalletsQueryVariables,
 } from "../graphql/data/__generated__/graphql";
 import { GET_VIEWER_WALLETS } from "../graphql/data/queries/GetViewerWallets";
 import { TQueryOptions } from "../types";
-import { GET_VIEWER_SPLITS } from "../graphql/data/queries/GetViewerSplits";
+import { GET_VIEWER_POOLS } from "../graphql/data/queries/GetViewerPools";
 import { GET_POOL_BY_ID } from "../graphql/data/queries/GetPoolById";
 
 export async function getPoolListByRecipient(
@@ -67,11 +67,11 @@ export async function getViewerWallets(
   });
 }
 
-export async function getViewerSplits(
-  options?: TQueryOptions<ViewerSplitsQueryVariables, ViewerSplitsQuery>,
-): Promise<ApolloQueryResult<ViewerSplitsQuery>> {
+export async function getViewerPools(
+  options?: TQueryOptions<ViewerPoolsQueryVariables, ViewerPoolsQuery>,
+): Promise<ApolloQueryResult<ViewerPoolsQuery>> {
   return getClient().query({
-    query: GET_VIEWER_SPLITS,
+    query: GET_VIEWER_POOLS,
     ...options,
   });
 }

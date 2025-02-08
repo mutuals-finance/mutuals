@@ -1,6 +1,6 @@
 import {
   ApolloQueryResult,
-  ViewerSplitsQuery,
+  ViewerPoolsQuery,
 } from "@mutuals/graphql-client-nextjs";
 import {
   Container,
@@ -18,11 +18,9 @@ import { HiViewGridAdd } from "react-icons/hi";
 
 export default function PoolList({
   data,
-}: ApolloQueryResult<ViewerSplitsQuery>) {
+}: ApolloQueryResult<ViewerPoolsQuery>) {
   const viewerPools =
-    data?.viewer && "viewerSplits" in data.viewer
-      ? data.viewer.viewerSplits
-      : [];
+    data?.viewer && "viewerPools" in data.viewer ? data.viewer.viewerPools : [];
 
   return (
     <Container maxW={"7xl"}>
@@ -38,7 +36,7 @@ export default function PoolList({
             gap={4}
           >
             {viewerPools.map((viewerPool, key) => {
-              return <PoolCard key={key} {...viewerPool?.split} />;
+              return <PoolCard key={key} {...viewerPool?.pool} />;
             })}
           </SimpleGrid>
         </>

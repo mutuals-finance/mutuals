@@ -17,9 +17,9 @@ import NextLink from "next/link";
 import { shortenAddress } from "@/utils";
 
 import PoolCardLogo from "@/features/Pool/Card/Logo";
-import { Split, SplitStatus } from "@mutuals/graphql-client-nextjs";
+import { Pool, PoolStatus } from "@mutuals/graphql-client-nextjs";
 
-export type PoolCardProps = Partial<Split>;
+export type PoolCardProps = Partial<Pool>;
 
 function PoolCard({ dbid, name, status, address }: PoolCardProps) {
   return (
@@ -41,9 +41,9 @@ function PoolCard({ dbid, name, status, address }: PoolCardProps) {
               </Box>
             </HStack>
 
-            {(status == SplitStatus.Draft || !status) && (
+            {(status == PoolStatus.Draft || !status) && (
               <Tag colorPalette={"orange"} flexShrink={"0"}>
-                {SplitStatus.Draft}
+                {PoolStatus.Draft}
               </Tag>
             )}
           </HStack>
