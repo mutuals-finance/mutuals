@@ -116,7 +116,7 @@ export default function ActorCard({
                   </Icon>
                 </Flex>
 
-                <Text fontSize="xs" mt="3" variant="subtag">
+                <Text fontSize="xs" mt="6" variant="subtag">
                   {description}
                 </Text>
 
@@ -142,7 +142,9 @@ export default function ActorCard({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <Text variant={"muted"}>{benefit}</Text>
+                    <Text color={"fg.subtle"} textStyle={"lg"}>
+                      {benefit}
+                    </Text>
                   </MotionBox>
                 )}
               </AnimatePresence>

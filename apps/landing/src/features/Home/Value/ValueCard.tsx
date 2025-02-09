@@ -31,7 +31,7 @@ export default function ValueCard({
 
         <Text my="3">{description}</Text>
 
-        <Button variant="surface" size={"sm"} alignSelf={"stretch"}>
+        <Button variant="surface" size={"xs"} alignSelf={"flex-start"}>
           Learn more
         </Button>
       </Card.Body>
