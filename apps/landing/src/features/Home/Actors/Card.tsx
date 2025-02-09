@@ -16,7 +16,7 @@ import {
   FlexProps,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
-import { IoCheckboxOutline, IoArrowUp } from "react-icons/io5";
+import { IoArrowUp } from "react-icons/io5";
 import { AnimatePresence, EventInfo } from "framer-motion";
 
 export interface ActorCardProps extends Card.RootProps {
@@ -151,9 +151,9 @@ export default function ActorCard({
 
           <Card.Footer as={Stack} gap={"6"} alignItems={"flex-start"}>
             <Button
-              size="lg"
+              size="xl"
               w={{ base: "full", lg: "auto" }}
-              variant={"subtle"}
+              variant={"surface"}
               {...buttonProps}
             >
               Learn More

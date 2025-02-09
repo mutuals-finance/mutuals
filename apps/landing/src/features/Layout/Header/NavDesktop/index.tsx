@@ -26,7 +26,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
       </AbsoluteCenter>
 
       <Group gap={"6"} ml={"auto"}>
-        <Button variant={"subtle"}>Reach out</Button>
+        <Button variant={"surface"}>Reach out</Button>
         <Button variant={"solid"}>Launch app</Button>
       </Group>
     </NavWrapper>

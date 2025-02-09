@@ -24,7 +24,7 @@ export default function PricingOptions() {
           <Card.Root size={"lg"} key={label} {...props}>
             <Card.Header>
               <Heading size={"3xl"}>{heading}</Heading>
-              <Text variant={"muted"}>{description}</Text>
+              <Text>{description}</Text>
             </Card.Header>
             <Card.Body>
               <Heading as={"h3"} size={"2xl"}>
@@ -32,12 +32,12 @@ export default function PricingOptions() {
               </Heading>
 
               <Box>
-                <Text color={"fg.muted"} fontWeight={"500"} fontSize={"sm"}>
+                <Text color={"muted"} textStyle={"xs"}>
                   {label}
                 </Text>
               </Box>
 
-              <Button w="full" mt="6" size={"lg"} variant={"subtle"}>
+              <Button w="full" mt="6" size={"xl"} variant={"surface"}>
                 Get Started
               </Button>
             </Card.Body>

@@ -8,12 +8,12 @@ export default function HomeFeatures() {
     <Box mt="32" mb={"16"}>
       <Container maxW="7xl">
         <ShellSectionCard
-          variant={"subtle"}
+          variant={"outline"}
           sectionHeaderProps={{
             children: "A Few More Things You’re Going To Love",
           }}
         >
-          <SimpleGrid columns={{ base: 1, lg: 3 }} gap={{ lg: "6" }}>
+          <SimpleGrid columns={{ base: 1, lg: 3 }} gap={{ base: "2", lg: "6" }}>
             <FeatureCard
               index={1}
               heading="All fungible assets"

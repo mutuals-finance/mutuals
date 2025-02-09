@@ -11,10 +11,11 @@ export default function ValueCard({
   icon,
   heading,
   description,
+  variant = "subtle",
   ...props
 }: ValueCardProps) {
   return (
-    <Card.Root {...props}>
+    <Card.Root variant={variant} {...props}>
       {!!icon && (
         <Card.Header>
           <IconBox color={"white"} bg="blue.600">
@@ -30,7 +31,7 @@ export default function ValueCard({
 
         <Text my="3">{description}</Text>
 
-        <Button variant="subtle" size={"xs"} alignSelf={"flex-start"}>
+        <Button variant="surface" size={"sm"} alignSelf={"stretch"}>
           Learn more
         </Button>
       </Card.Body>

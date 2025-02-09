@@ -41,13 +41,9 @@ export default function HomeHero() {
                 {
                   children: (
                     <Heading
-                      bgImage={
-                        "linear-gradient(to right bottom, {colors.fg/90} 40%, {colors.fg/60})"
-                      }
-                      bgClip={"text"}
                       as="h1"
                       size={{ base: "5xl", lg: "7xl" }}
-                      fontWeight={"semibold"}
+                      fontWeight={"medium"}
                     >
                       The best way to manage onchain payments.
                     </Heading>
@@ -57,8 +53,8 @@ export default function HomeHero() {
                   children: (
                     <Box maxW={"xl"}>
                       <Text
-                        variant={"muted"}
-                        fontSize={{ base: "lg", lg: "xl" }}
+                        textStyle={{ base: "lg", lg: "xl" }}
+                        color={"fg.muted"}
                       >
                         Automated and trustless revenue distribution without
                         reliance on intermediaries
@@ -69,8 +65,8 @@ export default function HomeHero() {
                 {
                   children: (
                     <Group gap="6">
-                      <Button size={"xl"}>Start for free</Button>
-                      <Button size={"xl"} variant={"subtle"}>
+                      <Button size={"2xl"}>Start for free</Button>
+                      <Button size={"2xl"} variant={"surface"}>
                         Learn more
                       </Button>
                     </Group>

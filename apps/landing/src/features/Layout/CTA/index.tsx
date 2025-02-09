@@ -30,7 +30,7 @@ export default function CTA() {
           <Heading size={{ base: "4xl", md: "5xl" }} color={"fg"}>
             Starting with Mutuals is simple, fast, and free.
           </Heading>
-          <Button size="lg" colorPalette={"blue"}>
+          <Button size="2xl" variant="solid" colorPalette={"blue"}>
             Get Started For Free
           </Button>
         </Container>

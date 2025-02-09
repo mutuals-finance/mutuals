@@ -18,7 +18,9 @@ export interface FormErrorAlertProps<
 export function FormErrorAlert<TFieldValues extends FieldValues = FieldValues>({
   status = "error",
   title = "There was an error processing your request",
-  name = "root",
+  name = "root" as FieldName<
+    FieldValuesFromFieldErrors<FieldErrors<TFieldValues>>
+  >,
   ...props
 }: FormErrorAlertProps<TFieldValues>) {
   return (

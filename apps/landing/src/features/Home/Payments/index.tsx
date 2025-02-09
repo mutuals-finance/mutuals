@@ -118,9 +118,7 @@ export default function HomePayments() {
               {payment.tag}
             </Heading>
 
-            <Text fontSize={"lg"} variant={"muted"}>
-              {payment.description}
-            </Text>
+            <Text textStyle={"xl"}>{payment.description}</Text>
           </Stack>
         </Stack>
         {/*

@@ -8,19 +8,13 @@ interface FeatureCardProps extends GridItemProps {
 
 export default function FeatureCard({
   heading,
-  index,
+  index: _,
   description,
   children,
   ...props
 }: FeatureCardProps) {
   return (
-    <Card.Root
-      variant={"subtle"}
-      size={"md"}
-      bg="transparent"
-      w={"full"}
-      {...props}
-    >
+    <Card.Root variant={"subtle"} size={"lg"} w={"full"} {...props}>
       <Card.Body
         as={Stack}
         direction={"column"}

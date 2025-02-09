@@ -8,7 +8,6 @@ import {
   Link,
   Box,
   Center,
-  Icon,
   Stack,
   StackSeparator,
   CloseButton,
@@ -20,7 +19,6 @@ import {
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/features/Layout/Header/NavWrapper";
 import { socialLinks } from "@/features/Layout/links";
-import { IoArrowForward } from "react-icons/io5";
 
 interface MobileNavProps
   extends Omit<Drawer.ContentProps, "children">,
@@ -58,29 +56,18 @@ export default function NavMobileDrawer({
               href={href}
               p={"6"}
               w={"full"}
-              fontSize={"lg"}
+              textStyle={"xl"}
               asChild
               focusRing={"none"}
               {...link}
             >
-              <Center
-                inline
-                gap="6"
-                flex={"1"}
-                justifyContent={"space-between"}
-              >
+              <Center inline gap="6" flex={"1"} justifyContent={"flex-start"}>
                 <Box>{children}</Box>
-                <Icon color={"fg.subtle"}>
-                  <IoArrowForward />
-                </Icon>
               </Center>
             </Link>
           ))}
           <Stack gap={6} p={"6"}>
-            <Button variant={"subtle"} size="xl" w={"full"}>
-              Reach out
-            </Button>
-            <Button variant="solid" size="xl" w={"full"}>
+            <Button variant="surface" size="2xl" w={"full"}>
               Launch App
             </Button>
             <Stack direction="row" gap={6} justify={"space-between"}>
@@ -88,7 +75,7 @@ export default function NavMobileDrawer({
                 {socialLinks.map(({ children, href: _href, ...props }) => (
                   <IconButton
                     size={"sm"}
-                    variant="outline"
+                    variant="ghost"
                     key={props["aria-label"]}
                     {...props}
                   >
@@ -96,7 +83,7 @@ export default function NavMobileDrawer({
                   </IconButton>
                 ))}
               </Group>
-              <ColorModeButton variant="outline" />
+              <ColorModeButton variant="ghost" />
             </Stack>
           </Stack>
         </Stack>
