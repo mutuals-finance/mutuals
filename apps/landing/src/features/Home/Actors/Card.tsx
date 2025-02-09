@@ -41,7 +41,7 @@ export default function ActorCard({
   iconProps,
   iconBoxProps,
   buttonProps,
-  benefitsProps,
+  benefitsProps: _,
   onHoverStart,
   onHoverEnd,
   image,

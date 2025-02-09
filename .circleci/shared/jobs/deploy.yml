@@ -30,6 +30,12 @@ steps:
       keys:
         - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
   - run:
+      name: Use Latest Corepack
+      command: |
+        echo "Before: corepack version => $(corepack --version || echo 'not installed')"
+        npm install -g corepack@latest
+        echo "After : corepack version => $(corepack --version)"
+  - run:
       name: Install pnpm Package Manager
       command: |
         corepack enable
