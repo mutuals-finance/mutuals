@@ -2,32 +2,25 @@
 
 pragma solidity ^0.8.20;
 
-import { Currency } from "./libraries/Currency.sol";
-import { PoolLib } from "./libraries/PoolLib.sol";
-import { Allocation } from "./libraries/Allocation.sol";
-import { MerkleTree } from "./libraries/MerkleTree.sol";
+import { ExtensionInteraction } from "./libraries/Hooks.sol";
+import { IPool } from "./interfaces/IPool.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
+import { Extensions } from "./libraries/Extensions.sol";
 
 contract Pool is OwnableUpgradeable, PausableUpgradeable {
-    using Currency for address;
-    using PoolLib for PoolLib.Data;
+    using Extensions for *;
 
     /* -------------------------------------------------------------------------- */
     /*                                   EVENTS                                   */
     /* -------------------------------------------------------------------------- */
 
-    event AllocationUpdated(bytes32 indexed oldAllocationRoot, bytes32 indexed newAllocationRoot);
     event Withdraw(address indexed recipient, address indexed token, uint256 amount);
 
     /* -------------------------------------------------------------------------- */
     /*                            STORAGE                                         */
     /* -------------------------------------------------------------------------- */
-
-    /**
-     * @dev Allocation data
-     */
-    PoolLib.Data internal pool;
+    Extensions internal extensions;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                             */
@@ -45,15 +38,12 @@ contract Pool is OwnableUpgradeable, PausableUpgradeable {
         __Context_init_unchained();
         __Ownable_init_unchained(_initialOwner);
         __Pausable_init_unchained();
-        __Pool_init_unchained(_allocationRoot);
     }
 
     /**
      * @dev Initializes only the contract specific storage.
      */
-    function __Pool_init_unchained(bytes32 _allocationRoot) internal onlyInitializing {
-        pool.initialize(_allocationRoot);
-    }
+    function __Pool_init_unchained(bytes32 _allocationRoot) internal onlyInitializing {}
 
     /* -------------------------------------------------------------------------- */
     /*                             EXTERNAL FUNCTIONS                             */
@@ -67,39 +57,57 @@ contract Pool is OwnableUpgradeable, PausableUpgradeable {
         _unpause();
     }
 
+    function releasable(IPool.Claim claim, IPool.WithdrawParams[] params) external {
+        return extensions.releasable(claim, params);
+    }
+
+    function batchReleasable(
+        IPool.Claim[] calldata claims,
+        IPool.WithdrawParams[][] calldata params,
+        bytes calldata context
+    ) external {
+        return extensions.batchReleasable(claims, params, context);
+    }
+
     /**
      * @notice Withdraws token from the pool for recipient.
      * @param recipient The address whose tokens are withdrawn.
      * @param token The address of the token to be withdrawn.
      * @param request The withdraw request to perform proof verification.
      */
-    function withdraw(
-        address recipient,
-        address token,
-        PoolLib.WithdrawRequest calldata request
-    ) external whenNotPaused returns (bool) {
-        uint256 totalAmount = pool.verifyWithdraw(recipient, token, request);
-        _withdraw(recipient, token, totalAmount);
-        return true;
+    function withdraw(IPool.Claim claim, IPool.WithdrawParams[] calldata params) external whenNotPaused {
+        extensions.beforeWithdraw(claim, params);
+        _withdraw(claim, params);
+        extensions.afterWithdraw(claim, params);
     }
 
     /**
-     * @notice Updates the pool allocation.
-     * @dev Only the owner can call this function.
-     * @param _newAllocationRoot The new allocation merkle tree root.
+     * @notice Withdraws token from the pool for recipient.
+     * @param recipient The address whose tokens are withdrawn.
+     * @param token The address of the token to be withdrawn.
+     * @param request The withdraw request to perform proof verification.
      */
-    function setAllocation(bytes32 _newAllocationRoot) external onlyOwner {
-        bytes32 oldAllocationRoot = pool.getAllocationRoot();
-        pool.setAllocationRoot(_newAllocationRoot);
-        emit AllocationUpdated(oldAllocationRoot, _newAllocationRoot);
+    function batchWithdraw(
+        IPool.Claim[] calldata claims,
+        IPool.WithdrawParams[] calldata params,
+        bytes calldata context
+    ) external whenNotPaused {
+        extensions.beforeBatchWithdraw(claims, params, context);
+        _withdraw(claims, params);
+        extensions.afterBatchWithdraw(claims, params, context);
     }
 
     /* -------------------------------------------------------------------------- */
     /*                              INTERNAL/PRIVATE                              */
     /* -------------------------------------------------------------------------- */
 
-    function _withdraw(address owner, address token, uint256 amount) internal {
-        token.transfer(owner, amount);
-        emit Withdraw(owner, token, amount);
+    function _withdraw(IPool.Claim calldata claim, IPool.WithdrawParams[] calldata params) internal {
+        // token.transfer(owner, amount);
+        // emit Withdraw(owner, token, amount);
+    }
+
+    function _batchWithdraw(IPool.Claim[] calldata claims, IPool.WithdrawParams[][] calldata params) internal {
+        // token.transfer(owner, amount);
+        // emit Withdraw(owner, token, amount);
     }
 }
