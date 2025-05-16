@@ -6,6 +6,8 @@ import { IPool } from "../interfaces/IPool.sol";
 import { ParseBytes } from "./ParseBytes.sol";
 import { CustomRevert } from "./CustomRevert.sol";
 import { BaseExtension } from "../../extensions/BaseExtension.sol";
+import { Claim } from "../types/Claim.sol";
+import { WithdrawParams } from "../types/WithdrawParams.sol";
 
 /// @title Extensions Library
 /// @notice Provides utility functions for managing and interacting with extensions
@@ -24,11 +26,7 @@ library Extensions {
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
     /// @return The releasable amount
-    function releasable(
-        State storage self,
-        IPool.Claim calldata claim,
-        IPool.WithdrawParams[] calldata params
-    ) internal returns (uint256) {
+    function releasable(State storage self, Claim calldata claim, WithdrawParams[] calldata params) internal returns (uint256) {
         return _releasable(self, claim, params);
     }
 
@@ -39,8 +37,8 @@ library Extensions {
     /// @return _releasable The total releasable amount
     function batchReleasable(
         State storage self,
-        IPool.Claim[] calldata claim,
-        IPool.WithdrawParams[][] calldata params,
+        Claim[] calldata claim,
+        WithdrawParams[][] calldata params,
         bytes calldata context
     ) internal returns (uint256 _releasable) {
         _releasable = 0;
@@ -49,11 +47,19 @@ library Extensions {
         }
     }
 
+    function checkState(State storage self, Claim calldata claim, WithdrawParams calldata params) internal {
+        self.registry.extension(claim).checkState(claim, params);
+    }
+
+    function checkBatchState(State storage self, Claim[] calldata claims, WithdrawParams[] calldata params) internal {
+        self.registry.extension(claims[0]).checkBatchState(claims, params);
+    }
+
     /// @notice Calls the beforeWithdraw hook and validates the return value
     /// @param self The state of the Extensions library
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
-    function beforeWithdraw(State storage self, IPool.Claim calldata claim, IPool.WithdrawParams[] calldata params) internal {
+    function beforeWithdraw(State storage self, Claim calldata claim, WithdrawParams[] calldata params) internal {
         _beforeWithdraw(self, claim, params);
     }
 
@@ -63,18 +69,10 @@ library Extensions {
     /// @param params A 2D array of withdrawal parameters
     function beforeBatchWithdraw(
         State storage self,
-        IPool.Claim[] calldata claims,
-        IPool.WithdrawParams[] calldata params,
+        Claim[] calldata claims,
+        WithdrawParams[] calldata params,
         bytes calldata context
     ) internal {
-        for (uint256 i = 0; i < self.registry.extensionsLength(); i++) {
-            IPool.Claim[] memory extensionClaims = extractExtensionClaims(claims, i);
-            if (extensionClaims.length == 0) continue;
-
-            IPool.WithdrawParams[] memory extensionParams = extractExtensionParams(claims, params, i);
-            self.registry.extensionAt(i).afterBatchWithdraw(extensionClaims, extensionParams);
-        }
-
         for (uint256 i = 0; i < claims.length; i++) {
             _beforeWithdraw(self, claims[i], params[i]);
         }
@@ -84,7 +82,7 @@ library Extensions {
     /// @param self The state of the Extensions library
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
-    function afterWithdraw(State storage self, IPool.Claim calldata claim, IPool.WithdrawParams[] calldata params) internal {
+    function afterWithdraw(State storage self, Claim calldata claim, WithdrawParams[] calldata params) internal {
         _afterWithdraw(self, claim, params);
     }
 
@@ -94,16 +92,12 @@ library Extensions {
     /// @param params A 2D array of withdrawal parameters
     function afterBatchWithdraw(
         State storage self,
-        IPool.Claim[] calldata claims,
-        IPool.WithdrawParams[][] calldata params,
+        Claim[] calldata claims,
+        WithdrawParams[] calldata params,
         bytes calldata context
     ) internal {
-        for (uint256 i = 0; i < self.registry.extensionsLength(); i++) {
-            IPool.Claim[] memory extensionClaims = extractExtensionClaims(claims, i);
-            if (extensionClaims.length == 0) continue;
-
-            IPool.WithdrawParams[] memory extensionParams = extractExtensionParams(claims, params, i);
-            self.registry.extensionAt(i).afterBatchWithdraw(extensionClaims, extensionParams);
+        for (uint256 i = 0; i < claims.length; i++) {
+            _afterWithdraw(self, claims[i], params[i]);
         }
     }
 
@@ -111,7 +105,7 @@ library Extensions {
     /// @param claim The claim data to check
     /// @param index The index to check
     /// @return True if the extension is active, false otherwise
-    function _isExtensionAt(IPool.Claim calldata claim, uint256 index) internal returns (bool) {
+    function _isExtensionAt(Claim calldata claim, uint256 index) internal returns (bool) {
         uint256 mask = 1 << index;
         return mask & claim.allocationType != 0;
     }
@@ -123,53 +117,14 @@ library Extensions {
     /// @return _releasable The releasable amount
     function _releasable(
         State storage self,
-        IPool.Claim calldata claim,
-        IPool.WithdrawParams[] calldata params
+        Claim calldata claim,
+        WithdrawParams[] calldata params
     ) private returns (uint256 _releasable) {
         uint256 j;
 
         for (uint256 i = 0; i < self.registry.extensionsLength(); i++) {
             if (_isExtensionAt(claim, j)) {
-                _releasable += self.registry.extensionAt(j).releasable(claim, params[j]);
-                j++;
-            }
-        }
-    }
-
-    function extractExtensionClaims(
-        IPool.Claim[] calldata claims,
-        uint256 index
-    ) internal pure returns (IPool.Claim[] memory result) {
-        uint256 count;
-        for (uint256 i = 0; i < claims.length; i++) {
-            if ((claims[i].allocationType & (1 << index)) != 0) count++;
-        }
-
-        result = new IPool.Claim[](count);
-        uint256 j;
-        for (uint256 i = 0; i < claims.length; i++) {
-            if ((claims[i].allocationType & (1 << index)) != 0) {
-                result[j] = claims[i];
-                j++;
-            }
-        }
-    }
-
-    function extractExtensionParams(
-        IPool.Claim[] calldata claims,
-        IPool.WithdrawParams[][] calldata allParams,
-        uint256 extIndex
-    ) internal pure returns (IPool.WithdrawParams[] memory result) {
-        uint256 count;
-        for (uint256 i = 0; i < claims.length; i++) {
-            if ((claims[i].allocationType & (1 << extIndex)) != 0) count++;
-        }
-
-        result = new IPool.WithdrawParams[](count);
-        uint256 j;
-        for (uint256 i = 0; i < claims.length; i++) {
-            if ((claims[i].allocationType & (1 << extIndex)) != 0) {
-                result[j] = allParams[i][extIndex];
+                _releasable += self.registry.extensionAt(claim.strategyData).releasable(claim, params[j]);
                 j++;
             }
         }
@@ -179,12 +134,12 @@ library Extensions {
     /// @param self The state of the Extensions library
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
-    function _beforeWithdraw(State storage self, IPool.Claim calldata claim, IPool.WithdrawParams[] calldata params) private {
+    function _beforeWithdraw(State storage self, Claim calldata claim, WithdrawParams calldata params) private {
         uint256 j;
 
         for (uint256 i = 0; i < self.registry.extensionsLength(); i++) {
             if (_isExtensionAt(claim, j)) {
-                _releasable += self.registry.extensionAt(j).beforeWithdraw(claim, params[j]);
+                _releasable += self.registry.extensionAt(j).beforeWithdraw(claim, params);
                 j++;
             }
         }
@@ -194,7 +149,7 @@ library Extensions {
     /// @param self The state of the Extensions library
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
-    function _afterWithdraw(State storage self, IPool.Claim calldata claim, IPool.WithdrawParams[] calldata params) private {
+    function _afterWithdraw(State storage self, Claim calldata claim, WithdrawParams calldata params) private {
         uint256 j;
 
         for (uint256 i = 0; i < self.registry.extensions.length; i++) {
