@@ -3,7 +3,6 @@
 pragma solidity ^0.8.20;
 
 import { IPool } from "../../core/interfaces/IPool.sol";
-import { Allocation } from "../../core/libraries/Allocation.sol";
 import { Claim } from "../../core/types/Claim.sol";
 import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
 import { BaseExtension } from "../BaseExtension.sol";
@@ -23,8 +22,8 @@ contract DefaultAllocation is BaseExtension {
     /**
      * @notice Calculates releasable amount based on allocation
      */
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external view returns (uint256 _releasable) {
-        return _pending(claim, params);
+    function releasable(Claim calldata claim, WithdrawParams calldata params) external view returns (uint256) {
+        return _releasable(claim, params);
     }
 
     /**
@@ -45,7 +44,11 @@ contract DefaultAllocation is BaseExtension {
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
+    function _releasable(Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
+        return _pending(claim, params);
+    }
+
     function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal {
-        if (params.amount > releasable(claim, params)) revert DefaultAllocation_InsufficientBalance();
+        if (params.amount > _releasable(claim, params)) revert DefaultAllocation_InsufficientBalance();
     }
 }

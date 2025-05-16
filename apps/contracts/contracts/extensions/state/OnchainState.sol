@@ -22,7 +22,7 @@ contract OnchainState is BaseExtension {
     /*                            STORAGE                                         */
     /* -------------------------------------------------------------------------- */
 
-    mapping(address => mapping(uint160 => Claim)) private _claims;
+    mapping(address => mapping(uint256 => Claim)) private _claims;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                             */
@@ -41,12 +41,12 @@ contract OnchainState is BaseExtension {
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function checkState(Claim calldata claim, WithdrawParams params) external {
+    function checkState(Claim calldata claim, WithdrawParams calldata params) external {
         _checkState(claim);
     }
 
     function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external {
-        bytes32 lastId;
+        uint256 lastId;
         for (uint256 i = 0; i < claims.length; i++) {
             _checkState(claims[i]);
 

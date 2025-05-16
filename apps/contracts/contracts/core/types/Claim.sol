@@ -9,7 +9,7 @@ struct Claim {
     // claim id
     uint256 id;
     // parent claim id
-    bytes32 parentId;
+    uint256 parentId;
     // claim recipient
     address recipient;
     // allocated value
@@ -25,7 +25,7 @@ struct Claim {
 }
 
 library ClaimLibrary {
-    function toHash(Claim calldata self) internal pure returns (bytes32) {
+    function hash(Claim calldata self) internal pure returns (bytes32) {
         return
             keccak256(
                 abi.encode(
@@ -45,15 +45,15 @@ library ClaimLibrary {
         return self.strategyId == bytes32(0);
     }
 
-    function equals(Claim calldata self, Claim calldata claim) internal returns (bool) {
+    function equals(Claim calldata self, Claim storage claim) internal view returns (bool) {
         if (self.id != claim.id) return false;
         if (self.parentId != claim.parentId) return false;
         if (self.recipient != claim.recipient) return false;
         if (self.value != claim.value) return false;
         if (self.stateId != claim.stateId) return false;
-        if (self.stateData != claim.stateData) return false;
+        //if (self.stateData != claim.stateData) return false;
         if (self.strategyId != claim.strategyId) return false;
-        if (self.strategyData != claim.strategyData) return false;
+        //if (self.strategyData != claim.strategyData) return false;
         return true;
     }
 }

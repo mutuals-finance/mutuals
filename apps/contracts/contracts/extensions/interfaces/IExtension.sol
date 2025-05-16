@@ -5,12 +5,12 @@ import { Claim } from "../../core/types/Claim.sol";
 import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
 
 interface IExtension {
-    function extensionId() external view override returns (uint256);
-    function extensionName() external view override returns (string);
+    function extensionId() external view returns (bytes32);
+    function extensionName() external view returns (string memory);
     function beforeInitialize(address sender) external;
     function afterInitialize(address sender) external;
-    function checkState(Claim calldata claim, WithdrawParams calldata params) external;
-    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external;
+    function checkState(Claim calldata claim, WithdrawParams calldata params) external view;
+    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view;
     function releasable(Claim calldata claim, WithdrawParams calldata params) external returns (uint256);
     function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external;
     function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external;

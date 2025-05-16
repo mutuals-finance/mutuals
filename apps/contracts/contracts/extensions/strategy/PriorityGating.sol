@@ -21,14 +21,14 @@ contract PriorityGating is BaseExtension {
 
     /// @notice Called before withdrawal of to check if the releasable amount is greater than the threshold of a previous node
     /// @param claim The claim parameters
-    /// @param wParams The withdraw parameters
+    /// @param params The withdraw parameters
     function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external {
         _checkReleasable(claim, params);
     }
 
     /// @notice Called before batch withdrawal of to check if the releasable amount is greater than the threshold of a previous node
     /// @param claim The claim parameters
-    /// @param wParams The withdraw parameters
+    /// @param params The withdraw parameters
     function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external {
         for (uint256 i = 0; i < claims.length; i++) {
             _checkReleasable(claims[i], params[i]);
@@ -42,10 +42,9 @@ contract PriorityGating is BaseExtension {
     /// @notice Check if the releasable amount is greater than the threshold
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
-    /// @return bool True if the releasable amount is greater than the threshold
     function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal view {
         (Claim memory previousClaim, uint256 threshold) = abi.decode(claim.strategyData, (Claim, uint256));
-        WithdrawParams previousParams = abi.decode(params.strategyData, (WithdrawParams));
+        WithdrawParams memory previousParams = abi.decode(params.strategyData, (WithdrawParams));
 
         uint256 previousReleasable = IPool(msg.sender).releasable(previousClaim, previousParams);
         if (previousReleasable <= threshold) revert PriorityGating_InsufficientBalance();

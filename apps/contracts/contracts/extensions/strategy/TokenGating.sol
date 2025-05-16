@@ -51,12 +51,12 @@ contract TokenGating is BaseExtension {
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
     function _checkBalance(Claim calldata claim, WithdrawParams calldata params) internal view {
-        (address token, address owner, uint256 id, TokenType tokenType, uint256 threshold) = abi.decode(
+        (Token token, address owner, uint256 id, TokenType tokenType, uint256 threshold) = abi.decode(
             claim.strategyData,
-            (address, TokenType, uint256)
+            (Token, address, uint256, TokenType, uint256)
         );
 
-        if (token == address(0)) revert TokenGating_InvalidToken();
+        if (token.isAddressZero()) revert TokenGating_InvalidToken();
         if (owner == address(0)) revert TokenGating_InvalidOwner();
 
         if (token.balanceOf(owner, tokenType, id) < threshold) revert TokenGating_InsufficientBalance();

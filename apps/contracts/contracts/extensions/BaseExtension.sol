@@ -5,6 +5,8 @@ pragma solidity ^0.8.20;
 import { IPool } from "../core/interfaces/IPool.sol";
 import { IExtension } from "./interfaces/IExtension.sol";
 import { IRegistry } from "../core/interfaces/IRegistry.sol";
+import { Claim } from "../core/types/Claim.sol";
+import { WithdrawParams } from "../core/types/WithdrawParams.sol";
 
 /// @title BaseExtension Contract
 /// @notice This contract is the base contract for all extensions
@@ -43,7 +45,7 @@ abstract contract BaseExtension is IExtension {
     /*                             INITIALIZE                             */
     /* -------------------------------------------------------------------------- */
 
-    constructor(string memory _extensionName, uint256 memory _extensionId) {
+    constructor(string memory _extensionName, uint256 _extensionId) {
         _EXTENSION_NAME = _extensionName;
         _EXTENSION_ID = _extensionId;
     }
@@ -51,7 +53,7 @@ abstract contract BaseExtension is IExtension {
     function initialize(address __poolFactory) external virtual override {
         __BaseExtension_init(__poolFactory);
 
-        emit Initialized(__poolFactory);
+        // emit Initialized(__poolFactory);
     }
 
     function __BaseExtension_init(address __poolFactory) internal virtual {
@@ -82,7 +84,7 @@ abstract contract BaseExtension is IExtension {
         return _EXTENSION_ID;
     }
 
-    function extensionName() external view override returns (string) {
+    function extensionName() external view override returns (string memory) {
         return _EXTENSION_NAME;
     }
 
@@ -135,7 +137,7 @@ abstract contract BaseExtension is IExtension {
     /* -------------------------------------------------------------------------- */
     /// @notice Checks if the 'msg.sender' is the Allo contract.
     /// @dev Reverts if the 'msg.sender' is not the Allo contract.
-    function _checkOnlyPoolyFactory() internal view virtual {
+    function _checkOnlyPoolFactory() internal view virtual {
         if (msg.sender != address(_poolFactory)) revert BaseExtension_Unauthorized();
     }
 

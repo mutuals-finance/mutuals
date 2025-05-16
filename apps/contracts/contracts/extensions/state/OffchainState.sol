@@ -38,7 +38,7 @@ contract OffchainState is BaseExtension {
 
     function beforeInitialize(bytes calldata data) external {
         // msg.sender is 'pool'
-        bytes32 merkleRoot = abi.decode(params.stateData, (bytes32));
+        bytes32 merkleRoot = abi.decode(data, (bytes32));
         if (merkleRoots[msg.sender] != bytes32(0)) revert OffchainState_PoolAlreadyInitialized();
         if (merkleRoot == bytes32(0)) revert OffchainState_InvalidMerkleRoot();
         merkleRoots[msg.sender] = merkleRoot;
@@ -62,7 +62,7 @@ contract OffchainState is BaseExtension {
     function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view {
         (bytes32[] memory proof, bool[] memory flags) = abi.decode(params[0].stateData, (bytes32[], bool[]));
         bytes32[] memory leaves = new bytes32[](claims.length);
-        bytes32 lastId;
+        uint256 lastId;
 
         for (uint256 i = 0; i < claims.length; i++) {
             if (lastId != claims[i].parentId) {

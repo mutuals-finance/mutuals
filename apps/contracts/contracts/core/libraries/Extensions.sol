@@ -26,7 +26,7 @@ library Extensions {
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
     /// @return The releasable amount
-    function releasable(State storage self, Claim calldata claim, WithdrawParams[] calldata params) internal returns (uint256) {
+    function releasable(State storage self, Claim calldata claim, WithdrawParams calldata params) internal returns (uint256) {
         return _releasable(self, claim, params);
     }
 
@@ -38,28 +38,27 @@ library Extensions {
     function batchReleasable(
         State storage self,
         Claim[] calldata claim,
-        WithdrawParams[][] calldata params,
-        bytes calldata context
-    ) internal returns (uint256 _releasable) {
-        _releasable = 0;
+        WithdrawParams[] calldata params
+    ) internal returns (uint256 __releasable) {
+        __releasable = 0;
         for (uint256 i = 0; i < claim.length; i++) {
-            _releasable += _releasable(self, claim[i], params[i]);
+            __releasable += _releasable(self, claim[i], params[i]);
         }
     }
 
     function checkState(State storage self, Claim calldata claim, WithdrawParams calldata params) internal {
-        self.registry.extension(claim).checkState(claim, params);
+        self.registry.extensionOf(claim.stateId).checkState(claim, params);
     }
 
     function checkBatchState(State storage self, Claim[] calldata claims, WithdrawParams[] calldata params) internal {
-        self.registry.extension(claims[0]).checkBatchState(claims, params);
+        self.registry.extensionOf(claims[0].stateId).checkBatchState(claims, params);
     }
 
     /// @notice Calls the beforeWithdraw hook and validates the return value
     /// @param self The state of the Extensions library
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
-    function beforeWithdraw(State storage self, Claim calldata claim, WithdrawParams[] calldata params) internal {
+    function beforeWithdraw(State storage self, Claim calldata claim, WithdrawParams calldata params) internal {
         _beforeWithdraw(self, claim, params);
     }
 
@@ -70,8 +69,7 @@ library Extensions {
     function beforeBatchWithdraw(
         State storage self,
         Claim[] calldata claims,
-        WithdrawParams[] calldata params,
-        bytes calldata context
+        WithdrawParams[] calldata params
     ) internal {
         for (uint256 i = 0; i < claims.length; i++) {
             _beforeWithdraw(self, claims[i], params[i]);
@@ -82,7 +80,7 @@ library Extensions {
     /// @param self The state of the Extensions library
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
-    function afterWithdraw(State storage self, Claim calldata claim, WithdrawParams[] calldata params) internal {
+    function afterWithdraw(State storage self, Claim calldata claim, WithdrawParams calldata params) internal {
         _afterWithdraw(self, claim, params);
     }
 
@@ -93,41 +91,19 @@ library Extensions {
     function afterBatchWithdraw(
         State storage self,
         Claim[] calldata claims,
-        WithdrawParams[] calldata params,
-        bytes calldata context
+        WithdrawParams[] calldata params
     ) internal {
         for (uint256 i = 0; i < claims.length; i++) {
             _afterWithdraw(self, claims[i], params[i]);
         }
     }
 
-    /// @notice Checks if an extension is active at a specific index
-    /// @param claim The claim data to check
-    /// @param index The index to check
-    /// @return True if the extension is active, false otherwise
-    function _isExtensionAt(Claim calldata claim, uint256 index) internal returns (bool) {
-        uint256 mask = 1 << index;
-        return mask & claim.allocationType != 0;
-    }
-
-    /// @notice Internal function to calculate the releasable amount for a claim
-    /// @param self The state of the Extensions library
-    /// @param claim The claim data to process
-    /// @param params The withdrawal parameters
-    /// @return _releasable The releasable amount
     function _releasable(
         State storage self,
         Claim calldata claim,
-        WithdrawParams[] calldata params
-    ) private returns (uint256 _releasable) {
-        uint256 j;
-
-        for (uint256 i = 0; i < self.registry.extensionsLength(); i++) {
-            if (_isExtensionAt(claim, j)) {
-                _releasable += self.registry.extensionAt(claim.strategyData).releasable(claim, params[j]);
-                j++;
-            }
-        }
+        WithdrawParams calldata params
+    ) private returns (uint256) {
+        return self.registry.extensionOf(claim.strategyData).releasable(claim, params);
     }
 
     /// @notice Internal function to handle the beforeWithdraw hook
@@ -135,14 +111,7 @@ library Extensions {
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
     function _beforeWithdraw(State storage self, Claim calldata claim, WithdrawParams calldata params) private {
-        uint256 j;
-
-        for (uint256 i = 0; i < self.registry.extensionsLength(); i++) {
-            if (_isExtensionAt(claim, j)) {
-                _releasable += self.registry.extensionAt(j).beforeWithdraw(claim, params);
-                j++;
-            }
-        }
+        self.registry.extensionOf(claim.strategyId).beforeWithdraw(claim, params);
     }
 
     /// @notice Internal function to handle the afterWithdraw hook
@@ -150,13 +119,6 @@ library Extensions {
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
     function _afterWithdraw(State storage self, Claim calldata claim, WithdrawParams calldata params) private {
-        uint256 j;
-
-        for (uint256 i = 0; i < self.registry.extensions.length; i++) {
-            if (_isExtensionAt(claim, j)) {
-                _releasable += self.registry.extensionAt(j).afterWithdraw(claim, params[j]);
-                j++;
-            }
-        }
+        self.registry.extensionOf(claim.strategyId).afterWithdraw(claim, params);
     }
 }

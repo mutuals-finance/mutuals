@@ -3,7 +3,6 @@
 pragma solidity ^0.8.20;
 
 import { IPool } from "../../core/interfaces/IPool.sol";
-import { Allocation } from "../../core/libraries/Allocation.sol";
 import { Claim } from "../../core/types/Claim.sol";
 import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
 import { BaseExtension } from "../BaseExtension.sol";
@@ -45,18 +44,14 @@ contract TimelockAllocation is BaseExtension {
     }
 
     /// @notice Called before withdrawal to ensure correct epoch is used per nodeId
-    /// @param params Withdrawal parameters
-    /// @param data Encoded as (uint256 epoch, uint256 period, uint256 count)
     function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external {
         _checkReleasable(claim, params);
     }
 
     /// @notice Called before batch withdrawal to ensure correct epoch is used per nodeId
-    /// @param params Array of withdrawal parameters
-    /// @param data Array of encoded data, each encoded as (uint256 epoch, uint256 period, uint256 count)
     function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external {
         for (uint256 i = 0; i < claims.length; i++) {
-            _checkReleasable(claims, params);
+            _checkReleasable(claims[i], params[i]);
         }
     }
 
@@ -69,7 +64,7 @@ contract TimelockAllocation is BaseExtension {
     }
 
     function _releasable(Claim calldata claim, WithdrawParams calldata params) internal returns (uint256) {
-        (uint256 epoch, uint256 period) = abi.decode(params.data, (uint256, uint256));
+        (uint256 epoch, uint256 period) = abi.decode(params.strategyData, (uint256, uint256));
 
         if (block.timestamp < _startTime()) {
             // Not started

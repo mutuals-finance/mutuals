@@ -54,16 +54,16 @@ contract TokenAllocation is BaseExtension {
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal {
-        if (params.amount > _releasable(claim, params)) revert TokenAllocation_InsufficientBalance();
-    }
-
     function _releasable(Claim calldata claim, WithdrawParams calldata params) internal returns (uint256) {
-        (address token, address owner, uint256 id, TokenType tokenType) = abi.decode(claim.strategyData, (address, TokenType));
+        (Token token, address owner, uint256 id, TokenType tokenType) = abi.decode(claim.strategyData, (Token, address, uint256, TokenType));
 
-        if (token == address(0)) revert TokenAllocation_InvalidToken();
+        if (token.isAddressZero()) revert TokenAllocation_InvalidToken();
         if (owner == address(0)) revert TokenAllocation_InvalidOwner();
 
-        return token.balanceOf(owner, tokenType, id) - allocations.released(claim);
+        return token.balanceOf(owner, tokenType, id) - _pending(claim, params);
+    }
+    
+    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal {
+        if (params.amount > _releasable(claim, params)) revert TokenAllocation_InsufficientBalance();
     }
 }

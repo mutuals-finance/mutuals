@@ -1,50 +1,61 @@
-// SPDX-License-Identifier: AGPL-3.0-only
-pragma solidity ^0.8.19;
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.20;
+
+import { IExtension } from "../extensions/interfaces/IExtension.sol";
+
+import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import { UUPSUpgradeable } from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import { EnumerableMap } from "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 
 /// @title Extension registry contract
 /// @notice This contract.
-contract Registry {
-    Extension[] public extensions;
+contract Registry is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+    using EnumerableMap for EnumerableMap.UintToAddressMap;
 
-    // isExtension mapping allows to check if an extension was whitelisted.
-    mapping(address => bool) public isExtension;
+    /* -------------------------------------------------------------------------- */
+    /*                                   STORAGE                                  */
+    /* -------------------------------------------------------------------------- */
 
-    /// @notice Constructor
-    /// @dev We create an instance of the 'Registry' contract using the _registry and _profileId.
-    /// @param _profileId The ID of the allowed profile to execute calls
-    constructor() {}
+    EnumerableMap.Bytes32ToAddressMap private extensions;
 
-    /// ==========================
-    /// ======== External ========
-    /// ==========================
+    /* -------------------------------------------------------------------------- */
+    /*                             INITIALIZATION                             */
+    /* -------------------------------------------------------------------------- */
 
-    /// @dev Allows to add an extension to the whitelist.
-    ///      This can only be done via a Safe transaction.
-    /// @param extension Extension to be whitelisted.
-    function addExtension(Extension extension) public onlyWallet {
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    /**
+     * @dev Initializes the contract.
+     */
+    function __Registry_init(address _owner) external initializer {
+        __UUPSUpgradeable_init_unchained();
+        __Ownable_init_unchained(_owner);
+        __Registry_init_unchained();
+    }
+
+    function __Registry_init_unchained() internal onlyInitializing {}
+
+    /* -------------------------------------------------------------------------- */
+    /*                             EXTERNAL FUNCTIONS                             */
+    /* -------------------------------------------------------------------------- */
+
+    function register(address extension) external onlyOwner {
         // Extension address cannot be null.
-        require(address(extension) != 0);
-        // Extension cannot be added twice.
-        require(!isExtension[extension]);
-        extensions.push(extension);
-        isExtension[extension] = true;
+        require(extension != address(0));
+        extensions.set(IExtension(extension).extensionId(), extension);
     }
 
-    /// @dev Allows to remove an extension from the whitelist.
-    ///      This can only be done via a Safe transaction.
-    /// @param extensionIndex Array index position of extension to be removed from whitelist.
-    /// @param extension Extension to be removed.
-    function removeExtension(uint256 extensionIndex, Extension extension) public onlyWallet {
-        // Validate extension address corresponds to extension index.
-        require(extensions[extensionIndex] == extension);
-        isExtension[extension] = false;
-        extensions[extensionIndex] = extensions[extensions.length - 1];
-        extensions.length--;
+    function unregister(bytes32 extensionId) external onlyOwner {
+        extensions.remove(extensionId);
+    }
+    
+    function extensionOf(bytes32 extensionId) external view returns (address) {
+        return extensions.get(extensionId);
     }
 
-    /// @dev Returns array of extensions.
-    /// @return Array of extensions.
-    function getExtensions() public view returns (Extension[]) {
-        return extensions;
-    }
 }
