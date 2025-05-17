@@ -18,7 +18,7 @@ contract Registry is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     /*                                   STORAGE                                  */
     /* -------------------------------------------------------------------------- */
 
-    EnumerableMap.Bytes32ToAddressMap private extensions;
+    EnumerableMap.UintToAddressMap private extensions;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                             */
@@ -47,15 +47,21 @@ contract Registry is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     function register(address extension) external onlyOwner {
         // Extension address cannot be null.
         require(extension != address(0));
-        extensions.set(IExtension(extension).extensionId(), extension);
+        extensions.set(uint256(IExtension(extension).extensionId()), extension);
     }
 
     function unregister(bytes32 extensionId) external onlyOwner {
-        extensions.remove(extensionId);
+        extensions.remove(uint256(extensionId));
     }
     
     function extensionOf(bytes32 extensionId) external view returns (address) {
-        return extensions.get(extensionId);
+        return extensions.get(uint256(extensionId));
     }
+    /* -------------------------------------------------------------------------- */
+    /*                         PRIVATE/INTERNAL FUNCTIONS                         */
+    /* -------------------------------------------------------------------------- */
+
+    /// @dev Upgrades the implementation of the proxy to new address.
+    function _authorizeUpgrade(address) internal override onlyOwner {}
 
 }

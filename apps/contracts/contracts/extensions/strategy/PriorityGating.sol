@@ -16,20 +16,26 @@ contract PriorityGating is BaseExtension {
     error PriorityGating_InsufficientBalance();
 
     /* -------------------------------------------------------------------------- */
+    /*                             INITIALIZATION                                 */
+    /* -------------------------------------------------------------------------- */
+
+    constructor() BaseExtension("PriorityGating", bytes32(uint256(0xeaa2d5)))  {}
+
+    /* -------------------------------------------------------------------------- */
     /*                            EXTERNAL FUNCTIONS                              */
     /* -------------------------------------------------------------------------- */
 
     /// @notice Called before withdrawal of to check if the releasable amount is greater than the threshold of a previous node
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external {
+    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external override view {
         _checkReleasable(claim, params);
     }
 
     /// @notice Called before batch withdrawal of to check if the releasable amount is greater than the threshold of a previous node
-    /// @param claim The claim parameters
+    /// @param claims The claim parameters
     /// @param params The withdraw parameters
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external {
+    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
         for (uint256 i = 0; i < claims.length; i++) {
             _checkReleasable(claims[i], params[i]);
         }

@@ -28,7 +28,9 @@ contract TimelockAllocation is BaseExtension {
     /*                             INITIALIZATION                                 */
     /* -------------------------------------------------------------------------- */
 
-    function beforeInitialize(bytes calldata data) external {
+    constructor() BaseExtension("TimelockAllocation", bytes32(uint256(0x07e49d)))  {}
+
+    function beforeInitialize(bytes calldata data) external override {
         // msg.sender is 'pool'
         uint256 startTime = abi.decode(data, (uint256));
         if (startTimes[msg.sender] != 0) revert TimelockAllocation_PoolAlreadyInitialized();
@@ -39,17 +41,17 @@ contract TimelockAllocation is BaseExtension {
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external returns (uint256) {
+    function releasable(Claim calldata claim, WithdrawParams calldata params) external override view returns (uint256) {
         return _releasable(claim, params);
     }
 
     /// @notice Called before withdrawal to ensure correct epoch is used per nodeId
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external {
+    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external override view {
         _checkReleasable(claim, params);
     }
 
     /// @notice Called before batch withdrawal to ensure correct epoch is used per nodeId
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external {
+    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
         for (uint256 i = 0; i < claims.length; i++) {
             _checkReleasable(claims[i], params[i]);
         }
@@ -63,7 +65,7 @@ contract TimelockAllocation is BaseExtension {
         return startTimes[msg.sender];
     }
 
-    function _releasable(Claim calldata claim, WithdrawParams calldata params) internal returns (uint256) {
+    function _releasable(Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
         (uint256 epoch, uint256 period) = abi.decode(params.strategyData, (uint256, uint256));
 
         if (block.timestamp < _startTime()) {
@@ -73,12 +75,12 @@ contract TimelockAllocation is BaseExtension {
 
         // uint256 remaining = period - (elapsed % period);
 
-        uint256 releasable = (block.timestamp - _startTime()) * _pending(claim, params);
+        uint256 __releasable = (block.timestamp - _startTime()) * _pending(claim, params);
 
-        return releasable - IPool(msg.sender).released(claim.id, params.token);
+        return __releasable - IPool(msg.sender).released(claim.id, params.token);
     }
 
-    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal {
+    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal view {
         if (params.amount > _releasable(claim, params)) revert TimelockAllocation_InsufficientBalance();
     }
 }

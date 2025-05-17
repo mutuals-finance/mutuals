@@ -7,11 +7,11 @@ import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
 interface IExtension {
     function extensionId() external view returns (bytes32);
     function extensionName() external view returns (string memory);
-    function beforeInitialize(address sender) external;
-    function afterInitialize(address sender) external;
+    function beforeInitialize(bytes calldata data) external;
+    function afterInitialize(bytes calldata data) external;
     function checkState(Claim calldata claim, WithdrawParams calldata params) external view;
     function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view;
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external returns (uint256);
+    function releasable(Claim calldata claim, WithdrawParams calldata params) external view returns (uint256);
     function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external;
     function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external;
     function afterWithdraw(Claim calldata claim, WithdrawParams calldata params) external;

@@ -71,13 +71,13 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
         return _released[token][claimId];
     }
 
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external returns (uint256) {
+    function releasable(Claim calldata claim, WithdrawParams calldata params) external view returns (uint256) {
         return extensions.releasable(claim, params);
     }
 
-    function batchReleasable(Claim[] calldata claims, WithdrawParams[] calldata params) external returns (uint256) {
-        return extensions.batchReleasable(claims, params);
-    }
+    //function batchReleasable(Claim[] calldata claims, WithdrawParams[] calldata params) external view returns (uint256) {
+    //    return extensions.batchReleasable(claims, params);
+    //}
 
     function withdraw(Claim calldata claim, WithdrawParams calldata params) external whenNotPaused {
         extensions.checkState(claim, params);

@@ -26,7 +26,7 @@ library Extensions {
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
     /// @return The releasable amount
-    function releasable(State storage self, Claim calldata claim, WithdrawParams calldata params) internal returns (uint256) {
+    function releasable(State storage self, Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
         return _releasable(self, claim, params);
     }
 
@@ -34,23 +34,22 @@ library Extensions {
     /// @param self The state of the Extensions library
     /// @param claim An array of claim data to process
     /// @param params A 2D array of withdrawal parameters
-    /// @return _releasable The total releasable amount
+    /// @return __releasable The total releasable amount
     function batchReleasable(
         State storage self,
         Claim[] calldata claim,
         WithdrawParams[] calldata params
-    ) internal returns (uint256 __releasable) {
-        __releasable = 0;
+    ) internal view returns (uint256 __releasable) {
         for (uint256 i = 0; i < claim.length; i++) {
             __releasable += _releasable(self, claim[i], params[i]);
         }
     }
 
-    function checkState(State storage self, Claim calldata claim, WithdrawParams calldata params) internal {
+    function checkState(State storage self, Claim calldata claim, WithdrawParams calldata params) internal view {
         self.registry.extensionOf(claim.stateId).checkState(claim, params);
     }
 
-    function checkBatchState(State storage self, Claim[] calldata claims, WithdrawParams[] calldata params) internal {
+    function checkBatchState(State storage self, Claim[] calldata claims, WithdrawParams[] calldata params) internal view {
         self.registry.extensionOf(claims[0].stateId).checkBatchState(claims, params);
     }
 
@@ -102,8 +101,8 @@ library Extensions {
         State storage self,
         Claim calldata claim,
         WithdrawParams calldata params
-    ) private returns (uint256) {
-        return self.registry.extensionOf(claim.strategyData).releasable(claim, params);
+    ) private view returns (uint256) {
+        return self.registry.extensionOf(claim.strategyId).releasable(claim, params);
     }
 
     /// @notice Internal function to handle the beforeWithdraw hook

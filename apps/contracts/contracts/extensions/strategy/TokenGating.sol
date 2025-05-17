@@ -24,20 +24,26 @@ contract TokenGating is BaseExtension {
     error TokenGating_InsufficientBalance();
 
     /* -------------------------------------------------------------------------- */
+    /*                             INITIALIZATION                                 */
+    /* -------------------------------------------------------------------------- */
+
+    constructor() BaseExtension("TokenGating", bytes32(uint256(0xf441f3)))  {}
+
+    /* -------------------------------------------------------------------------- */
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
     /// @notice Called before withdrawal to check if the token balance is greater than the threshold
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external view {
+    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external override view {
         _checkBalance(claim, params);
     }
 
     /// @notice Called before batch withdrawal to check if the token balance is greater than the threshold
     /// @param claims The claim parameters
     /// @param params The withdraw parameters
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external view {
+    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
         for (uint256 i = 0; i < claims.length; i++) {
             _checkBalance(claims[i], params[i]);
         }

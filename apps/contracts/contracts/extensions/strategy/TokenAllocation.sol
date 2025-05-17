@@ -23,6 +23,12 @@ contract TokenAllocation is BaseExtension {
     error TokenAllocation_InsufficientBalance();
 
     /* -------------------------------------------------------------------------- */
+    /*                             INITIALIZATION                                 */
+    /* -------------------------------------------------------------------------- */
+
+    constructor() BaseExtension("TokenAllocation", bytes32(uint256(0x9c2215)))  {}
+
+    /* -------------------------------------------------------------------------- */
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
@@ -30,21 +36,21 @@ contract TokenAllocation is BaseExtension {
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
     /// @return releasable The releasable amount
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external returns (uint256) {
+    function releasable(Claim calldata claim, WithdrawParams calldata params) external override view returns (uint256) {
         return _releasable(claim, params);
     }
 
     /// @notice Called before withdrawal to check if the requested withdraw amount is releasable
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external view {
+    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external override view {
         _checkReleasable(claim, params);
     }
 
     /// @notice Called before batch withdrawal to check if the requested withdraw amount is releasable
     /// @param claims The claim parameters
     /// @param params The withdraw parameters
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external view {
+    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
         for (uint256 i = 0; i < claims.length; i++) {
             _checkReleasable(claims[i], params[i]);
         }
@@ -54,7 +60,7 @@ contract TokenAllocation is BaseExtension {
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function _releasable(Claim calldata claim, WithdrawParams calldata params) internal returns (uint256) {
+    function _releasable(Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
         (Token token, address owner, uint256 id, TokenType tokenType) = abi.decode(claim.strategyData, (Token, address, uint256, TokenType));
 
         if (token.isAddressZero()) revert TokenAllocation_InvalidToken();
@@ -63,7 +69,7 @@ contract TokenAllocation is BaseExtension {
         return token.balanceOf(owner, tokenType, id) - _pending(claim, params);
     }
     
-    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal {
+    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal view {
         if (params.amount > _releasable(claim, params)) revert TokenAllocation_InsufficientBalance();
     }
 }

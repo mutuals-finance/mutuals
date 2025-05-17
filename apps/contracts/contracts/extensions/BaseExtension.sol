@@ -33,10 +33,12 @@ abstract contract BaseExtension is IExtension {
     /* -------------------------------------------------------------------------- */
 
     /// @notice The name of the extension
-    string internal immutable _EXTENSION_NAME;
+    string internal _EXTENSION_NAME;
+    // immutable?
 
     /// @notice The id of the extension
-    uint256 internal immutable _EXTENSION_ID;
+    bytes32 internal _EXTENSION_ID;
+    // immutable?
 
     /// @notice The factory contract
     address internal _poolFactory;
@@ -45,12 +47,12 @@ abstract contract BaseExtension is IExtension {
     /*                             INITIALIZE                             */
     /* -------------------------------------------------------------------------- */
 
-    constructor(string memory _extensionName, uint256 _extensionId) {
+    constructor(string memory _extensionName, bytes32 _extensionId) {
         _EXTENSION_NAME = _extensionName;
         _EXTENSION_ID = _extensionId;
     }
 
-    function initialize(address __poolFactory) external virtual override {
+    function initialize(address __poolFactory) external virtual {
         __BaseExtension_init(__poolFactory);
 
         // emit Initialized(__poolFactory);
@@ -58,10 +60,10 @@ abstract contract BaseExtension is IExtension {
 
     function __BaseExtension_init(address __poolFactory) internal virtual {
         // check if factory is not initialized already, if it is, revert
-        if (__poolFactory != 0) revert BaseExtension_AlreadyInitialized();
+        if (__poolFactory != address(0)) revert BaseExtension_AlreadyInitialized();
 
         // check if the factory address is valid and not zero (0), if it is, revert
-        if (__poolFactory == 0) revert BaseExtension_InvalidRegistry();
+        if (__poolFactory == address(0)) revert BaseExtension_InvalidRegistry();
         _poolFactory = __poolFactory;
     }
 
@@ -80,55 +82,55 @@ abstract contract BaseExtension is IExtension {
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function extensionId() external view override returns (uint256) {
+    function extensionId() external view returns (bytes32) {
         return _EXTENSION_ID;
     }
 
-    function extensionName() external view override returns (string memory) {
+    function extensionName() external view returns (string memory) {
         return _EXTENSION_NAME;
     }
 
-    function beforeInitialize(bytes calldata data) external view override {
+    function beforeInitialize(bytes calldata data) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterInitialize(bytes calldata data) external view override {
+    function afterInitialize(bytes calldata data) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function checkState(Claim calldata claim, WithdrawParams calldata params) external view override {
+    function checkState(Claim calldata claim, WithdrawParams calldata params) external view virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
+    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external view override returns (uint256) {
+    function releasable(Claim calldata claim, WithdrawParams calldata params) external view virtual returns (uint256) {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external view override {
+    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
+    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterWithdraw(Claim calldata claim, WithdrawParams calldata params) external view override {
+    function afterWithdraw(Claim calldata claim, WithdrawParams calldata params) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
+    function afterBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function beforeDonate(Claim calldata claim, WithdrawParams calldata params) external view override {
+    function beforeDonate(Claim calldata claim, WithdrawParams calldata params) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterDonate(Claim calldata claim, WithdrawParams calldata params) external view override {
+    function afterDonate(Claim calldata claim, WithdrawParams calldata params) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
@@ -143,15 +145,14 @@ abstract contract BaseExtension is IExtension {
 
     /**
      * @notice Calculates the actual amount based on allocation of native or erc20 token
-     * @param recipientId The recipient identifier
-     * @param token The token address
-     * @param totalAmount The total amount available
-     * @return The calculated allocation amount
+     * @param claim The claim
+     * @param params The params
+     * @return The calculated pending amount
      */
     function _pending(Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
         uint256 precision = 10_000;
         if (claim.isPercentage()) {
-            return (IPool(msg.sender).totalReceived()) / precision - IPool(msg.sender).released(params.token, claim.recipient);
+            return (IPool(msg.sender).totalReceived(params.token)) / precision - IPool(msg.sender).released(claim.id, params.token);
         } else {
             return claim.value;
         }

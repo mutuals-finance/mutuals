@@ -36,7 +36,9 @@ contract OffchainState is BaseExtension {
     /*                             INITIALIZATION                                 */
     /* -------------------------------------------------------------------------- */
 
-    function beforeInitialize(bytes calldata data) external {
+    constructor() BaseExtension("OffchainState", bytes32(uint256(0x637442)))  {}
+
+    function beforeInitialize(bytes calldata data) external override {
         // msg.sender is 'pool'
         bytes32 merkleRoot = abi.decode(data, (bytes32));
         if (merkleRoots[msg.sender] != bytes32(0)) revert OffchainState_PoolAlreadyInitialized();
@@ -48,18 +50,14 @@ contract OffchainState is BaseExtension {
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function _merkleRoot() internal view returns (bytes32) {
-        return merkleRoots[msg.sender];
-    }
-
-    function checkState(Claim calldata claim, WithdrawParams calldata params) external view {
+    function checkState(Claim calldata claim, WithdrawParams calldata params) external override view {
         (bytes32[] memory proof, ) = abi.decode(params.stateData, (bytes32[], bool[]));
         if (MerkleProof.verify(proof, _merkleRoot(), claim.hash())) {
             revert OffchainState_InvalidState();
         }
     }
 
-    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view {
+    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
         (bytes32[] memory proof, bool[] memory flags) = abi.decode(params[0].stateData, (bytes32[], bool[]));
         bytes32[] memory leaves = new bytes32[](claims.length);
         uint256 lastId;
@@ -75,5 +73,14 @@ contract OffchainState is BaseExtension {
         if (MerkleProof.multiProofVerify(proof, flags, _merkleRoot(), leaves)) {
             revert OffchainState_InvalidState();
         }
+    }
+
+    
+    /* -------------------------------------------------------------------------- */
+    /*                             INTERNAL FUNCTIONS                             */
+    /* -------------------------------------------------------------------------- */
+
+    function _merkleRoot() internal view returns (bytes32) {
+        return merkleRoots[msg.sender];
     }
 }

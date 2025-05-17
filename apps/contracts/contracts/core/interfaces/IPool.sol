@@ -36,7 +36,7 @@ interface IPool {
 
     function releasable(Claim calldata claim, WithdrawParams calldata params) external view returns (uint256);
 
-    function batchReleasable(Claim[] calldata claims, WithdrawParams[] calldata params) external view returns (uint256);
+    // function batchReleasable(Claim[] calldata claims, WithdrawParams[] calldata params) external view returns (uint256);
 
     function withdraw(Claim calldata claim, WithdrawParams calldata params) external;
 

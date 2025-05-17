@@ -25,10 +25,12 @@ contract OnchainState is BaseExtension {
     mapping(address => mapping(uint256 => Claim)) private _claims;
 
     /* -------------------------------------------------------------------------- */
-    /*                             INITIALIZATION                             */
+    /*                             INITIALIZATION                                 */
     /* -------------------------------------------------------------------------- */
 
-    function beforeInitialize(bytes calldata data) external {
+    constructor() BaseExtension("OnchainState", bytes32(uint256(0x7c93d7)))  {}
+
+    function beforeInitialize(bytes calldata data) external override {
         Claim[] memory __claims = abi.decode(data, (Claim[]));
         for (uint256 i = 0; i < __claims.length; i++) {
             Claim memory claim = __claims[i];
@@ -41,11 +43,11 @@ contract OnchainState is BaseExtension {
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function checkState(Claim calldata claim, WithdrawParams calldata params) external {
+    function checkState(Claim calldata claim, WithdrawParams calldata params) external override view {
         _checkState(claim);
     }
 
-    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external {
+    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
         uint256 lastId;
         for (uint256 i = 0; i < claims.length; i++) {
             _checkState(claims[i]);
@@ -57,7 +59,11 @@ contract OnchainState is BaseExtension {
         }
     }
 
-    function _checkState(Claim calldata claim) internal {
+    /* -------------------------------------------------------------------------- */
+    /*                             INTERNAL FUNCTIONS                             */
+    /* -------------------------------------------------------------------------- */
+
+    function _checkState(Claim calldata claim) internal view {
         if (claim.id <= 0 || !claim.equals(_claims[msg.sender][claim.id])) revert OnchainState_InvalidState();
     }
 }

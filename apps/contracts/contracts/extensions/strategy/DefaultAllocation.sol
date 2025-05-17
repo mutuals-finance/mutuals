@@ -16,25 +16,31 @@ contract DefaultAllocation is BaseExtension {
     error DefaultAllocation_InsufficientBalance();
 
     /* -------------------------------------------------------------------------- */
+    /*                             INITIALIZATION                                 */
+    /* -------------------------------------------------------------------------- */
+
+    constructor() BaseExtension("DefaultAllocation", bytes32(uint256(0x577472)))  {}
+
+    /* -------------------------------------------------------------------------- */
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
     /**
      * @notice Calculates releasable amount based on allocation
      */
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external view returns (uint256) {
+    function releasable(Claim calldata claim, WithdrawParams calldata params) external override view returns (uint256) {
         return _releasable(claim, params);
     }
 
     /**
      * @notice Process before withdrawal and calculate releasable amount
      */
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external {
+    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external override view {
         _checkReleasable(claim, params);
     }
 
     /// @notice Called before batch withdrawal to ensure correct epoch is used per nodeId
-    function beforeBatchWithdraw(Claim[] calldata claim, WithdrawParams[] calldata params) external {
+    function beforeBatchWithdraw(Claim[] calldata claim, WithdrawParams[] calldata params) external override view {
         for (uint256 i = 0; i < params.length; i++) {
             _checkReleasable(claim[i], params[i]);
         }
@@ -48,7 +54,7 @@ contract DefaultAllocation is BaseExtension {
         return _pending(claim, params);
     }
 
-    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal {
+    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal view {
         if (params.amount > _releasable(claim, params)) revert DefaultAllocation_InsufficientBalance();
     }
 }
