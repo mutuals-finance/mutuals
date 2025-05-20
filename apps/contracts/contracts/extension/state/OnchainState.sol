@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IPool } from "../../core/interfaces/IPool.sol";
-import { Claim } from "../../core/types/Claim.sol";
-import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
+import { IPool } from "../../pool/interfaces/IPool.sol";
+import { Claim } from "../../pool/types/Claim.sol";
+import { WithdrawParams } from "../../pool/types/WithdrawParams.sol";
 import { BaseExtension } from "../BaseExtension.sol";
 
 contract OnchainState is BaseExtension {
@@ -28,7 +28,7 @@ contract OnchainState is BaseExtension {
     /*                             INITIALIZATION                                 */
     /* -------------------------------------------------------------------------- */
 
-    constructor() BaseExtension("OnchainState", bytes32(uint256(0x7c93d7)))  {}
+    constructor() BaseExtension("OnchainState", bytes32(uint256(0x7c93d7))) {}
 
     function beforeInitialize(bytes calldata data) external override {
         Claim[] memory __claims = abi.decode(data, (Claim[]));
@@ -43,11 +43,19 @@ contract OnchainState is BaseExtension {
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function checkState(Claim calldata claim, WithdrawParams calldata params) external override view {
+    function checkState(
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external view override {
         _checkState(claim);
     }
 
-    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
+    function checkBatchState(
+        Claim[] calldata claims,
+        // solc-ignore-next-line unused-param
+        WithdrawParams[] calldata params
+    ) external view override {
         uint256 lastId;
         for (uint256 i = 0; i < claims.length; i++) {
             _checkState(claims[i]);

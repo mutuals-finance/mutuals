@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IPool } from "../../core/interfaces/IPool.sol";
-import { Claim } from "../../core/types/Claim.sol";
-import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
+import { IPool } from "../../pool/interfaces/IPool.sol";
+import { Claim } from "../../pool/types/Claim.sol";
+import { WithdrawParams } from "../../pool/types/WithdrawParams.sol";
 import { BaseExtension } from "../BaseExtension.sol";
 
 contract PriorityGating is BaseExtension {
@@ -19,7 +19,7 @@ contract PriorityGating is BaseExtension {
     /*                             INITIALIZATION                                 */
     /* -------------------------------------------------------------------------- */
 
-    constructor() BaseExtension("PriorityGating", bytes32(uint256(0xeaa2d5)))  {}
+    constructor() BaseExtension("PriorityGating", bytes32(uint256(0xeaa2d5))) {}
 
     /* -------------------------------------------------------------------------- */
     /*                            EXTERNAL FUNCTIONS                              */
@@ -28,14 +28,14 @@ contract PriorityGating is BaseExtension {
     /// @notice Called before withdrawal of to check if the releasable amount is greater than the threshold of a previous node
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external override view {
+    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external view override {
         _checkReleasable(claim, params);
     }
 
     /// @notice Called before batch withdrawal of to check if the releasable amount is greater than the threshold of a previous node
     /// @param claims The claim parameters
     /// @param params The withdraw parameters
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
+    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
         for (uint256 i = 0; i < claims.length; i++) {
             _checkReleasable(claims[i], params[i]);
         }

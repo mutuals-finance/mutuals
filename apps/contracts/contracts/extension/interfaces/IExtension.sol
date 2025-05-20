@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { Claim } from "../../core/types/Claim.sol";
-import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
+import { Claim } from "../../pool/types/Claim.sol";
+import { WithdrawParams } from "../../pool/types/WithdrawParams.sol";
 
 interface IExtension {
     function extensionId() external view returns (bytes32);

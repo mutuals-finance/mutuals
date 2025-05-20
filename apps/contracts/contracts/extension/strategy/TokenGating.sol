@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IPool } from "../../core/interfaces/IPool.sol";
-import { TokenType, Token } from "../../core/types/Token.sol";
-import { Claim } from "../../core/types/Claim.sol";
-import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
+import { IPool } from "../../pool/interfaces/IPool.sol";
+import { TokenType, Token } from "../../pool/types/Token.sol";
+import { Claim } from "../../pool/types/Claim.sol";
+import { WithdrawParams } from "../../pool/types/WithdrawParams.sol";
 import { BaseExtension } from "../BaseExtension.sol";
 
 /// @title TokenGating
@@ -27,7 +27,7 @@ contract TokenGating is BaseExtension {
     /*                             INITIALIZATION                                 */
     /* -------------------------------------------------------------------------- */
 
-    constructor() BaseExtension("TokenGating", bytes32(uint256(0xf441f3)))  {}
+    constructor() BaseExtension("TokenGating", bytes32(uint256(0xf441f3))) {}
 
     /* -------------------------------------------------------------------------- */
     /*                             EXTERNAL FUNCTIONS                             */
@@ -36,16 +36,24 @@ contract TokenGating is BaseExtension {
     /// @notice Called before withdrawal to check if the token balance is greater than the threshold
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external override view {
-        _checkBalance(claim, params);
+    function beforeWithdraw(
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external view override {
+        _checkBalance(claim);
     }
 
     /// @notice Called before batch withdrawal to check if the token balance is greater than the threshold
     /// @param claims The claim parameters
     /// @param params The withdraw parameters
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
+    function beforeBatchWithdraw(
+        Claim[] calldata claims,
+        // solc-ignore-next-line unused-param
+        WithdrawParams[] calldata params
+    ) external view override {
         for (uint256 i = 0; i < claims.length; i++) {
-            _checkBalance(claims[i], params[i]);
+            _checkBalance(claims[i]);
         }
     }
 
@@ -55,8 +63,7 @@ contract TokenGating is BaseExtension {
 
     /// @notice Check if the token balance is greater than the threshold
     /// @param claim The claim parameters
-    /// @param params The withdraw parameters
-    function _checkBalance(Claim calldata claim, WithdrawParams calldata params) internal view {
+    function _checkBalance(Claim calldata claim) internal view {
         (Token token, address owner, uint256 id, TokenType tokenType, uint256 threshold) = abi.decode(
             claim.strategyData,
             (Token, address, uint256, TokenType, uint256)

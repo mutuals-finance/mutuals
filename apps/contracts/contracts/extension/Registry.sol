@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IExtension } from "../extensions/interfaces/IExtension.sol";
+import { IExtension } from "./interfaces/IExtension.sol";
 
 import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import { UUPSUpgradeable } from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
@@ -53,7 +53,7 @@ contract Registry is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     function unregister(bytes32 extensionId) external onlyOwner {
         extensions.remove(uint256(extensionId));
     }
-    
+
     function extensionOf(bytes32 extensionId) external view returns (address) {
         return extensions.get(uint256(extensionId));
     }
@@ -63,5 +63,4 @@ contract Registry is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
     /// @dev Upgrades the implementation of the proxy to new address.
     function _authorizeUpgrade(address) internal override onlyOwner {}
-
 }

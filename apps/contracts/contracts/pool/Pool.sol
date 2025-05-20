@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IPool } from "./interfaces/IPool.sol";
-import { Extensions } from "./libraries/Extensions.sol";
 import { Claim } from "./types/Claim.sol";
+import { Extensions } from "./libraries/Extensions.sol";
+import { IPool } from "./interfaces/IPool.sol";
 import { Token } from "./types/Token.sol";
 import { WithdrawParams } from "./types/WithdrawParams.sol";
 
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
- 
+
 contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
     using Extensions for Extensions.State;
 
@@ -28,11 +28,6 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
     /*                             INITIALIZATION                             */
     /* -------------------------------------------------------------------------- */
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
     /**
      * @dev Initializes the contract and its extended storage.
      */
@@ -40,11 +35,13 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
         __Context_init_unchained();
         __Ownable_init_unchained(_initialOwner);
         __Pausable_init_unchained();
+        __Pool_init_unchained(_allocationRoot);
     }
 
     /**
      * @dev Initializes only the contract specific storage.
      */
+    /// @custom:oz-upgrades-unsafe-allow missing-initializer-call
     function __Pool_init_unchained(bytes32 _allocationRoot) internal onlyInitializing {}
 
     /* -------------------------------------------------------------------------- */
