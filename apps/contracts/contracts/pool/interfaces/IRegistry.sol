@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IExtension } from "../../extensions/interfaces/IExtension.sol";
+import { IExtension } from "../../extension/interfaces/IExtension.sol";
 
 interface IRegistry {
     function register(address extension) external;

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.22;
 
 import { IRegistry } from "../interfaces/IRegistry.sol";
 import { IPool } from "../interfaces/IPool.sol";
 import { ParseBytes } from "./ParseBytes.sol";
 import { CustomRevert } from "./CustomRevert.sol";
-import { BaseExtension } from "../../extensions/BaseExtension.sol";
+import { BaseExtension } from "../../extension/BaseExtension.sol";
 import { Claim } from "../types/Claim.sol";
 import { WithdrawParams } from "../types/WithdrawParams.sol";
 
@@ -26,7 +26,11 @@ library Extensions {
     /// @param claim The claim data to process
     /// @param params The withdrawal parameters
     /// @return The releasable amount
-    function releasable(State storage self, Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
+    function releasable(
+        State storage self,
+        Claim calldata claim,
+        WithdrawParams calldata params
+    ) internal view returns (uint256) {
         return _releasable(self, claim, params);
     }
 
@@ -65,11 +69,7 @@ library Extensions {
     /// @param self The state of the Extensions library
     /// @param claims An array of claim data to process
     /// @param params A 2D array of withdrawal parameters
-    function beforeBatchWithdraw(
-        State storage self,
-        Claim[] calldata claims,
-        WithdrawParams[] calldata params
-    ) internal {
+    function beforeBatchWithdraw(State storage self, Claim[] calldata claims, WithdrawParams[] calldata params) internal {
         for (uint256 i = 0; i < claims.length; i++) {
             _beforeWithdraw(self, claims[i], params[i]);
         }
@@ -87,11 +87,7 @@ library Extensions {
     /// @param self The state of the Extensions library
     /// @param claims An array of claim data to process
     /// @param params A 2D array of withdrawal parameters
-    function afterBatchWithdraw(
-        State storage self,
-        Claim[] calldata claims,
-        WithdrawParams[] calldata params
-    ) internal {
+    function afterBatchWithdraw(State storage self, Claim[] calldata claims, WithdrawParams[] calldata params) internal {
         for (uint256 i = 0; i < claims.length; i++) {
             _afterWithdraw(self, claims[i], params[i]);
         }

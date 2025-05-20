@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IPool } from "../core/interfaces/IPool.sol";
+import { IPool } from "../pool/interfaces/IPool.sol";
 import { IExtension } from "./interfaces/IExtension.sol";
-import { IRegistry } from "../core/interfaces/IRegistry.sol";
-import { Claim } from "../core/types/Claim.sol";
-import { WithdrawParams } from "../core/types/WithdrawParams.sol";
+import { IRegistry } from "../pool/interfaces/IRegistry.sol";
+import { Claim } from "../pool/types/Claim.sol";
+import { WithdrawParams } from "../pool/types/WithdrawParams.sol";
 
 /// @title BaseExtension Contract
 /// @notice This contract is the base contract for all extensions
@@ -90,53 +90,105 @@ abstract contract BaseExtension is IExtension {
         return _EXTENSION_NAME;
     }
 
-    function beforeInitialize(bytes calldata data) external virtual {
+    function beforeInitialize(
+        // solc-ignore-next-line unused-param
+        bytes calldata data
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterInitialize(bytes calldata data) external virtual {
+    function afterInitialize(
+        // solc-ignore-next-line unused-param
+        bytes calldata data
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function checkState(Claim calldata claim, WithdrawParams calldata params) external view virtual {
+    function checkState(
+        // solc-ignore-next-line unused-param
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external view virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view virtual {
+    function checkBatchState(
+        // solc-ignore-next-line unused-param
+        Claim[] calldata claims,
+        // solc-ignore-next-line unused-param
+        WithdrawParams[] calldata params
+    ) external view virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function releasable(Claim calldata claim, WithdrawParams calldata params) external view virtual returns (uint256) {
+    function releasable(
+        // solc-ignore-next-line unused-param
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external view virtual returns (uint256) {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external virtual {
+    function beforeWithdraw(
+        // solc-ignore-next-line unused-param
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external virtual {
+    function beforeBatchWithdraw(
+        // solc-ignore-next-line unused-param
+        Claim[] calldata claims,
+        // solc-ignore-next-line unused-param
+        WithdrawParams[] calldata params
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterWithdraw(Claim calldata claim, WithdrawParams calldata params) external virtual {
+    function afterWithdraw(
+        // solc-ignore-next-line unused-param
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external virtual {
+    function afterBatchWithdraw(
+        // solc-ignore-next-line unused-param
+        Claim[] calldata claims,
+        // solc-ignore-next-line unused-param
+        WithdrawParams[] calldata params
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function beforeDonate(Claim calldata claim, WithdrawParams calldata params) external virtual {
+    function beforeDonate(
+        // solc-ignore-next-line unused-param
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function afterDonate(Claim calldata claim, WithdrawParams calldata params) external virtual {
+    function afterDonate(
+        // solc-ignore-next-line unused-param
+        Claim calldata claim,
+        // solc-ignore-next-line unused-param
+        WithdrawParams calldata params
+    ) external virtual {
         revert BaseExtension_UnsupportedHook();
     }
 
     /* -------------------------------------------------------------------------- */
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
+
     /// @notice Checks if the 'msg.sender' is the Allo contract.
     /// @dev Reverts if the 'msg.sender' is not the Allo contract.
     function _checkOnlyPoolFactory() internal view virtual {
@@ -152,7 +204,10 @@ abstract contract BaseExtension is IExtension {
     function _pending(Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
         uint256 precision = 10_000;
         if (claim.isPercentage()) {
-            return (IPool(msg.sender).totalReceived(params.token)) / precision - IPool(msg.sender).released(claim.id, params.token);
+            return
+                (IPool(msg.sender).totalReceived(params.token)) /
+                precision -
+                IPool(msg.sender).released(claim.id, params.token);
         } else {
             return claim.value;
         }

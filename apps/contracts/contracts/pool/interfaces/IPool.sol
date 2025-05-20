@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
 import { Claim } from "../types/Claim.sol";
 import { WithdrawParams } from "../types/WithdrawParams.sol";
 import { Token } from "../types/Token.sol";
 
 interface IPool {
-        /* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
     /*                                   EVENTS                                   */
     /* -------------------------------------------------------------------------- */
 
@@ -41,5 +41,4 @@ interface IPool {
     function withdraw(Claim calldata claim, WithdrawParams calldata params) external;
 
     function batchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external;
-
 }

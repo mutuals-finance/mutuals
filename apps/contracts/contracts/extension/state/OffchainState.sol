@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
-import { IPool } from "../../core/interfaces/IPool.sol";
-import { Claim } from "../../core/types/Claim.sol";
-import { WithdrawParams } from "../../core/types/WithdrawParams.sol";
+import { IPool } from "../../pool/interfaces/IPool.sol";
+import { Claim } from "../../pool/types/Claim.sol";
+import { WithdrawParams } from "../../pool/types/WithdrawParams.sol";
 import { BaseExtension } from "../BaseExtension.sol";
 
 import { MerkleProof } from "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
@@ -36,7 +36,7 @@ contract OffchainState is BaseExtension {
     /*                             INITIALIZATION                                 */
     /* -------------------------------------------------------------------------- */
 
-    constructor() BaseExtension("OffchainState", bytes32(uint256(0x637442)))  {}
+    constructor() BaseExtension("OffchainState", bytes32(uint256(0x637442))) {}
 
     function beforeInitialize(bytes calldata data) external override {
         // msg.sender is 'pool'
@@ -50,14 +50,14 @@ contract OffchainState is BaseExtension {
     /*                             EXTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function checkState(Claim calldata claim, WithdrawParams calldata params) external override view {
+    function checkState(Claim calldata claim, WithdrawParams calldata params) external view override {
         (bytes32[] memory proof, ) = abi.decode(params.stateData, (bytes32[], bool[]));
         if (MerkleProof.verify(proof, _merkleRoot(), claim.hash())) {
             revert OffchainState_InvalidState();
         }
     }
 
-    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external override view {
+    function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
         (bytes32[] memory proof, bool[] memory flags) = abi.decode(params[0].stateData, (bytes32[], bool[]));
         bytes32[] memory leaves = new bytes32[](claims.length);
         uint256 lastId;
@@ -75,7 +75,6 @@ contract OffchainState is BaseExtension {
         }
     }
 
-    
     /* -------------------------------------------------------------------------- */
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */

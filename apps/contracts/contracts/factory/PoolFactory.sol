@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.22;
 
 import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import { UUPSUpgradeable } from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { BeaconProxy } from "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
-import { Pool } from "./Pool.sol";
+import { Pool } from "../pool/Pool.sol";
 
 /**
  * @dev This contract is for creating proxy to access Pool instances.
@@ -33,11 +33,6 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     /*                             INITIALIZATION                             */
     /* -------------------------------------------------------------------------- */
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
     /**
      * @dev Initializes the contract.
      */
@@ -47,6 +42,7 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         __PoolFactory_init_unchained(_beacon);
     }
 
+    /// @custom:oz-upgrades-unsafe-allow missing-initializer-call
     function __PoolFactory_init_unchained(address _beacon) internal onlyInitializing {
         beacon = _beacon;
     }
