@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
-import { IRegistry } from "../interfaces/IRegistry.sol";
+import { IRegistry } from "../../registry/interfaces/IRegistry.sol";
 import { IPool } from "../interfaces/IPool.sol";
 import { ParseBytes } from "./ParseBytes.sol";
 import { CustomRevert } from "./CustomRevert.sol";
@@ -19,6 +19,14 @@ library Extensions {
 
     struct State {
         IRegistry registry;
+    }
+
+    function beforeInitializePool(State storage self, bytes32 extensionId, bytes calldata data) internal {
+        self.registry.extensionOf(extensionId).beforeInitializePool(data);
+    }
+
+    function afterInitializePool(State storage self, bytes32 extensionId, bytes calldata data) internal {
+        self.registry.extensionOf(extensionId).afterInitializePool(data);
     }
 
     /// @notice Calls the releasable hook and validates the return value

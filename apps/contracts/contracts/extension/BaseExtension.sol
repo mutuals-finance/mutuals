@@ -4,7 +4,7 @@ pragma solidity ^0.8.22;
 
 import { IPool } from "../pool/interfaces/IPool.sol";
 import { IExtension } from "./interfaces/IExtension.sol";
-import { IRegistry } from "../pool/interfaces/IRegistry.sol";
+import { IRegistry } from "../registry/interfaces/IRegistry.sol";
 import { Claim } from "../pool/types/Claim.sol";
 import { WithdrawParams } from "../pool/types/WithdrawParams.sol";
 
@@ -98,6 +98,20 @@ abstract contract BaseExtension is IExtension {
     }
 
     function afterInitialize(
+        // solc-ignore-next-line unused-param
+        bytes calldata data
+    ) external virtual {
+        revert BaseExtension_UnsupportedHook();
+    }
+
+    function beforeInitializePool(
+        // solc-ignore-next-line unused-param
+        bytes calldata data
+    ) external virtual {
+        revert BaseExtension_UnsupportedHook();
+    }
+
+    function afterInitializePool(
         // solc-ignore-next-line unused-param
         bytes calldata data
     ) external virtual {

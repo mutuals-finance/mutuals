@@ -117,4 +117,8 @@ library TokenLibrary {
     function isAddressZero(Token self) internal pure returns (bool) {
         return Token.unwrap(self) == Token.unwrap(ADDRESS_ZERO);
     }
+
+    function equals(Token self, Token token) internal pure returns (bool) {
+        return Token.unwrap(self) == Token.unwrap(token);
+    }
 }

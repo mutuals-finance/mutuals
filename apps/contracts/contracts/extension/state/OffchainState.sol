@@ -38,7 +38,7 @@ contract OffchainState is BaseExtension {
 
     constructor() BaseExtension("OffchainState", bytes32(uint256(0x637442))) {}
 
-    function beforeInitialize(bytes calldata data) external override {
+    function afterInitializePool(bytes calldata data) external override {
         // msg.sender is 'pool'
         bytes32 merkleRoot = abi.decode(data, (bytes32));
         if (merkleRoots[msg.sender] != bytes32(0)) revert OffchainState_PoolAlreadyInitialized();

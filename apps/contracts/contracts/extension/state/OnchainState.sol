@@ -30,7 +30,7 @@ contract OnchainState is BaseExtension {
 
     constructor() BaseExtension("OnchainState", bytes32(uint256(0x7c93d7))) {}
 
-    function beforeInitialize(bytes calldata data) external override {
+    function afterInitializePool(bytes calldata data) external override {
         Claim[] memory __claims = abi.decode(data, (Claim[]));
         for (uint256 i = 0; i < __claims.length; i++) {
             Claim memory claim = __claims[i];

@@ -3,10 +3,10 @@
 pragma solidity ^0.8.22;
 
 import { Claim } from "./types/Claim.sol";
-import { Extensions } from "./libraries/Extensions.sol";
-import { IPool } from "./interfaces/IPool.sol";
 import { Token } from "./types/Token.sol";
 import { WithdrawParams } from "./types/WithdrawParams.sol";
+import { Extensions } from "./libraries/Extensions.sol";
+import { IPool } from "./interfaces/IPool.sol";
 
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
@@ -31,18 +31,27 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
     /**
      * @dev Initializes the contract and its extended storage.
      */
-    function __Pool_init(address _initialOwner, bytes32 _allocationRoot) external initializer {
+    function __Pool_init(address _initialOwner, bytes32[] calldata _extensions, bytes[] calldata _data) external initializer {
         __Context_init_unchained();
         __Ownable_init_unchained(_initialOwner);
         __Pausable_init_unchained();
-        __Pool_init_unchained(_allocationRoot);
+        __Pool_init_unchained(_extensions, _data);
     }
 
     /**
      * @dev Initializes only the contract specific storage.
      */
     /// @custom:oz-upgrades-unsafe-allow missing-initializer-call
-    function __Pool_init_unchained(bytes32 _allocationRoot) internal onlyInitializing {}
+    function __Pool_init_unchained(bytes32[] calldata _extensions, bytes[] calldata _data) internal onlyInitializing {
+        uint256 i;
+        for (i; i < _extensions.length - 1; i++) {
+            extensions.beforeInitializePool(_extensions[i], _data[i]);
+        }
+
+        for (i = 0; i < _extensions.length - 1; i++) {
+            extensions.afterInitializePool(_extensions[i], _data[i]);
+        }
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                             EXTERNAL FUNCTIONS                             */
@@ -72,29 +81,9 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
         return extensions.releasable(claim, params);
     }
 
-    //function batchReleasable(Claim[] calldata claims, WithdrawParams[] calldata params) external view returns (uint256) {
-    //    return extensions.batchReleasable(claims, params);
-    //}
-
     function withdraw(Claim calldata claim, WithdrawParams calldata params) external whenNotPaused {
         extensions.checkState(claim, params);
         extensions.beforeWithdraw(claim, params);
-        _withdraw(claim, params);
-        extensions.afterWithdraw(claim, params);
-    }
-
-    function batchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external whenNotPaused {
-        extensions.checkBatchState(claims, params);
-        extensions.beforeBatchWithdraw(claims, params);
-        _batchWithdraw(claims, params);
-        extensions.afterBatchWithdraw(claims, params);
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /*                              INTERNAL/PRIVATE                              */
-    /* -------------------------------------------------------------------------- */
-
-    function _withdraw(Claim calldata claim, WithdrawParams calldata params) internal {
         if (claim.recipient == address(0)) {
             revert Pool_InvalidRecipient();
         }
@@ -103,19 +92,24 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
         params.token.transfer(claim.recipient, params.amount);
 
         // emit Withdraw(claim, params);
+        extensions.afterWithdraw(claim, params);
     }
 
-    function _batchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) internal {
+    function batchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external whenNotPaused {
+        extensions.checkBatchState(claims, params);
+        extensions.beforeBatchWithdraw(claims, params);
         uint256 amount;
         for (uint256 i = claims.length - 1; i > 0; i--) {
-            amount += params[i].amount;
+            if (params[0].token.equals(params[i].token)) {
+                amount += params[i].amount;
+            }
         }
 
         _released[params[0].token][claims[claims.length - 1].id] += amount;
         _totalReleased[params[0].token] += amount;
 
         params[0].token.transfer(claims[claims.length - 1].recipient, amount);
-
-        // emit BatchWithdraw(claims, params);
+        // emit BatchWithdraw(claim, params);
+        extensions.afterBatchWithdraw(claims, params);
     }
 }

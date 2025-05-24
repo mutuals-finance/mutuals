@@ -30,7 +30,7 @@ contract TimelockAllocation is BaseExtension {
 
     constructor() BaseExtension("TimelockAllocation", bytes32(uint256(0x07e49d))) {}
 
-    function beforeInitialize(bytes calldata data) external override {
+    function afterInitializePool(bytes calldata data) external override {
         // msg.sender is 'pool'
         uint256 startTime = abi.decode(data, (uint256));
         if (startTimes[msg.sender] != 0) revert TimelockAllocation_PoolAlreadyInitialized();

@@ -9,6 +9,8 @@ interface IExtension {
     function extensionName() external view returns (string memory);
     function beforeInitialize(bytes calldata data) external;
     function afterInitialize(bytes calldata data) external;
+    function beforeInitializePool(bytes calldata data) external;
+    function afterInitializePool(bytes calldata data) external;
     function checkState(Claim calldata claim, WithdrawParams calldata params) external view;
     function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view;
     function releasable(Claim calldata claim, WithdrawParams calldata params) external view returns (uint256);
