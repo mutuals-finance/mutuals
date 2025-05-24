@@ -106,6 +106,23 @@ export const validateDeploymentSettings = ({
   }
 };
 
+export const deployRegistryContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployOrUpgradeProxy({
+    contractName: 'Registry',
+    args: await Promise.all([
+      hre.ethers.getNamedSigner('admin').then(({ address }) => address),
+    ]),
+    options: {
+      initializer: '__Registry_init',
+      kind: 'uups',
+    },
+  });
+};
+
 export const deployPoolFactoryContract = async ({
   hre,
 }: {

@@ -25,11 +25,6 @@ contract Registry is IRegistry, Initializable, OwnableUpgradeable, UUPSUpgradeab
     /*                             INITIALIZATION                             */
     /* -------------------------------------------------------------------------- */
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
     /**
      * @dev Initializes the contract.
      */
@@ -39,6 +34,7 @@ contract Registry is IRegistry, Initializable, OwnableUpgradeable, UUPSUpgradeab
         __Registry_init_unchained();
     }
 
+    /// @custom:oz-upgrades-unsafe-allow missing-initializer-call
     function __Registry_init_unchained() internal onlyInitializing {}
 
     /* -------------------------------------------------------------------------- */

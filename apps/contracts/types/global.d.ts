@@ -196,6 +196,7 @@ declare global {
   let hre: CustomHardHatRuntimeEnvironment; // todo remove from global types to prevent usage
 
   export interface Contracts {
+    Registry?: InstanceOfContract<Registry>;
     PoolFactory?: InstanceOfContract<PoolFactory>;
     Pool?: InstanceOfContract<Pool>;
     UpgradeableBeacon?: InstanceOfContract<UpgradeableBeacon>;
