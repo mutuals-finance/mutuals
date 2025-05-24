@@ -6,6 +6,9 @@ import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/I
 import { UUPSUpgradeable } from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { BeaconProxy } from "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
+import { EnumerableMap } from "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
+
+import { IPoolFactory } from "./interfaces/IPoolFactory.sol";
 import { Pool } from "../pool/Pool.sol";
 
 /**
@@ -14,7 +17,9 @@ import { Pool } from "../pool/Pool.sol";
  * The beacon should be initialized before call Pool constructor.
  *
  */
-contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+contract PoolFactory is IPoolFactory, Initializable, OwnableUpgradeable, UUPSUpgradeable {
+    using EnumerableMap for EnumerableMap.UintToAddressMap;
+
     /* -------------------------------------------------------------------------- */
     /*                                   STORAGE                                  */
     /* -------------------------------------------------------------------------- */
@@ -23,11 +28,8 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     /// @dev For more details see https://docs.openzeppelin.com/contracts/3.x/api/proxy#UpgradeableBeacon.
     address public beacon;
 
-    /* -------------------------------------------------------------------------- */
-    /*                                   EVENTS                                   */
-    /* -------------------------------------------------------------------------- */
-
-    event PoolCreated(address indexed pool, address indexed owner, bytes32 indexed root);
+    /// @dev Track if a pool has been created
+    mapping(address pool => bool) private _created;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                             */
@@ -59,18 +61,34 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
      * @param _initialOwner Params to create pool with.
      * @param _salt Salt.
      */
-    function createPool(address _initialOwner, bytes32 _root, uint _salt) external {
-        address beaconProxy = _deployProxy(_getData(_initialOwner, _root), _salt);
-        emit PoolCreated(beaconProxy, _initialOwner, _root);
+    function createPool(
+        address _initialOwner,
+        address _registry,
+        bytes32[] calldata _extensions,
+        bytes[] calldata _data,
+        uint _salt
+    ) external {
+        address beaconProxy = _deployProxy(_getData(_initialOwner, _registry, _extensions, _data), _salt);
+        _created[beaconProxy] = true;
+        emit PoolCreated(beaconProxy, _initialOwner, _registry, _extensions, _data);
     }
 
     //returns address that contract with such arguments will be deployed on
-    function getAddress(address _initialOwner, bytes32 _root, uint _salt) public view returns (address) {
-        bytes memory bytecode = _getCreationBytecode(_getData(_initialOwner, _root));
+    function getAddress(
+        address _initialOwner,
+        address _registry,
+        bytes32[] calldata _extensions,
+        bytes[] calldata _data,
+        uint _salt
+    ) public view returns (address) {
+        bytes memory bytecode = _getCreationBytecode(_getData(_initialOwner, _registry, _extensions, _data));
 
         bytes32 hash = keccak256(abi.encodePacked(bytes1(0xff), address(this), _salt, keccak256(bytecode)));
-
         return address(uint160(uint(hash)));
+    }
+
+    function created(address pool) external view returns (bool) {
+        return _created[pool];
     }
 
     /* -------------------------------------------------------------------------- */
@@ -93,8 +111,13 @@ contract PoolFactory is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return abi.encodePacked(type(BeaconProxy).creationCode, abi.encode(beacon, _data));
     }
 
-    function _getData(address _initialOwner, bytes32 _root) internal pure returns (bytes memory) {
-        return abi.encodeWithSelector(Pool(address(0)).__Pool_init.selector, _initialOwner, _root);
+    function _getData(
+        address _initialOwner,
+        address _registry,
+        bytes32[] calldata _extensions,
+        bytes[] calldata _data
+    ) internal pure returns (bytes memory) {
+        return abi.encodeWithSelector(Pool(address(0)).__Pool_init.selector, _initialOwner, _registry, _extensions, _data);
     }
 
     /// @dev Upgrades the implementation of the proxy to new address.

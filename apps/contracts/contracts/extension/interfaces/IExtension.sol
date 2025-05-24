@@ -18,6 +18,4 @@ interface IExtension {
     function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external;
     function afterWithdraw(Claim calldata claim, WithdrawParams calldata params) external;
     function afterBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external;
-    function beforeDonate(Claim calldata claim, WithdrawParams calldata params) external;
-    function afterDonate(Claim calldata claim, WithdrawParams calldata params) external;
 }

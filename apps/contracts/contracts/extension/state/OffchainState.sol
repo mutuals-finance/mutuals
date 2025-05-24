@@ -30,7 +30,7 @@ contract OffchainState is BaseExtension {
     /*                            STORAGE                                         */
     /* -------------------------------------------------------------------------- */
 
-    mapping(address => bytes32) public merkleRoots;
+    mapping(IPool pool => bytes32) public merkleRoots;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                                 */
@@ -41,9 +41,10 @@ contract OffchainState is BaseExtension {
     function afterInitializePool(bytes calldata data) external override {
         // msg.sender is 'pool'
         bytes32 merkleRoot = abi.decode(data, (bytes32));
-        if (merkleRoots[msg.sender] != bytes32(0)) revert OffchainState_PoolAlreadyInitialized();
+        IPool pool = _pool();
+        if (merkleRoots[pool] != bytes32(0)) revert OffchainState_PoolAlreadyInitialized();
         if (merkleRoot == bytes32(0)) revert OffchainState_InvalidMerkleRoot();
-        merkleRoots[msg.sender] = merkleRoot;
+        merkleRoots[pool] = merkleRoot;
     }
 
     /* -------------------------------------------------------------------------- */
@@ -52,16 +53,20 @@ contract OffchainState is BaseExtension {
 
     function checkState(Claim calldata claim, WithdrawParams calldata params) external view override {
         (bytes32[] memory proof, ) = abi.decode(params.stateData, (bytes32[], bool[]));
-        if (MerkleProof.verify(proof, _merkleRoot(), claim.hash())) {
+        IPool pool = _pool();
+        _checkPoolCreated(pool);
+        if (MerkleProof.verify(proof, merkleRoots[pool], claim.hash())) {
             revert OffchainState_InvalidState();
         }
     }
 
     function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
+        IPool pool = _pool();
+        _checkPoolCreated(pool);
         (bytes32[] memory proof, bool[] memory flags) = abi.decode(params[0].stateData, (bytes32[], bool[]));
         bytes32[] memory leaves = new bytes32[](claims.length);
-        uint256 lastId;
 
+        uint256 lastId;
         for (uint256 i = 0; i < claims.length; i++) {
             if (lastId != claims[i].parentId) {
                 revert OffchainState_InvalidParent();
@@ -70,16 +75,8 @@ contract OffchainState is BaseExtension {
             lastId = claims[i].id;
         }
 
-        if (MerkleProof.multiProofVerify(proof, flags, _merkleRoot(), leaves)) {
+        if (MerkleProof.multiProofVerify(proof, flags, merkleRoots[pool], leaves)) {
             revert OffchainState_InvalidState();
         }
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /*                             INTERNAL FUNCTIONS                             */
-    /* -------------------------------------------------------------------------- */
-
-    function _merkleRoot() internal view returns (bytes32) {
-        return merkleRoots[msg.sender];
     }
 }

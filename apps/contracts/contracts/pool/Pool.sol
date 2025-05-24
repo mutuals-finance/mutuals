@@ -31,23 +31,32 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
     /**
      * @dev Initializes the contract and its extended storage.
      */
-    function __Pool_init(address _initialOwner, bytes32[] calldata _extensions, bytes[] calldata _data) external initializer {
+    function __Pool_init(
+        address _initialOwner,
+        address _registry,
+        bytes32[] calldata _extensions,
+        bytes[] calldata _data
+    ) external initializer {
         __Context_init_unchained();
         __Ownable_init_unchained(_initialOwner);
         __Pausable_init_unchained();
-        __Pool_init_unchained(_extensions, _data);
+        __Pool_init_unchained(_registry, _extensions, _data);
     }
 
     /**
      * @dev Initializes only the contract specific storage.
      */
     /// @custom:oz-upgrades-unsafe-allow missing-initializer-call
-    function __Pool_init_unchained(bytes32[] calldata _extensions, bytes[] calldata _data) internal onlyInitializing {
+    function __Pool_init_unchained(
+        address _registry,
+        bytes32[] calldata _extensions,
+        bytes[] calldata _data
+    ) internal onlyInitializing {
         uint256 i;
         for (i; i < _extensions.length - 1; i++) {
             extensions.beforeInitializePool(_extensions[i], _data[i]);
         }
-
+        extensions.initialize(_registry);
         for (i = 0; i < _extensions.length - 1; i++) {
             extensions.afterInitializePool(_extensions[i], _data[i]);
         }

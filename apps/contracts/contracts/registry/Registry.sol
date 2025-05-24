@@ -61,6 +61,11 @@ contract Registry is IRegistry, Initializable, OwnableUpgradeable, UUPSUpgradeab
     function extensionOf(bytes32 extensionId) external view returns (IExtension) {
         return IExtension(extensions.get(uint256(extensionId)));
     }
+
+    function exists(bytes32 extensionId) external view returns (bool) {
+        return extensions.contains(uint256(extensionId));
+    }
+
     /* -------------------------------------------------------------------------- */
     /*                         PRIVATE/INTERNAL FUNCTIONS                         */
     /* -------------------------------------------------------------------------- */

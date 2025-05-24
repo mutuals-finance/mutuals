@@ -21,6 +21,10 @@ library Extensions {
         IRegistry registry;
     }
 
+    function initialize(State storage self, address registry) internal {
+        self.registry = IRegistry(registry);
+    }
+
     function beforeInitializePool(State storage self, bytes32 extensionId, bytes calldata data) internal {
         self.registry.extensionOf(extensionId).beforeInitializePool(data);
     }

@@ -3,6 +3,7 @@
 pragma solidity ^0.8.22;
 
 import { IPool } from "../pool/interfaces/IPool.sol";
+import { IPoolFactory } from "../factory/interfaces/IPoolFactory.sol";
 import { IExtension } from "./interfaces/IExtension.sol";
 import { IRegistry } from "../registry/interfaces/IRegistry.sol";
 import { Claim } from "../pool/types/Claim.sol";
@@ -19,14 +20,14 @@ abstract contract BaseExtension is IExtension {
     /// @notice Throws when the hook is not implemented
     error BaseExtension_UnsupportedHook();
 
-    /// @notice Throws when the caller is not the PoolFactory contract
-    error BaseExtension_Unauthorized();
+    /// @notice Throws when the caller is not deployed by the PoolFactory
+    error BaseExtension_UnknownPool();
+
+    // @notice Throws when the factory address is invalid (zero address)
+    error BaseExtension_InvalidFactory();
 
     /// @notice Throws when the extension is already initialized
     error BaseExtension_AlreadyInitialized();
-
-    /// @notice Throws when the factory is invalid
-    error BaseExtension_InvalidRegistry();
 
     /* -------------------------------------------------------------------------- */
     /*                            STORAGE                                         */
@@ -34,14 +35,12 @@ abstract contract BaseExtension is IExtension {
 
     /// @notice The name of the extension
     string internal _EXTENSION_NAME;
-    // immutable?
 
     /// @notice The id of the extension
     bytes32 internal _EXTENSION_ID;
-    // immutable?
 
-    /// @notice The factory contract
-    address internal _poolFactory;
+    /// @notice The address of the pool factory contract
+    IPoolFactory internal _factory;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZE                             */
@@ -52,30 +51,18 @@ abstract contract BaseExtension is IExtension {
         _EXTENSION_ID = _extensionId;
     }
 
-    function initialize(address __poolFactory) external virtual {
-        __BaseExtension_init(__poolFactory);
-
-        // emit Initialized(__poolFactory);
+    function initialize(address __factory) external {
+        __BaseExtension_init(__factory);
+        // emit Initialized();
     }
 
-    function __BaseExtension_init(address __poolFactory) internal virtual {
+    function __BaseExtension_init(address __factory) internal virtual {
         // check if factory is not initialized already, if it is, revert
-        if (__poolFactory != address(0)) revert BaseExtension_AlreadyInitialized();
+        if (__factory != address(0)) revert BaseExtension_AlreadyInitialized();
 
         // check if the factory address is valid and not zero (0), if it is, revert
-        if (__poolFactory == address(0)) revert BaseExtension_InvalidRegistry();
-        _poolFactory = __poolFactory;
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /*                             MODIFIERS                             */
-    /* -------------------------------------------------------------------------- */
-
-    /// @notice Modifier to check if the 'msg.sender' is the PoolFactory contract.
-    /// @dev Reverts if the 'msg.sender' is not the PoolFactory contract.
-    modifier onlyPoolFactory() {
-        _checkOnlyPoolFactory();
-        _;
+        if (__factory == address(0)) revert BaseExtension_InvalidFactory();
+        _factory = IPoolFactory(__factory);
     }
 
     /* -------------------------------------------------------------------------- */
@@ -181,33 +168,9 @@ abstract contract BaseExtension is IExtension {
         revert BaseExtension_UnsupportedHook();
     }
 
-    function beforeDonate(
-        // solc-ignore-next-line unused-param
-        Claim calldata claim,
-        // solc-ignore-next-line unused-param
-        WithdrawParams calldata params
-    ) external virtual {
-        revert BaseExtension_UnsupportedHook();
-    }
-
-    function afterDonate(
-        // solc-ignore-next-line unused-param
-        Claim calldata claim,
-        // solc-ignore-next-line unused-param
-        WithdrawParams calldata params
-    ) external virtual {
-        revert BaseExtension_UnsupportedHook();
-    }
-
     /* -------------------------------------------------------------------------- */
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
-
-    /// @notice Checks if the 'msg.sender' is the Allo contract.
-    /// @dev Reverts if the 'msg.sender' is not the Allo contract.
-    function _checkOnlyPoolFactory() internal view virtual {
-        if (msg.sender != address(_poolFactory)) revert BaseExtension_Unauthorized();
-    }
 
     /**
      * @notice Calculates the actual amount based on allocation of native or erc20 token
@@ -218,14 +181,24 @@ abstract contract BaseExtension is IExtension {
     function _pending(Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
         uint256 precision = 10_000;
         if (claim.isPercentage()) {
-            return
-                (IPool(msg.sender).totalReceived(params.token)) /
-                precision -
-                IPool(msg.sender).released(claim.id, params.token);
+            IPool pool = _pool();
+            return pool.totalReceived(params.token) / precision - pool.released(claim.id, params.token);
         } else {
             return claim.value;
         }
     }
 
-    receive() external payable virtual onlyPoolFactory {}
+    // @notice Returns only the pool contract instance that was created by the factory
+    function _pool() internal view returns (IPool) {
+        return IPool(msg.sender);
+    }
+
+    /// @notice Checks if the pool was created by the factory
+    function _checkPoolCreated(IPool pool) internal view {
+        if (!_factory.created(address(pool))) {
+            revert BaseExtension_UnknownPool();
+        }
+    }
+
+    receive() external payable virtual {}
 }

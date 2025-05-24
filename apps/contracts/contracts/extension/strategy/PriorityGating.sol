@@ -29,15 +29,16 @@ contract PriorityGating is BaseExtension {
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
     function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external view override {
-        _checkReleasable(claim, params);
+        _checkReleasable(_pool(), claim, params);
     }
 
     /// @notice Called before batch withdrawal of to check if the releasable amount is greater than the threshold of a previous node
     /// @param claims The claim parameters
     /// @param params The withdraw parameters
     function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
+        IPool pool = _pool();
         for (uint256 i = 0; i < claims.length; i++) {
-            _checkReleasable(claims[i], params[i]);
+            _checkReleasable(pool, claims[i], params[i]);
         }
     }
 
@@ -48,11 +49,13 @@ contract PriorityGating is BaseExtension {
     /// @notice Check if the releasable amount is greater than the threshold
     /// @param claim The claim parameters
     /// @param params The withdraw parameters
-    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal view {
+    function _checkReleasable(IPool pool, Claim calldata claim, WithdrawParams calldata params) internal view {
         (Claim memory previousClaim, uint256 threshold) = abi.decode(claim.strategyData, (Claim, uint256));
         WithdrawParams memory previousParams = abi.decode(params.strategyData, (WithdrawParams));
 
-        uint256 previousReleasable = IPool(msg.sender).releasable(previousClaim, previousParams);
-        if (previousReleasable <= threshold) revert PriorityGating_InsufficientBalance();
+        uint256 previousReleasable = pool.releasable(previousClaim, previousParams);
+        if (previousReleasable <= threshold) {
+            revert PriorityGating_InsufficientBalance();
+        }
     }
 }

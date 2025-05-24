@@ -22,7 +22,7 @@ contract TimelockAllocation is BaseExtension {
     /*                            STORAGE                                         */
     /* -------------------------------------------------------------------------- */
 
-    mapping(address => uint256) public startTimes;
+    mapping(IPool => uint256) public startTimes;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                                 */
@@ -31,10 +31,10 @@ contract TimelockAllocation is BaseExtension {
     constructor() BaseExtension("TimelockAllocation", bytes32(uint256(0x07e49d))) {}
 
     function afterInitializePool(bytes calldata data) external override {
-        // msg.sender is 'pool'
+        IPool pool = _pool();
         uint256 startTime = abi.decode(data, (uint256));
-        if (startTimes[msg.sender] != 0) revert TimelockAllocation_PoolAlreadyInitialized();
-        startTimes[msg.sender] = startTime;
+        if (startTimes[pool] != 0) revert TimelockAllocation_PoolAlreadyInitialized();
+        startTimes[pool] = startTime;
     }
 
     /* -------------------------------------------------------------------------- */
@@ -42,18 +42,20 @@ contract TimelockAllocation is BaseExtension {
     /* -------------------------------------------------------------------------- */
 
     function releasable(Claim calldata claim, WithdrawParams calldata params) external view override returns (uint256) {
-        return _releasable(claim, params);
+        return _releasable(_pool(), claim, params);
     }
 
     /// @notice Called before withdrawal to ensure correct epoch is used per nodeId
     function beforeWithdraw(Claim calldata claim, WithdrawParams calldata params) external view override {
-        _checkReleasable(claim, params);
+        _checkReleasable(_pool(), claim, params);
     }
 
     /// @notice Called before batch withdrawal to ensure correct epoch is used per nodeId
     function beforeBatchWithdraw(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
+        IPool pool = _pool();
+
         for (uint256 i = 0; i < claims.length; i++) {
-            _checkReleasable(claims[i], params[i]);
+            _checkReleasable(pool, claims[i], params[i]);
         }
     }
 
@@ -61,26 +63,24 @@ contract TimelockAllocation is BaseExtension {
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function _startTime() internal view returns (uint256) {
-        return startTimes[msg.sender];
-    }
-
-    function _releasable(Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
+    function _releasable(IPool pool, Claim calldata claim, WithdrawParams calldata params) internal view returns (uint256) {
         // (uint256 epoch, uint256 period) = abi.decode(params.strategyData, (uint256, uint256));
-
-        if (block.timestamp < _startTime()) {
+        uint256 startTime = startTimes[pool];
+        if (block.timestamp < startTime) {
             // Not started
             return 0;
         }
 
         // uint256 remaining = period - (elapsed % period);
 
-        uint256 __releasable = (block.timestamp - _startTime()) * _pending(claim, params);
+        uint256 __releasable = (block.timestamp - startTime) * _pending(claim, params);
 
-        return __releasable - IPool(msg.sender).released(claim.id, params.token);
+        return __releasable - pool.released(claim.id, params.token);
     }
 
-    function _checkReleasable(Claim calldata claim, WithdrawParams calldata params) internal view {
-        if (params.amount > _releasable(claim, params)) revert TimelockAllocation_InsufficientBalance();
+    function _checkReleasable(IPool pool, Claim calldata claim, WithdrawParams calldata params) internal view {
+        if (params.amount > _releasable(pool, claim, params)) {
+            revert TimelockAllocation_InsufficientBalance();
+        }
     }
 }

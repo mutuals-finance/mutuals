@@ -22,7 +22,7 @@ contract OnchainState is BaseExtension {
     /*                            STORAGE                                         */
     /* -------------------------------------------------------------------------- */
 
-    mapping(address => mapping(uint256 => Claim)) private _claims;
+    mapping(IPool => mapping(uint256 => Claim)) private _claims;
 
     /* -------------------------------------------------------------------------- */
     /*                             INITIALIZATION                                 */
@@ -32,10 +32,11 @@ contract OnchainState is BaseExtension {
 
     function afterInitializePool(bytes calldata data) external override {
         Claim[] memory __claims = abi.decode(data, (Claim[]));
+        IPool pool = _pool();
+
         for (uint256 i = 0; i < __claims.length; i++) {
             Claim memory claim = __claims[i];
-            // msg.sender is 'pool'
-            _claims[msg.sender][claim.id] = claim;
+            _claims[pool][claim.id] = claim;
         }
     }
 
@@ -48,7 +49,9 @@ contract OnchainState is BaseExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams calldata params
     ) external view override {
-        _checkState(claim);
+        IPool pool = _pool();
+        _checkPoolCreated(pool);
+        _checkState(claim, pool);
     }
 
     function checkBatchState(
@@ -56,9 +59,12 @@ contract OnchainState is BaseExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams[] calldata params
     ) external view override {
+        IPool pool = _pool();
+        _checkPoolCreated(pool);
+
         uint256 lastId;
         for (uint256 i = 0; i < claims.length; i++) {
-            _checkState(claims[i]);
+            _checkState(claims[i], pool);
 
             if (lastId != claims[i].parentId) {
                 revert OnchainState_InvalidParent();
@@ -71,7 +77,7 @@ contract OnchainState is BaseExtension {
     /*                             INTERNAL FUNCTIONS                             */
     /* -------------------------------------------------------------------------- */
 
-    function _checkState(Claim calldata claim) internal view {
-        if (claim.id <= 0 || !claim.equals(_claims[msg.sender][claim.id])) revert OnchainState_InvalidState();
+    function _checkState(Claim calldata claim, IPool pool) internal view {
+        if (claim.id <= 0 || !claim.equals(_claims[pool][claim.id])) revert OnchainState_InvalidState();
     }
 }
