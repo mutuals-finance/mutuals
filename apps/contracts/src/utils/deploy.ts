@@ -158,7 +158,6 @@ export const deployDefaultAllocationContract = async ({
 }) => {
   return hre.deployNonUpgradeable({
     contractName: 'DefaultAllocation',
-    args: [],
   });
 };
 
@@ -169,7 +168,6 @@ export const deployTimelockAllocationContract = async ({
 }) => {
   return hre.deployNonUpgradeable({
     contractName: 'TimelockAllocation',
-    args: [],
   });
 };
 
@@ -180,7 +178,6 @@ export const deployTokenAllocationContract = async ({
 }) => {
   return hre.deployNonUpgradeable({
     contractName: 'TokenAllocation',
-    args: [],
   });
 };
 
@@ -191,7 +188,6 @@ export const deployPriorityGatingContract = async ({
 }) => {
   return hre.deployNonUpgradeable({
     contractName: 'PriorityGating',
-    args: [],
   });
 };
 
@@ -202,7 +198,6 @@ export const deployTokenGatingContract = async ({
 }) => {
   return hre.deployNonUpgradeable({
     contractName: 'TokenGating',
-    args: [],
   });
 };
 
@@ -213,7 +208,6 @@ export const deployOnchainStateContract = async ({
 }) => {
   return hre.deployNonUpgradeable({
     contractName: 'OnchainState',
-    args: [],
   });
 };
 
@@ -224,7 +218,6 @@ export const deployOffchainStateContract = async ({
 }) => {
   return hre.deployNonUpgradeable({
     contractName: 'OffchainState',
-    args: [],
   });
 };
 

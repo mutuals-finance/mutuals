@@ -138,11 +138,11 @@ export const deployNonUpgradeable = async <
   TFactory extends ContractFactory,
 >({
   contractName,
-  args,
+  args = [],
   options,
 }: {
   contractName: keyof Contracts;
-  args: unknown[];
+  args?: unknown[];
   options?: FactoryOptions;
 }): Promise<InstanceOfContract<TContract>> => {
   const [signer] = await hre.getSigners();

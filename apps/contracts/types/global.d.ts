@@ -163,7 +163,7 @@ type DeployNonUpgradeableFunction = <TContract extends BaseContract>({
   options,
 }: {
   contractName: keyof Contracts;
-  args: unknown[];
+  args?: unknown[];
   options?: FactoryOptions;
 }) => Promise<InstanceOfContract<TContract>>;
 
