@@ -25,13 +25,13 @@
     }
   },
   "dependencies": {
-    "@openzeppelin/merkle-tree": "^1.0.7",
-    "@mutuals/graphql-client-nextjs": "workspace:*"
+    "@mutuals/graphql-client-nextjs": "workspace:*",
+    "@openzeppelin/merkle-tree": "^1.0.8"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "eslint": "^8.57.0",
-    "typescript": "^5.7.2"
+    "eslint": "^9.27.0",
+    "typescript": "^5.8.3"
   }
 }
