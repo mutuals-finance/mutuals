@@ -151,6 +151,17 @@ export const deployPoolBeaconContract = async ({
   });
 };
 
+export const deployDefaultAllocationContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'DefaultAllocation',
+    args: [],
+  });
+};
+
 export const saveDeployments = async ({
   hre,
   contracts,

@@ -81,28 +81,28 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         bytes calldata data
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function afterInitialize(
         // solc-ignore-next-line unused-param
         bytes calldata data
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function beforeInitializePool(
         // solc-ignore-next-line unused-param
         bytes calldata data
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function afterInitializePool(
         // solc-ignore-next-line unused-param
         bytes calldata data
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function checkState(
@@ -111,7 +111,7 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams calldata params
     ) external view virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function checkBatchState(
@@ -120,7 +120,7 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams[] calldata params
     ) external view virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function releasable(
@@ -129,7 +129,7 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams calldata params
     ) external view virtual returns (uint256) {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function beforeWithdraw(
@@ -138,7 +138,7 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams calldata params
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function beforeBatchWithdraw(
@@ -147,7 +147,7 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams[] calldata params
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function afterWithdraw(
@@ -156,7 +156,7 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams calldata params
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     function afterBatchWithdraw(
@@ -165,7 +165,7 @@ abstract contract BaseExtension is IExtension {
         // solc-ignore-next-line unused-param
         WithdrawParams[] calldata params
     ) external virtual {
-        revert BaseExtension_UnsupportedHook();
+        // revert BaseExtension_UnsupportedHook();
     }
 
     /* -------------------------------------------------------------------------- */

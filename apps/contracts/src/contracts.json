@@ -8,6 +8,9 @@
     },
     "Registry": {
       "proxyAddress": "0x28f282C3df413C9b0A5301DF875Df3b0955731a8"
+    },
+    "DefaultAllocation": {
+      "proxyAddress": "0x2605Ea7aedbEA8CeD14f69BE94c1E4fBaA46e213"
     }
   },
   "localhost": {

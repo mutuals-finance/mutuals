@@ -29,7 +29,19 @@ import type { Deployment } from 'hardhat-deploy/types';
 import type { TASKS } from '@/tasks';
 import type { networks } from '@/config/networks';
 import type { NamedAccounts } from '@/config/accounts';
-import type { Pool, PoolFactory, UpgradeableBeacon } from '#/types/typechain';
+import type {
+  Pool,
+  PoolFactory,
+  UpgradeableBeacon,
+  Registry,
+  DefaultAllocation,
+  PriorityGating,
+  TimelockAllocation,
+  TokenAllocation,
+  TokenGating,
+  OffchainState,
+  OnchainState,
+} from '#/types/typechain';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import {
   FactoryOptions,
@@ -199,6 +211,13 @@ declare global {
     Registry?: InstanceOfContract<Registry>;
     PoolFactory?: InstanceOfContract<PoolFactory>;
     Pool?: InstanceOfContract<Pool>;
+    DefaultAllocation?: InstanceOfContract<DefaultAllocation>;
+    PriorityGating?: InstanceOfContract<PriorityGating>;
+    TimelockAllocation?: InstanceOfContract<TimelockAllocation>;
+    TokenAllocation?: InstanceOfContract<TokenAllocation>;
+    TokenGating?: InstanceOfContract<TokenGating>;
+    OffchainState?: InstanceOfContract<OffchainState>;
+    OnchainState?: InstanceOfContract<OnchainState>;
     UpgradeableBeacon?: InstanceOfContract<UpgradeableBeacon>;
   }
 
