@@ -148,6 +148,7 @@ export const deployPoolBeaconContract = async ({
 }) => {
   return hre.deployOrUpgradeBeacon({
     contractName: 'Pool',
+    args: [0, 0, [], []],
   });
 };
 

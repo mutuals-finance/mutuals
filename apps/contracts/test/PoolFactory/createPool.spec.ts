@@ -1,84 +1,105 @@
-import { Pool, PoolFactory, Registry } from '#/types/typechain';
+import { Pool, PoolFactory } from '#/types/typechain';
 import { expect } from 'chai';
 import { withSnapshot } from '#/test/utils';
+import { Addressable } from 'ethers';
 
-const setupTest = withSnapshot(['pool'], async (hre) => {
+const genInitPoolArgs = (
+  owner: string | Addressable,
+  registry: string | Addressable
+) => [owner, registry, [], []] as Parameters<Pool['__Pool_init']>;
+
+const genCreatePoolArgs = (
+  owner: string | Addressable,
+  registry: string | Addressable
+) =>
+  [
+    ...genInitPoolArgs(owner, registry),
+    hre.ethers.toBigInt(hre.ethers.randomBytes(16)),
+  ] as Parameters<PoolFactory['createPool']>;
+
+const setupTest = withSnapshot(['pool', 'registry'], async (hre) => {
   const [poolOwnerHonest, poolOwnerMalicious] = await Promise.all([
     hre.ethers.getNamedSigner('poolOwnerHonest'),
     hre.ethers.getNamedSigner('poolOwnerMalicious'),
   ]);
-  const poolFactory = (await hre.deployments.get(
-    'PoolFactory'
-  )) as unknown as PoolFactory;
-  const pool = (await hre.deployments.get('Pool')) as unknown as Pool;
-  const registry = (await hre.deployments.get(
-    'Registry'
-  )) as unknown as Registry;
+
+  const registry = await hre.ethers.getContract('Registry');
+
+  const createPoolArgs0 = genCreatePoolArgs(
+    poolOwnerHonest.address,
+    registry.target
+  );
+
+  const createPoolArgs1 = genCreatePoolArgs(
+    poolOwnerHonest.address,
+    registry.target
+  );
+
+  const initPoolArgsMalicious = genInitPoolArgs(
+    poolOwnerMalicious.address,
+    registry.target
+  );
 
   return {
-    registry,
-    poolFactory,
-    pool,
+    initPoolArgsMalicious,
+    createPoolArgs1,
+    createPoolArgs0,
     poolOwnerHonest,
     poolOwnerMalicious,
   };
 });
 
-const salt1 = hre.ethers.toBigInt(hre.ethers.randomBytes(16));
-const salt2 = hre.ethers.toBigInt(hre.ethers.randomBytes(16));
-
 describe('PoolFactory.createPool', () => {
   context('When called with valid parameters', () => {
-    let createdPool: Pool | null;
-
-    before(async () => {
-      const { registry, poolFactory, poolOwnerHonest } = await setupTest();
-      const params = [
-        poolOwnerHonest.address,
-        registry.target,
-        [],
-        [],
-        salt2,
-      ] as Parameters<PoolFactory['createPool']>;
-
-      await poolFactory
-        .connect(poolOwnerHonest)
-        .createPool(...params)
-        .then((tx) => tx.wait());
-
-      const create2Address = await poolFactory.getAddress(...params);
-      createdPool = (await hre.ethers.getContractAt(
-        'Pool',
-        create2Address
-      )) as unknown as Pool;
-    });
-
     it('should deploy a beacon proxy', async () => {
-      const { registry, poolFactory, poolOwnerHonest } = await setupTest();
-      expect(
-        poolFactory
-          .connect(poolOwnerHonest)
-          .createPool(poolOwnerHonest.address, registry.target, [], [], salt1)
+      const { createPoolArgs0, poolOwnerHonest } = await setupTest();
+
+      await expect(
+        hre.deployments.execute(
+          'PoolFactory',
+          {
+            from: poolOwnerHonest.address,
+          },
+          'createPool',
+          ...createPoolArgs0
+        )
       ).to.not.reverted;
     });
 
     it('should emit a valid PoolCreated event', async () => {
-      const { registry, poolFactory, poolOwnerHonest } = await setupTest();
+      const { createPoolArgs1, poolOwnerHonest } = await setupTest();
 
-      await expect(
-        poolFactory
-          .connect(poolOwnerHonest)
-          .createPool(poolOwnerHonest.address, registry.target, [], [], salt2)
-      ).to.emit(poolFactory, 'PoolCreated');
+      const poolFactory = (await hre.ethers.getContract(
+        'PoolFactory',
+        poolOwnerHonest
+      )) as PoolFactory;
+
+      await expect(poolFactory.createPool(...createPoolArgs1)).to.emit(
+        poolFactory,
+        'PoolCreated'
+      );
     });
 
     it('should initialize the proxy', async () => {
-      const { registry, poolOwnerMalicious } = await setupTest();
+      const { initPoolArgsMalicious, createPoolArgs0, poolOwnerMalicious } =
+        await setupTest();
+
+      const create2Address = await hre.deployments.read(
+        'PoolFactory',
+        'getAddress',
+        ...createPoolArgs0
+      );
 
       await expect(
-        createdPool
-          ?.connect(poolOwnerMalicious)
-          .__Pool_init(poolOwnerMalicious.address, registry.target, [], [])
+        hre.deployments.execute(
+          'Pool',
+          {
+            to: create2Address,
+            from: poolOwnerMalicious.address,
+          },
+          '__Pool_init',
+          ...initPoolArgsMalicious
+        )
       ).to.be.reverted;
     });
   });

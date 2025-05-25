@@ -13,4 +13,4 @@ export const deploy: DeployFunction = async (environment) => {
 
 export default deploy;
 deploy.dependencies = ['preconditions'];
-deploy.tags = ['all', 'pool', 'pool-instance', 'pool-factory'];
+deploy.tags = ['all', 'pool', 'pool-beacon', 'pool-factory'];
