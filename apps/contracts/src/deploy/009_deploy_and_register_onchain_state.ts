@@ -1,22 +1,22 @@
 import { DeployFunction } from 'hardhat-deploy/types';
 import {
-  deployDefaultAllocationContract,
+  deployOnchainStateContract,
   finalizeDeployments,
 } from '@/utils/deploy';
 import { registerExtension } from '@/utils/extension';
 
 export const deploy: DeployFunction = async (environment) => {
   const hre = environment as unknown as CustomHardHatRuntimeEnvironment;
-  hre.trace(`deploy-extension-default-allocation`);
+  hre.trace(`deploy-extension-onchain-state`);
 
-  const DefaultAllocation = await deployDefaultAllocationContract({
+  const OnchainState = await deployOnchainStateContract({
     hre,
   });
 
-  await finalizeDeployments({ hre, contracts: { DefaultAllocation } });
-  await registerExtension({ hre, target: DefaultAllocation.target });
+  await finalizeDeployments({ hre, contracts: { OnchainState } });
+  await registerExtension({ hre, target: OnchainState.target });
 };
 
 export default deploy;
 deploy.dependencies = ['preconditions', 'registry'];
-deploy.tags = ['all', 'extension', 'allocation', 'default-allocation'];
+deploy.tags = ['all', 'extension', 'state', 'onchain-state'];

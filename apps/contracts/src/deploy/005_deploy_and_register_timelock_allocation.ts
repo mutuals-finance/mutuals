@@ -1,22 +1,22 @@
 import { DeployFunction } from 'hardhat-deploy/types';
 import {
-  deployDefaultAllocationContract,
+  deployTimelockAllocationContract,
   finalizeDeployments,
 } from '@/utils/deploy';
 import { registerExtension } from '@/utils/extension';
 
 export const deploy: DeployFunction = async (environment) => {
   const hre = environment as unknown as CustomHardHatRuntimeEnvironment;
-  hre.trace(`deploy-extension-default-allocation`);
+  hre.trace(`deploy-extension-timelock-allocation`);
 
-  const DefaultAllocation = await deployDefaultAllocationContract({
+  const TimelockAllocation = await deployTimelockAllocationContract({
     hre,
   });
 
-  await finalizeDeployments({ hre, contracts: { DefaultAllocation } });
-  await registerExtension({ hre, target: DefaultAllocation.target });
+  await finalizeDeployments({ hre, contracts: { TimelockAllocation } });
+  await registerExtension({ hre, target: TimelockAllocation.target });
 };
 
 export default deploy;
 deploy.dependencies = ['preconditions', 'registry'];
-deploy.tags = ['all', 'extension', 'allocation', 'default-allocation'];
+deploy.tags = ['all', 'extension', 'allocation', 'timelock-allocation'];

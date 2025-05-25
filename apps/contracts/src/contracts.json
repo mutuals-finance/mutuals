@@ -11,6 +11,24 @@
     },
     "DefaultAllocation": {
       "proxyAddress": "0x2605Ea7aedbEA8CeD14f69BE94c1E4fBaA46e213"
+    },
+    "TimelockAllocation": {
+      "proxyAddress": "0x6613588888a2C8C09b4b084DD93AA18309EB7dBE"
+    },
+    "TokenAllocation": {
+      "proxyAddress": "0x4Db5481A1C4A9c883C0d33045E05CD5631a6D775"
+    },
+    "PriorityGating": {
+      "proxyAddress": "0x01717ee89C3c3f303a0aa4044FfAFA6bea02E540"
+    },
+    "TokenGating": {
+      "proxyAddress": "0xE0e2982449645596a1de35815BC2Ec39b15563D0"
+    },
+    "OnchainState": {
+      "proxyAddress": "0x39c6d59fC7412F830Bd9ed7c09400F36Ef6AcDca"
+    },
+    "OffchainState": {
+      "proxyAddress": "0x5d29426fF96885D61454370262D16793fBe45381"
     }
   },
   "localhost": {

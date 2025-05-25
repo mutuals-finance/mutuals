@@ -162,6 +162,72 @@ export const deployDefaultAllocationContract = async ({
   });
 };
 
+export const deployTimelockAllocationContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'TimelockAllocation',
+    args: [],
+  });
+};
+
+export const deployTokenAllocationContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'TokenAllocation',
+    args: [],
+  });
+};
+
+export const deployPriorityGatingContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'PriorityGating',
+    args: [],
+  });
+};
+
+export const deployTokenGatingContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'TokenGating',
+    args: [],
+  });
+};
+
+export const deployOnchainStateContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'OnchainState',
+    args: [],
+  });
+};
+
+export const deployOffchainStateContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'OffchainState',
+    args: [],
+  });
+};
+
 export const saveDeployments = async ({
   hre,
   contracts,
