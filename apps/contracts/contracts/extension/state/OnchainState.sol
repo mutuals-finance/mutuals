@@ -78,6 +78,8 @@ contract OnchainState is BaseExtension {
     /* -------------------------------------------------------------------------- */
 
     function _checkState(Claim calldata claim, IPool pool) internal view {
-        if (claim.id <= 0 || !claim.equals(_claims[pool][claim.id])) revert OnchainState_InvalidState();
+        if (claim.id <= 0 || !claim.equals(_claims[pool][claim.id])) {
+            revert OnchainState_InvalidState();
+        }
     }
 }
