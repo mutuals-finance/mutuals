@@ -10,8 +10,8 @@ export default function NavLink(props: NavLinkProps) {
   const isActive = pathname === props.href;
   return (
     <Link
-      color={isActive ? "fg" : "fg.muted"}
-      _hover={{ color: "fg" }}
+      color={isActive ? "fg.muted" : "fg"}
+      _hover={{ color: "fg.muted" }}
       fontSize={"xs"}
       textTransform="uppercase"
       letterSpacing={"wide"}

@@ -48,12 +48,6 @@ import {
   HardhatEthersSigner,
   HardhatEthersHelpers,
 } from '@nomicfoundation/hardhat-ethers/types';
-import { lazyFunction } from 'hardhat/plugins';
-import {
-  isNetworkLocal,
-  isNetworkProduction,
-  isNetworkStaging,
-} from '@/plugins/network';
 
 declare module 'hardhat/config' {
   type EnvironmentExtender = (

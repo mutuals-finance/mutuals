@@ -18,7 +18,19 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
   return (
     <NavWrapper {...props}>
       <AbsoluteCenter>
-        <HStack textAlign={"center"} gap="6" justifyContent="center">
+        <HStack
+          textAlign={"center"}
+          gap="12"
+          justifyContent="center"
+          bgColor={"bg/90"}
+          style={{ backdropFilter: "blur(4px)" }}
+          border={"1px solid"}
+          borderColor={"border"}
+          px={{ base: "2", lg: "6" }}
+          py={{ base: "1", lg: "4" }}
+          rounded={"lg"}
+          overflow={"hidden"}
+        >
           {links.map((props, index) => (
             <NavLink key={index} {...props} />
           ))}
@@ -26,8 +38,9 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
       </AbsoluteCenter>
 
       <Group gap={"6"} ml={"auto"}>
-        <Button variant={"surface"}>Reach out</Button>
-        <Button variant={"solid"}>Launch app</Button>
+        <Button variant="solid" size={"xl"}>
+          Launch App
+        </Button>
       </Group>
     </NavWrapper>
   );

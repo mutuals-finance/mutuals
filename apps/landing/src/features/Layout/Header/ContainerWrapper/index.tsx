@@ -80,18 +80,32 @@ export default function HeaderContainerWrapper({
           flex={"1"}
           alignItems="stretch"
           justifyContent="stretch"
-          bgColor={!isTransparent ? "bg/80" : "transparent"}
-          style={{ backdropFilter: !isTransparent ? "blur(12px)" : "none" }}
-          borderBottom={"1px solid"}
-          borderColor={!isTransparent ? "border" : "transparent"}
+          bgColor={{
+            base: !isTransparent ? "bg/90" : "transparent",
+            lg: "transparent",
+          }}
+          css={{
+            backdropFilter: {
+              base: !isTransparent ? "blur(6px)" : "none",
+              lg: "none",
+            },
+          }}
+          borderBottom={{
+            base: "1px solid",
+            lg: "none",
+          }}
+          borderColor={{
+            base: !isTransparent ? "border" : "transparent",
+            lg: "transparent",
+          }}
           color={"fg"}
+          roundedBottom={"lg"}
         >
           <Container
             as={HStack}
-            size="2xl"
             alignItems="center"
             position="relative"
-            gap="12"
+            gap="6"
             px={0}
           >
             {children}

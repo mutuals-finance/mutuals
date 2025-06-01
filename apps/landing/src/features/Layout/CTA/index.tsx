@@ -6,7 +6,7 @@ export default function CTA() {
   return (
     <Container maxW="7xl">
       <Theme
-        rounded={"xl"}
+        rounded={"lg"}
         position="relative"
         overflow="hidden"
         appearance="dark"

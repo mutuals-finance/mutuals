@@ -1,5 +1,3 @@
-import chalk from 'chalk';
-
 const { log: defaultLogger, table } = console;
 
 export const trace = (...consoleArguments: unknown[]): void => {
@@ -26,11 +24,9 @@ export const getLogger = ({
 } => {
   const maybePrefix = typeof prefix === 'string' ? [prefix] : [];
   return {
-    info: (...args: unknown[]) =>
-      hre.log(chalk.bold.white(...maybePrefix, ...args)),
-    error: (...args: unknown[]) => hre.log(chalk.red(...maybePrefix, ...args)),
-    success: (...args: unknown[]) =>
-      hre.log(chalk.bold.green(...maybePrefix, ...args)),
+    info: (...args: unknown[]) => hre.log(...maybePrefix, ...args),
+    error: (...args: unknown[]) => hre.log(...maybePrefix, ...args),
+    success: (...args: unknown[]) => hre.log(...maybePrefix, ...args),
     table: (args: unknown, columns?: string[]): void => {
       table(args, columns);
     },

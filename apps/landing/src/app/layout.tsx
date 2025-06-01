@@ -26,7 +26,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         .join(" ")}
       suppressHydrationWarning={true}
     >
-      <body>
+      <body suppressHydrationWarning={true}>
         <Providers>
           <Layout>{children}</Layout>
         </Providers>

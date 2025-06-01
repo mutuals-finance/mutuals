@@ -10,7 +10,6 @@ import {
   Center,
   Stack,
   StackSeparator,
-  CloseButton,
   ButtonProps,
   Group,
   IconButton,
@@ -19,6 +18,8 @@ import {
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/features/Layout/Header/NavWrapper";
 import { socialLinks } from "@/features/Layout/links";
+import NavMobileMenuButton from "@/features/Layout/Header/NavMobile/MenuButton";
+import { BiX } from "react-icons/bi";
 
 interface MobileNavProps
   extends Omit<Drawer.ContentProps, "children">,
@@ -40,11 +41,12 @@ export default function NavMobileDrawer({
           borderBottomWidth={"1px"}
           borderColor={"border"}
         >
-          <CloseButton
-            fontSize={"2xl"}
+          <NavMobileMenuButton
             aria-label="Close Navigation"
             {...closeButtonProps}
-          />
+          >
+            <BiX />
+          </NavMobileMenuButton>
         </NavWrapper>
       </DrawerHeader>
 

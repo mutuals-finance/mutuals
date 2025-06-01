@@ -14,7 +14,7 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <Card.Root variant={"subtle"} size={"lg"} w={"full"} {...props}>
+    <Card.Root variant={"outline"} size={"lg"} w={"full"} {...props}>
       <Card.Body
         as={Stack}
         direction={"column"}

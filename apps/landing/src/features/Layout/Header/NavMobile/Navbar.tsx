@@ -1,9 +1,10 @@
-import { IconButton, Box, type IconButtonProps } from "@mutuals/ui";
+import { Box, type IconButtonProps } from "@mutuals/ui";
 
 import NavWrapper, {
   NavWrapperProps,
 } from "@/features/Layout/Header/NavWrapper";
-import { VscMenu } from "react-icons/vsc";
+import { BiMenuAltLeft } from "react-icons/bi";
+import NavMobileMenuButton from "@/features/Layout/Header/NavMobile/MenuButton";
 
 interface NavMobileNavbarProps extends NavWrapperProps {
   buttonProps?: Omit<IconButtonProps, "aria-label">;
@@ -16,13 +17,9 @@ export default function NavMobileNavbar({
   return (
     <NavWrapper {...props}>
       <Box ml={"auto"}>
-        <IconButton
-          variant={"ghost"}
-          aria-label="Toggle Navigation"
-          {...buttonProps}
-        >
-          <VscMenu />
-        </IconButton>
+        <NavMobileMenuButton aria-label="Toggle Navigation" {...buttonProps}>
+          <BiMenuAltLeft />
+        </NavMobileMenuButton>
       </Box>
     </NavWrapper>
   );
