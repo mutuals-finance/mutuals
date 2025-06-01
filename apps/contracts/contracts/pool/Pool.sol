@@ -53,10 +53,10 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
         bytes[] calldata _data
     ) internal onlyInitializing {
         uint256 i;
+        extensions.initialize(_registry);
         for (; i < _extensions.length; i++) {
             extensions.beforeInitializePool(_extensions[i], _data[i]);
         }
-        extensions.initialize(_registry);
         for (i = 0; i < _extensions.length; i++) {
             extensions.afterInitializePool(_extensions[i], _data[i]);
         }

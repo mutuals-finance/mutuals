@@ -1,22 +1,7 @@
-import { Pool, PoolFactory } from '#/types/typechain';
+import { PoolFactory } from '#/types/typechain';
 import { expect } from 'chai';
 import { withSnapshot } from '#/test/utils';
-import { Addressable } from 'ethers';
 import { generatePoolArgs } from '@/utils/pool';
-
-const genInitPoolArgs = (
-  owner: string | Addressable,
-  registry: string | Addressable
-) => [owner, registry, [], []] as Parameters<Pool['__Pool_init']>;
-
-const genCreatePoolArgs = (
-  owner: string | Addressable,
-  registry: string | Addressable
-) =>
-  [
-    ...genInitPoolArgs(owner, registry),
-    hre.ethers.toBigInt(hre.ethers.randomBytes(16)),
-  ] as Parameters<PoolFactory['createPool']>;
 
 const setupTest = withSnapshot(['pool', 'registry'], async (hre) => {
   const [poolOwnerHonest, poolOwnerMalicious] = await Promise.all([
