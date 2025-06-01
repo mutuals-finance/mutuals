@@ -72,7 +72,7 @@ export default function HeroImageSlider({
             <AspectRatio position={"relative"} ratio={16 / 9} w={"full"}>
               <NextImage
                 src={aboutImage}
-                alt="Mutuals Dashboard"
+                alt="Mutuals Dashboard Hero"
                 fill={true}
                 style={{ objectFit: "cover" }}
               />
