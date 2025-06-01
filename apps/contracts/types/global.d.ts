@@ -10,7 +10,6 @@ import type {
   Contract,
   ContractFactory,
   ethers as defaultEthers,
-  Signer,
 } from 'ethers';
 import type { DeployProxyOptions } from '@openzeppelin/hardhat-upgrades/src/utils';
 import type { HardhatUpgrades } from '@openzeppelin/hardhat-upgrades';
@@ -215,18 +214,6 @@ declare global {
     UpgradeableBeacon?: InstanceOfContract<UpgradeableBeacon>;
   }
 
-  let ethers: Omit<
-    typeof defaultEthers & HardhatEthersHelpers,
-    'getContractFactory'
-  > & {
-    getContractFactory<
-      TContractFactory extends ContractFactory = ContractFactory,
-    >(
-      name: string,
-      signerOrOptions?: Signer | FactoryOptions
-    ): Promise<TContractFactory>;
-  }; // todo remove from global types to prevent usage
-
   type CustomHardHatRuntimeEnvironment = Omit<
     HardhatRuntimeEnvironment,
     'run' | 'upgrades' | 'ethers'
@@ -239,7 +226,7 @@ declare global {
     upgrades: CustomHardhatUpgrades;
     defender: CustomHardhatUpgrades;
     network: Omit<Network, 'name'> & { name: keyof typeof networks };
-    ethers: typeof ethers;
+    ethers: defaultEthers & HardhatEthersHelpers;
     getSigners: () => Promise<SignerWithAddress[]>;
     deployOrUpgradeProxy: DeployOrUpgradeProxyFunction;
     deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction;
