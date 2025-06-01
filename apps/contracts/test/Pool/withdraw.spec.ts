@@ -1,18 +1,17 @@
-import { PoolFactory } from '#/types/typechain';
 import { withSnapshot } from '#/test/utils';
 
 // const salt = toBigInt(hre.ethers.randomBytes(16));
 // const allocationRoot = hre.ethers.randomBytes(32);
-const recipientNamedSigners = ['recipient0', 'recipient1', 'recipient2'];
+const namedSigners = [
+  'poolOwnerHonest',
+  'recipient0',
+  'recipient1',
+  'recipient2',
+];
 
 const setupTest = withSnapshot(['pool'], async (hre) => {
-  const [recipient0, recipient1, recipient2] = await Promise.all(
-    recipientNamedSigners.map(hre.ethers.getNamedSigner)
-  );
-
-  const poolFactory = (await hre.ethers.getContract(
-    'PoolFactory'
-  )) as PoolFactory;
+  const [poolOwnerHonest, recipient0, recipient1, recipient2] =
+    await Promise.all(namedSigners.map(hre.ethers.getNamedSigner));
   // const args = [recipient0!.address, allocationRoot, salt] as [
   //   string,
   //   Uint8Array,
@@ -43,10 +42,10 @@ const setupTest = withSnapshot(['pool'], async (hre) => {
   // } as MerkleTree.MultiProofStruct;
 
   return {
-    poolFactory,
     // pool,
     // proofParams,
     // allocations,
+    poolOwnerHonest,
     recipient0,
     recipient1,
     recipient2,
@@ -59,10 +58,18 @@ const wrongRecipientPosition = 1;
 describe('Pool.withdraw', () => {
   context('When a user withdraws with valid parameters', () => {
     before(async () => {
-      // const { allocations, proofParams } = await setupTest();
+      //   const { poolOwnerHonest } = await setupTest();
+      //   hre.deployments.execute(
+      //     'PoolFactory',
+      //     {
+      //       from: poolOwnerHonest.address,
+      //     },
+      //     'createPool',
+      //     ...createPoolArgs0
+      //   );
     });
 
-    it('should successfully execute the withdrawal up to the allotted amount for a recipient', async () => {
+    it('should successfully execute the withdrawal', async () => {
       // const { pool, proofParams, allocations, recipient0 } = await setupTest();
       // const request = {
       //   allocations: [[allocations[recipientPosition]]],

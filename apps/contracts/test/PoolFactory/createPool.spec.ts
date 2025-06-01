@@ -2,6 +2,7 @@ import { Pool, PoolFactory } from '#/types/typechain';
 import { expect } from 'chai';
 import { withSnapshot } from '#/test/utils';
 import { Addressable } from 'ethers';
+import { generatePoolArgs } from '@/utils/pool';
 
 const genInitPoolArgs = (
   owner: string | Addressable,
@@ -25,17 +26,17 @@ const setupTest = withSnapshot(['pool', 'registry'], async (hre) => {
 
   const registry = await hre.ethers.getContract('Registry');
 
-  const createPoolArgs0 = genCreatePoolArgs(
+  const createPoolArgs0 = generatePoolArgs.create(
     poolOwnerHonest.address,
     registry.target
   );
 
-  const createPoolArgs1 = genCreatePoolArgs(
+  const createPoolArgs1 = generatePoolArgs.create(
     poolOwnerHonest.address,
     registry.target
   );
 
-  const initPoolArgsMalicious = genInitPoolArgs(
+  const initPoolArgsMalicious = generatePoolArgs.init(
     poolOwnerMalicious.address,
     registry.target
   );

@@ -1,4 +1,5 @@
 import { Addressable, ParamType } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 export const registerExtension = async ({
   hre,
@@ -13,7 +14,7 @@ export const registerExtension = async ({
 
   const from = await hre.ethers
     .getNamedSigner('admin')
-    .then(({ address }) => address);
+    .then((s: SignerWithAddress) => s.address);
 
   const abiEncoder = hre.ethers.AbiCoder.defaultAbiCoder();
 
