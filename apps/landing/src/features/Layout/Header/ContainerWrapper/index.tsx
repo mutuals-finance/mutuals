@@ -6,7 +6,7 @@ import {
   BoxProps,
   Container,
   HStack,
-  MotionBox,
+  Presence,
 } from "@mutuals/ui";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
@@ -26,57 +26,44 @@ export default function HeaderContainerWrapper({
 }: BoxProps) {
   const { scrollY } = useScroll();
 
-  const isLargerLg = true;
   const [isTransparent, setTransparent] = useState(true);
-  const [isHidden, setHidden] = useState(false);
   const [prevScroll, setPrevScroll] = useState<number | null>(null);
-  const { headerTheme } = useHeaderObserver();
+
+  const { initialized, headerTheme } = useHeaderObserver();
 
   const transparentThreshold = 1;
 
   const onUpdate = useCallback(
-    (latest: number, prev: number | null) => {
+    (latest: number) => {
       if (!isTransparent && latest <= transparentThreshold) {
         setTransparent(true);
       } else if (isTransparent && latest > transparentThreshold) {
         setTransparent(false);
       }
-
-      if (!prev || (isHidden && latest <= prev)) {
-        setHidden(false);
-      } else if (!isLargerLg && !isHidden && latest > prev) {
-        setHidden(true);
-      }
     },
-    [isLargerLg, isTransparent, isHidden],
+    [isTransparent],
   );
 
-  useEffect(() => onUpdate(0, null), []);
+  useEffect(() => onUpdate(0), []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    onUpdate(latest, prevScroll);
+    onUpdate(latest);
     setPrevScroll(latest);
   });
 
   return (
     <Theme appearance={headerTheme as "light" | "dark"}>
-      <MotionBox
-        display={"flex"}
-        position="fixed"
-        top="0"
-        left="0"
-        zIndex={10}
-        suppressHydrationWarning={true}
-        w="full"
-        animate={isHidden ? "invisible" : "visible"}
-        variants={variants.visibility}
-        transition={{
-          type: "spring",
-          bounce: 0,
-          duration: 0.3,
-        }}
+      <Presence
+        present={initialized}
+        animationName={{ _open: "fade-in" }}
+        animationDuration={"300ms"}
       >
         <Flex
+          position="fixed"
+          top="0"
+          left="0"
+          zIndex={10}
+          w="full"
           flex={"1"}
           alignItems="stretch"
           justifyContent="stretch"
@@ -86,7 +73,7 @@ export default function HeaderContainerWrapper({
           }}
           css={{
             backdropFilter: {
-              base: !isTransparent ? "blur(6px)" : "none",
+              base: !isTransparent ? "blur(4px)" : "none",
               lg: "none",
             },
           }}
@@ -99,7 +86,7 @@ export default function HeaderContainerWrapper({
             lg: "transparent",
           }}
           color={"fg"}
-          roundedBottom={"lg"}
+          roundedBottom={"xl"}
         >
           <Container
             as={HStack}
@@ -111,7 +98,7 @@ export default function HeaderContainerWrapper({
             {children}
           </Container>
         </Flex>
-      </MotionBox>
+      </Presence>
     </Theme>
   );
 }

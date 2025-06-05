@@ -11,10 +11,12 @@ import {
 import { useTheme } from "@mutuals/ui";
 
 type ContextT = {
-  headerTheme?: string;
+  initialized: boolean;
+  headerTheme: string;
   setHeaderTheme: (theme: string) => void;
 };
 const Context = createContext<ContextT>({
+  initialized: false,
   headerTheme: "system",
   setHeaderTheme: () => {},
 });
@@ -26,22 +28,25 @@ type HeaderIntersectionObserverProps = PropsWithChildren;
 export default function HeaderObserverProvider({
   children,
 }: HeaderIntersectionObserverProps) {
-  const { theme } = useTheme();
+  const { theme = "light" } = useTheme();
+  const [initialized, setInitialized] = useState(false);
   const [headerTheme, setHeaderTheme] = useState(theme);
   const pathname = usePathname();
 
   useEffect(() => {
     setHeaderTheme(theme);
+    setInitialized(true);
   }, [pathname, theme]);
 
   return (
     <Context.Provider
       value={{
+        initialized,
         headerTheme,
         setHeaderTheme,
       }}
     >
-      <>{children}</>
+      {children}
     </Context.Provider>
   );
 }
