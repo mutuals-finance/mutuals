@@ -6,7 +6,7 @@
     "dev": "hardhat node",
     "build": "hardhat compile --config ./hardhat.config.ts",
     "build:clean": "cross-env pnpm clean && pnpm build",
-    "clean": "cross-env hardhat clean && rimraf .deps cache hh-cache",
+    "clean": "cross-env hardhat clean && rimraf .deps cache",
     "test": "hardhat test --config ./hardhat.config.ts",
     "test:clean": "cross-env pnpm clean && pnpm test",
     "typechain": "hardhat typechain",

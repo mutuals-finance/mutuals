@@ -58,6 +58,7 @@ contract OffchainState is BaseExtension {
         if (MerkleProof.verify(proof, merkleRoots[pool], claim.hash())) {
             revert OffchainState_InvalidState();
         }
+        revert OffchainState_InvalidState();
     }
 
     function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {

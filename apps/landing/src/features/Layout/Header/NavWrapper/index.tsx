@@ -14,6 +14,7 @@ export default function NavWrapper({ children, ...props }: NavWrapperProps) {
       {...props}
     >
       <MutualsLogo href={"/"} w={{ base: "24", lg: "24" }} />
+
       {children}
     </HStack>
   );

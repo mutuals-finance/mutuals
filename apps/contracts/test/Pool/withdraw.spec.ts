@@ -56,6 +56,8 @@ const setupTest = withSnapshot(
       Object.values(extensionArgs)
     );
 
+    console.log('createPoolArgs', createPoolArgs);
+
     return {
       poolOwnerHonest,
       recipient0,
@@ -94,7 +96,7 @@ describe('Pool.withdraw', () => {
       const { recipient0, claims, stateTree } = await setupTest();
 
       // recipient0's claim
-      const claim0 = claims[0]!;
+      const claim0 = { ...claims[0]!, id: 2 };
       const encoder = hre.ethers.AbiCoder.defaultAbiCoder();
 
       const params: WithdrawParamsStruct = {
@@ -104,6 +106,32 @@ describe('Pool.withdraw', () => {
         stateData: encoder.encode(['bytes32[]'], [stateTree.getProof(0)]),
       };
 
+      const args = [claim0, params];
+
+      console.log(
+        'args',
+        JSON.stringify({
+          args: [
+            [
+              claim0.id,
+              claim0.parentId,
+              claim0.recipient,
+              claim0.value,
+              claim0.stateId,
+              claim0.stateData,
+              claim0.strategyId,
+              claim0.strategyData,
+            ],
+            [
+              params.amount,
+              params.token,
+              params.strategyData,
+              params.stateData,
+            ],
+          ],
+        })
+      );
+
       expect(
         hre.deployments.execute(
           'Pool',
@@ -112,8 +140,7 @@ describe('Pool.withdraw', () => {
             from: recipient0.address,
           },
           'withdraw',
-          { ...claim0, id: 2 },
-          params
+          ...args
         )
       ).to.not.reverted;
     });

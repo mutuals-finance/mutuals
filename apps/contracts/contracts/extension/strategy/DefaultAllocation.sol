@@ -12,7 +12,7 @@ contract DefaultAllocation is BaseExtension {
     /*                                   ERRORS                                   */
     /* -------------------------------------------------------------------------- */
 
-    /// @notice Throws when the balance of the actor is insufficient
+    /// @notice Throws when the balance of the actor is insufficient 
     error DefaultAllocation_InsufficientBalance();
 
     /* -------------------------------------------------------------------------- */
