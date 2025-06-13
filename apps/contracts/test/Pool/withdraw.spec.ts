@@ -1,14 +1,10 @@
 import { withSnapshot } from '#/test/utils';
 import { generatePoolArgs } from '@/utils/pool';
-import { TxOptions } from 'hardhat-deploy/dist/types';
 import { expect } from 'chai';
-import {
-  ClaimStruct,
-  WithdrawParamsStruct,
-} from '#/types/typechain/contracts/pool/Pool';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ZeroAddress } from 'ethers';
 import Claim from '@/utils/claim';
+import { Pool__factory } from '#/types/typechain';
 
 // const salt = toBigInt(hre.ethers.randomBytes(16));
 // const allocationRoot = hre.ethers.randomBytes(32);
@@ -56,25 +52,6 @@ const setupTest = withSnapshot(
       Object.values(extensionArgs)
     );
 
-    console.log('createPoolArgs', createPoolArgs);
-
-    return {
-      poolOwnerHonest,
-      recipient0,
-      recipient1,
-      recipient2,
-      createPoolArgs,
-      claims,
-      stateTree,
-    };
-  }
-);
-
-describe('Pool.withdraw', () => {
-  const options: TxOptions = { to: '', from: '' };
-
-  before(async () => {
-    const { poolOwnerHonest, createPoolArgs } = await setupTest();
     await hre.deployments.execute(
       'PoolFactory',
       {
@@ -84,127 +61,114 @@ describe('Pool.withdraw', () => {
       ...createPoolArgs
     );
 
-    options.to = await hre.deployments.read(
+    const address = await hre.deployments.read(
       'PoolFactory',
       'getAddress',
       ...createPoolArgs
     );
-  });
+    const pool = Pool__factory.connect(address ?? '', recipient0);
 
+    const encoder = hre.ethers.AbiCoder.defaultAbiCoder();
+
+    return {
+      poolOwnerHonest,
+      recipient0,
+      recipient1,
+      recipient2,
+      encoder,
+      createPoolArgs,
+      pool,
+      claims,
+      stateTree,
+    };
+  }
+);
+
+describe('Pool.withdraw', () => {
   context('When a user withdraws with valid parameters', () => {
     it('should successfully execute the withdrawal', async () => {
-      const { recipient0, claims, stateTree } = await setupTest();
-
+      const { recipient0, encoder, claims, stateTree, pool } =
+        await setupTest();
       // recipient0's claim
-      const claim0 = { ...claims[0]!, id: 2 };
-      const encoder = hre.ethers.AbiCoder.defaultAbiCoder();
-
-      const params: WithdrawParamsStruct = {
-        amount: claim0.value,
-        token: ZeroAddress,
-        strategyData: '0x',
-        stateData: encoder.encode(['bytes32[]'], [stateTree.getProof(0)]),
-      };
-
-      const args = [claim0, params];
-
-      console.log(
-        'args',
-        JSON.stringify({
-          args: [
-            [
-              claim0.id,
-              claim0.parentId,
-              claim0.recipient,
-              claim0.value,
-              claim0.stateId,
-              claim0.stateData,
-              claim0.strategyId,
-              claim0.strategyData,
-            ],
-            [
-              params.amount,
-              params.token,
-              params.strategyData,
-              params.stateData,
-            ],
-          ],
+      const claim0 = claims[0]!;
+      hre.log('confirm checkState: pool', {
+        claim0,
+        pool: pool.target,
+        proofs: stateTree.getProof(0),
+        root: stateTree.root,
+        entries: stateTree.render(),
+      });
+      await expect(
+        pool.connect(recipient0).withdraw(claim0, {
+          amount: claim0.value,
+          token: ZeroAddress,
+          strategyData: '0x',
+          stateData: encoder.encode(['bytes32[]'], [stateTree.getProof(0)]),
         })
-      );
-
-      expect(
-        hre.deployments.execute(
-          'Pool',
-          {
-            ...options,
-            from: recipient0.address,
-          },
-          'withdraw',
-          ...args
-        )
-      ).to.not.reverted;
+      ).to.emit(pool, 'Withdrawal');
     });
   });
+
   context('When a user withdraws with invalid parameters', () => {
-    it('should revert for a negative amount for a recipient', async () => {
-      // const { pool, proofParams, allocations, recipient0 } = await setupTest();
-      // const request = {
-      //   allocations: [[allocations[recipientPosition]]],
-      //   amounts: [-1],
-      //   proof: proofParams,
-      // } as PoolLib.WithdrawRequestStruct;
-      // expect(
-      //   pool
-      //     .connect(recipient0)
-      //     .withdraw(recipient0!.address, ZeroAddress, request)
-      // ).to.be.reverted;
-    });
-    it('should revert for submitting empty claim and params arguments', async () => {
-      const { recipient0 } = await setupTest();
-
-      const claim: ClaimStruct = {
-        id: '',
-        parentId: '',
-        recipient: recipient0.address,
-        value: '',
-        stateId: '',
-        stateData: '',
-        strategyId: '',
-        strategyData: '',
-      };
-
-      const params: WithdrawParamsStruct = {
-        amount: '',
-        token: ZeroAddress,
-        strategyData: '',
-        stateData: '',
-      };
-
-      expect(
-        hre.deployments.execute(
-          'Pool',
-          {
-            ...options,
-            from: recipient0.address,
-          },
-          'withdraw',
-          claim,
-          params
-        )
-      ).to.be.reverted;
-    });
-    it('should revert for a too high amount for a recipient', async () => {
-      // const { pool, proofParams, allocations, recipient0 } = await setupTest();
-      // const request = {
-      //   allocations: [[allocations[recipientPosition]]],
-      //   amounts: [1],
-      //   proof: proofParams,
-      // } as PoolLib.WithdrawRequestStruct;
-      // expect(
-      //   pool
-      //     .connect(recipient0)
-      //     .withdraw(recipient0!.address, ZeroAddress, request)
-      // ).to.be.reverted;
-    });
+    // it('should revert for a negative amount for a recipient', async () => {
+    // const { pool, proofParams, allocations, recipient0 } = await setupTest();
+    // const request = {
+    //   allocations: [[allocations[recipientPosition]]],
+    //   amounts: [-1],
+    //   proof: proofParams,
+    // } as PoolLib.WithdrawRequestStruct;
+    // expect(
+    //   pool
+    //     .connect(recipient0)
+    //     .withdraw(recipient0!.address, ZeroAddress, request)
+    // ).to.be.reverted;
+    // });
+    //  it('should revert for submitting empty claim and params arguments', async () => {
+    //    const { recipient0 } = await setupTest();
+    //
+    //    const claim: ClaimStruct = {
+    //      id: '',
+    //      parentId: '',
+    //      recipient: recipient0.address,
+    //      value: '',
+    //      stateId: '',
+    //      stateData: '',
+    //      strategyId: '',
+    //      strategyData: '',
+    //    };
+    //
+    //    const params: WithdrawParamsStruct = {
+    //      amount: '',
+    //      token: ZeroAddress,
+    //      strategyData: '',
+    //      stateData: '',
+    //    };
+    //
+    //    await expect(
+    //      hre.deployments.execute(
+    //        'Pool',
+    //        {
+    //          ...options,
+    //          from: recipient0.address,
+    //        },
+    //        'withdraw',
+    //        claim,
+    //        params
+    //      )
+    //    ).to.be.reverted;
+    //  });
+    //it('should revert for a too high amount for a recipient', async () => {
+    // const { pool, proofParams, allocations, recipient0 } = await setupTest();
+    // const request = {
+    //   allocations: [[allocations[recipientPosition]]],
+    //   amounts: [1],
+    //   proof: proofParams,
+    // } as PoolLib.WithdrawRequestStruct;
+    // expect(
+    //   pool
+    //     .connect(recipient0)
+    //     .withdraw(recipient0!.address, ZeroAddress, request)
+    // ).to.be.reverted;
+    // });
   });
 });

@@ -7,6 +7,7 @@ import { Token } from "./types/Token.sol";
 import { WithdrawParams } from "./types/WithdrawParams.sol";
 import { Extensions } from "./libraries/Extensions.sol";
 import { IPool } from "./interfaces/IPool.sol";
+import "hardhat/console.sol";
 
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
@@ -96,11 +97,12 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
         if (claim.recipient == address(0)) {
             revert Pool_InvalidRecipient();
         }
+
         _released[params.token][claim.id] += params.amount;
         _totalReleased[params.token] += params.amount;
-        params.token.transfer(claim.recipient, params.amount);
+        //params.token.transfer(claim.recipient, params.amount);
 
-        // emit Withdraw(claim, params);
+        emit Withdrawal(claim.recipient, params.token, params.amount);
         extensions.afterWithdraw(claim, params);
     }
 

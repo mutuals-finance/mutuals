@@ -11,7 +11,7 @@ interface IPool {
     /*                                   EVENTS                                   */
     /* -------------------------------------------------------------------------- */
 
-    event Withdraw(address indexed recipient, address indexed token, uint256 amount);
+    event Withdrawal(address indexed recipient, Token indexed token, uint256 amount);
 
     /* -------------------------------------------------------------------------- */
     /*                                   ERRORS                                   */

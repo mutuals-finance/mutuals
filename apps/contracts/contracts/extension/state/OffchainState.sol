@@ -6,6 +6,7 @@ import { IPool } from "../../pool/interfaces/IPool.sol";
 import { Claim } from "../../pool/types/Claim.sol";
 import { WithdrawParams } from "../../pool/types/WithdrawParams.sol";
 import { BaseExtension } from "../BaseExtension.sol";
+import "hardhat/console.sol";
 
 import { MerkleProof } from "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
@@ -52,18 +53,18 @@ contract OffchainState is BaseExtension {
     /* -------------------------------------------------------------------------- */
 
     function checkState(Claim calldata claim, WithdrawParams calldata params) external view override {
-        (bytes32[] memory proof, ) = abi.decode(params.stateData, (bytes32[], bool[]));
-        IPool pool = _pool();
-        _checkPoolCreated(pool);
-        if (MerkleProof.verify(proof, merkleRoots[pool], claim.hash())) {
+         IPool pool = _pool();
+        // TODO _checkPoolCreated(pool) needed?
+        (bytes32[] memory proof) = abi.decode(params.stateData, (bytes32[]));
+
+        if (!MerkleProof.verify(proof, merkleRoots[pool], claim.hash())) {
             revert OffchainState_InvalidState();
         }
-        revert OffchainState_InvalidState();
     }
 
     function checkBatchState(Claim[] calldata claims, WithdrawParams[] calldata params) external view override {
         IPool pool = _pool();
-        _checkPoolCreated(pool);
+        // TODO _checkPoolCreated(pool) needed?
         (bytes32[] memory proof, bool[] memory flags) = abi.decode(params[0].stateData, (bytes32[], bool[]));
         bytes32[] memory leaves = new bytes32[](claims.length);
 

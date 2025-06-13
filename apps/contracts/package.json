@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "hardhat node",
-    "build": "hardhat compile --config ./hardhat.config.ts",
+    "build": "hardhat compile",
     "build:clean": "cross-env pnpm clean && pnpm build",
     "clean": "cross-env hardhat clean && rimraf .deps cache",
-    "test": "hardhat test --config ./hardhat.config.ts",
+    "test": "cross-env SOLC_PROFILE=test && hardhat test --trace",
     "test:clean": "cross-env pnpm clean && pnpm test",
     "typechain": "hardhat typechain",
     "deploy:local": "hardhat deploy --network localhost",
