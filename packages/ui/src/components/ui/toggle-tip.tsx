@@ -1,17 +1,24 @@
-import { Popover as ChakraPopover, Portal } from "@chakra-ui/react"
-import { forwardRef } from "react"
+import { Popover as ChakraPopover, IconButton, Portal } from "@chakra-ui/react"
+import * as React from "react"
+import { HiOutlineInformationCircle } from "react-icons/hi"
 
 export interface ToggleTipProps extends ChakraPopover.RootProps {
   showArrow?: boolean
   portalled?: boolean
-  containerRef?: React.RefObject<HTMLElement>
+  portalRef?: React.RefObject<HTMLElement>
   content?: React.ReactNode
 }
 
-export const ToggleTip = forwardRef<HTMLDivElement, ToggleTipProps>(
+export const ToggleTip = React.forwardRef<HTMLDivElement, ToggleTipProps>(
   function ToggleTip(props, ref) {
-    const { showArrow, children, portalled, content, containerRef, ...rest } =
-      props
+    const {
+      showArrow,
+      children,
+      portalled = true,
+      content,
+      portalRef,
+      ...rest
+    } = props
 
     return (
       <ChakraPopover.Root
@@ -19,13 +26,13 @@ export const ToggleTip = forwardRef<HTMLDivElement, ToggleTipProps>(
         positioning={{ ...rest.positioning, gutter: 4 }}
       >
         <ChakraPopover.Trigger asChild>{children}</ChakraPopover.Trigger>
-        <Portal disabled={!portalled} container={containerRef}>
+        <Portal disabled={!portalled} container={portalRef}>
           <ChakraPopover.Positioner>
             <ChakraPopover.Content
               width="auto"
               px="2"
-              py="0.5"
-              fontSize="xs"
+              py="1"
+              textStyle="xs"
               rounded="sm"
               ref={ref}
             >
@@ -42,3 +49,22 @@ export const ToggleTip = forwardRef<HTMLDivElement, ToggleTipProps>(
     )
   },
 )
+
+export const InfoTip = React.forwardRef<
+  HTMLDivElement,
+  Partial<ToggleTipProps>
+>(function InfoTip(props, ref) {
+  const { children, ...rest } = props
+  return (
+    <ToggleTip content={children} {...rest} ref={ref}>
+      <IconButton
+        variant="ghost"
+        aria-label="info"
+        size="2xs"
+        colorPalette="gray"
+      >
+        <HiOutlineInformationCircle />
+      </IconButton>
+    </ToggleTip>
+  )
+})

@@ -10,7 +10,6 @@ import type {
   Contract,
   ContractFactory,
   ethers as defaultEthers,
-  Signer,
 } from 'ethers';
 import type { DeployProxyOptions } from '@openzeppelin/hardhat-upgrades/src/utils';
 import type { HardhatUpgrades } from '@openzeppelin/hardhat-upgrades';
@@ -29,19 +28,25 @@ import type { Deployment } from 'hardhat-deploy/types';
 import type { TASKS } from '@/tasks';
 import type { networks } from '@/config/networks';
 import type { NamedAccounts } from '@/config/accounts';
-import type { Pool, PoolFactory, UpgradeableBeacon } from '#/types/typechain';
+import type {
+  Pool,
+  PoolFactory,
+  UpgradeableBeacon,
+  Registry,
+  DefaultAllocation,
+  PriorityGating,
+  TimelockAllocation,
+  TokenAllocation,
+  TokenGating,
+  OffchainState,
+  OnchainState,
+} from '#/types/typechain';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import {
   FactoryOptions,
   HardhatEthersSigner,
   HardhatEthersHelpers,
 } from '@nomicfoundation/hardhat-ethers/types';
-import { lazyFunction } from 'hardhat/plugins';
-import {
-  isNetworkLocal,
-  isNetworkProduction,
-  isNetworkStaging,
-} from '@/plugins/network';
 
 declare module 'hardhat/config' {
   type EnvironmentExtender = (
@@ -151,7 +156,7 @@ type DeployNonUpgradeableFunction = <TContract extends BaseContract>({
   options,
 }: {
   contractName: keyof Contracts;
-  args: unknown[];
+  args?: unknown[];
   options?: FactoryOptions;
 }) => Promise<InstanceOfContract<TContract>>;
 
@@ -196,22 +201,18 @@ declare global {
   let hre: CustomHardHatRuntimeEnvironment; // todo remove from global types to prevent usage
 
   export interface Contracts {
+    Registry?: InstanceOfContract<Registry>;
     PoolFactory?: InstanceOfContract<PoolFactory>;
     Pool?: InstanceOfContract<Pool>;
+    DefaultAllocation?: InstanceOfContract<DefaultAllocation>;
+    PriorityGating?: InstanceOfContract<PriorityGating>;
+    TimelockAllocation?: InstanceOfContract<TimelockAllocation>;
+    TokenAllocation?: InstanceOfContract<TokenAllocation>;
+    TokenGating?: InstanceOfContract<TokenGating>;
+    OffchainState?: InstanceOfContract<OffchainState>;
+    OnchainState?: InstanceOfContract<OnchainState>;
     UpgradeableBeacon?: InstanceOfContract<UpgradeableBeacon>;
   }
-
-  let ethers: Omit<
-    typeof defaultEthers & HardhatEthersHelpers,
-    'getContractFactory'
-  > & {
-    getContractFactory<
-      TContractFactory extends ContractFactory = ContractFactory,
-    >(
-      name: string,
-      signerOrOptions?: Signer | FactoryOptions
-    ): Promise<TContractFactory>;
-  }; // todo remove from global types to prevent usage
 
   type CustomHardHatRuntimeEnvironment = Omit<
     HardhatRuntimeEnvironment,
@@ -225,7 +226,7 @@ declare global {
     upgrades: CustomHardhatUpgrades;
     defender: CustomHardhatUpgrades;
     network: Omit<Network, 'name'> & { name: keyof typeof networks };
-    ethers: typeof ethers;
+    ethers: defaultEthers & HardhatEthersHelpers;
     getSigners: () => Promise<SignerWithAddress[]>;
     deployOrUpgradeProxy: DeployOrUpgradeProxyFunction;
     deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction;

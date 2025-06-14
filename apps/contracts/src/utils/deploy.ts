@@ -106,6 +106,23 @@ export const validateDeploymentSettings = ({
   }
 };
 
+export const deployRegistryContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployOrUpgradeProxy({
+    contractName: 'Registry',
+    args: await Promise.all([
+      hre.ethers.getNamedSigner('admin').then(({ address }) => address),
+    ]),
+    options: {
+      initializer: '__Registry_init',
+      kind: 'uups',
+    },
+  });
+};
+
 export const deployPoolFactoryContract = async ({
   hre,
 }: {
@@ -131,6 +148,77 @@ export const deployPoolBeaconContract = async ({
 }) => {
   return hre.deployOrUpgradeBeacon({
     contractName: 'Pool',
+    args: [0, 0, [], []],
+  });
+};
+
+export const deployDefaultAllocationContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'DefaultAllocation',
+  });
+};
+
+export const deployTimelockAllocationContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'TimelockAllocation',
+  });
+};
+
+export const deployTokenAllocationContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'TokenAllocation',
+  });
+};
+
+export const deployPriorityGatingContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'PriorityGating',
+  });
+};
+
+export const deployTokenGatingContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'TokenGating',
+  });
+};
+
+export const deployOnchainStateContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'OnchainState',
+  });
+};
+
+export const deployOffchainStateContract = async ({
+  hre,
+}: {
+  hre: CustomHardHatRuntimeEnvironment;
+}) => {
+  return hre.deployNonUpgradeable({
+    contractName: 'OffchainState',
   });
 };
 

@@ -1,55 +1,31 @@
-import {
-  AllocationItemNode,
-  AllocationType,
-  CreateDefaultAllocationFn,
-} from "../types";
+import { CalculationType, RecipientType } from "../types";
 
-export const DEFAULT_ALLOCATION_NODE: Record<
-  AllocationType,
-  AllocationItemNode | CreateDefaultAllocationFn
-> = {
-  [AllocationType.Fixed]: {
-    node: {
-      value: 0,
-      allocationType: AllocationType.Fixed,
-      recipient: "0x",
-    },
+export const RECIPIENT_TYPE_CONFIG = {
+  [RecipientType.DefaultItem]: {
+    key: RecipientType.DefaultItem,
+    name: "Default Recipient",
   },
-  [AllocationType.Percentage]: {
-    node: {
-      value: 0,
-      allocationType: AllocationType.Percentage,
-      recipient: "0x",
-    },
+  [RecipientType.DefaultGroup]: {
+    key: RecipientType.DefaultGroup,
+    name: "Default Group",
   },
-  [AllocationType.PercentagePrioritized]: (allocationType) => ({
-    node: {
-      value: 0,
-      allocationType: AllocationType.PercentagePrioritized,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
-  [AllocationType.FixedPrioritized]: (allocationType) => ({
-    node: {
-      value: 0,
-      allocationType: AllocationType.FixedPrioritized,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
-  [AllocationType.PercentageTimed]: (allocationType) => ({
-    node: {
-      value: 0,
-      allocationType: AllocationType.PercentageTimed,
-      timespan: 0,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
-  [AllocationType.FixedTimed]: (allocationType) => ({
-    node: {
-      value: 0,
-      allocationType: AllocationType.FixedTimed,
-      timespan: 0,
-    },
-    children: new Array(2).fill(DEFAULT_ALLOCATION_NODE[allocationType]),
-  }),
+  [RecipientType.TimedGroup]: {
+    key: RecipientType.TimedGroup,
+    name: "Timed Group",
+  },
+  [RecipientType.PrioritizedGroup]: {
+    key: RecipientType.PrioritizedGroup,
+    name: "Prioritized Group",
+  },
+};
+
+export const CALCULATION_TYPE_CONFIG = {
+  [CalculationType.Percentage]: {
+    key: CalculationType.Percentage,
+    name: "Percentage",
+  },
+  [CalculationType.Fixed]: {
+    key: CalculationType.Fixed,
+    name: "Fixed",
+  },
 };

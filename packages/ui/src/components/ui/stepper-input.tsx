@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import type { TextProps } from "@chakra-ui/react"
-import { HStack, IconButton, NumberInput, Text } from "@chakra-ui/react"
-import { LuMinus, LuPlus } from "react-icons/lu"
+import type { TextProps } from "@chakra-ui/react";
+import { HStack, IconButton, NumberInput, Text } from "@chakra-ui/react";
+import { LuMinus, LuPlus } from "react-icons/lu";
 
 export interface StepperInputProps extends NumberInput.RootProps {
-  label?: React.ReactNode
+  label?: React.ReactNode;
 }
 
 export const StepperInput = (props: StepperInputProps) => {
-  const { label, ...rest } = props
+  const { label, ...rest } = props;
   return (
     <NumberInput.Root {...rest} unstyled>
       {label && <NumberInput.Label>{label}</NumberInput.Label>}
@@ -19,13 +19,13 @@ export const StepperInput = (props: StepperInputProps) => {
         <IncrementTrigger />
       </HStack>
     </NumberInput.Root>
-  )
-}
+  );
+};
 
 const ValueText = (props: TextProps) => {
   return (
     <Text
-      align="center"
+      textAlign="center"
       fontSize="lg"
       minW="3ch"
       fontWeight="medium"
@@ -35,8 +35,8 @@ const ValueText = (props: TextProps) => {
     >
       <NumberInput.Context>{(api) => api.value}</NumberInput.Context>
     </Text>
-  )
-}
+  );
+};
 
 const DecrementTrigger = (props: NumberInput.DecrementTriggerProps) => {
   return (
@@ -45,8 +45,8 @@ const DecrementTrigger = (props: NumberInput.DecrementTriggerProps) => {
         <LuMinus />
       </IconButton>
     </NumberInput.DecrementTrigger>
-  )
-}
+  );
+};
 
 const IncrementTrigger = (props: NumberInput.IncrementTriggerProps) => {
   return (
@@ -55,5 +55,5 @@ const IncrementTrigger = (props: NumberInput.IncrementTriggerProps) => {
         <LuPlus />
       </IconButton>
     </NumberInput.IncrementTrigger>
-  )
-}
+  );
+};

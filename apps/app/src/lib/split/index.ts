@@ -1,14 +1,18 @@
-import { decodePrefixedAddress } from "src/utils";
-import { getPoolDetails } from "@mutuals/graphql-client-nextjs/server";
-import { getMetadata } from "@/lib/split/fetchers";
+import { getPoolById } from "@mutuals/graphql-client-nextjs/server";
+import { notFound } from "next/navigation";
+import { Pool } from "@mutuals/graphql-client-nextjs";
 
 export * from "./fetchers";
 
 export async function getPoolDetailsFromRouteParams(params: { id: string }) {
-  const id = decodePrefixedAddress(params.id);
-  const { data } = await getPoolDetails({ variables: { id } });
-  const pool = data.split;
+  //const id = decodePrefixedAddress(params.id);
+  const { data } = await getPoolById({ variables: params });
 
-  const metaData = await getMetadata(pool?.metaDataUri);
-  return { ...pool, metaData };
+  if (!("poolById" in data)) {
+    notFound();
+  }
+
+  const pool = data.poolById;
+
+  return pool as Pool;
 }

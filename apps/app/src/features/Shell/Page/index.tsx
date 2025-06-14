@@ -52,9 +52,9 @@ export default function Page({
             )}
             {!!description && (
               <Text
-                fontSize={"lg"}
-                variant={"muted"}
+                fontSize={"md"}
                 maxW={"xl"}
+                variant={"muted"}
                 {...descriptionProps}
               >
                 {description}

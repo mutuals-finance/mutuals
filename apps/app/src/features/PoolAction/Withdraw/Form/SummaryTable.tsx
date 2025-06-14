@@ -1,13 +1,4 @@
-import {
-  ChakraProps,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Tfoot,
-  Tr,
-} from "@mutuals/ui";
+import { DataListItem, DataListRoot, DataListItemProps } from "@mutuals/ui";
 import React, { useMemo } from "react";
 import { formatPrice } from "src/utils";
 import { type WithdrawData } from "@/features/PoolAction/types";
@@ -49,7 +40,7 @@ export default function SummaryTable({
 
   const userWithdraw = Number(share?.value || "0.00") * total?.balance;
 
-  const rows: Record<string, { value: number; props?: ChakraProps }> = {
+  const rows: Record<string, { value: number; props?: DataListItemProps }> = {
     "Total Withdrawal": {
       value: distribute ? total?.balance : userWithdraw,
       props: { border: "none", py: 0 },
@@ -58,35 +49,19 @@ export default function SummaryTable({
   };
 
   return (
-    <TableContainer overflow={"hidden"}>
-      <Table size="sm">
-        <Tbody>
-          {Object.keys(rows).map((col) => (
-            <Tr key={col}>
-              <Td px={"0"} {...rows[col]?.props}>
-                <Text>{col}</Text>
-              </Td>
-              <Td isNumeric px={"0"} {...rows[col]?.props}>
-                {formatPrice(rows[col]?.value.toString() ?? "")}
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
-        <Tfoot>
-          <Tr>
-            <Td px={"0"}>
-              <Text as={"b"} fontWeight={"500"}>
-                Your Withdrawal
-              </Text>
-            </Td>
-            <Td px={"0"} isNumeric>
-              <Text as="b" fontWeight={"500"}>
-                {formatPrice(userWithdraw.toString())}
-              </Text>
-            </Td>
-          </Tr>
-        </Tfoot>
-      </Table>
-    </TableContainer>
+    <DataListRoot orientation="horizontal" size={"sm"} divideY="0">
+      {Object.keys(rows).map((col) => (
+        <DataListItem
+          key={col}
+          label={col}
+          value={formatPrice(rows[col]?.value.toString() ?? "")}
+          {...rows[col]?.props}
+        />
+      ))}
+      <DataListItem
+        label={"Your Withdrawal"}
+        value={formatPrice(userWithdraw.toString())}
+      />
+    </DataListRoot>
   );
 }

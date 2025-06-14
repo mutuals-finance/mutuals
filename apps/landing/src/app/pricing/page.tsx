@@ -1,12 +1,14 @@
-import FAQ from "@/app/pricing/FAQ";
-import Info from "@/app/pricing/Info";
-import PageHeader from "@/components/PageHeader";
+import FAQ from "@/features/Pricing/FAQ";
+import Options from "@/features/Pricing/Options";
+import ShellPageHeader from "src/features/Shell/PageHeader";
 
 export default function PricingPage() {
   return (
     <>
-      <PageHeader tag={"Pricing"}>Mutuals is free - That&apos;s it.</PageHeader>
-      <Info />
+      <ShellPageHeader tag={"Pricing"}>
+        Mutuals is free - That&apos;s it.
+      </ShellPageHeader>
+      <Options />
       <FAQ />
     </>
   );

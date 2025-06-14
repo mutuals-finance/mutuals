@@ -17,9 +17,7 @@ export default function PoolAddPage() {
       }
     >
       <Container maxW={"7xl"}>
-        <Box maxW={"3xl"}>
-          <PoolAddForm />
-        </Box>
+        <PoolAddForm />
       </Container>
     </ShellPage>
   );

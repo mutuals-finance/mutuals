@@ -4,8 +4,7 @@ import {
   Icon,
   type IconProps,
 } from "@chakra-ui/react";
-import { LuChevronDown } from "react-icons/lu";
-import { IoAddCircle, IoChevronDown, IoRemoveCircle } from "react-icons/io5";
+import { IoChevronDown } from "react-icons/io5";
 
 interface AccordionItemTriggerProps extends ChakraAccordion.ItemTriggerProps {}
 

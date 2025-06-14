@@ -1,9 +1,8 @@
 "use client";
 
 import { ChakraProvider, type ChakraProviderProps } from "@chakra-ui/react";
-import system from "../../theme";
-import { ThemeProvider } from "next-themes";
-import { ThemeProviderProps } from "next-themes/dist/types";
+import defaultSystem from "../../theme";
+import { ThemeProvider, ThemeProviderProps } from "next-themes";
 
 export interface UIProviderProps extends Omit<ChakraProviderProps, "value"> {
   themeProps?: Omit<ThemeProviderProps, "children">;
@@ -12,10 +11,12 @@ export interface UIProviderProps extends Omit<ChakraProviderProps, "value"> {
 
 export function UIProvider({
   children,
-  value = system,
+  value = defaultSystem,
   themeProps: {
     attribute = "class",
     disableTransitionOnChange = true,
+    defaultTheme = "system",
+    enableSystem = true,
     ...themeProps
   } = {},
   ...props
@@ -25,6 +26,8 @@ export function UIProvider({
       <ThemeProvider
         attribute={attribute}
         disableTransitionOnChange={disableTransitionOnChange}
+        defaultTheme={defaultTheme}
+        enableSystem={enableSystem}
         {...themeProps}
       >
         {children}

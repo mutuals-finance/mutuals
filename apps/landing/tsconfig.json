@@ -11,7 +11,6 @@
   // filenames are resolved relative to the directory containing the tsconfig.json file.
   // https://www.typescriptlang.org/tsconfig/#include
   "include": [
-    "next-sitemap.config.js",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",

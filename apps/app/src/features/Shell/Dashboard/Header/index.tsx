@@ -1,10 +1,12 @@
-"use client";
-
-import { InputGroup, Stack, MutualsLogo, IconButton } from "@mutuals/ui";
+import {
+  Form,
+  InputGroup,
+  Stack,
+  MutualsLogo,
+  IconButton,
+  Input,
+} from "@mutuals/ui";
 import { IoMenuSharp, IoSearch } from "react-icons/io5";
-
-import Form from "@/components/Form";
-import Input from "@/components/Form/Input";
 
 import Chain from "./Chain";
 import User from "./User";
@@ -31,7 +33,7 @@ export default function ShellDashboardHeader() {
     >
       <Form hideBelow={"lg"}>
         <InputGroup startElement={<IoSearch />}>
-          <Input size={"sm"} hideWrapper={true} placeholder="Search..." />
+          <Input size={"sm"} placeholder="Search..." />
         </InputGroup>
       </Form>
 

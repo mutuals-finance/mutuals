@@ -21,19 +21,21 @@ export default function WithdrawTable({ ...props }: WithdrawTableProps) {
         header: ({ table }) => (
           <Checkbox
             {...{
-              isChecked: table.getIsAllRowsSelected(),
-              isIndeterminate: table.getIsSomeRowsSelected(),
-              onChange: table.getToggleAllRowsSelectedHandler(),
+              checked: table.getIsSomeRowsSelected()
+                ? "indeterminate"
+                : table.getIsAllRowsSelected(),
+              onCheckedChange: table.getToggleAllRowsSelectedHandler(),
             }}
           />
         ),
         cell: ({ row }) => (
           <Checkbox
             {...{
-              isChecked: row.getIsSelected(),
-              isDisabled: !row.getCanSelect(),
-              isIndeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler(),
+              checked: row.getIsSomeSelected()
+                ? "indeterminate"
+                : row.getIsSelected(),
+              disabled: !row.getCanSelect(),
+              onCheckedChange: row.getToggleSelectedHandler(),
             }}
           />
         ),
@@ -62,9 +64,9 @@ export default function WithdrawTable({ ...props }: WithdrawTableProps) {
 
   return (
     <Table<Balance>
-      columns={columns}
       tableProps={{ size: "sm" }}
       containerProps={{ w: "full" }}
+      columns={columns}
       {...props}
     />
   );

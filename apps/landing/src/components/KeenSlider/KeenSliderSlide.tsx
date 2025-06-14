@@ -1,13 +1,15 @@
 import { Box, type BoxProps } from "@mutuals/ui";
+import { forwardRef } from "react";
 
-export default function KeenSliderSlide({
-  className,
-  children,
-  ...props
-}: BoxProps) {
-  return (
-    <Box className={`keen-slider__slide ${className}`} {...props}>
-      {children}
-    </Box>
-  );
-}
+const KeenSliderSlide = forwardRef<"div", BoxProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <Box ref={ref} className={`keen-slider__slide ${className}`} {...props}>
+        {children}
+      </Box>
+    );
+  },
+);
+
+KeenSliderSlide.displayName = "KeenSliderSlide";
+export default KeenSliderSlide;

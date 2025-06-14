@@ -17,6 +17,9 @@ export function Link({
   linkProps,
   ...props
 }: LinkProps) {
+  // const pathname = usePathname();
+  // const isActive = pathname === href.toString();
+
   return (
     <ChakraLink
       asChild={asChild}

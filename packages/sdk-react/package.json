@@ -20,13 +20,14 @@
     }
   },
   "dependencies": {
+    "@mutuals/graphql-client-nextjs": "workspace:*",
     "@mutuals/sdk": "workspace:*"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "@types/react": "^18.3.2",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.5"
+    "@types/react": "^19.1.5",
+    "eslint": "^9.27.0",
+    "typescript": "^5.8.3"
   }
 }

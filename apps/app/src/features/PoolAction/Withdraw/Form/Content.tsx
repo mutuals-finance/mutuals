@@ -6,21 +6,17 @@ import { useFormContext } from "react-hook-form";
 import { useToggle } from "react-use";
 import { GetAccountBalanceReply } from "@ankr.com/ankr.js";
 
-import { DeepPartial } from "#/partial";
-
 import useWithdrawSplit from "@/hooks/useWithdrawSplit";
 
-import FormGroup from "@/components/Form/FormGroup";
-import InputSwitch from "@/components/Form/InputSwitch";
 import WithdrawModal from "@/features/PoolAction/Withdraw/Modal";
 import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
-import { type Split } from "@mutuals/graphql-client-nextjs/thegraph";
+import { type Pool } from "@mutuals/graphql-client-nextjs";
 import { WithdrawData } from "@/features/PoolAction/types";
 
 export interface WithdrawFormContentProps extends StackProps {
   balance?: GetAccountBalanceReply;
-  pool?: DeepPartial<Split>;
+  pool?: Pool;
 }
 
 export default function PoolActionWithdrawFormContent({
@@ -60,27 +56,23 @@ export default function PoolActionWithdrawFormContent({
       >
         <Box px="6">{children}</Box>
 
-        <FormGroup px="6">
-          <InputSwitch label={"Distribute"} id={"distribute"} />
-        </FormGroup>
+        {/*<InputSwitch label={"Distribute"} id={"distribute"} />*/}
 
-        <FormGroup>
-          <WithdrawTable
-            data={data}
-            state={{
-              rowSelection: selectedAssets,
-            }}
-            onRowSelectionChange={(updaterOrValue) => {
-              const isUpdaterFn = typeof updaterOrValue == "function";
-              setValue(
-                "assets",
-                isUpdaterFn
-                  ? updaterOrValue(selectedAssets ?? {})
-                  : updaterOrValue,
-              );
-            }}
-          />
-        </FormGroup>
+        <WithdrawTable
+          data={data}
+          state={{
+            rowSelection: selectedAssets,
+          }}
+          onRowSelectionChange={(updaterOrValue) => {
+            const isUpdaterFn = typeof updaterOrValue == "function";
+            setValue(
+              "assets",
+              isUpdaterFn
+                ? updaterOrValue(selectedAssets ?? {})
+                : updaterOrValue,
+            );
+          }}
+        />
       </VStack>
 
       <Stack
@@ -88,7 +80,7 @@ export default function PoolActionWithdrawFormContent({
         p={"6"}
         gap={"6"}
         borderTop={"1px solid"}
-        borderColor={"border.1"}
+        borderColor={"border"}
       >
         <SummaryTable
           data={data}

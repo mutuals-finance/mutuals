@@ -2,8 +2,6 @@
 
 import {
   Box,
-  Button,
-  Field,
   HStack,
   IconButton,
   Stack,
@@ -11,9 +9,9 @@ import {
   useBreakpointValue,
   Link,
   LinkButton,
+  Icon,
 } from "@mutuals/ui";
 import { PropsWithChildren, useEffect } from "react";
-import { IoMenuSharp } from "react-icons/io5";
 import { useToggle } from "react-use";
 
 import Sidebar from "@/components/Sidebar";
@@ -50,7 +48,6 @@ export default function ShellDashboardSidebarContent({
   return (
     <Stack gap="0" direction={"row"}>
       <Sidebar
-        zIndex={"1"}
         w={w}
         minW={{ base: "0", lg: "5.6rem" }}
         isOpen={isOpen}
@@ -91,33 +88,33 @@ export default function ShellDashboardSidebarContent({
         }
       >
         {Object.keys(navItems).map((section) => (
-          <Field
-            label={section}
-            truncate
-            alignItems={"stretch"}
-            key={section}
-            gap={"3"}
-          >
+          <Stack key={section} gap={"2"}>
+            <Text fontWeight="medium" fontSize={"sm"} truncate>
+              {section}
+            </Text>
             <Stack gap={2} w={"full"}>
               {navItems[section]?.map((navItem) => (
                 <LinkButton
                   key={navItem.label}
                   href={navItem.href}
-                  variant={"outline"}
+                  variant={"subtle"}
                   w={"full"}
                   justifyContent={"flex-start"}
                   px={"3.5"}
-                  size={"lg"}
+                  gap={"4"}
+                  size={"xl"}
                   fontSize={"sm"}
                   textAlign={"left"}
                   overflow={"hidden"}
                 >
-                  <navItem.icon />
+                  <Icon boxSize={"4"}>
+                    <navItem.icon />
+                  </Icon>
                   {navItem.label}
                 </LinkButton>
               ))}
             </Stack>
-          </Field>
+          </Stack>
         ))}
       </Sidebar>
 

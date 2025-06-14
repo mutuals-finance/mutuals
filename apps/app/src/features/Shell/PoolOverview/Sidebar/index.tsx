@@ -1,13 +1,13 @@
 "use client";
 
-import { BoxProps, useBreakpointValue, type DrawerProps } from "@mutuals/ui";
+import { DrawerRootProps, useBreakpointValue } from "@mutuals/ui";
 
 import RouterTabs, { RouterTabProps } from "@/components/RouterTabs";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import ShellPoolOverviewSidebarMobile from "@/features/Shell/PoolOverview/Sidebar/Mobile";
 import ShellPoolOverviewSidebarDesktop from "@/features/Shell/PoolOverview/Sidebar/Desktop";
 
-export interface ShellPoolOverviewSidebarProps extends BoxProps {
+export interface ShellPoolOverviewSidebarProps extends DrawerRootProps {
   defaultOpen?: boolean;
   tabs: RouterTabProps[];
 }
@@ -35,10 +35,11 @@ export default function ShellPoolOverviewSidebar({
 
   const isClosed = index < 0;
 
-  const wrapperProps: DrawerProps = {
-    isOpen: !isClosed,
-    onClose: () => router.push(`/pool/${decodeURIComponent(params.id)}`),
-    placement: "right" as DrawerProps["placement"],
+  const wrapperProps: DrawerRootProps = {
+    open: !isClosed,
+    onExitComplete: () =>
+      router.push(`/pool/${decodeURIComponent(params.id)}`, { scroll: false }),
+    placement: "right" as DrawerRootProps["placement"],
     children: <RouterTabs tabs={tabs}>{children}</RouterTabs>,
     ...props,
   };

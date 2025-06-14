@@ -18,7 +18,7 @@ export default function AssetTableIconCell({
   row,
   labelProps,
   imageProps,
-  gap = "3",
+  gap = "2",
   onlyImage = false,
   onlyLabel = false,
   ...props
@@ -28,7 +28,7 @@ export default function AssetTableIconCell({
     <HStack
       alignItems={"center"}
       justifyContent={"flex-start"}
-      gap={spacing}
+      gap={gap}
       {...props}
     >
       {!onlyLabel && (

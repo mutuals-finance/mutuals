@@ -11,11 +11,13 @@ import SignMessageProvider from "@/features/Wallet/SignProvider";
 import { getViewer } from "@mutuals/graphql-client-nextjs/server";
 import MutualsProvider from "@/providers/MutualsProvider";
 
+import "keen-slider/keen-slider.min.css";
+
 export default async function Providers({ children }: PropsWithChildren) {
   const redirectURL = "/";
   const { data } = await getViewer();
 
-  const cookie = headers().get("cookie") ?? "";
+  const cookie = await headers().then((h) => h.get("cookie") ?? "");
   const wagmiInitialState = cookieToInitialState(config, cookie);
 
   return (

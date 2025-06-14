@@ -34,7 +34,7 @@ import {
   SetPausedConfig,
   SetPoolAllocationConfig,
 } from "../types";
-import { allocation as allocationUtils } from "../utils";
+import { allocation as allocationUtils, buildMerkleTree } from "../utils";
 import { BaseClientMixin, BaseTransactions } from "./base";
 import { applyMixins } from "./mixin";
 import { validateAddress } from "../utils/validation";
@@ -71,8 +71,7 @@ class PoolTransactions extends BaseTransactions {
   }: CreatePoolConfig): Promise<TransactionFormat> {
     validateAddress(ownerAddress);
 
-    const allocationTree = allocationUtils.getTree(allocations);
-
+    const allocationTree = buildMerkleTree(allocations);
     this._requirePublicClient();
     if (this._shouldRequireWalletClient) this._requireWalletClient();
 

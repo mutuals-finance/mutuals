@@ -1,12 +1,8 @@
 "use client";
 
 import type { GroupProps, SlotRecipeProps } from "@chakra-ui/react";
-import {
-  AvatarRootPropsProvider,
-  Avatar as ChakraAvatar,
-  Group,
-} from "@chakra-ui/react";
-import { forwardRef } from "react";
+import { Avatar as ChakraAvatar, Group } from "@chakra-ui/react";
+import * as React from "react";
 
 type ImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
@@ -19,7 +15,7 @@ export interface AvatarProps extends ChakraAvatar.RootProps {
   fallback?: React.ReactNode;
 }
 
-export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
+export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   function Avatar(props, ref) {
     const { name, src, srcSet, loading, icon, fallback, children, ...rest } =
       props;
@@ -40,20 +36,21 @@ interface AvatarFallbackProps extends ChakraAvatar.FallbackProps {
   icon?: React.ReactElement;
 }
 
-const AvatarFallback = forwardRef<HTMLDivElement, AvatarFallbackProps>(
-  function AvatarFallback(props, ref) {
-    const { name, icon, children, ...rest } = props;
-    return (
-      <ChakraAvatar.Fallback ref={ref} {...rest}>
-        {children}
-        {name != null && children == null && <>{getInitials(name)}</>}
-        {name == null && children == null && (
-          <ChakraAvatar.Icon asChild={!!icon}>{icon}</ChakraAvatar.Icon>
-        )}
-      </ChakraAvatar.Fallback>
-    );
-  },
-);
+export const AvatarFallback = React.forwardRef<
+  HTMLDivElement,
+  AvatarFallbackProps
+>(function AvatarFallback(props, ref) {
+  const { name, icon, children, ...rest } = props;
+  return (
+    <ChakraAvatar.Fallback ref={ref} {...rest}>
+      {children}
+      {name != null && children == null && <>{getInitials(name)}</>}
+      {name == null && children == null && (
+        <ChakraAvatar.Icon asChild={!!icon}>{icon}</ChakraAvatar.Icon>
+      )}
+    </ChakraAvatar.Fallback>
+  );
+});
 
 function getInitials(name: string) {
   const names = name.trim().split(" ");
@@ -66,13 +63,17 @@ function getInitials(name: string) {
 
 interface AvatarGroupProps extends GroupProps, SlotRecipeProps<"avatar"> {}
 
-export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
+export const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
   function AvatarGroup(props, ref) {
     const { size, variant, borderless, ...rest } = props;
     return (
-      <AvatarRootPropsProvider value={{ size, variant, borderless }}>
+      <ChakraAvatar.PropsProvider value={{ size, variant, borderless }}>
         <Group gap="0" spaceX="-3" ref={ref} {...rest} />
-      </AvatarRootPropsProvider>
+      </ChakraAvatar.PropsProvider>
     );
   },
 );
+
+export const AvatarRoot = ChakraAvatar.Root;
+export const AvatarImage = ChakraAvatar.Image;
+export const AvatarIcon = ChakraAvatar.Icon;

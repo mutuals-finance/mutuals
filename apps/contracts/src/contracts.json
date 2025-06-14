@@ -1,18 +1,66 @@
 {
   "hardhat": {
     "Pool": {
-      "proxyAddress": "0x28f282C3df413C9b0A5301DF875Df3b0955731a8"
+      "proxyAddress": "0x08cDe78486F5975D1f01Ff57698fAfE665cB0e48"
     },
     "PoolFactory": {
-      "proxyAddress": "0xaD733F1c8F34A16B5Ad8F84ba94c487547ebd59e"
+      "proxyAddress": "0xbC4BFa087473C516A04D720Ac6301BF8981177FA"
+    },
+    "Registry": {
+      "proxyAddress": "0x5ec4AA92a40BcDbAdaeb46be6f808a3C81917573"
+    },
+    "DefaultAllocation": {
+      "proxyAddress": "0x2605Ea7aedbEA8CeD14f69BE94c1E4fBaA46e213"
+    },
+    "TimelockAllocation": {
+      "proxyAddress": "0x6613588888a2C8C09b4b084DD93AA18309EB7dBE"
+    },
+    "TokenAllocation": {
+      "proxyAddress": "0x4Db5481A1C4A9c883C0d33045E05CD5631a6D775"
+    },
+    "PriorityGating": {
+      "proxyAddress": "0x01717ee89C3c3f303a0aa4044FfAFA6bea02E540"
+    },
+    "TokenGating": {
+      "proxyAddress": "0xE0e2982449645596a1de35815BC2Ec39b15563D0"
+    },
+    "OnchainState": {
+      "proxyAddress": "0x39c6d59fC7412F830Bd9ed7c09400F36Ef6AcDca"
+    },
+    "OffchainState": {
+      "proxyAddress": "0x5d29426fF96885D61454370262D16793fBe45381"
     }
   },
   "localhost": {
     "Pool": {
-      "proxyAddress": "0x534236DF16CA4AB06F46D8b99d2D35FCc887438A"
+      "proxyAddress": "0xaD733F1c8F34A16B5Ad8F84ba94c487547ebd59e"
     },
     "PoolFactory": {
-      "proxyAddress": "0xb3117660142EB09172F8703975976703150656eB"
+      "proxyAddress": "0xA1B80af7772729b4f7626fAed4cEcDA98B9d3f44"
+    },
+    "Registry": {
+      "proxyAddress": "0x28f282C3df413C9b0A5301DF875Df3b0955731a8"
+    },
+    "DefaultAllocation": {
+      "proxyAddress": "0xB58B4391d3C2Cb89FFc13E0DC46320407335dC14"
+    },
+    "TimelockAllocation": {
+      "proxyAddress": "0x19c4Ca43CfFaf31E2cb10A3858647e388faA4833"
+    },
+    "TokenAllocation": {
+      "proxyAddress": "0xD2ec7C8F5ABd85C5930BaD655d0297C9Cda91b54"
+    },
+    "PriorityGating": {
+      "proxyAddress": "0x638653C7614f57715F80c97eA753D3e8a63b50a9"
+    },
+    "TokenGating": {
+      "proxyAddress": "0xfC9fAf573a2B5cE245f92cE4379b8ef32B0dEB9f"
+    },
+    "OnchainState": {
+      "proxyAddress": "0x89DeE073192C297a6a6E65B8D8E470b330A6b3B0"
+    },
+    "OffchainState": {
+      "proxyAddress": "0x6c201cd5447FAf238D9Ab0DbC0a9A87660f1aF5b"
     }
   },
   "polygonAmoy": {

@@ -1,5 +1,4 @@
 import {
-  Flex,
   Text,
   Stack,
   Tag,
@@ -9,7 +8,6 @@ import {
   Group,
   Button,
   Alert,
-  Box,
   Card,
 } from "@mutuals/ui";
 import {
@@ -18,11 +16,10 @@ import {
   IoOpenOutline,
 } from "react-icons/io5";
 import QRCode from "@/components/QRCode";
-import { Split } from "@mutuals/graphql-client-nextjs/thegraph";
-import { DeepPartial } from "#/partial";
+import { Pool } from "@mutuals/graphql-client-nextjs";
 
 interface PoolActionDepositProps {
-  pool?: DeepPartial<Split>;
+  pool?: Pool;
 }
 
 export default async function PoolActionDeposit({
@@ -30,37 +27,32 @@ export default async function PoolActionDeposit({
 }: PoolActionDepositProps) {
   return (
     <>
-      <Stack overflowY={"auto"} flex={"1"} p="6" gap={"3"}>
+      <Stack overflowY={"auto"} flex={"1"} p="6" gap={"2"}>
         <Text>
           Use the address below to receive funds to this Payment Pool.
         </Text>
 
-        <Box>
-          <Alert status="warning" fontSize={"xs"}>
-            Only ETH and ERC-20 tokens can be deposited. Do not send NFTs to a
-            Pool. Please make sure to operate on the Ethereum chain, as other
-            networks are not supported for this address.
-          </Alert>
-        </Box>
+        <Alert status="warning" fontSize={"xs"}>
+          Only ETH and ERC-20 tokens can be deposited. Do not send NFTs to a
+          Pool. Please make sure to operate on the Ethereum chain, as other
+          networks are not supported for this address.
+        </Alert>
 
         <Card.Root size={"sm"} variant={"outline"}>
-          <Card.Header
-            as={Flex}
-            w={"full"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-            pb={"0"}
-          >
-            <Tag size={"sm"}>
-              <TagLabel>Ethereum</TagLabel>
-            </Tag>
+          <Card.Header>
+            <Stack
+              direction="row"
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
+              <Tag>
+                <TagLabel>Ethereum</TagLabel>
+              </Tag>
 
-            <IconButton
-              variant="ghost"
-              colorPalette="gray"
-              aria-label="See menu"
-              icon={<IoEllipsisHorizontal />}
-            />
+              <IconButton size={"sm"} variant="ghost" aria-label="See menu">
+                <IoEllipsisHorizontal />
+              </IconButton>
+            </Stack>
           </Card.Header>
           <Card.Body>
             <Center>
@@ -72,22 +64,27 @@ export default async function PoolActionDeposit({
 
       <Stack
         flexShrink={"0"}
-        p={"6"}
+        p={"4"}
         borderTop={"1px solid"}
-        borderColor={"border.1"}
+        borderColor={"border"}
       >
-        <Text fontSize={"sm"}>Pool address</Text>
-        <Group size="md" variant="outline" isAttached>
+        <Text fontWeight={"medium"} textStyle={"sm"}>
+          Pool address
+        </Text>
+        <Group attached={true}>
           <Button
-            w={"full"}
-            rightIcon={<IoCopyOutline />}
+            variant="outline"
+            flex={"1"}
             aria-label="Copy split address to clipboard"
           >
-            <Text noOfLines={1} display={"block"}>
-              {pool?.address}
-            </Text>
+            {pool?.address}
+
+            <IoCopyOutline />
           </Button>
-          <IconButton aria-label="View on Etherscan" icon={<IoOpenOutline />} />
+
+          <IconButton variant="outline" aria-label="View on Etherscan">
+            <IoOpenOutline />
+          </IconButton>
         </Group>
       </Stack>
     </>

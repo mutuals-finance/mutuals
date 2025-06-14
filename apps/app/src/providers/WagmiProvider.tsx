@@ -9,7 +9,7 @@ interface WagmiProviderProps {
   initialState?: State;
 }
 
-export default function SplitFiWagmiProvider({
+export default function MutualsWagmiProvider({
   children,
   initialState,
 }: PropsWithChildren<WagmiProviderProps>) {

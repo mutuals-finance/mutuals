@@ -10,7 +10,6 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "eslint-config-turbo",
   ],
   settings: {
     "import/resolver": {
@@ -26,6 +25,7 @@ module.exports = {
   ],
   rules: {
     "import/no-unused-modules": "off",
+    "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

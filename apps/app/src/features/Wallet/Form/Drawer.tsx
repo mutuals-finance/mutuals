@@ -2,7 +2,6 @@
 
 import {
   Button,
-  Drawer,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
@@ -11,11 +10,13 @@ import {
   DrawerHeader,
   DrawerRoot,
   DrawerRootProps,
+  DrawerActionTrigger,
   VStack,
+  DrawerTitle,
+  Form,
 } from "@mutuals/ui";
 import { useRouter } from "next/navigation";
-import React, { PropsWithChildren, useCallback } from "react";
-import Form from "@/components/Form";
+import React, { PropsWithChildren, useCallback, useState } from "react";
 import { Chain } from "@mutuals/graphql-client-nextjs";
 import { useSignMessage } from "@/features/Wallet/SignProvider";
 import { addWallet } from "@mutuals/graphql-client-nextjs/server";
@@ -33,8 +34,11 @@ export function WalletFormDrawer({
   title,
   children,
   defaultValues,
+  open: initialOpen = true,
   ...props
 }: PropsWithChildren<WalletFormDrawerProps>) {
+  const [open, setOpen] = useState(initialOpen);
+
   const router = useRouter();
   const { signMessage } = useSignMessage();
 
@@ -44,7 +48,6 @@ export function WalletFormDrawer({
         address: data.address,
         chain: Chain.Ethereum,
       };
-      console.log("onSubmit", { chainAddress, data });
 
       try {
         const { signature, message, nonce } = await signMessage({
@@ -70,19 +73,19 @@ export function WalletFormDrawer({
             },
           },
         });
-
-        console.log("res", { res });
       } catch (error) {
         console.log("error", error);
       }
     },
-    [signMessage, addWallet()],
+    [signMessage],
   );
 
   return (
     <DrawerRoot
       placement="end"
       size={"sm"}
+      open={open}
+      onOpenChange={(e) => setOpen(e.open)}
       onExitComplete={() => router.push(`/`, { scroll: false })}
       {...props}
     >
@@ -90,7 +93,9 @@ export function WalletFormDrawer({
       <DrawerContent>
         <DrawerCloseTrigger />
 
-        <DrawerHeader flexShrink={"0"}>{title}</DrawerHeader>
+        <DrawerHeader>
+          <DrawerTitle>{title}</DrawerTitle>
+        </DrawerHeader>
         <Form<WalletData>
           flex={"1"}
           onSubmit={(data) => onSubmit(data)}
@@ -101,13 +106,12 @@ export function WalletFormDrawer({
           </DrawerBody>
 
           <DrawerFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => props.onOpenChange?.({ open: false })}
-            >
-              Cancel
-            </Button>
+            <DrawerActionTrigger asChild>
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
+            </DrawerActionTrigger>
+
             <Button loading={false} type={"submit"}>
               Submit
             </Button>

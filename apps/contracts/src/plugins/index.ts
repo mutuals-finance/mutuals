@@ -8,6 +8,7 @@ import 'hardhat-deploy-ethers';
 import '@typechain/hardhat';
 import 'hardhat-tracer';
 import 'hardhat-contract-sizer';
+import 'hardhat-ignore-warnings';
 import '@/config/environment';
 import '@/tasks';
 import { extendEnvironment } from 'hardhat/config';

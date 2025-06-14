@@ -1,7 +1,5 @@
 import ContentCard from "@/components/ContentCard";
 
-import Content from "@/features/PoolOverview/Shares/Content";
-import { Stack } from "@mutuals/ui";
 import { Share } from "@mutuals/graphql-client-nextjs/thegraph";
 
 interface PoolOverviewSharesProps {
@@ -11,11 +9,5 @@ interface PoolOverviewSharesProps {
 export default function PoolOverviewShares({
   shares,
 }: PoolOverviewSharesProps) {
-  return (
-    <ContentCard title={"Shares"}>
-      <Stack direction={{ base: "column", md: "row" }}>
-        <Content shares={shares} />
-      </Stack>
-    </ContentCard>
-  );
+  return <ContentCard title={"Shares"}></ContentCard>;
 }

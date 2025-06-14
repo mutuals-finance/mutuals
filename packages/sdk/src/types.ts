@@ -11,7 +11,13 @@ import {
   WalletClient,
 } from "viem";
 
-export type TransactionOverrides = {
+import {
+  CalculationType,
+  RecipientType,
+  SplitAllocationInput,
+} from "@mutuals/graphql-client-nextjs";
+
+type TransactionOverrides = {
   accessList?: AccessList;
   gas?: bigint;
   maxFeePerGas?: bigint;
@@ -24,19 +30,19 @@ interface TransactionOverridesDict {
   transactionOverrides?: TransactionOverrides;
 }
 
-export type ApiConfig = {
+type ApiConfig = {
   apiKey: string;
   serverURL?: string;
 };
 
-export type DataClientConfig = {
+type DataClientConfig = {
   publicClient?: PublicClient<Transport, Chain>;
   apiConfig: ApiConfig;
   includeEnsNames?: boolean;
   ensPublicClient?: PublicClient<Transport, Chain>;
 };
 
-export type MutualsClientConfig = {
+type MutualsClientConfig = {
   chainId: number;
   publicClient?: PublicClient<Transport, Chain>;
   walletClient?: WalletClient<Transport, Chain, Account>;
@@ -45,20 +51,11 @@ export type MutualsClientConfig = {
   ensPublicClient?: PublicClient<Transport, Chain>;
 };
 
-export type TransactionConfig = {
+type TransactionConfig = {
   transactionType: TransactionType;
 };
 
-export enum AllocationType {
-  Fixed = 0,
-  Percentage = 1,
-  FixedPrioritized = 2,
-  FixedTimed = 3,
-  PercentagePrioritized = 4,
-  PercentageTimed = 5,
-}
-
-export type RawAllocation = {
+type RawAllocation = {
   id: bigint;
   recipient: bigint;
   target: bigint;
@@ -68,77 +65,20 @@ export type RawAllocation = {
   timespan: bigint;
 };
 
-export type Allocation =
-  | AllocationFixed
-  | AllocationPercentage
-  | AllocationFixedPrioritized
-  | AllocationFixedTimed
-  | AllocationPercentagePrioritized
-  | AllocationPercentageTimed;
+type Allocation = SplitAllocationInput;
 
-export type AllocationBase = {
-  value: number;
-};
-
-export type AllocationItemBase = {
-  recipient: Address;
-} & AllocationBase;
-
-export type AllocationFixed = {
-  allocationType: AllocationType.Fixed;
-} & AllocationItemBase;
-
-export type AllocationPercentage = {
-  allocationType: AllocationType.Percentage;
-} & AllocationItemBase;
-
-export type AllocationFixedPrioritized = {
-  allocationType: AllocationType.FixedPrioritized;
-} & AllocationBase;
-
-export type AllocationPercentagePrioritized = {
-  allocationType: AllocationType.PercentagePrioritized;
-} & AllocationBase;
-
-export type AllocationFixedTimed = {
-  allocationType: AllocationType.FixedTimed;
-  timespan: number;
-} & AllocationBase;
-
-export type AllocationPercentageTimed = {
-  allocationType: AllocationType.PercentageTimed;
-  timespan: number;
-} & AllocationBase;
-
-export type Node<TNode, TChildren = TNode> = {
-  node: TNode;
-  children?: Array<Node<TChildren>>;
-};
-
-export type AllocationGroup =
-  | AllocationFixedPrioritized
-  | AllocationPercentagePrioritized
-  | AllocationFixedTimed
-  | AllocationPercentageTimed;
-
-export type AllocationItem = AllocationFixed | AllocationPercentage;
-
-export type AllocationNode = Node<Allocation>;
-export type AllocationGroupNode = Node<AllocationGroup>;
-export type AllocationItemNode = Node<AllocationItem>;
-
-export type CreatePoolConfig = {
+type CreatePoolConfig = {
   allocations: Allocation[];
   ownerAddress: string;
   salt: bigint;
 } & TransactionOverridesDict;
 
-export type SetPoolAllocationConfig = {
+type SetPoolAllocationConfig = {
   poolAddress: Address;
   poolAllocation: Allocation[];
 } & TransactionOverridesDict;
 
-export type WithdrawConfig = {
+type WithdrawConfig = {
   poolAddress: Address;
   recipientAddress?: Address;
   tokenAddress: Address;
@@ -147,23 +87,44 @@ export type WithdrawConfig = {
   amounts: number[];
 } & TransactionOverridesDict;
 
-export type TransferOwnershipConfig = {
+type TransferOwnershipConfig = {
   poolAddress: Address;
   newOwner: Address;
 } & TransactionOverridesDict;
 
-export type SetPausedConfig = {
+type SetPausedConfig = {
   poolAddress: Address;
   paused: boolean;
 } & TransactionOverridesDict;
 
-export type CreateDefaultAllocationFn = (
-  allocationType: AllocationItem["allocationType"],
-) => AllocationGroupNode;
+type CreateDefaultAllocationFn = (
+  calculationType: CalculationType,
+  recipientType: RecipientType,
+) => Allocation;
 
-export type CallData = {
+type CallData = {
   address: string;
   data: Hex;
 };
 
-export type TransactionFormat = Hash | bigint | CallData;
+type TransactionFormat = Hash | bigint | CallData;
+
+export { CalculationType, RecipientType };
+
+export type {
+  TransactionOverrides,
+  ApiConfig,
+  DataClientConfig,
+  MutualsClientConfig,
+  TransactionConfig,
+  RawAllocation,
+  Allocation,
+  CreatePoolConfig,
+  SetPoolAllocationConfig,
+  WithdrawConfig,
+  TransferOwnershipConfig,
+  SetPausedConfig,
+  CreateDefaultAllocationFn,
+  CallData,
+  TransactionFormat,
+};

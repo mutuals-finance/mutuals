@@ -4,10 +4,9 @@ import PoolCard from "@/features/Pool/Card";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
 import { toBigInt } from "ethers";
+import { UseFormReturn } from "react-hook-form";
 
-interface ReviewStepProps {
-  data: PoolAddData;
-}
+interface ReviewStepProps extends UseFormReturn<PoolAddData> {}
 
 function PoolReviewCard({ image, name, description }: PoolAddData) {
   return (
@@ -16,19 +15,19 @@ function PoolReviewCard({ image, name, description }: PoolAddData) {
       metaData={{
         id: "id",
         name: name,
-        image: image!.preview!.toString(),
+        //image: image!.preview!.toString(),
         description: description,
       }}
     />
   );
 }
 
-export function ReviewStep({ data }: ReviewStepProps) {
+export function ReviewStep({ getValues }: ReviewStepProps) {
   return (
     <Box>
       <Text mb={"6"}>You are about to create the following Payment Pool:</Text>
 
-      <PoolReviewCard {...data} />
+      <PoolReviewCard {...getValues()} />
     </Box>
   );
 }

@@ -8,9 +8,9 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const { metaData } = await getPoolDetailsFromRouteParams(params);
+  const { name, description } = await getPoolDetailsFromRouteParams(params);
 
-  if (!metaData || !metaData.name) {
+  if (!name || name == "") {
     return {
       title: `Unknown Payment Pool`,
     };
@@ -18,10 +18,10 @@ export async function generateMetadata({
 
   return {
     title: {
-      default: `${metaData.name}`,
-      template: `${metaData.name}: %s — ${siteName}`,
+      default: `${name}`,
+      template: `${name}: %s — ${siteName}`,
     },
-    description: metaData.description,
+    description,
   };
 }
 

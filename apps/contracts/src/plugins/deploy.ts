@@ -61,7 +61,7 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
   let contract: InstanceOfContract<TContract>;
   const contractFactory = await hre.ethers
     .getContractFactory(contractName, signer)
-    .then((f) => f.connect(signer));
+    .then((f: TContract) => f.connect(signer));
 
   if (shouldDeployProxy) {
     hre.trace('Deploying proxy and instance', contractName);
@@ -138,11 +138,11 @@ export const deployNonUpgradeable = async <
   TFactory extends ContractFactory,
 >({
   contractName,
-  args,
+  args = [],
   options,
 }: {
   contractName: keyof Contracts;
-  args: unknown[];
+  args?: unknown[];
   options?: FactoryOptions;
 }): Promise<InstanceOfContract<TContract>> => {
   const [signer] = await hre.getSigners();

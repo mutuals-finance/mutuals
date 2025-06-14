@@ -8,7 +8,7 @@ import { ReactNode } from "react";
 interface ShellPoolOverviewProps extends Omit<StackProps, "content"> {
   content?: ReactNode;
   contentProps?: ShellPoolProps;
-  sidebarProps: ShellPoolOverviewSidebarProps;
+  sidebarProps: Omit<ShellPoolOverviewSidebarProps, "children">;
 }
 
 export default async function ShellPoolOverview({
@@ -18,19 +18,17 @@ export default async function ShellPoolOverview({
   sidebarProps,
   ...props
 }: ShellPoolOverviewProps) {
-  const isDefaultOpen = sidebarProps.tabs.some(({ href }) =>
+  const defaultOpen = sidebarProps.tabs.some(({ href }) =>
     href.toString().includes((children as any)?.props?.childPropSegment ?? ""),
   );
 
   return (
     <Stack direction={"row"} gap={"0"} w={"full"} {...props}>
       <ShellPool flex={"1"} minWidth={"0"} {...contentProps}>
-        <Container as={Stack} gap={"6"} variant={"shell"}>
-          {content}
-        </Container>
+        <Container maxW={"7xl"}>{content}</Container>
       </ShellPool>
 
-      <ShellPoolOverviewSidebar defaultOpen={isDefaultOpen} {...sidebarProps}>
+      <ShellPoolOverviewSidebar defaultOpen={defaultOpen} {...sidebarProps}>
         {children}
       </ShellPoolOverviewSidebar>
     </Stack>

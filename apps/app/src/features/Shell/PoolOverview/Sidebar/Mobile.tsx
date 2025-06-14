@@ -1,30 +1,33 @@
 import {
-  Drawer,
+  DrawerRootProps,
+  DrawerBackdrop,
   DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay,
-  DrawerProps,
+  DrawerRoot,
+  DrawerCloseTrigger,
+  DrawerTitle,
 } from "@mutuals/ui";
 
-export type ShellPoolOverviewSidebarMobileProps = DrawerProps;
+export type ShellPoolOverviewSidebarMobileProps = DrawerRootProps;
 
 export default function ShellPoolOverviewSidebarMobile({
   children,
   ...props
 }: ShellPoolOverviewSidebarMobileProps) {
   return (
-    <Drawer {...props} size={"lg"}>
-      <DrawerOverlay />
+    <DrawerRoot {...props} size={"lg"}>
+      <DrawerBackdrop />
       <DrawerContent>
-        <DrawerCloseButton />
-        <DrawerHeader>Manage Funds</DrawerHeader>
+        <DrawerCloseTrigger />
+        <DrawerHeader>
+          <DrawerTitle>Manage Funds</DrawerTitle>
+        </DrawerHeader>
 
         <DrawerBody p={"0"} flex={"1"}>
           {children}
         </DrawerBody>
       </DrawerContent>
-    </Drawer>
+    </DrawerRoot>
   );
 }

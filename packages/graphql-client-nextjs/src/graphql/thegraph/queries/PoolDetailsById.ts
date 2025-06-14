@@ -2,7 +2,7 @@ import { graphql } from "../__generated__";
 
 export const GET_POOL_DETAILS_BY_ID = graphql(/* GraphQL */ `
   query PoolDetailsById($id: ID!) {
-    split(id: $id) {
+    pool(id: $id) {
       id
       address
       blockNumber

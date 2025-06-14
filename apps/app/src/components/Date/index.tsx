@@ -1,4 +1,4 @@
-import { Text, TextProps } from "@chakra-ui/react";
+import { Text, TextProps } from "@mutuals/ui";
 import { format, FormatOptions, fromUnixTime } from "date-fns";
 
 interface DateProps extends TextProps {

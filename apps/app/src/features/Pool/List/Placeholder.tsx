@@ -3,7 +3,7 @@ import React from "react";
 
 import ContentCard from "@/components/ContentCard";
 
-export function SplitListPlaceholder() {
+export function PoolListPlaceholder() {
   return (
     <ContentCard
       size={"lg"}

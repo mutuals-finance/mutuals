@@ -5,6 +5,7 @@ import {
   BreadcrumbLink,
   type BreadcrumbLinkProps,
   BreadcrumbCurrentLink,
+  Link,
 } from "@mutuals/ui";
 import { ReactNode } from "react";
 import { Icon } from "@mutuals/ui";
@@ -13,10 +14,15 @@ import { RxSlash } from "react-icons/rx";
 function BreadcrumbsInnerItem({
   children,
   isCurrentPage,
+  href,
   ...props
 }: BreadcrumbLinkProps & { isCurrentPage?: boolean }) {
-  return !isCurrentPage ? (
-    <BreadcrumbLink {...props}>{children}</BreadcrumbLink>
+  return !isCurrentPage && !!href ? (
+    <BreadcrumbLink asChild {...props}>
+      <Link href={href} unstyled={true}>
+        {children}
+      </Link>
+    </BreadcrumbLink>
   ) : (
     <BreadcrumbCurrentLink {...props}>{children}</BreadcrumbCurrentLink>
   );
@@ -32,18 +38,23 @@ export default function BreadcrumbsInner({
 }: BreadcrumbsInnerProps) {
   return (
     <BreadcrumbRoot
-      fontSize={"sm"}
       gap="3"
-      separator={<Icon as={RxSlash} boxSize={"0.6rem"} />}
+      separator={
+        <Icon boxSize={"0.6rem"}>
+          <RxSlash />
+        </Icon>
+      }
       {...props}
     >
-      {items.map(function ({ children, href }, i) {
+      {items.map(function ({ children, href, ...innerProps }, i) {
         const isCurrentPage = i === items.length - 1;
 
         return (
           <BreadcrumbsInnerItem
             key={`${href}-${i}`}
             isCurrentPage={isCurrentPage}
+            href={href}
+            {...innerProps}
           >
             {children}
           </BreadcrumbsInnerItem>

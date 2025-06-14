@@ -1,19 +1,16 @@
-import { Button } from "@mutuals/ui";
-import Form from "@/components/Form";
-import FormGroup from "@/components/Form/FormGroup";
-import Input from "@/components/Form/Input";
+import { Form, Button, Input, Box, Field } from "@mutuals/ui";
 
 type Email = { email?: string };
 
 export function WalletSelectionEmail() {
   return (
     <Form<Email>>
-      <FormGroup>
+      <Field label={"Email"}>
         <Input id={"email"} placeholder={"Enter your email"} />
-      </FormGroup>
-      <FormGroup>
-        <Button size={"md"}>Sign In</Button>
-      </FormGroup>
+      </Field>
+      <Box>
+        <Button size={"xl"}>Sign In</Button>
+      </Box>
     </Form>
   );
 }

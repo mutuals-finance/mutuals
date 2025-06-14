@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Text } from "@mutuals/ui";
 
 export interface StepperItemState {
   id: string;
@@ -14,6 +15,7 @@ export interface StepperItemState {
 
 export interface StepperModalStep extends StepperItemState {
   children: (state: ItemState) => ReactNode;
+  onNext?: (step: StepperModalStep, index: number) => void | Promise<void>;
 }
 
 export interface ItemState extends StepperItemState {
@@ -33,7 +35,7 @@ export default function StepperItem({ children, ...props }: StepperItemProps) {
       {isActive && (
         <>
           {children(props)}
-          {isError && <p>{error?.message || "Unknown Error"}</p>}
+          {isError && <Text>{error?.message || "Unknown Error"}</Text>}
         </>
       )}
     </>

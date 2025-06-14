@@ -27,7 +27,7 @@ export default function ShellDashboardFooter() {
         separator={<StackSeparator />}
         gap={"3"}
       >
-        <Text>Copyright 2023 SplitFi</Text>
+        <Text>Copyright 2023 Mutuals</Text>
         <Text>The best way to split your smart contract profits</Text>
       </Stack>
 

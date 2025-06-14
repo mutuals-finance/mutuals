@@ -37,7 +37,9 @@ export function EventIconCell({ address = "", row }: EventIconCellProps) {
       alignItems={"center"}
       justifyContent={"center"}
     >
-      <Icon as={type === EventType.Deposit ? HiArrowDownTray : HiArrowUpTray} />
+      <Icon>
+        {type === EventType.Deposit ? <HiArrowDownTray /> : <HiArrowUpTray />}
+      </Icon>
     </Flex>
   );
 }

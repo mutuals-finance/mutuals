@@ -13,10 +13,9 @@ export default function WalletConnectButton({
   return (
     <Button
       w={"full"}
-      size={"lg"}
+      size={"2xl"}
       justifyContent={"flex-start"}
       variant="outline"
-      minH={"16"}
       {...props}
     >
       {connector?.icon && (

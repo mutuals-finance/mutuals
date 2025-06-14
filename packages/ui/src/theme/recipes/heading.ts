@@ -4,7 +4,7 @@ export default defineRecipe({
   variants: {
     variant: {
       subtag: {
-        color: "fg.muted",
+        color: "fg.subtle",
         fontFamily: "heading",
         textTransform: "uppercase",
         letterSpacing: "widest",
@@ -13,5 +13,5 @@ export default defineRecipe({
       },
     },
   },
-  base: { fontWeight: "500" },
+  base: { fontWeight: "medium" },
 });

@@ -1,17 +1,20 @@
 "use client";
 
-import Form from "@/components/Form";
-import FormGroup from "@/components/Form/FormGroup";
-import InputImage from "@/components/Form/InputImage";
-import Input from "@/components/Form/Input";
-import TextArea from "@/components/Form/TextArea";
-import { Box, Button } from "@mutuals/ui";
-import { FileWithPreview } from "@/components/Form/types";
+import {
+  Box,
+  Button,
+  Fieldset,
+  Input,
+  Textarea,
+  FileUpload,
+  Field,
+  Form,
+} from "@mutuals/ui";
 
 type PoolMetadataEditType = {
-  name?: string | null;
-  description?: string | null;
-  image?: FileWithPreview | null;
+  name?: string;
+  description?: string;
+  image?: any;
 };
 
 interface PoolMetadataFormProps {
@@ -23,23 +26,32 @@ export default function PoolMetadataForm({
 }: PoolMetadataFormProps) {
   return (
     <Form<PoolMetadataEditType> defaultValues={defaultValues}>
-      <FormGroup description={`Modify the metadata of your split contract.`}>
-        <InputImage id="image" label="Image" />
+      <Fieldset.Root>
+        <Fieldset.Legend>Metadata</Fieldset.Legend>
+        <Fieldset.HelperText>
+          Modify the metadata of your split contract.
+        </Fieldset.HelperText>
 
-        <Input
-          label="Name"
-          id="name"
-          validation={{ required: "Please enter a name" }}
-        />
+        <Fieldset.Content>
+          <Field label="Image" id="image">
+            <FileUpload id="image" />
+          </Field>
 
-        <TextArea label="Description" id="description" />
-      </FormGroup>
+          <Field label="Name" id="name">
+            <Input id="name" rules={{ required: "Please enter a name" }} />
+          </Field>
 
-      <Box>
-        <Button w={"full"} type={"submit"}>
-          Update Metadata
-        </Button>
-      </Box>
+          <Field label="Description" id="description">
+            <Textarea id="description" />
+          </Field>
+
+          <Box>
+            <Button size={"xl"} type={"submit"}>
+              Update Metadata
+            </Button>
+          </Box>
+        </Fieldset.Content>
+      </Fieldset.Root>
     </Form>
   );
 }

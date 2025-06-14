@@ -2,97 +2,71 @@ import {
   Box,
   Button,
   Card,
-  Flex,
   Heading,
-  HStack,
   LinkBox,
   LinkOverlay,
-  Stack,
   Text,
   StatRoot,
   StatLabel,
+  HStack,
   StatValueText,
+  Tag,
 } from "@mutuals/ui";
 import NextLink from "next/link";
 
-import {
-  formatPrefixedAddress,
-  getShortNameByChainId,
-  shortenAddress,
-} from "@/utils";
+import { shortenAddress } from "@/utils";
 
 import PoolCardLogo from "@/features/Pool/Card/Logo";
-import { Split } from "@mutuals/graphql-client-nextjs/thegraph";
+import { Pool, PoolStatus } from "@mutuals/graphql-client-nextjs";
 
-export type PoolCardProps = Partial<Split>;
+export type PoolCardProps = Partial<Pool>;
 
-function PoolCard({ id, metaData, address }: PoolCardProps) {
+function PoolCard({ dbid, name, status, address }: PoolCardProps) {
   return (
     <LinkBox as="article">
       <Card.Root>
-        <Card.Header as={Flex} alignItems={"center"} gap={"3"}>
-          <Box flexShrink={0}>
-            {
-              <PoolCardLogo
-                src={
-                  "https://bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu.ipfs.w3s.link"
-                }
-                alt={metaData?.name || "UNKNOWN"}
-              />
-            }
-          </Box>
+        <Card.Header>
+          <HStack alignItems={"flex-start"}>
+            <HStack flex={"1"}>
+              <PoolCardLogo alt={name} />
 
-          <Box flex="1">
-            <Heading size="sm" as={"h3"}>
-              {metaData?.name === "" ? "Unknown" : metaData?.name}
-            </Heading>
+              <Box>
+                <Heading size="sm" as={"h3"}>
+                  {!name || name == "" ? "Unknown Pool" : name}
+                </Heading>
 
-            <Text fontFamily={"mono"} fontSize={"xs"}>
-              {shortenAddress(address)}
-            </Text>
-          </Box>
-        </Card.Header>
-        <Card.Body pt={"0"}>
-          <Stack gap="3">
-            <Text lineClamp={2} fontSize={"sm"}>
-              {metaData?.description}
-            </Text>
-
-            <HStack
-              flex={"1"}
-              alignItems={"flex-end"}
-              gap={"6"}
-              p={"3"}
-              bg={"bg.2"}
-              rounded={"md"}
-            >
-              <StatRoot maxW="240px">
-                <StatLabel>Your balance</StatLabel>
-                <StatValueText
-                  value={493123.24}
-                  formatOptions={{
-                    currency: "USD",
-                    style: "currency",
-                  }}
-                />
-              </StatRoot>
-
-              <Button size={"sm"} _hover={{ cursor: "default" }}>
-                View More
-              </Button>
+                <Text fontFamily={"mono"} fontSize={"xs"}>
+                  {shortenAddress(address)}
+                </Text>
+              </Box>
             </HStack>
-          </Stack>
+
+            {(status == PoolStatus.Draft || !status) && (
+              <Tag colorPalette={"orange"} flexShrink={"0"}>
+                {PoolStatus.Draft}
+              </Tag>
+            )}
+          </HStack>
+        </Card.Header>
+        <Card.Body>
+          <StatRoot flex={"1"} size={"sm"}>
+            <StatLabel>Your balance</StatLabel>
+            <StatValueText
+              value={0.0}
+              formatOptions={{
+                currency: "USD",
+                style: "currency",
+              }}
+            />
+          </StatRoot>
         </Card.Body>
+        <Card.Footer>
+          <Button flex={"1"} size={"sm"} variant={"subtle"}>
+            View More
+          </Button>
+        </Card.Footer>
       </Card.Root>
-      {!!id && (
-        <LinkOverlay
-          as={NextLink}
-          href={`/pool/${formatPrefixedAddress(
-            id,
-            getShortNameByChainId(80001),
-          )}`}
-        />
-      )}
+      {!!dbid && <LinkOverlay as={NextLink} href={`/pool/${dbid}`} />}
     </LinkBox>
   );
 }

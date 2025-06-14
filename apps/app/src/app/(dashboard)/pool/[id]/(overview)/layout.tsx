@@ -1,21 +1,24 @@
 import React, { PropsWithChildren } from "react";
 import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
-import PoolOverviewShares from "@/features/PoolOverview/Shares";
 import ActivityTableCard from "@/features/Activity/TableCard";
 import AssetTableCard from "@/features/Asset/TableCard";
 import PoolOverviewDescription from "@/features/PoolOverview/Description";
 import ShellPoolOverview from "@/features/Shell/PoolOverview";
 import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
+import { Stack } from "@mutuals/ui";
+import AllocationTableCard from "@/features/Allocation/TableCard";
 
 const tabs = [
   {
     title: "Withdraw",
-    href: "/pool/maticmum:0x84f36e3afa3d0994401b24f1eabd4fddbdc715db/withdraw",
+    value: "withdraw",
+    href: "/pool/2s4NOxbwvXdpJ9daLIqqvBnpl7V/withdraw",
   },
   {
     title: "Deposit",
-    href: "/pool/maticmum:0x84f36e3afa3d0994401b24f1eabd4fddbdc715db/deposit",
+    value: "deposit",
+    href: "/pool/2s4NOxbwvXdpJ9daLIqqvBnpl7V/deposit",
   },
 ];
 
@@ -39,7 +42,6 @@ export default async function PoolOverviewLayout({
 
   const props = {
     pool,
-    shares: pool.shares ?? [],
     balance: queries[1]!,
     activity: queries[2]!,
   };
@@ -48,18 +50,18 @@ export default async function PoolOverviewLayout({
     <ShellPoolOverview
       sidebarProps={{ tabs }}
       content={
-        <>
+        <Stack gap={"4"}>
           <PoolOverviewDescription {...props} />
           <PoolOverviewHandlers {...props} />
-          <PoolOverviewShares {...props} />
-          <AssetTableCard assets={props.balance?.assets?.slice(0, 6)} />
+          <AllocationTableCard {...props} />
+          <AssetTableCard assets={props.balance?.assets?.slice(0, 10)} />
           <ActivityTableCard
-            payee={props.pool?.address!}
-            transfers={props.activity.transfers.slice(0, 6)}
+            payee={address}
+            transfers={props.activity.transfers.slice(0, 10)}
           />
-        </>
+        </Stack>
       }
-      contentProps={{ metaData: pool.metaData }}
+      contentProps={{ pool }}
     >
       {children}
     </ShellPoolOverview>

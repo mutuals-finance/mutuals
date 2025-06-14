@@ -1,13 +1,15 @@
-import { default as container } from "./container";
-import { default as button } from "./button";
+import { default as chakraContainer } from "./container";
+import { default as chakraButton } from "./button";
 import { default as chakraText } from "./text";
-import { default as heading } from "./heading";
-import { default as link } from "./link";
+import { default as chakraHeading } from "./heading";
+import { default as chakraLink } from "./link";
+import { default as chakraInput } from "./input";
 
 export default {
-  button,
-  container,
-  link,
+  button: chakraButton,
+  container: chakraContainer,
+  link: chakraLink,
   text: chakraText,
-  heading,
+  heading: chakraHeading,
+  input: chakraInput,
 };

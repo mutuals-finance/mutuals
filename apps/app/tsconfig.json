@@ -1,7 +1,6 @@
 {
   "extends": "@mutuals/typescript-config/next.json",
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -15,11 +14,9 @@
   // filenames are resolved relative to the directory containing the tsconfig.json file.
   // https://www.typescriptlang.org/tsconfig/#include
   "include": [
-    "next-env.d.ts",
-    "next.config.js",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["out/**/*", "node_modules", "cypress/**/*.ts", "types/**/typechain/**/*.ts"]
+  "exclude": ["node_modules"]
 }
