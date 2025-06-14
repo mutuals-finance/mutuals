@@ -7,7 +7,7 @@
     "build": "hardhat compile",
     "build:clean": "cross-env pnpm clean && pnpm build",
     "clean": "cross-env hardhat clean && rimraf .deps cache",
-    "test": "cross-env SOLC_PROFILE=test && hardhat test --trace",
+    "test": "cross-env SOLC_PROFILE=test && hardhat test",
     "test:clean": "cross-env pnpm clean && pnpm test",
     "typechain": "hardhat typechain",
     "deploy:local": "hardhat deploy --network localhost",

@@ -200,5 +200,4 @@ abstract contract BaseExtension is IExtension {
         }
     }
 
-    receive() external payable virtual {}
 }

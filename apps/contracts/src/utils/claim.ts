@@ -6,18 +6,35 @@ type ClaimConfig = Record<string, number>;
 
 const Claim = {
   from(config: ClaimConfig) {
-    return Object.entries(config).map(([recipient, value], i) => {
-      return {
-        id: i,
-        parentId: 0,
-        recipient: getAddress(recipient),
-        value,
-        stateId: ethers.solidityPacked(['uint256'], [0x637442]),
-        stateData: ethers.ZeroHash,
-        strategyId: ethers.solidityPacked(['uint256'], [0x577472]),
-        strategyData: ethers.ZeroHash,
-      };
-    }) as ClaimStruct[];
+    return Object.entries(config).reduce(
+      (acc: ClaimStruct[], [recipient, value], i) => {
+        const base = {
+          id: acc.length,
+          parentId: 0,
+          recipient: getAddress(recipient),
+          value,
+          stateId: ethers.solidityPacked(['uint256'], [0x637442]),
+          stateData: ethers.ZeroHash,
+          strategyId: ethers.solidityPacked(['uint256'], [0x577472]),
+          strategyData: ethers.ZeroHash,
+        };
+
+        return [
+          ...acc,
+          {
+            ...base,
+            strategyId: ethers.solidityPacked(['uint256'], [0x577472]),
+            strategyData: ethers.ZeroHash,
+          },
+          {
+            ...base,
+            strategyId: ethers.solidityPacked(['uint256'], [0x577472]),
+            strategyData: ethers.ZeroHash,
+          },
+        ];
+      },
+      [] as ClaimStruct[]
+    );
   },
   buildTree(claims: ClaimStruct[]) {
     const abiCoder = ethers.AbiCoder.defaultAbiCoder();

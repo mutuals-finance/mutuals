@@ -66,7 +66,7 @@ contract TokenAllocation is BaseExtension {
             (Token, address, uint256, TokenType)
         );
 
-        if (token.isAddressZero()) revert TokenAllocation_InvalidToken();
+        // @notice token address can be zero for native token
         if (owner == address(0)) revert TokenAllocation_InvalidOwner();
 
         return token.balanceOf(owner, tokenType, id) - _pending(claim, params);

@@ -117,7 +117,7 @@ contract PoolFactory is IPoolFactory, Initializable, OwnableUpgradeable, UUPSUpg
         bytes32[] calldata _extensions,
         bytes[] calldata _data
     ) internal pure returns (bytes memory) {
-        return abi.encodeWithSelector(Pool(address(0)).__Pool_init.selector, _initialOwner, _registry, _extensions, _data);
+        return abi.encodeWithSelector(Pool(payable(0)).__Pool_init.selector, _initialOwner, _registry, _extensions, _data);
     }
 
     /// @dev Upgrades the implementation of the proxy to new address.

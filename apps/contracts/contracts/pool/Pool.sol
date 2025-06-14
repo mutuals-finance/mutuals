@@ -100,7 +100,7 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
 
         _released[params.token][claim.id] += params.amount;
         _totalReleased[params.token] += params.amount;
-        //params.token.transfer(claim.recipient, params.amount);
+        params.token.transfer(claim.recipient, params.amount);
 
         emit Withdrawal(claim.recipient, params.token, params.amount);
         extensions.afterWithdraw(claim, params);
@@ -123,4 +123,6 @@ contract Pool is IPool, OwnableUpgradeable, PausableUpgradeable {
         // emit BatchWithdraw(claim, params);
         extensions.afterBatchWithdraw(claims, params);
     }
+
+    receive() external payable  {}
 }
