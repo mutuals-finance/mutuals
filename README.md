@@ -1,6 +1,24 @@
 # Mutuals
+Mutuals Finance is an open-source, decentralized protocol for managing on‑chain payments. 
+It enables automated, trustless revenue distribution, token splitting, and earnings tracking—with zero protocol fees and support across 7+ networks (Ethereum, Polygon, Base, Optimism, Arbitrum, Avalanche, BNB, and zkSync).
 
-### Apps and Packages
+## Apps and Packages
+
+| App                                      | Description                             |
+|------------------------------------------|-----------------------------------------|
+| [`@mutuals/contracts`](./apps/contracts) | Mutuals smart contracts |
+| [`@mutuals/app`](./apps/app)             | Mutuals app interface          |
+| [`@mutuals/landing`](./apps/landing)     | Mutuals landing page                 |
+| [`@mutuals/docs`](./apps/docs)           | Mutuals documentation                 |
+
+| Package                                                              | Description                                |
+|----------------------------------------------------------------------|--------------------------------------------|
+| [`@mutuals/ui`](./packages/ui)                                       | Shared stub component and theme library    |
+| [`@mutuals/graphql-client-nextjs`](./packages/graphql-client-nextjs) | Shared graphql client with graphql schemes |
+| [`@mutuals/sdk`](./packages/sdk)                                     | Shared SDK                                 |
+| [`@mutuals/sdk`](./packages/sdk-react)                               | Shared React SDK                           |
+| [`@mutuals/eslint-config`](./packages/ui-components)                 | Shared `eslint` configurations             |
+| [`@mutuals/typescript-config`](./packages/web)                       | Shared `tsconfig.json`s                    |
 
 - `@mutuals/landing`: Mutuals landing page
 - `@mutuals/app`: Mutuals app interface
