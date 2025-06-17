@@ -1,11 +1,4 @@
-import {
-  AccordionItemProps,
-  Button,
-  Card,
-  IconProps,
-  List,
-  Text,
-} from "@mutuals/ui";
+import { Button, Card, IconProps } from "@mutuals/ui";
 import { IoChatbubblesOutline, IoPaperPlaneOutline } from "react-icons/io5";
 
 const items = [
@@ -16,7 +9,7 @@ const items = [
       "Discuss your enterprise requirements, explore personalized pricing options, or request a demo.",
     ],
     children: (
-      <Button mt={"6"} variant={"subtle"}>
+      <Button variant={"solid"} mt={"4"} alignSelf={"flex-start"} size={"sm"}>
         Let's Chat
       </Button>
     ),

@@ -2,10 +2,17 @@
 
 import { Link, type LinkProps } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
+import { LuExternalLink } from "react-icons/lu";
 
-export interface NavLinkProps extends LinkProps {}
+export interface NavLinkProps extends LinkProps {
+  external?: boolean;
+}
 
-export default function NavLink(props: NavLinkProps) {
+export default function NavLink({
+  children,
+  external = false,
+  ...props
+}: NavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === props.href;
   return (
@@ -16,6 +23,8 @@ export default function NavLink(props: NavLinkProps) {
       textTransform="uppercase"
       letterSpacing={"wide"}
       {...props}
-    />
+    >
+      {children} {external && <LuExternalLink />}
+    </Link>
   );
 }
