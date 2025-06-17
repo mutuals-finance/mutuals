@@ -12,19 +12,19 @@ const values = [
   {
     heading: "Split tokens",
     description:
-      "Mutuals integrates with your clients systems and connects with a range of data sources",
+      "Mutuals processes payments and allocates funds to recipients based on preset rules.",
     icon: <RiExchange2Line />,
   },
   {
     heading: "Automate payments",
     description:
-      "Mutuals integrates with your clients systems and connects with a range of data sources",
+      "Mutuals automates blockchain payments to ensure timely, rule-based transfers without manual intervention.",
     icon: <IoCodeWorkingOutline />,
   },
   {
     heading: "Track earnings",
     description:
-      "Mutuals integrates with your clients systems and connects with a range of data sources",
+      "Mutuals tracks on-chain earnings in real time, giving recipients clear, transparent insights into their payouts.",
     icon: <IoTimerOutline />,
   },
 ];

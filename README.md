@@ -1,16 +1,26 @@
 # Mutuals
+Mutuals Finance is an open-source, decentralized protocol for managing on‑chain payments. 
+It enables automated, trustless revenue distribution, token splitting, and earnings tracking with zero protocol fees and support across 7+ networks (Ethereum, Polygon, Base, Optimism, Arbitrum, Avalanche, BNB, and zkSync).
 
-### Apps and Packages
+## Apps and Packages
 
-- `@mutuals/landing`: Mutuals landing page
-- `@mutuals/app`: Mutuals app interface
-- `@mutuals/contracts`: Mutuals smart contracts
-- `@mutuals/docs`: Mutuals documentation
-- `@mutuals/ui`: shared stub component and theme library
-- `@mutuals/eslint-config`: shared `eslint` configurations
-- `@mutuals/typescript-config`: shared `tsconfig.json`s
+| App                                      | Description                             |
+|------------------------------------------|-----------------------------------------|
+| [`@mutuals/contracts`](./apps/contracts) | Mutuals smart contracts |
+| [`@mutuals/app`](./apps/app)             | Mutuals app interface          |
+| [`@mutuals/landing`](./apps/landing)     | Mutuals landing page                 |
+| [`@mutuals/docs`](./apps/docs)           | Mutuals documentation                 |
 
-### Build
+| Package                                                              | Description                                |
+|----------------------------------------------------------------------|--------------------------------------------|
+| [`@mutuals/ui`](./packages/ui)                                       | Shared stub component and theme library    |
+| [`@mutuals/graphql-client-nextjs`](./packages/graphql-client-nextjs) | Shared graphql client with graphql schemes |
+| [`@mutuals/sdk`](./packages/sdk)                                     | Shared SDK                                 |
+| [`@mutuals/sdk`](./packages/sdk-react)                               | Shared React SDK                           |
+| [`@mutuals/eslint-config`](./packages/ui-components)                 | Shared `eslint` configurations             |
+| [`@mutuals/typescript-config`](./packages/web)                       | Shared `tsconfig.json`s                    |
+
+## Build
 
 To build all apps and packages, run the following command:
 
@@ -19,7 +29,7 @@ cd mutuals
 pnpm build
 ```
 
-### Develop
+## Develop
 
 To develop all apps and packages, run the following command:
 
@@ -28,7 +38,7 @@ cd mutuals
 pnpm dev
 ```
 
-### Remote Caching
+## Remote Caching
 
 Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 

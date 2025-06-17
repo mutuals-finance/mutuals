@@ -1,16 +1,16 @@
-import { type LinkProps } from "@mutuals/ui";
 import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
 import { BiLogoTelegram } from "react-icons/bi";
+import { NavLinkProps } from "@/features/Layout/Header/NavLink";
 
-const links: LinkProps[] = [
+const links: NavLinkProps[] = [
   {
     href: "/pricing",
     children: "Pricing",
   },
-  { children: "Company", href: "/contact" },
-  { children: "Community", href: "/support" },
-  { children: "Blog", href: "/blog" },
-  { children: "Docs", href: "/docs" },
+  { children: "About", href: "/contact" },
+  { children: "Socials", href: "/socials" },
+  { children: "Blog", external: true, href: "/blog" },
+  { children: "Docs", external: true, href: "/docs" },
 ];
 
 export const socialLinks = [

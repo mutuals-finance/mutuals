@@ -12,40 +12,52 @@ import IconBox from "@/components/IconBox";
 
 export default function ContactOptions() {
   return (
-    <Container mt="16" mb="32" maxW="5xl">
+    <Container mt="16" mb="32" maxW="7xl">
       <Stack textAlign={"center"} alignItems={"center"}>
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "6", lg: "12" }}>
-          {items.map(({ icon, heading, description, children, ...props }) => (
-            <Card.Root
-              alignItems={"flex-start"}
-              textAlign={"left"}
-              key={heading}
-              {...props}
-            >
-              <Card.Body alignItems={"flex-start"}>
-                {!!icon && (
-                  <IconBox mb="4" size={"lg"} color={"white"} bg="blue.600">
-                    <Icon asChild boxSize={5}>
-                      {icon}
-                    </Icon>
-                  </IconBox>
-                )}
-                <Heading size={"xl"}>{heading}</Heading>
+          {items.map(
+            ({
+              icon,
+              heading,
+              description,
+              children,
+              variant = "outline",
+              size = "lg",
+              ...props
+            }) => (
+              <Card.Root key={heading} variant={variant} size={size} {...props}>
+                <Card.Header>
+                  <Stack direction={"row"} alignItems={"flex-end"}>
+                    <Heading size={"xl"}>{heading}</Heading>
 
-                {!!description?.length && description.length > 0 && (
-                  <Stack gap={"1"} mt={"4"}>
-                    {description.map((paragraph, i) => (
-                      <Text key={i} variant={"muted"}>
-                        {paragraph}
-                      </Text>
-                    ))}
+                    {!!icon && (
+                      <IconBox
+                        size={"xs"}
+                        color={"fg.muted"}
+                        bg="gray.muted"
+                        ml={"auto"}
+                      >
+                        <Icon asChild>{icon}</Icon>
+                      </IconBox>
+                    )}
                   </Stack>
-                )}
+                </Card.Header>
+                <Card.Body>
+                  {!!description?.length && description.length > 0 && (
+                    <Stack gap={"1"}>
+                      {description.map((paragraph, i) => (
+                        <Text key={i} color={"fg.muted"}>
+                          {paragraph}
+                        </Text>
+                      ))}
+                    </Stack>
+                  )}
 
-                {children}
-              </Card.Body>
-            </Card.Root>
-          ))}
+                  {children}
+                </Card.Body>
+              </Card.Root>
+            ),
+          )}
         </SimpleGrid>
       </Stack>
     </Container>

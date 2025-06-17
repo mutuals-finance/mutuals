@@ -1,13 +1,13 @@
 {
   "hardhat": {
     "Pool": {
-      "proxyAddress": "0x08cDe78486F5975D1f01Ff57698fAfE665cB0e48"
+      "proxyAddress": "0xaD733F1c8F34A16B5Ad8F84ba94c487547ebd59e"
     },
     "PoolFactory": {
-      "proxyAddress": "0xbC4BFa087473C516A04D720Ac6301BF8981177FA"
+      "proxyAddress": "0xA1B80af7772729b4f7626fAed4cEcDA98B9d3f44"
     },
     "Registry": {
-      "proxyAddress": "0x5ec4AA92a40BcDbAdaeb46be6f808a3C81917573"
+      "proxyAddress": "0x28f282C3df413C9b0A5301DF875Df3b0955731a8"
     },
     "DefaultAllocation": {
       "proxyAddress": "0x2605Ea7aedbEA8CeD14f69BE94c1E4fBaA46e213"
@@ -64,11 +64,8 @@
     }
   },
   "polygonAmoy": {
-    "Pool": {
-      "proxyAddress": "0xA1B80af7772729b4f7626fAed4cEcDA98B9d3f44"
-    },
-    "PoolFactory": {
-      "proxyAddress": "0xbC4BFa087473C516A04D720Ac6301BF8981177FA"
+    "Registry": {
+      "proxyAddress": "0x0691F1291893f87201F59b4017f7a51476d8F380"
     }
   }
 }
