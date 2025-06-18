@@ -2,7 +2,9 @@
 
 import { Box, Container, AspectRatio, Stack, Heading, Text } from "@mutuals/ui";
 
-import percentImage from "@/assets/percent.webp";
+import percentImage from "@/assets/percentage.png";
+import timelockImage from "@/assets/timelock.png";
+
 import bg1Image from "@/assets/pay-1-bg.png";
 import bg2Image from "@/assets/pay-2-bg.png";
 import bg3Image from "@/assets/pay-3-bg.png";
@@ -14,13 +16,22 @@ import IconBox from "@/components/IconBox";
 
 const payments = [
   {
+    tag: "Customizable allocation",
+    headline:
+      "Seamlessly convert your funds between tokens and fiat in realtime.",
+    description: "Recipient allocation based on relative amounts.",
+    image: timelockImage,
+    bgImage: bg2Image,
+    isActive: true,
+  },
+  {
     tag: "Percentage allocation",
     headline:
       "Seamlessly convert your funds between tokens and fiat in realtime.",
     description: "Recipient allocation based on relative amounts.",
     image: percentImage,
     bgImage: bg1Image,
-    isActive: true,
+    isActive: false,
   },
   {
     tag: "Prioritized allocation",
