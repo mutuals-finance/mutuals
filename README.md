@@ -5,8 +5,8 @@ It enables automated, trustless revenue distribution, token splitting, and earni
 ```mermaid
 flowchart TD
     Pool(["Pool"]) L_Pool_A_0@-- "0.4 ETH" --> A["alice.eth"]
-    Pool L_Pool_B_0@-- 2000 USDC --> B["0xd23…5D2"]
-    Pool L_Pool_C_0@-- 4500 USDC --> C(["Group"])
+    Pool L_Pool_B_0@-- 1y / 120,000 USDC --> B["0xd23…5D2"]
+    Pool L_Pool_C_0@-- 30d / 9,500 USDC --> C(["Group"])
     C L_C_D_0@-- 50% --> D["bob.eth"] & E["0x56E…117"]
     L_Pool_A_0@{ animation: slow } 
     L_Pool_B_0@{ animation: slow } 
