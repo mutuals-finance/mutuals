@@ -2,6 +2,19 @@
 Mutuals Finance is an open-source, decentralized protocol for managing on‑chain payments. 
 It enables automated, trustless revenue distribution, token splitting, and earnings tracking with zero protocol fees and support across 7+ networks (Ethereum, Polygon, Base, Optimism, Arbitrum, Avalanche, BNB, and zkSync).
 
+```mermaid
+flowchart TD
+    Pool(["Pool"]) L_Pool_A_0@-- "0.4 ETH" --> A["alice.eth"]
+    Pool L_Pool_B_0@-- 2000 USDC --> B["0xd23…5D2"]
+    Pool L_Pool_C_0@-- 4500 USDC --> C(["Group"])
+    C L_C_D_0@-- 50% --> D["bob.eth"] & E["0x56E…117"]
+    L_Pool_A_0@{ animation: slow } 
+    L_Pool_B_0@{ animation: slow } 
+    L_Pool_C_0@{ animation: slow } 
+    L_C_D_0@{ animation: slow } 
+    L_C_E_0@{ animation: slow }
+```
+
 ## Apps and Packages
 
 | App                                      | Description                             |
