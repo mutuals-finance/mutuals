@@ -28,7 +28,7 @@ export default function ContactOptions() {
               <Card.Root key={heading} variant={variant} size={size} {...props}>
                 <Card.Header>
                   <Stack direction={"row"} alignItems={"flex-end"}>
-                    <Heading size={"xl"}>{heading}</Heading>
+                    <Heading size={"4xl"}>{heading}</Heading>
 
                     {!!icon && (
                       <IconBox
@@ -46,7 +46,7 @@ export default function ContactOptions() {
                   {!!description?.length && description.length > 0 && (
                     <Stack gap={"1"}>
                       {description.map((paragraph, i) => (
-                        <Text key={i} color={"fg.muted"}>
+                        <Text key={i} color={"fg.subtle"} textStyle={"lg"}>
                           {paragraph}
                         </Text>
                       ))}

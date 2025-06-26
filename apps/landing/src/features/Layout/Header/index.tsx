@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Box, HStack, BoxProps } from "@mutuals/ui";
+import { Box, BoxProps } from "@mutuals/ui";
 
 import NavMobile from "@/features/Layout/Header/NavMobile";
 import NavDesktop from "@/features/Layout/Header/NavDesktop";
@@ -21,19 +21,20 @@ export default function Header(props: HeaderProps) {
 
   return (
     <Box as="header" {...props}>
-      <NavMobile.Root open={open}>
-        <HeaderContainerWrapper>
-          <NavDesktop hideBelow="lg" links={links} />
+      <HeaderContainerWrapper>
+        <NavDesktop hideBelow="lg" links={links} />
+
+        <NavMobile.Root open={open}>
           <NavMobile.Navbar
             hideFrom="lg"
             buttonProps={{ onClick: () => setOpen(true) }}
           />
-        </HeaderContainerWrapper>
-        <NavMobile.Drawer
-          links={links}
-          closeButtonProps={{ onClick: () => setOpen(false) }}
-        />
-      </NavMobile.Root>
+          <NavMobile.Drawer
+            links={links}
+            closeButtonProps={{ onClick: () => setOpen(false) }}
+          />
+        </NavMobile.Root>
+      </HeaderContainerWrapper>
     </Box>
   );
 }

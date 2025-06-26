@@ -26,10 +26,10 @@ export default function LayoutFooter() {
           <ListBox
             title={"Company"}
             links={[
-              { children: "About Us", href: "/" },
+              { children: "About Us", href: "/about" },
+              { children: "Contact Us", href: "/contact" },
+              { children: "Careers", href: "/about" },
               { children: "Blog", href: "/" },
-              { children: "Careers", href: "/" },
-              { children: "Contact Us", href: "/" },
             ]}
           />
           <ListBox
@@ -64,7 +64,7 @@ export default function LayoutFooter() {
           </ListBox>
 
           <ListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 3 }}>
-            <Form>
+            <Form w={"full"}>
               <Field id={"email"} label={"Email address"}>
                 <InputGroup
                   w={"full"}

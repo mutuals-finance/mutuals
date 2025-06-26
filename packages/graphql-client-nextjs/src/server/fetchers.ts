@@ -2,14 +2,7 @@
 
 import { ApolloQueryResult } from "@apollo/client";
 import { getClient } from "./client";
-import {
-  PoolDetailsByIdQuery,
-  PoolDetailsByIdQueryVariables,
-  PoolListByRecipientQuery,
-  PoolListByRecipientQueryVariables,
-} from "../graphql/thegraph/__generated__/graphql";
-import { GET_POOL_DETAILS_BY_ID } from "../graphql/thegraph/queries/PoolDetailsById";
-import { GET_POOL_LIST_BY_RECIPIENT } from "../graphql/thegraph/queries/PoolListByRecipient";
+
 import { GET_VIEWER } from "../graphql/data/queries/GetViewer";
 import {
   PoolByIdQuery,
@@ -25,29 +18,6 @@ import { GET_VIEWER_WALLETS } from "../graphql/data/queries/GetViewerWallets";
 import { TQueryOptions } from "../types";
 import { GET_VIEWER_POOLS } from "../graphql/data/queries/GetViewerPools";
 import { GET_POOL_BY_ID } from "../graphql/data/queries/GetPoolById";
-
-export async function getPoolListByRecipient(
-  options?: TQueryOptions<
-    PoolListByRecipientQueryVariables,
-    PoolListByRecipientQuery
-  >,
-) {
-  return getClient().query({
-    query: GET_POOL_LIST_BY_RECIPIENT,
-    context: { clientName: "thegraph", ...options?.context },
-    ...options,
-  });
-}
-
-export async function getPoolDetails(
-  options?: TQueryOptions<PoolDetailsByIdQueryVariables, PoolDetailsByIdQuery>,
-): Promise<ApolloQueryResult<PoolDetailsByIdQuery>> {
-  return getClient().query({
-    query: GET_POOL_DETAILS_BY_ID,
-    context: { clientName: "thegraph", ...options?.context },
-    ...options,
-  });
-}
 
 export async function getViewer(
   options?: TQueryOptions<ViewerQueryVariables, ViewerQuery>,

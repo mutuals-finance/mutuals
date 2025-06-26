@@ -1,6 +1,6 @@
 "use client";
 
-import { useHeaderObserver } from "@/providers/HeaderObserver/index";
+import { useHeaderObserver } from "@/providers/HeaderObserver";
 import { Box, MotionBox } from "@mutuals/ui";
 
 import { PropsWithChildren } from "react";
@@ -16,10 +16,12 @@ export default function HeaderObserverChange({
   const { setHeaderTheme } = useHeaderObserver();
 
   const onViewportEnter = (entry: IntersectionObserverEntry | null) => {
+    console.log("onViewportEnter", { entry, theme });
     setHeaderTheme(theme);
   };
 
   const onViewportLeave = (entry: IntersectionObserverEntry | null) => {
+    console.log("onViewportLeave", { entry, theme });
     setHeaderTheme("system");
   };
 

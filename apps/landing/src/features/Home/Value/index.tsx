@@ -5,8 +5,6 @@ import SectionHeader from "src/features/Shell/SectionHeader";
 import { IoCodeWorkingOutline, IoTimerOutline } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
 import ValueCard from "./ValueCard";
-import NextImage from "next/image";
-import transitionImage from "@/assets/bg-hero-bottom-right.png";
 
 const values = [
   {
@@ -30,17 +28,7 @@ const values = [
 ];
 export default function HomeValue() {
   return (
-    <Box my={"16"} py={"16"} position={"relative"}>
-      <NextImage
-        src={transitionImage}
-        alt={"Mutuals values"}
-        fill={true}
-        style={{
-          objectFit: "contain",
-          objectPosition: "bottom right",
-          opacity: "0.3",
-        }}
-      />
+    <Box my={"16"} py={"16"}>
       <Container maxW="7xl">
         <SectionHeader label={"Explore Mutuals"}>
           Financial management for on-chain teams

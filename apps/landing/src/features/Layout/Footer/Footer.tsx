@@ -5,6 +5,7 @@ import {
   Stack,
   Text,
   ColorModeMenu,
+  Link,
 } from "@mutuals/ui";
 import { socialLinks } from "@/features/Layout/links";
 
@@ -32,16 +33,19 @@ export default function FooterFooter() {
         </Text>
         <Stack direction="row" gap={6} justify={"space-between"}>
           <Group>
-            {socialLinks.map(({ children, href: _variant, ...props }) => (
-              <IconButton
-                size={"sm"}
-                variant="ghost"
-                key={props["aria-label"]}
-                {...props}
-              >
-                {children}
-              </IconButton>
-            ))}
+            {socialLinks.map(
+              ({ children, href, ["aria-label"]: ariaLabel, ...props }) => (
+                <Link key={ariaLabel} href={href} {...props} asChild={true}>
+                  <IconButton
+                    size={"sm"}
+                    variant="ghost"
+                    aria-label={ariaLabel}
+                  >
+                    {children}
+                  </IconButton>
+                </Link>
+              ),
+            )}
           </Group>
 
           <ColorModeMenu variant="outline" size="sm" />
