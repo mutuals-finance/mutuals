@@ -4,7 +4,7 @@ const textStyles = defineTextStyles({
   link: {
     description: "The link style - used for links",
     value: {
-      fontWeight: "medium",
+      fontWeight: "500",
       textDecoration: "none",
       textDecorationLine: "none",
       fontFamily: "{fonts.heading}",

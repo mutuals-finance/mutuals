@@ -1,11 +1,10 @@
 import { Box } from "@mutuals/ui";
 import type { PropsWithChildren } from "react";
-import NextImage from "next/image";
-import image from "@/assets/bg-hero-top-left.png";
 
 export default function LayoutMain({ children }: PropsWithChildren) {
   return (
     <Box as="main">
+      {/*
       <Box
         position={"absolute"}
         top={"0"}
@@ -25,6 +24,7 @@ export default function LayoutMain({ children }: PropsWithChildren) {
           }}
         />
       </Box>
+*/}
       {children}
     </Box>
   );

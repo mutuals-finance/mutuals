@@ -9,20 +9,11 @@ const apiKeysAreDefined =
 export const etherscan: HardhatUserConfig['etherscan'] = apiKeysAreDefined
   ? {
       apiKey: {
-        amoy: POLYGONSCAN_API_KEY,
         polygon: POLYGONSCAN_API_KEY,
+        polygonAmoy: POLYGONSCAN_API_KEY,
         mainnet: ETHERSCAN_API_KEY,
-        goerli: ETHERSCAN_API_KEY,
+        sepolia: ETHERSCAN_API_KEY,
+        holesky: ETHERSCAN_API_KEY,
       },
-      customChains: [
-        {
-          network: 'amoy',
-          chainId: 80_002,
-          urls: {
-            apiURL: 'https://api-amoy.polygonscan.com/api',
-            browserURL: 'https://amoy.polygonscan.com',
-          },
-        },
-      ],
     }
   : undefined;

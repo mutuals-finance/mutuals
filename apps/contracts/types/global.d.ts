@@ -10,6 +10,7 @@ import type {
   Contract,
   ContractFactory,
   ethers as defaultEthers,
+  Signer,
 } from 'ethers';
 import type { DeployProxyOptions } from '@openzeppelin/hardhat-upgrades/src/utils';
 import type { HardhatUpgrades } from '@openzeppelin/hardhat-upgrades';
@@ -47,6 +48,11 @@ import {
   HardhatEthersSigner,
   HardhatEthersHelpers,
 } from '@nomicfoundation/hardhat-ethers/types';
+import {
+  DefenderDeployOptions,
+  DeployFactoryOpts,
+  StandaloneOptions,
+} from '@openzeppelin/hardhat-upgrades/src/utils/options';
 
 declare module 'hardhat/config' {
   type EnvironmentExtender = (
@@ -130,9 +136,25 @@ type GenericUpgradeFunction = <
   options?: UpgradeProxyOptions
 ) => Promise<InstanceOfContract<TC>>;
 
-type DeployOrUpgradeProxyFunctionArgs = {
+interface BaseDeployFunction {
+  <
+    TC extends BaseContract = Contract,
+    TContract extends ContractFactory = ContractFactory,
+  >(
+    ImplFactory: TContract,
+    args: unknown[],
+    options: DeployProxyOptions,
+    signer: Signer
+  ): Promise<InstanceOfContract<TC>>;
+}
+
+type DeployFunctionArgs = {
   contractName: keyof Contracts;
-  args: unknown[];
+  args?: unknown[];
+  options?: StandaloneOptions & DeployFactoryOpts & DefenderDeployOptions;
+};
+
+type DeployOrUpgradeProxyFunctionArgs = Omit<DeployFunctionArgs, 'options'> & {
   options?: DeployProxyOptions;
 };
 

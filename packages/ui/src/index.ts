@@ -69,6 +69,7 @@ export {
   type ButtonProps,
   Alert,
   Tag,
+  type TagProps,
   InputGroup,
   DialogBody,
   DialogCloseTrigger,

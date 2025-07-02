@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.29;
 
 import { IRegistry } from "./interfaces/IRegistry.sol";
 import { IExtension } from "../extension/interfaces/IExtension.sol";

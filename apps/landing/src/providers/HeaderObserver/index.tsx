@@ -34,6 +34,8 @@ export default function HeaderObserverProvider({
   const pathname = usePathname();
 
   useEffect(() => {
+    console.log("setHeaderTheme", { theme });
+
     setHeaderTheme(theme);
     setInitialized(true);
   }, [pathname, theme]);

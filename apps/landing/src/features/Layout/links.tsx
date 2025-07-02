@@ -1,21 +1,45 @@
-import { IoLogoDiscord, IoLogoTwitter } from "react-icons/io5";
+import { IoLogoDiscord, IoLogoGithub } from "react-icons/io5";
 import { BiLogoTelegram } from "react-icons/bi";
 import { NavLinkProps } from "@/features/Layout/Header/NavLink";
+import { RiTwitterXLine } from "react-icons/ri";
 
 const links: NavLinkProps[] = [
   {
     href: "/pricing",
     children: "Pricing",
   },
-  { children: "About", href: "/contact" },
+  {
+    children: "Company",
+    href: "/about",
+    links: [
+      { children: "About", href: "/about" },
+      { children: "Contact", href: "/contact" },
+    ],
+  },
   { children: "Socials", href: "/socials" },
   { children: "Blog", external: true, href: "/blog" },
   { children: "Docs", external: true, href: "/docs" },
 ];
 
 export const socialLinks = [
-  { "aria-label": "Twitter", children: <IoLogoTwitter />, href: "/" },
-  { "aria-label": "Discord", children: <IoLogoDiscord />, href: "/" },
+  {
+    "aria-label": "Github",
+    children: <IoLogoGithub />,
+    href: "https://github.com/mutuals-finance",
+    target: "_blank",
+  },
+  {
+    "aria-label": "XTwitter",
+    children: <RiTwitterXLine />,
+    href: "https://x.com",
+    target: "_blank",
+  },
+  {
+    "aria-label": "Discord",
+    children: <IoLogoDiscord />,
+    href: "https://discord.com",
+    target: "_blank",
+  },
   { "aria-label": "Telegram", children: <BiLogoTelegram />, href: "/" },
 ];
 

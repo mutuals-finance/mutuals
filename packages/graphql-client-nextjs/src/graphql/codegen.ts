@@ -22,26 +22,6 @@ const config: CodegenConfig = {
   overwrite: true,
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    /*
-    "./src/graphql/thegraph/__generated__/": {
-      ...defaultConfig,
-      schema: sdkConfig.urls.thegraph,
-      documents: [
-        "./src/graphql/thegraph/!**!/!*.{ts,tsx}",
-        "!./src/graphql/thegraph/__generated__/!**!/!*",
-      ],
-      config: {
-        ...defaultConfig.config,
-        scalars: {
-          BigDecimal: "BigInt",
-          BigInt: "BigInt",
-          Bytes: "string",
-          Int8: "BigInt",
-          Timestamp: "number",
-        },
-      },
-    },
-*/
     "./src/graphql/data/__generated__/": {
       ...defaultConfig,
       schema: `${sdkConfig.urls.data}`,

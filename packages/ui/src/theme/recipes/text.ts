@@ -5,7 +5,6 @@ export default defineRecipe({
     variant: {
       muted: {
         color: "fg.subtle",
-        fontWeight: "medium",
       },
       subtag: {
         color: "fg.subtle",
