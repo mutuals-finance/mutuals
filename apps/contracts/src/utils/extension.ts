@@ -13,7 +13,7 @@ export const registerExtension = async ({
   hre.log('registerExtension:', target);
 
   const from = await hre.ethers
-    .getNamedSigner('admin')
+    .getNamedSigner('mutualsStagingDeployer')
     .then((s: SignerWithAddress) => s.address);
 
   const abiEncoder = hre.ethers.AbiCoder.defaultAbiCoder();

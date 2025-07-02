@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.29;
 
 import { Claim } from "../../pool/types/Claim.sol";
 import { WithdrawParams } from "../../pool/types/WithdrawParams.sol";

@@ -1,34 +1,34 @@
 {
   "hardhat": {
     "Pool": {
-      "proxyAddress": "0xaD733F1c8F34A16B5Ad8F84ba94c487547ebd59e"
+      "proxyAddress": "0x39214015335C50b5703De5f8bA5B9E1992AE1844"
     },
     "PoolFactory": {
-      "proxyAddress": "0xA1B80af7772729b4f7626fAed4cEcDA98B9d3f44"
+      "proxyAddress": "0xb8516ACD10afeF5c04BdE6b1E86B25f094E45B06"
     },
     "Registry": {
-      "proxyAddress": "0x28f282C3df413C9b0A5301DF875Df3b0955731a8"
+      "proxyAddress": "0x0691F1291893f87201F59b4017f7a51476d8F380"
     },
     "DefaultAllocation": {
-      "proxyAddress": "0x2605Ea7aedbEA8CeD14f69BE94c1E4fBaA46e213"
+      "proxyAddress": "0x5ec4AA92a40BcDbAdaeb46be6f808a3C81917573"
     },
     "TimelockAllocation": {
-      "proxyAddress": "0x6613588888a2C8C09b4b084DD93AA18309EB7dBE"
+      "proxyAddress": "0x08cDe78486F5975D1f01Ff57698fAfE665cB0e48"
     },
     "TokenAllocation": {
-      "proxyAddress": "0x4Db5481A1C4A9c883C0d33045E05CD5631a6D775"
+      "proxyAddress": "0xbC4BFa087473C516A04D720Ac6301BF8981177FA"
     },
     "PriorityGating": {
-      "proxyAddress": "0x01717ee89C3c3f303a0aa4044FfAFA6bea02E540"
+      "proxyAddress": "0x0813bA5BA97723a1e39E1b76887D9C097231eE0E"
     },
     "TokenGating": {
-      "proxyAddress": "0xE0e2982449645596a1de35815BC2Ec39b15563D0"
+      "proxyAddress": "0xD0a169764a388941FDbB0E1250543ec05eaD4115"
     },
     "OnchainState": {
-      "proxyAddress": "0x39c6d59fC7412F830Bd9ed7c09400F36Ef6AcDca"
+      "proxyAddress": "0xC1281E1227445796fF720fAf8cb48947C12dF878"
     },
     "OffchainState": {
-      "proxyAddress": "0x5d29426fF96885D61454370262D16793fBe45381"
+      "proxyAddress": "0x0D18C5203c227284cf101d447d4cE90c2ae8b906"
     }
   },
   "localhost": {
@@ -65,7 +65,56 @@
   },
   "polygonAmoy": {
     "Registry": {
+      "proxyAddress": "0xb8516ACD10afeF5c04BdE6b1E86B25f094E45B06"
+    },
+    "Pool": {
+      "proxyAddress": "0xDf44bA5b738021B1867858E515215C1B19843f49"
+    },
+    "PoolFactory": {
+      "proxyAddress": "0xb0Eb474D53D0f315e385E2F6e291397c61ee19b1"
+    }
+  },
+  "sepolia": {
+    "Registry": {
+      "proxyAddress": "0xe024eDE1a2dE848cdc8CbFf595F763De251225D2"
+    },
+    "Pool": {
+      "proxyAddress": "0x0813bA5BA97723a1e39E1b76887D9C097231eE0E"
+    },
+    "PoolFactory": {
+      "proxyAddress": "0xC1281E1227445796fF720fAf8cb48947C12dF878"
+    }
+  },
+  "holesky": {
+    "Registry": {
+      "proxyAddress": "0xD0a169764a388941FDbB0E1250543ec05eaD4115"
+    },
+    "Pool": {
+      "proxyAddress": "0xC1281E1227445796fF720fAf8cb48947C12dF878"
+    },
+    "PoolFactory": {
+      "proxyAddress": "0x0D18C5203c227284cf101d447d4cE90c2ae8b906"
+    },
+    "DefaultAllocation": {
       "proxyAddress": "0x0691F1291893f87201F59b4017f7a51476d8F380"
+    },
+    "TimelockAllocation": {
+      "proxyAddress": "0xb8516ACD10afeF5c04BdE6b1E86B25f094E45B06"
+    },
+    "TokenAllocation": {
+      "proxyAddress": "0xDf44bA5b738021B1867858E515215C1B19843f49"
+    },
+    "PriorityGating": {
+      "proxyAddress": "0xb0Eb474D53D0f315e385E2F6e291397c61ee19b1"
+    },
+    "TokenGating": {
+      "proxyAddress": "0xDAEF96eF0CF43Ce093745D5A0B5e7C01De79b9b9"
+    },
+    "OnchainState": {
+      "proxyAddress": "0x304125adEdfc2C976F66a8Ff56e0292F35741b0E"
+    },
+    "OffchainState": {
+      "proxyAddress": "0xE126a953CD67DC86aF1928Bcecec04e9e43898a1"
     }
   }
 }

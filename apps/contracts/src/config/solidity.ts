@@ -1,7 +1,7 @@
 import type { HardhatUserConfig, SolcUserConfig } from 'hardhat/types/config';
 
 const DEFAULT_SOLC_CONFIG: SolcUserConfig = {
-  version: '0.8.22',
+  version: '0.8.29',
   settings: {
     viaIR: process.env.VIA_IR,
     optimizer: {

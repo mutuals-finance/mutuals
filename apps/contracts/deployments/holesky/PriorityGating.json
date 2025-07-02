@@ -1,0 +1,709 @@
+{
+  "address": "0xb0Eb474D53D0f315e385E2F6e291397c61ee19b1",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "BaseExtension_AlreadyInitialized",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "BaseExtension_InvalidFactory",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "BaseExtension_UnknownPool",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "BaseExtension_UnsupportedHook",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PriorityGating_InsufficientBalance",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "parentId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "stateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "strategyId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Claim[]",
+          "name": "claims",
+          "type": "tuple[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "Token",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct WithdrawParams[]",
+          "name": "params",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "afterBatchWithdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "afterInitialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "afterInitializePool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "parentId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "stateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "strategyId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Claim",
+          "name": "claim",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "Token",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct WithdrawParams",
+          "name": "params",
+          "type": "tuple"
+        }
+      ],
+      "name": "afterWithdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "parentId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "stateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "strategyId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Claim[]",
+          "name": "claims",
+          "type": "tuple[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "Token",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct WithdrawParams[]",
+          "name": "params",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "beforeBatchWithdraw",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "beforeInitialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "beforeInitializePool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "parentId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "stateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "strategyId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Claim",
+          "name": "claim",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "Token",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct WithdrawParams",
+          "name": "params",
+          "type": "tuple"
+        }
+      ],
+      "name": "beforeWithdraw",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "parentId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "stateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "strategyId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Claim[]",
+          "name": "claims",
+          "type": "tuple[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "Token",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct WithdrawParams[]",
+          "name": "params",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "checkBatchState",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "parentId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "stateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "strategyId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Claim",
+          "name": "claim",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "Token",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct WithdrawParams",
+          "name": "params",
+          "type": "tuple"
+        }
+      ],
+      "name": "checkState",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "extensionId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "extensionName",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "__factory",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "parentId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "stateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "strategyId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Claim",
+          "name": "claim",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "Token",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "strategyData",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "stateData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct WithdrawParams",
+          "name": "params",
+          "type": "tuple"
+        }
+      ],
+      "name": "releasable",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "numDeployments": 1,
+  "bytecode": "0x6080346101065760408101906001600160401b038211818310176100f057602091604052600e8152016d5072696f72697479476174696e6760901b8152600054600181811c911680156100e6575b60208210146100d057601f8111610087575b81516001600160901b031916601c1760005562eaa2d56001556040516108b6908161010c8239f35b60008052601f0160051c7f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563908101905b8181106100c4575061005f565b600081556001016100b7565b634e487b7160e01b600052602260045260246000fd5b90607f169061004d565b634e487b7160e01b600052604160045260246000fd5b600080fdfe608080604052600436101561001357600080fd5b60003560e01c90816319bbe29c146103445781631c86100f1461023b575080632ad45de11461015f57806331526dae146101b3578063405b79501461016f5780635f6df45e1461019b57806362d7076e1461017d57806375170a321461016f57806377d63e171461015f578063971b7aa7146100b9578063a58b1277146100b9578063c4d66de8146100de578063c730fe30146100be5763ef40dc09146100b957600080fd5b610344565b346100d9576100cc3661045b565b5050602060405160008152f35b600080fd5b346100d95760203660031901126100d9576004356001600160a01b0381168091036100d9578015801561014e5761013d577fffffffffffffffffffffffff00000000000000000000000000000000000000006002541617600255600080f35b635054ed8360e11b60005260046000fd5b639cd69a8760e01b60005260046000fd5b346100d95761016d36610409565b005b346100d95761016d3661045b565b346100d95760003660031901126100d9576020600154604051908152f35b346100d95761016d6101ac3661045b565b903361058b565b346100d9576101c136610409565b3684810360fe19019290819003607e19019160005b8581101561016d5760008160051b90818901359187831215610237578484101561022357850135908682121561022057506001929161021a918601908a013361058b565b016101d6565b80fd5b634e487b7160e01b82526032600452602482fd5b5080fd5b346100d95760003660031901126100d957600080548060011c9060018116801561033a575b6020831081146103265782855290811561030257506001146102a5575b6102a18361028d818503826104c9565b604051918291602083526020830190610397565b0390f35b60008080527f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563939250905b8082106102e85750909150810160200161028d61027d565b9192600181602092548385880101520191019092916102d0565b60ff191660208086019190915291151560051b8401909101915061028d905061027d565b634e487b7160e01b84526022600452602484fd5b91607f1691610260565b346100d957600060203660031901126102205760043567ffffffffffffffff811161023757366023820112156102375780600401359167ffffffffffffffff831161022057366024848401011161022057005b919082519283825260005b8481106103c3575050826000602080949584010152601f8019910116010190565b806020809284010151828286010152016103a2565b9181601f840112156100d95782359167ffffffffffffffff83116100d9576020808501948460051b0101116100d957565b60406003198201126100d95760043567ffffffffffffffff81116100d95781610434916004016103d8565b929092916024359067ffffffffffffffff82116100d957610457916004016103d8565b9091565b9060406003198301126100d95760043567ffffffffffffffff81116100d95761010081840360031901126100d957600401916024359067ffffffffffffffff82116100d95760809082900360031901126100d95760040190565b35906001600160a01b03821682036100d957565b90601f8019910116810190811067ffffffffffffffff8211176104eb57604052565b634e487b7160e01b600052604160045260246000fd5b903590601e19813603018212156100d9570180359067ffffffffffffffff82116100d9576020019181360383136100d957565b81601f820112156100d95780359067ffffffffffffffff82116104eb5760405192610569601f8401601f1916602001856104c9565b828452602083830101116100d957816000926020809301838601378301015290565b9061059a9060e0810190610501565b81929101926040838503126100d957823567ffffffffffffffff81116100d9578301610100818603126100d95760405190610100820182811067ffffffffffffffff8211176104eb5760405280358252602082019260208201358452610602604083016104b5565b966040840197885260608401916060840135835260808501936080810135855260a081013567ffffffffffffffff81116100d95783610642918301610534565b9260a0870193845260c087019160c0810135835260e08101359167ffffffffffffffff83116100d95761068b926106799201610534565b9260e088019384526040810190610501565b810192906020818503126100d95780359067ffffffffffffffff82116100d95701936080858503126100d957604051966080880188811067ffffffffffffffff8211176104eb57604052853588526106e5602087016104b5565b9460208901958652604087013567ffffffffffffffff81116100d9578161070d918901610534565b9660408a0197885260608101359067ffffffffffffffff82116100d957019061073591610534565b96606089019788526040519d8e9b8c9b630c730fe360e41b8d5260048d01604090525160448d01525160648c0152516001600160a01b031660848b01525160a48a01525160c48901525160e488016101009052610144880161079691610397565b915161010488015251868203604319016101248801526107b69190610397565b93600319868603016024870152518452516001600160a01b03166020840152516040830160809052608083016107eb91610397565b90519180820390606001526107ff91610397565b03916001600160a01b031691815a93602094fa9182156108745760009261083f575b5060200135101561082e57565b63338bce1b60e21b60005260046000fd5b9091506020813d60201161086c575b8161085b602093836104c9565b810103126100d95751906020610821565b3d915061084e565b6040513d6000823e3d90fdfea2646970667358221220313afc2fbb1cc5935b9142211eecf870b6ee2e72d4402ba8e42b5d6a9c6d59a164736f6c634300081d0033",
+  "deployedBytecode": "0x608080604052600436101561001357600080fd5b60003560e01c90816319bbe29c146103445781631c86100f1461023b575080632ad45de11461015f57806331526dae146101b3578063405b79501461016f5780635f6df45e1461019b57806362d7076e1461017d57806375170a321461016f57806377d63e171461015f578063971b7aa7146100b9578063a58b1277146100b9578063c4d66de8146100de578063c730fe30146100be5763ef40dc09146100b957600080fd5b610344565b346100d9576100cc3661045b565b5050602060405160008152f35b600080fd5b346100d95760203660031901126100d9576004356001600160a01b0381168091036100d9578015801561014e5761013d577fffffffffffffffffffffffff00000000000000000000000000000000000000006002541617600255600080f35b635054ed8360e11b60005260046000fd5b639cd69a8760e01b60005260046000fd5b346100d95761016d36610409565b005b346100d95761016d3661045b565b346100d95760003660031901126100d9576020600154604051908152f35b346100d95761016d6101ac3661045b565b903361058b565b346100d9576101c136610409565b3684810360fe19019290819003607e19019160005b8581101561016d5760008160051b90818901359187831215610237578484101561022357850135908682121561022057506001929161021a918601908a013361058b565b016101d6565b80fd5b634e487b7160e01b82526032600452602482fd5b5080fd5b346100d95760003660031901126100d957600080548060011c9060018116801561033a575b6020831081146103265782855290811561030257506001146102a5575b6102a18361028d818503826104c9565b604051918291602083526020830190610397565b0390f35b60008080527f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563939250905b8082106102e85750909150810160200161028d61027d565b9192600181602092548385880101520191019092916102d0565b60ff191660208086019190915291151560051b8401909101915061028d905061027d565b634e487b7160e01b84526022600452602484fd5b91607f1691610260565b346100d957600060203660031901126102205760043567ffffffffffffffff811161023757366023820112156102375780600401359167ffffffffffffffff831161022057366024848401011161022057005b919082519283825260005b8481106103c3575050826000602080949584010152601f8019910116010190565b806020809284010151828286010152016103a2565b9181601f840112156100d95782359167ffffffffffffffff83116100d9576020808501948460051b0101116100d957565b60406003198201126100d95760043567ffffffffffffffff81116100d95781610434916004016103d8565b929092916024359067ffffffffffffffff82116100d957610457916004016103d8565b9091565b9060406003198301126100d95760043567ffffffffffffffff81116100d95761010081840360031901126100d957600401916024359067ffffffffffffffff82116100d95760809082900360031901126100d95760040190565b35906001600160a01b03821682036100d957565b90601f8019910116810190811067ffffffffffffffff8211176104eb57604052565b634e487b7160e01b600052604160045260246000fd5b903590601e19813603018212156100d9570180359067ffffffffffffffff82116100d9576020019181360383136100d957565b81601f820112156100d95780359067ffffffffffffffff82116104eb5760405192610569601f8401601f1916602001856104c9565b828452602083830101116100d957816000926020809301838601378301015290565b9061059a9060e0810190610501565b81929101926040838503126100d957823567ffffffffffffffff81116100d9578301610100818603126100d95760405190610100820182811067ffffffffffffffff8211176104eb5760405280358252602082019260208201358452610602604083016104b5565b966040840197885260608401916060840135835260808501936080810135855260a081013567ffffffffffffffff81116100d95783610642918301610534565b9260a0870193845260c087019160c0810135835260e08101359167ffffffffffffffff83116100d95761068b926106799201610534565b9260e088019384526040810190610501565b810192906020818503126100d95780359067ffffffffffffffff82116100d95701936080858503126100d957604051966080880188811067ffffffffffffffff8211176104eb57604052853588526106e5602087016104b5565b9460208901958652604087013567ffffffffffffffff81116100d9578161070d918901610534565b9660408a0197885260608101359067ffffffffffffffff82116100d957019061073591610534565b96606089019788526040519d8e9b8c9b630c730fe360e41b8d5260048d01604090525160448d01525160648c0152516001600160a01b031660848b01525160a48a01525160c48901525160e488016101009052610144880161079691610397565b915161010488015251868203604319016101248801526107b69190610397565b93600319868603016024870152518452516001600160a01b03166020840152516040830160809052608083016107eb91610397565b90519180820390606001526107ff91610397565b03916001600160a01b031691815a93602094fa9182156108745760009261083f575b5060200135101561082e57565b63338bce1b60e21b60005260046000fd5b9091506020813d60201161086c575b8161085b602093836104c9565b810103126100d95751906020610821565b3d915061084e565b6040513d6000823e3d90fdfea2646970667358221220313afc2fbb1cc5935b9142211eecf870b6ee2e72d4402ba8e42b5d6a9c6d59a164736f6c634300081d0033"
+}

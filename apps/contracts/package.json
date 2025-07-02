@@ -11,7 +11,7 @@
     "test:clean": "cross-env pnpm clean && pnpm test",
     "typechain": "hardhat typechain",
     "deploy:local": "hardhat deploy --network localhost",
-    "deploy:staging": "cross-env SOLC_PROFILE=production hardhat deploy --network polygonAmoy",
+    "deploy:staging": "cross-env SOLC_PROFILE=production hardhat deploy --network holesky",
     "deploy:production": "hardhat deploy --network mainnet",
     "task:accounts": "hardhat accounts",
     "lint": "cross-env pnpm lint:solhint && pnpm lint:eslint",

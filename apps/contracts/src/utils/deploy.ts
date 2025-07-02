@@ -1,6 +1,7 @@
 import path from 'node:path';
 
 import { readJsonSync, writeJsonSync } from 'fs-extra';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 type ContractConfig = Record<string, { proxyAddress: string }>;
 
@@ -60,7 +61,14 @@ export const verifyContracts = async ({
   for (const { reason } of results.filter(
     ({ status }) => status === 'rejected'
   ) as PromiseRejectedResult[]) {
-    if (!reason.message.toLowerCase().includes('already verified')) {
+    const whitelist = [
+      'already verified',
+      'proxy was recently deployed, the transaction may not be available',
+    ];
+    const message = reason.message.toLowerCase();
+    const isWhitelisted = whitelist.some((item) => message.includes(item));
+
+    if (!isWhitelisted) {
       throw new Error(reason);
     }
   }
@@ -114,7 +122,9 @@ export const deployRegistryContract = async ({
   return hre.deployOrUpgradeProxy({
     contractName: 'Registry',
     args: await Promise.all([
-      hre.ethers.getNamedSigner('admin').then(({ address }) => address),
+      hre.ethers
+        .getNamedSigner('mutualsStagingDeployer')
+        .then(({ address }: SignerWithAddress) => address),
     ]),
     options: {
       initializer: '__Registry_init',
@@ -131,7 +141,9 @@ export const deployPoolFactoryContract = async ({
   return hre.deployOrUpgradeProxy({
     contractName: 'PoolFactory',
     args: await Promise.all([
-      hre.ethers.getNamedSigner('admin').then(({ address }) => address),
+      hre.ethers
+        .getNamedSigner('mutualsStagingDeployer')
+        .then(({ address }: SignerWithAddress) => address),
       hre.deployments.get('Pool').then(({ address }) => address),
     ]),
     options: {

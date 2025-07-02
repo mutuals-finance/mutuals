@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.29;
 
 import { IPool } from "../../pool/interfaces/IPool.sol";
 import { Claim } from "../../pool/types/Claim.sol";
@@ -12,7 +12,7 @@ contract DefaultAllocation is BaseExtension {
     /*                                   ERRORS                                   */
     /* -------------------------------------------------------------------------- */
 
-    /// @notice Throws when the balance of the actor is insufficient 
+    /// @notice Throws when the balance of the actor is insufficient
     error DefaultAllocation_InsufficientBalance();
 
     /* -------------------------------------------------------------------------- */
