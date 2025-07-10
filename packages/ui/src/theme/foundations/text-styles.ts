@@ -7,7 +7,6 @@ const textStyles = defineTextStyles({
       fontWeight: "500",
       textDecoration: "none",
       textDecorationLine: "none",
-      fontFamily: "{fonts.heading}",
       _hover: {
         textDecoration: "none",
         textDecorationLine: "none",

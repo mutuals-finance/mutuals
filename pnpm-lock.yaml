@@ -354,21 +354,6 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  apps/squid-local:
-    devDependencies:
-      '@mutuals/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@mutuals/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
-      eslint:
-        specifier: ^9.27.0
-        version: 9.27.0
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-
   packages/eslint-config:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -435,6 +420,34 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
+  packages/manifest-nextjs:
+    dependencies:
+      next:
+        specifier: ^15.3.2
+        version: 15.3.2(@babel/core@7.27.1)(react-dom@19.1.0)(react@19.1.0)
+    devDependencies:
+      '@mutuals/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@mutuals/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^22.15.21
+        version: 22.15.29
+      '@types/react':
+        specifier: ^19.1.5
+        version: 19.1.5
+      '@types/react-dom':
+        specifier: ^19.1.5
+        version: 19.1.5(@types/react@19.1.5)
+      eslint:
+        specifier: ^9.27.0
+        version: 9.27.0
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -5404,7 +5417,7 @@ packages:
   /@types/bn.js@5.1.6:
     resolution: {integrity: sha512-Xh8vSwUeMKeYYrj3cX4lGQgFSF/N03r+tv4AiLl1SucqV+uTQpxRcnM8AkXKHwYP9ZPXOYXRr2KPXpVlIvqh9w==}
     dependencies:
-      '@types/node': 22.15.21
+      '@types/node': 22.15.29
     dev: true
 
   /@types/chai-as-promised@7.1.8:
@@ -5452,7 +5465,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 22.15.21
+      '@types/node': 22.15.29
     dev: true
 
   /@types/http-cache-semantics@4.0.4:
@@ -5485,7 +5498,7 @@ packages:
   /@types/jsonfile@6.1.4:
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
     dependencies:
-      '@types/node': 22.15.21
+      '@types/node': 22.15.29
     dev: true
 
   /@types/long@4.0.2:
@@ -5519,12 +5532,12 @@ packages:
     resolution: {integrity: sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ==}
     dependencies:
       undici-types: 6.21.0
+    dev: true
 
   /@types/node@22.15.29:
     resolution: {integrity: sha512-LNdjOkUDlU1RZb8e1kOIUpN1qQUlzGkEtbVNo53vbrwDg5om6oduhm4SiUaPW5ASTXhAiP0jInWG8Qx9fVlOeQ==}
     dependencies:
       undici-types: 6.21.0
-    dev: true
 
   /@types/node@22.7.5:
     resolution: {integrity: sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==}
@@ -5577,7 +5590,7 @@ packages:
   /@types/through@0.0.33:
     resolution: {integrity: sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==}
     dependencies:
-      '@types/node': 22.15.21
+      '@types/node': 22.15.29
     dev: true
 
   /@types/tinycolor2@1.4.6:
@@ -5591,7 +5604,7 @@ packages:
   /@types/ws@8.18.1:
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
     dependencies:
-      '@types/node': 22.15.21
+      '@types/node': 22.15.29
     dev: true
 
   /@typescript-eslint/eslint-plugin@8.32.1(@typescript-eslint/parser@8.32.1)(eslint@9.27.0)(typescript@5.8.3):
@@ -13445,7 +13458,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 22.15.21
+      '@types/node': 22.15.29
       long: 4.0.0
     dev: false
 
