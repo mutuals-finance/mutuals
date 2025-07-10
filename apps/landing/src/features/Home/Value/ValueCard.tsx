@@ -19,7 +19,7 @@ export default function ValueCard({
       {!!icon && (
         <Card.Header>
           <Stack direction={"row"} alignItems={"flex-end"}>
-            <Heading as="h3" variant={"subtag"} size={"xs"}>
+            <Heading as="h3" size={"2xl"}>
               {heading}
             </Heading>
 
@@ -31,7 +31,7 @@ export default function ValueCard({
       )}
 
       <Card.Body>
-        <Text>{description}</Text>
+        <Text color={"fg.muted"}>{description}</Text>
       </Card.Body>
     </Card.Root>
   );

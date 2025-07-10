@@ -31,6 +31,7 @@ export default function NavLink({
       fontSize={"xs"}
       textTransform="uppercase"
       letterSpacing={"wide"}
+      fontFamily={"heading"}
       {...props}
     >
       {children} {external && <LuExternalLink />}

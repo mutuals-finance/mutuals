@@ -2,6 +2,7 @@
   "name": "mutuals",
   "private": true,
   "scripts": {
+    "prepare": "husky",
     "build": "turbo build",
     "build:app": "turbo build -F @mutuals/app",
     "build:contracts": "turbo build -F @mutuals/contracts",
@@ -15,7 +16,13 @@
     "gen:component": "turbo gen component",
     "lint": "turbo lint",
     "lint:fix": "turbo lint -- --fix",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "next:enter": "changeset pre enter next",
+    "next:exit": "changeset pre exit next",
+    "version": "changeset version",
+    "release": "changeset publish",
+    "version:dev": "changeset version --snapshot dev",
+    "release:dev": "changeset publish --tag dev"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
@@ -27,5 +34,8 @@
   "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.29.5"
   }
 }
