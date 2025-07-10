@@ -129,7 +129,7 @@ export default function HomePayments() {
               flex={isActive ? "1" : "0 20%"}
               rounded={"lg"}
               h={"0.2rem"}
-            ></Box>
+            />
           ))}
         </Stack>
 
@@ -142,12 +142,14 @@ export default function HomePayments() {
             </IconBox>
           </Box>
 
-          <Stack gap={"3"}>
+          <Stack gap={"4"}>
             <Heading as="h3" size={"4xl"}>
               {payment.tag}
             </Heading>
 
-            <Text textStyle={"xl"}>{payment.description}</Text>
+            <Text textStyle={"lg"} color={"fg.muted"}>
+              {payment.description}
+            </Text>
           </Stack>
         </Stack>
         {/*

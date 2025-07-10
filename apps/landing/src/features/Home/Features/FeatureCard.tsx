@@ -31,14 +31,14 @@ export default function FeatureCard({
           direction={"column"}
           justifyContent={"space-between"}
           alignItems={"flex-start"}
-          gap={"2"}
+          gap={"4"}
         >
           {children}
-          <Heading as={"h3"} size={"xs"} variant={"subtag"}>
+          <Heading as={"h3"} size={"2xl"}>
             {heading}
           </Heading>
 
-          <Text>{description}</Text>
+          <Text color={"fg.muted"}>{description}</Text>
         </Card.Body>
 
         <Box p={"2"}>

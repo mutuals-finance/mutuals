@@ -10,7 +10,7 @@ import {
 } from "@mutuals/ui";
 import type { ImageProps } from "next/image";
 import Image from "next/image";
-import { IoAdd, IoRemove } from "react-icons/io5";
+import { IoAdd } from "react-icons/io5";
 
 interface PaymentOptionSlideProps extends Card.RootProps {
   tag: string;
@@ -57,7 +57,7 @@ export default function PaymentCard({
           </Heading>
           <Text fontSize={"lg"}>{headline}</Text>
           <Collapsible.Content>
-            <Text fontSize={"lg"} color={"color.3"}>
+            <Text textStyle={"lg"} color={"fg.muted"}>
               {description}
             </Text>
           </Collapsible.Content>
