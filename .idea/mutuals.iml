@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/.vercel" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/app/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/interfaces/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/libraries/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/deployments/localhost" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/hh-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/types/typechain" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/docs/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/landing/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/sdk/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/ui/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/graphql-client-nextjs/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/extension/strategy/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/factory/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/registry/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/sdk-react/.turbo" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
