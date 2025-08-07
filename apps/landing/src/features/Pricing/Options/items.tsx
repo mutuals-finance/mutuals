@@ -29,7 +29,6 @@ const items = [
       "Dedicated requirements",
     ],
     variant: "subtle",
-    bg: "transparent",
   },
 ].map((i) => ({
   ...i,

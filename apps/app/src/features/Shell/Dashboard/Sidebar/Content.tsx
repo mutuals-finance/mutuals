@@ -29,7 +29,7 @@ export default function ShellDashboardSidebarContent({
     lg: true,
   });
 
-  const [isOpen, toggleIsOpen] = useToggle(false);
+  const [open, toggleIsOpen] = useToggle(false);
 
   useEffect(() => {
     toggleIsOpen(breakpointIsOpen);
@@ -50,12 +50,12 @@ export default function ShellDashboardSidebarContent({
       <Sidebar
         w={w}
         minW={{ base: "0", lg: "5.6rem" }}
-        isOpen={isOpen}
+        open={open}
         borderColor={{ base: "transparent", lg: "border" }}
         bg={"bg"}
         header={
           <HStack justifyContent={"flex-end"} gap={"3"}>
-            {isOpen && (
+            {open && (
               <Box mr={"auto"}>
                 <MutualsLogo w={"24"} href={"/"} />
               </Box>
@@ -75,7 +75,7 @@ export default function ShellDashboardSidebarContent({
           <Box
             textAlign={"center"}
             fontSize={"xs"}
-            visibility={isOpen ? "inherit" : "hidden"}
+            visibility={open ? "inherit" : "hidden"}
           >
             <Text truncate>
               &copy; {new Date().getFullYear()} {siteCopyrightText}

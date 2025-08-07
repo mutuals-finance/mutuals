@@ -1,10 +1,8 @@
 "use client";
 
-import { Flex, BoxProps, Container, HStack, Presence } from "@mutuals/ui";
+import { BoxProps, Container, HStack, MotionBox } from "@mutuals/ui";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
-import { useHeaderObserver } from "@/providers/HeaderObserver";
-import ClientTheme from "./ClientTheme";
 
 const variants = {
   visibility: {
@@ -22,8 +20,6 @@ export default function HeaderContainerWrapper({
 
   const [isTransparent, setTransparent] = useState(true);
   const [prevScroll, setPrevScroll] = useState<number | null>(null);
-
-  const { initialized, headerTheme } = useHeaderObserver();
 
   const transparentThreshold = 1;
 
@@ -46,53 +42,36 @@ export default function HeaderContainerWrapper({
   });
 
   return (
-    <ClientTheme appearance={headerTheme as "light" | "dark"}>
-      <Presence
-        present={initialized}
-        animationName={{ _open: "fade-in" }}
-        animationDuration={"300ms"}
+    <MotionBox
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+      display={"flex"}
+      position="fixed"
+      top="0"
+      left="0"
+      zIndex={10}
+      w="full"
+      flex={"1"}
+      alignItems="stretch"
+      justifyContent="stretch"
+      bgColor={!isTransparent ? "bg/75" : "transparent"}
+      css={{
+        backdropFilter: "blur(12px)",
+      }}
+      borderBottom={"1px solid"}
+      borderColor={!isTransparent ? "border" : "transparent"}
+      color={"fg"}
+    >
+      <Container
+        as={HStack}
+        alignItems="center"
+        position="relative"
+        gap="6"
+        px={0}
       >
-        <Flex
-          position="fixed"
-          top="0"
-          left="0"
-          zIndex={10}
-          w="full"
-          flex={"1"}
-          alignItems="stretch"
-          justifyContent="stretch"
-          bgColor={{
-            base: !isTransparent ? "bg/90" : "transparent",
-            lg: "transparent",
-          }}
-          css={{
-            backdropFilter: {
-              base: !isTransparent ? "blur(4px)" : "none",
-              lg: "none",
-            },
-          }}
-          borderBottom={{
-            base: "1px solid",
-            lg: "none",
-          }}
-          borderColor={{
-            base: !isTransparent ? "border" : "transparent",
-            lg: "transparent",
-          }}
-          color={"fg"}
-          roundedBottom={"xl"}
-        >
-          <Container
-            as={HStack}
-            alignItems="center"
-            position="relative"
-            gap="6"
-            px={0}
-          >
-            {children}
-          </Container>
-        </Flex>
-      </Presence>
-    </ClientTheme>
+        {children}
+      </Container>
+    </MotionBox>
   );
 }

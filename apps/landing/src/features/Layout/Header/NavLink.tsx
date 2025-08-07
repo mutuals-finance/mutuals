@@ -28,10 +28,11 @@ export default function NavLink({
     <Link
       color={isActive ? "fg.muted" : "fg"}
       _hover={{ color: "fg.muted" }}
-      fontSize={"xs"}
-      textTransform="uppercase"
-      letterSpacing={"wide"}
+      textStyle={"xs"}
+      textTransform={"uppercase"}
+      letterSpacing={"wider"}
       fontFamily={"heading"}
+      fontWeight={"500"}
       {...props}
     >
       {children} {external && <LuExternalLink />}

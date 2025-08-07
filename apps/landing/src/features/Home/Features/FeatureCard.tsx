@@ -24,21 +24,21 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <Card.Root variant={"outline"} size={"lg"} w={"full"} {...props}>
+    <Card.Root variant={"outline"} bg={"bg"} size={"lg"} w={"full"} {...props}>
       <Stack direction={"row"}>
         <Card.Body
           as={Stack}
           direction={"column"}
           justifyContent={"space-between"}
           alignItems={"flex-start"}
-          gap={"4"}
+          gap={"2"}
         >
           {children}
-          <Heading as={"h3"} size={"2xl"}>
+          <Heading as={"h3"} size={"xl"}>
             {heading}
           </Heading>
 
-          <Text color={"fg.muted"}>{description}</Text>
+          <Text color={"fg.subtle"}>{description}</Text>
         </Card.Body>
 
         <Box p={"2"}>

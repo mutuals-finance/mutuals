@@ -10,6 +10,7 @@ import {
   Box,
 } from "@mutuals/ui";
 import HeroImageSlider from "@/features/Home/Hero/ImageSlider";
+import GridBg from "@/components/GridBg";
 
 export const transitionProps = {
   initial: { opacity: 0, y: 20 },
@@ -25,6 +26,7 @@ export default function HomeHero() {
       minH={{ base: "100vh", lg: "unset" }}
       justifyContent="center"
     >
+      <GridBg />
       <Container maxW={{ base: "xl", lg: "4xl" }} mb={{ base: "12", lg: "24" }}>
         <VStack
           alignItems={{ base: "center", md: "center" }}
@@ -48,8 +50,8 @@ export default function HomeHero() {
                 children: (
                   <Box maxW={"xl"}>
                     <Text
-                      textStyle={{ base: "lg", lg: "xl" }}
-                      color={"fg.muted"}
+                      textStyle={{ base: "lg", lg: "2xl" }}
+                      color={"fg.subtle"}
                     >
                       Automated and trustless revenue distribution without
                       reliance on intermediaries
@@ -59,9 +61,11 @@ export default function HomeHero() {
               },
               {
                 children: (
-                  <Group gap="6">
-                    <Button size={"2xl"}>Start for free</Button>
-                    <Button size={"2xl"} variant={"surface"}>
+                  <Group gap="2">
+                    <Button size={"2xl"} rounded={"4xl"}>
+                      Start for free
+                    </Button>
+                    <Button size={"2xl"} rounded={"4xl"} variant={"surface"}>
                       Learn more
                     </Button>
                   </Group>
@@ -75,7 +79,7 @@ export default function HomeHero() {
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.12 }}
+                transition={{ delay: (index + 0.02) * 0.2 }}
               >
                 {children}
               </MotionBox>

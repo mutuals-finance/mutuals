@@ -14,7 +14,7 @@ export default function ContactOptions() {
   return (
     <Container mt="16" mb="32" maxW="7xl">
       <Stack textAlign={"center"} alignItems={"center"}>
-        <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "6", lg: "12" }}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "2" }}>
           {items.map(
             ({
               icon,
@@ -22,12 +22,19 @@ export default function ContactOptions() {
               description,
               children,
               variant = "outline",
+              bg = "bg",
               size = "lg",
               ...props
             }) => (
-              <Card.Root key={heading} variant={variant} size={size} {...props}>
+              <Card.Root
+                key={heading}
+                variant={variant}
+                size={size}
+                bg={bg}
+                {...props}
+              >
                 <Card.Header>
-                  <Stack direction={"row"} alignItems={"flex-end"}>
+                  <Stack direction={"row"} alignItems={"flex-start"}>
                     <Heading size={"4xl"}>{heading}</Heading>
 
                     {!!icon && (

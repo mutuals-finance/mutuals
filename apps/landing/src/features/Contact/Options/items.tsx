@@ -9,7 +9,13 @@ const items = [
       "Discuss your enterprise requirements, explore personalized pricing options, or request a demo.",
     ],
     children: (
-      <Button variant={"surface"} mt={"6"} alignSelf={"flex-start"} size={"lg"}>
+      <Button
+        variant={"surface"}
+        mt={"6"}
+        alignSelf={"flex-start"}
+        size={"xl"}
+        rounded={"4xl"}
+      >
         Let's Chat
       </Button>
     ),

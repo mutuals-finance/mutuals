@@ -69,7 +69,7 @@ export default function NavMobileDrawer({
             </Link>
           ))}
           <Stack gap={6} p={"6"}>
-            <Button variant="surface" size="2xl" w={"full"}>
+            <Button variant="surface" size="2xl" rounded={"4xl"} w={"full"}>
               Launch App
             </Button>
             <Stack direction="row" gap={6} justify={"space-between"}>
