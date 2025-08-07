@@ -6,7 +6,7 @@ export default function PricingPage() {
   return (
     <>
       <ShellPageHeader tag={"Pricing"}>
-        Mutuals is free - That&apos;s it.
+        Mutuals is free &#151; That&apos;s it.
       </ShellPageHeader>
       <Options />
       <FAQ />
