@@ -49,7 +49,7 @@ export default function AboutCareer() {
             </CardBody>
             <CardFooter>
               <Link href={""} asChild={true} mx={"auto"} w={"full"}>
-                <Button variant={"surface"} w={"full"}>
+                <Button variant={"surface"} w={"full"} rounded={"4xl"}>
                   Open application
                 </Button>
               </Link>
@@ -75,7 +75,11 @@ export default function AboutCareer() {
                 mx={{ base: "auto", lg: "unset" }}
                 w={{ base: "full", lg: "unset" }}
               >
-                <Button variant={"surface"} w={{ base: "full", lg: "unset" }}>
+                <Button
+                  variant={"surface"}
+                  w={{ base: "full", lg: "unset" }}
+                  rounded={"4xl"}
+                >
                   Open application
                 </Button>
               </Link>

@@ -10,18 +10,17 @@ export default function AboutPageHeader() {
         afterContent={
           <Wrap
             direction={"row"}
-            mt={{ base: "12", lg: "16" }}
-            gap={{ base: "6", lg: "6" }}
-            justifyContent={"center"}
+            mt={{ base: "12", lg: "12" }}
+            gap={{ base: "2", lg: "2" }}
           >
             <Link asChild href={"/about"}>
-              <Button size={"xl"} variant={"solid"}>
+              <Button size={"xl"} variant={"solid"} rounded={"4xl"}>
                 Open Roles
               </Button>
             </Link>
 
             <Link asChild href={"/contact"}>
-              <Button size={"xl"} variant={"surface"}>
+              <Button size={"xl"} variant={"surface"} rounded={"4xl"}>
                 Reach Out
               </Button>
             </Link>

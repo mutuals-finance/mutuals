@@ -18,15 +18,13 @@ export default function ShellSectionCard({
   ...props
 }: ShellSectionCardProps) {
   return (
-    <Card.Root size={"lg"} {...props}>
-      <Card.Header {...cardHeaderProps}>
-        <ShellSectionHeader
-          textAlign={{ base: "center", lg: "left" }}
-          ml={{ lg: "unset" }}
-          {...sectionHeaderProps}
-        />
-      </Card.Header>
-      <Card.Body {...cardBodyProps}>{children}</Card.Body>
-    </Card.Root>
+    <>
+      <ShellSectionHeader
+        textAlign={{ base: "center", lg: "left" }}
+        ml={{ lg: "unset" }}
+        {...sectionHeaderProps}
+      />
+      {children}
+    </>
   );
 }

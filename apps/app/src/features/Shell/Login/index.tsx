@@ -1,6 +1,14 @@
-import { Container, Grid, GridItem, MutualsLogo, Text, Box } from "@mutuals/ui";
+import {
+  Container,
+  Grid,
+  GridItem,
+  MutualsLogo,
+  Text,
+  Box,
+  AbsoluteCenter,
+} from "@mutuals/ui";
 import Image from "next/image";
-import signInImage from "@/assets/images/sign-in.jpg";
+import signInImage from "@/assets/images/sign-in.png";
 import { PropsWithChildren } from "react";
 import WalletSelector from "@/features/Wallet/Selection";
 
@@ -11,7 +19,7 @@ function LogoWithLink() {
 export default function ShellLogin({ children }: PropsWithChildren) {
   return (
     <Grid
-      templateColumns={{ base: "100%", lg: "var(--chakra-sizes-sm) 1fr" }}
+      templateColumns={{ base: "100%", lg: "var(--chakra-sizes-md) 1fr" }}
       alignItems={{ base: "center", lg: "flex-start" }}
       minH={{ base: "unset", lg: "100vh" }}
       position={{ base: "relative", lg: "unset" }}
@@ -26,22 +34,38 @@ export default function ShellLogin({ children }: PropsWithChildren) {
         overflow={"hidden"}
         hideBelow={"lg"}
       >
+        <AbsoluteCenter
+          zIndex={"50"}
+          bg={"bg"}
+          p={"8"}
+          rounded={"full"}
+          w={"32"}
+          h={"32"}
+        >
+          <MutualsLogo wordmark={false} />
+        </AbsoluteCenter>
+
         <Box
           position={"absolute"}
-          zIndex={"50"}
-          left={"12"}
-          top={"12"}
-          color={"white"}
+          inset={"4"}
+          rounded={"lg"}
+          overflow={"hidden"}
         >
-          <LogoWithLink />
+          <Image
+            src={signInImage}
+            alt={"Connect to Mutuals"}
+            fill={true}
+            style={{ objectFit: "cover" }}
+          />
+          <Box
+            position={"absolute"}
+            inset={"0"}
+            bgGradient="to-tl"
+            gradientFrom="transparent"
+            gradientVia="blue.100"
+            gradientTo="blue.400"
+          ></Box>
         </Box>
-
-        <Image
-          src={signInImage}
-          alt={"Connect to Mutuals"}
-          fill={true}
-          style={{ objectFit: "cover" }}
-        />
       </GridItem>
 
       <GridItem>

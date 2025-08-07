@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Button, Container, SimpleGrid, Stack } from "@mutuals/ui";
+import {
+  Theme,
+  Box,
+  Button,
+  Container,
+  SimpleGrid,
+  Stack,
+  GridItem,
+} from "@mutuals/ui";
 import SectionHeader from "src/features/Shell/SectionHeader";
 import { IoCodeWorkingOutline, IoTimerOutline } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
@@ -28,30 +36,34 @@ const values = [
 ];
 export default function HomeValue() {
   return (
-    <Box my={"16"} py={"16"}>
-      <Container maxW="7xl">
-        <SectionHeader label={"Explore Mutuals"}>
-          Financial management for on-chain teams
-        </SectionHeader>
+    <Theme appearance={"dark"}>
+      <Box my={"16"} py={"16"} bg={"bg.subtle"}>
+        <Container maxW="7xl">
+          <SectionHeader label={"Explore Mutuals"}>
+            Financial management for on-chain teams
+          </SectionHeader>
 
-        <SimpleGrid
-          columns={{
-            base: 1,
-            lg: 3,
-          }}
-          gap={{ base: "6", lg: "12" }}
-        >
-          {values.map((value) => (
-            <ValueCard key={value.heading} {...value} />
-          ))}
-        </SimpleGrid>
+          <SimpleGrid
+            columns={{
+              base: 1,
+              lg: 3,
+            }}
+            gap={{ base: "2", lg: "2" }}
+          >
+            {values.map((value, index) => (
+              <GridItem key={value.heading}>
+                <ValueCard {...value} />
+              </GridItem>
+            ))}
+          </SimpleGrid>
 
-        <Stack align={"center"} mt={"12"}>
-          <Button size={"2xl"} variant={"surface"}>
-            Explore the Platform
-          </Button>
-        </Stack>
-      </Container>
-    </Box>
+          <Stack align={"center"} mt={"12"}>
+            <Button size={"2xl"} variant={"surface"} rounded={"4xl"}>
+              Explore the Platform
+            </Button>
+          </Stack>
+        </Container>
+      </Box>
+    </Theme>
   );
 }

@@ -13,36 +13,43 @@ import {
   Text,
   FormatNumber,
 } from "@mutuals/ui";
-import { IoCheckboxOutline } from "react-icons/io5";
+import { IoCheckbox } from "react-icons/io5";
 import items from "@/features/Pricing/Options/items";
 
 export default function PricingOptions() {
   return (
-    <Container maxW="7xl" mb={"32"} position={"relative"}>
-      <SimpleGrid gap={{ base: 6, lg: 12 }} columns={{ base: 1, md: 3 }}>
+    <Container maxW="7xl" mb={"16"} position={"relative"}>
+      <SimpleGrid gap="2" columns={{ base: 1, md: 3 }}>
         {items.map(({ heading, label, description, features, ...props }) => (
-          <Card.Root size={"lg"} key={label} {...props}>
+          <Card.Root size={"lg"} key={label} bg={"bg"} {...props}>
             <Card.Header>
-              <Heading size={"3xl"}>{heading}</Heading>
-              <Text>{description}</Text>
+              <Heading textStyle={"3xl"}>{heading}</Heading>
             </Card.Header>
             <Card.Body>
-              <Heading as={"h3"} size={"2xl"}>
+              <Text textStyle={"md"}>{description}</Text>
+
+              <Text textStyle={"4xl"} mt={"4"}>
                 <FormatNumber value={0.0} style="currency" currency="USD" />
-              </Heading>
+              </Text>
 
               <Box>
-                <Text color={"muted"} textStyle={"xs"}>
+                <Text color={"fg.subtle"} textStyle={"xs"}>
                   {label}
                 </Text>
               </Box>
 
-              <Button w="full" mt="6" size={"xl"} variant={"surface"}>
+              <Button
+                w="full"
+                mt="6"
+                size={"xl"}
+                variant={"surface"}
+                rounded={"4xl"}
+              >
                 Get Started
               </Button>
             </Card.Body>
             <Card.Footer as={Stack} alignItems={"flex-start"}>
-              <Heading size="xs" variant={"subtag"} as="h3">
+              <Heading textStyle="xs" variant={"subtag"} as="h3">
                 Includes
               </Heading>
 
@@ -54,12 +61,7 @@ export default function PricingOptions() {
                     gap="0"
                     alignItems={"flex-start"}
                   >
-                    <List.Indicator
-                      w="4"
-                      h={"4"}
-                      as={IoCheckboxOutline}
-                      color={"fg.muted"}
-                    />
+                    <List.Indicator w="4" h={"4"} as={IoCheckbox} />
                     <Text>{feature}</Text>
                   </List.Item>
                 ))}

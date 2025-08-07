@@ -1,4 +1,4 @@
-import { Text, Heading, Card, Icon, IconProps, Stack } from "@mutuals/ui";
+import { Text, Heading, Card, Icon, IconProps } from "@mutuals/ui";
 import IconBox from "@/components/IconBox";
 
 interface ValueCardProps extends Card.RootProps {
@@ -12,25 +12,21 @@ export default function ValueCard({
   heading,
   description,
   variant = "subtle",
+  bg = "transparent",
+  size = "md",
   ...props
 }: ValueCardProps) {
   return (
-    <Card.Root variant={variant} {...props}>
-      {!!icon && (
-        <Card.Header>
-          <Stack direction={"row"} alignItems={"flex-end"}>
-            <Heading as="h3" size={"2xl"}>
-              {heading}
-            </Heading>
-
-            <IconBox color={"fg.muted"} bg="gray.muted" size={"xs"} ml={"auto"}>
-              <Icon>{icon}</Icon>
-            </IconBox>
-          </Stack>
-        </Card.Header>
-      )}
-
+    <Card.Root variant={variant} bg={bg} size={size} {...props}>
       <Card.Body>
+        {!!icon && (
+          <IconBox color={"fg.subtle"} bg="bg.muted" size={"xs"} mb={"4"}>
+            <Icon>{icon}</Icon>
+          </IconBox>
+        )}
+        <Heading as="h3" textStyle={"2xl"} mb={"4"}>
+          {heading}
+        </Heading>
         <Text color={"fg.muted"}>{description}</Text>
       </Card.Body>
     </Card.Root>

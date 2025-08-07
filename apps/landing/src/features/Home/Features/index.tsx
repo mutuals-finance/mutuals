@@ -8,7 +8,7 @@ export default function HomeFeatures() {
       <Container maxW="7xl">
         <SimpleGrid columns={{ base: 1, lg: 2 }} gap={"6"}>
           <GridItem colSpan={{ base: 1, lg: 2 }}>
-            <Heading size={"3xl"}>Use</Heading>
+            <Heading size={"2xl"}>Use</Heading>
           </GridItem>
           <FeatureCard
             index={1}
@@ -22,7 +22,7 @@ export default function HomeFeatures() {
           />
 
           <GridItem colSpan={{ base: 1, lg: 2 }}>
-            <Heading size={"3xl"}>Explore</Heading>
+            <Heading size={"2xl"}>Explore</Heading>
           </GridItem>
           <FeatureCard
             index={3}
