@@ -1,28 +1,29 @@
-import { Alert as ChakraAlert, Stack } from "@chakra-ui/react";
-import { forwardRef } from "react";
+import { Alert as ChakraAlert } from "@chakra-ui/react"
+import * as React from "react"
 
 export interface AlertProps extends Omit<ChakraAlert.RootProps, "title"> {
-  title?: React.ReactNode;
-  icon?: React.ReactElement;
+  startElement?: React.ReactNode
+  endElement?: React.ReactNode
+  title?: React.ReactNode
+  icon?: React.ReactElement
 }
 
-export const Alert = forwardRef<HTMLDivElement, AlertProps>(
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   function Alert(props, ref) {
-    const { title, children, icon, ...rest } = props;
+    const { title, children, icon, startElement, endElement, ...rest } = props
     return (
       <ChakraAlert.Root ref={ref} {...rest}>
-        <ChakraAlert.Indicator>{icon}</ChakraAlert.Indicator>
+        {startElement || <ChakraAlert.Indicator>{icon}</ChakraAlert.Indicator>}
         {children ? (
-          <Stack gap="1">
+          <ChakraAlert.Content>
             <ChakraAlert.Title>{title}</ChakraAlert.Title>
-            <ChakraAlert.Description w={"full"}>
-              {children}
-            </ChakraAlert.Description>
-          </Stack>
+            <ChakraAlert.Description>{children}</ChakraAlert.Description>
+          </ChakraAlert.Content>
         ) : (
-          <ChakraAlert.Title>{title}</ChakraAlert.Title>
+          <ChakraAlert.Title flex="1">{title}</ChakraAlert.Title>
         )}
+        {endElement}
       </ChakraAlert.Root>
-    );
+    )
   },
-);
+)

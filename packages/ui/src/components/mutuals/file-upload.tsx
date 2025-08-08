@@ -1,13 +1,13 @@
 "use client";
 
-import { FileUploadDropzoneProps } from "@chakra-ui/react";
 import { Controller, useFormContext } from "react-hook-form";
 import {
   FileUploadDropzone,
   FileUploadList,
   FileUploadRoot,
   FileUploadRootProps,
-} from "../../components/ui/file-button";
+  FileUploadDropzoneProps,
+} from "../../components/ui/file-upload";
 import { BaseInputProps } from "../../components/mutuals/input";
 
 export interface FileUploadProps extends BaseInputProps, FileUploadRootProps {
@@ -29,7 +29,10 @@ export function FileUpload({
       rules={rules}
       render={({ field }) => (
         <FileUploadRoot {...props} {...field}>
-          <FileUploadDropzone {...dropzoneProps} />
+          <FileUploadDropzone
+            label={dropzoneProps?.label ?? "unknown"}
+            {...dropzoneProps}
+          />
           <FileUploadList />
         </FileUploadRoot>
       )}

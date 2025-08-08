@@ -1,36 +1,36 @@
-import { HoverCard as ChakraHoverCard, Portal } from "@chakra-ui/react"
-import { forwardRef } from "react"
+import { HoverCard, Portal } from "@chakra-ui/react"
+import * as React from "react"
 
-interface HoverCardContentProps extends ChakraHoverCard.ContentProps {
+interface HoverCardContentProps extends HoverCard.ContentProps {
   portalled?: boolean
-  containerRef?: React.RefObject<HTMLElement>
+  portalRef?: React.RefObject<HTMLElement>
 }
 
-export const HoverCardContent = forwardRef<
+export const HoverCardContent = React.forwardRef<
   HTMLDivElement,
   HoverCardContentProps
 >(function HoverCardContent(props, ref) {
-  const { portalled = true, containerRef, ...rest } = props
+  const { portalled = true, portalRef, ...rest } = props
 
   return (
-    <Portal disabled={!portalled} container={containerRef}>
-      <ChakraHoverCard.Positioner>
-        <ChakraHoverCard.Content ref={ref} {...rest} />
-      </ChakraHoverCard.Positioner>
+    <Portal disabled={!portalled} container={portalRef}>
+      <HoverCard.Positioner>
+        <HoverCard.Content ref={ref} {...rest} />
+      </HoverCard.Positioner>
     </Portal>
   )
 })
 
-export const HoverCardArrow = (props: ChakraHoverCard.ArrowProps) => {
+export const HoverCardArrow = React.forwardRef<
+  HTMLDivElement,
+  HoverCard.ArrowProps
+>(function HoverCardArrow(props, ref) {
   return (
-    <ChakraHoverCard.Arrow {...props}>
-      <ChakraHoverCard.ArrowTip />
-    </ChakraHoverCard.Arrow>
+    <HoverCard.Arrow ref={ref} {...props}>
+      <HoverCard.ArrowTip />
+    </HoverCard.Arrow>
   )
-}
+})
 
-export const HoverCardTrigger = (props: ChakraHoverCard.TriggerProps) => {
-  return <ChakraHoverCard.Trigger {...props} />
-}
-
-export const HoverCardRoot = ChakraHoverCard.Root
+export const HoverCardRoot = HoverCard.Root
+export const HoverCardTrigger = HoverCard.Trigger

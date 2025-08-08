@@ -1,10 +1,5 @@
 import { IconButton, IconButtonProps, Stack, Text } from "@chakra-ui/react";
-import {
-  forwardRef,
-  ForwardRefExoticComponent,
-  MutableRefObject,
-  RefAttributes,
-} from "react";
+import { forwardRef, ForwardRefExoticComponent, RefAttributes } from "react";
 import { LinkButton, LinkButtonProps } from "../ui/link-button";
 
 type IconTextButtonProps = IconButtonProps | LinkButtonProps;
@@ -18,15 +13,9 @@ const IconTextButton = forwardRef(function (
   return (
     <Stack gap={"3"} alignItems={"center"} textAlign={"center"}>
       {"href" in _props ? (
-        <LinkButton
-          {..._props}
-          ref={ref as MutableRefObject<HTMLAnchorElement>}
-        />
+        <LinkButton {..._props} ref={ref} />
       ) : (
-        <IconButton
-          {..._props}
-          ref={ref as MutableRefObject<HTMLButtonElement>}
-        />
+        <IconButton {...(_props as IconButtonProps)} ref={ref} />
       )}
       <Text>{props["aria-label"]}</Text>
     </Stack>

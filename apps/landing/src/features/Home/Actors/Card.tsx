@@ -118,9 +118,20 @@ export default function ActorCard({
                   </Icon>
                 </Flex>
 
-                <Text fontSize="xs" mt="6" variant="subtag">
+                <Heading
+                  textStyle="xs"
+                  mt="6"
+                  {...{
+                    color: "fg.subtle",
+                    fontFamily: "heading",
+                    textTransform: "uppercase",
+                    letterSpacing: "widest",
+                    lineHeight: "widest",
+                    fontWeight: "medium",
+                  }}
+                >
                   {description}
-                </Text>
+                </Heading>
 
                 <Heading maxW={"sm"} fontSize={"inherit"} lineHeight={"1.2"}>
                   {title}

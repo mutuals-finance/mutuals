@@ -1,40 +1,47 @@
-import {
-  Accordion as ChakraAccordion,
-  HStack,
-  Icon,
-  type IconProps,
-} from "@chakra-ui/react";
-import { IoChevronDown } from "react-icons/io5";
+import { Accordion, HStack } from "@chakra-ui/react";
+import * as React from "react";
+import { LuChevronDown } from "react-icons/lu";
 
-interface AccordionItemTriggerProps extends ChakraAccordion.ItemTriggerProps {}
+interface AccordionItemTriggerProps extends Accordion.ItemTriggerProps {
+  indicatorPlacement?: "start" | "end";
+}
 
-export const AccordionItemTrigger = (props: AccordionItemTriggerProps) => {
-  const { children, ...rest } = props;
+export const AccordionItemTrigger = React.forwardRef<
+  HTMLButtonElement,
+  AccordionItemTriggerProps
+>(function AccordionItemTrigger(props, ref) {
+  const { children, indicatorPlacement = "end", ...rest } = props;
   return (
-    <ChakraAccordion.ItemTrigger {...rest}>
+    <Accordion.ItemTrigger {...rest} ref={ref}>
+      {indicatorPlacement === "start" && (
+        <Accordion.ItemIndicator rotate={{ base: "-90deg", _open: "0deg" }}>
+          <LuChevronDown />
+        </Accordion.ItemIndicator>
+      )}
       <HStack gap="4" flex="1" textAlign="start" width="full">
         {children}
       </HStack>
-      <ChakraAccordion.ItemIndicator>
-        <IoChevronDown />
-      </ChakraAccordion.ItemIndicator>
-    </ChakraAccordion.ItemTrigger>
+      {indicatorPlacement === "end" && (
+        <Accordion.ItemIndicator>
+          <LuChevronDown />
+        </Accordion.ItemIndicator>
+      )}
+    </Accordion.ItemTrigger>
   );
-};
+});
 
-interface AccordionItemContentProps extends ChakraAccordion.ItemContentProps {}
+interface AccordionItemContentProps extends Accordion.ItemContentProps {}
 
-export const AccordionItemContent = (props: AccordionItemContentProps) => {
+export const AccordionItemContent = React.forwardRef<
+  HTMLDivElement,
+  AccordionItemContentProps
+>(function AccordionItemContent(props, ref) {
   return (
-    <ChakraAccordion.ItemContent>
-      <ChakraAccordion.ItemBody {...props} />
-    </ChakraAccordion.ItemContent>
+    <Accordion.ItemContent>
+      <Accordion.ItemBody {...props} ref={ref} />
+    </Accordion.ItemContent>
   );
-};
+});
 
-export const AccordionItemIcon = (props: IconProps) => {
-  return <Icon color="fg.muted" fontSize="lg" {...props} asChild />;
-};
-
-export const AccordionRoot = ChakraAccordion.Root;
-export const AccordionItem = ChakraAccordion.Item;
+export const AccordionRoot = Accordion.Root;
+export const AccordionItem = Accordion.Item;

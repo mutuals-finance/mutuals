@@ -10,6 +10,7 @@
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "typegen": "chakra typegen ./src/theme/index.ts",
+    "snippet-add-all": "chakra snippet add --all",
     "postinstall": "pnpm typegen"
   },
   "dependencies": {
