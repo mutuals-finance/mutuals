@@ -8,7 +8,7 @@ import { default as stat } from "./stat";
 import { default as breadcrumb } from "./breadcrumb";
 import { default as table } from "./table";
 
-export default {
+const slotRecipes = {
   card,
   tabs,
   // form,
@@ -19,3 +19,5 @@ export default {
   breadcrumb,
   table,
 };
+
+export default slotRecipes;

@@ -50,7 +50,7 @@ export default function HomeHero() {
                 children: (
                   <Box maxW={"xl"}>
                     <Text
-                      textStyle={{ base: "lg", lg: "2xl" }}
+                      textStyle={{ base: "lg", lg: "xl" }}
                       color={"fg.subtle"}
                     >
                       Automated and trustless revenue distribution without

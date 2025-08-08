@@ -13,7 +13,7 @@ import {
   Text,
   FormatNumber,
 } from "@mutuals/ui";
-import { IoCheckbox } from "react-icons/io5";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import items from "@/features/Pricing/Options/items";
 
 export default function PricingOptions() {
@@ -61,7 +61,11 @@ export default function PricingOptions() {
                     gap="0"
                     alignItems={"flex-start"}
                   >
-                    <List.Indicator w="4" h={"4"} as={IoCheckbox} />
+                    <List.Indicator
+                      w="4"
+                      h={"4"}
+                      as={IoCheckmarkCircleOutline}
+                    />
                     <Text>{feature}</Text>
                   </List.Item>
                 ))}

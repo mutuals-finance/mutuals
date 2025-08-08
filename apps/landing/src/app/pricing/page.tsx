@@ -1,6 +1,6 @@
 import FAQ from "@/features/Pricing/FAQ";
 import Options from "@/features/Pricing/Options";
-import ShellPageHeader from "src/features/Shell/PageHeader";
+import ShellPageHeader from "@/features/Shell/PageHeader";
 
 export default function PricingPage() {
   return (

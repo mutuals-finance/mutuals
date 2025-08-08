@@ -11,7 +11,7 @@ export default function ValueCard({
   icon,
   heading,
   description,
-  variant = "subtle",
+  variant = "outline",
   bg = "transparent",
   size = "md",
   ...props
@@ -24,7 +24,7 @@ export default function ValueCard({
             <Icon>{icon}</Icon>
           </IconBox>
         )}
-        <Heading as="h3" textStyle={"2xl"} mb={"4"}>
+        <Heading as="h3" textStyle={"xl"} mb={"4"}>
           {heading}
         </Heading>
         <Text color={"fg.muted"}>{description}</Text>
