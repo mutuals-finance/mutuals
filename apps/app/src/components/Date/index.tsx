@@ -14,8 +14,10 @@ export default function Date({
 }: DateProps) {
   const date = fromUnixTime(Number(timestamp));
   return (
-    <Text as={"time"} dateTime={date.toJSON()} {...props}>
-      {format(date, formatString, options)}
+    <Text asChild {...props}>
+      <time dateTime={date.toJSON()}>
+        {format(date, formatString, options)}
+      </time>
     </Text>
   );
 }

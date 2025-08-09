@@ -3,6 +3,6 @@
 /* eslint-disable */
 export * as common from "./common";
 export * as contractMetadata from "./contract-metadata";
-export * as split from "./split";
+export * as split from "./splitContract";
 export { Split__factory } from "./Split__factory";
 export { SplitFactory__factory } from "./SplitFactory__factory";

@@ -26,14 +26,14 @@ export default async function PoolOverviewLayout({
   children,
   params,
 }: PropsWithChildren<{
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }>) {
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
 
   const queries = await Promise.all([
-    getPoolDetailsFromRouteParams(params),
+    getPoolDetailsFromRouteParams(await params),
     getAccountBalance({ walletAddress: address, blockchain: "eth" }),
     getTokenTransfers({ address: [address], blockchain: "eth" }),
   ]);

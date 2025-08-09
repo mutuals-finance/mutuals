@@ -44,7 +44,7 @@ export default function AllocationFormTableControl({
         </MenuTrigger>
         <MenuContent>
           <MenuRoot positioning={{ placement: "right-start", gutter: 2 }}>
-            <MenuTriggerItem>Insert</MenuTriggerItem>
+            <MenuTriggerItem value={"insert"}>Insert</MenuTriggerItem>
             <AllocationMenu
               onInsert={({ value, cached }) =>
                 cached ? insertCached() : insert({ value })

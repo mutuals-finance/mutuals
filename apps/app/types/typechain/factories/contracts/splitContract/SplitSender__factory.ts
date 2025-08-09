@@ -12,7 +12,7 @@ import type { NonPayableOverrides } from "../../../common";
 import type {
   SplitSender,
   SplitSenderInterface,
-} from "../../../contracts/split/SplitSender";
+} from "../../../contracts/splitContract/SplitSender";
 
 const _abi = [
   {
@@ -426,7 +426,7 @@ type SplitSenderConstructorParams =
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: SplitSenderConstructorParams
+  xs: SplitSenderConstructorParams,
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class SplitSender__factory extends ContractFactory {
@@ -439,7 +439,7 @@ export class SplitSender__factory extends ContractFactory {
   }
 
   override getDeployTransaction(
-    overrides?: NonPayableOverrides & { from?: string }
+    overrides?: NonPayableOverrides & { from?: string },
   ): Promise<ContractDeployTransaction> {
     return super.getDeployTransaction(overrides || {});
   }

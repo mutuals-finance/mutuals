@@ -69,9 +69,16 @@ export default function NavMobileDrawer({
             </Link>
           ))}
           <Stack gap={6} p={"6"}>
-            <Button variant="surface" size="2xl" rounded={"4xl"} w={"full"}>
-              Launch App
-            </Button>
+            <Link
+              href={"https://app.mutuals.finance"}
+              target="_blank"
+              asChild={true}
+            >
+              <Button variant="surface" size="2xl" rounded={"4xl"} w={"full"}>
+                Launch App
+              </Button>
+            </Link>
+
             <Stack direction="row" gap={6} justify={"space-between"}>
               <Group>
                 {socialLinks.map(({ children, href: _href, ...props }) => (

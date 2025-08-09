@@ -121,16 +121,19 @@ export default function AllocationFormTableRow({
                 id: `${id}.recipientType`,
                 flexBasis: "44",
               },
-            ].map(({ children: selectChildren, ...selectProps }, i) => (
-              <Select
-                key={selectProps.id + "-" + i}
-                size={"sm"}
-                flexShrink={"0"}
-                {...selectProps}
-              >
-                {selectChildren}
-              </Select>
-            ))}
+            ].map(
+              ({ children: selectChildren, collection, id, flexBasis }, i) => (
+                <Select
+                  key={id + "-" + i}
+                  flexBasis={flexBasis}
+                  collection={collection as any}
+                  size={"sm"}
+                  flexShrink={"0"}
+                >
+                  {selectChildren}
+                </Select>
+              ),
+            )}
 
             {isRecipient && (
               <Input

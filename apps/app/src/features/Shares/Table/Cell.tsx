@@ -18,15 +18,9 @@ export default function SharesTableCell({
   return (
     <HStack alignItems={"center"} gap={"3"}>
       <UserAvatar address={address} />
-      <Text
-        as={Link}
-        variant={"slashed-zero"}
-        href={href}
-        target={"_blank"}
-        rel={"noopener noreferrer"}
-      >
-        {shortAddress}
-      </Text>
+      <Link asChild href={href} target={"_blank"} rel={"noopener noreferrer"}>
+        <Text fontVariantNumeric={"slashed-zero"}>{shortAddress}</Text>
+      </Link>
     </HStack>
   );
 }

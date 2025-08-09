@@ -27,7 +27,7 @@ export default function PoolAddModal({
         await createPool({
           ownerAddress: data.ownerAddress,
           salt: BigInt(0),
-          allocations: data.allocations,
+          allocations: data.allocations ?? [],
         });
       },
     },

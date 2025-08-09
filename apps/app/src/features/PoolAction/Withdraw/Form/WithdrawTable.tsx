@@ -66,6 +66,7 @@ export default function WithdrawTable({ ...props }: WithdrawTableProps) {
     <Table<Balance>
       tableProps={{ size: "sm" }}
       containerProps={{ w: "full" }}
+      // @ts-expect-error: is expected to be a TableProps<Balance>
       columns={columns}
       {...props}
     />

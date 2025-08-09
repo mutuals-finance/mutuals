@@ -4,27 +4,30 @@ import ShellPage from "@/features/Shell/Page";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
 import { Container } from "@mutuals/ui";
 
-interface PoolSettingsLayoutProps {
-  params: { id: string };
-}
-
 export default async function PoolSettingsLayout({
   children,
   params,
-}: PropsWithChildren<PoolSettingsLayoutProps>) {
-  const pool = await getPoolDetailsFromRouteParams(params);
+}: PropsWithChildren<{
+  params: Promise<{
+    id: string;
+  }>;
+}>) {
+  const pool = await getPoolDetailsFromRouteParams(await params);
 
   const tabs = [
     {
       title: "General",
+      value: "general",
       href: `/pool/maticmum:${pool?.address}/settings`,
     },
     {
       title: "Security",
+      value: "security",
       href: `/pool/maticmum:${pool?.address}/settings/security`,
     },
     {
       title: "Notifications",
+      value: "notifications",
       href: `/pool/maticmum:${pool?.address}/settings/notifications`,
     },
   ];

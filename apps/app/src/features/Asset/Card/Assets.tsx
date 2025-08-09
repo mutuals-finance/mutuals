@@ -17,13 +17,13 @@ export default function AssetCardBalance({
   return (
     <Box fontSize={"sm"} {...props}>
       <Box>
-        <Text variant={"slashed-zero"} as={"span"}>
+        <Text fontVariantNumeric={"slashed-zero"} as={"span"}>
           {formatCurrencyAmount(balance)}
         </Text>{" "}
         {tokenSymbol}
       </Box>
 
-      <Text variant={"slashed-zero"} as={"span"} display={"block"}>
+      <Text fontVariantNumeric={"slashed-zero"} as={"span"} display={"block"}>
         {formatUSDPrice(balanceUsd)}
       </Text>
     </Box>

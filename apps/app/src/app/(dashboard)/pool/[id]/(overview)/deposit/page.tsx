@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default async function PoolHandleDeposit({
   params,
 }: {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }) {
-  const pool = await getPoolDetailsFromRouteParams(params);
+  const pool = await getPoolDetailsFromRouteParams(await params);
 
   return <PoolActionDeposit pool={pool} />;
 }

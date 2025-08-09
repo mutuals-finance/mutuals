@@ -1,12 +1,12 @@
 import ContentCard, { type ContentCardProps } from "@/components/ContentCard";
 
-import { Box, LinkButton, ButtonProps } from "@mutuals/ui";
+import { Box, LinkButton, ConditionalValue } from "@mutuals/ui";
 import { AssetTableProps } from "@/features/Asset/types";
 import AssetTable from "@/features/Asset/Table";
 
 export interface AssetTableCardProps extends AssetTableProps {
   cardProps?: ContentCardProps;
-  size?: ButtonProps["size"];
+  size?: ConditionalValue<"sm" | "md" | "lg" | undefined>;
 }
 
 export default function AssetTableCard({

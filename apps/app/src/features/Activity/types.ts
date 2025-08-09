@@ -1,6 +1,5 @@
 import type { TableProps } from "@/components/Table";
 import type { TokenTransfer } from "@ankr.com/ankr.js";
-import type { Share } from "@mutuals/graphql-client-nextjs/thegraph";
 
 export enum EventType {
   Deposit = "Deposit",
@@ -16,7 +15,7 @@ export interface SplitEvent {
 }
 
 export interface ActivityTableProps
-  extends Omit<TableProps<TokenTransfer>, "data" | "columns">,
-    Pick<Share, "payee"> {
+  extends Omit<TableProps<TokenTransfer>, "data" | "columns"> {
+  payee?: string;
   transfers?: TokenTransfer[];
 }

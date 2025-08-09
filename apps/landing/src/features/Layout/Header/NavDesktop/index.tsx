@@ -4,6 +4,7 @@ import {
   AbsoluteCenter,
   HStack,
   type LinkProps,
+  Link,
 } from "@mutuals/ui";
 
 import NavLink from "@/features/Layout/Header/NavLink";
@@ -26,9 +27,15 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
       </AbsoluteCenter>
 
       <Group gap={"6"} ml={"auto"}>
-        <Button variant="solid" size={"xl"} rounded={"4xl"}>
-          Launch App
-        </Button>
+        <Link
+          href={"https://app.mutuals.finance"}
+          target="_blank"
+          asChild={true}
+        >
+          <Button variant="solid" size={"xl"} rounded={"4xl"}>
+            Launch App
+          </Button>
+        </Link>
       </Group>
     </NavWrapper>
   );

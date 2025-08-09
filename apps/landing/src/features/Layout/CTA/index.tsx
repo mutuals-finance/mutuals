@@ -1,4 +1,4 @@
-import { Theme, Button, Heading, Container, Stack } from "@mutuals/ui";
+import { Theme, Button, Heading, Container, Stack, Link } from "@mutuals/ui";
 import NextImage from "next/image";
 import ctaBgImage from "@/assets/background-primary.png";
 
@@ -24,14 +24,20 @@ export default function CTA() {
         <Heading size={{ base: "4xl", md: "5xl" }} color={"fg"}>
           Starting with Mutuals is simple, fast, and free.
         </Heading>
-        <Button
-          size="2xl"
-          variant="solid"
-          colorPalette={"blue"}
-          rounded={"4xl"}
+        <Link
+          href={"https://app.mutuals.finance"}
+          target="_blank"
+          asChild={true}
         >
-          Get Started For Free
-        </Button>
+          <Button
+            size="2xl"
+            variant="solid"
+            colorPalette={"blue"}
+            rounded={"4xl"}
+          >
+            Start for free
+          </Button>
+        </Link>
       </Container>
     </Theme>
   );

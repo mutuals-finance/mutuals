@@ -8,13 +8,14 @@ import {
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import { Pool } from "@mutuals/graphql-client-nextjs";
+import { IconTextButtonProps } from "@mutuals/ui";
 
 interface PoolHandlersProps {
   pool?: Pool;
 }
 
 export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
-  const items = [
+  const items: IconTextButtonProps[] = [
     {
       "aria-label": "Withdraw",
       children: <IoPushOutline />,
