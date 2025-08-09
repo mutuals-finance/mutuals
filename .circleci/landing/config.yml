@@ -21,24 +21,24 @@ workflows:
   run-landing:
     jobs:
       - lint:
-          name: "Lint Landing"
+          name: "[landing] lint"
       - test:
-          name: "Test Landing"
+          name: "[landing] test"
       - deploy: &base
-          name: "Deploy Landing to Preview"
+          name: "[landing] deploy staging"
           vercel-project-id: $VERCEL_PROJECT_ID_LANDING
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
           requires:
-            - "Lint Landing"
-            - "Test Landing"
+            - "[landing] lint"
+            - "[landing] test"
           vercel-environment: preview
           filters:
             branches:
               ignore: /main/
       - deploy:
           <<: *base
-          name: "Deploy Landing to Production"
+          name: "[landing] deploy production"
           vercel-environment: production
           filters:
             branches:

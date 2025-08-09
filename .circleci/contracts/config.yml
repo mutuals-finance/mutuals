@@ -21,6 +21,6 @@ workflows:
   run-contracts:
     jobs:
       - lint:
-          name: "Lint Contracts"
+          name: "[contracts] lint"
       - test:
-          name: "Test Contracts"
+          name: "[contracts] test"

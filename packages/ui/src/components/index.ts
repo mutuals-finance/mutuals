@@ -31,6 +31,7 @@ export * from "./ui/password-input";
 export * from "./ui/pin-input";
 export * from "./ui/popover";
 export * from "./ui/progress";
+export * from "./ui/progress-circle";
 export * from "./ui/prose";
 //export * from "./ui/provider";
 export * from "./ui/qr-code";
