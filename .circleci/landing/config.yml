@@ -30,8 +30,8 @@ workflows:
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
           requires:
-            - lint
-            - test
+            - "Lint Landing"
+            - "Test Landing"
           vercel-environment: preview
           filters:
             branches:
