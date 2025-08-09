@@ -19,9 +19,12 @@ parameters:
 workflows:
   run-app:
     jobs:
-      - lint
-      - test
+      - lint:
+          name: "Lint App"
+      - test:
+          name: "Test App"
       - deploy: &base
+          name: "Deploy App to Preview"
           vercel-project-id: $VERCEL_PROJECT_ID_APP
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
@@ -34,6 +37,7 @@ workflows:
               ignore: /main/
       - deploy:
           <<: *base
+          name: "Deploy App to Production"
           vercel-environment: production
           filters:
             branches:
