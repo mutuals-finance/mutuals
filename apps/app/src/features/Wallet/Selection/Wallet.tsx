@@ -16,7 +16,7 @@ export function WalletSelectionWallet() {
   );
 
   return (
-    <Stack gap={"6"} alignItems={"stretch"}>
+    <Stack gap={"4"} alignItems={"stretch"}>
       {(recentConnectors?.length ?? 0) > 0 && (
         <Stack>
           <Heading as={"h4"} variant={"subtag"} fontSize={"xs"}>

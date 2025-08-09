@@ -9,7 +9,7 @@ import React, {
 import useAuthLogin from "@/features/Auth/useLogin";
 import { useRouter } from "next/navigation";
 import { Connector, useAccountEffect, useConnect, useDisconnect } from "wagmi";
-import { ViewerQuery } from "@mutuals/graphql-client-nextjs";
+import { ApolloQueryResult, ViewerQuery } from "@mutuals/graphql-client-nextjs";
 import { Address } from "viem";
 import { useLogout } from "@mutuals/graphql-client-nextjs/client";
 import { walletMapFromViewerQuery } from "@/utils";
@@ -34,7 +34,7 @@ export function useAuth() {
 
 interface AuthProviderContextProps extends PropsWithChildren {
   redirectTo?: string;
-  query?: ViewerQuery;
+  query: ApolloQueryResult<ViewerQuery>;
 }
 
 export default function AuthProvider({
@@ -42,7 +42,7 @@ export default function AuthProvider({
   redirectTo = "/",
   query,
 }: AuthProviderContextProps) {
-  const walletMap = walletMapFromViewerQuery(query);
+  const walletMap = walletMapFromViewerQuery(query.data);
 
   const { disconnect } = useDisconnect();
   const { connect } = useConnect();
@@ -60,7 +60,7 @@ export default function AuthProvider({
         router.push(redirectTo);
       }
     },
-    [router, doLogin],
+    [walletMap, doLogin, router, redirectTo],
   );
 
   const connectAndLogin = useCallback(
@@ -72,7 +72,7 @@ export default function AuthProvider({
 
   const disconnectAndLogout = useCallback(() => {
     disconnect();
-  }, []);
+  }, [disconnect]);
 
   useAccountEffect({
     onConnect(data) {

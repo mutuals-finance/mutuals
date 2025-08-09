@@ -1,15 +1,13 @@
-import { HttpLink, from, ApolloLink, HttpOptions } from "@apollo/client";
-import { RetryLink } from "@apollo/client/link/retry";
+import { HttpLink, from, HttpOptions } from "@apollo/client";
 import {
-  NextSSRApolloClient,
-  NextSSRInMemoryCache,
+  ApolloClient,
+  InMemoryCache,
   SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support/ssr";
+} from "@apollo/client-integration-nextjs";
 import config from "../config";
+import { onError } from "@apollo/client/link/error";
 
 const isLocalEnv = process.env.NODE_ENV !== "production";
-
-const maxRetryAttempts = 5;
 
 export interface MakeClientOpts {
   authHeaders?: Record<string, string>;
@@ -19,12 +17,15 @@ export const makeClient =
   (opts: MakeClientOpts = {}) =>
   () => {
     const isSSr = typeof window === "undefined";
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors)
+        graphQLErrors.forEach(({ message, locations, path }) =>
+          console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+          ),
+        );
 
-    const retryLink = new RetryLink({
-      delay: () => 1000,
-      attempts: (count, operation, error) => {
-        return !!error && count < maxRetryAttempts;
-      },
+      if (networkError) console.log(`[Network error]: ${networkError}`);
     });
 
     const apiLink = (uri: string, options?: Omit<HttpOptions, "uri">) => {
@@ -47,6 +48,7 @@ export const makeClient =
 
       return isSSr
         ? from([
+            errorLink,
             // in a SSR environment, if you use multipart features like
             // @defer, you need to decide how to handle these.
             // This strips all interfaces with a `@defer` directive from your queries.
@@ -55,18 +57,12 @@ export const makeClient =
             }),
             httpApiLink,
           ])
-        : from([retryLink, httpApiLink]);
+        : from([errorLink, httpApiLink]);
     };
 
-    return new NextSSRApolloClient({
+    return new ApolloClient({
       connectToDevTools: isLocalEnv,
-      cache: new NextSSRInMemoryCache(),
-      link: ApolloLink.split(
-        (operation) => operation.getContext().clientName === "thegraph",
-        //if above:
-        apiLink(config.urls.thegraph),
-        // else:
-        apiLink(config.urls.data, { credentials: "include" }),
-      ),
+      cache: new InMemoryCache(),
+      link: apiLink(config.urls.data, { credentials: "include" }),
     });
   };

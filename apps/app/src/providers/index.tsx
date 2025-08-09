@@ -3,8 +3,8 @@ import AnkrProvider from "@/providers/AnkrProvider";
 import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { config } from "@/lib/wagmi";
-import { UIProvider } from "@mutuals/ui";
 import { ApolloProvider } from "@mutuals/graphql-client-nextjs/providers";
+import UIProvider from "@/providers/UIProvider";
 import WagmiProvider from "@/providers/WagmiProvider";
 import AuthProvider from "@/features/Auth/Provider";
 import SignMessageProvider from "@/features/Wallet/SignProvider";
@@ -15,7 +15,7 @@ import "keen-slider/keen-slider.min.css";
 
 export default async function Providers({ children }: PropsWithChildren) {
   const redirectURL = "/";
-  const { data } = await getViewer();
+  const query = await getViewer();
 
   const cookie = await headers().then((h) => h.get("cookie") ?? "");
   const wagmiInitialState = cookieToInitialState(config, cookie);
@@ -25,7 +25,7 @@ export default async function Providers({ children }: PropsWithChildren) {
       <ApolloProvider>
         <WagmiProvider initialState={wagmiInitialState}>
           <SignMessageProvider>
-            <AuthProvider redirectTo={redirectURL} query={data}>
+            <AuthProvider redirectTo={redirectURL} query={query}>
               <AnkrProvider>
                 <MutualsProvider>{children}</MutualsProvider>
               </AnkrProvider>

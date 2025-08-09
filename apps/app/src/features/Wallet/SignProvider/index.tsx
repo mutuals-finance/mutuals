@@ -63,7 +63,7 @@ export default function SignMessageProvider({ children }: PropsWithChildren) {
   const abort = useCallback(() => {
     setModalOpen(false);
     doAbortSignRemoteMessage();
-  }, [doSignRemoteMessage, setModalOpen]);
+  }, [doAbortSignRemoteMessage, setModalOpen]);
 
   const value = {
     signMessage,

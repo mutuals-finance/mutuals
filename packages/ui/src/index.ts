@@ -38,6 +38,7 @@ export {
   type LinkProps,
   MotionBox,
   MutualsLogo,
+  type UIProviderProps,
   UIProvider,
   AccordionItemTrigger,
   AccordionItemContent,
@@ -179,4 +180,6 @@ export {
   // SelectRoot,
   // SelectTrigger,
   // SelectValueText,
+  toaster,
+  Toaster,
 } from "./components";

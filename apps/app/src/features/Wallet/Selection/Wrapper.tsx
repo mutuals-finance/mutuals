@@ -18,10 +18,10 @@ export function WalletSelectionWrapper({
   ...props
 }: WalletSelectionWrapperProps) {
   return (
-    <VStack gap={"6"} alignItems={"stretch"} {...props}>
+    <VStack gap={"4"} alignItems={"stretch"} {...props}>
       <Heading {...headingProps}>{heading}</Heading>
 
-      <Text fontSize={"lg"} variant={"muted"}>
+      <Text textStyle={"lg"} color={"fg.muted"}>
         {description}
       </Text>
 

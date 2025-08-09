@@ -19,7 +19,7 @@ function LogoWithLink() {
 export default function ShellLogin({ children }: PropsWithChildren) {
   return (
     <Grid
-      templateColumns={{ base: "100%", lg: "var(--chakra-sizes-md) 1fr" }}
+      templateColumns={{ base: "100%", lg: "4fr 7fr" }}
       alignItems={{ base: "center", lg: "flex-start" }}
       minH={{ base: "unset", lg: "100vh" }}
       position={{ base: "relative", lg: "unset" }}
@@ -35,25 +35,26 @@ export default function ShellLogin({ children }: PropsWithChildren) {
         hideBelow={"lg"}
       >
         <AbsoluteCenter
+          shadow={"xs"}
           zIndex={"50"}
           bg={"bg"}
-          p={"8"}
-          rounded={"full"}
-          w={"32"}
-          h={"32"}
+          p={"6"}
+          rounded={"4xl"}
+          w={"24"}
+          h={"24"}
         >
           <MutualsLogo wordmark={false} />
         </AbsoluteCenter>
 
         <Box
           position={"absolute"}
-          inset={"4"}
-          rounded={"lg"}
+          inset={"2"}
+          rounded={"4xl"}
           overflow={"hidden"}
         >
           <Image
             src={signInImage}
-            alt={"Connect to Mutuals"}
+            alt={"Welcome to Mutuals"}
             fill={true}
             style={{ objectFit: "cover" }}
           />
@@ -69,14 +70,14 @@ export default function ShellLogin({ children }: PropsWithChildren) {
       </GridItem>
 
       <GridItem>
-        <Container maxW={"3xl"}>
+        <Container maxW={"3xl"} marginInline={"unset"}>
           <Box hideFrom={"lg"}>
             <LogoWithLink />
           </Box>
 
           <WalletSelector.Wrapper
             heading="Connect to Mutuals"
-            headingProps={{ as: "h1", size: "5xl" }}
+            headingProps={{ as: "h1", textStyle: "5xl" }}
             description={
               "Choose your favourite method to sign in. You can always add more methods later."
             }
@@ -93,13 +94,13 @@ export default function ShellLogin({ children }: PropsWithChildren) {
               },
             ]}
             py={"12"}
-            maxW={"xl"}
+            mt={"12"}
           >
             {children}
 
-            <Text fontSize="sm">
+            <Text textStyle={"sm"} color={"fg.subtle"}>
               By connecting, you agree to Mutual’s Terms of Service and
-              acknowledge that you have read and understand the SplitFi
+              acknowledge that you have read and understand the Mutuals
               Disclaimer.
             </Text>
           </WalletSelector.Wrapper>

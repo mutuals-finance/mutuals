@@ -10,6 +10,7 @@ import {
   DialogRootProps,
   Text,
   DialogBackdrop,
+  Dialog,
 } from "@mutuals/ui";
 
 export interface WalletSignDialogProps
@@ -26,19 +27,36 @@ export default function WalletSignDialog({
     <DialogRoot size={size} {...props}>
       <DialogBackdrop />
       <DialogContent textAlign={"center"}>
-        <DialogBody>
-          <Stack alignItems={"center"} textAlign={"center"} gap={"4"} pt={"8"}>
-            <Spinner size="lg" animationDuration="0.8s" />
-            <Heading size={"lg"}>Loading</Heading>
-            <Text variant={"muted"} fontSize={"md"}>
-              {prompt}
-            </Text>
-          </Stack>
-        </DialogBody>
+        <Dialog.Context>
+          {(store) => (
+            <>
+              <DialogBody>
+                <Stack
+                  alignItems={"center"}
+                  textAlign={"center"}
+                  gap={"4"}
+                  pt={"8"}
+                >
+                  <Spinner size="lg" animationDuration="0.8s" />
+                  <Heading textStyle={"lg"}>Loading</Heading>
+                  <Text color={"fg.subtle"} textStyle={"md"}>
+                    {prompt}
+                  </Text>
+                </Stack>
+              </DialogBody>
 
-        <DialogFooter>
-          <Button w="full">Cancel</Button>
-        </DialogFooter>
+              <DialogFooter>
+                <Button
+                  variant="solid"
+                  w="full"
+                  onClick={() => store.setOpen(false)}
+                >
+                  Cancel
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </Dialog.Context>
       </DialogContent>
     </DialogRoot>
   );
