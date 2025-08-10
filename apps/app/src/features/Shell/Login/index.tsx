@@ -6,14 +6,19 @@ import {
   Text,
   Box,
   AbsoluteCenter,
+  Stack,
 } from "@mutuals/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.png";
 import { PropsWithChildren } from "react";
 import WalletSelector from "@/features/Wallet/Selection";
 
-function LogoWithLink() {
-  return <MutualsLogo w={"28"} href={"/"} />;
+function LogoBox() {
+  return (
+    <Box shadow={"xs"} bg={"bg"} p={"6"} rounded={"4xl"} w={"24"} h={"24"}>
+      <MutualsLogo wordmark={false} />
+    </Box>
+  );
 }
 
 export default function ShellLogin({ children }: PropsWithChildren) {
@@ -34,16 +39,8 @@ export default function ShellLogin({ children }: PropsWithChildren) {
         overflow={"hidden"}
         hideBelow={"lg"}
       >
-        <AbsoluteCenter
-          shadow={"xs"}
-          zIndex={"50"}
-          bg={"bg"}
-          p={"6"}
-          rounded={"4xl"}
-          w={"24"}
-          h={"24"}
-        >
-          <MutualsLogo wordmark={false} />
+        <AbsoluteCenter zIndex={"50"}>
+          <LogoBox />
         </AbsoluteCenter>
 
         <Box
@@ -70,14 +67,14 @@ export default function ShellLogin({ children }: PropsWithChildren) {
       </GridItem>
 
       <GridItem>
-        <Container maxW={"3xl"} marginInline={"unset"}>
-          <Box hideFrom={"lg"}>
-            <LogoWithLink />
-          </Box>
+        <Container maxW={"3xl"} marginInline={"unset"} mt={"12"}>
+          <Stack hideFrom={"lg"} alignItems={"center"}>
+            <LogoBox />
+          </Stack>
 
           <WalletSelector.Wrapper
+            py={"12"}
             heading="Connect to Mutuals"
-            headingProps={{ as: "h1", textStyle: "5xl" }}
             description={
               "Choose your favourite method to sign in. You can always add more methods later."
             }
@@ -93,12 +90,10 @@ export default function ShellLogin({ children }: PropsWithChildren) {
                 value: "email",
               },
             ]}
-            py={"12"}
-            mt={"12"}
           >
             {children}
 
-            <Text textStyle={"sm"} color={"fg.subtle"}>
+            <Text textStyle={"xs"} color={"fg.subtle"} textAlign={"left"}>
               By connecting, you agree to Mutual’s Terms of Service and
               acknowledge that you have read and understand the Mutuals
               Disclaimer.

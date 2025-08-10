@@ -18,8 +18,8 @@ export function WalletSelectionWallet() {
   return (
     <Stack gap={"4"} alignItems={"stretch"}>
       {(recentConnectors?.length ?? 0) > 0 && (
-        <Stack>
-          <Heading as={"h4"} variant={"subtag"} fontSize={"xs"}>
+        <Stack alignItems={"flex-start"}>
+          <Heading as={"h4"} variant={"subtag"} textStyle={"xs"}>
             Recent
           </Heading>
           {recentConnectors?.map((connector) => (
@@ -32,7 +32,7 @@ export function WalletSelectionWallet() {
         </Stack>
       )}
 
-      <Stack>
+      <Stack alignItems={"flex-start"}>
         <Heading as={"h4"} variant={"subtag"} fontSize={"xs"}>
           Popular
         </Heading>

@@ -18,14 +18,25 @@ export function WalletSelectionWrapper({
   ...props
 }: WalletSelectionWrapperProps) {
   return (
-    <VStack gap={"4"} alignItems={"stretch"} {...props}>
-      <Heading {...headingProps}>{heading}</Heading>
+    <VStack
+      gap={"4"}
+      textAlign={{ base: "center", lg: "left" }}
+      alignItems={"stretch"}
+      {...props}
+    >
+      <Heading
+        as={"h1"}
+        textStyle={{ base: "4xl", lg: "5xl" }}
+        {...headingProps}
+      >
+        {heading}
+      </Heading>
 
-      <Text textStyle={"lg"} color={"fg.muted"}>
+      <Text textStyle={{ base: "md", lg: "lg" }} color={"fg.muted"}>
         {description}
       </Text>
 
-      <RouterTabs size={"lg"} tabs={tabs}>
+      <RouterTabs size={{ base: "md", lg: "lg" }} tabs={tabs}>
         {children}
       </RouterTabs>
     </VStack>
