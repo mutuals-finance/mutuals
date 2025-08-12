@@ -20,8 +20,9 @@ export function WalletSelectionWrapper({
   return (
     <VStack
       gap={"4"}
-      textAlign={{ base: "center", lg: "left" }}
+      textAlign={{ base: "left", lg: "left" }}
       alignItems={"stretch"}
+      flex={1}
       {...props}
     >
       <Heading
@@ -32,7 +33,7 @@ export function WalletSelectionWrapper({
         {heading}
       </Heading>
 
-      <Text textStyle={{ base: "md", lg: "lg" }} color={"fg.muted"}>
+      <Text textStyle={{ lg: "lg" }} color={"fg.subtle"}>
         {description}
       </Text>
 

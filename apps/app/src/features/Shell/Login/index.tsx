@@ -6,7 +6,7 @@ import {
   Text,
   Box,
   AbsoluteCenter,
-  Stack,
+  Separator,
 } from "@mutuals/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.png";
@@ -15,7 +15,14 @@ import WalletSelector from "@/features/Wallet/Selection";
 
 function LogoBox() {
   return (
-    <Box shadow={"xs"} bg={"bg"} p={"6"} rounded={"4xl"} w={"24"} h={"24"}>
+    <Box
+      shadow={"xs"}
+      bg={"bg"}
+      p={{ base: "4", lg: "6" }}
+      rounded={{ base: "3xl", lg: "4xl" }}
+      w={{ base: "20", lg: "24" }}
+      h={{ base: "20", lg: "24" }}
+    >
       <MutualsLogo wordmark={false} />
     </Box>
   );
@@ -25,19 +32,19 @@ export default function ShellLogin({ children }: PropsWithChildren) {
   return (
     <Grid
       templateColumns={{ base: "100%", lg: "4fr 7fr" }}
-      alignItems={{ base: "center", lg: "flex-start" }}
-      minH={{ base: "unset", lg: "100vh" }}
+      templateRows={{ base: "28 auto", lg: "1fr 1fr" }}
+      minH={"100vh"}
       position={{ base: "relative", lg: "unset" }}
       gap={0}
     >
       <GridItem
-        position={"sticky"}
-        top={"0"}
-        left={"0"}
+        rowSpan={{ lg: 2 }}
+        flexShrink={"0"}
+        position={{ base: "relative", lg: "sticky" }}
+        top={{ lg: "0" }}
+        left={{ lg: "0" }}
         w={"full"}
-        h={"100vh"}
-        overflow={"hidden"}
-        hideBelow={"lg"}
+        h={"full"}
       >
         <AbsoluteCenter zIndex={"50"}>
           <LogoBox />
@@ -45,8 +52,8 @@ export default function ShellLogin({ children }: PropsWithChildren) {
 
         <Box
           position={"absolute"}
-          inset={"2"}
-          rounded={"4xl"}
+          inset={{ base: "0", lg: "2" }}
+          rounded={{ lg: "4xl" }}
           overflow={"hidden"}
         >
           <Image
@@ -66,14 +73,17 @@ export default function ShellLogin({ children }: PropsWithChildren) {
         </Box>
       </GridItem>
 
-      <GridItem>
-        <Container maxW={"3xl"} marginInline={"unset"} mt={"12"}>
-          <Stack hideFrom={"lg"} alignItems={"center"}>
-            <LogoBox />
-          </Stack>
-
+      <GridItem rowSpan={2}>
+        <Container
+          maxW={"2xl"}
+          marginInline={{ lg: "unset" }}
+          pt={{ base: "4", lg: "12" }}
+          display={"flex"}
+          flexDirection={"column"}
+          h={"full"}
+        >
           <WalletSelector.Wrapper
-            py={"12"}
+            py={{ base: "4", lg: "12" }}
             heading="Connect to Mutuals"
             description={
               "Choose your favourite method to sign in. You can always add more methods later."
@@ -93,7 +103,9 @@ export default function ShellLogin({ children }: PropsWithChildren) {
           >
             {children}
 
-            <Text textStyle={"xs"} color={"fg.subtle"} textAlign={"left"}>
+            <Separator mt={"auto"} />
+
+            <Text textStyle={"xs"} color={"fg.subtle"}>
               By connecting, you agree to Mutual’s Terms of Service and
               acknowledge that you have read and understand the Mutuals
               Disclaimer.

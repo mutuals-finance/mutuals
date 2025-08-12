@@ -23,8 +23,20 @@ export default function RouterTabs({
 
   return (
     <>
-      <Tabs.Root value={current?.value} fitted={true} {...props}>
-        <Tabs.List>
+      <Tabs.Root
+        value={current?.value}
+        fitted={true}
+        variant={"plain"}
+        {...props}
+      >
+        <Tabs.List borderBottom={"1px solid"} borderColor={"border"}>
+          <Tabs.Indicator
+            shadow={"none"}
+            borderBottom={"2px solid"}
+            borderColor={"fg"}
+            bg={"transparent"}
+          />
+
           {tabs?.map(({ title, value, tabProps, ..._props }) => (
             <Tabs.Trigger
               key={"trigger" + "-" + value}
@@ -33,12 +45,12 @@ export default function RouterTabs({
               {...tabProps}
             >
               <Link
+                unstyled={true}
                 textAlign="center"
                 justifyContent="center"
                 w={"full"}
                 alignSelf={"stretch"}
-                p={"3"}
-                fontFamily={"font.body"}
+                p={"2"}
                 {..._props}
               >
                 {title}

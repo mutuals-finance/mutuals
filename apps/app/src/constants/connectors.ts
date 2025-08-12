@@ -1,6 +1,6 @@
-import * as METAMASK_LOGO from "@/assets/svg/metaMask.svg";
-import * as WALLET_CONNECT_LOGO from "@/assets/svg/walletConnect.svg";
-import * as COINBASE_WALLET_LOGO from "@/assets/svg/coinbaseWallet.svg";
+import * as METAMASK_LOGO from "@/assets/svg/connectors/metaMask.svg";
+import * as WALLET_CONNECT_LOGO from "@/assets/svg/connectors/walletConnect.svg";
+import * as COINBASE_WALLET_LOGO from "@/assets/svg/connectors/coinbaseWallet.svg";
 
 export { METAMASK_LOGO, WALLET_CONNECT_LOGO, COINBASE_WALLET_LOGO };
 
