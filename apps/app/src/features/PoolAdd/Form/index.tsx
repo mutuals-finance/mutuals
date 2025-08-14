@@ -97,7 +97,7 @@ export default function PoolAdd() {
                   <FileUpload
                     id="image"
                     maxW={"3xs"}
-                    dropzoneProps={{ maxW: "3xs", minH: "3xs" }}
+                    dropzoneProps={{ maxW: "3xs", minH: "3xs", label: "Image" }}
                   />
                 </Field>
                 <Field id={"name"} label={"Name"}>

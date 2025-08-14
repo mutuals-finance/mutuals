@@ -6,9 +6,11 @@ export default async function PoolPagesLayout({
   children,
   params,
 }: PropsWithChildren<{
-  params: { id: string };
+  params: Promise<{
+    id: string;
+  }>;
 }>) {
-  const pool = await getPoolDetailsFromRouteParams(params);
+  const pool = await getPoolDetailsFromRouteParams(await params);
 
   return <ShellPool pool={pool}>{children}</ShellPool>;
 }

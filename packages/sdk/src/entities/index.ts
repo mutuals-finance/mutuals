@@ -1,5 +1,4 @@
 import { CalculationType, RecipientType } from "../types";
-import { CALCULATION_TYPE_KEY, RECIPIENT_TYPE_KEY } from "../constants";
 
 export class Allocation {
   value: string;
@@ -17,8 +16,8 @@ export class Allocation {
   }: {
     value: string;
     recipient: string;
-    calculationType: CalculationType;
-    recipientType: RecipientType;
+    calculationType: CalculationType[];
+    recipientType: RecipientType[];
   }) {
     this.value = value;
     this.recipient = recipient;
@@ -26,10 +25,8 @@ export class Allocation {
     this.recipientType = recipientType;
   }
 
-  get hash() {}
-
   get isItem() {
-    return this.recipientType[0] == RECIPIENT_TYPE_KEY.DEFAULT_RECIPIENT;
+    return this.recipientType[0] == RecipientType.DefaultItem;
   }
 
   get isGroup() {
@@ -37,18 +34,18 @@ export class Allocation {
   }
 
   get isFixed() {
-    return this.calculationType[0] == CALCULATION_TYPE_KEY.FIXED;
+    return this.calculationType[0] == CalculationType.Fixed;
   }
 
   get isPercentage() {
-    return this.calculationType[0] == CALCULATION_TYPE_KEY.PERCENTAGE;
+    return this.calculationType[0] == CalculationType.Percentage;
   }
 
   get isPrioritized() {
-    return this.recipientType[0] == RECIPIENT_TYPE_KEY.PRIORITIZED_GROUP;
+    return this.recipientType[0] == RecipientType.PrioritizedGroup;
   }
 
   get isTimed() {
-    return this.recipientType[0] == RECIPIENT_TYPE_KEY.TIMED_GROUP;
+    return this.recipientType[0] == RecipientType.TimedGroup;
   }
 }

@@ -9,12 +9,12 @@ export interface AssetCardLabelProps
 export default function AssetCardLabel({
   tokenName = "Unknown",
   fontSize = "sm",
-  noOfLines = 2,
+  lineClamp = 2,
   ...props
 }: AssetCardLabelProps) {
   return (
     <Stack alignItems={"flex-start"} gap={"1"}>
-      <Text fontSize={fontSize} noOfLines={noOfLines} {...props}>
+      <Text fontSize={fontSize} lineClamp={lineClamp} {...props}>
         {tokenName}
       </Text>
     </Stack>

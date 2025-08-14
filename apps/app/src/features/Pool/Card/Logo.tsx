@@ -1,7 +1,6 @@
 import { Box, BoxProps, Stack } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoImage } from "react-icons/io5";
-import { ipfsResolveData } from "@/utils";
 import { Pool } from "@mutuals/graphql-client-nextjs";
 
 export type PoolCardLogoProps = Omit<BoxProps, "fill"> &
@@ -42,11 +41,7 @@ export default function PoolCardLogo({
             position={"relative"}
             {...props}
           >
-            <NextImage
-              src={ipfsResolveData(src)}
-              alt={alt || "Unknown Pool"}
-              fill={fill}
-            />
+            <NextImage src={src} alt={alt || "Unknown Pool"} fill={fill} />
           </Box>
         )}
       </>

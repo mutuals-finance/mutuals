@@ -1,5 +1,4 @@
 import { ipfsUrlFromUri } from "src/utils";
-import { SplitMetadata } from "@mutuals/graphql-client-nextjs/thegraph";
 
 export const fetcher = <TResponse = unknown>(
   url: string,
@@ -8,4 +7,4 @@ export const fetcher = <TResponse = unknown>(
 };
 
 export const getMetadata = (uri?: string | null) =>
-  fetcher<Partial<SplitMetadata>>(ipfsUrlFromUri(uri || ""));
+  fetcher<Partial<any>>(ipfsUrlFromUri(uri || ""));

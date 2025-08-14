@@ -1,9 +1,7 @@
 import ContentCard from "@/components/ContentCard";
 
-import { Share } from "@mutuals/graphql-client-nextjs/thegraph";
-
 interface PoolOverviewSharesProps {
-  shares?: Partial<Share>[];
+  shares?: Partial<any>[];
 }
 
 export default function PoolOverviewShares({

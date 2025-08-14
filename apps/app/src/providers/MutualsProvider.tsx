@@ -17,8 +17,8 @@ function MutualsProviderInner({ children }: PropsWithChildren) {
   useMutualsClient({
     // NOTE: existing wallet connection must not be checked, since its done by `AuthRequireWallet`
     chainId: chainId!,
-    publicClient,
-    walletClient,
+    publicClient: publicClient as any,
+    walletClient: walletClient as any,
   });
 
   return children;

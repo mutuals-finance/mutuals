@@ -1,12 +1,12 @@
 import ActivityTable from "@/features/Activity/Table";
 import ContentCard, { type ContentCardProps } from "@/components/ContentCard";
 
-import { Box, ButtonProps, LinkButton } from "@mutuals/ui";
+import { Box, ConditionalValue, LinkButton } from "@mutuals/ui";
 import { ActivityTableProps } from "@/features/Activity/types";
 
 export interface ActivityTableCardProps extends ActivityTableProps {
   cardProps?: ContentCardProps;
-  size?: ButtonProps["size"];
+  size?: ConditionalValue<"sm" | "md" | "lg" | undefined>;
 }
 
 export default function ActivityTableCard({

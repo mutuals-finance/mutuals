@@ -1,7 +1,5 @@
 export {
   MutualsClient,
-  RECIPIENT_TYPE_KEY,
-  CALCULATION_TYPE_KEY,
   RECIPIENT_TYPE_CONFIG,
   CALCULATION_TYPE_CONFIG,
 } from "@mutuals/sdk";

@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   Heading,
   IconButton,
@@ -72,7 +71,6 @@ export default function WalletCard({
             roundedRight={"0"}
             variant={"subtle"}
             href={`wallet/${chainAddress?.address}`}
-            scroll={false}
           >
             Manage
           </LinkButton>

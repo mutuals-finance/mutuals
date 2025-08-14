@@ -23,7 +23,6 @@ export default function DashboardHandlers() {
             children: <IoWalletOutline />,
             href: "/wallet/new",
             variant: "subtle",
-            scroll: false,
           },
           {
             "aria-label": "Settings",

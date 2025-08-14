@@ -76,18 +76,5 @@ export default function PoolActionWithdrawModal({
     }
   }, deps);
 
-  return (
-    <StepperModal
-      steps={steps}
-      onNext={() => {
-        setCurrentIndex((prev) => prev + 1);
-      }}
-      onClose={() => {
-        onClose();
-        reset();
-      }}
-      activeStep={currentIndex}
-      open={open}
-    />
-  );
+  return <StepperModal steps={steps} open={open} />;
 }

@@ -6,54 +6,58 @@ import {
   Text,
   Box,
   AbsoluteCenter,
+  Separator,
 } from "@mutuals/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.png";
 import { PropsWithChildren } from "react";
 import WalletSelector from "@/features/Wallet/Selection";
 
-function LogoWithLink() {
-  return <MutualsLogo w={"28"} href={"/"} />;
+function LogoBox() {
+  return (
+    <Box
+      shadow={"xs"}
+      bg={"bg"}
+      p={{ base: "4", lg: "6" }}
+      rounded={{ base: "3xl", lg: "4xl" }}
+      w={{ base: "20", lg: "24" }}
+      h={{ base: "20", lg: "24" }}
+    >
+      <MutualsLogo wordmark={false} />
+    </Box>
+  );
 }
 
 export default function ShellLogin({ children }: PropsWithChildren) {
   return (
     <Grid
-      templateColumns={{ base: "100%", lg: "var(--chakra-sizes-md) 1fr" }}
-      alignItems={{ base: "center", lg: "flex-start" }}
-      minH={{ base: "unset", lg: "100vh" }}
+      templateColumns={{ base: "100%", lg: "4fr 7fr" }}
+      templateRows={{ base: "8rem auto", lg: "1fr 1fr" }}
+      minH={"100vh"}
       position={{ base: "relative", lg: "unset" }}
       gap={0}
     >
       <GridItem
-        position={"sticky"}
-        top={"0"}
-        left={"0"}
-        w={"full"}
-        h={"100vh"}
-        overflow={"hidden"}
-        hideBelow={"lg"}
+        rowSpan={{ lg: 2 }}
+        position={{ base: "relative", lg: "sticky" }}
+        top={{ lg: "0" }}
+        left={{ lg: "0" }}
+        h={{ lg: "100vh" }}
+        w={{ lg: "full" }}
       >
-        <AbsoluteCenter
-          zIndex={"50"}
-          bg={"bg"}
-          p={"8"}
-          rounded={"full"}
-          w={"32"}
-          h={"32"}
-        >
-          <MutualsLogo wordmark={false} />
+        <AbsoluteCenter zIndex={"50"}>
+          <LogoBox />
         </AbsoluteCenter>
 
         <Box
           position={"absolute"}
-          inset={"4"}
-          rounded={"lg"}
+          inset={{ base: "0", lg: "2" }}
+          rounded={{ lg: "4xl" }}
           overflow={"hidden"}
         >
           <Image
             src={signInImage}
-            alt={"Connect to Mutuals"}
+            alt={"Welcome to Mutuals"}
             fill={true}
             style={{ objectFit: "cover" }}
           />
@@ -68,15 +72,17 @@ export default function ShellLogin({ children }: PropsWithChildren) {
         </Box>
       </GridItem>
 
-      <GridItem>
-        <Container maxW={"3xl"}>
-          <Box hideFrom={"lg"}>
-            <LogoWithLink />
-          </Box>
-
+      <GridItem rowSpan={2}>
+        <Container
+          maxW={"2xl"}
+          marginInline={{ lg: "unset" }}
+          display={"flex"}
+          flexDirection={"column"}
+          h={"full"}
+          py={{ base: "4", lg: "12" }}
+        >
           <WalletSelector.Wrapper
             heading="Connect to Mutuals"
-            headingProps={{ as: "h1", size: "5xl" }}
             description={
               "Choose your favourite method to sign in. You can always add more methods later."
             }
@@ -90,19 +96,23 @@ export default function ShellLogin({ children }: PropsWithChildren) {
                 title: "Continue With Email",
                 href: "/auth/login/email",
                 value: "email",
+                tabProps: {
+                  disabled: false,
+                },
               },
             ]}
-            py={"12"}
-            maxW={"xl"}
           >
             {children}
+          </WalletSelector.Wrapper>
 
-            <Text fontSize="sm">
+          <Box pt={{ base: "4", lg: "12" }} mt={"auto"}>
+            <Separator mb={"4"} />
+            <Text textStyle={"xs"} color={"fg.subtle"}>
               By connecting, you agree to Mutual’s Terms of Service and
-              acknowledge that you have read and understand the SplitFi
+              acknowledge that you have read and understand the Mutuals
               Disclaimer.
             </Text>
-          </WalletSelector.Wrapper>
+          </Box>
         </Container>
       </GridItem>
     </Grid>

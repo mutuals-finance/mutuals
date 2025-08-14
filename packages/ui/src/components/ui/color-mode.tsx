@@ -1,36 +1,36 @@
 "use client";
 
-import {
-  ClientOnly,
-  IconButton,
-  Skeleton,
-  Button,
-  ButtonProps,
-  IconButtonProps,
-} from "@chakra-ui/react";
-import { ThemeProvider, ThemeProviderProps, useTheme } from "next-themes";
+import type { IconButtonProps, SpanProps } from "@chakra-ui/react";
+import { ClientOnly, IconButton, Skeleton, Span } from "@chakra-ui/react";
+import { ThemeProvider, useTheme } from "next-themes";
+import type { ThemeProviderProps } from "next-themes";
+import * as React from "react";
 import { LuMoon, LuSun } from "react-icons/lu";
-import {
-  MenuContent,
-  MenuRadioItem,
-  MenuRadioItemGroup,
-  MenuRoot,
-  MenuTrigger,
-} from "./menu";
 
-export function ColorModeProvider(props: ThemeProviderProps) {
+export interface ColorModeProviderProps extends ThemeProviderProps {}
+
+export function ColorModeProvider(props: ColorModeProviderProps) {
   return (
     <ThemeProvider attribute="class" disableTransitionOnChange {...props} />
   );
 }
 
-export function useColorMode() {
-  const { resolvedTheme, setTheme } = useTheme();
+export type ColorMode = "light" | "dark";
+
+export interface UseColorModeReturn {
+  colorMode: ColorMode;
+  setColorMode: (colorMode: ColorMode) => void;
+  toggleColorMode: () => void;
+}
+
+export function useColorMode(): UseColorModeReturn {
+  const { resolvedTheme, setTheme, forcedTheme } = useTheme();
+  const colorMode = forcedTheme || resolvedTheme;
   const toggleColorMode = () => {
-    setTheme(resolvedTheme === "light" ? "dark" : "light");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
   return {
-    colorMode: resolvedTheme,
+    colorMode: colorMode as ColorMode,
     setColorMode: setTheme,
     toggleColorMode,
   };
@@ -38,22 +38,29 @@ export function useColorMode() {
 
 export function useColorModeValue<T>(light: T, dark: T) {
   const { colorMode } = useColorMode();
-  return colorMode === "light" ? light : dark;
+  return colorMode === "dark" ? dark : light;
 }
 
 export function ColorModeIcon() {
   const { colorMode } = useColorMode();
-  return colorMode === "light" ? <LuSun /> : <LuMoon />;
+  return colorMode === "dark" ? <LuMoon /> : <LuSun />;
 }
 
-export function ColorModeButton(props: IconButtonProps) {
+interface ColorModeButtonProps extends Omit<IconButtonProps, "aria-label"> {}
+
+export const ColorModeButton = React.forwardRef<
+  HTMLButtonElement,
+  ColorModeButtonProps
+>(function ColorModeButton(props, ref) {
   const { toggleColorMode } = useColorMode();
   return (
     <ClientOnly fallback={<Skeleton boxSize="8" />}>
       <IconButton
         onClick={toggleColorMode}
         variant="ghost"
+        aria-label="Toggle color mode"
         size="sm"
+        ref={ref}
         {...props}
         css={{
           _icon: {
@@ -66,27 +73,36 @@ export function ColorModeButton(props: IconButtonProps) {
       </IconButton>
     </ClientOnly>
   );
-}
-export function ColorModeMenu(props: ButtonProps) {
-  const { setColorMode, colorMode } = useColorMode();
-  return (
-    <ClientOnly fallback={<Skeleton boxSize="8" />}>
-      <MenuRoot>
-        <MenuTrigger asChild>
-          <Button {...props}>
-            <ColorModeIcon /> {colorMode === "dark" ? "Dark" : "Light"}
-          </Button>
-        </MenuTrigger>
-        <MenuContent>
-          <MenuRadioItemGroup
-            value={colorMode}
-            onValueChange={(e) => setColorMode(e.value)}
-          >
-            <MenuRadioItem value="dark">Dark</MenuRadioItem>
-            <MenuRadioItem value="light">Light</MenuRadioItem>
-          </MenuRadioItemGroup>
-        </MenuContent>
-      </MenuRoot>
-    </ClientOnly>
-  );
-}
+});
+
+export const LightMode = React.forwardRef<HTMLSpanElement, SpanProps>(
+  function LightMode(props, ref) {
+    return (
+      <Span
+        color="fg"
+        display="contents"
+        className="chakra-theme light"
+        colorPalette="gray"
+        colorScheme="light"
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+
+export const DarkMode = React.forwardRef<HTMLSpanElement, SpanProps>(
+  function DarkMode(props, ref) {
+    return (
+      <Span
+        color="fg"
+        display="contents"
+        className="chakra-theme dark"
+        colorPalette="gray"
+        colorScheme="dark"
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);

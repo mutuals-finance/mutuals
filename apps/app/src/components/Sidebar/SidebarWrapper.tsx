@@ -12,8 +12,6 @@ export function SidebarWrapper({
   width,
   w,
   placement = "start",
-  onExitComplete,
-  ...props
 }: SidebarWrapperProps) {
   return (
     <MotionBox
@@ -32,14 +30,13 @@ export function SidebarWrapper({
       animate={open ? "open" : "closed"}
       variants={{
         open: {
-          width: width || w,
+          width: (width || w) as string,
         },
         closed: {
           width: 0,
         },
       }}
-      onChange={(open) => !open && onExitComplete()}
-      {...props}
+      onChange={(open) => !open}
     >
       <VStack flex="1" alignItems={"stretch"} overflow={"hidden"} gap={"0"}>
         {children}

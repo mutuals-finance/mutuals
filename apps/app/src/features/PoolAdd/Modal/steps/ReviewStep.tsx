@@ -3,7 +3,6 @@ import { Box, Text } from "@mutuals/ui";
 import PoolCard from "@/features/Pool/Card";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
-import { toBigInt } from "ethers";
 import { UseFormReturn } from "react-hook-form";
 
 interface ReviewStepProps extends UseFormReturn<PoolAddData> {}
@@ -11,8 +10,7 @@ interface ReviewStepProps extends UseFormReturn<PoolAddData> {}
 function PoolReviewCard({ image, name, description }: PoolAddData) {
   return (
     <PoolCard
-      timestamp={toBigInt(new Date().getTime())}
-      metaData={{
+      {...{
         id: "id",
         name: name,
         //image: image!.preview!.toString(),

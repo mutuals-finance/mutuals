@@ -16,11 +16,11 @@ export default function PoolCardSkeleton() {
         </Box>
 
         <Box flex="1" py={"6"}>
-          <SkeletonText noOfLines={2} />
+          <SkeletonText lineClamp={2} />
         </Box>
       </Card.Header>
       <Card.Body>
-        <SkeletonText noOfLines={2} />
+        <SkeletonText lineClamp={2} />
       </Card.Body>
       <Card.Footer>
         <Skeleton height="16" w={"full"} />

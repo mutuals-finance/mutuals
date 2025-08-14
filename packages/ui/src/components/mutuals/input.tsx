@@ -111,6 +111,7 @@ export function NumberInput({
 }
 
 type ReactNodeOrFn =
+  | string
   | ReactNode
   | ((value?: any, index?: number) => React.ReactNode);
 

@@ -1,15 +1,16 @@
 "use client";
 
-import { Tabs, Link, LinkProps } from "@mutuals/ui";
+import { Text, TextProps, Tabs, Link, LinkProps } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
 
 export type RouterTabProps = {
   title: string;
 } & Pick<Tabs.TriggerProps, "value"> & {
     tabProps?: Omit<Tabs.TriggerProps, "asChild" | "value">;
-  } & LinkProps;
+  } & TextProps &
+  LinkProps;
 
-interface RouterTabsProps extends Tabs.RootProps {
+export interface RouterTabsProps extends Tabs.RootProps {
   tabs?: RouterTabProps[];
 }
 
@@ -23,28 +24,47 @@ export default function RouterTabs({
 
   return (
     <>
-      <Tabs.Root value={current?.value} fitted={true} {...props}>
-        <Tabs.List>
-          {tabs?.map(({ title, value, tabProps, ..._props }) => (
-            <Tabs.Trigger
-              key={"trigger" + "-" + value}
-              value={value}
-              p={"0"}
-              {...tabProps}
-            >
-              <Link
-                textAlign="center"
-                justifyContent="center"
-                w={"full"}
-                alignSelf={"stretch"}
-                p={"3"}
-                fontFamily={"font.body"}
-                {..._props}
+      <Tabs.Root
+        value={current?.value}
+        fitted={true}
+        variant={"plain"}
+        {...props}
+      >
+        <Tabs.List borderBottom={"1px solid"} borderColor={"border"}>
+          <Tabs.Indicator
+            shadow={"none"}
+            borderBottom={"2px solid"}
+            borderColor={"fg"}
+            bg={"transparent"}
+          />
+
+          {tabs?.map(({ title, value, tabProps, ..._props }) => {
+            const __props = {
+              unstyled: true,
+              textAlign: "center",
+              justifyContent: "center",
+              w: "full",
+              alignSelf: "stretch",
+              p: "2",
+              children: title,
+              ..._props,
+            };
+
+            return (
+              <Tabs.Trigger
+                key={"trigger" + "-" + value}
+                value={value}
+                p={"0"}
+                {...tabProps}
               >
-                {title}
-              </Link>
-            </Tabs.Trigger>
-          ))}
+                {tabProps?.disabled ? (
+                  <Text {...__props} />
+                ) : (
+                  <Link {...__props} />
+                )}
+              </Tabs.Trigger>
+            );
+          })}
         </Tabs.List>
       </Tabs.Root>
       {children}

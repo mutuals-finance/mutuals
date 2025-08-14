@@ -5,9 +5,35 @@ import { Connector, useConnect } from "wagmi";
 import WalletSelectionButton from "@/features/Wallet/SelectionButton";
 import { partition } from "@/utils";
 import { useAuth } from "@/features/Auth/Provider";
+import coinbaseWallet from "@/assets/svg/connectors/coinbaseWallet.svg";
+import metaMask from "@/assets/svg/connectors/metaMask.svg";
+import walletConnect from "@/assets/svg/connectors/walletConnect.svg";
+import Magic from "@/assets/svg/connectors/Magic.svg";
+
+const connectorIcons = {
+  coinbaseWallet,
+  metaMask,
+  walletConnect,
+  Magic,
+};
+
+function useConnectors() {
+  const { connectors: _connectors } = useConnect();
+
+  const connectors = _connectors.map((connector) => {
+    console.log("connector.id", connector);
+    return {
+      ...connector,
+      icon: connectorIcons[connector.type as keyof typeof connectorIcons],
+    };
+  });
+
+  return { connectors };
+}
 
 export function WalletSelectionWallet() {
-  const { connectors } = useConnect();
+  const { connectors } = useConnectors();
+
   const { connectAndLogin } = useAuth();
 
   const [recentConnectors, popularConnectors] = partition(
@@ -16,10 +42,10 @@ export function WalletSelectionWallet() {
   );
 
   return (
-    <Stack gap={"6"} alignItems={"stretch"}>
+    <Stack gap={"4"} alignItems={"stretch"}>
       {(recentConnectors?.length ?? 0) > 0 && (
-        <Stack>
-          <Heading as={"h4"} variant={"subtag"} fontSize={"xs"}>
+        <Stack alignItems={"flex-start"}>
+          <Heading as={"h4"} variant={"subtag"} textStyle={"xs"}>
             Recent
           </Heading>
           {recentConnectors?.map((connector) => (
@@ -32,7 +58,7 @@ export function WalletSelectionWallet() {
         </Stack>
       )}
 
-      <Stack>
+      <Stack alignItems={"flex-start"}>
         <Heading as={"h4"} variant={"subtag"} fontSize={"xs"}>
           Popular
         </Heading>

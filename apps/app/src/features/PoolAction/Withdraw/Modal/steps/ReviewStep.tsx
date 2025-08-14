@@ -1,5 +1,4 @@
 import PoolCard from "@/features/Pool/Card";
-import { toBigInt } from "ethers";
 
 interface ReviewStepProps {
   data: any;
@@ -8,8 +7,7 @@ interface ReviewStepProps {
 function PoolReviewCard({ image, name, description }: any) {
   return (
     <PoolCard
-      timestamp={toBigInt(new Date().getTime())}
-      metaData={{
+      {...{
         id: "id",
         name: name,
         image: image?.preview.toString(),

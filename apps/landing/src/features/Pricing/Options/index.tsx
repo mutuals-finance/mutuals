@@ -12,8 +12,9 @@ import {
   Stack,
   Text,
   FormatNumber,
+  Link,
 } from "@mutuals/ui";
-import { IoCheckbox } from "react-icons/io5";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import items from "@/features/Pricing/Options/items";
 
 export default function PricingOptions() {
@@ -38,15 +39,21 @@ export default function PricingOptions() {
                 </Text>
               </Box>
 
-              <Button
-                w="full"
-                mt="6"
-                size={"xl"}
-                variant={"surface"}
-                rounded={"4xl"}
+              <Link
+                href={"https://app.mutuals.finance"}
+                target="_blank"
+                asChild={true}
               >
-                Get Started
-              </Button>
+                <Button
+                  w="full"
+                  mt="6"
+                  size={"xl"}
+                  variant={"surface"}
+                  rounded={"4xl"}
+                >
+                  Get Started
+                </Button>
+              </Link>
             </Card.Body>
             <Card.Footer as={Stack} alignItems={"flex-start"}>
               <Heading textStyle="xs" variant={"subtag"} as="h3">
@@ -61,7 +68,11 @@ export default function PricingOptions() {
                     gap="0"
                     alignItems={"flex-start"}
                   >
-                    <List.Indicator w="4" h={"4"} as={IoCheckbox} />
+                    <List.Indicator
+                      w="4"
+                      h={"4"}
+                      as={IoCheckmarkCircleOutline}
+                    />
                     <Text>{feature}</Text>
                   </List.Item>
                 ))}

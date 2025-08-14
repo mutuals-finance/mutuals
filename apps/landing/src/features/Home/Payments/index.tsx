@@ -1,164 +1,177 @@
 "use client";
 
-import { Box, Container, AspectRatio, Stack, Heading, Text } from "@mutuals/ui";
-
-import percentImage from "@/assets/payment/percentage.png";
-import fixedImage from "@/assets/payment/fixed.png";
-import timelockImage from "@/assets/payment/timelock.png";
-import prioritizedImage from "@/assets/payment/prioritized.png";
-import combineImage from "@/assets/payment/combine.png";
-
-import bg1Image from "@/assets/pay-1-bg.png";
-import bg2Image from "@/assets/pay-2-bg.png";
-import bg3Image from "@/assets/pay-3-bg.png";
-import SectionHeader from "src/features/Shell/SectionHeader";
+import {
+  Box,
+  Container,
+  AspectRatio,
+  Stack,
+  Heading,
+  Text,
+  Bleed,
+  ButtonGroup,
+  IconButton,
+  Button,
+} from "@mutuals/ui";
+import SectionHeader from "@/features/Shell/SectionHeader";
 import NextImage from "next/image";
-import { IoArrowUp } from "react-icons/io5";
-import IconBox from "@/components/IconBox";
-
-const payments = [
-  {
-    tag: "Percentage allocation",
-    headline:
-      "Seamlessly convert your funds between tokens and fiat in realtime.",
-    description: "Recipient allocation based on relative amounts.",
-    image: percentImage,
-    bgImage: bg1Image,
-    isActive: true,
-  },
-  {
-    tag: "Fixed allocation",
-    headline:
-      "Seamlessly convert your funds between tokens and fiat in realtime.",
-    description: "Recipient allocation based on relative amounts.",
-    image: fixedImage,
-    bgImage: bg2Image,
-    isActive: false,
-  },
-  {
-    tag: "Recurring payments",
-    headline:
-      "Streamline regular transactions for consistent financial management.",
-    description:
-      "Setup your Payment Pool to automatically trigger payments in regular intervals. On-chain verification ensures that only allowed funds are transferred.",
-    image: timelockImage,
-    bgImage: bg3Image,
-    isActive: false,
-  },
-  {
-    tag: "Prioritized allocation",
-    headline: "Optimize strategic asset distribution for maximum efficiency.",
-    description:
-      "Limited cashflow with unsupervised distribution? Use SplitFi's account-based priorization engine to predetermine allowed withdraws.",
-    image: prioritizedImage,
-    bgImage: bg1Image,
-    isActive: false,
-  },
-  {
-    tag: "Combined allocation",
-    headline: "Optimize strategic asset distribution for maximum efficiency.",
-    description:
-      "Limited cashflow with unsupervised distribution? Use SplitFi's account-based priorization engine to predetermine allowed withdraws.",
-    image: combineImage,
-    bgImage: bg2Image,
-    isActive: false,
-  },
-];
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import payments from "./items";
+import { useTime, useTransform, useMotionValueEvent } from "framer-motion";
+import { useCallback, useState } from "react";
 
 export default function HomePayments() {
-  const payment = payments[0] as (typeof payments)[0];
+  const duration = 10000;
+  const time = useTime();
+
+  const [selectionTime, setSelectionTime] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Compute the current index based on time since last manual selection
+  const activeMotionIndex = useTransform(time, (latest) => {
+    const elapsed = latest - selectionTime;
+    const cycles = Math.floor(elapsed / duration);
+    return (startIndex + cycles) % payments.length;
+  });
+
+  useMotionValueEvent(activeMotionIndex, "change", (latest) => {
+    setActiveIndex(latest);
+  });
+
+  const onSelectIndex = useCallback(
+    (index: number) => {
+      setStartIndex(index);
+      setSelectionTime(time.get());
+      setActiveIndex(index);
+    },
+    [time],
+  );
+
+  const activePayment = payments[activeIndex];
   return (
     <Box my="32">
       <Container maxW="7xl">
         <SectionHeader label={"Flexible Setup"}>
           Payments For Every Use Case
         </SectionHeader>
-        <AspectRatio ratio={{ base: 4 / 3, md: 7 / 3 }}>
-          <Stack direction={"row"} flex={"1"} gap={{ base: "1", md: "2" }}>
-            {payments.map(
-              ({ bgImage, image, tag, isActive, ...payment }, i) => (
-                <Stack
-                  key={tag}
-                  flex={{
-                    base: isActive ? "1" : "0 1%",
-                    md: isActive ? "1" : "0 2%",
-                  }}
-                  align={"center"}
-                  justify={"center"}
-                  position={"relative"}
-                  p={{ base: "2", md: "0" }}
-                  roundedRight={i >= payments.length - 1 ? "lg" : "none"}
-                  roundedLeft={i <= 0 ? "lg" : "none"}
-                  overflow={"hidden"}
-                  h={"full"}
-                >
-                  <NextImage
-                    src={bgImage}
-                    alt={tag}
-                    fill={true}
-                    style={{ objectFit: "cover" }}
-                  />
-                  {isActive && (
-                    <Box
+
+        <Bleed inline={{ base: "6", lg: "0" }}>
+          <Box position={"relative"}>
+            <AspectRatio ratio={{ base: 4 / 3, md: 7 / 3 }}>
+              <Stack
+                direction={"row"}
+                flex={"1"}
+                gap={{ base: "0.5", md: "2" }}
+              >
+                {payments.map(({ bgImage, image, tag = "" }, i) => {
+                  const isActive = i == activeIndex;
+
+                  return (
+                    <Stack
+                      key={tag}
+                      onClick={() => !isActive && onSelectIndex(i)}
+                      _hover={{ opacity: isActive ? 1 : 0.9 }}
+                      transition="opacity"
+                      transitionDuration="fastest"
+                      transitionTimingFunction="ease-in-smooth"
+                      cursor={isActive ? "default" : "pointer"}
+                      flex={{
+                        base: isActive ? "1" : "0 2%",
+                        md: isActive ? "1" : "0 2%",
+                      }}
+                      align={"center"}
+                      justify={"center"}
                       position={"relative"}
-                      rounded={"lg"}
+                      p={isActive ? "2" : "0"}
+                      roundedRight={{
+                        base: "0",
+                        lg: i >= payments.length - 1 ? "4xl" : "none",
+                      }}
+                      roundedLeft={{ base: "0", lg: i <= 0 ? "4xl" : "none" }}
                       overflow={"hidden"}
+                      h={"full"}
                     >
                       <NextImage
-                        src={image}
-                        alt={tag + "image"}
-                        width={1200}
-                        style={{
-                          maxWidth: "36rem",
-                          width: "100%",
-                          height: "auto",
-                        }}
+                        src={bgImage}
+                        alt={tag}
+                        fill={true}
+                        style={{ objectFit: "cover" }}
                       />
-                    </Box>
-                  )}
-                </Stack>
-              ),
-            )}
-          </Stack>
-        </AspectRatio>
-
-        <Stack direction={"row"} flex={"1"} gap={"3"} mt={"6"}>
-          {payments.map(({ bgImage, image, tag, isActive, ...payment }) => (
+                      {isActive && (
+                        <Box
+                          position={"relative"}
+                          rounded={"4xl"}
+                          overflow={"hidden"}
+                        >
+                          <NextImage
+                            src={image}
+                            alt={tag + "image"}
+                            width={1200}
+                            style={{
+                              maxWidth: "36rem",
+                              width: "100%",
+                              height: "auto",
+                            }}
+                          />
+                        </Box>
+                      )}
+                    </Stack>
+                  );
+                })}
+              </Stack>
+            </AspectRatio>
             <Box
-              key={tag}
-              flex={isActive ? "1" : "0 20%"}
+              position={"absolute"}
+              bottom={{ base: "4", md: "6" }}
+              right={{ base: "4", md: "6" }}
+              bg={"bg/40"}
+              css={{
+                backdropFilter: "blur(12px)",
+              }}
               rounded={"lg"}
-              h={"0.2rem"}
-            />
-          ))}
-        </Stack>
+            >
+              <ButtonGroup size={"sm"} variant="ghost" attached>
+                <IconButton
+                  onClick={() =>
+                    onSelectIndex(
+                      (activeIndex - 1 + payments.length) % payments.length,
+                    )
+                  }
+                >
+                  <IoChevronBack />
+                </IconButton>
 
-        <Stack direction={"row"} gap={"3"} maxW={"xl"} mt={"9"}>
-          <Box>
-            <IconBox size="md" color={"fg.inverted"} bg={"bg.inverted"}>
-              <Box transform={"rotate(45deg)"}>
-                <IoArrowUp />
-              </Box>
-            </IconBox>
+                <IconButton
+                  onClick={() =>
+                    onSelectIndex((activeIndex + 1) % payments.length)
+                  }
+                >
+                  <IoChevronForward />
+                </IconButton>
+              </ButtonGroup>
+            </Box>
           </Box>
+        </Bleed>
 
-          <Stack gap={"4"}>
-            <Heading as="h3" size={"4xl"}>
-              {payment.tag}
-            </Heading>
+        <Stack
+          gap={"4"}
+          maxW={"2xl"}
+          mt={"6"}
+          px={{ md: "12" }}
+          alignItems={"flex-start"}
+        >
+          <Heading as="h3" textStyle={{ base: "3xl", md: "4xl" }}>
+            {activePayment?.tag}
+          </Heading>
 
-            <Text textStyle={"lg"} color={"fg.muted"}>
-              {payment.description}
-            </Text>
-          </Stack>
+          <Text textStyle={"lg"} color={"fg.subtle"}>
+            {activePayment?.description}
+          </Text>
+
+          <Button variant={"surface"} rounded={"4xl"} size={"lg"}>
+            Explore the use case
+          </Button>
         </Stack>
-        {/*
-        <SimpleGrid columns={{ base: 1, lg: 3 }} gap={"6"}>
-          {payments.map(({ bgImage, ...payment }) => (
-            <PaymentCard {...payment} key={payment.tag} />
-          ))}
-        </SimpleGrid>
-*/}
       </Container>
     </Box>
   );

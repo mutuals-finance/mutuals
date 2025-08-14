@@ -1,26 +1,10 @@
 import React, { PropsWithChildren } from "react";
 
 import Providers from "@/providers";
-import { siteDescription, siteName, siteUrl } from "@/config";
-import { Metadata } from "next";
 import fonts from "@mutuals/ui/font";
+import { createMetadata } from "@mutuals/metadata-nextjs";
 
-export const metadata: Metadata = {
-  title: {
-    default: siteName,
-    template: `%s — ${siteName}`,
-  },
-  description: siteDescription,
-  alternates: {
-    canonical: siteUrl,
-  },
-  metadataBase: new URL(siteUrl),
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    siteName,
-  },
-};
+export const metadata = createMetadata();
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (

@@ -48,11 +48,11 @@ export type { IContractMetadata } from "./contracts/contract-metadata/IContractM
 export { IContractMetadata__factory } from "./factories/contracts/contract-metadata/IContractMetadata__factory";
 export type { Split } from "./contracts/Split";
 export { Split__factory } from "./factories/contracts/Split__factory";
-export type { SplitBase } from "./contracts/split/SplitBase";
-export { SplitBase__factory } from "./factories/contracts/split/SplitBase__factory";
-export type { SplitReceiver } from "./contracts/split/SplitReceiver";
-export { SplitReceiver__factory } from "./factories/contracts/split/SplitReceiver__factory";
-export type { SplitSender } from "./contracts/split/SplitSender";
-export { SplitSender__factory } from "./factories/contracts/split/SplitSender__factory";
+export type { SplitBase } from "./contracts/splitContract/SplitBase";
+export { SplitBase__factory } from "./factories/contracts/splitContract/SplitBase__factory";
+export type { SplitReceiver } from "./contracts/splitContract/SplitReceiver";
+export { SplitReceiver__factory } from "./factories/contracts/splitContract/SplitReceiver__factory";
+export type { SplitSender } from "./contracts/splitContract/SplitSender";
+export { SplitSender__factory } from "./factories/contracts/splitContract/SplitSender__factory";
 export type { SplitFactory } from "./contracts/SplitFactory";
 export { SplitFactory__factory } from "./factories/contracts/SplitFactory__factory";

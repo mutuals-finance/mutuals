@@ -13,8 +13,8 @@ import {
 
 import {
   CalculationType,
+  PoolAllocationInput,
   RecipientType,
-  SplitAllocationInput,
 } from "@mutuals/graphql-client-nextjs";
 
 type TransactionOverrides = {
@@ -65,7 +65,7 @@ type RawAllocation = {
   timespan: bigint;
 };
 
-type Allocation = SplitAllocationInput;
+type Allocation = PoolAllocationInput;
 
 type CreatePoolConfig = {
   allocations: Allocation[];

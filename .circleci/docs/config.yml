@@ -20,21 +20,25 @@ parameters:
 workflows:
   run-docs:
     jobs:
-      - lint
-      - test
+      - lint:
+          name:  "[docs] lint"
+      - test:
+          name:  "[docs] test"
       - deploy: &base
+          name: "[docs] deploy staging"
           vercel-project-id: $VERCEL_PROJECT_ID_DOCS
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
           requires:
-            - lint
-            - test
+            - "[docs] lint"
+            - "[docs] test"
           vercel-environment: preview
           filters:
             branches:
               ignore: /main/
       - deploy:
           <<: *base
+          name: "[docs] deploy production"
           vercel-environment: production
           filters:
             branches:

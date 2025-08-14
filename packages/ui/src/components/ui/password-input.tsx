@@ -1,21 +1,40 @@
 "use client"
 
-import { mergeRefs, useControllableState } from "@chakra-ui/hooks"
 import type {
   ButtonProps,
   GroupProps,
   InputProps,
   StackProps,
 } from "@chakra-ui/react"
-import { Box, HStack, IconButton, Input, Stack } from "@chakra-ui/react"
-import { forwardRef, useRef } from "react"
+import {
+  Box,
+  HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  Stack,
+  mergeRefs,
+  useControllableState,
+} from "@chakra-ui/react"
+import * as React from "react"
 import { LuEye, LuEyeOff } from "react-icons/lu"
-import { InputGroup } from "./input-group"
 
 export interface PasswordVisibilityProps {
+  /**
+   * The default visibility state of the password input.
+   */
   defaultVisible?: boolean
+  /**
+   * The controlled visibility state of the password input.
+   */
   visible?: boolean
+  /**
+   * Callback invoked when the visibility state changes.
+   */
   onVisibleChange?: (visible: boolean) => void
+  /**
+   * Custom icons for the visibility toggle button.
+   */
   visibilityIcon?: { on: React.ReactNode; off: React.ReactNode }
 }
 
@@ -25,54 +44,54 @@ export interface PasswordInputProps
   rootProps?: GroupProps
 }
 
-export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  function PasswordInput(props, ref) {
-    const {
-      rootProps,
-      defaultVisible,
-      visible: visibleProp,
-      onVisibleChange,
-      visibilityIcon = { on: <LuEye />, off: <LuEyeOff /> },
-      ...rest
-    } = props
+export const PasswordInput = React.forwardRef<
+  HTMLInputElement,
+  PasswordInputProps
+>(function PasswordInput(props, ref) {
+  const {
+    rootProps,
+    defaultVisible,
+    visible: visibleProp,
+    onVisibleChange,
+    visibilityIcon = { on: <LuEye />, off: <LuEyeOff /> },
+    ...rest
+  } = props
 
-    const [visible, setVisible] = useControllableState({
-      value: visibleProp,
-      defaultValue: defaultVisible || false,
-      onChange: onVisibleChange,
-    })
+  const [visible, setVisible] = useControllableState({
+    value: visibleProp,
+    defaultValue: defaultVisible || false,
+    onChange: onVisibleChange,
+  })
 
-    const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
-    return (
-      <InputGroup
-        width="full"
-        endElement={
-          <VisibilityTrigger
-            disabled={rest.disabled}
-            onPointerDown={(e) => {
-              if (rest.disabled) return
-              if (e.button !== 0) return
-              e.preventDefault()
-              setVisible(!visible)
-            }}
-          >
-            {visible ? visibilityIcon.off : visibilityIcon.on}
-          </VisibilityTrigger>
-        }
-        {...rootProps}
-      >
-        <Input
-          {...rest}
-          ref={mergeRefs(ref, inputRef)}
-          type={visible ? "text" : "password"}
-        />
-      </InputGroup>
-    )
-  },
-)
+  return (
+    <InputGroup
+      endElement={
+        <VisibilityTrigger
+          disabled={rest.disabled}
+          onPointerDown={(e) => {
+            if (rest.disabled) return
+            if (e.button !== 0) return
+            e.preventDefault()
+            setVisible(!visible)
+          }}
+        >
+          {visible ? visibilityIcon.off : visibilityIcon.on}
+        </VisibilityTrigger>
+      }
+      {...rootProps}
+    >
+      <Input
+        {...rest}
+        ref={mergeRefs(ref, inputRef)}
+        type={visible ? "text" : "password"}
+      />
+    </InputGroup>
+  )
+})
 
-const VisibilityTrigger = forwardRef<HTMLButtonElement, ButtonProps>(
+const VisibilityTrigger = React.forwardRef<HTMLButtonElement, ButtonProps>(
   function VisibilityTrigger(props, ref) {
     return (
       <IconButton
@@ -81,7 +100,6 @@ const VisibilityTrigger = forwardRef<HTMLButtonElement, ButtonProps>(
         me="-2"
         aspectRatio="square"
         size="sm"
-        color="fg.muted"
         variant="ghost"
         height="calc(100% - {spacing.2})"
         aria-label="Toggle password visibility"
@@ -96,7 +114,7 @@ interface PasswordStrengthMeterProps extends StackProps {
   value: number
 }
 
-export const PasswordStrengthMeter = forwardRef<
+export const PasswordStrengthMeter = React.forwardRef<
   HTMLDivElement,
   PasswordStrengthMeterProps
 >(function PasswordStrengthMeter(props, ref) {
@@ -107,7 +125,7 @@ export const PasswordStrengthMeter = forwardRef<
 
   return (
     <Stack align="flex-end" gap="1" ref={ref} {...rest}>
-      <HStack width="full" ref={ref} {...rest}>
+      <HStack width="full" {...rest}>
         {Array.from({ length: max }).map((_, index) => (
           <Box
             key={index}
@@ -115,7 +133,7 @@ export const PasswordStrengthMeter = forwardRef<
             flex="1"
             rounded="sm"
             data-selected={index < value ? "" : undefined}
-            layerStyle="fill.muted"
+            layerStyle="fill.subtle"
             colorPalette="gray"
             _selected={{
               colorPalette,

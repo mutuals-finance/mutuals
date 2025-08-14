@@ -6,9 +6,13 @@ import { siteName } from "@/config";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{
+    id: string;
+  }>;
 }): Promise<Metadata> {
-  const { name, description } = await getPoolDetailsFromRouteParams(params);
+  const { name, description } = await getPoolDetailsFromRouteParams(
+    await params,
+  );
 
   if (!name || name == "") {
     return {

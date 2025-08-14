@@ -21,7 +21,7 @@ export default async function PoolAssetsPage() {
 
   return (
     <ShellPage breadcrumbsEnabled={false} title={"Assets"}>
-      <Container as={"section"} variant={"shell"}>
+      <Container as={"section"} maxW={"7xl"}>
         <ContentCard
           bodyProps={{ p: "0" }}
           css={{ overflow: "auto !important" }}

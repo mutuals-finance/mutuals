@@ -3,12 +3,12 @@ import ContentCard, { type ContentCardProps } from "@/components/ContentCard";
 import AllocationTable, {
   AllocationTableProps,
 } from "@/features/Allocation/Table";
-import type { Split } from "@mutuals/graphql-client-nextjs";
+import type { Pool } from "@mutuals/graphql-client-nextjs";
 import { Allocation } from "@mutuals/sdk-react";
 
 export type AllocationTableCardProps = Omit<ContentCardProps, "children"> & {
   tableProps?: Omit<AllocationTableProps, "values">;
-  pool?: Split;
+  pool?: Pool;
   children?: ReactNode | ((table?: ReactNode) => ReactNode);
 };
 

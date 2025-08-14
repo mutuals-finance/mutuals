@@ -16,21 +16,22 @@
     "typecheck": "tsc -b"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "5.0.6",
-    "@graphql-codegen/client-preset": "4.8.1",
+    "@graphql-codegen/cli": "5.0.7",
+    "@graphql-codegen/client-preset": "4.8.3",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "@types/node": "^22.15.21",
-    "@types/react": "^19.1.5",
-    "@types/react-dom": "^19.1.5",
-    "eslint": "^9.27.0",
-    "react": "^19.1.0",
-    "typescript": "^5.8.3"
+    "@types/node": "^24.2.1",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "eslint": "^9.32.0",
+    "react": "^19.1.1",
+    "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@apollo/client": "^3.13.8",
-    "@apollo/experimental-nextjs-app-support": "^0.12.2",
-    "next": "^15.3.2"
+    "@apollo/client": "^3.13.9",
+    "@apollo/client-integration-nextjs": "^0.12.3",
+    "@apollo/experimental-nextjs-app-support": "^0.12.3",
+    "next": "^15.4.6"
   }
 }

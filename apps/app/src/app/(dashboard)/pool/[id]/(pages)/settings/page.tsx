@@ -3,22 +3,24 @@ import ContentCard from "@/components/ContentCard";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
 import { Metadata } from "next";
 
-interface PoolSettingsPageProps {
-  params: { id: string };
-}
-
 export const metadata: Metadata = {
   title: "General Settings",
 };
 
 export default async function PoolSettingsPage({
   params,
-}: PoolSettingsPageProps) {
-  const { name, description } = await getPoolDetailsFromRouteParams(params);
+}: {
+  params: Promise<{
+    id: string;
+  }>;
+}) {
+  const { name, description } = await getPoolDetailsFromRouteParams(
+    await params,
+  );
 
   const defaultValues = {
-    name,
-    description,
+    name: name ?? "",
+    description: description ?? "",
     image: undefined,
   };
 

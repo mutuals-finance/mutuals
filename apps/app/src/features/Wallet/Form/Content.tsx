@@ -8,10 +8,9 @@ export function WalletDrawerContent({ children }: PropsWithChildren) {
     <>
       {children}
 
-      <Input id="name" label={"Name"} />
+      <Input id="name" />
 
       <Input
-        label={"Address"}
         disabled={true}
         id="address"
         rules={{

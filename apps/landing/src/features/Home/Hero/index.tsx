@@ -8,6 +8,7 @@ import {
   MotionBox,
   For,
   Box,
+  Link,
 } from "@mutuals/ui";
 import HeroImageSlider from "@/features/Home/Hero/ImageSlider";
 import GridBg from "@/components/GridBg";
@@ -50,7 +51,7 @@ export default function HomeHero() {
                 children: (
                   <Box maxW={"xl"}>
                     <Text
-                      textStyle={{ base: "lg", lg: "2xl" }}
+                      textStyle={{ base: "lg", lg: "xl" }}
                       color={"fg.subtle"}
                     >
                       Automated and trustless revenue distribution without
@@ -62,12 +63,24 @@ export default function HomeHero() {
               {
                 children: (
                   <Group gap="2">
-                    <Button size={"2xl"} rounded={"4xl"}>
-                      Start for free
-                    </Button>
-                    <Button size={"2xl"} rounded={"4xl"} variant={"surface"}>
-                      Learn more
-                    </Button>
+                    <Link
+                      href={"https://app.mutuals.finance"}
+                      target="_blank"
+                      asChild={true}
+                    >
+                      <Button size={"2xl"} rounded={"4xl"}>
+                        Start for free
+                      </Button>
+                    </Link>
+                    <Link
+                      href={"https://docs.mutuals.finance"}
+                      target="_blank"
+                      asChild={true}
+                    >
+                      <Button size={"2xl"} rounded={"4xl"} variant={"surface"}>
+                        Learn more
+                      </Button>
+                    </Link>
                   </Group>
                 ),
               },

@@ -1,16 +1,18 @@
-import type { BoxProps, InputElementProps } from "@chakra-ui/react";
-import { Group, InputElement } from "@chakra-ui/react";
-import { cloneElement, forwardRef } from "react";
+import type { BoxProps, InputElementProps } from "@chakra-ui/react"
+import { Group, InputElement } from "@chakra-ui/react"
+import * as React from "react"
 
 export interface InputGroupProps extends BoxProps {
-  startElementProps?: InputElementProps;
-  endElementProps?: InputElementProps;
-  startElement?: React.ReactNode;
-  endElement?: React.ReactNode;
-  children: React.ReactElement;
+  startElementProps?: InputElementProps
+  endElementProps?: InputElementProps
+  startElement?: React.ReactNode
+  endElement?: React.ReactNode
+  children: React.ReactElement<InputElementProps>
+  startOffset?: InputElementProps["paddingStart"]
+  endOffset?: InputElementProps["paddingEnd"]
 }
 
-export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
+export const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
   function InputGroup(props, ref) {
     const {
       startElement,
@@ -18,8 +20,13 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
       endElement,
       endElementProps,
       children,
+      startOffset = "6px",
+      endOffset = "6px",
       ...rest
-    } = props;
+    } = props
+
+    const child =
+      React.Children.only<React.ReactElement<InputElementProps>>(children)
 
     return (
       <Group ref={ref} {...rest}>
@@ -28,10 +35,12 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
             {startElement}
           </InputElement>
         )}
-        {cloneElement(children, {
-          ...(startElement && { ps: "calc(var(--input-height) - 6px)" }),
-          ...(endElement && { pe: "calc(var(--input-height) - 6px)" }),
-          //...children.props,
+        {React.cloneElement(child, {
+          ...(startElement && {
+            ps: `calc(var(--input-height) - ${startOffset})`,
+          }),
+          ...(endElement && { pe: `calc(var(--input-height) - ${endOffset})` }),
+          ...children.props,
         })}
         {endElement && (
           <InputElement placement="end" {...endElementProps}>
@@ -39,6 +48,6 @@ export const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
           </InputElement>
         )}
       </Group>
-    );
+    )
   },
-);
+)

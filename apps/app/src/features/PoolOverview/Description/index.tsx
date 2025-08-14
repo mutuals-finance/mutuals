@@ -9,7 +9,7 @@ import {
   StatValueText,
 } from "@mutuals/ui";
 
-import { formatUSDPrice, ipfsResolveData } from "src/utils";
+import { formatUSDPrice } from "src/utils";
 
 import { type Pool } from "@mutuals/graphql-client-nextjs";
 import PoolCard from "@/features/Pool/Card";
@@ -30,7 +30,7 @@ export default function PoolOverviewDescription({
         w={"full"}
       >
         <PoolCard.Logo
-          src={ipfsResolveData()}
+          src={""}
           alt={pool?.name ?? "Unknown Payment Pool"}
           boxSize={"3.4rem"}
         />

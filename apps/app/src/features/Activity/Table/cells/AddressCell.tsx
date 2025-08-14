@@ -16,11 +16,11 @@ export function AddressCell({ getValue, address: parent }: AddressCellProps) {
   const { href, shortAddress } = useExplorerLink({ address });
   return !equals ? (
     <Link href={href} target={"_blank"} rel={"noopener noreferrer"}>
-      <Text variant={"slashed-zero"}>{shortAddress}</Text>
+      <Text>{shortAddress}</Text>
     </Link>
   ) : (
     <Link href={href} target={"_blank"} rel={"noopener noreferrer"}>
-      <Text variant={"slashed-zero"}>{shortAddress}</Text>
+      <Text fontVariantNumeric={"slashed-zero"}>{shortAddress}</Text>
     </Link>
   );
 }

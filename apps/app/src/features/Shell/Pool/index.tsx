@@ -1,6 +1,5 @@
 import React from "react";
 import ShellPage, { ShellPageProps } from "@/features/Shell/Page";
-import { ipfsResolveData } from "@/utils";
 import PoolCard from "@/features/Pool/Card";
 import { Pool } from "@mutuals/graphql-client-nextjs";
 import { Tag } from "@mutuals/ui";
@@ -25,7 +24,7 @@ export default function ShellPool({
               size={"md"}
               startElement={
                 <PoolCard.Logo
-                  src={ipfsResolveData()}
+                  src={""}
                   alt={pool?.name ?? "Unknown Payment Pool"}
                   boxSize="0.8rem"
                   p={"0"}

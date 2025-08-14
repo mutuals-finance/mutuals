@@ -24,7 +24,7 @@ export default async function PoolActivityPage() {
       }
       breadcrumbsEnabled={false}
     >
-      <Container as={"section"} variant={"shell"}>
+      <Container as={"section"} maxW={"container.xl"}>
         <ActivityTableCard
           cardProps={{
             css: { overflow: "auto !important" },

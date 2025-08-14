@@ -11,7 +11,8 @@ import { TMutationOptions } from "../types";
 export async function addWallet(
   options?: TMutationOptions<AddWalletMutation, AddWalletMutationVariables>,
 ) {
-  return getClient().mutate({
+  const client = await getClient();
+  return client.mutate({
     mutation: ADD_WALLET,
     ...options,
   });

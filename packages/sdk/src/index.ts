@@ -7,8 +7,6 @@ export * from "./errors";
 
 export {
   SUPPORTED_CHAIN_IDS,
-  RECIPIENT_TYPE_KEY,
-  CALCULATION_TYPE_KEY,
   RECIPIENT_TYPE_CONFIG,
   CALCULATION_TYPE_CONFIG,
 } from "./constants";

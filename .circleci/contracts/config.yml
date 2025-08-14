@@ -20,5 +20,7 @@ parameters:
 workflows:
   run-contracts:
     jobs:
-      - lint
-      - test
+      - lint:
+          name: "[contracts] lint"
+      - test:
+          name: "[contracts] test"

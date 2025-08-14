@@ -2,11 +2,10 @@ import { DataListItem, DataListRoot, DataListItemProps } from "@mutuals/ui";
 import React, { useMemo } from "react";
 import { formatPrice } from "src/utils";
 import { type WithdrawData } from "@/features/PoolAction/types";
-import { Share } from "@mutuals/graphql-client-nextjs/thegraph";
 import { Balance } from "@ankr.com/ankr.js/dist/types";
 
 export interface SummaryTableProps extends WithdrawData {
-  shares?: Share[];
+  shares?: any[];
   data?: Balance[];
 }
 
