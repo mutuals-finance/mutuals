@@ -1,6 +1,6 @@
 import {
   defaultContentType,
-  LogoBorderImageResponse,
+  LogoTransparentImageResponse,
 } from "@mutuals/metadata-nextjs";
 
 export const size = {
@@ -11,7 +11,7 @@ export const size = {
 export const contentType = defaultContentType;
 
 export default function Icon() {
-  return new LogoBorderImageResponse({
+  return new LogoTransparentImageResponse({
     ...size,
   });
 }

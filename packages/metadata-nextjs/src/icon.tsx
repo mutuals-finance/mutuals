@@ -20,8 +20,10 @@ export class DefaultImageResponse extends NextImageResponse {
       renderBaseIcon(
         {
           style: {
+            color: "#09090B",
             backgroundColor: "#FAFAFA",
-            borderColor: "transparent",
+            borderRadius: "100%",
+            padding: "18%",
           },
         },
         options,
@@ -31,13 +33,14 @@ export class DefaultImageResponse extends NextImageResponse {
   }
 }
 
-export class LogoBorderImageResponse extends NextImageResponse {
+export class LogoTransparentImageResponse extends NextImageResponse {
   constructor(options?: ImageResponseOptions) {
     super(
       renderBaseIcon(
         {
           style: {
-            borderColor: "#D4D4D8",
+            color: "#09090B",
+            backgroundColor: "transparent",
           },
         },
         options,

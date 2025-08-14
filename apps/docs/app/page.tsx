@@ -1,6 +1,5 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { Button, Card, Code } from "@mutuals/ui";
 
 function Gradient({
   conic,
@@ -10,7 +9,7 @@ function Gradient({
   small?: boolean;
   conic?: boolean;
   className?: string;
-}): JSX.Element {
+}) {
   return (
     <span
       className={[
@@ -49,14 +48,11 @@ const LINKS = [
   },
 ];
 
-export default function Page(): JSX.Element {
+export default function Page() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
-          examples/basic&nbsp;
-          <Code className={styles.code}>docs</Code>
-        </p>
+        <p>examples/basic&nbsp; docs</p>
         <div>
           <a
             href="https://vercel.com?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo"
@@ -76,7 +72,7 @@ export default function Page(): JSX.Element {
         </div>
       </div>
 
-      <Button className={styles.button}>Click me!</Button>
+      <button className={styles.button}>Click me!</button>
 
       <div className={styles.hero}>
         <div className={styles.heroContent}>
@@ -130,9 +126,10 @@ export default function Page(): JSX.Element {
 
       <div className={styles.grid}>
         {LINKS.map(({ title, description }) => (
-          <Card className={styles.card} key={title} title={title}>
+          <div className={styles.card} key={title}>
+            {title}
             {description}
-          </Card>
+          </div>
         ))}
       </div>
     </main>

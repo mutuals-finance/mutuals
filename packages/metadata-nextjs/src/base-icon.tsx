@@ -14,11 +14,6 @@ export default function renderBaseIcon(
         alignItems: "center",
         width: "100%",
         height: "100%",
-        color: "#09090B",
-        backgroundColor: "#FAFAFA",
-        border: `${(options?.width || 0) * 0.1}px solid`,
-        borderRadius: "100%",
-        padding: "12%",
         ...style,
       }}
       {...props}
