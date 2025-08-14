@@ -1,15 +1,10 @@
-import { Container, Stack, StackSeparator, Text } from "@mutuals/ui";
-import Link from "next/link";
+import { Link, Container, Stack, StackSeparator, Text } from "@mutuals/ui";
 
 export default function ShellDashboardFooter() {
   const routes: Record<string, string> = {
-    Home: "/",
-    About: "/splits",
-    App: "/splits",
-    Feedback: "/splits",
-    Help: "/splits",
-    "Terms Of Service": "/splits",
-    "Privacy Policy": "/splits",
+    Homepage: "https://mutuals.finance",
+    "Terms Of Service": "/",
+    "Privacy Policy": "/",
   };
   return (
     <Container
@@ -25,13 +20,13 @@ export default function ShellDashboardFooter() {
         mb={"6"}
         direction={"row"}
         separator={<StackSeparator />}
-        gap={"3"}
+        gap={"4"}
       >
-        <Text>Copyright 2023 Mutuals</Text>
-        <Text>The best way to split your smart contract profits</Text>
+        <Text textStyle={"xs"}>Copyright 2025 Mutuals</Text>
+        <Text textStyle={"xs"}>The best way to manage onchain payments.</Text>
       </Stack>
 
-      <Stack gap={"6"} direction={["column", "row"]}>
+      <Stack gap={"4"} direction={["column", "row"]} textStyle={"xs"}>
         {Object.keys(routes).map((name: string) => (
           <Link href={routes[name] || "/"} key={name}>
             {name}

@@ -104,7 +104,6 @@ export default function ShellDashboardHeaderUser() {
       </Menu.Root>
 
       <Button
-        hideBelow={"lg"}
         variant={"solid"}
         size={"sm"}
         loading={isConnecting}

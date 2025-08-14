@@ -2,16 +2,30 @@ import { Box, Container, Heading } from "@mutuals/ui";
 import React from "react";
 
 import WalletListContent from "@/features/Wallet/List/Content";
+import {
+  ApolloQueryResult,
+  ViewerWalletsQuery,
+} from "@mutuals/graphql-client-nextjs";
+import AuthSiginInCard from "@/features/Auth/SignInCard";
 
-export default function WalletList() {
+type WalletListProps = ApolloQueryResult<ViewerWalletsQuery>;
+
+export default function WalletList({ data }: WalletListProps) {
   return (
-    <Box overflow={"hidden"} my={"12"}>
+    <Box my={"12"}>
       <Container maxW={"7xl"}>
-        <Heading as={"h2"} size={"2xl"} mb={"3"}>
+        <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
           Wallets
         </Heading>
-
-        <WalletListContent />
+        {data?.viewer ? (
+          <WalletListContent />
+        ) : (
+          <AuthSiginInCard
+            description={
+              "To view and manage your wallets you must sign in to your account."
+            }
+          />
+        )}
       </Container>
     </Box>
   );

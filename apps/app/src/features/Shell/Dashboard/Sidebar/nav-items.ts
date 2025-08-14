@@ -16,24 +16,24 @@ export default {
     },
     {
       label: "Payment Pools",
-      href: "/dashboard",
+      href: "/", // dashboard
       icon: IoGridOutline,
     },
     {
       label: "Address Book",
-      href: "/address-book",
+      href: "/", // address-book
       icon: IoPeopleOutline,
     },
   ],
   Preferences: [
     {
       label: "Settings",
-      href: "/settings",
+      href: "/", // settings
       icon: IoSettingsOutline,
     },
     {
       label: "Help Center",
-      href: "/settings",
+      href: "/", // settings
       icon: IoHelpCircleOutline,
     },
   ],

@@ -97,7 +97,7 @@ export default function ShellDashboardSidebarContent({
                 <LinkButton
                   key={navItem.label}
                   href={navItem.href}
-                  variant={"subtle"}
+                  variant={"surface"}
                   w={"full"}
                   justifyContent={"flex-start"}
                   px={"3.5"}
@@ -106,6 +106,7 @@ export default function ShellDashboardSidebarContent({
                   fontSize={"sm"}
                   textAlign={"left"}
                   overflow={"hidden"}
+                  rounded={"2xl"}
                 >
                   <Icon boxSize={"4"}>
                     <navItem.icon />

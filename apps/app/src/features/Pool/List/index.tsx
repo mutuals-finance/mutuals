@@ -1,56 +1,28 @@
-import {
-  ApolloQueryResult,
-  ViewerPoolsQuery,
-} from "@mutuals/graphql-client-nextjs";
-import {
-  Container,
-  Heading,
-  SimpleGrid,
-  EmptyState,
-  Group,
-  Button,
-} from "@mutuals/ui";
-import React from "react";
+import { Container, Heading } from "@mutuals/ui";
+import AuthSiginInCard from "@/features/Auth/SignInCard";
+import PoolListContent, {
+  PoolListContentProps,
+} from "@/features/Pool/List/Content";
 
-import { TreasurySearchAndCreate } from "./SearchAndCreate";
-import PoolCard from "@/features/Pool/Card";
-import { HiViewGridAdd } from "react-icons/hi";
+export type PoolListProps = PoolListContentProps;
 
-export default function PoolList({
-  data,
-}: ApolloQueryResult<ViewerPoolsQuery>) {
-  const viewerPools =
-    data?.viewer && "viewerPools" in data.viewer ? data.viewer.viewerPools : [];
+export default function PoolList(query: PoolListProps) {
+  const { data } = query;
 
   return (
     <Container maxW={"7xl"}>
-      <Heading as={"h2"} size={"2xl"} mb={"3"}>
+      <Heading as={"h2"} textStyle={"3xl"} mb={"3"}>
         Payment Pools
       </Heading>
-
-      {!!viewerPools && viewerPools.length > 0 ? (
-        <>
-          <TreasurySearchAndCreate />
-          <SimpleGrid
-            templateColumns={"repeat(auto-fill, minmax(16rem, 1fr))"}
-            gap={4}
-          >
-            {viewerPools.map((viewerPool, key) => {
-              return <PoolCard key={key} {...viewerPool?.pool} />;
-            })}
-          </SimpleGrid>
-        </>
+      {!data?.viewer ? (
+        <AuthSiginInCard
+          actionProps={{ children: "Create payment pool" }}
+          description={
+            "To view and manage your payment pools you must sign in to your account."
+          }
+        />
       ) : (
-        <EmptyState
-          icon={<HiViewGridAdd />}
-          title="Start receiving funds"
-          description="Add a new payment pool to get started"
-        >
-          <Group>
-            <Button>Create Payment Pool</Button>
-            <Button variant="outline">Import</Button>
-          </Group>
-        </EmptyState>
+        <PoolListContent {...query} />
       )}
     </Container>
   );

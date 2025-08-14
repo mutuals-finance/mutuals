@@ -3,19 +3,25 @@ import WalletList from "@/features/Wallet/List";
 import PoolList from "@/features/Pool/List";
 import DashboardHomeBalance from "src/features/DashboardHome/Balance";
 import DashboardHomeHandlers from "@/features/DashboardHome/Handlers";
-import { getViewerPools } from "@mutuals/graphql-client-nextjs/server";
+import {
+  getViewerPools,
+  getViewerWallets,
+} from "@mutuals/graphql-client-nextjs/server";
 
 export default async function DashboardHomeLayout({
   children,
 }: PropsWithChildren) {
-  const query = await getViewerPools();
+  const [walletsQuery, poolQuery] = await Promise.all([
+    getViewerWallets(),
+    getViewerPools(),
+  ]);
 
   return (
     <>
       <DashboardHomeBalance />
       <DashboardHomeHandlers />
-      <WalletList />
-      <PoolList {...query} />
+      <WalletList {...walletsQuery} />
+      <PoolList {...poolQuery} />
       {children}
     </>
   );
