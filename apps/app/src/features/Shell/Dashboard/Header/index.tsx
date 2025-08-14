@@ -1,12 +1,5 @@
-import {
-  Form,
-  InputGroup,
-  Stack,
-  MutualsLogo,
-  IconButton,
-  Input,
-} from "@mutuals/ui";
-import { IoMenuSharp, IoSearch } from "react-icons/io5";
+import { Form, InputGroup, Stack, MutualsLogo, Input } from "@mutuals/ui";
+import { IoSearch } from "react-icons/io5";
 
 import Chain from "./Chain";
 import User from "./User";
@@ -43,15 +36,6 @@ export default function ShellDashboardHeader() {
         <Chain />
         <User />
       </Stack>
-
-      <IconButton
-        fontSize={"2xl"}
-        aria-label={"Toggle Menu"}
-        variant={"ghost"}
-        hideFrom={"lg"}
-      >
-        <IoMenuSharp />
-      </IconButton>
     </Stack>
   );
 }

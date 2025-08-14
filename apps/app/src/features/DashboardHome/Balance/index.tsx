@@ -1,62 +1,46 @@
 import {
-  Button,
   Container,
   Group,
   Stack,
   StatRoot,
-  StatHelpText,
   StatValueText,
   StatLabel,
-  ProgressRoot,
-  ProgressBar,
+  Box,
 } from "@mutuals/ui";
-import ContentCard from "@/components/ContentCard";
+import DashboardBalanceChart from "@/features/DashboardHome/Balance/Chart";
 
 export default function DashboardBalance() {
   return (
-    <Container maxW={"7xl"} my={"16"}>
-      <ContentCard w={"full"} enableAccordion={false}>
-        <ProgressRoot w={"full"} mb={"6"}>
-          <ProgressBar />
-        </ProgressRoot>
+    <Box mt={"16"} mb={"6"}>
+      <Container maxW={"7xl"}>
+        <Box position={"relative"}>
+          <Stack
+            position={"absolute"}
+            top={"0"}
+            left={"0"}
+            w={"full"}
+            direction={"row"}
+            alignItems={"flex-start"}
+            justifyContent={"space-between"}
+            p={"4"}
+          >
+            <Group gap={"6"}>
+              <StatRoot size={"lg"}>
+                <StatValueText
+                  value={0.0}
+                  formatOptions={{
+                    currency: "USD",
+                    style: "currency",
+                  }}
+                />
+                <StatLabel>Total balance</StatLabel>
+              </StatRoot>
+            </Group>
+          </Stack>
+        </Box>
 
-        <Stack
-          direction={"row"}
-          alignItems={"flex-start"}
-          justifyContent={"space-between"}
-        >
-          <Group gap={"12"}>
-            <StatRoot>
-              <StatLabel>Pools balance</StatLabel>
-              <StatValueText
-                value={902834.48 - 40022.34}
-                formatOptions={{
-                  currency: "USD",
-                  style: "currency",
-                }}
-              />
-              <StatHelpText>+12% from last week</StatHelpText>
-            </StatRoot>
-
-            <StatRoot>
-              <StatLabel>Your balance</StatLabel>
-              <StatValueText
-                value={40022.34}
-                formatOptions={{
-                  currency: "USD",
-                  style: "currency",
-                }}
-              />
-              <StatHelpText>+12% from last week</StatHelpText>
-            </StatRoot>
-          </Group>
-
-          <Group>
-            <Button>Withdraw</Button>
-            <Button variant={"outline"}>View Pools</Button>
-          </Group>
-        </Stack>
-      </ContentCard>
-    </Container>
+        <DashboardBalanceChart />
+      </Container>
+    </Box>
   );
 }

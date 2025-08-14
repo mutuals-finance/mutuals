@@ -32,6 +32,7 @@ export default function ShellIconButtonList({
           <KeenSliderSlide
             key={`${i}-${props["aria-label"]}`}
             flexShrink={"0"}
+            pt={"1px"}
             css={{ w: "24 !important" }}
           >
             <IconTextButton {...props} />

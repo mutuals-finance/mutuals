@@ -11,6 +11,19 @@ export * from "@chakra-ui/react";
 export * from "next-themes";
 
 /**
+ * Unmodified Components 3
+ * These recipes are exported directly from ChakraUI.
+ */
+export * from "@chakra-ui/charts";
+
+/**
+ * Unmodified Components 3
+ * These recipes are exported directly from ChakraUI.
+ */
+// export everything excerpt TextProps from recharts
+export * as recharts from "recharts";
+
+/**
  * Custom Components
  */
 export {
