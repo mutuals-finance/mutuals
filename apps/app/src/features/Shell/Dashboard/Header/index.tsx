@@ -39,7 +39,7 @@ export default function ShellDashboardHeader() {
 
       <MutualsLogo hideFrom={"lg"} w={"24"} mr={"auto"} />
 
-      <Stack direction={"row"} gap={6} ml={"auto"}>
+      <Stack direction={"row"} gap={4} ml={"auto"}>
         <Chain />
         <User />
       </Stack>

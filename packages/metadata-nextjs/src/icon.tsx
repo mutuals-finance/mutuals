@@ -17,17 +17,14 @@ export function defaultGenerateImageMetadata() {
 export class DefaultImageResponse extends NextImageResponse {
   constructor(options?: ImageResponseOptions) {
     super(
-      renderBaseIcon(
-        {
-          style: {
-            color: "#09090B",
-            backgroundColor: "#FAFAFA",
-            borderRadius: "100%",
-            padding: "18%",
-          },
+      renderBaseIcon({
+        style: {
+          color: "#09090B",
+          backgroundColor: "#FAFAFA",
+          borderRadius: "100%",
+          padding: "18%",
         },
-        options,
-      ),
+      }),
       options,
     );
   }
@@ -36,15 +33,12 @@ export class DefaultImageResponse extends NextImageResponse {
 export class LogoTransparentImageResponse extends NextImageResponse {
   constructor(options?: ImageResponseOptions) {
     super(
-      renderBaseIcon(
-        {
-          style: {
-            color: "#09090B",
-            backgroundColor: "transparent",
-          },
+      renderBaseIcon({
+        style: {
+          color: "#09090B",
+          backgroundColor: "transparent",
         },
-        options,
-      ),
+      }),
       options,
     );
   }
