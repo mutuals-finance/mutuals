@@ -17,6 +17,7 @@ export function createManifest(
       src: `/icon/${size}`,
       sizes: `${size}x${size}`,
       type: defaultContentType,
+      purpose: "maskable",
     })),
     ...props,
   };
