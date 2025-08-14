@@ -32,19 +32,18 @@ export default function ShellLogin({ children }: PropsWithChildren) {
   return (
     <Grid
       templateColumns={{ base: "100%", lg: "4fr 7fr" }}
-      templateRows={{ base: "28 auto", lg: "1fr 1fr" }}
+      templateRows={{ base: "8rem auto", lg: "1fr 1fr" }}
       minH={"100vh"}
       position={{ base: "relative", lg: "unset" }}
       gap={0}
     >
       <GridItem
         rowSpan={{ lg: 2 }}
-        flexShrink={"0"}
         position={{ base: "relative", lg: "sticky" }}
         top={{ lg: "0" }}
         left={{ lg: "0" }}
-        w={"full"}
-        h={"full"}
+        h={{ lg: "100vh" }}
+        w={{ lg: "full" }}
       >
         <AbsoluteCenter zIndex={"50"}>
           <LogoBox />
@@ -77,13 +76,12 @@ export default function ShellLogin({ children }: PropsWithChildren) {
         <Container
           maxW={"2xl"}
           marginInline={{ lg: "unset" }}
-          pt={{ base: "4", lg: "12" }}
           display={"flex"}
           flexDirection={"column"}
           h={"full"}
+          py={{ base: "4", lg: "12" }}
         >
           <WalletSelector.Wrapper
-            py={{ base: "4", lg: "12" }}
             heading="Connect to Mutuals"
             description={
               "Choose your favourite method to sign in. You can always add more methods later."
@@ -98,19 +96,23 @@ export default function ShellLogin({ children }: PropsWithChildren) {
                 title: "Continue With Email",
                 href: "/auth/login/email",
                 value: "email",
+                tabProps: {
+                  disabled: false,
+                },
               },
             ]}
           >
             {children}
+          </WalletSelector.Wrapper>
 
-            <Separator mt={"auto"} />
-
+          <Box pt={{ base: "4", lg: "12" }} mt={"auto"}>
+            <Separator mb={"4"} />
             <Text textStyle={"xs"} color={"fg.subtle"}>
               By connecting, you agree to Mutual’s Terms of Service and
               acknowledge that you have read and understand the Mutuals
               Disclaimer.
             </Text>
-          </WalletSelector.Wrapper>
+          </Box>
         </Container>
       </GridItem>
     </Grid>

@@ -1,9 +1,13 @@
 import { type CreateConnectorFn } from "wagmi";
 import { coinbaseWallet, metaMask, walletConnect } from "wagmi/connectors";
-
+import { dedicatedWalletConnector } from "@magiclabs/wagmi-connector";
 import { Chain, http } from "viem";
-
-import { CHAINS_MAP, WALLETCONNECT_PROJECT_ID } from "@/constants";
+import {
+  MAGIC_PUBLISHABLE_API_KEY,
+  CHAINS_MAP,
+  WALLETCONNECT_PROJECT_ID,
+} from "@/constants";
+import { isSSR } from "@/utils";
 
 const prodChains = [
   CHAINS_MAP.mainnet,
@@ -25,16 +29,6 @@ const devChains = [
 
 const appName = "Mutuals";
 
-const connectors = [
-  metaMask({ dappMetadata: { name: appName } }),
-  coinbaseWallet({
-    appName: appName,
-  }),
-  walletConnect({
-    projectId: WALLETCONNECT_PROJECT_ID,
-  }),
-] as CreateConnectorFn[];
-
 const chains = ({
   production: prodChains,
   development: devChains,
@@ -43,6 +37,32 @@ const chains = ({
   Chain,
   ...Chain[],
 ];
+
+const connectors = [
+  metaMask({ dappMetadata: { name: appName } }),
+  // NOTE: @magiclabs/wagmi-connector is not compatible with SSR
+  // https://github.com/magiclabs/wagmi-magic-connector/issues/42#issuecomment-2771613002
+  ...(isSSR()
+    ? []
+    : [
+        dedicatedWalletConnector({
+          chains,
+          options: {
+            apiKey: MAGIC_PUBLISHABLE_API_KEY,
+            oauthOptions: {
+              providers: ["google"],
+            },
+            magicSdkConfiguration: {},
+          },
+        }),
+        coinbaseWallet({
+          appName: appName,
+        }),
+        walletConnect({
+          projectId: WALLETCONNECT_PROJECT_ID,
+        }),
+      ]),
+] as CreateConnectorFn[];
 
 const transports = chains.reduce(
   (all, chain) => ({

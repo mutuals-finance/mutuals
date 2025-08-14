@@ -8,11 +8,13 @@ import { useAuth } from "@/features/Auth/Provider";
 import coinbaseWallet from "@/assets/svg/connectors/coinbaseWallet.svg";
 import metaMask from "@/assets/svg/connectors/metaMask.svg";
 import walletConnect from "@/assets/svg/connectors/walletConnect.svg";
+import Magic from "@/assets/svg/connectors/Magic.svg";
 
 const connectorIcons = {
   coinbaseWallet,
   metaMask,
   walletConnect,
+  Magic,
 };
 
 function useConnectors() {

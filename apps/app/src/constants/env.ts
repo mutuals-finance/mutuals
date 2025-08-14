@@ -21,3 +21,5 @@ export const WALLETCONNECT_PROJECT_ID =
 export const ANKR_URL = process.env.NEXT_PUBLIC_ANKR_URL || "";
 export const ANKR_API_KEY = process.env.NEXT_PUBLIC_ANKR_API_KEY || "";
 export const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "";
+export const MAGIC_PUBLISHABLE_API_KEY =
+  process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_API_KEY || "";

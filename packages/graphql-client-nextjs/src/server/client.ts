@@ -36,11 +36,6 @@ const makeClient = async () => {
   return new ApolloClient({
     link: from([networkErrorIgnoreLink, errorLink, httpLink]),
     cache: new InMemoryCache(),
-    defaultOptions: {
-      query: {
-        fetchPolicy: "no-cache",
-      },
-    },
   });
 };
 
