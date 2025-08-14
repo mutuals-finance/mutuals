@@ -20,7 +20,7 @@ export class DefaultImageResponse extends NextImageResponse {
       renderBaseIcon(
         {
           style: {
-            backgroundColor: "#EEEEEE",
+            backgroundColor: "#FAFAFA",
             borderColor: "transparent",
           },
         },

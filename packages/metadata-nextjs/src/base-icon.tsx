@@ -16,9 +16,9 @@ export default function renderBaseIcon(
         height: "100%",
         color: "#09090B",
         backgroundColor: "#FAFAFA",
-        border: `${(options?.width || 0) * 0.04}px solid`,
+        border: `${(options?.width || 0) * 0.1}px solid`,
         borderRadius: "100%",
-        padding: "16%",
+        padding: "12%",
         ...style,
       }}
       {...props}

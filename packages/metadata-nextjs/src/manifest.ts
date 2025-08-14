@@ -9,10 +9,9 @@ export function createManifest(
     short_name: "Mutuals",
     description: "The best way to manage on-chain payments.",
     start_url: "/",
-    display_override: ["fullscreen", "minimal-ui"],
     display: "standalone",
-    background_color: "#09090b",
-    theme_color: "#09090b",
+    background_color: "#FAFAFA",
+    theme_color: "#FAFAFA",
     icons: iconSizes.map((size) => ({
       src: `/icon/${size}`,
       sizes: `${size}x${size}`,
