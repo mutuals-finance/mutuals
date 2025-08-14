@@ -12,6 +12,7 @@
     "@ankr.com/ankr.js": "^0.6.0",
     "@magiclabs/wagmi-connector": "^2.2.4",
     "@mutuals/graphql-client-nextjs": "workspace:*",
+    "@mutuals/metadata-nextjs": "workspace:*",
     "@mutuals/sdk-react": "workspace:*",
     "@mutuals/ui": "workspace:*",
     "@tanstack/react-query": "^5.84.2",

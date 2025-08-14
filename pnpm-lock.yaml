@@ -39,6 +39,9 @@ importers:
       '@mutuals/graphql-client-nextjs':
         specifier: workspace:*
         version: link:../../packages/graphql-client-nextjs
+      '@mutuals/metadata-nextjs':
+        specifier: workspace:*
+        version: link:../../packages/metadata-nextjs
       '@mutuals/sdk-react':
         specifier: workspace:*
         version: link:../../packages/sdk-react
@@ -320,6 +323,9 @@ importers:
 
   apps/landing:
     dependencies:
+      '@mutuals/metadata-nextjs':
+        specifier: workspace:^
+        version: link:../../packages/metadata-nextjs
       '@mutuals/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -418,6 +424,37 @@ importers:
       '@mutuals/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: ^24.2.1
+        version: 24.2.1
+      '@types/react':
+        specifier: ^19.1.9
+        version: 19.1.9
+      '@types/react-dom':
+        specifier: ^19.1.7
+        version: 19.1.7(@types/react@19.1.9)
+      eslint:
+        specifier: ^9.32.0
+        version: 9.32.0
+      react:
+        specifier: ^19.1.1
+        version: 19.1.1
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+
+  packages/metadata-nextjs:
+    dependencies:
+      '@chakra-ui/react':
+        specifier: 3.24.2
+        version: 3.24.2(@emotion/react@11.14.0)(react-dom@19.1.1)(react@19.1.1)
+      '@mutuals/ui':
+        specifier: workspace:^
+        version: link:../ui
+      next:
+        specifier: 15.x
+        version: 15.4.6(@babel/core@7.28.0)(react-dom@19.1.1)(react@19.1.1)
+    devDependencies:
       '@types/node':
         specifier: ^24.2.1
         version: 24.2.1
@@ -5943,7 +5980,7 @@ packages:
     resolution: {integrity: sha512-zmPitbQ8+6zNutpwgcQuLcsEpn/Cj54Kbn7L5pX0Os5kdWplB7xPgEh/g+SWOB/qmows2gpuCaPyduq8ZZRnxA==}
     deprecated: This is a stub types definition. minimatch provides its own type definitions, so you do not need this installed.
     dependencies:
-      minimatch: 9.0.5
+      minimatch: 10.0.3
     dev: true
 
   /@types/minimist@1.2.5:

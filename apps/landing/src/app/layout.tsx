@@ -1,22 +1,11 @@
-import type { Metadata, Viewport } from "next";
 import React, { type PropsWithChildren } from "react";
-
 import Providers from "@/providers";
 import Layout from "@/features/Layout";
 import fonts from "@mutuals/ui/font";
+import { createMetadata } from "@mutuals/metadata-nextjs";
+import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: {
-    default: `Mutuals – The best way to manage on-chain payments`,
-    template: "%s – Mutuals",
-  },
-  description: "The best way to manage on-chain payments",
-  applicationName: "Mutuals",
-};
-
-export const viewport: Viewport = {
-  themeColor: "#09090b",
-};
+export const metadata: Metadata = createMetadata();
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (

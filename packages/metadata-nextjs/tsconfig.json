@@ -1,0 +1,5 @@
+{
+  "extends": "@mutuals/typescript-config/next.json",
+  "include": ["src", "turbo"],
+  "exclude": ["node_modules", "dist"]
+}
