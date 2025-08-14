@@ -2,32 +2,49 @@
 
 import {
   Button,
-  MenuContent,
-  MenuItem,
-  MenuItemGroup,
-  MenuRoot,
-  MenuArrow,
-  MenuTrigger,
   Text,
   useColorMode,
-  MenuSeparator,
-  ClientOnly,
+  IconButton,
+  ButtonGroup,
+  Portal,
+  Box,
+  Menu,
+  Link,
 } from "@mutuals/ui";
 import {
+  IoEllipsisHorizontal,
+  IoGlobeOutline,
   IoHelpOutline,
-  IoLogInOutline,
-  IoLogOutOutline,
   IoMegaphoneOutline,
   IoMoonOutline,
   IoSunnyOutline,
 } from "react-icons/io5";
 import { useAccount } from "wagmi";
-
 import { shortenAddress } from "@/utils";
-
 import UserAvatar from "src/features/Wallet/Avatar";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/features/Auth/Provider";
+
+const linkItems = [
+  {
+    label: "Homepage",
+    value: "homepage",
+    icon: <IoGlobeOutline />,
+    href: "https://mutuals.finance",
+  },
+  {
+    label: "Feedback",
+    value: "feedback",
+    icon: <IoMegaphoneOutline />,
+    href: "https://docs.mutuals.finance/",
+  },
+  {
+    label: "Help",
+    value: "help",
+    icon: <IoHelpOutline />,
+    href: "https://docs.mutuals.finance/",
+  },
+];
 
 export default function ShellDashboardHeaderUser() {
   const { address, isConnected, isConnecting } = useAccount();
@@ -37,57 +54,75 @@ export default function ShellDashboardHeaderUser() {
   const router = useRouter();
 
   return (
-    <MenuRoot closeOnSelect={false}>
-      <MenuTrigger asChild>
-        <Button hideBelow={"lg"} variant={"ghost"} loading={isConnecting}>
-          <UserAvatar address={address} size={"xs"} />
-          {isConnected ? (
+    <ButtonGroup size="sm">
+      <Menu.Root>
+        <Menu.Trigger asChild>
+          <IconButton variant="ghost" aria-label="Open navigation menu">
+            <IoEllipsisHorizontal />
+          </IconButton>
+        </Menu.Trigger>
+        <Portal>
+          <Menu.Positioner>
+            <Menu.Content minW={"44"}>
+              <Menu.ItemGroup>
+                <Menu.ItemGroupLabel>Navigate</Menu.ItemGroupLabel>
+                {linkItems.map((item) => (
+                  <Menu.Item key={item.value} value={item.value} asChild>
+                    <Link
+                      unstyled={true}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Box flex="1">{item.label}</Box>
+                      {item.icon}
+                    </Link>
+                  </Menu.Item>
+                ))}
+              </Menu.ItemGroup>
+              <Menu.Separator />
+              <Menu.ItemGroup>
+                <Menu.ItemGroupLabel>Preferences</Menu.ItemGroupLabel>
+                <Menu.Item
+                  value="color-mode"
+                  onClick={toggleColorMode}
+                  closeOnSelect={false}
+                >
+                  <Box flex="1">
+                    {colorMode === `light` ? `Dark Mode` : `Light Mode`}
+                  </Box>
+                  {colorMode === `light` ? (
+                    <IoMoonOutline />
+                  ) : (
+                    <IoSunnyOutline />
+                  )}
+                </Menu.Item>
+              </Menu.ItemGroup>
+            </Menu.Content>
+          </Menu.Positioner>
+        </Portal>
+      </Menu.Root>
+
+      <Button
+        hideBelow={"lg"}
+        variant={"solid"}
+        size={"sm"}
+        loading={isConnecting}
+        onClick={() =>
+          isConnected ? disconnectAndLogout() : router.push("/auth/login")
+        }
+      >
+        {isConnected ? (
+          <>
+            <UserAvatar address={address} size={"xs"} />
             <Text as={"span"} fontFamily={"mono"}>
               {shortenAddress(address)}
             </Text>
-          ) : (
-            "Not Connected"
-          )}
-          <MenuArrow />
-        </Button>
-      </MenuTrigger>
-
-      <MenuContent>
-        <MenuItemGroup>
-          <MenuItem value={"Feedback"}>
-            <IoMegaphoneOutline />
-            Feedback
-          </MenuItem>
-          <MenuItem value={"Help"}>
-            <IoHelpOutline />
-            Help
-          </MenuItem>
-        </MenuItemGroup>
-        <MenuSeparator />
-        <MenuItemGroup>
-          <ClientOnly>
-            <MenuItem
-              value="Mode"
-              fontWeight={"medium"}
-              onClick={toggleColorMode}
-            >
-              {colorMode === `light` ? <IoMoonOutline /> : <IoSunnyOutline />}
-              {colorMode === `light` ? `Dark Mode` : `Light Mode`}
-            </MenuItem>
-
-            <MenuItem
-              fontWeight={"medium"}
-              value={"auth"}
-              onClick={() =>
-                isConnected ? disconnectAndLogout() : router.push("/auth/login")
-              }
-            >
-              {isConnected ? <IoLogOutOutline /> : <IoLogInOutline />}
-              {isConnected ? `Logout` : `Login`}
-            </MenuItem>
-          </ClientOnly>
-        </MenuItemGroup>
-      </MenuContent>
-    </MenuRoot>
+          </>
+        ) : (
+          <>Sign in</>
+        )}
+      </Button>
+    </ButtonGroup>
   );
 }

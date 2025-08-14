@@ -1,9 +1,7 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { ImageResponseOptions } from "next/server";
 
 export default function renderBaseIcon(
   _props?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-  options?: ImageResponseOptions,
 ) {
   const { style, ...props } = _props ?? { style: {} };
 
