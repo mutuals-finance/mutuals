@@ -24,13 +24,8 @@ export default function RouterTabs({
 
   return (
     <>
-      <Tabs.Root
-        value={current?.value}
-        fitted={true}
-        variant={"plain"}
-        {...props}
-      >
-        <Tabs.List borderBottom={"1px solid"} borderColor={"border"}>
+      <Tabs.Root value={current?.value} {...props}>
+        <Tabs.List>
           <Tabs.Indicator
             shadow={"none"}
             borderBottom={"2px solid"}
@@ -40,12 +35,12 @@ export default function RouterTabs({
 
           {tabs?.map(({ title, value, tabProps, ..._props }) => {
             const __props = {
-              unstyled: true,
               textAlign: "center",
               justifyContent: "center",
               w: "full",
               alignSelf: "stretch",
-              p: "2",
+              py: "2",
+              px: "4",
               children: title,
               ..._props,
             };
@@ -55,6 +50,7 @@ export default function RouterTabs({
                 key={"trigger" + "-" + value}
                 value={value}
                 p={"0"}
+                unstyled={true}
                 {...tabProps}
               >
                 {tabProps?.disabled ? (

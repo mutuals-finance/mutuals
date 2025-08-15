@@ -12,21 +12,21 @@ import {
 import React, { ReactNode } from "react";
 import { MdAccountBox } from "react-icons/md";
 
-export type AuthSiginInCardProps = Omit<Card.RootProps, "children"> & {
+export type AuthSignInCardProps = Omit<Card.RootProps, "children"> & {
   children?: ReactNode;
   title?: EmptyStateProps["title"];
   description?: EmptyStateProps["description"];
   emptyStateProps?: Omit<EmptyStateProps, "title" | "description">;
   actionProps?: ButtonProps;
 };
-export default function AuthSiginInCard({
+export default function AuthSignInCard({
   emptyStateProps,
   actionProps,
   children,
   title = "Sign in to your account",
   description = "Please sign in to continue",
   ...props
-}: AuthSiginInCardProps) {
+}: AuthSignInCardProps) {
   return (
     <Card.Root size={"sm"} bg={"bg"} rounded={"4xl"} {...props}>
       <Card.Body>

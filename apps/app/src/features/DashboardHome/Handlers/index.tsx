@@ -1,8 +1,8 @@
-import { IoSettingsOutline, IoWalletOutline } from "react-icons/io5";
+import { IoSettingsSharp, IoWalletSharp } from "react-icons/io5";
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import { Container } from "@mutuals/ui";
-import { RiFunctionAddLine } from "react-icons/ri";
+import { RiApps2AddFill } from "react-icons/ri";
 import { BiArrowToBottom, BiArrowToTop } from "react-icons/bi";
 
 export default function DashboardHandlers() {
@@ -26,22 +26,22 @@ export default function DashboardHandlers() {
           },
           {
             "aria-label": "Create Pool",
-            children: <RiFunctionAddLine />,
+            children: <RiApps2AddFill />,
             href: "/", // pool/new
             variant: "surface",
             rounded: "2xl",
           },
           {
             "aria-label": "Add Wallet",
-            children: <IoWalletOutline />,
+            children: <IoWalletSharp />,
             href: "/", // wallet/new
             variant: "surface",
             rounded: "2xl",
           },
           {
             "aria-label": "Settings",
-            children: <IoSettingsOutline />,
-            href: "/", // settings
+            children: <IoSettingsSharp />,
+            href: "/settings",
             variant: "surface",
             rounded: "2xl",
           },
