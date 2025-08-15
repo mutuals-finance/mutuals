@@ -39,6 +39,5 @@ export default defineRecipe({
   },
   base: {
     fontWeight: "400",
-    rounded: "lg",
   },
 });

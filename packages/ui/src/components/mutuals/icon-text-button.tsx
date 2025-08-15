@@ -5,10 +5,10 @@ import { LinkButton, LinkButtonProps } from "../ui/link-button";
 type IconTextButtonProps = IconButtonProps | LinkButtonProps;
 
 const IconTextButton = forwardRef(function (
-  { size = "lg", w = "16", rounded = "md", ...props }: IconTextButtonProps,
+  { size = "lg", w = "16", ...props }: IconTextButtonProps,
   ref,
 ) {
-  const _props = { rounded, size, w, h: w, ...props };
+  const _props = { size, w, h: w, ...props };
 
   return (
     <Stack gap={"3"} alignItems={"center"} textAlign={"center"}>

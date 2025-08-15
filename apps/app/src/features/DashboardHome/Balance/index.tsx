@@ -4,15 +4,19 @@ import {
   Stack,
   StatRoot,
   StatValueText,
-  StatLabel,
   Box,
+  Heading,
 } from "@mutuals/ui";
 import DashboardBalanceChart from "@/features/DashboardHome/Balance/Chart";
 
 export default function DashboardBalance() {
   return (
-    <Box mt={"16"} mb={"6"}>
+    <Box my={"6"}>
       <Container maxW={"7xl"}>
+        <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+          Your Balance
+        </Heading>
+
         <Box position={"relative"}>
           <Stack
             position={"absolute"}
@@ -22,10 +26,9 @@ export default function DashboardBalance() {
             direction={"row"}
             alignItems={"flex-start"}
             justifyContent={"space-between"}
-            p={"4"}
           >
             <Group gap={"6"}>
-              <StatRoot size={"lg"}>
+              <StatRoot>
                 <StatValueText
                   value={0.0}
                   formatOptions={{
@@ -33,7 +36,6 @@ export default function DashboardBalance() {
                     style: "currency",
                   }}
                 />
-                <StatLabel>Total balance</StatLabel>
               </StatRoot>
             </Group>
           </Stack>
