@@ -19,4 +19,9 @@ const variants = {};
 
 export default defineSlotRecipe({
   slots: statAnatomy.keys(),
+  base: {
+    valueText: {
+      fontWeight: "normal",
+    },
+  },
 });
