@@ -9,19 +9,18 @@ import {
   AbsoluteCenter,
   IconButton,
   Icon,
-  type UseDisclosureProps,
+  IconButtonProps,
 } from "@mutuals/ui";
 import { IoSearch } from "react-icons/io5";
 
 import Chain from "./Chain";
 import User from "./User";
 import { VscMenu } from "react-icons/vsc";
+import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 
-export type ShellDashboardHeaderProps = UseDisclosureProps;
+export default function ShellDashboardHeader() {
+  const { mobile, desktop } = useDashboardRoot();
 
-export default function ShellDashboardHeader({
-  onToggle,
-}: ShellDashboardHeaderProps) {
   return (
     <Stack
       as="header"
@@ -35,39 +34,54 @@ export default function ShellDashboardHeader({
       w={"100%"}
       alignItems={"center"}
       justifyContent={"space-between"}
-      gap={{ base: "2", lg: "12" }}
+      gap={{ base: "1", lg: "12" }}
       borderBottomWidth="1px"
       borderColor={"border"}
       bg={"bg"}
       direction={"row"}
     >
-      <Stack direction={"row"} gap={4} alignItems={"center"}>
-        <MutualsLogo w={"24"} />
+      <MutualsLogo w={{ base: "24", md: "24" }} href={"/"} />
 
-        <IconButton
-          size={"sm"}
-          aria-label={"Toggle Sidebar"}
-          variant={"ghost"}
-          onClick={onToggle}
-        >
-          <Icon size={"md"}>
-            <VscMenu />
-          </Icon>
-        </IconButton>
-      </Stack>
-
-      <AbsoluteCenter>
-        <Form hideBelow={"lg"}>
+      <AbsoluteCenter hideBelow={"lg"}>
+        <Form>
           <InputGroup startElement={<IoSearch />}>
             <Input size={"sm"} placeholder="Search..." />
           </InputGroup>
         </Form>
       </AbsoluteCenter>
 
-      <Stack direction={"row"} gap={4}>
+      <SidebarToggle
+        aria-label={"Toggle Desktop Sidebar"}
+        hideBelow={"lg"}
+        onClick={desktop.onToggle}
+        mr={"auto"}
+      />
+
+      <Stack direction={"row"} gap={4} ml={"auto"}>
         <Chain />
         <User />
       </Stack>
+
+      <SidebarToggle
+        aria-label={"Toggle Mobile Sidebar"}
+        hideFrom={"lg"}
+        onClick={mobile.onToggle}
+      />
     </Stack>
+  );
+}
+
+function SidebarToggle(props: IconButtonProps) {
+  return (
+    <IconButton
+      size={"sm"}
+      aria-label={"Toggle Sidebar"}
+      variant={"ghost"}
+      {...props}
+    >
+      <Icon size={"md"}>
+        <VscMenu />
+      </Icon>
+    </IconButton>
   );
 }

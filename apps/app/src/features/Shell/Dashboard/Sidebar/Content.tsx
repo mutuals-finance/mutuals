@@ -14,7 +14,7 @@ import { useToggle } from "react-use";
 
 import Sidebar from "@/components/Sidebar";
 
-import navItems from "@/features/Shell/Dashboard/Sidebar/nav-items";
+import navItems from "@/features/Shell/Dashboard/nav-items";
 import { siteCopyrightText } from "@/config";
 
 export default function ShellDashboardSidebarContent({

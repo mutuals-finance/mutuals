@@ -1,6 +1,16 @@
-import { PropsWithChildren } from "react";
-import ShellDashboardSidebarContent from "@/features/Shell/Dashboard/Sidebar/Content";
+import ShellDashboardSidebarDesktop from "@/features/Shell/Dashboard/Sidebar/Desktop";
+import ShellDashboardSidebarMobile from "@/features/Shell/Dashboard/Sidebar/Mobile";
+import { Box } from "@mutuals/ui";
 
-export default function ShellDashboardSidebar(props: PropsWithChildren) {
-  return <ShellDashboardSidebarContent {...props} />;
+export default function ShellDashboardSidebar() {
+  return (
+    <>
+      <Box hideBelow={"lg"}>
+        <ShellDashboardSidebarDesktop />
+      </Box>
+      <Box hideFrom={"lg"}>
+        <ShellDashboardSidebarMobile />
+      </Box>
+    </>
+  );
 }
