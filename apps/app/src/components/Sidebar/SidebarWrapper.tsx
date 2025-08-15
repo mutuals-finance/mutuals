@@ -22,11 +22,11 @@ export function SidebarWrapper({
       display={"flex"}
       flex={"0 0 auto"}
       overflow={"hidden"}
-      borderRightWidth={placement === "start" ? "1px" : "0px"}
-      borderLeftWidth={placement === "end" ? "1px" : "0px"}
-      borderTopWidth={placement === "bottom" ? "1px" : "0px"}
-      borderBottomWidth={placement === "top" ? "1px" : "0px"}
-      borderColor={"border"}
+      borderRightWidth={{ lg: placement === "start" ? "1px" : "0px" }}
+      borderLeftWidth={{ lg: placement === "end" ? "1px" : "0px" }}
+      borderTopWidth={{ lg: placement === "bottom" ? "1px" : "0px" }}
+      borderBottomWidth={{ lg: placement === "top" ? "1px" : "0px" }}
+      borderColor={{ lg: "border" }}
       animate={open ? "open" : "closed"}
       variants={{
         open: {

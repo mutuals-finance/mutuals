@@ -7,6 +7,7 @@ import {
   getViewerPools,
   getViewerWallets,
 } from "@mutuals/graphql-client-nextjs/server";
+import { Container, Heading } from "@mutuals/ui";
 
 export default async function DashboardHomeLayout({
   children,
@@ -20,8 +21,16 @@ export default async function DashboardHomeLayout({
     <>
       <DashboardHomeBalance />
       <DashboardHomeHandlers />
+
       <WalletList {...walletsQuery} />
-      <PoolList {...poolQuery} />
+
+      <Container maxW={"7xl"}>
+        <Heading as={"h2"} textStyle={"3xl"} mb={"3"}>
+          Payment Pools
+        </Heading>
+        <PoolList {...poolQuery} />
+      </Container>
+
       {children}
     </>
   );

@@ -17,6 +17,7 @@ import {
   IoHelpOutline,
   IoMegaphoneOutline,
   IoMoonOutline,
+  IoSettingsOutline,
   IoSunnyOutline,
 } from "react-icons/io5";
 import { useAccount } from "wagmi";
@@ -39,8 +40,8 @@ const linkItems = [
     href: "https://docs.mutuals.finance/",
   },
   {
-    label: "Help",
-    value: "help",
+    label: "Help Center",
+    value: "help-center",
     icon: <IoHelpOutline />,
     href: "https://docs.mutuals.finance/",
   },
@@ -63,7 +64,7 @@ export default function ShellDashboardHeaderUser() {
         </Menu.Trigger>
         <Portal>
           <Menu.Positioner>
-            <Menu.Content minW={"44"}>
+            <Menu.Content minW={"56"}>
               <Menu.ItemGroup>
                 <Menu.ItemGroupLabel>Navigate</Menu.ItemGroupLabel>
                 {linkItems.map((item) => (
@@ -83,6 +84,13 @@ export default function ShellDashboardHeaderUser() {
               <Menu.Separator />
               <Menu.ItemGroup>
                 <Menu.ItemGroupLabel>Preferences</Menu.ItemGroupLabel>
+                <Menu.Item value={"settings"} asChild>
+                  <Link unstyled={true} href={"/settings"}>
+                    <Box flex="1">Settings</Box>
+                    <IoSettingsOutline />
+                  </Link>
+                </Menu.Item>
+
                 <Menu.Item
                   value="color-mode"
                   onClick={toggleColorMode}

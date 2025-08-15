@@ -1,40 +1,40 @@
 import { IconType } from "react-icons";
 import {
-  IoGridOutline,
-  IoHelpCircleOutline,
-  IoHomeOutline,
-  IoPeopleOutline,
-  IoSettingsOutline,
+  IoHelpCircleSharp,
+  IoPeopleSharp,
+  IoSettingsSharp,
+  IoSpeedometerSharp,
 } from "react-icons/io5";
+import { RiApps2Fill } from "react-icons/ri";
 
 export default {
   General: [
     {
       label: "Dashboard",
       href: "/",
-      icon: IoHomeOutline,
+      icon: IoSpeedometerSharp,
     },
     {
       label: "Payment Pools",
-      href: "/", // dashboard
-      icon: IoGridOutline,
+      href: "/pool", // dashboard
+      icon: RiApps2Fill,
     },
     {
       label: "Address Book",
-      href: "/", // address-book
-      icon: IoPeopleOutline,
+      href: "/address-book", // address-book
+      icon: IoPeopleSharp,
     },
   ],
   Preferences: [
     {
       label: "Settings",
-      href: "/", // settings
-      icon: IoSettingsOutline,
+      href: "/settings", // settings
+      icon: IoSettingsSharp,
     },
     {
       label: "Help Center",
       href: "/", // settings
-      icon: IoHelpCircleOutline,
+      icon: IoHelpCircleSharp,
     },
   ],
 } as {
