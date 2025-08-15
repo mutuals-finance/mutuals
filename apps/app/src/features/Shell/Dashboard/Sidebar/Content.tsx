@@ -2,8 +2,6 @@
 
 import {
   Box,
-  HStack,
-  IconButton,
   Stack,
   Text,
   useBreakpointValue,
@@ -16,10 +14,8 @@ import { useToggle } from "react-use";
 
 import Sidebar from "@/components/Sidebar";
 
-import { MutualsLogo } from "@mutuals/ui";
 import navItems from "@/features/Shell/Dashboard/Sidebar/nav-items";
 import { siteCopyrightText } from "@/config";
-import { VscMenu } from "react-icons/vsc";
 
 export default function ShellDashboardSidebarContent({
   children,
@@ -53,24 +49,6 @@ export default function ShellDashboardSidebarContent({
         open={open}
         borderColor={{ base: "transparent", lg: "border" }}
         bg={"bg"}
-        header={
-          <HStack justifyContent={"flex-end"} gap={"3"}>
-            {open && (
-              <Box mr={"auto"}>
-                <MutualsLogo w={"24"} href={"/"} />
-              </Box>
-            )}
-
-            <IconButton
-              fontSize={"lg"}
-              aria-label={"Toggle Sidebar"}
-              onClick={() => toggleIsOpen()}
-              variant={"ghost"}
-            >
-              <VscMenu />
-            </IconButton>
-          </HStack>
-        }
         footer={
           <Box
             textAlign={"center"}
@@ -89,7 +67,7 @@ export default function ShellDashboardSidebarContent({
       >
         {Object.keys(navItems).map((section) => (
           <Stack key={section} gap={"2"}>
-            <Text fontWeight="medium" fontSize={"sm"} truncate>
+            <Text fontWeight="medium" textStyle={"sm"} truncate>
               {section}
             </Text>
             <Stack gap={2} w={"full"}>
