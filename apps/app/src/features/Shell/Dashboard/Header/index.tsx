@@ -34,7 +34,7 @@ export default function ShellDashboardHeader() {
       w={"100%"}
       alignItems={"center"}
       justifyContent={"space-between"}
-      gap={{ base: "1", lg: "12" }}
+      gap={{ base: "1", lg: "4" }}
       borderBottomWidth="1px"
       borderColor={"border"}
       bg={"bg"}
@@ -43,9 +43,9 @@ export default function ShellDashboardHeader() {
       <MutualsLogo w={{ base: "24", md: "24" }} href={"/"} />
 
       <AbsoluteCenter hideBelow={"lg"}>
-        <Form>
+        <Form w={"full"} maxW={"80"}>
           <InputGroup startElement={<IoSearch />}>
-            <Input size={"sm"} placeholder="Search..." />
+            <Input size={"sm"} placeholder="Search users, pools and tokens" />
           </InputGroup>
         </Form>
       </AbsoluteCenter>
@@ -74,12 +74,12 @@ export default function ShellDashboardHeader() {
 function SidebarToggle(props: IconButtonProps) {
   return (
     <IconButton
-      size={"sm"}
+      size={"md"}
       aria-label={"Toggle Sidebar"}
       variant={"ghost"}
       {...props}
     >
-      <Icon size={"md"}>
+      <Icon size={"lg"}>
         <VscMenu />
       </Icon>
     </IconButton>
