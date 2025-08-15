@@ -7,7 +7,7 @@ import {
   getViewerPools,
   getViewerWallets,
 } from "@mutuals/graphql-client-nextjs/server";
-import { Container, Heading } from "@mutuals/ui";
+import { Box, Container, Heading, Stack } from "@mutuals/ui";
 
 export default async function DashboardHomeLayout({
   children,
@@ -19,21 +19,31 @@ export default async function DashboardHomeLayout({
 
   return (
     <>
-      <DashboardHomeBalance />
-      <DashboardHomeHandlers />
+      <Container maxW={"7xl"} mt={"6"}>
+        <Stack gap={"6"}>
+          <Box>
+            <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+              Your Balance
+            </Heading>
+            <DashboardHomeBalance />
+          </Box>
 
-      <Container maxW={"7xl"} my={"6"}>
-        <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
-          Wallets
-        </Heading>
-        <WalletList {...walletsQuery} />
-      </Container>
+          <DashboardHomeHandlers />
 
-      <Container maxW={"7xl"} my={"6"}>
-        <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
-          Payment Pools
-        </Heading>
-        <PoolList {...poolQuery} />
+          <Box>
+            <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+              Wallets
+            </Heading>
+            <WalletList {...walletsQuery} />
+          </Box>
+
+          <Box>
+            <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+              Payment Pools
+            </Heading>
+            <PoolList {...poolQuery} />
+          </Box>
+        </Stack>
       </Container>
 
       {children}
