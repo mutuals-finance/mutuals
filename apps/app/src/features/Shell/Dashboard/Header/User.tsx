@@ -11,41 +11,19 @@ import {
   Menu,
   Link,
 } from "@mutuals/ui";
+
 import {
   IoEllipsisHorizontal,
-  IoGlobeOutline,
-  IoHelpOutline,
-  IoMegaphoneOutline,
-  IoMoonOutline,
-  IoSettingsOutline,
-  IoSunnyOutline,
+  IoMoonSharp,
+  IoSettingsSharp,
+  IoSunnySharp,
 } from "react-icons/io5";
 import { useAccount } from "wagmi";
 import { shortenAddress } from "@/utils";
 import UserAvatar from "src/features/Wallet/Avatar";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/features/Auth/Provider";
-
-const linkItems = [
-  {
-    label: "Homepage",
-    value: "homepage",
-    icon: <IoGlobeOutline />,
-    href: "https://mutuals.finance",
-  },
-  {
-    label: "Feedback",
-    value: "feedback",
-    icon: <IoMegaphoneOutline />,
-    href: "https://docs.mutuals.finance/",
-  },
-  {
-    label: "Help Center",
-    value: "help-center",
-    icon: <IoHelpOutline />,
-    href: "https://docs.mutuals.finance/",
-  },
-];
+import { header as headerLinks } from "@/features/Shell/Dashboard/links";
 
 export default function ShellDashboardHeaderUser() {
   const { address, isConnected, isConnecting } = useAccount();
@@ -58,7 +36,11 @@ export default function ShellDashboardHeaderUser() {
     <ButtonGroup size="sm">
       <Menu.Root>
         <Menu.Trigger asChild>
-          <IconButton variant="ghost" aria-label="Open navigation menu">
+          <IconButton
+            variant="ghost"
+            aria-label="Open navigation menu"
+            hideBelow={"lg"}
+          >
             <IoEllipsisHorizontal />
           </IconButton>
         </Menu.Trigger>
@@ -67,7 +49,7 @@ export default function ShellDashboardHeaderUser() {
             <Menu.Content minW={"56"}>
               <Menu.ItemGroup>
                 <Menu.ItemGroupLabel>Navigate</Menu.ItemGroupLabel>
-                {linkItems.map((item) => (
+                {headerLinks.map((item) => (
                   <Menu.Item key={item.value} value={item.value} asChild>
                     <Link
                       unstyled={true}
@@ -76,7 +58,7 @@ export default function ShellDashboardHeaderUser() {
                       rel="noopener noreferrer"
                     >
                       <Box flex="1">{item.label}</Box>
-                      {item.icon}
+                      <item.icon />
                     </Link>
                   </Menu.Item>
                 ))}
@@ -87,7 +69,7 @@ export default function ShellDashboardHeaderUser() {
                 <Menu.Item value={"settings"} asChild>
                   <Link unstyled={true} href={"/settings"}>
                     <Box flex="1">Settings</Box>
-                    <IoSettingsOutline />
+                    <IoSettingsSharp />
                   </Link>
                 </Menu.Item>
 
@@ -99,11 +81,7 @@ export default function ShellDashboardHeaderUser() {
                   <Box flex="1">
                     {colorMode === `light` ? `Dark Mode` : `Light Mode`}
                   </Box>
-                  {colorMode === `light` ? (
-                    <IoMoonOutline />
-                  ) : (
-                    <IoSunnyOutline />
-                  )}
+                  {colorMode === `light` ? <IoMoonSharp /> : <IoSunnySharp />}
                 </Menu.Item>
               </Menu.ItemGroup>
             </Menu.Content>

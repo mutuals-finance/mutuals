@@ -9,7 +9,7 @@ export function WalletSelectionEmail() {
         <Input id={"email"} placeholder={"Enter your email"} />
       </Field>
       <Stack w={{ base: "full", lg: "auto" }}>
-        <Button size={"xl"} variant={"surface"} rounded={"4xl"}>
+        <Button size={"xl"} variant={"surface"}>
           Sign In
         </Button>
       </Stack>
