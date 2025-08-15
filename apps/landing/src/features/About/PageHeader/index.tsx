@@ -14,13 +14,13 @@ export default function AboutPageHeader() {
             gap={{ base: "2", lg: "2" }}
           >
             <Link asChild href={"/about"}>
-              <Button size={"xl"} variant={"solid"} rounded={"4xl"}>
+              <Button size={"xl"} variant={"solid"}>
                 Open Roles
               </Button>
             </Link>
 
             <Link asChild href={"/contact"}>
-              <Button size={"xl"} variant={"surface"} rounded={"4xl"}>
+              <Button size={"xl"} variant={"surface"}>
                 Reach Out
               </Button>
             </Link>

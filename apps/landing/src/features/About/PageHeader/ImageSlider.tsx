@@ -14,7 +14,7 @@ export default function PageHeaderImageSlider({ options }: ImageSliderProps) {
           ratio={4 / 3}
           w={"full"}
           key={"about-images-" + key}
-          rounded={"lg"}
+          rounded={"2xl"}
           overflow={"hidden"}
         >
           <NextImage

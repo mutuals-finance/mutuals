@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import WalletList from "@/features/Wallet/List";
 import PoolList from "@/features/Pool/List";
 import DashboardHomeBalance from "src/features/DashboardHome/Balance";
@@ -22,10 +22,15 @@ export default async function DashboardHomeLayout({
       <DashboardHomeBalance />
       <DashboardHomeHandlers />
 
-      <WalletList {...walletsQuery} />
+      <Container maxW={"7xl"} my={"6"}>
+        <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+          Wallets
+        </Heading>
+        <WalletList {...walletsQuery} />
+      </Container>
 
-      <Container maxW={"7xl"}>
-        <Heading as={"h2"} textStyle={"3xl"} mb={"3"}>
+      <Container maxW={"7xl"} my={"6"}>
+        <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
           Payment Pools
         </Heading>
         <PoolList {...poolQuery} />

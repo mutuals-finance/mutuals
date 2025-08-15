@@ -85,9 +85,9 @@ export default function HomePayments() {
                       p={isActive ? "2" : "0"}
                       roundedRight={{
                         base: "0",
-                        lg: i >= payments.length - 1 ? "4xl" : "none",
+                        lg: i >= payments.length - 1 ? "2xl" : "none",
                       }}
-                      roundedLeft={{ base: "0", lg: i <= 0 ? "4xl" : "none" }}
+                      roundedLeft={{ base: "0", lg: i <= 0 ? "2xl" : "none" }}
                       overflow={"hidden"}
                       h={"full"}
                     >
@@ -100,7 +100,7 @@ export default function HomePayments() {
                       {isActive && (
                         <Box
                           position={"relative"}
-                          rounded={"4xl"}
+                          rounded={"2xl"}
                           overflow={"hidden"}
                         >
                           <NextImage
@@ -128,7 +128,7 @@ export default function HomePayments() {
               css={{
                 backdropFilter: "blur(12px)",
               }}
-              rounded={"lg"}
+              rounded={"2xl"}
             >
               <ButtonGroup size={"sm"} variant="ghost" attached>
                 <IconButton
@@ -168,7 +168,7 @@ export default function HomePayments() {
             {activePayment?.description}
           </Text>
 
-          <Button variant={"surface"} rounded={"4xl"} size={"lg"}>
+          <Button variant={"surface"} size={"lg"}>
             Explore the use case
           </Button>
         </Stack>

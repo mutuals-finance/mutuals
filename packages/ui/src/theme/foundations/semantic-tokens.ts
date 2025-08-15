@@ -1,4 +1,9 @@
 export default {
+  radii: {
+    l1: { value: "0.5rem" },
+    l2: { value: "1rem" },
+    l3: { value: "2rem" },
+  },
   // radii: {
   //   l1: { value: "0.375rem" },
   //   l2: { value: "0.5rem" },

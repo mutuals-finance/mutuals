@@ -74,7 +74,7 @@ export default function NavMobileDrawer({
               target="_blank"
               asChild={true}
             >
-              <Button variant="surface" size="2xl" rounded={"4xl"} w={"full"}>
+              <Button variant="surface" size="2xl" w={"full"}>
                 Launch App
               </Button>
             </Link>

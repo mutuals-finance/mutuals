@@ -44,13 +44,7 @@ export default function PricingOptions() {
                 target="_blank"
                 asChild={true}
               >
-                <Button
-                  w="full"
-                  mt="6"
-                  size={"xl"}
-                  variant={"surface"}
-                  rounded={"4xl"}
-                >
+                <Button w="full" mt="6" size={"xl"} variant={"surface"}>
                   Get Started
                 </Button>
               </Link>

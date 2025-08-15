@@ -19,7 +19,7 @@ export default function ShellIconButtonList({
   ...props
 }: ShellIconButtonListProps) {
   return (
-    <Box overflow={"hidden"} {...props}>
+    <Box overflow={"hidden"} px={"6"} {...props}>
       <KeenSlider
         css={{ overflow: "visible !important" }}
         options={{

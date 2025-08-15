@@ -101,7 +101,6 @@ export default function ActorCard({
                   hideBelow="md"
                   w={"1.6em"}
                   h={"1.6em"}
-                  rounded={"md"}
                   alignItems={"center"}
                   justifyContent={"center"}
                   bg={"bg.inverted"}

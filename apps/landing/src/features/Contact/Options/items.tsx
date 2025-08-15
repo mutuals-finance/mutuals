@@ -14,7 +14,7 @@ const items = [
         mt={"6"}
         alignSelf={"flex-start"}
         size={"xl"}
-        rounded={"4xl"}
+        rounded={"2xl"}
       >
         Let's Chat
       </Button>

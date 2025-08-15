@@ -58,7 +58,7 @@ export default function HomeValue() {
           </SimpleGrid>
 
           <Stack align={"center"} mt={"12"}>
-            <Button size={"2xl"} variant={"solid"} rounded={"4xl"}>
+            <Button size={"2xl"} variant={"solid"}>
               Explore the Platform
             </Button>
           </Stack>
