@@ -12,6 +12,7 @@ import { getViewer } from "@mutuals/graphql-client-nextjs/server";
 import MutualsProvider from "@/providers/MutualsProvider";
 
 import "keen-slider/keen-slider.min.css";
+import AnalyticsProvider from "@/providers/AnalyticsProvider";
 
 export default async function Providers({ children }: PropsWithChildren) {
   const redirectURL = "/";
@@ -22,17 +23,19 @@ export default async function Providers({ children }: PropsWithChildren) {
 
   return (
     <UIProvider>
-      <ApolloProvider>
-        <WagmiProvider initialState={wagmiInitialState}>
-          <SignMessageProvider>
-            <AuthProvider redirectTo={redirectURL} query={query}>
-              <AnkrProvider>
-                <MutualsProvider>{children}</MutualsProvider>
-              </AnkrProvider>
-            </AuthProvider>
-          </SignMessageProvider>
-        </WagmiProvider>
-      </ApolloProvider>
+      <AnalyticsProvider>
+        <ApolloProvider>
+          <WagmiProvider initialState={wagmiInitialState}>
+            <SignMessageProvider>
+              <AuthProvider redirectTo={redirectURL} query={query}>
+                <AnkrProvider>
+                  <MutualsProvider>{children}</MutualsProvider>
+                </AnkrProvider>
+              </AuthProvider>
+            </SignMessageProvider>
+          </WagmiProvider>
+        </ApolloProvider>
+      </AnalyticsProvider>
     </UIProvider>
   );
 }

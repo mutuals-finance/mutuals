@@ -1,5 +1,5 @@
 {
-  "name": "@mutuals/metadata-nextjs",
+  "name": "@mutuals/analytics-nextjs",
   "version": "0.0.0",
   "private": true,
   "exports": {
@@ -20,6 +20,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "mixpanel-browser": "^2.68.0",
     "@mutuals/ui": "workspace:^"
   }
 }
