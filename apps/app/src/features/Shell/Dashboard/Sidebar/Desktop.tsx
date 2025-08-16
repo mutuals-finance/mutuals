@@ -1,17 +1,24 @@
+"use client";
+
 import {
+  Button,
+  Group,
   Icon,
-  LinkButton,
+  IconButton,
+  Link,
+  type NavLinkProps,
   Stack,
-  StackProps,
+  type StackProps,
   StackSeparator,
   Text,
 } from "@mutuals/ui";
 import {
-  NavItem,
   sidebar as sidebarItems,
+  social as socialLinks,
 } from "@/features/Shell/Dashboard/links";
-import ShellDashboardSidebarFooter from "@/features/Shell/Dashboard/Sidebar/Footer";
+
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
+import ShellDashboardSidebarFooter from "@/features/Shell/Dashboard/Sidebar/Footer";
 
 export default function ShellDashboardSidebarDesktop() {
   const { desktop } = useDashboardRoot();
@@ -24,22 +31,42 @@ export default function ShellDashboardSidebarDesktop() {
       top="4rem"
       h={"calc(100vh - 4rem)"}
       left="0"
-      w={{ _open: "60", _closed: "0" }}
+      w={{
+        base: { _open: "60", _closed: "0" },
+        "2xl": { _open: "80", _closed: "0" },
+      }}
       minW={"5rem"}
       overflow={"hidden"}
       gap={"4"}
-      p={"4"}
+      px={"4"}
+      py={"6"}
       transition="all 0.2s ease"
       separator={<StackSeparator />}
     >
-      <Stack gap={"4"} mb={"auto"}>
-        {Object.keys(sidebarItems).map((section) => (
-          <ShellDashboardSidebarDesktopSection
-            key={section}
-            title={section}
-            links={sidebarItems[section]}
-          />
-        ))}
+      <Stack flex={"1"}>
+        <Stack gap={"6"} mb={"auto"}>
+          {Object.keys(sidebarItems).map((section) => (
+            <ShellDashboardSidebarDesktopSection
+              key={section}
+              title={section}
+              links={sidebarItems[section]}
+            />
+          ))}
+        </Stack>
+
+        <Group
+          alignItems={"center"}
+          justifyContent={"center"}
+          visibility={desktop.open ? "inherit" : "hidden"}
+        >
+          {socialLinks.map(({ href, label, icon: LinkIcon, ...props }) => (
+            <Link key={label} href={href} {...props} asChild={true}>
+              <IconButton size={"xs"} variant="ghost" aria-label={label}>
+                <LinkIcon />
+              </IconButton>
+            </Link>
+          ))}
+        </Group>
       </Stack>
 
       <ShellDashboardSidebarFooter
@@ -53,7 +80,7 @@ export default function ShellDashboardSidebarDesktop() {
 
 type ShellDashboardSidebarDesktopSectionProps = {
   title?: string;
-  links?: NavItem[];
+  links?: NavLinkProps[];
 } & StackProps;
 
 function ShellDashboardSidebarDesktopSection({
@@ -67,25 +94,25 @@ function ShellDashboardSidebarDesktopSection({
         {title}
       </Text>
       <Stack gap={2} w={"full"}>
-        {links?.map((link) => (
-          <LinkButton
-            key={link.value}
-            href={link.href}
-            variant={"outline"}
-            w={"full"}
-            justifyContent={"flex-start"}
-            px={"0.95rem"}
-            gap={"4"}
-            size={"lg"}
-            fontSize={"sm"}
-            textAlign={"left"}
-            overflow={"hidden"}
-          >
-            <Icon boxSize={"4"}>
-              <link.icon />
-            </Icon>
-            {link.label}
-          </LinkButton>
+        {links?.map(({ value, href, label, icon: LinkIcon, ...props }) => (
+          <Link key={value} href={href} {...props} asChild={true}>
+            <Button
+              variant={"outline"}
+              w={"full"}
+              justifyContent={"flex-start"}
+              px={"0.95rem"}
+              gap={"4"}
+              size={"lg"}
+              fontSize={"sm"}
+              textAlign={"left"}
+              overflow={"hidden"}
+            >
+              <Icon boxSize={"4"}>
+                <LinkIcon />
+              </Icon>
+              {label}
+            </Button>
+          </Link>
         ))}
       </Stack>
     </Stack>

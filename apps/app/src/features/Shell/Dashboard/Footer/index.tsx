@@ -1,38 +1,52 @@
-import { Link, Container, Stack, StackSeparator, Text } from "@mutuals/ui";
+import { Box, Container, Grid, LinkListBox, MutualsLogo } from "@mutuals/ui";
+import ShellDashboardFooterFooter from "@/features/Shell/Dashboard/Footer/Footer";
 
 export default function ShellDashboardFooter() {
-  const routes: Record<string, string> = {
-    Homepage: "https://mutuals.finance",
-    "Terms Of Service": "/",
-    "Privacy Policy": "/",
-  };
   return (
-    <Container
-      as="footer"
-      maxW={"100%"}
-      display={"flex"}
-      flexDir={"column"}
-      justifyContent={"flex-end"}
-      p={"12"}
-      mt={"12"}
-    >
-      <Stack
-        mb={"6"}
-        direction={"row"}
-        separator={<StackSeparator />}
-        gap={"4"}
-      >
-        <Text textStyle={"xs"}>Copyright 2025 Mutuals</Text>
-        <Text textStyle={"xs"}>The best way to manage onchain payments.</Text>
-      </Stack>
+    <Box as="footer" role="contentinfo" mt={{ base: "24", lg: "32" }}>
+      <Container maxW="7xl" py={{ base: "6", lg: "12" }}>
+        <Grid
+          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
+          gap={{ base: "12", lg: "12" }}
+        >
+          <LinkListBox
+            title={"Company"}
+            links={[
+              { children: "About Us", href: "/about" },
+              { children: "Contact Us", href: "/contact" },
+              { children: "Careers", href: "/about" },
+              { children: "Blog", href: "/" },
+            ]}
+          />
+          <LinkListBox
+            title={"Support"}
+            links={[
+              { children: "Pricing", href: "/pricing" },
+              { children: "Help Center", href: "/" },
+              { children: "Safety Center", href: "/" },
+              { children: "Community Guidelines", href: "/" },
+            ]}
+          />
 
-      <Stack gap={"4"} direction={["column", "row"]} textStyle={"xs"}>
-        {Object.keys(routes).map((name: string) => (
-          <Link href={routes[name] || "/"} key={name}>
-            {name}
-          </Link>
-        ))}
-      </Stack>
-    </Container>
+          <LinkListBox
+            title={"Legal"}
+            links={[
+              { children: "Cookies Policy", href: "/" },
+              { children: "Privacy Policy", href: "/" },
+              { children: "Terms of Service", href: "/" },
+              { children: "Law Enforcement", href: "/" },
+            ]}
+          />
+
+          <LinkListBox alignItems={"flex-end"} justifyContent={"flex-start"}>
+            <Box>
+              <MutualsLogo href={"/"} maxW={{ base: "32", lg: "48" }} />
+            </Box>
+          </LinkListBox>
+        </Grid>
+      </Container>
+
+      <ShellDashboardFooterFooter />
+    </Box>
   );
 }

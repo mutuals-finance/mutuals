@@ -7,7 +7,18 @@ import {
   getViewerPools,
   getViewerWallets,
 } from "@mutuals/graphql-client-nextjs/server";
-import { Box, Container, Heading, Stack } from "@mutuals/ui";
+import {
+  Box,
+  Container,
+  Heading,
+  Link,
+  Stack,
+  AlertRoot,
+  AlertIndicator,
+  AlertContent,
+  AlertTitle,
+  AlertDescription,
+} from "@mutuals/ui";
 
 export default async function DashboardHomeLayout({
   children,
@@ -21,6 +32,20 @@ export default async function DashboardHomeLayout({
     <>
       <Container maxW={"7xl"} mt={"6"}>
         <Stack gap={"6"}>
+          <AlertRoot
+            borderStartWidth="3px"
+            borderStartColor="colorPalette.solid"
+          >
+            <AlertIndicator />
+            <AlertContent>
+              <AlertTitle>Welcome to Mutuals</AlertTitle>
+              <AlertDescription>
+                Please <Link href={"/auth/login"}>sign in</Link> to your account
+                to get started and access all features of your dashboard.
+              </AlertDescription>
+            </AlertContent>
+          </AlertRoot>
+
           <Box>
             <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
               Your Balance
