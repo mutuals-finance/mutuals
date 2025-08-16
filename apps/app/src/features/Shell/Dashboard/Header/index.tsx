@@ -40,12 +40,12 @@ export default function ShellDashboardHeader() {
       bg={"bg"}
       direction={"row"}
     >
-      <MutualsLogo w={{ base: "24", md: "24" }} href={"/"} />
+      <MutualsLogo w={{ base: "28", md: "28" }} href={"/"} />
 
-      <AbsoluteCenter hideBelow={"lg"}>
-        <Form w={"full"} maxW={"80"}>
+      <AbsoluteCenter hideBelow={"lg"} w={"full"} maxW={"xs"}>
+        <Form w={"full"}>
           <InputGroup startElement={<IoSearch />}>
-            <Input size={"sm"} placeholder="Search users, pools and tokens" />
+            <Input size={"md"} placeholder="Search users, pools and tokens" />
           </InputGroup>
         </Form>
       </AbsoluteCenter>

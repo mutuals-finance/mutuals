@@ -62,6 +62,7 @@ export * from "./mutuals/ui-provider";
 export * from "./mutuals/mutuals-logo";
 export * from "./mutuals/motion";
 export * from "./mutuals/link";
+export * from "./mutuals/link-list-box";
 export * from "./mutuals/icon-text-button";
 export * from "./mutuals/input";
 export * from "./mutuals/field";

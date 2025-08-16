@@ -3,12 +3,19 @@ import {
   type LinkProps as ChakraLinkProps,
 } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
+import { IconType } from "react-icons";
 
 export interface LinkProps
   extends Omit<ChakraLinkProps, "href">,
     Pick<NextLinkProps, "href"> {
   linkProps?: Omit<NextLinkProps, "href" | "children">;
 }
+
+export type NavLinkProps = LinkProps & {
+  label: string;
+  value: string;
+  icon: IconType;
+};
 
 export function Link({
   children,

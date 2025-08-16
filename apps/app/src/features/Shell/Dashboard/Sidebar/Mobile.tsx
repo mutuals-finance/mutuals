@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Drawer,
   Portal,
@@ -8,10 +10,10 @@ import {
   CloseButton,
   StackProps,
   ColorModeButton,
+  NavLinkProps,
 } from "@mutuals/ui";
 import ShellDashboardSidebarFooter from "@/features/Shell/Dashboard/Sidebar/Footer";
 import {
-  NavItem,
   sidebar as sidebarLinks,
   header as headerLinks,
 } from "@/features/Shell/Dashboard/links";
@@ -68,7 +70,7 @@ export default function ShellDashboardSidebarMobile() {
 
 type ShellDashboardSidebarMobileSectionProps = {
   title?: string;
-  links?: NavItem[];
+  links?: NavLinkProps[];
 } & StackProps;
 
 function ShellDashboardSidebarMobileSection({
@@ -82,18 +84,18 @@ function ShellDashboardSidebarMobileSection({
         {title}
       </Text>
       <Stack gap={0.5} w={"full"}>
-        {links?.map((navItem) => (
+        {links?.map((link) => (
           <Button
-            key={navItem.label}
+            key={link.label}
             asChild
             variant={"ghost"}
             size={"sm"}
             justifyContent={"flex-start"}
             textAlign={"left"}
           >
-            <Link href={navItem.href}>
-              <navItem.icon />
-              {navItem.label}
+            <Link href={link.href}>
+              <link.icon />
+              {link.label}
             </Link>
           </Button>
         ))}
