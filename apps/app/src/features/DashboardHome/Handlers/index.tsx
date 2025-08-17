@@ -13,13 +13,13 @@ export default function DashboardHandlers() {
           {
             "aria-label": "Withdraw",
             children: <BiArrowToTop />,
-            href: "/",
+            href: "withdraw",
             variant: "surface",
           },
           {
             "aria-label": "Deposit",
             children: <BiArrowToBottom />,
-            href: "/",
+            href: "deposit",
             variant: "surface",
           },
           {

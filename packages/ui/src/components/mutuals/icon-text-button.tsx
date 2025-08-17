@@ -1,29 +1,27 @@
 import { IconButton, IconButtonProps, Stack, Text } from "@chakra-ui/react";
-import { forwardRef, ForwardRefExoticComponent, RefAttributes } from "react";
-import { LinkButton, LinkButtonProps } from "../ui/link-button";
+import { forwardRef } from "react";
+import { Link, LinkProps } from "./link";
 
-type IconTextButtonProps = IconButtonProps | LinkButtonProps;
+type IconTextButtonProps = IconButtonProps & LinkProps;
 
-const IconTextButton = forwardRef(function (
-  { size = "lg", w = "16", ...props }: IconTextButtonProps,
-  ref,
-) {
-  const _props = { size, w, h: w, ...props };
+const IconTextButton = forwardRef<HTMLButtonElement, IconTextButtonProps>(
+  function ({ href, size = "lg", w = "16", ...props }, ref) {
+    const _props = { size, w, h: w, ...props };
 
-  return (
-    <Stack gap={"3"} alignItems={"center"} textAlign={"center"}>
-      {"href" in _props ? (
-        <LinkButton {..._props} ref={ref} />
-      ) : (
-        <IconButton {...(_props as IconButtonProps)} ref={ref} />
-      )}
-      <Text>{props["aria-label"]}</Text>
-    </Stack>
-  );
-}) as ForwardRefExoticComponent<
-  | (IconButtonProps & RefAttributes<HTMLButtonElement>)
-  | (LinkButtonProps & RefAttributes<HTMLAnchorElement>)
->;
+    return (
+      <Stack gap={"3"} alignItems={"center"} textAlign={"center"}>
+        {!href ? (
+          <IconButton {...(_props as IconButtonProps)} ref={ref} />
+        ) : (
+          <Link href={href} asChild={true}>
+            <IconButton {...(_props as IconButtonProps)} ref={ref} />
+          </Link>
+        )}
+        <Text>{props["aria-label"]}</Text>
+      </Stack>
+    );
+  },
+);
 
 IconTextButton.displayName = "IconTextButton";
 export { IconTextButton, type IconTextButtonProps };
