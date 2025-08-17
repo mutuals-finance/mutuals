@@ -26,6 +26,7 @@ export default function ShellDashboardSidebarMobile() {
     <Drawer.Root
       placement={"bottom"}
       open={mobile.open}
+      initialFocusEl={() => null}
       onOpenChange={(e) => mobile.setOpen(e.open)}
       size={"lg"}
     >

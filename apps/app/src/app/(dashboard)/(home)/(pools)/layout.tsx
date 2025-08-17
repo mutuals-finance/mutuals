@@ -43,7 +43,7 @@ export default function DashboardHomePoolsLayout({
     >
       <DrawerBackdrop />
       <DrawerContent>
-        <DrawerCloseTrigger top={"0.5"} />
+        <DrawerCloseTrigger top={"0.5"} zIndex={1} />
         <DrawerContext>
           {(store) => (
             <>
