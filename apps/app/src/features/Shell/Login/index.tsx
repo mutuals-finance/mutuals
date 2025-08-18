@@ -7,26 +7,12 @@ import {
   Box,
   AbsoluteCenter,
   Separator,
+  Theme,
 } from "@mutuals/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.png";
 import { PropsWithChildren } from "react";
 import WalletSelector from "@/features/Wallet/Selection";
-
-function LogoBox() {
-  return (
-    <Box
-      shadow={"xs"}
-      bg={"bg"}
-      p={{ base: "4", lg: "6" }}
-      rounded={{ base: "3xl", lg: "4xl" }}
-      w={{ base: "20", lg: "24" }}
-      h={{ base: "20", lg: "24" }}
-    >
-      <MutualsLogo wordmark={false} />
-    </Box>
-  );
-}
 
 export default function ShellLogin({ children }: PropsWithChildren) {
   return (
@@ -45,9 +31,20 @@ export default function ShellLogin({ children }: PropsWithChildren) {
         h={{ lg: "100vh" }}
         w={{ lg: "full" }}
       >
-        <AbsoluteCenter zIndex={"50"}>
-          <LogoBox />
-        </AbsoluteCenter>
+        <Theme appearance="light">
+          <AbsoluteCenter zIndex={"50"}>
+            <Box
+              shadow={"xs"}
+              bg={"bg"}
+              p={{ base: "4", lg: "6" }}
+              rounded={{ base: "3xl", lg: "4xl" }}
+              w={{ base: "20", lg: "24" }}
+              h={{ base: "20", lg: "24" }}
+            >
+              <MutualsLogo wordmark={false} />
+            </Box>
+          </AbsoluteCenter>
+        </Theme>
 
         <Box
           position={"absolute"}
@@ -79,10 +76,10 @@ export default function ShellLogin({ children }: PropsWithChildren) {
           display={"flex"}
           flexDirection={"column"}
           h={"full"}
-          py={{ base: "4", lg: "12" }}
+          py={{ base: "6", lg: "12" }}
         >
           <WalletSelector.Wrapper
-            heading="Connect to Mutuals"
+            heading="Sign in to Mutuals"
             description={
               "Choose your favourite method to sign in. You can always add more methods later."
             }
