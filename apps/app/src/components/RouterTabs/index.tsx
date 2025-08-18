@@ -24,7 +24,7 @@ export default function RouterTabs({
 
   return (
     <>
-      <Tabs.Root value={current?.value} {...props}>
+      <Tabs.Root value={current?.value} {...props} fitted={true}>
         <Tabs.List>
           <Tabs.Indicator
             shadow={"none"}

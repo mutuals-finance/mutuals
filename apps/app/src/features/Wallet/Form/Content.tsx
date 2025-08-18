@@ -1,13 +1,13 @@
 "use client";
 
 import React, { PropsWithChildren } from "react";
-import { Input } from "@mutuals/ui";
 
 export function WalletDrawerContent({ children }: PropsWithChildren) {
   return (
     <>
       {children}
 
+      {/*
       <Input id="name" />
 
       <Input
@@ -17,6 +17,7 @@ export function WalletDrawerContent({ children }: PropsWithChildren) {
           required: "Please enter an address",
         }}
       />
+*/}
     </>
   );
 }

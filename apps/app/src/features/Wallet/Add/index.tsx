@@ -9,6 +9,7 @@ import {
 } from "@mutuals/graphql-client-nextjs";
 import { walletMapFromViewerQuery } from "@/utils";
 import { Alert } from "@mutuals/ui";
+import AuthSignInCard from "@/features/Auth/SignInCard";
 
 interface WalletAddProps
   extends PropsWithChildren,
@@ -26,13 +27,15 @@ export default function WalletAdd({ children, data }: WalletAddProps) {
     >
       {!walletMap[address] ? (
         <WalletForm.Content>
+          {/*
           <Alert status={"info"} fontSize={"xs"}>
             External wallets and multisigs you add here will be included in your
             dashboard and count towards your total earnings. You&apos;ll also
             receive notifications for all these wallets, which you can turn off
             in your settings.
           </Alert>
-          {children}
+*/}
+          {!data.viewer ? <AuthSignInCard /> : children}
         </WalletForm.Content>
       ) : (
         <Alert status="info" size={"lg"} title={"Account already in use"}>

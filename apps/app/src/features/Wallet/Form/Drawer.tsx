@@ -82,8 +82,8 @@ export function WalletFormDrawer({
 
   return (
     <DrawerRoot
-      placement="end"
-      size={"sm"}
+      placement={{ base: "bottom", lg: "end" }}
+      size={{ base: "sm", lg: "sm" }}
       open={open}
       onOpenChange={(e) => setOpen(e.open)}
       onExitComplete={() => router.push(`/`, { scroll: false })}
@@ -112,7 +112,7 @@ export function WalletFormDrawer({
               </Button>
             </DrawerActionTrigger>
 
-            <Button loading={false} type={"submit"}>
+            <Button loading={false} type={"submit"} disabled={true}>
               Submit
             </Button>
           </DrawerFooter>
