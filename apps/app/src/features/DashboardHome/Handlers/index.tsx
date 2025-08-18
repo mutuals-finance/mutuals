@@ -25,13 +25,13 @@ export default function DashboardHandlers() {
           {
             "aria-label": "Create Pool",
             children: <RiApps2AddFill />,
-            href: "/", // pool/new
+            href: "pool/new", //
             variant: "surface",
           },
           {
             "aria-label": "Add Wallet",
             children: <IoWalletSharp />,
-            href: "/", // wallet/new
+            href: "wallet/new", // wallet/new
             variant: "surface",
           },
           {
