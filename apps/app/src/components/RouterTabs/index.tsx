@@ -40,7 +40,7 @@ export default function RouterTabs({
               w: "full",
               alignSelf: "stretch",
               py: "2",
-              px: "4",
+              px: { base: "2", lg: "4" },
               children: title,
               ..._props,
             };
