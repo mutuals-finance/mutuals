@@ -15,22 +15,22 @@ export default function ShellDashboardFooter() {
               {
                 children: "About Us",
                 target: "_blank",
-                href: "https://www.mutuals.finance/about",
+                href: "https://mutuals.finance/about",
               },
               {
                 children: "Contact Us",
                 target: "_blank",
-                href: "https://www.mutuals.finance/contact",
+                href: "https://mutuals.finance/contact",
               },
               {
                 children: "Careers",
                 target: "_blank",
-                href: "https://www.mutuals.finance/about",
+                href: "https://mutuals.finance/about",
               },
               {
                 children: "Blog",
                 target: "_blank",
-                href: "https://www.mutuals.finance/blog",
+                href: "https://mutuals.finance/blog",
               },
             ]}
           />
@@ -40,7 +40,7 @@ export default function ShellDashboardFooter() {
               {
                 children: "Pricing",
                 target: "_blank",
-                href: "https://www.mutuals.finance/pricing",
+                href: "https://mutuals.finance/pricing",
               },
               {
                 children: "Help Center",
@@ -63,10 +63,26 @@ export default function ShellDashboardFooter() {
           <LinkListBox
             title={"Legal"}
             links={[
-              { children: "Cookies Policy", href: "/" },
-              { children: "Privacy Policy", href: "/" },
-              { children: "Terms of Service", href: "/" },
-              { children: "Law Enforcement", href: "/" },
+              {
+                children: "Cookies Policy",
+                target: "_blank",
+                href: "https://mutuals.finance/",
+              },
+              {
+                children: "Privacy Policy",
+                target: "_blank",
+                href: "https://mutuals.finance/",
+              },
+              {
+                children: "Terms of Service",
+                target: "_blank",
+                href: "https://mutuals.finance/",
+              },
+              {
+                children: "Law Enforcement",
+                target: "_blank",
+                href: "https://mutuals.finance/",
+              },
             ]}
           />
 
