@@ -66,22 +66,22 @@ export default function ShellDashboardFooter() {
               {
                 children: "Cookies Policy",
                 target: "_blank",
-                href: "https://mutuals.finance/",
+                href: "https://mutuals.finance/cookies-policy",
               },
               {
                 children: "Privacy Policy",
                 target: "_blank",
-                href: "https://mutuals.finance/",
+                href: "https://mutuals.finance/privacy-policy",
               },
               {
                 children: "Terms of Service",
                 target: "_blank",
-                href: "https://mutuals.finance/",
+                href: "https://mutuals.finance/terms-of-service",
               },
               {
                 children: "Law Enforcement",
                 target: "_blank",
-                href: "https://mutuals.finance/",
+                href: "https://mutuals.finance/law-enforcement",
               },
             ]}
           />
