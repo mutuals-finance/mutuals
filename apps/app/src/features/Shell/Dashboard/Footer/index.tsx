@@ -12,19 +12,51 @@ export default function ShellDashboardFooter() {
           <LinkListBox
             title={"Company"}
             links={[
-              { children: "About Us", href: "/about" },
-              { children: "Contact Us", href: "/contact" },
-              { children: "Careers", href: "/about" },
-              { children: "Blog", href: "/" },
+              {
+                children: "About Us",
+                target: "_blank",
+                href: "https://www.mutuals.finance/about",
+              },
+              {
+                children: "Contact Us",
+                target: "_blank",
+                href: "https://www.mutuals.finance/contact",
+              },
+              {
+                children: "Careers",
+                target: "_blank",
+                href: "https://www.mutuals.finance/about",
+              },
+              {
+                children: "Blog",
+                target: "_blank",
+                href: "https://www.mutuals.finance/blog",
+              },
             ]}
           />
           <LinkListBox
             title={"Support"}
             links={[
-              { children: "Pricing", href: "/pricing" },
-              { children: "Help Center", href: "/" },
-              { children: "Safety Center", href: "/" },
-              { children: "Community Guidelines", href: "/" },
+              {
+                children: "Pricing",
+                target: "_blank",
+                href: "https://www.mutuals.finance/pricing",
+              },
+              {
+                children: "Help Center",
+                target: "_blank",
+                href: "https://docs.mutuals.finance/",
+              },
+              {
+                children: "Safety Center",
+                target: "_blank",
+                href: "https://docs.mutuals.finance/",
+              },
+              {
+                children: "Community Guidelines",
+                target: "_blank",
+                href: "https://docs.mutuals.finance/",
+              },
             ]}
           />
 

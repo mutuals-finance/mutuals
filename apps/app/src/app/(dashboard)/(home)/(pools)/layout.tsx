@@ -12,6 +12,8 @@ import {
   DrawerRoot,
   Box,
   DrawerContext,
+  DrawerHeader,
+  DrawerTitle,
 } from "@mutuals/ui";
 import { useRouter } from "next/navigation";
 
@@ -43,12 +45,15 @@ export default function DashboardHomePoolsLayout({
     >
       <DrawerBackdrop />
       <DrawerContent>
-        <DrawerCloseTrigger top={"0.5"} zIndex={1} />
+        <DrawerCloseTrigger />
         <DrawerContext>
           {(store) => (
             <>
+              <DrawerHeader>
+                <DrawerTitle>Manage Funds</DrawerTitle>
+              </DrawerHeader>
               <DrawerBody p={"0"} flex={"1"}>
-                <RouterTabs tabs={tabs}>
+                <RouterTabs fitted={true} tabs={tabs}>
                   <Box p={"6"}>{children}</Box>
                 </RouterTabs>
               </DrawerBody>

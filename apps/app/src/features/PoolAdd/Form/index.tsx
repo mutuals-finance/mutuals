@@ -87,7 +87,7 @@ export default function PoolAdd() {
             onOpenChange={({ open }) => setModalOpen(open)}
             {...methods}
           />
-          <Stack maxW={"3xl"}>
+          <Stack>
             {!signedId ? (
               <AuthSignInCard />
             ) : (

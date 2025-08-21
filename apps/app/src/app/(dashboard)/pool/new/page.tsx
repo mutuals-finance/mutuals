@@ -1,10 +1,10 @@
-import { Box, Container } from "@mutuals/ui";
+import { Container } from "@mutuals/ui";
 import ShellPage from "@/features/Shell/Page";
 import PoolAddForm from "@/features/PoolAdd/Form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Create a New Payment Pool",
+  title: "New payment pool",
 };
 
 export default function PoolAddPage() {
