@@ -1,5 +1,5 @@
 docker:
-  - image: node:18
+  - image: node:22
 
 resource_class: large
 
@@ -60,7 +60,7 @@ steps:
       name: Deploy Project Artifacts to Vercel
       command: |
         opts=(--prebuilt --token=$VERCEL_TOKEN)
-        
+
         if [[ <<parameters.vercel-environment>> == "production" ]]; then
           opts+=(--prod)
         fi
