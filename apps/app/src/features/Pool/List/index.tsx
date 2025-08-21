@@ -10,7 +10,6 @@ export default function PoolList(query: PoolListProps) {
 
   return !data?.viewer ? (
     <AuthSiginInCard
-      actionProps={{ children: "Create payment pool" }}
       description={
         "To view and manage your payment pools you must sign in to your account."
       }

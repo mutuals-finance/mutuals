@@ -13,25 +13,25 @@ export default function DashboardHandlers() {
           {
             "aria-label": "Withdraw",
             children: <BiArrowToTop />,
-            href: "withdraw",
+            href: "/withdraw",
             variant: "surface",
           },
           {
             "aria-label": "Deposit",
             children: <BiArrowToBottom />,
-            href: "deposit",
+            href: "/deposit",
             variant: "surface",
           },
           {
             "aria-label": "Create Pool",
             children: <RiApps2AddFill />,
-            href: "pool/new", //
+            href: "/pool/new", //
             variant: "surface",
           },
           {
             "aria-label": "Add Wallet",
             children: <IoWalletSharp />,
-            href: "wallet/new", // wallet/new
+            href: "/wallet/new", // wallet/new
             variant: "surface",
           },
           {

@@ -1,4 +1,4 @@
-import { EmptyState, Group, Button } from "@mutuals/ui";
+import { EmptyState, Group, Button, Link } from "@mutuals/ui";
 import { HiViewGridAdd } from "react-icons/hi";
 
 export default function PoolListEmptyState() {
@@ -10,7 +10,9 @@ export default function PoolListEmptyState() {
       size={"sm"}
     >
       <Group>
-        <Button size={"sm"}>Create Payment Pool</Button>
+        <Link asChild={true} href={"/pool/new"}>
+          <Button size={"sm"}>Create Payment Pool</Button>
+        </Link>
         <Button variant="outline" size={"sm"}>
           Import
         </Button>
