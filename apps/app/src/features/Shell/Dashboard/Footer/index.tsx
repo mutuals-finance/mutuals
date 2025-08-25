@@ -13,19 +13,9 @@ export default function ShellDashboardFooter() {
             title={"Company"}
             links={[
               {
-                children: "About Us",
-                target: "_blank",
-                href: "https://mutuals.finance/about",
-              },
-              {
-                children: "Contact Us",
+                children: "Contact",
                 target: "_blank",
                 href: "https://mutuals.finance/contact",
-              },
-              {
-                children: "Careers",
-                target: "_blank",
-                href: "https://mutuals.finance/about",
               },
               {
                 children: "Blog",

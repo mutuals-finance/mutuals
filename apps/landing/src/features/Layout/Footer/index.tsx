@@ -26,9 +26,7 @@ export default function LayoutFooter() {
           <ListBox
             title={"Company"}
             links={[
-              { children: "About Us", href: "/about" },
-              { children: "Contact Us", href: "/contact" },
-              { children: "Careers", href: "/about" },
+              { children: "Contact", href: "/contact" },
               { children: "Blog", href: "/" },
             ]}
           />

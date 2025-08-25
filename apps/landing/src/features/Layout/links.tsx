@@ -9,12 +9,8 @@ const links: NavLinkProps[] = [
     children: "Pricing",
   },
   {
-    children: "Company",
-    href: "/about",
-    links: [
-      { children: "About", href: "/about" },
-      { children: "Contact", href: "/contact" },
-    ],
+    children: "Contact",
+    href: "/contact",
   },
   { children: "Socials", href: "/socials" },
   { children: "Blog", external: true, href: "/blog" },
