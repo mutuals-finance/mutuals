@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 
 export const defaultMetadata: Metadata = {
   title: {
-    default: `Mutuals — The best way to manage on-chain payments`,
+    default: `Mutuals — Reimagining Programmable Money.`,
     template: "%s — Mutuals",
   },
-  description: "The best way to manage on-chain payments.",
+  description: "Reimagining Programmable Money.",
 };
 
 export function createMetadata(props?: Metadata): Metadata {

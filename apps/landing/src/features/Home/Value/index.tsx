@@ -37,7 +37,7 @@ const values = [
 export default function HomeValue() {
   return (
     <Theme appearance={"dark"}>
-      <Box my={"16"} py={"16"} bg={"bg.subtle"}>
+      <Box mb={"16"} py={"16"} bg={"bg.subtle"}>
         <Container maxW="7xl">
           <SectionHeader label={"Explore Mutuals"}>
             Financial management for on-chain teams

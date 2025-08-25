@@ -1,12 +1,20 @@
 "use client";
 
 import NextImage from "next/image";
-import aboutImage from "@/assets/hero.png";
+import dashboardImage from "@/assets/hero.png";
+import metricsImage from "@/assets/hero-2.png";
+import mockSigninImage from "@/assets/mock-signin.png";
 import { AspectRatio, MotionBox } from "@mutuals/ui";
 import { transitionProps } from "./index";
 import { useState } from "react";
 import ImageSlider, { ImageSliderProps } from "@/components/ImageSlider";
 
+const images = [
+  { key: "dashboard", src: dashboardImage, ratio: 16 / 9 },
+  { key: "metrics", src: metricsImage, ratio: 16 / 9 },
+  { key: "mocksignin", src: mockSigninImage, ratio: 9 / 16 },
+  { key: "metrics", src: metricsImage, ratio: 16 / 9 },
+];
 export default function HeroImageSlider({ options }: ImageSliderProps) {
   const [isCreated, setIsCreated] = useState(false);
 
@@ -35,16 +43,19 @@ export default function HeroImageSlider({ options }: ImageSliderProps) {
           ..._options,
         }}
       >
-        {[1, 2, 3, 4, 5].map((key) => (
+        {images.map(({ key, src, ratio }, index) => (
           <AspectRatio
             position={"relative"}
-            ratio={16 / 9}
+            ratio={ratio}
             w={"full"}
-            key={"hero-images-" + key}
+            maxH={"64"}
+            key={"hero-image-" + key}
+            rounded={"2xl"}
+            overflow={"hidden"}
           >
             <NextImage
-              src={aboutImage}
-              alt="Mutuals Dashboard Hero"
+              src={src}
+              alt={"Mutuals Dashboard Hero " + index}
               fill={true}
               style={{ objectFit: "cover" }}
             />
