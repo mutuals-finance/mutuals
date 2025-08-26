@@ -9,9 +9,10 @@ import {
   Link,
   Theme,
   AspectRatio,
+  BoxProps,
 } from "@mutuals/ui";
 import GridBg from "@/components/GridBg";
-import NextImage from "next/image";
+import NextImage, { ImageProps as NextImageProps } from "next/image";
 import dashboardDesktopImage from "@/assets/dashboard-desktop.png";
 import transactionHistoryImage from "@/assets/transaction-history.png";
 import assetAllocationImage from "@/assets/asset-allocation.png";
@@ -21,6 +22,22 @@ export const transitionProps = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
 };
+
+type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
+
+function HomeHeroImage({ imageProps, ...props }: HomeHeroProps) {
+  return (
+    <Box
+      rounded={"2xl"}
+      overflow={"hidden"}
+      position={"absolute"}
+      shadow={"lg"}
+      {...props}
+    >
+      <NextImage {...imageProps} />
+    </Box>
+  );
+}
 
 export default function HomeHero() {
   return (
@@ -71,17 +88,24 @@ export default function HomeHero() {
         maxW={"7xl"}
         position={"relative"}
         overflow={{ base: "hidden", lg: "unset" }}
-        px={{ base: "0", lg: "12" }}
         pt={{ base: "6", lg: "0" }}
       >
         <Theme appearance={"light"} bg={"transparent"}>
-          <Box w="full" maxW="4xl" mx="auto">
+          <Box
+            w="full"
+            maxW="4xl"
+            mx="auto"
+            data-state="open"
+            _open={{
+              animation: "fade-in 300ms ease-out",
+            }}
+          >
             <AspectRatio
-              ratio={{ base: 1, md: 2457 / 1441 }}
+              ratio={{ base: 8 / 7, md: 2457 / 1441 }}
               w="full"
-              roundedTop={{ lg: "2xl" }}
+              roundedTop={"2xl"}
               overflow={"hidden"}
-              shadow={{ lg: "md" }}
+              shadow={"md"}
             >
               <NextImage
                 src={dashboardDesktopImage}
@@ -91,51 +115,36 @@ export default function HomeHero() {
               />
             </AspectRatio>
           </Box>
-          <Box
-            rounded={"2xl"}
-            overflow={"hidden"}
-            position={"absolute"}
-            w={{ base: "44", md: "64" }}
+          <HomeHeroImage
+            w={{ base: "36", lg: "64" }}
             top={{ base: "0", lg: "25%" }}
-            transform={{ lg: "translateY(-50%)" }}
-            left={{ base: "2", lg: "2" }}
-            shadow={"lg"}
-          >
-            <NextImage
-              src={assetAllocationImage}
-              alt={"Mutuals Dashboard Hero Transaction History"}
-            />
-          </Box>
-          <Box
-            rounded={"2xl"}
-            overflow={"hidden"}
-            position={"absolute"}
-            bottom={{ base: "2", md: "25%" }}
-            transform={{ md: "translateY(50%)" }}
-            left={{ base: "2", lg: "24" }}
-            w={{ base: "52", md: "64" }}
-            shadow={"lg"}
-          >
-            <NextImage
-              src={dashboardHandlersImage}
-              alt={"Mutuals Dashboard Hero Transaction History"}
-            />
-          </Box>
-          <Box
-            rounded={"2xl"}
-            overflow={"hidden"}
-            position={"absolute"}
+            transform={{ base: "translateX(-25%)", lg: "translateY(-50%)" }}
+            left={{ base: "0", lg: "2" }}
+            imageProps={{
+              src: assetAllocationImage,
+              alt: "Mutuals Dashboard Hero Asset Allocation",
+            }}
+          />
+          <HomeHeroImage
+            bottom={{ base: "6", lg: "25%" }}
+            left={{ base: "25%", lg: "24" }}
+            transform={{ base: "translateX(-50%)", lg: "translateY(50%)" }}
+            w={{ base: "48", lg: "64" }}
+            imageProps={{
+              src: dashboardHandlersImage,
+              alt: "Mutuals Dashboard Hero Handlers",
+            }}
+          />
+          <HomeHeroImage
             top={"50%"}
-            transform={{ base: "translate(50%,-50%)", md: "translateY(-50%)" }}
-            right={{ base: "2", lg: "2" }}
-            w={{ base: "2xs", lg: "md" }}
-            shadow={"lg"}
-          >
-            <NextImage
-              src={transactionHistoryImage}
-              alt={"Mutuals Dashboard Hero Transaction History"}
-            />
-          </Box>
+            right={{ base: "0", lg: "2" }}
+            transform={{ base: "translate(60%,-50%)", md: "translateY(-50%)" }}
+            w={{ base: "xs", lg: "md" }}
+            imageProps={{
+              src: transactionHistoryImage,
+              alt: "Mutuals Dashboard Transaction History",
+            }}
+          />
         </Theme>
       </Container>
     </Box>
