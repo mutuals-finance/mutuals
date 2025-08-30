@@ -13,6 +13,7 @@ import {
   Form,
   Group,
   Input,
+  Text,
   Textarea,
   Stack,
   FormErrorAlert,
@@ -24,6 +25,7 @@ import {
 
 import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddModal from "@/features/PoolAdd/Modal";
+import AllocationInput from "@/features/PoolAdd/AllocationInput";
 import { useAccount } from "wagmi";
 import { usePoolCreate } from "@mutuals/graphql-client-nextjs/client";
 import { PoolStatus } from "@mutuals/graphql-client-nextjs";
@@ -61,10 +63,50 @@ export default function PoolAdd() {
     {
       title: "Step 1",
       description: "Enter pool information",
+      children: (
+        <>
+          <Field label={"Owner"} id={"ownerAddress"}>
+            <Input id="ownerAddress" />
+          </Field>
+
+          <Field id={"image"} label={"Image"}>
+            <FileUpload
+              id="image"
+              maxW={"36"}
+              dropzoneProps={{
+                maxW: "36",
+                minH: "36",
+                label: "Upload pool image",
+                gap: "2",
+                iconProps: {
+                  color: "fg.muted",
+                  fontSize: "md",
+                },
+              }}
+            />
+          </Field>
+          <Field id={"name"} label={"Name"}>
+            <Input id="name" />
+          </Field>
+          <Field id={"description"} label={"Description"}>
+            <Textarea id="description" />
+          </Field>
+        </>
+      ),
     },
     {
       title: "Step 2",
       description: "Configure pool allocations",
+      children: (
+        <>
+          <Stack>
+            <Text fontWeight={"medium"} textStyle={"sm"}>
+              Allocations
+            </Text>
+            <AllocationInput id="allocations" />
+          </Stack>
+        </>
+      ),
     },
   ];
 
@@ -147,41 +189,14 @@ export default function PoolAdd() {
                         <Fieldset.Content>
                           <FormErrorAlert name={"root.upsertPool"} />
 
-                          <Field label={"Owner"} id={"ownerAddress"}>
-                            <Input id="ownerAddress" />
-                          </Field>
-
-                          <Field id={"image"} label={"Image"}>
-                            <FileUpload
-                              id="image"
-                              maxW={"36"}
-                              dropzoneProps={{
-                                maxW: "36",
-                                minH: "36",
-                                label: "Upload pool image",
-                                gap: "2",
-                                iconProps: {
-                                  color: "fg.muted",
-                                  fontSize: "md",
-                                },
-                              }}
-                            />
-                          </Field>
-                          <Field id={"name"} label={"Name"}>
-                            <Input id="name" />
-                          </Field>
-                          <Field id={"description"} label={"Description"}>
-                            <Textarea id="description" />
-                          </Field>
-
-                          {/*
-                  <Stack>
-                    <Text fontWeight={"medium"} textStyle={"sm"}>
-                      Allocations
-                    </Text>
-                    <AllocationInput id="allocations" />
-                  </Stack>
-*/}
+                          {items.map((step, index) => (
+                            <Steps.Content key={index} index={index}>
+                              {step.children}
+                            </Steps.Content>
+                          ))}
+                          <Steps.CompletedContent>
+                            All steps are complete!
+                          </Steps.CompletedContent>
 
                           <Group>
                             {steps.hasPrevStep && (
