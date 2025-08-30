@@ -18,10 +18,11 @@ import { shortenAddress } from "@/utils";
 
 import PoolCardLogo from "@/features/Pool/Card/Logo";
 import { Pool, PoolStatus } from "@mutuals/graphql-client-nextjs";
+import { DeepPartial } from "#/partial";
 
-export type PoolCardProps = Partial<Pool>;
+export type PoolCardProps = DeepPartial<Pool>;
 
-function PoolCard({ dbid, name, status, address }: PoolCardProps) {
+function PoolCard({ dbid, name, status, contract }: PoolCardProps) {
   return (
     <LinkBox as="article">
       <Card.Root>
@@ -35,9 +36,11 @@ function PoolCard({ dbid, name, status, address }: PoolCardProps) {
                   {!name || name == "" ? "Unknown Pool" : name}
                 </Heading>
 
-                <Text fontFamily={"mono"} fontSize={"xs"}>
-                  {shortenAddress(address)}
-                </Text>
+                {!!contract && (
+                  <Text fontFamily={"mono"} fontSize={"xs"}>
+                    {shortenAddress(contract.address)}
+                  </Text>
+                )}
               </Box>
             </HStack>
 

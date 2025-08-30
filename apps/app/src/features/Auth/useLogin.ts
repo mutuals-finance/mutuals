@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 
-import { Chain } from "@mutuals/graphql-client-nextjs";
 import { type Address } from "viem";
 import { useStateList } from "react-use";
 import useAuthLoginOrCreateUser from "@/features/Auth/useLoginOrCreateUser";
@@ -76,7 +75,7 @@ export default function useAuthLogin(): UseAuthLoginResult {
         await loginOrCreateUser(address, {
           eoa: {
             chainPubKey: {
-              chain: Chain.Ethereum,
+              chainId: 1,
               pubKey: address,
             },
             nonce,

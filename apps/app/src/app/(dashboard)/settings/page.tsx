@@ -1,5 +1,5 @@
 import UserSettingsGeneral from "@/features/UserSettings/General";
-import { getViewer } from "@mutuals/graphql-client-nextjs/server";
+import { me } from "@mutuals/graphql-client-nextjs/server";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 export default async function UserSettingsGeneralPage() {
-  const query = await getViewer();
+  const query = await me();
 
   return <UserSettingsGeneral {...query} />;
 }

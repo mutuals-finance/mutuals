@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 export default function PoolAddPage() {
   return (
     <ShellPage
-      breadcrumbsProps={{ overwrite: { pool: false } }}
+      breadcrumbsProps={{
+        overwrite: { pool: false, ["new"]: "New Payment Pool" },
+      }}
       title={"New Payment Pool"}
       description={
         "A payment pool smart contract automatically routes on-chain payments to different destinations."

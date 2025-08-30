@@ -19,6 +19,7 @@ export type Scalars = {
   Email: { input: any; output: any; }
   FieldSet: { input: any; output: any; }
   HexString: { input: any; output: any; }
+  JSON: { input: any; output: any; }
   PubKey: { input: any; output: any; }
   Time: { input: any; output: any; }
   _Any: { input: any; output: any; }
@@ -31,56 +32,18 @@ export const Action = {
 } as const;
 
 export type Action = typeof Action[keyof typeof Action];
-export type AddRolesToUserPayloadOrError = ErrNotAuthorized | MutualsUser;
+export type AddRolesToUserPayloadOrError = ErrNotAuthorized | User;
 
 export type AddUserWalletPayload = {
   viewer?: Maybe<Viewer>;
 };
 
+/**
+ * -------------------------------------------------------------------------------
+ *  MUTATIONS
+ * -------------------------------------------------------------------------------
+ */
 export type AddUserWalletPayloadOrError = AddUserWalletPayload | ErrAddressOwnedByUser | ErrAuthenticationFailed | ErrInvalidInput | ErrNotAuthorized;
-
-export type AdminAddWalletInput = {
-  chainAddress: ChainAddressInput;
-  username: Scalars['String']['input'];
-  walletType: WalletType;
-};
-
-export type AdminAddWalletPayload = {
-  user?: Maybe<MutualsUser>;
-};
-
-export type AdminAddWalletPayloadOrError = AdminAddWalletPayload | ErrAddressOwnedByUser | ErrNotAuthorized | ErrUserNotFound;
-
-export type Allocation = Node & {
-  creationTime?: Maybe<Scalars['Time']['output']>;
-  dbid: Scalars['DBID']['output'];
-  id: Scalars['ID']['output'];
-  lastUpdated?: Maybe<Scalars['Time']['output']>;
-  pool?: Maybe<Pool>;
-  recipientAddress?: Maybe<Scalars['Address']['output']>;
-  value?: Maybe<Scalars['HexString']['output']>;
-  version?: Maybe<Scalars['Int']['output']>;
-};
-
-export type AllocationAggregation = Node & {
-  creationTime?: Maybe<Scalars['Time']['output']>;
-  dbid: Scalars['DBID']['output'];
-  expression?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  lastUpdated?: Maybe<Scalars['Time']['output']>;
-  pool?: Maybe<Pool>;
-  recipientAddress?: Maybe<Scalars['Address']['output']>;
-  version?: Maybe<Scalars['Int']['output']>;
-};
-
-export type Asset = Node & {
-  balance?: Maybe<Scalars['HexString']['output']>;
-  dbid: Scalars['DBID']['output'];
-  id: Scalars['ID']['output'];
-  ownerAddress?: Maybe<ChainAddress>;
-  token?: Maybe<Token>;
-  version?: Maybe<Scalars['Int']['output']>;
-};
 
 export type AuthMechanism = {
   debug?: InputMaybe<DebugAuth>;
@@ -91,11 +54,6 @@ export type AuthMechanism = {
   privy?: InputMaybe<PrivyAuth>;
 };
 
-export type AuthNonce = {
-  message?: Maybe<Scalars['String']['output']>;
-  nonce?: Maybe<Scalars['String']['output']>;
-};
-
 export type AuthorizationError = ErrDoesNotOwnRequiredToken | ErrInvalidToken | ErrNoCookie | ErrSessionInvalidated;
 
 export const BasicAuthType = {
@@ -104,64 +62,225 @@ export const BasicAuthType = {
 } as const;
 
 export type BasicAuthType = typeof BasicAuthType[keyof typeof BasicAuthType];
-export const CalculationType = {
-  Fixed: 'Fixed',
-  Percentage: 'Percentage'
-} as const;
-
-export type CalculationType = typeof CalculationType[keyof typeof CalculationType];
-export const Chain = {
-  Arbitrum: 'Arbitrum',
-  Ethereum: 'Ethereum',
-  Optimism: 'Optimism',
-  Polygon: 'Polygon'
-} as const;
-
-export type Chain = typeof Chain[keyof typeof Chain];
 export type ChainAddress = {
   address?: Maybe<Scalars['Address']['output']>;
-  chain?: Maybe<Chain>;
+  chainId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ChainAddressInput = {
   address: Scalars['Address']['input'];
-  chain: Chain;
+  chainId: Scalars['Int']['input'];
 };
 
 export type ChainPools = {
-  chain?: Maybe<Chain>;
+  chainId?: Maybe<Scalars['Int']['output']>;
   pools?: Maybe<Array<Maybe<Pool>>>;
 };
 
 export type ChainPubKey = {
-  chain?: Maybe<Chain>;
+  chainId?: Maybe<Scalars['Int']['output']>;
   pubKey?: Maybe<Scalars['PubKey']['output']>;
 };
 
 export type ChainPubKeyInput = {
-  chain: Chain;
+  chainId: Scalars['Int']['input'];
   pubKey: Scalars['PubKey']['input'];
+};
+
+export type Claim = Node & {
+  children?: Maybe<Array<Claim>>;
+  childrenCount: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  dbid: Scalars['DBID']['output'];
+  id: Scalars['ID']['output'];
+  label: Scalars['String']['output'];
+  parent?: Maybe<Claim>;
+  path: Scalars['String']['output'];
+  pool: Pool;
+  recipient?: Maybe<PoolOrUserOrEvmAccount>;
+  state: Extension;
+  strategy: Extension;
+  updatedAt: Scalars['Time']['output'];
+  value: Scalars['HexString']['output'];
+};
+
+/** Creates claims. */
+export type ClaimBulkCreate = {
+  /** Returns how many objects were created. */
+  count: Scalars['Int']['output'];
+  errors: Array<ClaimBulkError>;
+  /** List of the created claims. */
+  results: Array<ClaimBulkResult>;
+};
+
+export type ClaimBulkCreateInput = {
+  /** Children claims. */
+  children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Parent claim. */
+  parent?: InputMaybe<Scalars['DBID']['input']>;
+  /** Claim recipient address. */
+  recipientAddress?: InputMaybe<Scalars['Address']['input']>;
+  /** State id. */
+  stateId: Scalars['String']['input'];
+  /** Strategy id. */
+  strategyId: Scalars['String']['input'];
+  /** The allocated value of the claim. */
+  value: Scalars['HexString']['input'];
+};
+
+/** Deletes claims. */
+export type ClaimBulkDelete = {
+  /** Returns how many objects were affected. */
+  count: Scalars['Int']['output'];
+  errors: Array<ClaimError>;
+};
+
+export type ClaimBulkError = {
+  /** The error code. */
+  code: ClaimBulkErrorCode;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+  /** Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  path?: Maybe<Scalars['String']['output']>;
+};
+
+export const ClaimBulkErrorCode = {
+  Blank: 'BLANK',
+  DuplicatedInputItem: 'DUPLICATED_INPUT_ITEM',
+  GraphqlError: 'GRAPHQL_ERROR',
+  Invalid: 'INVALID',
+  MaxLength: 'MAX_LENGTH',
+  NotFound: 'NOT_FOUND',
+  Required: 'REQUIRED',
+  Unique: 'UNIQUE'
+} as const;
+
+export type ClaimBulkErrorCode = typeof ClaimBulkErrorCode[keyof typeof ClaimBulkErrorCode];
+export type ClaimBulkResult = {
+  /** Claim data. */
+  claim?: Maybe<Claim>;
+  /** List of errors occurred on create attempt. */
+  errors?: Maybe<Array<ClaimBulkError>>;
+};
+
+/** Updates claims. */
+export type ClaimBulkUpdate = {
+  /** Returns how many objects were updated. */
+  count: Scalars['Int']['output'];
+  errors: Array<ClaimBulkError>;
+  /** List of the updated claims. */
+  results: Array<ClaimBulkResult>;
+};
+
+export type ClaimBulkUpdateInput = {
+  /** Children claims. */
+  children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Parent claim. */
+  parent?: InputMaybe<Scalars['DBID']['input']>;
+  /** Claim recipient address. */
+  recipientAddress?: InputMaybe<Scalars['Address']['input']>;
+  /** State id. */
+  stateId: Scalars['String']['input'];
+  /** Strategy id. */
+  strategyId: Scalars['String']['input'];
+  /** The allocated value of the claim. */
+  value: Scalars['HexString']['input'];
+};
+
+/** Creates a new claim. */
+export type ClaimCreate = {
+  claim?: Maybe<Claim>;
+  errors: Array<ClaimError>;
+};
+
+export type ClaimCreateInput = {
+  /** Children claims. */
+  children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Parent claim. */
+  parent?: InputMaybe<Scalars['DBID']['input']>;
+  /** Claim recipient address. */
+  recipientAddress?: InputMaybe<Scalars['Address']['input']>;
+  /** State id. */
+  stateId: Scalars['String']['input'];
+  /** Strategy id. */
+  strategyId: Scalars['String']['input'];
+  /** The allocated value of the claim. */
+  value: Scalars['HexString']['input'];
+};
+
+/** Deletes a claim. */
+export type ClaimDelete = {
+  claim?: Maybe<Claim>;
+  errors: Array<ClaimError>;
+};
+
+export type ClaimError = {
+  /** The error code. */
+  code: ClaimErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export const ClaimErrorCode = {
+  AlreadyExists: 'ALREADY_EXISTS',
+  GraphqlError: 'GRAPHQL_ERROR',
+  Invalid: 'INVALID',
+  NotFound: 'NOT_FOUND',
+  Required: 'REQUIRED',
+  Unique: 'UNIQUE'
+} as const;
+
+export type ClaimErrorCode = typeof ClaimErrorCode[keyof typeof ClaimErrorCode];
+/** Updates given claim. */
+export type ClaimUpdate = {
+  claim?: Maybe<Claim>;
+  errors: Array<ClaimError>;
+};
+
+export type ClaimUpdateInput = {
+  /** Children claims. */
+  children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Parent claim. */
+  parent?: InputMaybe<Scalars['DBID']['input']>;
+  /** Claim recipient address. */
+  recipientAddress?: InputMaybe<Scalars['Address']['input']>;
+  /** State id. */
+  stateId: Scalars['String']['input'];
+  /** Strategy id. */
+  strategyId: Scalars['String']['input'];
+  /** The allocated value of the claim. */
+  value: Scalars['HexString']['input'];
 };
 
 export type ClearAllNotificationsPayload = {
   notifications?: Maybe<Array<Maybe<Notification>>>;
 };
 
-export type CreatePoolInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  logo?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+/** Confirm the email change of the logged-in user. */
+export type ConfirmEmailChange = {
+  errors: Array<UserError>;
+  /** A user instance with a new email. */
+  user?: Maybe<User>;
 };
 
-export type CreatePoolPayload = {
-  pool?: Maybe<Pool>;
+/** Confirm user account with token sent by email during registration. */
+export type ConfirmUser = {
+  errors: Array<UserError>;
+  /** An activated user. */
+  user?: Maybe<User>;
 };
 
-export type CreatePoolPayloadOrError = CreatePoolPayload | ErrInvalidInput | ErrNotAuthorized;
-
-export type CreateUserInput = {
-  email?: InputMaybe<Scalars['Email']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
+/** Create JWT token. */
+export type CreateToken = {
+  errors: Array<UserError>;
+  /** JWT refresh token, required to re-generate access token. */
+  refreshToken?: Maybe<Scalars['String']['output']>;
+  /** JWT token, required to authenticate. */
+  token?: Maybe<Scalars['String']['output']>;
+  /** A user instance. */
+  user?: Maybe<User>;
 };
 
 export type CreateUserPayload = {
@@ -170,6 +289,11 @@ export type CreateUserPayload = {
 
 export type CreateUserPayloadOrError = CreateUserPayload | ErrAuthenticationFailed | ErrDoesNotOwnRequiredToken | ErrInvalidInput | ErrUserAlreadyExists | ErrUsernameNotAvailable;
 
+/** Deactivate all JWT tokens of the currently authenticated user. */
+export type DeactivateAllUserTokens = {
+  errors: Array<UserError>;
+};
+
 export type DebugAuth = {
   asUsername?: InputMaybe<Scalars['String']['input']>;
   chainAddresses?: InputMaybe<Array<ChainAddressInput>>;
@@ -177,17 +301,41 @@ export type DebugAuth = {
   userId?: InputMaybe<Scalars['DBID']['input']>;
 };
 
-export type DeletePoolPayload = {
-  deletedId?: Maybe<DeletedNode>;
-};
-
-export type DeletePoolPayloadOrError = DeletePoolPayload | ErrInvalidInput | ErrNotAuthorized;
-
 export type DeletedNode = Node & {
   dbid: Scalars['DBID']['output'];
   id: Scalars['ID']['output'];
 };
 
+export type Deposit = {
+  amount: Scalars['HexString']['output'];
+  createdAt: Scalars['Time']['output'];
+  from: Scalars['Address']['output'];
+  id: Scalars['ID']['output'];
+  logIndex?: Maybe<Scalars['Int']['output']>;
+  origin: Scalars['String']['output'];
+  pool: Pool;
+  to: Scalars['Address']['output'];
+  token: Token;
+  transaction: Tx;
+  updatedAt: Scalars['Time']['output'];
+};
+
+export type EvmAccount = {
+  accountType: EvmAccountType;
+  address: Scalars['Address']['output'];
+  balances?: Maybe<Array<TokenBalance>>;
+  createdAt: Scalars['Time']['output'];
+  id: Scalars['ID']['output'];
+  selfPools?: Maybe<Array<Pool>>;
+  updatedAt: Scalars['Time']['output'];
+};
+
+export const EvmAccountType = {
+  Contract: 'Contract',
+  Eoa: 'EOA'
+} as const;
+
+export type EvmAccountType = typeof EvmAccountType[keyof typeof EvmAccountType];
 export type EmailNotificationSettings = {
   unsubscribedFromAll: Scalars['Boolean']['output'];
   unsubscribedFromNotifications: Scalars['Boolean']['output'];
@@ -285,8 +433,47 @@ export type Error = {
   message: Scalars['String']['output'];
 };
 
-export type GetAuthNoncePayloadOrError = AuthNonce;
+export const ErrorPolicyEnum = {
+  /** Save what is possible within a single row. If there are errors in an input data row, try to save it partially and skip the invalid part. */
+  IgnoreFailed: 'IGNORE_FAILED',
+  /** Reject all rows if there is at least one error in any of them. */
+  RejectEverything: 'REJECT_EVERYTHING',
+  /** Reject rows with errors. */
+  RejectFailedRows: 'REJECT_FAILED_ROWS'
+} as const;
 
+export type ErrorPolicyEnum = typeof ErrorPolicyEnum[keyof typeof ErrorPolicyEnum];
+export type Extension = {
+  address: Scalars['Address']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  data?: Maybe<Scalars['JSON']['output']>;
+  description: Scalars['String']['output'];
+  extensionId: Scalars['String']['output'];
+  extensionRegistry: ExtensionRegistry;
+  extensionType: ExtensionType;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  permissions?: Maybe<Array<Scalars['String']['output']>>;
+  updatedAt: Scalars['Time']['output'];
+};
+
+export type ExtensionRegistry = {
+  address: Scalars['Address']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  extensionCount: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  owner: EvmAccount;
+  updatedAt: Scalars['Time']['output'];
+};
+
+export const ExtensionType = {
+  State: 'State',
+  Strategy: 'Strategy'
+} as const;
+
+export type ExtensionType = typeof ExtensionType[keyof typeof ExtensionType];
 export type GnosisSafeAuth = {
   address: Scalars['Address']['input'];
   message: Scalars['String']['input'];
@@ -295,20 +482,12 @@ export type GnosisSafeAuth = {
 
 export type GroupNotificationUserEdge = {
   cursor?: Maybe<Scalars['String']['output']>;
-  node?: Maybe<MutualsUser>;
+  node?: Maybe<User>;
 };
 
 export type GroupNotificationUsersConnection = {
   edges?: Maybe<Array<Maybe<GroupNotificationUserEdge>>>;
   pageInfo?: Maybe<PageInfo>;
-};
-
-export type GroupedNotification = {
-  count?: Maybe<Scalars['Int']['output']>;
-  creationTime?: Maybe<Scalars['Time']['output']>;
-  id: Scalars['ID']['output'];
-  seen?: Maybe<Scalars['Boolean']['output']>;
-  updatedTime?: Maybe<Scalars['Time']['output']>;
 };
 
 export type LoginPayload = {
@@ -326,213 +505,236 @@ export type MagicLinkAuth = {
 };
 
 export type Mutation = {
-  addRolesToUser?: Maybe<AddRolesToUserPayloadOrError>;
-  addUserWallet?: Maybe<AddUserWalletPayloadOrError>;
-  addWalletToUserUnchecked?: Maybe<AdminAddWalletPayloadOrError>;
-  clearAllNotifications?: Maybe<ClearAllNotificationsPayload>;
-  createPool?: Maybe<CreatePoolPayloadOrError>;
-  createUser?: Maybe<CreateUserPayloadOrError>;
-  deletePool?: Maybe<DeletePoolPayloadOrError>;
-  getAuthNonce?: Maybe<GetAuthNoncePayloadOrError>;
-  login?: Maybe<LoginPayloadOrError>;
-  logout?: Maybe<LogoutPayload>;
-  optInForRoles?: Maybe<OptInForRolesPayloadOrError>;
-  optOutForRoles?: Maybe<OptOutForRolesPayloadOrError>;
-  preverifyEmail?: Maybe<PreverifyEmailPayloadOrError>;
-  publishPool?: Maybe<PublishPoolPayloadOrError>;
-  registerUserPushToken?: Maybe<RegisterUserPushTokenPayloadOrError>;
-  removeUserWallets?: Maybe<RemoveUserWalletsPayloadOrError>;
-  resendVerificationEmail?: Maybe<ResendVerificationEmailPayloadOrError>;
-  revokeRolesFromUser?: Maybe<RevokeRolesFromUserPayloadOrError>;
-  unregisterUserPushToken?: Maybe<UnregisterUserPushTokenPayloadOrError>;
-  unsubscribeFromEmailType?: Maybe<UnsubscribeFromEmailTypePayloadOrError>;
-  updateEmail?: Maybe<UpdateEmailPayloadOrError>;
-  updateEmailNotificationSettings?: Maybe<UpdateEmailNotificationSettingsPayloadOrError>;
-  updateNotificationSettings?: Maybe<NotificationSettings>;
-  updatePoolHidden?: Maybe<UpdatePoolHiddenPayloadOrError>;
-  updatePoolOrder?: Maybe<UpdatePoolOrderPayloadOrError>;
-  updatePrimaryWallet?: Maybe<UpdatePrimaryWalletPayloadOrError>;
-  updateUserExperience?: Maybe<UpdateUserExperiencePayloadOrError>;
-  updateUserInfo?: Maybe<UpdateUserInfoPayloadOrError>;
-  uploadPersistedQueries?: Maybe<UploadPersistedQueriesPayloadOrError>;
-  upsertPool?: Maybe<UpsertPoolPayloadOrError>;
-  verifyEmail?: Maybe<VerifyEmailPayloadOrError>;
-  verifyEmailMagicLink?: Maybe<VerifyEmailMagicLinkPayloadOrError>;
+  /** Creates claims. */
+  claimBulkCreate?: Maybe<ClaimBulkCreate>;
+  /** Deletes claims. */
+  claimBulkDelete?: Maybe<ClaimBulkDelete>;
+  /** Updates claims. */
+  claimBulkUpdate?: Maybe<ClaimBulkCreate>;
+  /** Creates a new claim. */
+  claimCreate?: Maybe<ClaimCreate>;
+  /** Deletes a claim. */
+  claimDelete?: Maybe<ClaimDelete>;
+  /** Updates a new claim. */
+  claimUpdate?: Maybe<ClaimUpdate>;
+  /** Clears a users notifications. */
+  clearNotifications?: Maybe<ClearAllNotificationsPayload>;
+  /** Confirm the email change of the logged-in user. */
+  confirmEmailChange?: Maybe<ConfirmEmailChange>;
+  /** Confirm user account with token sent by email during registration. */
+  confirmUser?: Maybe<ConfirmUser>;
+  /** Updates a users email notification settings. */
+  emailNotificationSettingsUpdate?: Maybe<EmailNotificationSettings>;
+  /** Get a nonce. */
+  nonce?: Maybe<Nonce>;
+  /** Updates a users notification settings. */
+  notificationSettingsUpdate?: Maybe<NotificationSettings>;
+  /** Creates a pool. */
+  poolCreate?: Maybe<PoolCreate>;
+  /** Deletes a pool. */
+  poolDelete?: Maybe<PoolDelete>;
+  /** Updates a pool. */
+  poolUpdate?: Maybe<PoolUpdate>;
+  /** Register a push token. */
+  pushTokenRegister?: Maybe<PushTokenRegister>;
+  /** Unregister a push token. */
+  pushTokenUnregister?: Maybe<PushTokenUnregister>;
+  /** Request email change of the logged in user. */
+  requestEmailChange?: Maybe<RequestEmailChange>;
+  /** Update a role. */
+  roleUpdate?: Maybe<RoleUpdate>;
+  /** Sends a notification confirmation. */
+  sendConfirmationEmail?: Maybe<SendConfirmationEmail>;
+  /** Create JWT token. */
+  tokenCreate?: Maybe<CreateToken>;
+  /** Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie. */
+  tokenRefresh?: Maybe<RefreshToken>;
+  /** Verify JWT token. */
+  tokenVerify?: Maybe<VerifyToken>;
+  /**
+   * Deactivate all JWT tokens of the currently authenticated user.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_USER.
+   */
+  tokensDeactivateAll?: Maybe<DeactivateAllUserTokens>;
+  /** Remove user. */
+  userDelete?: Maybe<UserDelete>;
+  /** Register a new user. */
+  userRegister?: Maybe<UserRegister>;
+  /** Sends an email with the user removal link for the logged-in user. */
+  userRequestDeletion?: Maybe<UserRequestDeletion>;
+  /** Updates the user of the logged-in user. */
+  userUpdate?: Maybe<UserUpdate>;
+  /** Creates a new wallet. */
+  walletCreate?: Maybe<WalletCreate>;
+  /** Deletes a wallet. */
+  walletDelete?: Maybe<WalletDelete>;
+  /** Updates a new wallet. */
+  walletUpdate?: Maybe<WalletUpdate>;
 };
 
 
-export type MutationAddRolesToUserArgs = {
-  roles?: InputMaybe<Array<InputMaybe<Role>>>;
-  username: Scalars['String']['input'];
+export type MutationClaimBulkCreateArgs = {
+  claims: Array<ClaimBulkCreateInput>;
+  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
 };
 
 
-export type MutationAddUserWalletArgs = {
-  authMechanism: AuthMechanism;
-  chainAddress: ChainAddressInput;
+export type MutationClaimBulkDeleteArgs = {
+  ids: Array<Scalars['DBID']['input']>;
 };
 
 
-export type MutationAddWalletToUserUncheckedArgs = {
-  input: AdminAddWalletInput;
+export type MutationClaimBulkUpdateArgs = {
+  claims: Array<ClaimBulkUpdateInput>;
+  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
+  ids: Array<Scalars['DBID']['input']>;
 };
 
 
-export type MutationCreatePoolArgs = {
-  input: CreatePoolInput;
+export type MutationClaimCreateArgs = {
+  input: ClaimCreateInput;
 };
 
 
-export type MutationCreateUserArgs = {
-  authMechanism: AuthMechanism;
-  input: CreateUserInput;
+export type MutationClaimDeleteArgs = {
+  id: Scalars['DBID']['input'];
 };
 
 
-export type MutationDeletePoolArgs = {
-  poolId: Scalars['DBID']['input'];
+export type MutationClaimUpdateArgs = {
+  id: Scalars['DBID']['input'];
+  input: ClaimUpdateInput;
 };
 
 
-export type MutationLoginArgs = {
-  authMechanism: AuthMechanism;
+export type MutationConfirmEmailChangeArgs = {
+  token: Scalars['String']['input'];
 };
 
 
-export type MutationLogoutArgs = {
-  pushTokenToUnregister?: InputMaybe<Scalars['String']['input']>;
+export type MutationConfirmUserArgs = {
+  email: Scalars['String']['input'];
+  token: Scalars['String']['input'];
 };
 
 
-export type MutationOptInForRolesArgs = {
-  roles: Array<Role>;
+export type MutationEmailNotificationSettingsUpdateArgs = {
+  settings: UpdateEmailNotificationSettingsInput;
 };
 
 
-export type MutationOptOutForRolesArgs = {
-  roles: Array<Role>;
+export type MutationNotificationSettingsUpdateArgs = {
+  settings: NotificationSettingsInput;
 };
 
 
-export type MutationPreverifyEmailArgs = {
-  input: PreverifyEmailInput;
+export type MutationPoolCreateArgs = {
+  input: PoolCreateInput;
 };
 
 
-export type MutationPublishPoolArgs = {
-  input: PublishPoolInput;
+export type MutationPoolDeleteArgs = {
+  id: Scalars['DBID']['input'];
 };
 
 
-export type MutationRegisterUserPushTokenArgs = {
+export type MutationPoolUpdateArgs = {
+  id: Scalars['DBID']['input'];
+  input: PoolUpdateInput;
+};
+
+
+export type MutationPushTokenRegisterArgs = {
   pushToken: Scalars['String']['input'];
 };
 
 
-export type MutationRemoveUserWalletsArgs = {
-  walletIds: Array<Scalars['DBID']['input']>;
-};
-
-
-export type MutationRevokeRolesFromUserArgs = {
-  roles?: InputMaybe<Array<InputMaybe<Role>>>;
-  username: Scalars['String']['input'];
-};
-
-
-export type MutationUnregisterUserPushTokenArgs = {
+export type MutationPushTokenUnregisterArgs = {
   pushToken: Scalars['String']['input'];
 };
 
 
-export type MutationUnsubscribeFromEmailTypeArgs = {
-  input: UnsubscribeFromEmailTypeInput;
+export type MutationRequestEmailChangeArgs = {
+  newEmail: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  redirectUrl: Scalars['String']['input'];
 };
 
 
-export type MutationUpdateEmailArgs = {
-  input: UpdateEmailInput;
+export type MutationRoleUpdateArgs = {
+  input: RoleUpdateInput;
+  role?: InputMaybe<Role>;
 };
 
 
-export type MutationUpdateEmailNotificationSettingsArgs = {
-  input: UpdateEmailNotificationSettingsInput;
+export type MutationSendConfirmationEmailArgs = {
+  redirectUrl: Scalars['String']['input'];
 };
 
 
-export type MutationUpdateNotificationSettingsArgs = {
-  settings?: InputMaybe<NotificationSettingsInput>;
+export type MutationTokenCreateArgs = {
+  audience?: InputMaybe<Scalars['String']['input']>;
+  authMechanism: AuthMechanism;
 };
 
 
-export type MutationUpdatePoolHiddenArgs = {
-  input: UpdatePoolHiddenInput;
+export type MutationTokenRefreshArgs = {
+  csrfToken?: InputMaybe<Scalars['String']['input']>;
+  refreshToken?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type MutationUpdatePoolOrderArgs = {
-  input: UpdatePoolOrderInput;
+export type MutationTokenVerifyArgs = {
+  token: Scalars['String']['input'];
 };
 
 
-export type MutationUpdatePrimaryWalletArgs = {
-  walletID: Scalars['DBID']['input'];
+export type MutationUserDeleteArgs = {
+  token: Scalars['String']['input'];
 };
 
 
-export type MutationUpdateUserExperienceArgs = {
-  input: UpdateUserExperienceInput;
+export type MutationUserRegisterArgs = {
+  authMechanism: AuthMechanism;
+  input: UserRegisterInput;
 };
 
 
-export type MutationUpdateUserInfoArgs = {
-  input: UpdateUserInfoInput;
+export type MutationUserRequestDeletionArgs = {
+  redirectUrl: Scalars['String']['input'];
 };
 
 
-export type MutationUploadPersistedQueriesArgs = {
-  input?: InputMaybe<UploadPersistedQueriesInput>;
+export type MutationUserUpdateArgs = {
+  input: UserInput;
+  userId?: InputMaybe<Scalars['DBID']['input']>;
 };
 
 
-export type MutationUpsertPoolArgs = {
-  input: UpsertPoolInput;
+export type MutationWalletCreateArgs = {
+  input: WalletCreateInput;
 };
 
 
-export type MutationVerifyEmailArgs = {
-  input: VerifyEmailInput;
+export type MutationWalletDeleteArgs = {
+  id: Scalars['DBID']['input'];
 };
 
 
-export type MutationVerifyEmailMagicLinkArgs = {
-  input: VerifyEmailMagicLinkInput;
+export type MutationWalletUpdateArgs = {
+  id: Scalars['DBID']['input'];
+  input: WalletUpdateInput;
 };
-
-export type MutualsUser = Node & {
-  dbid: Scalars['DBID']['output'];
-  id: Scalars['ID']['output'];
-  isAuthenticatedUser?: Maybe<Scalars['Boolean']['output']>;
-  pools?: Maybe<Array<Maybe<Pool>>>;
-  poolsByChain?: Maybe<ChainPools>;
-  primaryWallet?: Maybe<Wallet>;
-  roles?: Maybe<Array<Maybe<Role>>>;
-  universal?: Maybe<Scalars['Boolean']['output']>;
-  username?: Maybe<Scalars['String']['output']>;
-  wallets?: Maybe<Array<Maybe<Wallet>>>;
-};
-
-
-export type MutualsUserPoolsByChainArgs = {
-  chain: Chain;
-};
-
-export type MutualsUserOrAddress = ChainAddress | MutualsUser;
-
-export type MutualsUserOrWallet = MutualsUser | Wallet;
 
 export type Node = {
   id: Scalars['ID']['output'];
+};
+
+/** Create and get a new nonce and message. */
+export type Nonce = {
+  message?: Maybe<Scalars['String']['output']>;
+  nonce?: Maybe<Scalars['String']['output']>;
 };
 
 export type Notification = {
@@ -566,13 +768,13 @@ export type OneTimeLoginTokenAuth = {
 };
 
 export type OptInForRolesPayload = {
-  user?: Maybe<MutualsUser>;
+  user?: Maybe<User>;
 };
 
 export type OptInForRolesPayloadOrError = ErrInvalidInput | ErrNotAuthorized | OptInForRolesPayload;
 
 export type OptOutForRolesPayload = {
-  user?: Maybe<MutualsUser>;
+  user?: Maybe<User>;
 };
 
 export type OptOutForRolesPayloadOrError = ErrInvalidInput | ErrNotAuthorized | OptOutForRolesPayload;
@@ -587,41 +789,114 @@ export type PageInfo = {
 };
 
 export type Pool = Node & {
-  address?: Maybe<Scalars['Address']['output']>;
-  allocationAggregation?: Maybe<Array<AllocationAggregation>>;
-  allocations?: Maybe<Array<Maybe<Allocation>>>;
-  assets?: Maybe<Array<Maybe<Asset>>>;
-  chain?: Maybe<Chain>;
-  creatorAddress?: Maybe<Scalars['Address']['output']>;
+  claims?: Maybe<Array<Claim>>;
+  contract?: Maybe<PoolContract>;
+  createdAt: Scalars['Time']['output'];
   dbid: Scalars['DBID']['output'];
-  description?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  ownerAddress?: Maybe<Scalars['Address']['output']>;
+  logo: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  owner: UserOrAccount;
+  slug: Scalars['String']['output'];
   status: PoolStatus;
-  version?: Maybe<Scalars['Int']['output']>;
-};
-
-
-export type PoolAssetsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type PoolAllocationInput = {
-  calculationType: Array<CalculationType>;
-  children?: InputMaybe<Array<PoolAllocationInput>>;
-  id?: InputMaybe<Scalars['DBID']['input']>;
-  recipientAddress?: InputMaybe<Scalars['Address']['input']>;
-  recipientType: Array<RecipientType>;
-  value: Scalars['HexString']['input'];
+  updatedAt: Scalars['Time']['output'];
 };
 
 export type PoolByIdPayloadOrError = ErrPoolNotFound | Pool;
 
-export type PoolPositionInput = {
-  poolId: Scalars['DBID']['input'];
-  position: Scalars['String']['input'];
+export type PoolContract = {
+  account: EvmAccount;
+  address: Scalars['Address']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  dayBalance: Array<PoolDayBalance>;
+  deposits: Array<Deposit>;
+  hourBalance: Array<PoolHourBalance>;
+  id: Scalars['ID']['output'];
+  owner: EvmAccount;
+  poolFactory: PoolFactory;
+  status: PoolStatus;
+  updatedAt: Scalars['Time']['output'];
+  withdrawals: Array<Withdrawal>;
 };
+
+export type PoolCreate = {
+  errors: Array<PoolError>;
+  pool?: Maybe<Pool>;
+};
+
+export type PoolCreateInput = {
+  /** List of claims to assign to the pool. */
+  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Name of the pool. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Name of the pool. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Whether a pool is shared with its recipients or not. */
+  private?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Slug of the pool. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PoolDayBalance = {
+  amount: Scalars['HexString']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  id: Scalars['ID']['output'];
+  pool: Pool;
+  token: Token;
+  updatedAt: Scalars['Time']['output'];
+};
+
+/** Update a pool. */
+export type PoolDelete = {
+  errors: Array<PoolError>;
+  pool?: Maybe<Pool>;
+};
+
+export type PoolError = {
+  /** The error code. */
+  code: PoolErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export const PoolErrorCode = {
+  AlreadyExists: 'ALREADY_EXISTS',
+  GraphqlError: 'GRAPHQL_ERROR',
+  Invalid: 'INVALID',
+  NotFound: 'NOT_FOUND',
+  Required: 'REQUIRED',
+  Unique: 'UNIQUE'
+} as const;
+
+export type PoolErrorCode = typeof PoolErrorCode[keyof typeof PoolErrorCode];
+export type PoolFactory = {
+  address: Scalars['Address']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  id: Scalars['ID']['output'];
+  owner: EvmAccount;
+  poolCount: Scalars['Int']['output'];
+  updatedAt: Scalars['Time']['output'];
+};
+
+export type PoolHourBalance = {
+  amount: Scalars['HexString']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  id: Scalars['ID']['output'];
+  pool: Pool;
+  token: Token;
+  updatedAt: Scalars['Time']['output'];
+};
+
+export type PoolOrUserOrEvmAccount = EvmAccount | Pool | User;
 
 export type PoolSearchResult = {
   pool?: Maybe<Pool>;
@@ -634,6 +909,27 @@ export const PoolStatus = {
 } as const;
 
 export type PoolStatus = typeof PoolStatus[keyof typeof PoolStatus];
+/** Update a pool. */
+export type PoolUpdate = {
+  errors: Array<PoolError>;
+  pool?: Maybe<Pool>;
+};
+
+export type PoolUpdateInput = {
+  /** List of claims to assign to the pool. */
+  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Name of the pool. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Name of the pool. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Whether a pool is shared with its recipients or not. */
+  private?: InputMaybe<Scalars['Boolean']['input']>;
+  /** List of claims to remove from the pool. */
+  removeClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Slug of the pool. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type PreverifyEmailInput = {
   email: Scalars['Email']['input'];
 };
@@ -656,17 +952,69 @@ export type PrivyAuth = {
   token: Scalars['String']['input'];
 };
 
-export type PublishPoolInput = {
-  caption?: InputMaybe<Scalars['String']['input']>;
-  editId: Scalars['String']['input'];
-  poolId: Scalars['DBID']['input'];
+export type PushTokenError = {
+  /** The error code. */
+  code: PushTokenErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
 };
 
-export type PublishPoolPayload = {
-  pool?: Maybe<Pool>;
+export const PushTokenErrorCode = {
+  AlreadyExists: 'ALREADY_EXISTS',
+  GraphqlError: 'GRAPHQL_ERROR',
+  Invalid: 'INVALID',
+  NotFound: 'NOT_FOUND',
+  Required: 'REQUIRED',
+  Unique: 'UNIQUE'
+} as const;
+
+export type PushTokenErrorCode = typeof PushTokenErrorCode[keyof typeof PushTokenErrorCode];
+export type PushTokenRegister = {
+  errors: Array<PushTokenError>;
+  /** push token. */
+  pushToken?: Maybe<Scalars['String']['output']>;
+  /** A user instance. */
+  user?: Maybe<User>;
 };
 
-export type PublishPoolPayloadOrError = ErrInvalidInput | ErrNotAuthorized | PublishPoolPayload;
+export type PushTokenRegisterInput = {
+  /** List of claims to assign to the pool. */
+  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Name of the pool. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Name of the pool. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Whether a pool is shared with its recipients or not. */
+  private?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Slug of the pool. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Update a pool. */
+export type PushTokenUnregister = {
+  errors: Array<PushTokenError>;
+  /** push token. */
+  pushToken?: Maybe<Scalars['String']['output']>;
+  /** A user instance. */
+  user?: Maybe<User>;
+};
+
+export type PushTokenUnregisterInput = {
+  /** List of claims to assign to the pool. */
+  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Name of the pool. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Name of the pool. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Whether a pool is shared with its recipients or not. */
+  private?: InputMaybe<Scalars['Boolean']['input']>;
+  /** List of claims to remove from the pool. */
+  removeClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Slug of the pool. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type Query = {
   _service: _Service;
@@ -755,19 +1103,14 @@ export type QueryViewerPoolByIdArgs = {
   id: Scalars['DBID']['input'];
 };
 
-export const RecipientType = {
-  DefaultGroup: 'DefaultGroup',
-  DefaultItem: 'DefaultItem',
-  PrioritizedGroup: 'PrioritizedGroup',
-  TimedGroup: 'TimedGroup'
-} as const;
-
-export type RecipientType = typeof RecipientType[keyof typeof RecipientType];
-export type RegisterUserPushTokenPayload = {
-  viewer?: Maybe<Viewer>;
+/** Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie. */
+export type RefreshToken = {
+  errors: Array<UserError>;
+  /** JWT token, required to authenticate. */
+  token?: Maybe<Scalars['String']['output']>;
+  /** A user instance. */
+  user?: Maybe<User>;
 };
-
-export type RegisterUserPushTokenPayloadOrError = ErrInvalidInput | ErrNotAuthorized | ErrPushTokenBelongsToAnotherUser | RegisterUserPushTokenPayload;
 
 export type RemoveUserWalletsPayload = {
   viewer?: Maybe<Viewer>;
@@ -782,13 +1125,20 @@ export const ReportWindow = {
 } as const;
 
 export type ReportWindow = typeof ReportWindow[keyof typeof ReportWindow];
+/** Request email change of the logged in user. */
+export type RequestEmailChange = {
+  errors: Array<UserError>;
+  /** A user instance. */
+  user?: Maybe<User>;
+};
+
 export type ResendVerificationEmailPayload = {
   viewer?: Maybe<Viewer>;
 };
 
 export type ResendVerificationEmailPayloadOrError = ErrInvalidInput | ResendVerificationEmailPayload;
 
-export type RevokeRolesFromUserPayloadOrError = ErrNotAuthorized | MutualsUser;
+export type RevokeRolesFromUserPayloadOrError = ErrNotAuthorized | User;
 
 export const Role = {
   Admin: 'ADMIN',
@@ -797,6 +1147,36 @@ export const Role = {
 } as const;
 
 export type Role = typeof Role[keyof typeof Role];
+export type RoleError = {
+  /** The error code. */
+  code: RoleErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export const RoleErrorCode = {
+  DuplicatedInputItem: 'DUPLICATED_INPUT_ITEM',
+  OutOfScopeUser: 'OUT_OF_SCOPE_USER',
+  Required: 'REQUIRED',
+  Unique: 'UNIQUE'
+} as const;
+
+export type RoleErrorCode = typeof RoleErrorCode[keyof typeof RoleErrorCode];
+/** Update role. */
+export type RoleUpdate = {
+  errors: Array<RoleError>;
+  role?: Maybe<Role>;
+};
+
+export type RoleUpdateInput = {
+  /** List of users to assign to a role. */
+  addUsers?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** List of users to unassign from a role. */
+  removeUsers?: InputMaybe<Array<Scalars['DBID']['input']>>;
+};
+
 export type SearchPoolsPayload = {
   results?: Maybe<Array<PoolSearchResult>>;
 };
@@ -809,27 +1189,56 @@ export type SearchUsersPayload = {
 
 export type SearchUsersPayloadOrError = ErrInvalidInput | SearchUsersPayload;
 
+/** Sends a notification confirmation. */
+export type SendConfirmationEmail = {
+  errors: Array<SendConfirmationEmailError>;
+};
+
+export type SendConfirmationEmailError = {
+  /** The error code. */
+  code: SendConfirmationEmailErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export const SendConfirmationEmailErrorCode = {
+  ConfirmationAlreadyRequested: 'CONFIRMATION_ALREADY_REQUESTED',
+  Invalid: 'INVALID',
+  UserConfirmed: 'USER_CONFIRMED'
+} as const;
+
+export type SendConfirmationEmailErrorCode = typeof SendConfirmationEmailErrorCode[keyof typeof SendConfirmationEmailErrorCode];
 export type Subscription = {
-  newNotification?: Maybe<Notification>;
+  notificationCreated?: Maybe<Notification>;
   notificationUpdated?: Maybe<Notification>;
 };
 
-export type Token = Node & {
-  blockNumber?: Maybe<Scalars['String']['output']>;
-  chain?: Maybe<Chain>;
-  contractAddress?: Maybe<Scalars['Int']['output']>;
-  creationTime?: Maybe<Scalars['Time']['output']>;
-  dbid: Scalars['DBID']['output'];
-  decimals?: Maybe<Scalars['Int']['output']>;
+export type Token = {
+  address: Scalars['Address']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  decimals: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
-  isSpam?: Maybe<Scalars['Boolean']['output']>;
-  lastUpdated?: Maybe<Scalars['Time']['output']>;
   logo?: Maybe<Scalars['String']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  symbol?: Maybe<Scalars['String']['output']>;
-  tokenType?: Maybe<TokenType>;
-  totalSupply?: Maybe<Scalars['Int']['output']>;
-  version?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  possibleSpam?: Maybe<Scalars['Boolean']['output']>;
+  symbol: Scalars['String']['output'];
+  thumbnail?: Maybe<Scalars['String']['output']>;
+  tokenType: TokenType;
+  updatedAt: Scalars['Time']['output'];
+  validated?: Maybe<Scalars['Int']['output']>;
+};
+
+export type TokenBalance = {
+  amount: Scalars['HexString']['output'];
+  chainId: Scalars['Int']['output'];
+  createdAt: Scalars['Time']['output'];
+  holder: PoolOrUserOrEvmAccount;
+  id: Scalars['ID']['output'];
+  token: Token;
+  updatedAt: Scalars['Time']['output'];
 };
 
 export const TokenType = {
@@ -837,11 +1246,15 @@ export const TokenType = {
 } as const;
 
 export type TokenType = typeof TokenType[keyof typeof TokenType];
-export type UnregisterUserPushTokenPayload = {
-  viewer?: Maybe<Viewer>;
+export type Tx = {
+  createdAt: Scalars['Time']['output'];
+  deposits: Array<Maybe<Deposit>>;
+  gasPrice: Scalars['HexString']['output'];
+  gasUsed: Scalars['HexString']['output'];
+  id: Scalars['ID']['output'];
+  updatedAt: Scalars['Time']['output'];
+  withdrawals: Array<Maybe<Withdrawal>>;
 };
-
-export type UnregisterUserPushTokenPayloadOrError = ErrInvalidInput | ErrNotAuthorized | ErrPushTokenBelongsToAnotherUser | UnregisterUserPushTokenPayload;
 
 export type UnsubscribeFromEmailTypeInput = {
   token: Scalars['String']['input'];
@@ -880,64 +1293,6 @@ export type UpdateEmailPayload = {
 
 export type UpdateEmailPayloadOrError = ErrInvalidInput | UpdateEmailPayload;
 
-export type UpdatePoolHiddenInput = {
-  hidden: Scalars['Boolean']['input'];
-  id: Scalars['DBID']['input'];
-};
-
-export type UpdatePoolHiddenPayload = {
-  pool?: Maybe<Pool>;
-};
-
-export type UpdatePoolHiddenPayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpdatePoolHiddenPayload;
-
-export type UpdatePoolInfoInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['DBID']['input'];
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type UpdatePoolInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  editId: Scalars['String']['input'];
-  name?: InputMaybe<Scalars['String']['input']>;
-  order?: InputMaybe<Array<Scalars['DBID']['input']>>;
-  poolId: Scalars['DBID']['input'];
-};
-
-export type UpdatePoolOrderInput = {
-  positions: Array<PoolPositionInput>;
-};
-
-export type UpdatePoolOrderPayload = {
-  viewer?: Maybe<Viewer>;
-};
-
-export type UpdatePoolOrderPayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpdatePoolOrderPayload;
-
-export type UpdatePoolPayload = {
-  pool?: Maybe<Pool>;
-};
-
-export type UpdatePoolPayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpdatePoolPayload;
-
-export type UpdatePrimaryWalletPayload = {
-  viewer?: Maybe<Viewer>;
-};
-
-export type UpdatePrimaryWalletPayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpdatePrimaryWalletPayload;
-
-export type UpdateUserExperienceInput = {
-  experienceType: UserExperienceType;
-  experienced: Scalars['Boolean']['input'];
-};
-
-export type UpdateUserExperiencePayload = {
-  viewer?: Maybe<Viewer>;
-};
-
-export type UpdateUserExperiencePayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpdateUserExperiencePayload;
-
 export type UpdateUserInfoInput = {
   username: Scalars['String']['input'];
 };
@@ -958,28 +1313,32 @@ export type UploadPersistedQueriesPayload = {
 
 export type UploadPersistedQueriesPayloadOrError = ErrNotAuthorized | UploadPersistedQueriesPayload;
 
-export type UpsertPoolInput = {
-  allocations?: InputMaybe<Array<PoolAllocationInput>>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  poolId?: InputMaybe<Scalars['DBID']['input']>;
+export type User = Node & {
+  dbid: Scalars['DBID']['output'];
+  id: Scalars['ID']['output'];
+  isAuthenticatedUser?: Maybe<Scalars['Boolean']['output']>;
+  pools?: Maybe<Array<Maybe<Pool>>>;
+  primaryWallet?: Maybe<Wallet>;
+  roles?: Maybe<Array<Maybe<Role>>>;
+  username?: Maybe<Scalars['String']['output']>;
+  wallets?: Maybe<Array<Maybe<Wallet>>>;
 };
 
-export type UpsertPoolPayload = {
-  pool?: Maybe<Pool>;
+export type UserByAddressOrError = ErrInvalidInput | ErrUserNotFound | User;
+
+export type UserByIdOrError = ErrInvalidInput | ErrUserNotFound | User;
+
+export type UserByUsernameOrError = ErrInvalidInput | ErrUserNotFound | User;
+
+/** Removes a user. */
+export type UserDelete = {
+  errors: Array<UserError>;
+  user?: Maybe<User>;
 };
-
-export type UpsertPoolPayloadOrError = ErrInvalidInput | ErrNotAuthorized | UpsertPoolPayload;
-
-export type UserByAddressOrError = ErrInvalidInput | ErrUserNotFound | MutualsUser;
-
-export type UserByIdOrError = ErrInvalidInput | ErrUserNotFound | MutualsUser;
-
-export type UserByUsernameOrError = ErrInvalidInput | ErrUserNotFound | MutualsUser;
 
 export type UserEdge = {
   cursor?: Maybe<Scalars['String']['output']>;
-  node?: Maybe<MutualsUser>;
+  node?: Maybe<User>;
 };
 
 export type UserEmail = {
@@ -988,21 +1347,88 @@ export type UserEmail = {
   verificationStatus?: Maybe<EmailVerificationStatus>;
 };
 
-export type UserExperience = {
-  experienced: Scalars['Boolean']['output'];
-  type: UserExperienceType;
+/** Represents errors in user mutations. */
+export type UserError = {
+  /** The error code. */
+  code: UserErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
 };
 
-export const UserExperienceType = {
-  EmailUpsell: 'EmailUpsell',
-  MaintenanceFeb2023: 'MaintenanceFeb2023',
-  TwitterConnectionOnboardingUpsell: 'TwitterConnectionOnboardingUpsell',
-  UpsellMintMemento4: 'UpsellMintMemento4'
+export const UserErrorCode = {
+  AccountNotConfirmed: 'ACCOUNT_NOT_CONFIRMED',
+  ActivateOwnAccount: 'ACTIVATE_OWN_ACCOUNT',
+  ActivateSuperuserAccount: 'ACTIVATE_SUPERUSER_ACCOUNT',
+  DeactivateOwnAccount: 'DEACTIVATE_OWN_ACCOUNT',
+  DeactivateSuperuserAccount: 'DEACTIVATE_SUPERUSER_ACCOUNT',
+  DeleteNonStaffUser: 'DELETE_NON_STAFF_USER',
+  DeleteOwnAccount: 'DELETE_OWN_ACCOUNT',
+  DeleteSuperuserAccount: 'DELETE_SUPERUSER_ACCOUNT',
+  DuplicatedInputItem: 'DUPLICATED_INPUT_ITEM',
+  GraphqlError: 'GRAPHQL_ERROR',
+  Inactive: 'INACTIVE',
+  Invalid: 'INVALID',
+  InvalidCredentials: 'INVALID_CREDENTIALS',
+  JwtDecodeError: 'JWT_DECODE_ERROR',
+  JwtInvalidCsrfToken: 'JWT_INVALID_CSRF_TOKEN',
+  JwtInvalidToken: 'JWT_INVALID_TOKEN',
+  JwtMissingToken: 'JWT_MISSING_TOKEN',
+  JwtSignatureExpired: 'JWT_SIGNATURE_EXPIRED',
+  LoginAttemptDelayed: 'LOGIN_ATTEMPT_DELAYED',
+  NotFound: 'NOT_FOUND',
+  OutOfScopeRole: 'OUT_OF_SCOPE_ROLE',
+  Required: 'REQUIRED',
+  Unique: 'UNIQUE',
+  UnknownIpAddress: 'UNKNOWN_IP_ADDRESS'
 } as const;
 
-export type UserExperienceType = typeof UserExperienceType[keyof typeof UserExperienceType];
+export type UserErrorCode = typeof UserErrorCode[keyof typeof UserErrorCode];
+/** Fields required to update the user. */
+export type UserInput = {
+  /** Username. */
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UserOrAccount = EvmAccount | User;
+
+/** Register a new user. */
+export type UserRegister = {
+  errors: Array<UserError>;
+  /** Informs whether users need to confirm their email address. */
+  requiresConfirmation?: Maybe<Scalars['Boolean']['output']>;
+  user?: Maybe<User>;
+};
+
+/** Fields required to create a user. */
+export type UserRegisterInput = {
+  /** The email address of the user. */
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** Base of frontend URL that will be needed to create confirmation URL. Required when account confirmation is enabled. */
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
+  /** User name. */
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Sends an email with the user removal link for the logged-in user. */
+export type UserRequestDeletion = {
+  errors: Array<UserError>;
+};
+
+/**
+ * -------------------------------------------------------------------------------
+ *  SEARCH
+ * -------------------------------------------------------------------------------
+ */
 export type UserSearchResult = {
-  user?: Maybe<MutualsUser>;
+  user?: Maybe<User>;
+};
+
+/** Updates the user of the logged-in user. */
+export type UserUpdate = {
+  errors: Array<UserError>;
+  user?: Maybe<User>;
 };
 
 export type UsersConnection = {
@@ -1030,6 +1456,16 @@ export type VerifyEmailPayload = {
 
 export type VerifyEmailPayloadOrError = ErrInvalidInput | VerifyEmailPayload;
 
+/** Verify JWT token. */
+export type VerifyToken = {
+  /** JWT payload. */
+  errors: Array<UserError>;
+  /** Determine if token is valid or not. */
+  isValid: Scalars['Boolean']['output'];
+  /** User assigned to token. */
+  user?: Maybe<User>;
+};
+
 export type Viewer = Node & {
   email?: Maybe<UserEmail>;
   id: Scalars['ID']['output'];
@@ -1039,8 +1475,7 @@ export type Viewer = Node & {
    * Seen notifications come after unseen notifications
    */
   notifications?: Maybe<NotificationsConnection>;
-  user?: Maybe<MutualsUser>;
-  userExperiences?: Maybe<Array<UserExperience>>;
+  user?: Maybe<User>;
   viewerPools?: Maybe<Array<Maybe<ViewerPool>>>;
 };
 
@@ -1061,102 +1496,153 @@ export type ViewerPool = {
 export type ViewerPoolByIdPayloadOrError = ErrPoolNotFound | ViewerPool;
 
 export type Wallet = Node & {
-  chain?: Maybe<Chain>;
-  chainAddress?: Maybe<ChainAddress>;
+  account?: Maybe<EvmAccount>;
+  createdAt: Scalars['Time']['output'];
   dbid: Scalars['DBID']['output'];
   id: Scalars['ID']['output'];
-  pools?: Maybe<Array<Maybe<Pool>>>;
-  walletType?: Maybe<WalletType>;
+  name: Scalars['String']['output'];
+  primary: Scalars['Boolean']['output'];
+  updatedAt: Scalars['Time']['output'];
+  user?: Maybe<User>;
 };
 
-export const WalletType = {
-  Eoa: 'EOA',
-  GnosisSafe: 'GnosisSafe'
+/** Creates a new wallet. */
+export type WalletCreate = {
+  errors: Array<WalletError>;
+  wallet?: Maybe<Wallet>;
+};
+
+export type WalletCreateInput = {
+  /** Wallet account address. */
+  address: Scalars['Address']['input'];
+};
+
+/** Deletes a wallet. */
+export type WalletDelete = {
+  errors: Array<WalletError>;
+  wallet?: Maybe<Wallet>;
+};
+
+export type WalletError = {
+  /** The error code. */
+  code: WalletErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export const WalletErrorCode = {
+  AlreadyExists: 'ALREADY_EXISTS',
+  GraphqlError: 'GRAPHQL_ERROR',
+  Invalid: 'INVALID',
+  NotFound: 'NOT_FOUND',
+  Required: 'REQUIRED',
+  Unique: 'UNIQUE'
 } as const;
 
-export type WalletType = typeof WalletType[keyof typeof WalletType];
+export type WalletErrorCode = typeof WalletErrorCode[keyof typeof WalletErrorCode];
+/** Updates given wallet. */
+export type WalletUpdate = {
+  errors: Array<WalletError>;
+  wallet?: Maybe<Wallet>;
+};
+
+export type WalletUpdateInput = {
+  /** Wallet account address. */
+  address?: InputMaybe<Scalars['Address']['input']>;
+};
+
+export type Withdrawal = {
+  amount: Scalars['HexString']['output'];
+  createdAt: Scalars['Time']['output'];
+  from: Scalars['Address']['output'];
+  id: Scalars['ID']['output'];
+  logIndex?: Maybe<Scalars['Int']['output']>;
+  origin: Scalars['String']['output'];
+  pool: Pool;
+  to: Scalars['Address']['output'];
+  token: Token;
+  transaction: Tx;
+  updatedAt: Scalars['Time']['output'];
+};
+
 export type _Service = {
   sdl?: Maybe<Scalars['String']['output']>;
 };
 
-export type AddWalletMutationVariables = Exact<{
-  chainAddress: ChainAddressInput;
+export type NonceCreateMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NonceCreateMutation = { nonce?: { nonce?: string | null, message?: string | null } | null };
+
+export type PoolCreateMutationVariables = Exact<{
+  input: PoolCreateInput;
+}>;
+
+
+export type PoolCreateMutation = { poolCreate?: { pool?: { dbid: any, name: string, description: string } | null, errors: Array<{ field?: string | null, message?: string | null, code: PoolErrorCode }> } | null };
+
+export type TokenCreateMutationVariables = Exact<{
+  audience: Scalars['String']['input'];
   authMechanism: AuthMechanism;
 }>;
 
 
-export type AddWalletMutation = { addUserWallet?: { __typename: 'AddUserWalletPayload', viewer?: { user?: { primaryWallet?: { __typename: 'Wallet' } | null, wallets?: Array<{ dbid: any, chainAddress?: { address?: any | null, chain?: Chain | null } | null } | null> | null } | null } | null } | {} | null };
+export type TokenCreateMutation = { tokenCreate?: { token?: string | null, refreshToken?: string | null, user?: { id: string, dbid: any, username?: string | null } | null, errors: Array<{ field?: string | null, message?: string | null, code: UserErrorCode }> } | null };
 
-export type CreateNonceMutationVariables = Exact<{ [key: string]: never; }>;
+export type TokensDeactivateAllMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CreateNonceMutation = { getAuthNonce?: { __typename: 'AuthNonce', nonce?: string | null, message?: string | null } | null };
+export type TokensDeactivateAllMutation = { tokensDeactivateAll?: { errors: Array<{ field?: string | null, message?: string | null, code: UserErrorCode }> } | null };
 
-export type CreateUserMutationVariables = Exact<{
+export type UserRegisterMutationVariables = Exact<{
   authMechanism: AuthMechanism;
-  input: CreateUserInput;
+  input: UserRegisterInput;
 }>;
 
 
-export type CreateUserMutation = { createUser?: { __typename: 'CreateUserPayload', viewer?: { user?: { dbid: any } | null } | null } | { __typename: 'ErrAuthenticationFailed' } | { __typename: 'ErrDoesNotOwnRequiredToken' } | { __typename: 'ErrInvalidInput' } | { __typename: 'ErrUserAlreadyExists' } | { __typename: 'ErrUsernameNotAvailable' } | null };
+export type UserRegisterMutation = { userRegister?: { requiresConfirmation?: boolean | null, user?: { id: string, dbid: any, username?: string | null, isAuthenticatedUser?: boolean | null } | null, errors: Array<{ field?: string | null, message?: string | null, code: UserErrorCode }> } | null };
 
-export type LoginMutationVariables = Exact<{
-  mechanism: AuthMechanism;
+export type WalletCreateMutationVariables = Exact<{
+  input: WalletCreateInput;
 }>;
 
 
-export type LoginMutation = { login?: { __typename: 'ErrAuthenticationFailed', message: string } | { __typename: 'ErrDoesNotOwnRequiredToken', message: string } | { __typename: 'ErrUserNotFound', message: string } | { __typename: 'LoginPayload', viewer?: { user?: { dbid: any } | null } | null } | null };
-
-export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LogoutMutation = { logout?: { __typename: 'LogoutPayload' } | null };
-
-export type UpsertPoolMutationVariables = Exact<{
-  input: UpsertPoolInput;
-}>;
-
-
-export type UpsertPoolMutation = { upsertPool?: { __typename: 'ErrInvalidInput' } | { __typename: 'ErrNotAuthorized' } | { __typename: 'UpsertPoolPayload', pool?: { id: string, dbid: any, version?: number | null, status: PoolStatus, name?: string | null, description?: string | null, address?: any | null, ownerAddress?: any | null, creatorAddress?: any | null, chain?: Chain | null } | null } | null };
-
-export type PoolByIdQueryVariables = Exact<{
-  id: Scalars['DBID']['input'];
-}>;
-
-
-export type PoolByIdQuery = { poolById?: { id: string, dbid: any, version?: number | null, status: PoolStatus, name?: string | null, description?: string | null, address?: any | null, ownerAddress?: any | null, creatorAddress?: any | null, chain?: Chain | null } | {} | null };
+export type WalletCreateMutation = { walletCreate?: { wallet?: { id: string, dbid: any, name: string, account?: { address: any } | null } | null, errors: Array<{ field?: string | null, message?: string | null, code: WalletErrorCode }> } | null };
 
 export type UserByAddressQueryVariables = Exact<{
   chainAddress: ChainAddressInput;
 }>;
 
 
-export type UserByAddressQuery = { userByAddress?: { __typename: 'ErrInvalidInput' } | { __typename: 'ErrUserNotFound' } | { __typename: 'MutualsUser', dbid: any, universal?: boolean | null } | null };
+export type UserByAddressQuery = { userByAddress?: { __typename: 'ErrInvalidInput', message: string } | { __typename: 'ErrUserNotFound', message: string } | { __typename: 'User', username?: string | null, dbid: any } | null };
 
-export type ViewerQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ViewerQuery = { viewer?: { __typename: 'Viewer', id: string, user?: { wallets?: Array<{ chainAddress?: { address?: any | null } | null } | null> | null } | null } | {} | null };
-
-export type ViewerPoolsQueryVariables = Exact<{ [key: string]: never; }>;
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ViewerPoolsQuery = { viewer?: { viewerPools?: Array<{ pool?: { id: string, dbid: any, version?: number | null, status: PoolStatus, name?: string | null, description?: string | null, address?: any | null, ownerAddress?: any | null, creatorAddress?: any | null, chain?: Chain | null } | null } | null> | null } | {} | null };
+export type MeQuery = { viewer?: { __typename: 'ErrNotAuthorized', message: string } | { email?: { email?: any | null, verificationStatus?: EmailVerificationStatus | null } | null, user?: { username?: string | null, dbid: any } | null } | null };
 
-export type ViewerWalletsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ViewerWalletsQuery = { viewer?: { user?: { wallets?: Array<{ dbid: any, chainAddress?: { chain?: Chain | null, address?: any | null } | null } | null> | null, primaryWallet?: { dbid: any, chainAddress?: { chain?: Chain | null, address?: any | null } | null } | null } | null } | {} | null };
+export type MyPoolsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const AddWalletDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddWallet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChainAddressInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addUserWallet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"chainAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}}},{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AddUserWalletPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"primaryWallet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"Field","name":{"kind":"Name","value":"wallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AddWalletMutation, AddWalletMutationVariables>;
-export const CreateNonceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateNonce"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAuthNonce"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AuthNonce"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nonce"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<CreateNonceMutation, CreateNonceMutationVariables>;
-export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrAuthenticationFailed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrDoesNotOwnRequiredToken"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrUserAlreadyExists"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrUsernameNotAvailable"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrInvalidInput"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
-export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mechanism"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"LoginPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrUserNotFound"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrAuthenticationFailed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrDoesNotOwnRequiredToken"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
-export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
-export const UpsertPoolDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpsertPool"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpsertPoolInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertPool"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UpsertPoolPayload"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"pool"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ownerAddress"}},{"kind":"Field","name":{"kind":"Name","value":"creatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrInvalidInput"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrNotAuthorized"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]}}]} as unknown as DocumentNode<UpsertPoolMutation, UpsertPoolMutationVariables>;
-export const PoolByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PoolById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DBID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"poolById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Pool"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ownerAddress"}},{"kind":"Field","name":{"kind":"Name","value":"creatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}}]}}]} as unknown as DocumentNode<PoolByIdQuery, PoolByIdQueryVariables>;
-export const UserByAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserByAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChainAddressInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"chainAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MutualsUser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"universal"}}]}}]}}]}}]} as unknown as DocumentNode<UserByAddressQuery, UserByAddressQueryVariables>;
-export const ViewerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ViewerQuery, ViewerQueryVariables>;
-export const ViewerPoolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ViewerPools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewerPools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pool"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ownerAddress"}},{"kind":"Field","name":{"kind":"Name","value":"creatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"chain"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ViewerPoolsQuery, ViewerPoolsQueryVariables>;
-export const ViewerWalletsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ViewerWallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wallets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chain"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"primaryWallet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"chainAddress"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chain"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ViewerWalletsQuery, ViewerWalletsQueryVariables>;
+export type MyPoolsQuery = { viewer?: { viewerPools?: Array<{ pool?: { id: string, dbid: any, status: PoolStatus, name: string, description: string, slug: string, createdAt: any, updatedAt: any, owner: { address: any, accountType: EvmAccountType } | { username?: string | null, dbid: any } } | null } | null> | null } | {} | null };
+
+export type PoolGetByIdQueryVariables = Exact<{
+  id: Scalars['DBID']['input'];
+}>;
+
+
+export type PoolGetByIdQuery = { poolById?: { message: string } | { id: string, dbid: any, status: PoolStatus, name: string, description: string, slug: string, createdAt: any, updatedAt: any, owner: { address: any, accountType: EvmAccountType } | { username?: string | null, dbid: any } } | null };
+
+
+export const NonceCreateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"NonceCreate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nonce"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nonce"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<NonceCreateMutation, NonceCreateMutationVariables>;
+export const PoolCreateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PoolCreate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PoolCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"poolCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pool"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PoolCreateMutation, PoolCreateMutationVariables>;
+export const TokenCreateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TokenCreate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"audience"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokenCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"audience"},"value":{"kind":"Variable","name":{"kind":"Name","value":"audience"}}},{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<TokenCreateMutation, TokenCreateMutationVariables>;
+export const TokensDeactivateAllDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TokensDeactivateAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokensDeactivateAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<TokensDeactivateAllMutation, TokensDeactivateAllMutationVariables>;
+export const UserRegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UserRegister"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserRegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRegister"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requiresConfirmation"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"isAuthenticatedUser"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UserRegisterMutation, UserRegisterMutationVariables>;
+export const WalletCreateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"WalletCreate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"WalletCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"walletCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wallet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"account"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<WalletCreateMutation, WalletCreateMutationVariables>;
+export const UserByAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserByAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChainAddressInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"chainAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Error"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}}]}}]}}]} as unknown as DocumentNode<UserByAddressQuery, UserByAddressQueryVariables>;
+export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Error"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"verificationStatus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}}]}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
+export const MyPoolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyPools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Viewer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewerPools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pool"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EVMAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"accountType"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<MyPoolsQuery, MyPoolsQueryVariables>;
+export const PoolGetByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PoolGetById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DBID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"poolById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Pool"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EVMAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"accountType"}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ErrPoolNotFound"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<PoolGetByIdQuery, PoolGetByIdQueryVariables>;

@@ -1,15 +1,12 @@
 "use client";
 
 import { PropsWithChildren } from "react";
-import {
-  ApolloQueryResult,
-  ViewerWalletsQuery,
-} from "@mutuals/graphql-client-nextjs";
+import { ApolloQueryResult, MeQuery } from "@mutuals/graphql-client-nextjs";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 
 interface DashboardAuthCheckWalletProps extends PropsWithChildren {
-  query: ApolloQueryResult<ViewerWalletsQuery>;
+  query: ApolloQueryResult<MeQuery>;
   redirectArgs?: [] | [string] | [string, { scroll?: boolean }];
 }
 export default function AuthRequireWallet({

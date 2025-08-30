@@ -1,9 +1,4 @@
-import {
-  Allocation,
-  CalculationType,
-  RawAllocation,
-  RecipientType,
-} from "../types";
+import { Allocation, CalculationType, RawAllocation } from "../types";
 import { encodePacked, Hex, hexToBytes, keccak256, toHex } from "viem";
 import { InvalidAllocationIndicesLengthError } from "../errors";
 import {
@@ -60,35 +55,31 @@ export const allocation = {
     };
   },
 
-  isItem: (a?: Allocation) =>
-    a?.recipientType?.[0] == RecipientType.DefaultItem,
+  isItem: (a?: Allocation) => a?.recipientType?.[0] == 0,
 
   isGroup: (a?: Allocation) => !allocation.isItem(a),
 
-  isFixed: (a?: Allocation) => a?.calculationType?.[0] == CalculationType.Fixed,
+  isFixed: (a?: Allocation) => a?.calculationType?.[0] == 5,
 
-  isPercentage: (a?: Allocation) =>
-    a?.calculationType?.[0] == CalculationType.Percentage,
+  isPercentage: (a?: Allocation) => a?.calculationType?.[0] == 4,
 
-  isPrioritized: (a?: Allocation) =>
-    a?.recipientType?.[0] == RecipientType.PrioritizedGroup,
+  isPrioritized: (a?: Allocation) => a?.recipientType?.[0] == 3,
 
-  isTimed: (a?: Allocation) =>
-    a?.recipientType?.[0] == RecipientType.TimedGroup,
+  isTimed: (a?: Allocation) => a?.recipientType?.[0] == 2,
 };
 
 export const getRecipientAllocationOption = (a?: Partial<Allocation>) =>
   ({
     recipientAddress: a?.recipientAddress ?? "",
-    recipientType: a?.recipientType ?? [RecipientType.DefaultItem],
-    calculationType: a?.calculationType ?? [CalculationType.Percentage],
+    recipientType: a?.recipientType ?? [0],
+    calculationType: a?.calculationType ?? [4],
     value: a?.value ?? "1",
   }) as Allocation;
 
 export const getGroupAllocationOption = (a?: Partial<Allocation>) => {
   const result: Allocation = {
-    recipientType: a?.recipientType ?? [RecipientType.DefaultGroup],
-    calculationType: a?.calculationType ?? [CalculationType.Percentage],
+    recipientType: a?.recipientType ?? [1],
+    calculationType: a?.calculationType ?? [4],
     children: a?.children ?? [],
     value: a?.value ?? "1",
   };
@@ -118,37 +109,33 @@ export const getAllocationRecipientOptions = (
   };
 
   return {
-    [RecipientType.DefaultItem]: getRecipientAllocationOption(sharedProps),
-    [RecipientType.DefaultGroup]: getGroupAllocationOption({
+    [0]: getRecipientAllocationOption(sharedProps),
+    [1]: getGroupAllocationOption({
       ...sharedGroupProps,
-      recipientType: [RecipientType.DefaultGroup],
+      recipientType: [1],
     }),
-    [RecipientType.TimedGroup]: getGroupAllocationOption({
+    [2]: getGroupAllocationOption({
       ...sharedGroupProps,
-      recipientType: [RecipientType.TimedGroup],
+      recipientType: [2],
     }),
-    [RecipientType.PrioritizedGroup]: getGroupAllocationOption({
+    [3]: getGroupAllocationOption({
       ...sharedGroupProps,
-      recipientType: [RecipientType.PrioritizedGroup],
+      recipientType: [3],
     }),
   };
 };
 
 export const getAllocationDefaults = (cached?: Allocation) => ({
-  [CalculationType.Fixed]: getAllocationRecipientOptions(
-    [CalculationType.Fixed],
-    cached?.calculationType,
-  ),
-  [CalculationType.Percentage]: getAllocationRecipientOptions(
-    [CalculationType.Percentage],
-    cached?.calculationType,
-  ),
+  [5]: getAllocationRecipientOptions([5], cached?.calculationType),
+  [4]: getAllocationRecipientOptions([4], cached?.calculationType),
 });
 
-export const recipientTypeName = (recipientType: RecipientType) =>
-  RECIPIENT_TYPE_CONFIG[recipientType]?.name;
-export const calculationTypeName = (calculationType: CalculationType) =>
-  CALCULATION_TYPE_CONFIG[calculationType]?.name;
+export const recipientTypeName = (
+  recipientType: keyof typeof RECIPIENT_TYPE_CONFIG,
+) => RECIPIENT_TYPE_CONFIG[recipientType]?.name;
+export const calculationTypeName = (
+  calculationType: keyof typeof CALCULATION_TYPE_CONFIG,
+) => CALCULATION_TYPE_CONFIG[calculationType]?.name;
 
 // Utility to compute a hash using viem's keccak256
 function computeHash(
@@ -190,7 +177,7 @@ export function buildMerkleTree(allocations: Allocation[]): SimpleMerkleTree {
     // If the node has children, compute their hashes and Merkle root
     if (!!node && node.children && node.children.length > 0) {
       const childHashes = node.children.map(
-        (child) => traverseNode(child).hash,
+        (child: any) => traverseNode(child).hash,
       );
       // Use SimpleMerkleTree.of to compute the Merkle root for the children
       const merkleTree = SimpleMerkleTree.of(childHashes);
