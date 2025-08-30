@@ -1,31 +1,29 @@
-import { CalculationType, RecipientType } from "../types";
-
 export const RECIPIENT_TYPE_CONFIG = {
-  [RecipientType.DefaultItem]: {
-    key: RecipientType.DefaultItem,
+  [0]: {
+    key: 0,
     name: "Default Recipient",
   },
-  [RecipientType.DefaultGroup]: {
-    key: RecipientType.DefaultGroup,
+  [1]: {
+    key: 1,
     name: "Default Group",
   },
-  [RecipientType.TimedGroup]: {
-    key: RecipientType.TimedGroup,
+  [2]: {
+    key: 2,
     name: "Timed Group",
   },
-  [RecipientType.PrioritizedGroup]: {
-    key: RecipientType.PrioritizedGroup,
+  [3]: {
+    key: 3,
     name: "Prioritized Group",
   },
 };
 
 export const CALCULATION_TYPE_CONFIG = {
-  [CalculationType.Percentage]: {
-    key: CalculationType.Percentage,
+  [4]: {
+    key: 4,
     name: "Percentage",
   },
-  [CalculationType.Fixed]: {
-    key: CalculationType.Fixed,
+  [5]: {
+    key: 5,
     name: "Fixed",
   },
 };

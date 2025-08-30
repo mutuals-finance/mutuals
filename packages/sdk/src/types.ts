@@ -11,12 +11,6 @@ import {
   WalletClient,
 } from "viem";
 
-import {
-  CalculationType,
-  PoolAllocationInput,
-  RecipientType,
-} from "@mutuals/graphql-client-nextjs";
-
 type TransactionOverrides = {
   accessList?: AccessList;
   gas?: bigint;
@@ -65,7 +59,7 @@ type RawAllocation = {
   timespan: bigint;
 };
 
-type Allocation = PoolAllocationInput;
+type Allocation = any; // PoolAllocationInput;
 
 type CreatePoolConfig = {
   allocations: Allocation[];
@@ -97,6 +91,9 @@ type SetPausedConfig = {
   paused: boolean;
 } & TransactionOverridesDict;
 
+type CalculationType = any;
+type RecipientType = any;
+
 type CreateDefaultAllocationFn = (
   calculationType: CalculationType,
   recipientType: RecipientType,
@@ -109,7 +106,7 @@ type CallData = {
 
 type TransactionFormat = Hash | bigint | CallData;
 
-export { CalculationType, RecipientType };
+export type { CalculationType, RecipientType };
 
 export type {
   TransactionOverrides,

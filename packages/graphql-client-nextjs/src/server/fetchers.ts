@@ -1,56 +1,40 @@
 "use server";
 
 import { query } from "./client";
-
 import {
-  PoolByIdQuery,
-  PoolByIdQueryVariables,
-  ViewerQuery,
-  ViewerQueryVariables,
-  ViewerPoolsQuery,
-  ViewerPoolsQueryVariables,
-  ViewerWalletsQuery,
-  ViewerWalletsQueryVariables,
+  MeQuery,
+  MeQueryVariables,
+  MyPoolsQuery,
+  MyPoolsQueryVariables,
+  PoolGetByIdQuery,
+  PoolGetByIdQueryVariables,
 } from "../graphql/data/__generated__/graphql";
 import { TQueryOptions } from "../types";
+import { ME_GET } from "../graphql/data/queries/MeGet";
+import { MY_POOLS_GET } from "../graphql/data/queries/MyPoolsGet";
+import { POOL_GET_BY_ID } from "../graphql/data/queries/PoolGetById";
 
-import { GET_VIEWER } from "../graphql/data/queries/GetViewer";
-import { GET_VIEWER_WALLETS } from "../graphql/data/queries/GetViewerWallets";
-import { GET_VIEWER_POOLS } from "../graphql/data/queries/GetViewerPools";
-import { GET_POOL_BY_ID } from "../graphql/data/queries/GetPoolById";
-
-export async function getViewer(
-  options?: TQueryOptions<ViewerQueryVariables, ViewerQuery>,
-) {
+export async function me(options?: TQueryOptions<MeQueryVariables, MeQuery>) {
   return query({
-    query: GET_VIEWER,
+    query: ME_GET,
     ...options,
   });
 }
 
-export async function getViewerWallets(
-  options?: TQueryOptions<ViewerWalletsQueryVariables, ViewerWalletsQuery>,
+export async function myPoolsGet(
+  options?: TQueryOptions<MyPoolsQueryVariables, MyPoolsQuery>,
 ) {
   return query({
-    query: GET_VIEWER_WALLETS,
-    ...options,
-  });
-}
-
-export async function getViewerPools(
-  options?: TQueryOptions<ViewerPoolsQueryVariables, ViewerPoolsQuery>,
-) {
-  return query({
-    query: GET_VIEWER_POOLS,
+    query: MY_POOLS_GET,
     ...options,
   });
 }
 
 export async function getPoolById(
-  options?: TQueryOptions<PoolByIdQueryVariables, PoolByIdQuery>,
+  options?: TQueryOptions<PoolGetByIdQueryVariables, PoolGetByIdQuery>,
 ) {
   return query({
-    query: GET_POOL_BY_ID,
+    query: POOL_GET_BY_ID,
     ...options,
   });
 }

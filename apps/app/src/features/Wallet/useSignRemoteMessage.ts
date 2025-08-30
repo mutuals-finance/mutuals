@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { useSignMessage, UseSignMessageReturnType } from "wagmi";
 
-import { useCreateNonce } from "@mutuals/graphql-client-nextjs/client";
+import { useNonceCreate } from "@mutuals/graphql-client-nextjs/client";
 import { Address } from "viem";
 import useAbortController, { AbortFn } from "@/hooks/useAbortController";
 
@@ -28,7 +28,7 @@ export default function useSignRemoteMessage(): UseSignRemoteMessageResult {
   const [abort, { abortController }] = useAbortController();
 
   const { signMessageAsync, signMessage: _, ...state } = useSignMessage();
-  const [createNonce] = useCreateNonce({
+  const [createNonce] = useNonceCreate({
     context: {
       fetchOptions: {
         signal: abortController.current.signal,

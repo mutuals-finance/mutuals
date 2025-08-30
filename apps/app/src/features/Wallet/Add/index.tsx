@@ -3,17 +3,14 @@
 import React, { PropsWithChildren } from "react";
 import { useAccount } from "wagmi";
 import WalletForm from "@/features/Wallet/Form";
-import {
-  ApolloQueryResult,
-  ViewerWalletsQuery,
-} from "@mutuals/graphql-client-nextjs";
+import { ApolloQueryResult, MeQuery } from "@mutuals/graphql-client-nextjs";
 import { walletMapFromViewerQuery } from "@/utils";
 import { Alert } from "@mutuals/ui";
 import AuthSignInCard from "@/features/Auth/SignInCard";
 
 interface WalletAddProps
   extends PropsWithChildren,
-    ApolloQueryResult<ViewerWalletsQuery> {}
+    ApolloQueryResult<MeQuery> {}
 
 export default function WalletAdd({ children, data }: WalletAddProps) {
   const account = useAccount();

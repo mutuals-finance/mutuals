@@ -1,34 +1,23 @@
+import { QueryHookOptions, useLazyQuery, useMutation } from "@apollo/client";
 import {
-  QueryHookOptions,
-  useLazyQuery,
-  useMutation,
-  useQuery,
-} from "@apollo/client";
-import { LOGIN } from "../graphql/data/mutations/Login";
-import {
-  AddWalletMutation,
-  AddWalletMutationVariables,
-  CreateNonceMutation,
-  CreateNonceMutationVariables,
-  CreateUserMutationVariables,
   Exact,
-  LoginMutationVariables,
-  LogoutMutationVariables,
-  UpsertPoolMutation,
-  UpsertPoolMutationVariables,
+  NonceCreateMutation,
+  NonceCreateMutationVariables,
+  PoolCreateMutation,
+  PoolCreateMutationVariables,
+  TokenCreateMutationVariables,
+  TokensDeactivateAllMutationVariables,
   UserByAddressQuery,
   UserByAddressQueryVariables,
-  ViewerWalletsQuery,
-  ViewerWalletsQueryVariables,
+  UserRegisterMutationVariables,
 } from "../graphql/data/__generated__/graphql";
-import { CREATE_NONCE } from "../graphql/data/mutations/CreateNonce";
 import { GET_USER_BY_WALLET_ADDRESS } from "../graphql/data/queries/GetUserByWalletAddress";
-import { CREATE_USER } from "../graphql/data/mutations/CreateUser";
-import { ADD_WALLET } from "../graphql/data/mutations/AddWallet";
-import { LOGOUT } from "../graphql/data/mutations/Logout";
-import { GET_VIEWER_WALLETS } from "../graphql/data/queries/GetViewerWallets";
 import { TMutationOptions } from "../types";
-import { UPSERT_SPLIT } from "../graphql/data/mutations/UpsertPool";
+import { NONCE_CREATE } from "../graphql/data/mutations/NonceCreate";
+import { POOL_CREATE } from "../graphql/data/mutations/PoolCreate";
+import { TOKENS_DEACTIVATE_ALL } from "../graphql/data/mutations/TokensDeactivateAll";
+import { TOKEN_CREATE } from "../graphql/data/mutations/TokenCreate";
+import { USER_REGISTER } from "../graphql/data/mutations/UserRegister";
 
 export function useLazyGetUserByWalletAddress(
   options?: QueryHookOptions<
@@ -39,6 +28,7 @@ export function useLazyGetUserByWalletAddress(
   return useLazyQuery(GET_USER_BY_WALLET_ADDRESS, options);
 }
 
+/*
 export function useViewerWallets(
   options?: QueryHookOptions<
     ViewerWalletsQuery,
@@ -55,29 +45,32 @@ export function useAddWallet(
     ...options,
   });
 }
+*/
 
-export function useCreateUser(variables?: CreateUserMutationVariables) {
-  return useMutation(CREATE_USER, { variables });
+export function useUserRegister(variables?: UserRegisterMutationVariables) {
+  return useMutation(USER_REGISTER, { variables });
 }
 
-export function useLogin(variables?: LoginMutationVariables) {
-  return useMutation(LOGIN, { variables });
+export function useTokenCreate(variables?: TokenCreateMutationVariables) {
+  return useMutation(TOKEN_CREATE, { variables });
 }
 
-export function useLogout(variables?: LogoutMutationVariables) {
-  return useMutation(LOGOUT, { variables });
-}
-
-export function useCreateNonce(
-  options?: TMutationOptions<CreateNonceMutation, CreateNonceMutationVariables>,
+export function useTokensDeactivateAll(
+  variables?: TokensDeactivateAllMutationVariables,
 ) {
-  return useMutation(CREATE_NONCE, options);
+  return useMutation(TOKENS_DEACTIVATE_ALL, { variables });
 }
 
-export function useUpsertPool(
-  options?: TMutationOptions<UpsertPoolMutation, UpsertPoolMutationVariables>,
+export function useNonceCreate(
+  options?: TMutationOptions<NonceCreateMutation, NonceCreateMutationVariables>,
 ) {
-  return useMutation(UPSERT_SPLIT, {
+  return useMutation(NONCE_CREATE, options);
+}
+
+export function usePoolCreate(
+  options?: TMutationOptions<PoolCreateMutation, PoolCreateMutationVariables>,
+) {
+  return useMutation(POOL_CREATE, {
     ...options,
   });
 }

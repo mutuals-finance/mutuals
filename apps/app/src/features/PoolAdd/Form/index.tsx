@@ -6,30 +6,34 @@ import {
   Button,
   Field,
   Fieldset,
+  IconButton,
+  Box,
+  useSteps,
   FileUpload,
   Form,
-  Text,
   Group,
   Input,
   Textarea,
   Stack,
   FormErrorAlert,
-  Separator,
+  Steps,
+  SimpleGrid,
+  GridItem,
+  Card,
 } from "@mutuals/ui";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddModal from "@/features/PoolAdd/Modal";
 import { useAccount } from "wagmi";
-import { useUpsertPool } from "@mutuals/graphql-client-nextjs/client";
+import { usePoolCreate } from "@mutuals/graphql-client-nextjs/client";
 import { PoolStatus } from "@mutuals/graphql-client-nextjs";
-import React, { useCallback, useEffect } from "react";
-import AllocationInput from "@/features/PoolAdd/AllocationInput";
-import AuthSignInCard from "@/features/Auth/SignInCard";
+import React, { useCallback } from "react";
+import { IoChevronBackSharp } from "react-icons/io5";
 
 export default function PoolAdd() {
   const [modalOpen, setModalOpen] = useToggle(false);
   const { address } = useAccount();
-  const [upsertPool, { error, loading }] = useUpsertPool();
+  const [upsertPool, { error, loading }] = usePoolCreate();
 
   const signedId = false;
 
@@ -53,7 +57,21 @@ export default function PoolAdd() {
     [setModalOpen, upsertPool],
   );
 
-  useEffect(() => console.log({ error }), [error]);
+  const items = [
+    {
+      title: "Step 1",
+      description: "Enter pool information",
+    },
+    {
+      title: "Step 2",
+      description: "Configure pool allocations",
+    },
+  ];
+
+  const steps = useSteps({
+    defaultStep: 1,
+    count: items.length,
+  });
 
   return (
     <Form<PoolAddData>
@@ -87,66 +105,124 @@ export default function PoolAdd() {
             onOpenChange={({ open }) => setModalOpen(open)}
             {...methods}
           />
-          <Stack>
-            {!signedId ? (
-              <AuthSignInCard />
-            ) : (
-              <Fieldset.Root>
-                <Fieldset.Content>
-                  <FormErrorAlert name={"root.upsertPool"} />
 
-                  <Field label={"Owner"} id={"ownerAddress"}>
-                    <Input id="ownerAddress" />
-                  </Field>
+          <Steps.RootProvider orientation="vertical" size={"sm"} value={steps}>
+            <SimpleGrid
+              w={"full"}
+              columns={{ base: 1, md: 7 }}
+              gap={{ base: "6", md: "16" }}
+            >
+              <GridItem colSpan={{ base: 1, md: 2 }}>
+                <Box position={"sticky"} top={"24"} left={"0"}>
+                  <Card.Root>
+                    <Card.Body>
+                      <Steps.List h={"32"}>
+                        {items.map((step, index) => (
+                          <Steps.Item
+                            key={index}
+                            index={index}
+                            title={step.title}
+                            direction="column"
+                          >
+                            <Steps.Indicator />
+                            <Stack>
+                              <Steps.Title>{step.title}</Steps.Title>
+                              <Steps.Description>
+                                {step.description}
+                              </Steps.Description>
+                            </Stack>
+                            <Steps.Separator />
+                          </Steps.Item>
+                        ))}
+                      </Steps.List>
+                    </Card.Body>
+                  </Card.Root>
+                </Box>
+              </GridItem>
+              <GridItem colSpan={{ base: 1, md: 5 }}>
+                <Card.Root>
+                  <Card.Body>
+                    <Stack>
+                      <Fieldset.Root>
+                        <Fieldset.Content>
+                          <FormErrorAlert name={"root.upsertPool"} />
 
-                  <Field id={"image"} label={"Image"}>
-                    <FileUpload
-                      id="image"
-                      maxW={"3xs"}
-                      dropzoneProps={{
-                        maxW: "3xs",
-                        minH: "3xs",
-                        label: "Image",
-                      }}
-                    />
-                  </Field>
-                  <Field id={"name"} label={"Name"}>
-                    <Input id="name" />
-                  </Field>
-                  <Field id={"description"} label={"Description"}>
-                    <Textarea id="description" />
-                  </Field>
+                          <Field label={"Owner"} id={"ownerAddress"}>
+                            <Input id="ownerAddress" />
+                          </Field>
 
+                          <Field id={"image"} label={"Image"}>
+                            <FileUpload
+                              id="image"
+                              maxW={"36"}
+                              dropzoneProps={{
+                                maxW: "36",
+                                minH: "36",
+                                label: "Upload pool image",
+                                gap: "2",
+                                iconProps: {
+                                  color: "fg.muted",
+                                  fontSize: "md",
+                                },
+                              }}
+                            />
+                          </Field>
+                          <Field id={"name"} label={"Name"}>
+                            <Input id="name" />
+                          </Field>
+                          <Field id={"description"} label={"Description"}>
+                            <Textarea id="description" />
+                          </Field>
+
+                          {/*
                   <Stack>
                     <Text fontWeight={"medium"} textStyle={"sm"}>
                       Allocations
                     </Text>
                     <AllocationInput id="allocations" />
                   </Stack>
+*/}
 
-                  <Separator my={"4"} />
+                          <Group>
+                            {steps.hasPrevStep && (
+                              <Steps.PrevTrigger asChild>
+                                <IconButton variant="subtle" size="xl">
+                                  <IoChevronBackSharp />
+                                </IconButton>
+                              </Steps.PrevTrigger>
+                            )}
 
-                  <Group>
-                    <Button
-                      size="xl"
-                      type="button"
-                      onClick={() =>
-                        onSubmit(methods.getValues(), PoolStatus.Draft)
-                      }
-                      variant={"subtle"}
-                      loading={loading}
-                    >
-                      Save draft
-                    </Button>
-
-                    <Button size="xl" type="submit">
-                      Confirm and review
-                    </Button>
-                  </Group>
-                </Fieldset.Content>
-              </Fieldset.Root>
-            )}
-          </Stack>
+                            {steps.hasNextStep ? (
+                              <Steps.NextTrigger asChild>
+                                <Button
+                                  type="button"
+                                  flex="1"
+                                  variant="subtle"
+                                  size="xl"
+                                >
+                                  Continue
+                                </Button>
+                              </Steps.NextTrigger>
+                            ) : (
+                              <Button
+                                type="submit"
+                                flex="1"
+                                variant="subtle"
+                                size="xl"
+                                disabled={true}
+                              >
+                                Confirm
+                              </Button>
+                            )}
+                          </Group>
+                        </Fieldset.Content>
+                      </Fieldset.Root>
+                    </Stack>
+                  </Card.Body>
+                </Card.Root>
+              </GridItem>
+            </SimpleGrid>
+          </Steps.RootProvider>
         </>
       )}
     </Form>

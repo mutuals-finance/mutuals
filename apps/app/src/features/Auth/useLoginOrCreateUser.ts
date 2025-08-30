@@ -2,11 +2,11 @@
 
 import { useCallback } from "react";
 
-import { AuthMechanism, Chain } from "@mutuals/graphql-client-nextjs";
+import { AuthMechanism } from "@mutuals/graphql-client-nextjs";
 import {
-  useCreateUser,
   useLazyGetUserByWalletAddress,
-  useLogin,
+  useTokenCreate,
+  useUserRegister,
 } from "@mutuals/graphql-client-nextjs/client";
 import type { Address } from "viem";
 import useAbortController, { AbortFn } from "@/hooks/useAbortController";
@@ -20,8 +20,8 @@ export default function useAuthLoginOrCreateUser() {
   const [abort, { abortController }] = useAbortController();
 
   const [getUserByWalletAddress] = useLazyGetUserByWalletAddress();
-  const [login] = useLogin();
-  const [createUser] = useCreateUser();
+  const [login] = useTokenCreate();
+  const [createUser] = useUserRegister();
 
   const loginOrCreateUser = useCallback(
     async (address: Address, authMechanism: AuthMechanism) => {
@@ -35,7 +35,7 @@ export default function useAuthLoginOrCreateUser() {
         context,
         variables: {
           chainAddress: {
-            chain: Chain.Ethereum,
+            chainId: 1,
             address: address,
           },
         },
@@ -45,22 +45,19 @@ export default function useAuthLoginOrCreateUser() {
         throw new Error(error.message);
       }
 
-      const userExists = data?.userByAddress?.__typename == "MutualsUser";
+      const userExists = data?.userByAddress?.__typename == "User";
 
       if (userExists) {
         const { errors, data } = await login({
           context,
           variables: {
-            mechanism: authMechanism,
+            audience: "mutuals",
+            authMechanism,
           },
         });
 
         if (errors && errors.length > 0) {
           throw new Error("error adding wallet");
-        }
-
-        if (data?.login && "message" in data.login) {
-          throw new Error(data.login.message);
         }
       } else {
         const { errors } = await createUser({
