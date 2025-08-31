@@ -1,4 +1,4 @@
-import { ViewerQuery } from "@mutuals/graphql-client-nextjs";
+import { MeQuery } from "@mutuals/graphql-client-nextjs";
 import { getAddress } from "ethers";
 
 export function partition<T>(
@@ -17,18 +17,19 @@ export function partition<T>(
   );
 }
 
-export function walletMapFromViewerQuery(query?: ViewerQuery) {
+export function walletMapFromViewerQuery(query?: MeQuery) {
   if (
-    !(query?.viewer && "user" in query.viewer && query.viewer.user?.wallets)
+    !(query?.viewer && "user" in query.viewer) // && query.viewer.user?.wallets)
   ) {
     return {};
   }
 
-  return query.viewer.user.wallets.reduce(
+  return [].reduce(
+    //query.viewer.user.wallets
     (m, w) => ({
       ...m,
       ...{
-        [getAddress(w?.chainAddress?.address)]: true,
+        [getAddress("w?.chainAddress?.address")]: true,
       },
     }),
     {} as { [key: string]: boolean },

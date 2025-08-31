@@ -30,7 +30,9 @@ export function FileUpload({
       render={({ field }) => (
         <FileUploadRoot {...props} {...field}>
           <FileUploadDropzone
+            w={"full"}
             label={dropzoneProps?.label ?? "unknown"}
+            borderWidth={"1px"}
             {...dropzoneProps}
           />
           <FileUploadList />

@@ -1,4 +1,4 @@
-import { getViewer } from "@mutuals/graphql-client-nextjs/server";
+import { me } from "@mutuals/graphql-client-nextjs/server";
 import UserSettingsSecurity from "@/features/UserSettings/Security";
 import { Metadata } from "next";
 
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 export default async function UserSettingsSecurityPage() {
-  const query = await getViewer();
+  const query = await me();
 
   return <UserSettingsSecurity {...query} />;
 }

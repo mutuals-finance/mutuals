@@ -17,9 +17,7 @@ import {
 } from "@mutuals/ui";
 import { useRouter } from "next/navigation";
 import React, { PropsWithChildren, useCallback, useState } from "react";
-import { Chain } from "@mutuals/graphql-client-nextjs";
 import { useSignMessage } from "@/features/Wallet/SignProvider";
-import { addWallet } from "@mutuals/graphql-client-nextjs/server";
 
 type WalletData = {
   name: string;
@@ -46,7 +44,7 @@ export function WalletFormDrawer({
     async (data: WalletData) => {
       const chainAddress = {
         address: data.address,
-        chain: Chain.Ethereum,
+        chain: 1,
       };
 
       try {
@@ -57,22 +55,22 @@ export function WalletFormDrawer({
           },
         });
 
-        const res = await addWallet({
-          variables: {
-            chainAddress,
-            authMechanism: {
-              eoa: {
-                chainPubKey: {
-                  chain: chainAddress.chain,
-                  pubKey: chainAddress.address,
+        /*  const res = await addWallet({
+            variables: {
+              chainAddress,
+              authMechanism: {
+                eoa: {
+                  chainPubKey: {
+                    chain: chainAddress.chain,
+                    pubKey: chainAddress.address,
+                  },
+                  signature,
+                  message,
+                  nonce,
                 },
-                signature,
-                message,
-                nonce,
               },
             },
-          },
-        });
+          });*/
       } catch (error) {
         console.log("error", error);
       }

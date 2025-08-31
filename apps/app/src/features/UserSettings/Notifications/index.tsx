@@ -1,7 +1,7 @@
-import { ApolloQueryResult, ViewerQuery } from "@mutuals/graphql-client-nextjs";
+import { ApolloQueryResult, MeQuery } from "@mutuals/graphql-client-nextjs";
 import AuthSignInCard from "@/features/Auth/SignInCard";
 
-export type UserSettingsNotificationsProps = ApolloQueryResult<ViewerQuery>;
+export type UserSettingsNotificationsProps = ApolloQueryResult<MeQuery>;
 
 export default function UserSettingsNotifications({
   data,

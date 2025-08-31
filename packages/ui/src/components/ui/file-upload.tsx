@@ -1,6 +1,6 @@
 "use client";
 
-import type { ButtonProps, RecipeProps } from "@chakra-ui/react";
+import type { ButtonProps, IconProps, RecipeProps } from "@chakra-ui/react";
 import {
   Button,
   FileUpload as ChakraFileUpload,
@@ -35,16 +35,17 @@ export interface FileUploadDropzoneProps
   extends ChakraFileUpload.DropzoneProps {
   label: React.ReactNode;
   description?: React.ReactNode;
+  iconProps?: IconProps;
 }
 
 export const FileUploadDropzone = React.forwardRef<
   HTMLInputElement,
   FileUploadDropzoneProps
 >(function FileUploadDropzone(props, ref) {
-  const { children, label, description, ...rest } = props;
+  const { children, label, description, iconProps, ...rest } = props;
   return (
     <ChakraFileUpload.Dropzone ref={ref} {...rest}>
-      <Icon fontSize="xl" color="fg.muted">
+      <Icon fontSize="xl" color="fg.muted" {...iconProps}>
         <LuUpload />
       </Icon>
       <ChakraFileUpload.DropzoneContent>

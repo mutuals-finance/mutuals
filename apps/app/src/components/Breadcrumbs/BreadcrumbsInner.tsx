@@ -1,5 +1,4 @@
 import {
-  Box,
   BreadcrumbRoot,
   type BreadcrumbRootProps,
   BreadcrumbLink,
@@ -38,7 +37,7 @@ export default function BreadcrumbsInner({
 }: BreadcrumbsInnerProps) {
   return (
     <BreadcrumbRoot
-      gap="3"
+      gap="4"
       separator={
         <Icon boxSize={"0.6rem"}>
           <RxSlash />

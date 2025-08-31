@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   Container,
@@ -6,6 +8,7 @@ import {
   Group,
   VStack,
   Box,
+  Stack,
   Link,
   Theme,
   AspectRatio,
@@ -18,10 +21,7 @@ import transactionHistoryImage from "@/assets/transaction-history.png";
 import assetAllocationImage from "@/assets/asset-allocation.png";
 import dashboardHandlersImage from "@/assets/dashboard-handlers.png";
 
-export const transitionProps = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-};
+type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 
 type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 

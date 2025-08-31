@@ -18,17 +18,17 @@ export default async function PoolSettingsLayout({
     {
       title: "General",
       value: "general",
-      href: `/pool/maticmum:${pool?.address}/settings`,
+      href: `/pool/maticmum:${pool?.contract?.address}/settings`,
     },
     {
       title: "Security",
       value: "security",
-      href: `/pool/maticmum:${pool?.address}/settings/security`,
+      href: `/pool/maticmum:${pool?.contract?.address}/settings/security`,
     },
     {
       title: "Notifications",
       value: "notifications",
-      href: `/pool/maticmum:${pool?.address}/settings/notifications`,
+      href: `/pool/maticmum:${pool?.contract?.address}/settings/notifications`,
     },
   ];
 
