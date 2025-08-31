@@ -34,7 +34,7 @@ export default function PoolActionWithdrawFormContent({
   const selectedAssets = watch("assets");
   const distribute = watch("distribute");
 
-  const { ...tx } = useWithdrawSplit(pool!.address, []);
+  const { ...tx } = useWithdrawSplit(pool!.contract?.address, []);
   const [isModalOpen, setIsModalOpen] = useToggle(false);
   const data = balance?.assets ?? [];
 

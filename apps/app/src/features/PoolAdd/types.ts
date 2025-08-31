@@ -1,11 +1,11 @@
 import { FieldArrayWithId } from "react-hook-form";
 import { Address } from "viem";
-import { UpsertPoolInput } from "@mutuals/graphql-client-nextjs";
+import { PoolCreateInput } from "@mutuals/graphql-client-nextjs";
 
 export type PoolAddData = {
   image: any;
   ownerAddress: Address;
-} & UpsertPoolInput;
+} & PoolCreateInput;
 
 export type AllocationItemRecipientOrGroupBaseProps = FieldArrayWithId<
   PoolAddData,

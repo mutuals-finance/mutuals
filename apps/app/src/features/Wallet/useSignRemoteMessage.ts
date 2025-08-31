@@ -39,8 +39,8 @@ export default function useSignRemoteMessage(): UseSignRemoteMessageResult {
   const signMessage = useCallback(async () => {
     const { data, errors } = await createNonce();
 
-    const message = data?.getAuthNonce?.message;
-    const nonce = data?.getAuthNonce?.nonce;
+    const message = data?.nonce?.message;
+    const nonce = data?.nonce?.nonce;
 
     if ((!!errors && errors.length > 0) || !message || !nonce) {
       throw new Error("error fetching nonce");

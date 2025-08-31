@@ -7,15 +7,17 @@ export type AllocationTableRowProps = TreeTableRowProps<Allocation>;
 
 export default function AllocationTableRow(props: AllocationTableRowProps) {
   const { render: _, ...innerProps } = props;
-  const { recipientAddress, children } = useAllocation(props.value);
+  const {
+    /*recipientAddress, children*/
+  } = useAllocation(props.value);
 
   return (
     <TreeTableRow
       {...innerProps}
       render={(_props) => <AllocationTableRow {..._props} />}
-      values={children ?? []}
+      values={/*children ??*/ []}
     >
-      <Stack direction={"row"}>{recipientAddress}</Stack>
+      <Stack direction={"row"}>{/*{recipientAddress}*/}</Stack>
     </TreeTableRow>
   );
 }
