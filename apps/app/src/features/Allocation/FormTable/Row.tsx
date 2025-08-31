@@ -67,7 +67,7 @@ export default function AllocationFormTableRow({
   const { fields, remove, insert } = methods;
 
   const [calculationType, recipientType] = useWatch<PoolAddData>({
-    // @ts-expect-error: type definition string
+    // @ts-expect-error: is included
     name: [`${id}.calculationType.0`, `${id}.recipientType.0`],
   }) as [CalculationType, RecipientType];
 

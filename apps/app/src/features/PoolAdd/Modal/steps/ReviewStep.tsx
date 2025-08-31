@@ -12,9 +12,9 @@ function PoolReviewCard({ image, name, description }: PoolAddData) {
     <PoolCard
       {...{
         id: "id",
-        name: name,
+        name: name ?? "",
         //image: image!.preview!.toString(),
-        description: description,
+        description: description ?? "",
       }}
     />
   );

@@ -19,7 +19,7 @@ export default function AllocationTableCard({
   pool,
   ...props
 }: AllocationTableCardProps) {
-  const allocations = (pool?.allocations ?? []) as unknown as Allocation[];
+  const allocations = /*pool?.allocations*/ [] as unknown as Allocation[];
 
   const table = <AllocationTable values={allocations} {...tableProps} />;
 

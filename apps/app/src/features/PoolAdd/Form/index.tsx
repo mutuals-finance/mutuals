@@ -201,7 +201,6 @@ export default function PoolAdd() {
         ownerAddress: address,
         name: "",
         description: "",
-        allocations: [],
       }}
       errors={
         !error

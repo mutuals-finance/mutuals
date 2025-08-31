@@ -56,7 +56,7 @@ export default async function PoolActionDeposit({
           </Card.Header>
           <Card.Body>
             <Center>
-              <QRCode text={pool?.address} />
+              <QRCode text={pool?.contract?.address} />
             </Center>
           </Card.Body>
         </Card.Root>
@@ -77,7 +77,7 @@ export default async function PoolActionDeposit({
             flex={"1"}
             aria-label="Copy split address to clipboard"
           >
-            {pool?.address}
+            {pool?.contract?.address}
 
             <IoCopyOutline />
           </Button>

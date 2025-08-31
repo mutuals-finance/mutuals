@@ -28,11 +28,10 @@ interface WalletCardProps extends DeepPartial<Wallet>, Card.RootProps {
 }
 
 export default function WalletCard({
-  chainAddress,
   isPrimaryWallet,
   ...props
 }: WalletCardProps) {
-  const shortAddress = shortenAddress(chainAddress?.address);
+  const shortAddress = shortenAddress("chainAddress?.address");
   const hasName = true;
   const name = hasName ? "Company Multisig" : shortAddress;
 
@@ -45,7 +44,7 @@ export default function WalletCard({
         alignItems={"center"}
         textAlign={"center"}
       >
-        <UserAvatar address={chainAddress?.address} size={"sm"} />
+        <UserAvatar address={"chainAddress?.address"} size={"sm"} />
         <Stack gap={"2"} alignItems={"center"}>
           <Heading
             size="md"
@@ -70,7 +69,7 @@ export default function WalletCard({
             size={"sm"}
             roundedRight={"0"}
             variant={"subtle"}
-            href={`wallet/${chainAddress?.address}`}
+            href={`wallet/${"chainAddress?.address"}`}
           >
             Manage
           </LinkButton>
