@@ -6,6 +6,7 @@ import {
   Heading,
   Text,
   Group,
+  VStack,
   Box,
   Stack,
   Link,
@@ -19,6 +20,8 @@ import dashboardDesktopImage from "@/assets/dashboard-desktop.png";
 import transactionHistoryImage from "@/assets/transaction-history.png";
 import assetAllocationImage from "@/assets/asset-allocation.png";
 import dashboardHandlersImage from "@/assets/dashboard-handlers.png";
+
+type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 
 type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 
@@ -38,26 +41,23 @@ function HomeHeroImage({ imageProps, ...props }: HomeHeroProps) {
 
 export default function HomeHero() {
   return (
-    <Box position={"relative"} pt={"20"} overflow="hidden">
+    <Box position={"relative"} pt={"20"}>
       <GridBg />
 
-      <Container maxW={"7xl"} mt={{ base: "12", lg: "16" }}>
-        <Stack
-          direction={"column"}
-          alignItems={"center"}
-          textAlign={"center"}
-          gap={"6"}
+      <Container maxW={{ base: "xl", lg: "4xl" }} my={{ base: "12", lg: "16" }}>
+        <VStack
+          alignItems={{ base: "center", md: "center" }}
+          textAlign={{ base: "center", md: "center" }}
+          gap={"4"}
         >
-          <Box maxW={{ base: "xl", lg: "4xl" }}>
-            <Heading
-              as="h1"
-              size={{ base: "5xl", lg: "7xl" }}
-              fontWeight={"medium"}
-            >
-              Reimagining Programmable Money.
-            </Heading>
-          </Box>
-          <Box maxW={"2xl"}>
+          <Heading
+            as="h1"
+            size={{ base: "5xl", lg: "7xl" }}
+            fontWeight={"medium"}
+          >
+            Reimagining Programmable Money.
+          </Heading>
+          <Box maxW={"xl"}>
             <Text textStyle={{ base: "lg", lg: "xl" }} color={"fg.subtle"}>
               Automated, trustless payments for frictionless financial
               interactions
@@ -81,17 +81,24 @@ export default function HomeHero() {
               </Button>
             </Link>
           </Group>
-        </Stack>
+        </VStack>
+      </Container>
 
+      <Container
+        maxW={"7xl"}
+        position={"relative"}
+        overflow={{ base: "hidden", lg: "unset" }}
+        pt={{ base: "6", lg: "0" }}
+      >
         <Theme appearance={"light"} bg={"transparent"}>
           <Box
-            position={"relative"}
-            pt={{ base: "6", lg: "0" }}
-            px={{ base: "6", lg: "0" }}
-            mt={{ base: "12", lg: "16" }}
             w="full"
-            maxW="3xl"
+            maxW="4xl"
             mx="auto"
+            data-state="open"
+            _open={{
+              animation: "fade-in 300ms ease-out",
+            }}
           >
             <AspectRatio
               ratio={{ base: 8 / 7, md: 2457 / 1441 }}
@@ -107,49 +114,37 @@ export default function HomeHero() {
                 style={{ objectFit: "cover" }}
               />
             </AspectRatio>
-
-            <HomeHeroImage
-              w={{ base: "36", lg: "52" }}
-              top={{ base: "0", lg: "6" }}
-              transform={{
-                base: "translateX(-25%)",
-                lg: "translate(-50%, 0)",
-              }}
-              left={"0"}
-              imageProps={{
-                src: assetAllocationImage,
-                alt: "Mutuals Dashboard Hero Asset Allocation",
-              }}
-            />
-
-            <HomeHeroImage
-              w={"52"}
-              bottom={{ base: "6", lg: "6" }}
-              left={{ base: "25%", lg: "0" }}
-              transform={{
-                base: "translateX(-50%)",
-                lg: "translate(-50%, 0)",
-              }}
-              imageProps={{
-                src: dashboardHandlersImage,
-                alt: "Mutuals Dashboard Hero Handlers",
-              }}
-            />
-
-            <HomeHeroImage
-              w={{ base: "xs", lg: "sm" }}
-              top={"50%"}
-              right={"0"}
-              transform={{
-                base: "translate(60%,-50%)",
-                md: "translate(50%, -50%)",
-              }}
-              imageProps={{
-                src: transactionHistoryImage,
-                alt: "Mutuals Dashboard Transaction History",
-              }}
-            />
           </Box>
+          <HomeHeroImage
+            w={{ base: "36", lg: "64" }}
+            top={{ base: "0", lg: "25%" }}
+            transform={{ base: "translateX(-25%)", lg: "translateY(-50%)" }}
+            left={{ base: "0", lg: "2" }}
+            imageProps={{
+              src: assetAllocationImage,
+              alt: "Mutuals Dashboard Hero Asset Allocation",
+            }}
+          />
+          <HomeHeroImage
+            bottom={{ base: "6", lg: "25%" }}
+            left={{ base: "25%", lg: "24" }}
+            transform={{ base: "translateX(-50%)", lg: "translateY(50%)" }}
+            w={{ base: "48", lg: "64" }}
+            imageProps={{
+              src: dashboardHandlersImage,
+              alt: "Mutuals Dashboard Hero Handlers",
+            }}
+          />
+          <HomeHeroImage
+            top={"50%"}
+            right={{ base: "0", lg: "2" }}
+            transform={{ base: "translate(60%,-50%)", md: "translateY(-50%)" }}
+            w={{ base: "xs", lg: "md" }}
+            imageProps={{
+              src: transactionHistoryImage,
+              alt: "Mutuals Dashboard Transaction History",
+            }}
+          />
         </Theme>
       </Container>
     </Box>
