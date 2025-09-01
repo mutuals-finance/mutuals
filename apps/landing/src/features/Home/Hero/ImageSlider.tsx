@@ -5,7 +5,6 @@ import dashboardImage from "@/assets/hero.png";
 import metricsImage from "@/assets/hero-2.png";
 import mockSigninImage from "@/assets/mock-signin.png";
 import { AspectRatio, MotionBox } from "@mutuals/ui";
-import { transitionProps } from "./index";
 import { useState } from "react";
 import ImageSlider, { ImageSliderProps } from "@/components/ImageSlider";
 
@@ -18,22 +17,12 @@ const images = [
 export default function HeroImageSlider({ options }: ImageSliderProps) {
   const [isCreated, setIsCreated] = useState(false);
 
-  const variants = {
-    hide: transitionProps.initial,
-    show: transitionProps.animate,
-  };
-
   const { created, ..._options } = {
     ...options,
   };
 
   return (
-    <MotionBox
-      w="full"
-      animate={isCreated ? "show" : "hide"}
-      initial={"hide"}
-      variants={variants}
-    >
+    <MotionBox w="full" animate={isCreated ? "show" : "hide"} initial={"hide"}>
       <ImageSlider
         options={{
           created: (s) => {

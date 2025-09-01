@@ -8,7 +8,6 @@ import {
   Group,
   VStack,
   Box,
-  Stack,
   Link,
   Theme,
   AspectRatio,
@@ -20,8 +19,6 @@ import dashboardDesktopImage from "@/assets/dashboard-desktop.png";
 import transactionHistoryImage from "@/assets/transaction-history.png";
 import assetAllocationImage from "@/assets/asset-allocation.png";
 import dashboardHandlersImage from "@/assets/dashboard-handlers.png";
-
-type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 
 type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 
