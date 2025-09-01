@@ -5,8 +5,7 @@ const nextConfig: NextConfig = {
   eslint: {
     dirs: ["src"],
   },
-  transpilePackages: ["@mutuals/ui"],
-  experimental: {},
+  experimental: { optimizePackageImports: ["@mutuals/ui", "@chakra-ui/react"] },
 };
 
 export default nextConfig;
