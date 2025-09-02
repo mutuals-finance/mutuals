@@ -13,7 +13,6 @@ import {
   Form,
   Group,
   Input,
-  Text,
   Textarea,
   Stack,
   FormErrorAlert,
@@ -40,6 +39,7 @@ import { PoolStatus } from "@mutuals/graphql-client-nextjs";
 import React, { useCallback } from "react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import AuthSignInCard from "@/features/Auth/SignInCard";
+import AllocationFormTree from "@/features/Allocation/FormTree";
 
 const items = {
   0: {
@@ -82,17 +82,12 @@ const items = {
     children: (
       <>
         <Stack>
-          <Text fontWeight={"medium"} textStyle={"sm"}>
-            Allocations
-          </Text>
-          <AuthSignInCard
+          {/*        <AuthSignInCard
             description={
               "You must sign in to your account to configure allocations."
             }
-          />
-          {/*
-          <AllocationInput id="allocations" />
-*/}
+          />*/}
+          <AllocationFormTree />
         </Stack>
       </>
     ),
@@ -235,9 +230,8 @@ export default function PoolAdd() {
             >
               <GridItem colSpan={{ base: 1, lg: 2 }}>
                 <SelectRoot
+                  size={"lg"}
                   collection={collection}
-                  w="full"
-                  variant={"subtle"}
                   defaultValue={[collection.items[0]!.value]}
                   value={[
                     collection.items[
@@ -249,10 +243,10 @@ export default function PoolAdd() {
                   }}
                   hideFrom={"lg"}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger maxW={"32"} w="full">
                     <SelectValueText placeholder="Select step" />
                   </SelectTrigger>
-                  <SelectContent portalled={false}>
+                  <SelectContent portalled={false} maxW={"full"} minW={"64"}>
                     {collection.items.map((step) => (
                       <SelectItem item={step} key={step.value}>
                         <Stack gap={"0"}>
@@ -294,8 +288,11 @@ export default function PoolAdd() {
               </GridItem>
 
               <GridItem colSpan={{ base: 1, lg: 5 }}>
-                <Card.Root border={{ base: "none", smToLg: "none" }}>
-                  <Card.Body p={{ base: "0", smToLg: "0" }}>
+                <Card.Root
+                  border={{ base: "none", lg: "1px solid" }}
+                  borderColor={{ lg: "border" }}
+                >
+                  <Card.Body p={{ base: "0", lg: "6" }}>
                     <PoolAddFormFieldset {...steps} />
                   </Card.Body>
                 </Card.Root>
