@@ -45,6 +45,7 @@ export {
   type NumberInputProps,
   Select,
   type SelectProps,
+  type SelectCollectionItemProps,
   Textarea,
   type TextareaProps,
   Link,

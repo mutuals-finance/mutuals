@@ -1,190 +1,87 @@
 "use client";
 
-import {
-  HStack,
-  IconButton,
-  TreeView,
-  createTreeCollection,
-  useTreeViewContext,
-} from "@mutuals/ui";
-import React, { PropsWithChildren, useState } from "react";
-import { LuPlus, LuTrash } from "react-icons/lu";
-import AllocationFormTreeCombobox from "@/features/Allocation/FormTree/Combobox";
+import { TreeView } from "@mutuals/ui";
+import React from "react";
+import { AllocationAddData, AllocationNode } from "@/features/Allocation/types";
+import AllocationFormTreeNode from "@/features/Allocation/FormTree/Node";
+import { useFormContext, useWatch } from "react-hook-form";
+import type { PoolAddData } from "@/features/PoolAdd/types";
 
-export default function AllocationFormTree() {
-  const [collection, setCollection] = useState(initialCollection);
+const createNewNode = (): AllocationNode => ({
+  id: `${Date.now()}`,
+  value: 0,
+  stateId: "",
+  strategyId: "",
+  children: [],
+});
 
-  const removeNode = (props: TreeNodeProps) => {
-    setCollection(collection.remove([props.indexPath]));
+export interface AllocationFormTreeProps
+  extends Omit<TreeView.RootProps, "collection"> {
+  id?: "claims";
+}
+
+export default function AllocationFormTree({
+  id = "claims",
+  ...props
+}: AllocationFormTreeProps) {
+  const { setValue, control } = useFormContext<PoolAddData>();
+
+  const claims: AllocationAddData = useWatch<PoolAddData>({
+    control,
+    name: id,
+  });
+
+  const onRemove = (props: TreeView.NodeProviderProps<AllocationNode>) => {
+    setValue(id, claims.remove([props.indexPath]));
   };
 
-  const addNode = (props: TreeNodeProps) => {
+  const onAddBefore = (props: TreeView.NodeProviderProps<AllocationNode>) => {
+    const { indexPath } = props;
+    const newNode = createNewNode();
+    const newClaims = claims.insertBefore(indexPath, [newNode]);
+    if (newClaims) {
+      setValue(id, newClaims);
+    }
+  };
+
+  const onAddAfter = (props: TreeView.NodeProviderProps<AllocationNode>) => {
+    const { indexPath } = props;
+    const newNode = createNewNode();
+    const newClaims = claims.insertAfter(indexPath, [newNode]);
+    if (newClaims) {
+      setValue(id, newClaims);
+    }
+  };
+
+  const onAddNested = (props: TreeView.NodeProviderProps<AllocationNode>) => {
     const { node, indexPath } = props;
-    if (!collection.isBranchNode(node)) return;
-    const children = [
-      {
-        id: `untitled-${Date.now()}`,
-        name: `untitled-${node.children?.length}.tsx`,
-      },
-      ...(node.children || []),
-    ];
-    setCollection(collection.replace(indexPath, { ...node, children }));
+    const newNode = createNewNode();
+    const children = [newNode, ...(node.children ?? [])];
+    setValue(id, claims.replace(indexPath, { ...node, children }));
   };
 
   return (
-    <TreeView.Root collection={collection} animateContent={true}>
+    <TreeView.Root
+      collection={claims}
+      animateContent={true}
+      selectionMode="multiple"
+      {...props}
+    >
       <TreeView.Label>Allocation</TreeView.Label>
       <TreeView.Tree>
         <TreeView.Node
           indentGuide={<TreeView.BranchIndentGuide />}
-          render={({ node, nodeState, indexPath }) =>
-            nodeState.isBranch ? (
-              <TreeView.BranchControl role="">
-                <AllocationFormTreeNodeContent>
-                  <TreeView.BranchText>{node.name}</TreeView.BranchText>
-                  <TreeNodeActions
-                    node={node}
-                    indexPath={indexPath}
-                    onRemove={removeNode}
-                    onAdd={addNode}
-                  />
-                </AllocationFormTreeNodeContent>
-              </TreeView.BranchControl>
-            ) : (
-              <TreeView.Item>
-                <AllocationFormTreeNodeContent>
-                  <TreeView.BranchText>{node.name}</TreeView.BranchText>
-                  <TreeNodeActions
-                    node={node}
-                    indexPath={indexPath}
-                    onRemove={removeNode}
-                    onAdd={addNode}
-                  />
-                </AllocationFormTreeNodeContent>
-              </TreeView.Item>
-            )
-          }
+          render={(nodeProps) => (
+            <AllocationFormTreeNode
+              onAddNested={onAddNested}
+              onAddAfter={onAddAfter}
+              onAddBefore={onAddBefore}
+              onRemove={onRemove}
+              {...nodeProps}
+            />
+          )}
         />
       </TreeView.Tree>
     </TreeView.Root>
   );
 }
-
-function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
-  return (
-    <>
-      <AllocationFormTreeCombobox
-        size="xs"
-        flexBasis={"32"}
-        inputProps={{ placeholder: "State extension" }}
-      />
-
-      <AllocationFormTreeCombobox
-        size="xs"
-        flexBasis={"36"}
-        inputProps={{ placeholder: "Strategy extension" }}
-      />
-
-      {children}
-    </>
-  );
-}
-
-interface TreeNodeProps extends TreeView.NodeProviderProps<Node> {
-  onRemove?: (props: TreeView.NodeProviderProps<Node>) => void;
-  onAdd?: (props: TreeView.NodeProviderProps<Node>) => void;
-}
-
-const TreeNodeActions = (props: TreeNodeProps) => {
-  const { onRemove, onAdd, node } = props;
-  const tree = useTreeViewContext();
-  const isBranch = tree.collection.isBranchNode(node);
-  return (
-    <HStack
-      gap="0.5"
-      position="absolute"
-      right="0"
-      top="0"
-      scale="0.8"
-      css={{
-        opacity: 0,
-        "[role=treeitem]:hover &": { opacity: 1 },
-      }}
-    >
-      <IconButton
-        size="xs"
-        variant="ghost"
-        aria-label="Remove node"
-        onClick={(e) => {
-          e.stopPropagation();
-          onRemove?.(props);
-        }}
-      >
-        <LuTrash />
-      </IconButton>
-      {isBranch && (
-        <IconButton
-          size="xs"
-          variant="ghost"
-          aria-label="Add node"
-          onClick={(e) => {
-            e.stopPropagation();
-            onAdd?.(props);
-            tree.expand([node.id]);
-          }}
-        >
-          <LuPlus />
-        </IconButton>
-      )}
-    </HStack>
-  );
-};
-
-interface Node {
-  id: string;
-  name: string;
-  children?: Node[];
-  childrenCount?: number;
-}
-
-const initialCollection = createTreeCollection<Node>({
-  nodeToValue: (node) => node.id,
-  nodeToString: (node) => node.name,
-  rootNode: {
-    id: "ROOT",
-    name: "",
-    children: [
-      {
-        id: "node_modules",
-        name: "node_modules",
-        children: [
-          { id: "node_modules/zag-js", name: "zag-js" },
-          { id: "node_modules/pandacss", name: "panda" },
-          {
-            id: "node_modules/@types",
-            name: "@types",
-            children: [
-              { id: "node_modules/@types/react", name: "react" },
-              { id: "node_modules/@types/react-dom", name: "react-dom" },
-            ],
-          },
-        ],
-      },
-      {
-        id: "src",
-        name: "src",
-        children: [
-          { id: "src/app.tsx", name: "app.tsx" },
-          {
-            id: "src/index.ts",
-            name: "index.ts",
-          },
-        ],
-      },
-      { id: "panda.config", name: "panda.config.ts" },
-      { id: "package.json", name: "package.json" },
-      { id: "renovate.json", name: "renovate.json" },
-      { id: "readme.md", name: "README.md" },
-    ],
-  },
-});

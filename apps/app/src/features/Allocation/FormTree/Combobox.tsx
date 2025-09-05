@@ -1,62 +1,45 @@
 "use client";
 
-import { Combobox, Portal, useFilter, useListCollection } from "@mutuals/ui";
+import {
+  createListCollection,
+  Select,
+  SelectProps,
+  SelectCollectionItemProps,
+} from "@mutuals/ui";
 
-export type AllocationFormTreeComboboxProps = Combobox.RootProps & {
-  inputProps?: Combobox.InputProps;
-};
+export type AllocationFormTreeComboboxProps = Omit<SelectProps, "collection">;
 
 export default function AllocationFormTreeCombobox({
-  inputProps,
   ...props
 }: AllocationFormTreeComboboxProps) {
-  const { contains } = useFilter({ sensitivity: "base" });
-
-  const { collection, filter } = useListCollection({
-    initialItems: frameworks,
-    filter: contains,
-  });
-
   return (
-    <Combobox.Root
-      collection={collection}
-      onInputValueChange={(e) => filter(e.inputValue)}
+    <Select
+      collection={frameworks}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
       {...props}
-    >
-      <Combobox.Control>
-        <Combobox.Input {...inputProps} />
-        <Combobox.IndicatorGroup>
-          <Combobox.ClearTrigger />
-          <Combobox.Trigger />
-        </Combobox.IndicatorGroup>
-      </Combobox.Control>
-      <Portal>
-        <Combobox.Positioner>
-          <Combobox.Content>
-            <Combobox.Empty>No items found</Combobox.Empty>
-            {collection.items.map((item) => (
-              <Combobox.Item item={item} key={item.value}>
-                {item.label}
-                <Combobox.ItemIndicator />
-              </Combobox.Item>
-            ))}
-          </Combobox.Content>
-        </Combobox.Positioner>
-      </Portal>
-    </Combobox.Root>
+    ></Select>
   );
 }
 
-const frameworks = [
-  { label: "React", value: "react" },
-  { label: "Solid", value: "solid" },
-  { label: "Vue", value: "vue" },
-  { label: "Angular", value: "angular" },
-  { label: "Svelte", value: "svelte" },
-  { label: "Preact", value: "preact" },
-  { label: "Qwik", value: "qwik" },
-  { label: "Lit", value: "lit" },
-  { label: "Alpine.js", value: "alpinejs" },
-  { label: "Ember", value: "ember" },
-  { label: "Next.js", value: "nextjs" },
-];
+const frameworks = createListCollection({
+  items: [
+    {
+      value: "basic",
+      children: "Basic Plan",
+    },
+    {
+      value: "pro",
+      children: "Pro Plan",
+    },
+    {
+      value: "business",
+      children: "Business Plan",
+    },
+    {
+      value: "enterprise",
+      children: "Enterprise Plan",
+    },
+  ] as SelectCollectionItemProps[],
+});
