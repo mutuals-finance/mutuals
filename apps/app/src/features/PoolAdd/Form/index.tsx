@@ -29,6 +29,7 @@ import {
   createListCollection,
   SelectItemText,
   Span,
+  createTreeCollection,
 } from "@mutuals/ui";
 
 import { PoolAddData } from "@/features/PoolAdd/types";
@@ -40,6 +41,32 @@ import React, { useCallback } from "react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import AuthSignInCard from "@/features/Auth/SignInCard";
 import AllocationFormTree from "@/features/Allocation/FormTree";
+import { AllocationNode } from "@/features/Allocation/types";
+
+const initialClaims = createTreeCollection<AllocationNode>({
+  nodeToValue: (node) => node.id,
+  nodeToString: (node) => node.recipientAddress ?? node.id,
+  rootNode: {
+    id: "ROOT",
+    value: 0,
+    stateId: "",
+    strategyId: "",
+    children: [
+      {
+        id: "1",
+        value: 0,
+        stateId: "",
+        strategyId: "",
+      },
+      {
+        id: "2",
+        value: 0,
+        stateId: "",
+        strategyId: "",
+      },
+    ],
+  },
+});
 
 const items = {
   0: {
@@ -87,7 +114,7 @@ const items = {
               "You must sign in to your account to configure allocations."
             }
           />*/}
-          <AllocationFormTree />
+          <AllocationFormTree id={"claims"} />
         </Stack>
       </>
     ),
@@ -101,12 +128,7 @@ const collection = createListCollection({
   })),
 });
 
-type PoolAddFormFieldsetProps = UseStepsReturn;
-
-function PoolAddFormFieldset({
-  hasPrevStep,
-  hasNextStep,
-}: PoolAddFormFieldsetProps) {
+function PoolAddFormFieldset() {
   return (
     <Fieldset.Root>
       <Fieldset.Content>
@@ -124,33 +146,43 @@ function PoolAddFormFieldset({
             }
           />
         </Steps.CompletedContent>
-        <Group>
-          <Steps.PrevTrigger asChild>
-            <IconButton variant="subtle" size="xl" disabled={!hasPrevStep}>
-              <IoChevronBackSharp />
-            </IconButton>
-          </Steps.PrevTrigger>
-
-          {hasNextStep ? (
-            <Steps.NextTrigger asChild>
-              <Button type="button" flex="1" variant="subtle" size="xl">
-                Continue
-              </Button>
-            </Steps.NextTrigger>
-          ) : (
-            <Button
-              type="submit"
-              flex="1"
-              variant="solid"
-              size="xl"
-              disabled={true}
-            >
-              Confirm
-            </Button>
-          )}
-        </Group>
       </Fieldset.Content>
     </Fieldset.Root>
+  );
+}
+
+type PoolAddFormHandlersProps = UseStepsReturn;
+
+function PoolAddFormHandlers({
+  hasPrevStep,
+  hasNextStep,
+}: PoolAddFormHandlersProps) {
+  return (
+    <Group w={"full"}>
+      <Steps.PrevTrigger asChild>
+        <IconButton variant="subtle" size="xl" disabled={!hasPrevStep}>
+          <IoChevronBackSharp />
+        </IconButton>
+      </Steps.PrevTrigger>
+
+      {hasNextStep ? (
+        <Steps.NextTrigger asChild>
+          <Button type="button" flex="1" variant="subtle" size="xl">
+            Continue
+          </Button>
+        </Steps.NextTrigger>
+      ) : (
+        <Button
+          type="submit"
+          flex="1"
+          variant="solid"
+          size="xl"
+          disabled={true}
+        >
+          Confirm
+        </Button>
+      )}
+    </Group>
   );
 }
 
@@ -196,6 +228,7 @@ export default function PoolAdd() {
         ownerAddress: address,
         name: "",
         description: "",
+        claims: initialClaims,
       }}
       errors={
         !error
@@ -293,8 +326,11 @@ export default function PoolAdd() {
                   borderColor={{ lg: "border" }}
                 >
                   <Card.Body p={{ base: "0", lg: "6" }}>
-                    <PoolAddFormFieldset {...steps} />
+                    <PoolAddFormFieldset />
                   </Card.Body>
+                  <Card.Footer p={{ base: "0", lg: "6" }}>
+                    <PoolAddFormHandlers {...steps} />
+                  </Card.Footer>
                 </Card.Root>
               </GridItem>
             </SimpleGrid>
