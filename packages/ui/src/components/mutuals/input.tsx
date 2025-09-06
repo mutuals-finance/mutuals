@@ -10,7 +10,6 @@ import {
   SelectRoot as ChakraSelectRoot,
   SelectRootProps as ChakraSelectRootProps,
   SelectValueTextProps as ChakraSelectValueTextProps,
-  ListCollection as ChakraListCollection,
 } from "@chakra-ui/react";
 import { Controller, useFormContext, ControllerProps } from "react-hook-form";
 import {
@@ -113,20 +112,54 @@ export function NumberInput({
 type ReactNodeOrFn =
   | string
   | ReactNode
-  | ((value?: any, index?: number) => React.ReactNode);
+  | ((value?: SelectCollectionItemProps, index?: number) => React.ReactNode);
 
 export type SelectCollectionItemProps = {
   value: any;
   children: ReactNodeOrFn;
 };
 
+// ChakraListCollection<SelectCollectionItemProps>
+
 export interface SelectProps
   extends BaseInputProps,
-    Omit<ChakraSelectRootProps, "children"> {
-  collection: ChakraListCollection<SelectCollectionItemProps>;
+    Omit<ChakraSelectRootProps<SelectCollectionItemProps>, "children"> {
+  // collection: ChakraSelectRootProps<SelectCollectionItemProps>["collection"];
   children?: ReactNodeOrFn;
   placeholder?: ChakraSelectValueTextProps["placeholder"];
   valueTextProps?: Omit<ChakraSelectValueTextProps, "placeholder">;
+}
+
+type SelectCollectionItemRenderProps = {
+  children?: ReactNodeOrFn;
+  item?: SelectCollectionItemProps;
+  index: number;
+};
+
+function SelectCollectionItemContent({
+  item,
+  children,
+  index,
+}: SelectCollectionItemRenderProps) {
+  if (children) {
+    return typeof children == "function" ? children(item, index) : children;
+  }
+
+  if (item?.children) {
+    return typeof item.children == "function" ? item.children() : item.children;
+  }
+  /*
+  if(typeof item == "string"){
+    return item
+  }
+  collection.stringifyItem(item)
+*/
+
+  if (item?.value) {
+    return item.value;
+  }
+
+  return `unknown ${index}`;
 }
 
 export function Select({
@@ -167,24 +200,19 @@ export function Select({
               placeholder={placeholder}
               {...valueTextProps}
             >
-              {(items: SelectCollectionItemProps[]) => {
-                const item = items[0]!;
-                return typeof children == "function"
-                  ? children(item.value, 0)
-                  : !children
-                    ? typeof item == "string" && item
-                    : collection.stringifyItem(item);
-              }}
+              {(items: SelectCollectionItemProps[]) => (
+                <SelectCollectionItemContent item={items[0]} index={0}>
+                  {children}
+                </SelectCollectionItemContent>
+              )}
             </ChakraSelectValueText>
           </ChakraSelectTrigger>
           <ChakraSelectContent>
             {collection?.items.map((item, i) => (
               <ChakraSelectItem key={i} item={item}>
-                {typeof children == "function"
-                  ? children(item.value, i)
-                  : !children
-                    ? typeof item == "string" && item
-                    : children}
+                <SelectCollectionItemContent item={item} index={i}>
+                  {children}
+                </SelectCollectionItemContent>
               </ChakraSelectItem>
             ))}
           </ChakraSelectContent>
