@@ -11,6 +11,8 @@ import {
   Portal,
   Menu,
   Box,
+  createListCollection,
+  SelectCollectionItemProps,
 } from "@mutuals/ui";
 import React, { PropsWithChildren } from "react";
 import AllocationFormTreeCombobox from "@/features/Allocation/FormTree/Combobox";
@@ -22,6 +24,10 @@ import {
 } from "react-icons/io5";
 import { BsArrowBarDown, BsArrowBarUp, BsArrowsCollapse } from "react-icons/bs";
 import { AllocationNode } from "../types";
+import {
+  CALCULATION_TYPE_CONFIG,
+  RECIPIENT_TYPE_CONFIG,
+} from "@mutuals/sdk-react";
 
 export type AllocationFormTreeNodeProps =
   TreeView.NodeRenderProps<AllocationNode> & {
@@ -31,6 +37,21 @@ export type AllocationFormTreeNodeProps =
     onRemove?: (props: TreeView.NodeProviderProps<AllocationNode>) => void;
   };
 
+const createAllocationCollection = (config: {
+  [key: number]: { key: number; name: string };
+}) =>
+  createListCollection<SelectCollectionItemProps>({
+    items: Object.values(config).map(({ key, name }) => ({
+      value: key,
+      children: name,
+    })),
+  });
+
+const SELECT_ITEMS = {
+  state: createAllocationCollection(RECIPIENT_TYPE_CONFIG),
+  strategy: createAllocationCollection(CALCULATION_TYPE_CONFIG),
+};
+
 export default function AllocationFormTreeNode({
   onAddNested,
   onAddAfter,
@@ -39,65 +60,30 @@ export default function AllocationFormTreeNode({
   ...props
 }: AllocationFormTreeNodeProps) {
   const tree = useTreeViewContext();
-  const { node, nodeState, indexPath } = props;
-  /*
-  const groupId = ""; //`${id}${depth >= 0 ? ".children" : ""}`;
-  const methods = useAllocationData({
-    id: `${groupId}`,
-  });
-
-  const { fields, remove, insert } = methods;
-*/
+  const { node, nodeState } = props;
 
   return (
     <>
       <Menu.Root positioning={{ hideWhenDetached: true }}>
         <Menu.ContextTrigger as={"div"}>
           {nodeState.isBranch ? (
-            <TreeView.BranchControl role="" rounded={0}>
-              <AllocationFormTreeNodeContent>
-                <Menu.Trigger asChild>
-                  <IconButton
-                    size="xs"
-                    variant="ghost"
-                    aria-label="Toggle menu"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <IoEllipsisHorizontalSharp />
-                  </IconButton>
-                </Menu.Trigger>
-              </AllocationFormTreeNodeContent>
+            <TreeView.BranchControl role="">
+              <AllocationFormTreeNodeContent />
             </TreeView.BranchControl>
           ) : (
-            <TreeView.Item rounded={0}>
-              <AllocationFormTreeNodeContent>
-                <Menu.Trigger asChild>
-                  <IconButton
-                    size="xs"
-                    variant="ghost"
-                    aria-label="Toggle menu"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <IoEllipsisHorizontalSharp />
-                  </IconButton>
-                </Menu.Trigger>
-              </AllocationFormTreeNodeContent>
+            <TreeView.Item>
+              <AllocationFormTreeNodeContent />
             </TreeView.Item>
           )}
         </Menu.ContextTrigger>
         <Portal>
           <Menu.Positioner>
-            <Menu.Content minW={"40"} maxW={"full"}>
+            <Menu.Content minW={"48"} maxW={"full"}>
               <Menu.Item
                 value="add-before"
                 onClick={(e) => {
                   e.stopPropagation();
                   onAddBefore?.(props);
-                  //tree.expand([node.id]);
                 }}
               >
                 <BsArrowBarUp />
@@ -107,9 +93,7 @@ export default function AllocationFormTreeNode({
                 value="add-after"
                 onClick={(e) => {
                   e.stopPropagation();
-                  console.log(props);
                   onAddAfter?.(props);
-                  //tree.expand([node.id]);
                 }}
               >
                 <BsArrowBarDown />
@@ -137,7 +121,7 @@ export default function AllocationFormTreeNode({
                 }}
               >
                 <IoTrashBinSharp />
-                <Box flex="1">Delete item</Box>
+                <Box flex="1">Delete recipient</Box>
               </Menu.Item>
             </Menu.Content>
           </Menu.Positioner>
@@ -160,48 +144,16 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
         <IoPersonCircleOutline />
       )}
 
-      {/*
-      <TreeView.BranchTrigger
-        pointerEvents={!nodeState.isBranch ? "none" : "auto"}
-      >
-        <TreeView.BranchIndicator asChild>
-          <IconButton
-            size="2xs"
-            variant="ghost"
-            aria-label="Collapse node"
-            opacity={nodeState.isBranch ? 1 : 0}
-          >
-            <IoChevronForward />
-          </IconButton>
-        </TreeView.BranchIndicator>
-      </TreeView.BranchTrigger>
-
-      <TreeView.NodeCheckbox aria-label="check node">
-        <Checkmark
-          bg={{
-            base: "bg",
-            _checked: "colorPalette.solid",
-            _indeterminate: "colorPalette.solid",
-          }}
-          size="md"
-          checked={nodeState.checked === true}
-          indeterminate={nodeState.checked === "indeterminate"}
-        />
-      </TreeView.NodeCheckbox>
-*/}
-
       <AllocationFormTreeCombobox
-        size="xs"
-        flexBasis={"16"}
         placeholder={"State"}
         id={`${id}.stateId`}
+        collection={SELECT_ITEMS.state}
       />
 
       <AllocationFormTreeCombobox
-        size="xs"
-        flexBasis={"20"}
         placeholder={"Strategy"}
         id={`${id}.strategyId`}
+        collection={SELECT_ITEMS.strategy}
       />
 
       <Input
@@ -234,6 +186,19 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
           }}
         />
       </InputGroup>
+
+      <Menu.Trigger asChild>
+        <IconButton
+          size="xs"
+          variant="ghost"
+          aria-label="Toggle menu"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <IoEllipsisHorizontalSharp />
+        </IconButton>
+      </Menu.Trigger>
 
       {children}
     </>
