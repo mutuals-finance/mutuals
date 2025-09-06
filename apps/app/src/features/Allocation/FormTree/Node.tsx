@@ -154,7 +154,7 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
       <AllocationFormTreeCombobox
         placeholder={"State"}
         id={`${id}.stateId`}
-        size="xs"
+        size={"md"}
         w={"32"}
         flex={"0 0 auto"}
         collection={SELECT_ITEMS.state}
@@ -163,7 +163,7 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
       <AllocationFormTreeCombobox
         placeholder={"Strategy"}
         id={`${id}.strategyId`}
-        size="xs"
+        size={"md"}
         w={"32"}
         flex={"0 0 auto"}
         collection={SELECT_ITEMS.strategy}
@@ -172,7 +172,7 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
       <Input
         placeholder={"0x000...000"}
         id={`${id}.recipientAddress`}
-        size={"xs"}
+        size={"md"}
         w={"32"}
         flex={"1 0 auto"}
         onClick={(e) => {
@@ -191,7 +191,7 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
           step={!false ? 0.1 : 1}
           max={!false ? 100 : 9999}
           min={0}
-          size={"xs"}
+          size={"md"}
           inputProps={{
             ps: "2.2em",
           }}
@@ -205,7 +205,7 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
         <IconButton
           position={"sticky"}
           right={"0"}
-          size="xs"
+          size={"md"}
           variant="ghost"
           bg={"bg"}
           aria-label="Toggle menu"
