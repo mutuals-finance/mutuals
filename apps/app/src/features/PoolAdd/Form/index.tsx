@@ -130,7 +130,7 @@ const collection = createListCollection({
 
 function PoolAddFormFieldset() {
   return (
-    <Fieldset.Root>
+    <Fieldset.Root minW={"0"}>
       <Fieldset.Content>
         <FormErrorAlert name={"root.upsertPool"} />
 
@@ -325,10 +325,16 @@ export default function PoolAdd() {
                   border={{ base: "none", lg: "1px solid" }}
                   borderColor={{ lg: "border" }}
                 >
-                  <Card.Body p={{ base: "0", lg: "6" }}>
+                  <Card.Body
+                    px={{ base: "0", lg: "6" }}
+                    pt={{ base: "0", lg: "6" }}
+                  >
                     <PoolAddFormFieldset />
                   </Card.Body>
-                  <Card.Footer p={{ base: "0", lg: "6" }}>
+                  <Card.Footer
+                    px={{ base: "0", lg: "6" }}
+                    pb={{ base: "0", lg: "6" }}
+                  >
                     <PoolAddFormHandlers {...steps} />
                   </Card.Footer>
                 </Card.Root>

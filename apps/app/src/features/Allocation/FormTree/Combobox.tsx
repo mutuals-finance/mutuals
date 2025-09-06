@@ -9,9 +9,6 @@ export default function AllocationFormTreeCombobox({
 }: AllocationFormTreeComboboxProps) {
   return (
     <Select
-      size="xs"
-      w={"24"}
-      flex={"0 0 auto"}
       positioning={{ sameWidth: false }}
       onClick={(e) => {
         e.stopPropagation();

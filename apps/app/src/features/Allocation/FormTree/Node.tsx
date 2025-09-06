@@ -13,6 +13,7 @@ import {
   Box,
   createListCollection,
   SelectCollectionItemProps,
+  Icon,
 } from "@mutuals/ui";
 import React, { PropsWithChildren } from "react";
 import AllocationFormTreeCombobox from "@/features/Allocation/FormTree/Combobox";
@@ -65,17 +66,21 @@ export default function AllocationFormTreeNode({
   return (
     <>
       <Menu.Root positioning={{ hideWhenDetached: true }}>
+        {/*
         <Menu.ContextTrigger as={"div"}>
-          {nodeState.isBranch ? (
-            <TreeView.BranchControl role="">
-              <AllocationFormTreeNodeContent />
-            </TreeView.BranchControl>
-          ) : (
-            <TreeView.Item>
-              <AllocationFormTreeNodeContent />
-            </TreeView.Item>
-          )}
+*/}
+        {nodeState.isBranch ? (
+          <TreeView.BranchControl role="">
+            <AllocationFormTreeNodeContent />
+          </TreeView.BranchControl>
+        ) : (
+          <TreeView.Item>
+            <AllocationFormTreeNodeContent />
+          </TreeView.Item>
+        )}
+        {/*
         </Menu.ContextTrigger>
+*/}
         <Portal>
           <Menu.Positioner>
             <Menu.Content minW={"48"} maxW={"full"}>
@@ -138,21 +143,29 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
 
   return (
     <>
-      {nodeState.isBranch ? (
-        <IoPeopleCircleOutline />
-      ) : (
-        <IoPersonCircleOutline />
-      )}
+      <Icon flex={"0 0 auto"}>
+        {nodeState.isBranch ? (
+          <IoPeopleCircleOutline />
+        ) : (
+          <IoPersonCircleOutline />
+        )}
+      </Icon>
 
       <AllocationFormTreeCombobox
         placeholder={"State"}
         id={`${id}.stateId`}
+        size="xs"
+        w={"32"}
+        flex={"0 0 auto"}
         collection={SELECT_ITEMS.state}
       />
 
       <AllocationFormTreeCombobox
         placeholder={"Strategy"}
         id={`${id}.strategyId`}
+        size="xs"
+        w={"32"}
+        flex={"0 0 auto"}
         collection={SELECT_ITEMS.strategy}
       />
 
@@ -160,7 +173,8 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
         placeholder={"0x000...000"}
         id={`${id}.recipientAddress`}
         size={"xs"}
-        flex={"1"}
+        w={"32"}
+        flex={"1 0 auto"}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -189,8 +203,11 @@ function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
 
       <Menu.Trigger asChild>
         <IconButton
+          position={"sticky"}
+          right={"0"}
           size="xs"
           variant="ghost"
+          bg={"bg"}
           aria-label="Toggle menu"
           onClick={(e) => {
             e.stopPropagation();

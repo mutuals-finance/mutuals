@@ -68,7 +68,7 @@ export default function AllocationFormTree({
       {...props}
     >
       <TreeView.Label>Allocation</TreeView.Label>
-      <TreeView.Tree>
+      <TreeView.Tree overflowX={"auto"}>
         <TreeView.Node
           indentGuide={<TreeView.BranchIndentGuide />}
           render={(nodeProps) => (
