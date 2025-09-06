@@ -1,45 +1,22 @@
 "use client";
 
-import {
-  createListCollection,
-  Select,
-  SelectProps,
-  SelectCollectionItemProps,
-} from "@mutuals/ui";
+import { Select, SelectProps } from "@mutuals/ui";
 
-export type AllocationFormTreeComboboxProps = Omit<SelectProps, "collection">;
+export type AllocationFormTreeComboboxProps = SelectProps;
 
 export default function AllocationFormTreeCombobox({
   ...props
 }: AllocationFormTreeComboboxProps) {
   return (
     <Select
-      collection={frameworks}
+      size="xs"
+      w={"24"}
+      flex={"0 0 auto"}
+      positioning={{ sameWidth: false }}
       onClick={(e) => {
         e.stopPropagation();
       }}
       {...props}
-    ></Select>
+    />
   );
 }
-
-const frameworks = createListCollection({
-  items: [
-    {
-      value: "basic",
-      children: "Basic Plan",
-    },
-    {
-      value: "pro",
-      children: "Pro Plan",
-    },
-    {
-      value: "business",
-      children: "Business Plan",
-    },
-    {
-      value: "enterprise",
-      children: "Enterprise Plan",
-    },
-  ] as SelectCollectionItemProps[],
-});
