@@ -2,19 +2,15 @@ import {
   IconButton,
   Stack,
   Group,
-  createListCollection,
   MenuRoot,
   MenuTrigger,
   InputGroup,
   Input,
-  Select,
   NumberInput,
 } from "@mutuals/ui";
 import {
   RECIPIENT_TYPE_CONFIG,
   CALCULATION_TYPE_CONFIG,
-  recipientTypeName,
-  calculationTypeName,
   Allocation,
   CalculationType,
   RecipientType,
@@ -104,7 +100,7 @@ export default function AllocationFormTableRow({
               />
             </MenuRoot>
 
-            {[
+            {/* {[
               {
                 collection: createListCollection({
                   items: SELECT_ITEMS.calculation,
@@ -133,7 +129,7 @@ export default function AllocationFormTableRow({
                   {selectChildren}
                 </Select>
               ),
-            )}
+            )}*/}
 
             {isRecipient && (
               <Input
