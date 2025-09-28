@@ -248,7 +248,7 @@ export type SelectCollectionItemProps = {
   group?: string;
 };
 
-export interface SelectProps<TFieldValue>
+export interface SelectProps<TFieldValue = ChakraSelectRootProps["value"]>
   extends BaseInputProps<
       TFieldValue,
       SelectValueChangeDetails<SelectCollectionItemProps>

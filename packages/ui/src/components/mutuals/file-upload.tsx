@@ -10,7 +10,9 @@ import {
 } from "../../components/ui/file-upload";
 import { BaseInputProps } from "../../components/mutuals/input";
 
-export interface FileUploadProps extends BaseInputProps, FileUploadRootProps {
+export interface FileUploadProps
+  extends Omit<BaseInputProps<unknown, unknown>, "transform">,
+    FileUploadRootProps {
   dropzoneProps?: FileUploadDropzoneProps;
 }
 
