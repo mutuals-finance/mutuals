@@ -2,12 +2,12 @@ import { Box, Text } from "@mutuals/ui";
 
 import PoolCard from "@/features/Pool/Card";
 
-import { PoolAddData } from "@/features/PoolAdd/types";
 import { UseFormReturn } from "react-hook-form";
+import { PoolCreateInput } from "@mutuals/sdk-react";
 
-interface ReviewStepProps extends UseFormReturn<PoolAddData> {}
+interface ReviewStepProps extends UseFormReturn<PoolCreateInput> {}
 
-function PoolReviewCard({ image, name, description }: PoolAddData) {
+function PoolReviewCard({ image, name, description }: PoolCreateInput) {
   return (
     <PoolCard
       {...{

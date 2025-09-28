@@ -1,56 +1,61 @@
 "use client";
 
 import {
+  Icon,
   IconButton,
   TreeView,
   useTreeViewNodeContext,
-  InputGroup,
   useTreeViewContext,
-  NumberInput,
   Input,
   Portal,
   Menu,
   Box,
   createListCollection,
   SelectCollectionItemProps,
-  Icon,
+  Select,
+  Group,
 } from "@mutuals/ui";
-import React, { PropsWithChildren } from "react";
-import AllocationFormTreeCombobox from "@/features/Allocation/FormTree/Combobox";
+import React, { PropsWithChildren, useMemo } from "react";
 import {
+  IoChevronForwardSharp,
   IoEllipsisHorizontalSharp,
-  IoPeopleCircleOutline,
-  IoPersonCircleOutline,
   IoTrashBinSharp,
 } from "react-icons/io5";
 import { BsArrowBarDown, BsArrowBarUp, BsArrowsCollapse } from "react-icons/bs";
-import { AllocationNode } from "../types";
 import {
-  CALCULATION_TYPE_CONFIG,
-  RECIPIENT_TYPE_CONFIG,
+  StrategyExtensions,
+  StateExtensions,
+  PoolCreateInput,
+  ClaimCreateNode,
 } from "@mutuals/sdk-react";
+import { useWatch } from "react-hook-form";
+import { RiFolderReceivedLine, RiUserReceivedLine } from "react-icons/ri";
 
 export type AllocationFormTreeNodeProps =
-  TreeView.NodeRenderProps<AllocationNode> & {
-    onAddNested?: (props: TreeView.NodeProviderProps<AllocationNode>) => void;
-    onAddAfter?: (props: TreeView.NodeProviderProps<AllocationNode>) => void;
-    onAddBefore?: (props: TreeView.NodeProviderProps<AllocationNode>) => void;
-    onRemove?: (props: TreeView.NodeProviderProps<AllocationNode>) => void;
+  TreeView.NodeRenderProps<ClaimCreateNode> & {
+    onAddNested?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
+    onAddAfter?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
+    onAddBefore?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
+    onRemove?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
   };
 
-const createAllocationCollection = (config: {
-  [key: number]: { key: number; name: string };
-}) =>
+const createAllocationCollection = (
+  config: {
+    [key: string]: { key: string; name: string };
+  },
+  configValue: string,
+) =>
   createListCollection<SelectCollectionItemProps>({
     items: Object.values(config).map(({ key, name }) => ({
       value: key,
       children: name,
+      configValue,
     })),
   });
 
 const SELECT_ITEMS = {
-  state: createAllocationCollection(RECIPIENT_TYPE_CONFIG),
-  strategy: createAllocationCollection(CALCULATION_TYPE_CONFIG),
+  state: createAllocationCollection(StateExtensions, "state"),
+  strategy: createAllocationCollection(StrategyExtensions, "strategy"),
 };
 
 export default function AllocationFormTreeNode({
@@ -66,21 +71,15 @@ export default function AllocationFormTreeNode({
   return (
     <>
       <Menu.Root positioning={{ hideWhenDetached: true }}>
-        {/*
-        <Menu.ContextTrigger as={"div"}>
-*/}
         {nodeState.isBranch ? (
-          <TreeView.BranchControl role="">
+          <TreeView.BranchControl role="none" w={"full"} bg={"bg"} pr={"0"}>
             <AllocationFormTreeNodeContent />
           </TreeView.BranchControl>
         ) : (
-          <TreeView.Item>
+          <TreeView.Item w={"full"} bg={"bg"} pr={"0"}>
             <AllocationFormTreeNodeContent />
           </TreeView.Item>
         )}
-        {/*
-        </Menu.ContextTrigger>
-*/}
         <Portal>
           <Menu.Positioner>
             <Menu.Content minW={"48"} maxW={"full"}>
@@ -138,84 +137,115 @@ export default function AllocationFormTreeNode({
 
 function AllocationFormTreeNodeContent({ children }: PropsWithChildren) {
   const nodeState = useTreeViewNodeContext();
-  const baseId = "claims.rootNode";
-  const id = `${baseId}${nodeState.indexPath.map((p) => `.children.${p}`)}`;
+  const baseId = "addClaims.rootNode";
+  const id =
+    `${baseId}${nodeState.indexPath.map((p) => `.children.${p}`)}` as `addClaims.rootNode`;
+
+  const [stateId, strategyId] = useWatch<PoolCreateInput>({
+    name: [`${id}.stateId`, `${id}.strategyId`],
+  });
+
+  const selectedState = StateExtensions[stateId];
+  const selectedStrategy = StrategyExtensions[strategyId];
+
+  const renderProps = useMemo(() => ({ id }), [id]);
 
   return (
     <>
       <Icon flex={"0 0 auto"}>
-        {nodeState.isBranch ? (
-          <IoPeopleCircleOutline />
-        ) : (
-          <IoPersonCircleOutline />
-        )}
+        {nodeState.isBranch ? <RiFolderReceivedLine /> : <RiUserReceivedLine />}
       </Icon>
 
-      <AllocationFormTreeCombobox
+      <Select<string>
         placeholder={"State"}
         id={`${id}.stateId`}
         size={"md"}
-        w={"32"}
+        w={"28"}
         flex={"0 0 auto"}
         collection={SELECT_ITEMS.state}
-      />
-
-      <AllocationFormTreeCombobox
-        placeholder={"Strategy"}
-        id={`${id}.strategyId`}
-        size={"md"}
-        w={"32"}
-        flex={"0 0 auto"}
-        collection={SELECT_ITEMS.strategy}
-      />
-
-      <Input
-        placeholder={"0x000...000"}
-        id={`${id}.recipientAddress`}
-        size={"md"}
-        w={"32"}
-        flex={"1 0 auto"}
+        positioning={{ sameWidth: false }}
         onClick={(e) => {
           e.stopPropagation();
         }}
+        transform={{
+          input: (value) => (!value ? undefined : [value]),
+          output: (e) => (!e.value ? undefined : e.value[0]),
+        }}
       />
 
-      <InputGroup
-        flexBasis={"24"}
-        flexShrink={"0"}
-        startElement={false ? "#" : "%"}
-      >
-        <NumberInput
-          id={`${id}.value`}
-          allowMouseWheel={true}
-          step={!false ? 0.1 : 1}
-          max={!false ? 100 : 9999}
-          min={0}
+      <Select<string>
+        placeholder={"Strategy"}
+        id={`${id}.strategyId`}
+        collection={SELECT_ITEMS.strategy}
+        size={"md"}
+        w={"48"}
+        flex={"0 0 auto"}
+        positioning={{ sameWidth: false }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        transform={{
+          input: (value) => (!value ? undefined : [value]),
+          output: (e) => (!e.value ? undefined : e.value[0]),
+        }}
+      />
+
+      {!nodeState.isBranch && (
+        <Input
+          placeholder={"Recipient address"}
+          id={`${id}.recipientAddress`}
           size={"md"}
-          inputProps={{
-            ps: "2.2em",
-          }}
+          w={"48"}
+          flex={"1 0 auto"}
           onClick={(e) => {
             e.stopPropagation();
           }}
         />
-      </InputGroup>
+      )}
 
-      <Menu.Trigger asChild>
-        <IconButton
-          position={"sticky"}
-          right={"0"}
-          size={"md"}
-          variant="ghost"
-          bg={"bg"}
-          aria-label="Toggle menu"
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <IoEllipsisHorizontalSharp />
-        </IconButton>
-      </Menu.Trigger>
+      {selectedState?.renderInput?.(renderProps)}
+
+      {selectedStrategy?.renderInput?.(renderProps)}
+
+      <Group position={"sticky"} right={"0"} gap={"0.5"} ml={"auto"}>
+        {nodeState.isBranch && (
+          <TreeView.BranchTrigger asChild>
+            <IconButton
+              css={{
+                lg: {
+                  opacity: 0,
+                  "[role=treeitem]:hover &": { opacity: 1 },
+                },
+              }}
+              shadow={"xs"}
+              variant="subtle"
+              aria-label="Toggle children"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              size={{ base: "xs", lg: "xs" }}
+            >
+              <TreeView.BranchIndicator asChild>
+                <IoChevronForwardSharp />
+              </TreeView.BranchIndicator>
+            </IconButton>
+          </TreeView.BranchTrigger>
+        )}
+
+        <Menu.Trigger asChild>
+          <IconButton
+            shadow={"xs"}
+            variant="subtle"
+            aria-label="Toggle menu"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            size={{ base: "xs", lg: "xs" }}
+          >
+            <IoEllipsisHorizontalSharp />
+          </IconButton>
+        </Menu.Trigger>
+      </Group>
 
       {children}
     </>

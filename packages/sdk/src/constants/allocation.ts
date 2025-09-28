@@ -1,29 +1,64 @@
-export const RECIPIENT_TYPE_CONFIG = {
-  [0]: {
-    key: 0,
-    name: "Default Recipient",
+import { KeyedValue } from "../types";
+
+export const stateIds = {
+  Offchain: "offchain",
+  Onchain: "onchain",
+};
+
+export const StateExtensions: KeyedValue<typeof stateIds> = {
+  [stateIds.Offchain]: {
+    key: stateIds.Offchain,
+    name: "Offchain",
   },
-  [1]: {
-    key: 1,
-    name: "Default Group",
-  },
-  [2]: {
-    key: 2,
-    name: "Timed Group",
-  },
-  [3]: {
-    key: 3,
-    name: "Prioritized Group",
+  [stateIds.Onchain]: {
+    key: stateIds.Onchain,
+    name: "Onchain",
   },
 };
 
-export const CALCULATION_TYPE_CONFIG = {
-  [4]: {
-    key: 4,
+export const strategyIds = {
+  DefaultAllocation: "default_allocation",
+  TimelockAllocation: "timelock_allocation",
+  TokenAllocation: "token_allocation",
+  TokenGating: "token_gating",
+  PriorityGating: "priority_gating",
+};
+
+export const StrategyExtensions: KeyedValue<typeof strategyIds> = {
+  [strategyIds.DefaultAllocation]: {
+    key: strategyIds.DefaultAllocation,
+    name: "Default Allocation",
+  },
+  [strategyIds.TimelockAllocation]: {
+    key: strategyIds.TimelockAllocation,
+    name: "Timelock Allocation",
+  },
+  [strategyIds.TokenAllocation]: {
+    key: strategyIds.TokenAllocation,
+    name: "Token Allocation",
+  },
+  [strategyIds.TokenGating]: {
+    key: strategyIds.TokenGating,
+    name: "Token Gating",
+  },
+  [strategyIds.PriorityGating]: {
+    key: strategyIds.PriorityGating,
+    name: "Priority Gating",
+  },
+};
+
+export const allocationIds = {
+  Percentage: "percentage",
+  Fixed: "fixed",
+};
+
+export const AllocationType: KeyedValue<typeof allocationIds> = {
+  [allocationIds.Percentage]: {
+    key: allocationIds.Percentage,
     name: "Percentage",
   },
-  [5]: {
-    key: 5,
+  [allocationIds.Fixed]: {
+    key: allocationIds.Fixed,
     name: "Fixed",
   },
 };

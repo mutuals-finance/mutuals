@@ -9,8 +9,8 @@ import {
   NumberInput,
 } from "@mutuals/ui";
 import {
-  RECIPIENT_TYPE_CONFIG,
-  CALCULATION_TYPE_CONFIG,
+  StateExtensions,
+  StrategyExtensions,
   Allocation,
   CalculationType,
   RecipientType,
@@ -32,11 +32,11 @@ import React, { ReactNode } from "react";
 import TreeTableRow, { TreeTableRowProps } from "@/components/TreeTable/Row";
 
 const SELECT_ITEMS = {
-  recipient: Object.values(RECIPIENT_TYPE_CONFIG).map(({ key, name }) => ({
+  recipient: Object.values(StateExtensions).map(({ key, name }) => ({
     value: key,
     children: name,
   })),
-  calculation: Object.values(CALCULATION_TYPE_CONFIG).map(({ key, name }) => ({
+  calculation: Object.values(StrategyExtensions).map(({ key, name }) => ({
     value: key,
     children: name,
   })),

@@ -2,40 +2,46 @@
 
 import { TreeView } from "@mutuals/ui";
 import React from "react";
-import { AllocationAddData, AllocationNode } from "@/features/Allocation/types";
 import AllocationFormTreeNode from "@/features/Allocation/FormTree/Node";
 import { useFormContext, useWatch } from "react-hook-form";
-import type { PoolAddData } from "@/features/PoolAdd/types";
+import {
+  ClaimCreateNode,
+  ClaimCreateTree,
+  PoolCreateInput,
+  stateIds,
+  strategyIds,
+} from "@mutuals/sdk-react";
 
-const createNewNode = (): AllocationNode => ({
+const createNewNode = (): ClaimCreateNode => ({
   id: `${Date.now()}`,
   value: 0,
-  stateId: "",
-  strategyId: "",
+  stateId: stateIds.Offchain,
+  strategyId: strategyIds.DefaultAllocation,
   children: [],
+  data: "",
 });
 
 export interface AllocationFormTreeProps
   extends Omit<TreeView.RootProps, "collection"> {
-  id?: "claims";
+  id?: "addClaims";
 }
 
 export default function AllocationFormTree({
-  id = "claims",
+  id = "addClaims",
   ...props
 }: AllocationFormTreeProps) {
-  const { setValue, control } = useFormContext<PoolAddData>();
+  const { setValue, control } = useFormContext<PoolCreateInput>();
 
-  const claims: AllocationAddData = useWatch<PoolAddData>({
+  const claims: ClaimCreateTree = useWatch<PoolCreateInput>({
     control,
     name: id,
   });
 
-  const onRemove = (props: TreeView.NodeProviderProps<AllocationNode>) => {
+  const onRemove = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
     setValue(id, claims.remove([props.indexPath]));
   };
 
-  const onAddBefore = (props: TreeView.NodeProviderProps<AllocationNode>) => {
+  const onAddBefore = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
     const { indexPath } = props;
     const newNode = createNewNode();
     const newClaims = claims.insertBefore(indexPath, [newNode]);
@@ -44,7 +50,7 @@ export default function AllocationFormTree({
     }
   };
 
-  const onAddAfter = (props: TreeView.NodeProviderProps<AllocationNode>) => {
+  const onAddAfter = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
     const { indexPath } = props;
     const newNode = createNewNode();
     const newClaims = claims.insertAfter(indexPath, [newNode]);
@@ -53,7 +59,7 @@ export default function AllocationFormTree({
     }
   };
 
-  const onAddNested = (props: TreeView.NodeProviderProps<AllocationNode>) => {
+  const onAddNested = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
     const { node, indexPath } = props;
     const newNode = createNewNode();
     const children = [newNode, ...(node.children ?? [])];
@@ -61,15 +67,10 @@ export default function AllocationFormTree({
   };
 
   return (
-    <TreeView.Root
-      collection={claims}
-      animateContent={true}
-      selectionMode="multiple"
-      {...props}
-    >
+    <TreeView.Root collection={claims} expandOnClick={false} {...props}>
       <TreeView.Label>Allocation</TreeView.Label>
       <TreeView.Tree overflowX={"auto"}>
-        <TreeView.Node
+        <TreeView.Node<ClaimCreateNode>
           indentGuide={<TreeView.BranchIndentGuide />}
           render={(nodeProps) => (
             <AllocationFormTreeNode

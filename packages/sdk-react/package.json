@@ -11,6 +11,7 @@
     "typecheck": "tsc -b"
   },
   "peerDependencies": {
+    "@mutuals/ui": "workspace:*",
     "react": ">= 18.0.0",
     "viem": ">=2.0.0"
   },
@@ -21,7 +22,8 @@
   },
   "dependencies": {
     "@mutuals/graphql-client-nextjs": "workspace:*",
-    "@mutuals/sdk": "workspace:*"
+    "@mutuals/sdk": "workspace:*",
+    "react-hook-form": "^7.62.0"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",

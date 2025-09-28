@@ -2,11 +2,11 @@
 
 import { Select, SelectProps } from "@mutuals/ui";
 
-export type AllocationFormTreeComboboxProps = SelectProps;
+export type AllocationFormTreeSelectProps = SelectProps;
 
-export default function AllocationFormTreeCombobox({
+export default function AllocationFormTreeSelect({
   ...props
-}: AllocationFormTreeComboboxProps) {
+}: AllocationFormTreeSelectProps) {
   return (
     <Select
       positioning={{ sameWidth: false }}
