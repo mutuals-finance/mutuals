@@ -1,12 +1,11 @@
 import StepperModal, { StepperDialogProps } from "@/components/StepperModal";
 import { LoadingStep, ReviewStep, SuccessStep } from "./steps";
-import { PoolAddData } from "@/features/PoolAdd/types";
 import { UseFormReturn } from "react-hook-form";
-import { useCreatePool } from "@mutuals/sdk-react";
+import { PoolCreateInput, useCreatePool } from "@mutuals/sdk-react";
 
 interface PoolAddModalProps
   extends Omit<StepperDialogProps, "activeStep" | "steps" | "onNext">,
-    UseFormReturn<PoolAddData, unknown> {}
+    UseFormReturn<PoolCreateInput, unknown> {}
 
 export default function PoolAddModal({
   open,

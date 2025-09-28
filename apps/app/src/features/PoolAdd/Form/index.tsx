@@ -32,7 +32,6 @@ import {
   createTreeCollection,
 } from "@mutuals/ui";
 
-import { PoolAddData } from "@/features/PoolAdd/types";
 import PoolAddModal from "@/features/PoolAdd/Modal";
 import { useAccount } from "wagmi";
 import { usePoolCreate } from "@mutuals/graphql-client-nextjs/client";
@@ -41,9 +40,14 @@ import React, { useCallback } from "react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import AuthSignInCard from "@/features/Auth/SignInCard";
 import AllocationFormTree from "@/features/Allocation/FormTree";
-import { AllocationNode } from "@/features/Allocation/types";
+import {
+  ClaimCreateNode,
+  PoolCreateInput,
+  stateIds,
+  strategyIds,
+} from "@mutuals/sdk-react";
 
-const initialClaims = createTreeCollection<AllocationNode>({
+const initialClaims = createTreeCollection<ClaimCreateNode>({
   nodeToValue: (node) => node.id,
   nodeToString: (node) => node.recipientAddress ?? node.id,
   rootNode: {
@@ -51,18 +55,21 @@ const initialClaims = createTreeCollection<AllocationNode>({
     value: 0,
     stateId: "",
     strategyId: "",
+    data: "",
     children: [
       {
         id: "1",
         value: 0,
-        stateId: "",
-        strategyId: "",
+        stateId: stateIds.Offchain,
+        strategyId: strategyIds.DefaultAllocation,
+        data: "",
       },
       {
         id: "2",
         value: 0,
-        stateId: "",
-        strategyId: "",
+        stateId: stateIds.Offchain,
+        strategyId: strategyIds.DefaultAllocation,
+        data: "",
       },
     ],
   },
@@ -114,7 +121,7 @@ const items = {
               "You must sign in to your account to configure allocations."
             }
           />*/}
-          <AllocationFormTree id={"claims"} />
+          <AllocationFormTree id={"addClaims"} />
         </Stack>
       </>
     ),
@@ -195,7 +202,13 @@ export default function PoolAdd() {
 
   const onSubmit = useCallback(
     (
-      { image: _image, ownerAddress: _ownerAddress, ...input }: PoolAddData,
+      {
+        image: _image,
+        ownerAddress: _ownerAddress,
+        // TODO enable claims add
+        addClaims: _addClaims,
+        ...input
+      }: PoolCreateInput,
       status: PoolStatus,
     ) => {
       if (status == PoolStatus.Active) {
@@ -219,7 +232,7 @@ export default function PoolAdd() {
   });
 
   return (
-    <Form<PoolAddData>
+    <Form<PoolCreateInput>
       onSubmit={(values) => onSubmit(values, PoolStatus.Active)}
       onSubmitInvalid={() => {
         console.log("Submit: invalid");
@@ -228,7 +241,7 @@ export default function PoolAdd() {
         ownerAddress: address,
         name: "",
         description: "",
-        claims: initialClaims,
+        addClaims: initialClaims,
       }}
       errors={
         !error

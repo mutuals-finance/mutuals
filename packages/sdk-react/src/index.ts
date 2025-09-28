@@ -1,8 +1,4 @@
-export {
-  MutualsClient,
-  RECIPIENT_TYPE_CONFIG,
-  CALCULATION_TYPE_CONFIG,
-} from "@mutuals/sdk";
+export { MutualsClient, AllocationType, allocationIds } from "@mutuals/sdk";
 
 export {
   getAllocationDefaults,
@@ -28,6 +24,21 @@ export type {
   Allocation,
 } from "@mutuals/sdk";
 export { ChainId } from "@mutuals/sdk/constants";
+
+export type {
+  ClaimCreateNode,
+  ClaimCreateTree,
+  PoolCreateInput,
+  ExtensionRenderInputProps,
+  ExtensionType,
+} from "./types";
+
+export {
+  StateExtensions,
+  StrategyExtensions,
+  stateIds,
+  strategyIds,
+} from "./extensions";
 
 export { MutualsProvider } from "./context";
 export {

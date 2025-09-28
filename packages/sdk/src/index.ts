@@ -7,10 +7,15 @@ export * from "./errors";
 
 export {
   SUPPORTED_CHAIN_IDS,
-  RECIPIENT_TYPE_CONFIG,
-  CALCULATION_TYPE_CONFIG,
+  StateExtensions,
+  StrategyExtensions,
+  AllocationType,
+  allocationIds,
+  stateIds,
+  strategyIds,
 } from "./constants";
 export type {
+  KeyedValue,
   MutualsClientConfig,
   DataClientConfig,
   CallData,

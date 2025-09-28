@@ -44,9 +44,8 @@ export default function AllocationMenu({
           <MenuItemGroup key={calculationType} title={names.calculationType}>
             {Object.entries(recipients).map(
               ([recipientType, value], _index) => {
-                names.recipientType = recipientTypeName(
-                  recipientType as RecipientType,
-                );
+                names.recipientType =
+                  recipientTypeName(recipientType as RecipientType) ?? "";
                 return (
                   <MenuItem
                     key={`${calculationType}-${recipientType}-${_index}`}

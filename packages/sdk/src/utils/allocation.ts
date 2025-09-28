@@ -1,11 +1,7 @@
 import { Allocation, CalculationType, RawAllocation } from "../types";
 import { encodePacked, Hex, hexToBytes, keccak256, toHex } from "viem";
 import { InvalidAllocationIndicesLengthError } from "../errors";
-import {
-  CALCULATION_TYPE_CONFIG,
-  RECIPIENT_TYPE_CONFIG,
-  ZERO,
-} from "../constants";
+import { StrategyExtensions, StateExtensions, ZERO } from "../constants";
 import { SimpleMerkleTree } from "@openzeppelin/merkle-tree";
 
 export const allocation = {
@@ -131,11 +127,11 @@ export const getAllocationDefaults = (cached?: Allocation) => ({
 });
 
 export const recipientTypeName = (
-  recipientType: keyof typeof RECIPIENT_TYPE_CONFIG,
-) => RECIPIENT_TYPE_CONFIG[recipientType]?.name;
+  recipientType: keyof typeof StateExtensions,
+) => StateExtensions[recipientType]?.name;
 export const calculationTypeName = (
-  calculationType: keyof typeof CALCULATION_TYPE_CONFIG,
-) => CALCULATION_TYPE_CONFIG[calculationType]?.name;
+  calculationType: keyof typeof StrategyExtensions,
+) => StrategyExtensions[calculationType]?.name;
 
 // Utility to compute a hash using viem's keccak256
 function computeHash(

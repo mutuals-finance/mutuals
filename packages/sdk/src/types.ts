@@ -9,7 +9,17 @@ import {
   TransactionType,
   Transport,
   WalletClient,
+  ValueOf,
 } from "viem";
+
+export type KeyedValue<
+  T extends Record<string, string> = Record<string, string>,
+> = {
+  [K in ValueOf<T>]: {
+    key: K;
+    name: string;
+  };
+};
 
 type TransactionOverrides = {
   accessList?: AccessList;
@@ -91,8 +101,10 @@ type SetPausedConfig = {
   paused: boolean;
 } & TransactionOverridesDict;
 
+// TODO remove when not needed
 type CalculationType = any;
 type RecipientType = any;
+// new types
 
 type CreateDefaultAllocationFn = (
   calculationType: CalculationType,

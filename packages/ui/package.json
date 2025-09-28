@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@chakra-ui/charts": "^3.24.2",
-    "@chakra-ui/react": "3.24.2",
+    "@chakra-ui/react": "3.27.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/error-message": "^2.0.1",
