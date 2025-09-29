@@ -26,10 +26,7 @@ export default async function DashboardHomeLayout({
     <>
       <Container maxW={"7xl"} mt={"6"}>
         <Stack gap={"6"}>
-          <AlertRoot
-            borderStartWidth="3px"
-            borderStartColor="colorPalette.solid"
-          >
+          <AlertRoot>
             <AlertIndicator />
             <AlertContent>
               <AlertTitle>Welcome to Mutuals</AlertTitle>
