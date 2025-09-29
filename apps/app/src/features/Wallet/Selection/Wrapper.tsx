@@ -24,7 +24,11 @@ export function WalletSelectionWrapper({
 }: WalletSelectionWrapperProps) {
   return (
     <VStack gap={"4"} textAlign={"left"} alignItems={"stretch"} {...props}>
-      <Heading as={"h1"} textStyle={"5xl"} {...headingProps}>
+      <Heading
+        as={"h1"}
+        textStyle={{ base: "4xl", lg: "5xl" }}
+        {...headingProps}
+      >
         {heading}
       </Heading>
 

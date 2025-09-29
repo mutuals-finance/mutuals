@@ -4,20 +4,15 @@ import { useToggle } from "react-use";
 
 import {
   Button,
-  Field,
   Fieldset,
   IconButton,
   Box,
   useSteps,
-  FileUpload,
   Form,
   Group,
-  Input,
-  Textarea,
   Stack,
   FormErrorAlert,
   Steps,
-  UseStepsReturn,
   SimpleGrid,
   GridItem,
   Card,
@@ -31,21 +26,21 @@ import {
   Span,
   createTreeCollection,
 } from "@mutuals/ui";
-
-import PoolAddModal from "@/features/PoolAdd/Modal";
 import { useAccount } from "wagmi";
 import { usePoolCreate } from "@mutuals/graphql-client-nextjs/client";
 import { PoolStatus } from "@mutuals/graphql-client-nextjs";
 import React, { useCallback } from "react";
 import { IoChevronBackSharp } from "react-icons/io5";
 import AuthSignInCard from "@/features/Auth/SignInCard";
-import AllocationFormTree from "@/features/Allocation/FormTree";
 import {
   ClaimCreateNode,
   PoolCreateInput,
   stateIds,
   strategyIds,
 } from "@mutuals/sdk-react";
+import PoolAddModal from "@/features/PoolAdd/Modal";
+import PoolAddFormInfo from "@/features/PoolAdd/Form/Info";
+import PoolAddFormClaims from "@/features/PoolAdd/Form/Claims";
 
 const initialClaims = createTreeCollection<ClaimCreateNode>({
   nodeToValue: (node) => node.id,
@@ -79,52 +74,12 @@ const items = {
   0: {
     label: "Step 1",
     description: "Enter pool information",
-    children: (
-      <>
-        <Field label={"Owner"} id={"ownerAddress"}>
-          <Input id="ownerAddress" />
-        </Field>
-
-        <Field id={"image"} label={"Image"}>
-          <FileUpload
-            id="image"
-            maxW={"36"}
-            dropzoneProps={{
-              maxW: "36",
-              minH: "36",
-              label: "Upload pool image",
-              gap: "2",
-              iconProps: {
-                color: "fg.muted",
-                fontSize: "md",
-              },
-            }}
-          />
-        </Field>
-        <Field id={"name"} label={"Name"}>
-          <Input id="name" />
-        </Field>
-        <Field id={"description"} label={"Description"}>
-          <Textarea id="description" />
-        </Field>
-      </>
-    ),
+    children: <PoolAddFormInfo />,
   },
   1: {
     label: "Step 2",
     description: "Configure pool allocations",
-    children: (
-      <>
-        <Stack>
-          {/*        <AuthSignInCard
-            description={
-              "You must sign in to your account to configure allocations."
-            }
-          />*/}
-          <AllocationFormTree id={"addClaims"} />
-        </Stack>
-      </>
-    ),
+    children: <PoolAddFormClaims />,
   },
 };
 
@@ -134,64 +89,6 @@ const collection = createListCollection({
     value: key,
   })),
 });
-
-function PoolAddFormFieldset() {
-  return (
-    <Fieldset.Root minW={"0"}>
-      <Fieldset.Content>
-        <FormErrorAlert name={"root.upsertPool"} />
-
-        {collection.items.map((step, index) => (
-          <Steps.Content key={index} index={index}>
-            {step.children}
-          </Steps.Content>
-        ))}
-        <Steps.CompletedContent>
-          <AuthSignInCard
-            description={
-              "You must sign in to your account to create a new payment pool."
-            }
-          />
-        </Steps.CompletedContent>
-      </Fieldset.Content>
-    </Fieldset.Root>
-  );
-}
-
-type PoolAddFormHandlersProps = UseStepsReturn;
-
-function PoolAddFormHandlers({
-  hasPrevStep,
-  hasNextStep,
-}: PoolAddFormHandlersProps) {
-  return (
-    <Group w={"full"}>
-      <Steps.PrevTrigger asChild>
-        <IconButton variant="subtle" size="xl" disabled={!hasPrevStep}>
-          <IoChevronBackSharp />
-        </IconButton>
-      </Steps.PrevTrigger>
-
-      {hasNextStep ? (
-        <Steps.NextTrigger asChild>
-          <Button type="button" flex="1" variant="subtle" size="xl">
-            Continue
-          </Button>
-        </Steps.NextTrigger>
-      ) : (
-        <Button
-          type="submit"
-          flex="1"
-          variant="solid"
-          size="xl"
-          disabled={true}
-        >
-          Confirm
-        </Button>
-      )}
-    </Group>
-  );
-}
 
 export default function PoolAdd() {
   const [modalOpen, setModalOpen] = useToggle(false);
@@ -342,13 +239,63 @@ export default function PoolAdd() {
                     px={{ base: "0", lg: "6" }}
                     pt={{ base: "0", lg: "6" }}
                   >
-                    <PoolAddFormFieldset />
+                    <Fieldset.Root minW={"0"}>
+                      <Fieldset.Content>
+                        <FormErrorAlert name={"root.upsertPool"} />
+
+                        {collection.items.map((step, index) => (
+                          <Steps.Content key={index} index={index}>
+                            {step.children}
+                          </Steps.Content>
+                        ))}
+                        <Steps.CompletedContent>
+                          <AuthSignInCard
+                            description={
+                              "You must sign in to your account to create a new payment pool."
+                            }
+                          />
+                        </Steps.CompletedContent>
+                      </Fieldset.Content>
+                    </Fieldset.Root>
                   </Card.Body>
                   <Card.Footer
                     px={{ base: "0", lg: "6" }}
                     pb={{ base: "0", lg: "6" }}
                   >
-                    <PoolAddFormHandlers {...steps} />
+                    <Group w={"full"}>
+                      <Steps.PrevTrigger asChild>
+                        <IconButton
+                          variant="subtle"
+                          size="xl"
+                          disabled={!steps.hasPrevStep}
+                        >
+                          <IoChevronBackSharp />
+                        </IconButton>
+                      </Steps.PrevTrigger>
+
+                      {steps.hasNextStep ? (
+                        <Steps.NextTrigger asChild>
+                          <Button
+                            type="button"
+                            flex="1"
+                            variant="subtle"
+                            size="xl"
+                          >
+                            Continue
+                          </Button>
+                        </Steps.NextTrigger>
+                      ) : (
+                        <Button
+                          type="submit"
+                          flex="1"
+                          variant="solid"
+                          size="xl"
+                          disabled={true}
+                        >
+                          Confirm
+                        </Button>
+                      )}
+                    </Group>
                   </Card.Footer>
                 </Card.Root>
               </GridItem>
