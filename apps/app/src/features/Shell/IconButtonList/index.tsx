@@ -18,21 +18,7 @@ export default function ShellIconButtonList({
 }: ShellIconButtonListProps) {
   return (
     <ScrollArea.Root w="full" size="xs" {...props}>
-      <ScrollArea.Viewport
-      /* css={{
-            "--scroll-shadow-size": "2rem",
-            maskImage:
-              "linear-gradient(to right, #000, #000, transparent 0, #000 var(--scroll-shadow-size), #000 calc(100% - var(--scroll-shadow-size)), transparent)",
-            "&[data-at-left]": {
-              maskImage:
-                "linear-gradient(to right, #000 calc(100% - var(--scroll-shadow-size)), transparent)",
-            },
-            "&[data-at-right]": {
-              maskImage:
-                "linear-gradient(to left, #000 calc(100% - var(--scroll-shadow-size)), transparent)",
-            },
-          }}*/
-      >
+      <ScrollArea.Viewport>
         <ScrollArea.Content py="4" px={"6"}>
           <Flex gap={{ base: "2", lg: "6" }} flexWrap="nowrap">
             {items.map((props, i) => (
