@@ -40,6 +40,7 @@ export default function NavMobileDrawer({
           justifyContent="space-between"
           borderBottomWidth={"1px"}
           borderColor={"border"}
+          h={"20"}
         >
           <NavMobileMenuButton
             aria-label="Close Navigation"

@@ -1,42 +1,83 @@
 import {
   Button,
-  Group,
-  AbsoluteCenter,
-  HStack,
+  StackSeparator,
+  Stack,
   type LinkProps,
   Link,
+  AbsoluteCenter,
+  StackProps,
 } from "@mutuals/ui";
 
 import NavLink from "@/features/Layout/Header/NavLink";
-import NavWrapper, {
-  NavWrapperProps,
-} from "@/features/Layout/Header/NavWrapper";
+import NavWrapper from "@/features/Layout/Header/NavWrapper";
+import HeaderContainerWrapper, {
+  HeaderContainerWrapperProps,
+} from "@/features/Layout/Header/ContainerWrapper";
 
-interface NavDesktopProps extends NavWrapperProps {
+interface NavDesktopProps extends HeaderContainerWrapperProps {
   links?: LinkProps[];
 }
-export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
-  return (
-    <NavWrapper {...props}>
-      <AbsoluteCenter>
-        <HStack textAlign={"center"} gap="12" justifyContent="center">
-          {links.map((props, index) => (
-            <NavLink key={index} {...props} />
-          ))}
-        </HStack>
-      </AbsoluteCenter>
 
-      <Group gap={"6"} ml={"auto"}>
-        <Link
-          href={"https://app.mutuals.finance"}
-          target="_blank"
-          asChild={true}
+function NavDesktopStack({ children, ...props }: StackProps) {
+  return (
+    <Stack
+      direction={"row"}
+      rounded={"4xl"}
+      bgColor={"bg/20"}
+      css={{
+        backdropFilter: "blur(12px)",
+      }}
+      h="14"
+      justifyContent="center"
+      alignItems={"center"}
+      {...props}
+    >
+      {children}
+    </Stack>
+  );
+}
+export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
+  const lastIndex = links?.length - 1;
+  const lastLinksProps = links[lastIndex];
+
+  return (
+    <HeaderContainerWrapper {...props}>
+      <NavWrapper>
+        <AbsoluteCenter>
+          <NavDesktopStack
+            px={{ base: "6", lg: "12" }}
+            textAlign={"center"}
+            gap="12"
+          >
+            {links.slice(0, -1).map((props, index) => (
+              <NavLink key={index} {...props} />
+            ))}
+          </NavDesktopStack>
+        </AbsoluteCenter>
+
+        <NavDesktopStack
+          px={{ base: "2", lg: "2" }}
+          gap={{ base: "2", lg: "2" }}
+          separator={<StackSeparator h={"4"} alignSelf={"center"} />}
         >
-          <Button variant="solid" size={"xl"}>
-            Launch App
-          </Button>
-        </Link>
-      </Group>
-    </NavWrapper>
+          {lastLinksProps && (
+            <Link href={lastLinksProps.href} target="_blank" asChild={true}>
+              <Button size={"md"} variant={"subtle"} rounded={"4xl"}>
+                {lastLinksProps.children}
+              </Button>
+            </Link>
+          )}
+          <Link
+            href={"https://app.mutuals.finance"}
+            target="_blank"
+            asChild={true}
+          >
+            <Button size={"md"} variant={"solid"} rounded={"4xl"}>
+              Launch App
+            </Button>
+          </Link>
+        </NavDesktopStack>
+      </NavWrapper>
+    </HeaderContainerWrapper>
   );
 }

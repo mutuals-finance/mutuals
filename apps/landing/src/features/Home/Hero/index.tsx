@@ -6,19 +6,14 @@ import {
   Heading,
   Text,
   Group,
-  VStack,
   Box,
   Link,
-  Theme,
-  AspectRatio,
   BoxProps,
+  AspectRatio,
+  Stack,
 } from "@mutuals/ui";
-import GridBg from "@/components/GridBg";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
-import dashboardDesktopImage from "@/assets/dashboard-desktop.png";
-import transactionHistoryImage from "@/assets/transaction-history.png";
-import assetAllocationImage from "@/assets/asset-allocation.png";
-import dashboardHandlersImage from "@/assets/dashboard-handlers.png";
+import ThemeWrapper from "@/components/ThemeWrapper";
 
 type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 
@@ -38,50 +33,80 @@ function HomeHeroImage({ imageProps, ...props }: HomeHeroProps) {
 
 export default function HomeHero() {
   return (
-    <Box position={"relative"} pt={"20"}>
-      <GridBg />
+    <ThemeWrapper appearance={"dark"}>
+      <Stack
+        position={"relative"}
+        pt={"20"}
+        minH={"100vh"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Box>
+          <AspectRatio
+            ratio={21 / 9}
+            position={"absolute"}
+            top={"0"}
+            left={"0"}
+            w={"full"}
+            h={"full"}
+          >
+            <video
+              loop={true}
+              autoPlay={true}
+              muted={true}
+              style={{ objectPosition: "bottom" }}
+            >
+              <source src="/hero.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </AspectRatio>
+        </Box>
+        <Box position={"absolute"} inset={"0"} bg={"bg/25"} />
 
-      <Container maxW={{ base: "xl", lg: "4xl" }} my={{ base: "12", lg: "16" }}>
-        <VStack
-          alignItems={{ base: "center", md: "center" }}
-          textAlign={{ base: "center", md: "center" }}
-          gap={"4"}
+        <Container
+          maxW={{ base: "xl", lg: "4xl" }}
+          mb={{ base: "12", lg: "16" }}
+          alignItems={"center"}
+          textAlign={"center"}
         >
           <Heading
             as="h1"
-            size={{ base: "5xl", lg: "7xl" }}
+            size={{ base: "6xl", lg: "7xl" }}
             fontWeight={"medium"}
           >
-            Reimagining Programmable Money.
+            Reimagining Programmable Money
           </Heading>
-          <Box maxW={"xl"}>
-            <Text textStyle={{ base: "lg", lg: "xl" }} color={"fg.subtle"}>
-              Automated, trustless payments for frictionless financial
-              interactions
+
+          <Box mt={{ base: "8", lg: "8" }}>
+            <Text textStyle={{ base: "lg", lg: "xl" }}>
+              Automated and trustless payment processing with flexible fund
+              allocation based on predefined rules
             </Text>
           </Box>
-          <Group gap="2">
+
+          <Group gap="2" mt={{ base: "8", lg: "8" }}>
             <Link
               href={"https://app.mutuals.finance"}
               target="_blank"
               asChild={true}
             >
-              <Button size={"2xl"}>Start for free</Button>
+              <Button size={"2xl"} rounded={"4xl"}>
+                Start for free
+              </Button>
             </Link>
             <Link
               href={"https://docs.mutuals.finance"}
               target="_blank"
               asChild={true}
             >
-              <Button size={"2xl"} variant={"surface"}>
+              <Button size={"2xl"} variant={"subtle"} rounded={"4xl"}>
                 Learn more
               </Button>
             </Link>
           </Group>
-        </VStack>
-      </Container>
+        </Container>
 
-      <Container
+        {/*     <Container
         maxW={"7xl"}
         position={"relative"}
         overflow={{ base: "hidden", lg: "unset" }}
@@ -143,7 +168,8 @@ export default function HomeHero() {
             }}
           />
         </Theme>
-      </Container>
-    </Box>
+      </Container>*/}
+      </Stack>
+    </ThemeWrapper>
   );
 }

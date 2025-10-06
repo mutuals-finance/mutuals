@@ -28,14 +28,12 @@ type HeaderIntersectionObserverProps = PropsWithChildren;
 export default function HeaderObserverProvider({
   children,
 }: HeaderIntersectionObserverProps) {
-  const { theme = "light" } = useTheme();
+  const { theme = "dark" } = useTheme();
   const [initialized, setInitialized] = useState(false);
   const [headerTheme, setHeaderTheme] = useState(theme);
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log("setHeaderTheme", { theme });
-
     setHeaderTheme(theme);
     setInitialized(true);
   }, [pathname, theme]);

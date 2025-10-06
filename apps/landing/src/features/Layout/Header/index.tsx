@@ -4,7 +4,6 @@ import { Box, BoxProps } from "@mutuals/ui";
 
 import NavMobile from "@/features/Layout/Header/NavMobile";
 import NavDesktop from "@/features/Layout/Header/NavDesktop";
-import HeaderContainerWrapper from "@/features/Layout/Header/ContainerWrapper";
 import links from "@/features/Layout/links";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,20 +20,18 @@ export default function Header(props: HeaderProps) {
 
   return (
     <Box as="header" {...props}>
-      <HeaderContainerWrapper>
-        <NavDesktop hideBelow="lg" links={links} />
+      <NavDesktop hideBelow="lg" links={links} />
 
-        <NavMobile.Root open={open}>
-          <NavMobile.Navbar
-            hideFrom="lg"
-            buttonProps={{ onClick: () => setOpen(true) }}
-          />
-          <NavMobile.Drawer
-            links={links}
-            closeButtonProps={{ onClick: () => setOpen(false) }}
-          />
-        </NavMobile.Root>
-      </HeaderContainerWrapper>
+      <NavMobile.Root open={open}>
+        <NavMobile.Navbar
+          hideFrom="lg"
+          buttonProps={{ onClick: () => setOpen(true) }}
+        />
+        <NavMobile.Drawer
+          links={links}
+          closeButtonProps={{ onClick: () => setOpen(false) }}
+        />
+      </NavMobile.Root>
     </Box>
   );
 }

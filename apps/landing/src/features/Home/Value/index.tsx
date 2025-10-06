@@ -1,18 +1,14 @@
 "use client";
 
-import {
-  Theme,
-  Box,
-  Button,
-  Container,
-  SimpleGrid,
-  Stack,
-  GridItem,
-} from "@mutuals/ui";
+import { Box, Button, Container, Stack, ScrollArea, Flex } from "@mutuals/ui";
 import SectionHeader from "src/features/Shell/SectionHeader";
 import { IoCodeWorkingOutline, IoTimerOutline } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
 import ValueCard from "./ValueCard";
+import SplitPaymentsImage from "@/assets/home/split-payments.png";
+import FlexibleDesignImage from "@/assets/home/flexible-design.png";
+import TrackEarningsImage from "@/assets/home/track-earnings.png";
+import AutomatePaymentsImage from "@/assets/home/automate-payments.png";
 
 const values = [
   {
@@ -20,50 +16,66 @@ const values = [
     description:
       "Mutuals processes payments and allocates funds to recipients based on preset rules.",
     icon: <RiExchange2Line />,
+    image: SplitPaymentsImage,
+  },
+  {
+    heading: "Flexible design",
+    description:
+      "Mutuals provides simple, stackable building blocks to configure and combine your own custom payout flows.",
+    icon: <RiExchange2Line />,
+    image: FlexibleDesignImage,
   },
   {
     heading: "Automate payments",
     description:
       "Mutuals automates blockchain payments to ensure timely, rule-based transfers without manual intervention.",
     icon: <IoCodeWorkingOutline />,
+    image: AutomatePaymentsImage,
   },
   {
     heading: "Track earnings",
     description:
       "Mutuals tracks on-chain earnings in real time, giving recipients clear, transparent insights into their payouts.",
     icon: <IoTimerOutline />,
+    image: TrackEarningsImage,
   },
 ];
 export default function HomeValue() {
   return (
-    <Theme appearance={"dark"}>
-      <Box mb={"16"} py={"16"} bg={"bg.subtle"}>
-        <Container maxW="7xl">
-          <SectionHeader label={"Explore Mutuals"}>
-            Financial management for on-chain teams
-          </SectionHeader>
+    <Box my={"16"}>
+      <Container maxW="7xl">
+        <SectionHeader label={"Explore Mutuals"}>
+          Financial management for on-chain teams
+        </SectionHeader>
 
-          <SimpleGrid
-            columns={{
-              base: 1,
-              lg: 3,
-            }}
-            gap={{ base: "2", lg: "2" }}
-          >
-            {values.map((value, index) => (
-              <GridItem key={value.heading}>
-                <ValueCard {...value} />
-              </GridItem>
-            ))}
-          </SimpleGrid>
+        <ScrollArea.Root w="full" size="xs">
+          <ScrollArea.Viewport>
+            <ScrollArea.Content py="4">
+              <Flex gap={{ base: "4", lg: "6" }} flexWrap="nowrap">
+                {values.map((value, index) => (
+                  <ValueCard
+                    key={value.heading}
+                    {...value}
+                    w={{
+                      base: "72",
+                      lg: "calc(25% - var(--chakra-spacing-6))",
+                    }}
+                    flexShrink="0"
+                  />
+                ))}
+              </Flex>
+            </ScrollArea.Content>
+          </ScrollArea.Viewport>
+          <ScrollArea.Scrollbar orientation="horizontal" />
+          <ScrollArea.Corner />
+        </ScrollArea.Root>
 
-          <Stack align={"center"} mt={"12"}>
-            <Button size={"2xl"} variant={"solid"}>
-              Explore the Platform
-            </Button>
-          </Stack>
-        </Container>
-      </Box>
-    </Theme>
+        <Stack align={"center"} mt={"12"}>
+          <Button size={"2xl"} variant={"surface"} rounded={"4xl"}>
+            Explore the Platform
+          </Button>
+        </Stack>
+      </Container>
+    </Box>
   );
 }

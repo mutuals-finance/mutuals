@@ -105,6 +105,7 @@ export default function ActorCard({
                   justifyContent={"center"}
                   bg={"bg.inverted"}
                   color={"fg.inverted"}
+                  rounded={"0.4em"}
                   {...iconBoxProps}
                 >
                   <Icon

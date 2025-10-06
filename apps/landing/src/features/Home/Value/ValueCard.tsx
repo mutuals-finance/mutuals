@@ -1,10 +1,11 @@
-import { Text, Heading, Card, Icon, IconProps } from "@mutuals/ui";
-import IconBox from "@/components/IconBox";
+import { Text, Heading, Card, IconProps, AspectRatio } from "@mutuals/ui";
+import NextImage, { ImageProps } from "next/image";
 
 interface ValueCardProps extends Card.RootProps {
   heading: string;
   description: string;
   icon?: IconProps["children"];
+  image?: ImageProps["src"];
 }
 
 export default function ValueCard({
@@ -14,20 +15,27 @@ export default function ValueCard({
   variant = "outline",
   bg = "transparent",
   size = "md",
+  image,
   ...props
 }: ValueCardProps) {
   return (
-    <Card.Root variant={variant} bg={bg} size={size} {...props}>
+    <Card.Root
+      variant={variant}
+      bg={bg}
+      size={size}
+      overflow="hidden"
+      {...props}
+    >
+      {image && (
+        <AspectRatio ratio={16 / 9} position={"relative"}>
+          <NextImage src={image} alt={description} fill={true} />
+        </AspectRatio>
+      )}
       <Card.Body>
-        {!!icon && (
-          <IconBox color={"fg.subtle"} bg="bg.muted" size={"xs"} mb={"4"}>
-            <Icon>{icon}</Icon>
-          </IconBox>
-        )}
         <Heading as="h3" textStyle={"xl"} mb={"4"}>
           {heading}
         </Heading>
-        <Text color={"fg.muted"}>{description}</Text>
+        <Text color={"fg.subtle"}>{description}</Text>
       </Card.Body>
     </Card.Root>
   );

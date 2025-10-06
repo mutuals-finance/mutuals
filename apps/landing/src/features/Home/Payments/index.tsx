@@ -95,6 +95,7 @@ export default function HomePayments() {
                         src={bgImage}
                         alt={tag}
                         fill={true}
+                        priority={true}
                         style={{ objectFit: "cover" }}
                       />
                       {isActive && (

@@ -11,7 +11,7 @@ export default function ThemeWrapper({
   children,
   appearance = "dark",
   imageProps: { enabled, ...imageProps } = {
-    enabled: true,
+    enabled: false,
     src: transitionImage,
     alt: "ThemeWrapper Transition",
     fill: true,

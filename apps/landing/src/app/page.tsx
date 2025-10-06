@@ -10,9 +10,9 @@ export default function HomePage() {
     <>
       <Hero />
       <Value />
+      <Chains />
       <Actors />
       <Payments />
-      <Chains />
       <Features />
     </>
   );

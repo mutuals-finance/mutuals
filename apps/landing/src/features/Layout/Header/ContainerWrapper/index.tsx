@@ -1,15 +1,15 @@
 "use client";
 
-import { StackProps, Container, Stack } from "@mutuals/ui";
-import { useMotionValueEvent, useScroll } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { PresenceProps, Stack, Presence, Theme } from "@mutuals/ui";
+import { useHeaderObserver } from "@/providers/HeaderObserver";
+
+export type HeaderContainerWrapperProps = PresenceProps;
 
 export default function HeaderContainerWrapper({
   children,
-  transition: _,
   ...props
-}: StackProps) {
-  const { scrollY } = useScroll();
+}: HeaderContainerWrapperProps) {
+  /* const { scrollY } = useScroll();
 
   const [isTransparent, setTransparent] = useState(true);
 
@@ -30,30 +30,21 @@ export default function HeaderContainerWrapper({
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     onUpdate(latest);
-  });
+  });*/
+  const { initialized, headerTheme } = useHeaderObserver();
 
   return (
-    <Stack
-      position="fixed"
-      top="0"
-      left="0"
-      zIndex={10}
-      w="full"
-      flex={"1"}
-      alignItems="stretch"
-      justifyContent="stretch"
-      bgColor={!isTransparent ? "bg/75" : "transparent"}
-      css={{
-        backdropFilter: "blur(12px)",
-      }}
-      borderBottom={"1px solid"}
-      borderColor={!isTransparent ? "border" : "transparent"}
-      color={"fg"}
+    <Presence
+      present={initialized}
+      animationName={{ _open: "fade-in", _closed: "fade-out" }}
+      animationDuration="moderate"
       {...props}
     >
-      <Container alignItems="center" position="relative" px={0}>
-        <Stack gap="6">{children}</Stack>
-      </Container>
-    </Stack>
+      <Theme appearance={headerTheme as "light" | "dark"}>
+        <Stack position="fixed" top="0" left="0" w={"full"} zIndex={10}>
+          {children}
+        </Stack>
+      </Theme>
+    </Presence>
   );
 }

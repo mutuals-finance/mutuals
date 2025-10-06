@@ -12,7 +12,7 @@ export default function HomeActors() {
   const [active, setActive] = useState<"owners" | "partners">("owners");
 
   return (
-    <Box my="32">
+    <Box my={"32"}>
       <Container maxW="7xl">
         <SectionHeader label={"tailored to your needs"}>
           Versatile Solutions For Everyone
