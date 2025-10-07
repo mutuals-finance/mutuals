@@ -2,7 +2,7 @@ import { ImageResponse as NextImageResponse } from "next/og";
 import { ImageResponseOptions } from "next/server";
 import renderBaseIcon from "./base-icon";
 
-export const iconSizes = [512, 1024];
+export const iconSizes = [192, 512, 1024];
 
 export const defaultContentType = "image/png";
 
