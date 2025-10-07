@@ -38,73 +38,83 @@ export default function HomeHero() {
         position={"relative"}
         pt={"20"}
         minH={"100vh"}
-        alignItems={"center"}
-        justifyContent={"center"}
+        mb={{ base: "12", lg: "16" }}
       >
-        <Box>
-          <AspectRatio
-            ratio={21 / 9}
-            position={"absolute"}
-            top={"0"}
-            left={"0"}
-            w={"full"}
-            h={"full"}
+        <AspectRatio
+          ratio={21 / 9}
+          position={"absolute"}
+          top={"0"}
+          left={"0"}
+          w={"full"}
+          h={"full"}
+        >
+          <video
+            loop={true}
+            autoPlay={true}
+            muted={true}
+            style={{ objectPosition: "bottom" }}
+            poster={"/hero-poster.jpg"}
           >
-            <video
-              loop={true}
-              autoPlay={true}
-              muted={true}
-              style={{ objectPosition: "bottom" }}
-            >
-              <source src="/hero.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </AspectRatio>
-        </Box>
+            <source
+              media="(max-width: 768px)"
+              src="/hero-mobile.mp4"
+              type="video/mp4"
+            />
+            <source src="/hero.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </AspectRatio>
+
         <Box position={"absolute"} inset={"0"} bg={"bg/25"} />
 
-        <Container
-          maxW={{ base: "xl", lg: "4xl" }}
-          mb={{ base: "12", lg: "16" }}
-          alignItems={"center"}
-          textAlign={"center"}
-        >
-          <Heading
-            as="h1"
-            size={{ base: "6xl", lg: "7xl" }}
-            fontWeight={"medium"}
+        <Stack justifyContent={"center"} flex={"1"}>
+          <Container
+            transform={{ base: "translateY(-25%)", md: "translateY(0%)" }}
+            maxW={{ base: "xl", lg: "4xl" }}
+            alignItems={{ lg: "center" }}
+            textAlign={{ base: "left", lg: "center" }}
+            display={"flex"}
+            flexDirection={"column"}
+            py={"12"}
           >
-            Reimagining Programmable Money
-          </Heading>
-
-          <Box mt={{ base: "8", lg: "8" }}>
-            <Text textStyle={{ base: "lg", lg: "xl" }}>
-              Automated and trustless payment processing with flexible fund
-              allocation based on predefined rules
-            </Text>
-          </Box>
-
-          <Group gap="2" mt={{ base: "8", lg: "8" }}>
-            <Link
-              href={"https://app.mutuals.finance"}
-              target="_blank"
-              asChild={true}
+            <Heading
+              as="h1"
+              size={{ base: "5xl", lg: "7xl" }}
+              fontWeight={"medium"}
             >
-              <Button size={"2xl"} rounded={"4xl"}>
-                Start for free
-              </Button>
-            </Link>
-            <Link
-              href={"https://docs.mutuals.finance"}
-              target="_blank"
-              asChild={true}
-            >
-              <Button size={"2xl"} variant={"subtle"} rounded={"4xl"}>
-                Learn more
-              </Button>
-            </Link>
-          </Group>
-        </Container>
+              Reimagine Programmable Money
+            </Heading>
+
+            <Box mt={{ base: "6", lg: "8" }}>
+              <Text textStyle={{ base: "md", lg: "xl" }}>
+                With Mutuals, you can create complex payment workflows and
+                integrate custom apps. Experience automated, flexible, and
+                trustless payment processing.
+              </Text>
+            </Box>
+
+            <Group gap="2" mt={{ base: "6", lg: "8" }}>
+              <Link
+                href={"https://app.mutuals.finance"}
+                target="_blank"
+                asChild={true}
+              >
+                <Button size={"2xl"} rounded={"4xl"}>
+                  Start for free
+                </Button>
+              </Link>
+              <Link
+                href={"https://docs.mutuals.finance"}
+                target="_blank"
+                asChild={true}
+              >
+                <Button size={"2xl"} variant={"subtle"} rounded={"4xl"}>
+                  Learn more
+                </Button>
+              </Link>
+            </Group>
+          </Container>
+        </Stack>
 
         {/*     <Container
         maxW={"7xl"}

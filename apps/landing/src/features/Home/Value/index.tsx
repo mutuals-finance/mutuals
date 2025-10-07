@@ -6,7 +6,6 @@ import { IoCodeWorkingOutline, IoTimerOutline } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
 import ValueCard from "./ValueCard";
 import SplitPaymentsImage from "@/assets/home/split-payments.png";
-import FlexibleDesignImage from "@/assets/home/flexible-design.png";
 import TrackEarningsImage from "@/assets/home/track-earnings.png";
 import AutomatePaymentsImage from "@/assets/home/automate-payments.png";
 
@@ -17,13 +16,6 @@ const values = [
       "Mutuals processes payments and allocates funds to recipients based on preset rules.",
     icon: <RiExchange2Line />,
     image: SplitPaymentsImage,
-  },
-  {
-    heading: "Flexible design",
-    description:
-      "Mutuals provides simple, stackable building blocks to configure and combine your own custom payout flows.",
-    icon: <RiExchange2Line />,
-    image: FlexibleDesignImage,
   },
   {
     heading: "Automate payments",
@@ -43,7 +35,7 @@ const values = [
 export default function HomeValue() {
   return (
     <Box my={"16"}>
-      <Container maxW="7xl">
+      <Container maxW="6xl">
         <SectionHeader label={"Explore Mutuals"}>
           Financial management for on-chain teams
         </SectionHeader>
@@ -58,7 +50,7 @@ export default function HomeValue() {
                     {...value}
                     w={{
                       base: "72",
-                      lg: "calc(25% - var(--chakra-spacing-6))",
+                      lg: "calc(33.33% - var(--chakra-spacing-6))",
                     }}
                     flexShrink="0"
                   />

@@ -32,19 +32,29 @@ export default function ShellPageHeader({
         as="header"
         pt={"20"}
         position={"relative"}
-        textAlign={"center"}
+        textAlign={{ lg: "center" }}
         {...props}
       >
-        <Container maxW={"7xl"} my={"16"} {...containerProps}>
-          <Box maxW={"xl"} mx={"auto"}>
+        <Container
+          maxW={"7xl"}
+          mt={{ base: "2", lg: "12" }}
+          mb={{ base: "6", lg: "12" }}
+          {...containerProps}
+        >
+          <Box maxW={"xl"} mx={{ lg: "auto" }}>
             {!!tag && (
-              <Text textStyle="md" mb={"6"} color={"fg.muted"} {...tagProps}>
+              <Text
+                textStyle={{ lg: "lg" }}
+                mb={"6"}
+                color={"fg.muted"}
+                {...tagProps}
+              >
                 {tag}
               </Text>
             )}
 
             <Heading
-              textStyle={{ base: "5xl", md: "5xl" }}
+              textStyle={{ base: "4xl", md: "5xl" }}
               as="h1"
               {...headingProps}
             >

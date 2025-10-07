@@ -13,30 +13,34 @@ export default function ValueCard({
   heading,
   description,
   variant = "outline",
-  bg = "transparent",
-  size = "md",
+  size = "sm",
   image,
   ...props
 }: ValueCardProps) {
   return (
-    <Card.Root
-      variant={variant}
-      bg={bg}
-      size={size}
-      overflow="hidden"
-      {...props}
-    >
+    <Card.Root variant={variant} size={size} overflow="hidden" {...props}>
       {image && (
-        <AspectRatio ratio={16 / 9} position={"relative"}>
-          <NextImage src={image} alt={description} fill={true} />
-        </AspectRatio>
+        <Card.Header>
+          <AspectRatio
+            ratio={16 / 9}
+            position={"relative"}
+            rounded={"2xl"}
+            overflow={"hidden"}
+          >
+            <NextImage src={image} alt={description} fill={true} />
+          </AspectRatio>
+        </Card.Header>
       )}
+
       <Card.Body>
-        <Heading as="h3" textStyle={"xl"} mb={"4"}>
+        <Heading as="h3" textStyle={"xl"}>
           {heading}
         </Heading>
-        <Text color={"fg.subtle"}>{description}</Text>
       </Card.Body>
+      <Card.Footer>
+        {" "}
+        <Text color={"fg.subtle"}>{description}</Text>
+      </Card.Footer>
     </Card.Root>
   );
 }

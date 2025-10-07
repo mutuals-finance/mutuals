@@ -12,9 +12,9 @@ import IconBox from "@/components/IconBox";
 
 export default function ContactOptions() {
   return (
-    <Container mt="16" mb="32" maxW="7xl">
+    <Container mt={{ base: "6", lg: "12" }} mb="32" maxW="6xl">
       <Stack textAlign={"center"} alignItems={"center"}>
-        <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "2" }}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "12" }}>
           {items.map(
             ({
               icon,
@@ -23,7 +23,7 @@ export default function ContactOptions() {
               children,
               variant = "outline",
               bg = "bg",
-              size = "lg",
+              size = "md",
               ...props
             }) => (
               <Card.Root
@@ -35,7 +35,9 @@ export default function ContactOptions() {
               >
                 <Card.Header>
                   <Stack direction={"row"} alignItems={"flex-start"}>
-                    <Heading size={"4xl"}>{heading}</Heading>
+                    <Heading textStyle={{ base: "2xl", lg: "3xl" }}>
+                      {heading}
+                    </Heading>
 
                     {!!icon && (
                       <IconBox
@@ -53,7 +55,7 @@ export default function ContactOptions() {
                   {!!description?.length && description.length > 0 && (
                     <Stack gap={"1"}>
                       {description.map((paragraph, i) => (
-                        <Text key={i} color={"fg.subtle"} textStyle={"lg"}>
+                        <Text key={i} color={"fg.muted"} textStyle={"md"}>
                           {paragraph}
                         </Text>
                       ))}

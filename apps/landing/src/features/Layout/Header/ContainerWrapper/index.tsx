@@ -1,6 +1,6 @@
 "use client";
 
-import { PresenceProps, Stack, Presence, Theme } from "@mutuals/ui";
+import { PresenceProps, Stack, Presence, Theme, ClientOnly } from "@mutuals/ui";
 import { useHeaderObserver } from "@/providers/HeaderObserver";
 
 export type HeaderContainerWrapperProps = PresenceProps;
@@ -40,11 +40,15 @@ export default function HeaderContainerWrapper({
       animationDuration="moderate"
       {...props}
     >
-      <Theme appearance={headerTheme as "light" | "dark"}>
-        <Stack position="fixed" top="0" left="0" w={"full"} zIndex={10}>
-          {children}
-        </Stack>
-      </Theme>
+      <ClientOnly>
+        {() => (
+          <Theme appearance={headerTheme as "light" | "dark"}>
+            <Stack position="fixed" top="0" left="0" w={"full"} zIndex={10}>
+              {children}
+            </Stack>
+          </Theme>
+        )}
+      </ClientOnly>
     </Presence>
   );
 }
