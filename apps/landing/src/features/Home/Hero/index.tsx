@@ -69,7 +69,7 @@ export default function HomeHero() {
 
         <Stack justifyContent={"center"} flex={"1"}>
           <Container
-            transform={{ base: "translateY(-25%)", md: "translateY(0%)" }}
+            transform={{ base: "translateY(-12.5%)", md: "translateY(0%)" }}
             maxW={{ base: "xl", lg: "4xl" }}
             alignItems={{ lg: "center" }}
             textAlign={{ base: "left", lg: "center" }}

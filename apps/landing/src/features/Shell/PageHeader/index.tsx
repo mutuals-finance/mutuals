@@ -2,18 +2,18 @@ import {
   type BoxProps,
   type HeadingProps,
   type ContainerProps,
-  type TextProps,
+  type TagProps,
   Box,
   Heading,
   Container,
-  Text,
+  Tag,
 } from "@mutuals/ui";
 
 interface PageHeaderProps extends BoxProps {
   tag?: string;
   headingProps?: HeadingProps;
   containerProps?: ContainerProps;
-  tagProps?: TextProps;
+  tagProps?: TagProps;
   afterContent?: React.ReactNode;
 }
 
@@ -37,20 +37,26 @@ export default function ShellPageHeader({
       >
         <Container
           maxW={"7xl"}
-          mt={{ base: "2", lg: "12" }}
+          mt={{ base: "6", lg: "12" }}
           mb={{ base: "6", lg: "12" }}
           {...containerProps}
         >
           <Box maxW={"xl"} mx={{ lg: "auto" }}>
             {!!tag && (
-              <Text
+              <Tag
                 textStyle={{ lg: "lg" }}
                 mb={"6"}
                 color={"fg.muted"}
+                textTransform={"uppercase"}
+                p={"2"}
+                fontWeight={"medium"}
+                bgGradient="to-r"
+                gradientFrom="bg"
+                gradientTo="bg.muted"
                 {...tagProps}
               >
                 {tag}
-              </Text>
+              </Tag>
             )}
 
             <Heading

@@ -8,7 +8,7 @@ export default function PricingActors() {
   return (
     <Box my={"32"}>
       <Container maxW="7xl">
-        <SimpleGrid gap={{ base: "2", lg: "12" }} columns={{ base: 1, md: 2 }}>
+        <SimpleGrid gap={{ base: "2", lg: "16" }} columns={{ base: 1, md: 2 }}>
           <GridItem>
             <PricingActorsCard
               title={"Distribute payments, track project earnings"}

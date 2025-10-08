@@ -29,7 +29,7 @@ export default function PricingActorsCard({
   ...props
 }: PricingActorsCardProps) {
   return (
-    <Card.Root size={"sm"} variant={"subtle"} bg={"transparent"} {...props}>
+    <Card.Root size={"lg"} variant={"outline"} {...props}>
       <Card.Header>
         {image && (
           <AspectRatio
