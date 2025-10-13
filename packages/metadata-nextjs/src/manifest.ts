@@ -11,7 +11,7 @@ export function createManifest(
     start_url: "/",
     display: "standalone",
     background_color: "#FAFAFA",
-    theme_color: "#020203",
+    theme_color: "#FAFAFA",
     icons: iconSizes.map((size) => ({
       src: `/icon/${size}`,
       sizes: `${size}x${size}`,
