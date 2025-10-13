@@ -34,6 +34,8 @@ export interface ActorCardProps extends Card.RootProps {
   onHoverEnd?: (event: MouseEvent, info: EventInfo) => void;
 }
 
+const transition = { type: "tween", duration: 0.2 };
+
 export default function ActorCard({
   title,
   description,
@@ -52,13 +54,20 @@ export default function ActorCard({
   const isGrown = !isLargerLg || animate === "grow";
 
   return (
-    <MotionBox variants={itemVariants}>
+    <MotionBox
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.5 }}
+      variants={itemVariants}
+      asChild={true}
+    >
       <MotionBox
         alignItems={"stretch"}
         justifyContent={"stretch"}
         animate={animate}
         flex={"1 auto"}
         w={"full"}
+        asChild={true}
         variants={useBreakpointValue({
           lg: {
             shrink: {
@@ -71,6 +80,7 @@ export default function ActorCard({
         })}
         onHoverStart={onHoverStart}
         onHoverEnd={onHoverEnd}
+        transition={transition}
       >
         <Card.Root
           size={"lg"}
@@ -79,7 +89,6 @@ export default function ActorCard({
           gap={"6"}
           minH={{ lg: "lg" }}
           variant={"outline"}
-          bg={"bg"}
           {...props}
         >
           <Stack flex={"1"} gap={"0"} maxW={{ sm: "xl" }}>
@@ -90,9 +99,11 @@ export default function ActorCard({
                 lg: {
                   shrink: {
                     fontSize: "var(--chakra-font-sizes-xl)",
+                    transition,
                   },
                   grow: {
                     fontSize: "var(--chakra-font-sizes-3xl)",
+                    transition,
                   },
                 },
               })}
@@ -142,31 +153,29 @@ export default function ActorCard({
               </Card.Header>
             </MotionBox>
 
-            <Card.Body
-              as={Stack}
-              flex={"1"}
-              gap={"6"}
-              justifyContent={"flex-end"}
-            >
-              {benefit && (
-                <AnimatePresence>
-                  {isGrown && (
-                    <MotionBox
-                      maxW={{ sm: "sm" }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <Text color={"fg.subtle"} textStyle={"lg"}>
-                        {benefit}
-                      </Text>
-                    </MotionBox>
-                  )}
-                </AnimatePresence>
-              )}
+            <Card.Body>
+              <Stack flex={"1"} gap={"6"} justifyContent={"flex-end"}>
+                {benefit && (
+                  <AnimatePresence>
+                    {isGrown && (
+                      <MotionBox
+                        maxW={{ sm: "xs" }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={transition}
+                      >
+                        <Text color={"fg.muted"} textStyle={"lg"}>
+                          {benefit}
+                        </Text>
+                      </MotionBox>
+                    )}
+                  </AnimatePresence>
+                )}
+              </Stack>
             </Card.Body>
 
-            <Card.Footer as={Stack} gap={"6"} alignItems={"flex-start"}>
+            <Card.Footer>
               <Button
                 size="xl"
                 w={{ base: "full", lg: "auto" }}
@@ -194,6 +203,7 @@ export default function ActorCard({
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
+                  transition={transition}
                 >
                   <NextImage
                     src={image}

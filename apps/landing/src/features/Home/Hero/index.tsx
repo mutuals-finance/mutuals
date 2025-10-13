@@ -37,7 +37,11 @@ export default function HomeHero() {
   return (
     <MotionBoxWrapper asChild={true}>
       <Box pt={"20"} mb={{ base: "16", lg: "32" }}>
-        <Container maxW={{ base: "xl", lg: "4xl" }} mt="12" mb="24">
+        <Container
+          maxW={{ base: "xl", lg: "4xl" }}
+          mt="12"
+          mb={{ base: "12", lg: "24" }}
+        >
           <Stack
             gap={{ base: "6", lg: "6" }}
             alignItems={{ lg: "center" }}
