@@ -26,8 +26,7 @@ export default function NavLink({
 
   const link = (
     <Link
-      color={isActive ? "fg.muted" : "fg"}
-      _hover={{ color: "fg.muted" }}
+      color={"inherit"}
       textStyle={"xs"}
       textTransform={"uppercase"}
       letterSpacing={"wider"}

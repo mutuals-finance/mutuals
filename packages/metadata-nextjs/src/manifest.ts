@@ -7,7 +7,7 @@ export function createManifest(
   return {
     name: "Mutuals",
     short_name: "Mutuals",
-    description: "Reimagining Programmable Money.",
+    description: "Reimagine Programmable Money.",
     start_url: "/",
     display: "standalone",
     background_color: "#FAFAFA",

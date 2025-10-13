@@ -40,6 +40,7 @@ export default function NavMobileDrawer({
           justifyContent="space-between"
           borderBottomWidth={"1px"}
           borderColor={"border"}
+          h={"20"}
         >
           <NavMobileMenuButton
             aria-label="Close Navigation"
@@ -58,7 +59,7 @@ export default function NavMobileDrawer({
               href={href}
               p={"6"}
               w={"full"}
-              textStyle={"xl"}
+              textStyle={"lg"}
               asChild
               focusRing={"none"}
               {...link}
@@ -74,7 +75,7 @@ export default function NavMobileDrawer({
               target="_blank"
               asChild={true}
             >
-              <Button variant="surface" size="2xl" w={"full"}>
+              <Button variant="solid" size="xl" w={"full"}>
                 Launch App
               </Button>
             </Link>

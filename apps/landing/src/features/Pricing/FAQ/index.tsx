@@ -5,26 +5,31 @@ import {
   AccordionItemTrigger,
   AccordionRoot,
   Heading,
-  Theme,
+  GridItem,
+  SimpleGrid,
 } from "@mutuals/ui";
 import items from "@/features/Pricing/FAQ/items";
 import ShellSectionCard from "@/features/Shell/SectionCard";
 
 export default function PricingFAQ() {
   return (
-    <Theme appearance="dark" bg={"bg.subtle"}>
-      <Container mt="16" py={"32"} maxW="7xl">
-        <ShellSectionCard
-          sectionHeaderProps={{
-            children: "Questions? We're glad you asked.",
-            label: "Mutuals FAQ",
-          }}
-        >
+    <Container my="32" maxW="7xl">
+      <SimpleGrid columns={{ base: 1, lg: 5 }} gap={{ base: "0", lg: "6" }}>
+        <GridItem colSpan={{ base: 1, md: 2 }}>
+          <ShellSectionCard
+            sectionHeaderProps={{
+              children: "Questions? We're glad you asked.",
+              label: "Frequently Asked Questions",
+              mb: { base: "12", lg: "0" },
+            }}
+          />
+        </GridItem>
+        <GridItem colSpan={{ base: 1, md: 3 }}>
           <AccordionRoot multiple size={"lg"}>
             {items.map(({ title, children, ...props }, i) => (
               <AccordionItem key={i} value={title} {...props}>
-                <AccordionItemTrigger py={"6"}>
-                  <Heading as={"h5"} size="xl">
+                <AccordionItemTrigger py={"4"}>
+                  <Heading as={"h5"} size="lg">
                     {title}
                   </Heading>
                 </AccordionItemTrigger>
@@ -32,8 +37,8 @@ export default function PricingFAQ() {
               </AccordionItem>
             ))}
           </AccordionRoot>
-        </ShellSectionCard>
-      </Container>
-    </Theme>
+        </GridItem>
+      </SimpleGrid>
+    </Container>
   );
 }

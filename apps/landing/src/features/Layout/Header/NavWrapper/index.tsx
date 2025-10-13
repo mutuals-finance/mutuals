@@ -1,21 +1,26 @@
-import { HStack, MutualsLogo, StackProps } from "@mutuals/ui";
+import { Container, MutualsLogo, Stack, StackProps } from "@mutuals/ui";
 
 export type NavWrapperProps = StackProps;
 
 export default function NavWrapper({ children, ...props }: NavWrapperProps) {
   return (
-    <HStack
-      h="20"
-      alignItems="center"
+    <Stack
+      h={{ base: "20", lg: "20" }}
+      direction={"row"}
+      alignItems={"center"}
       w={"full"}
-      gap="12"
-      px={{ base: "6", lg: "12" }}
-      position="relative"
       {...props}
     >
-      <MutualsLogo href={"/"} w={{ base: "24", lg: "24" }} />
+      <Container
+        display={"flex"}
+        maxW={"7xl"}
+        alignItems="center"
+        justifyContent={"space-between"}
+      >
+        <MutualsLogo href={"/"} w={{ base: "32", lg: "32" }} />
 
-      {children}
-    </HStack>
+        {children}
+      </Container>
+    </Stack>
   );
 }

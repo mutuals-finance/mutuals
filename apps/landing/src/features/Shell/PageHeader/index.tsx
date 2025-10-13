@@ -1,20 +1,21 @@
+import { itemVariants } from "@/components/MotionBoxWrapper";
 import {
   type BoxProps,
   type HeadingProps,
   type ContainerProps,
-  type TextProps,
+  type TagProps,
   Box,
   Heading,
   Container,
-  Text,
+  Tag,
+  MotionBox,
 } from "@mutuals/ui";
-import GridBg from "@/components/GridBg";
 
 interface PageHeaderProps extends BoxProps {
   tag?: string;
   headingProps?: HeadingProps;
   containerProps?: ContainerProps;
-  tagProps?: TextProps;
+  tagProps?: TagProps;
   afterContent?: React.ReactNode;
 }
 
@@ -29,24 +30,47 @@ export default function ShellPageHeader({
 }: PageHeaderProps) {
   return (
     <>
-      <Box as="header" pt={"20"} position={"relative"} {...props}>
-        <GridBg />
-
-        <Container maxW={"7xl"} my={"12"} {...containerProps}>
-          <Box maxW={"xl"}>
+      <Box
+        as="header"
+        pt={"20"}
+        position={"relative"}
+        textAlign={{ lg: "center" }}
+        {...props}
+      >
+        <Container
+          maxW={"7xl"}
+          mt={{ base: "6", lg: "12" }}
+          mb={{ base: "6", lg: "12" }}
+          {...containerProps}
+        >
+          <Box maxW={"xl"} mx={{ lg: "auto" }}>
             {!!tag && (
-              <Text textStyle="2xl" mb={"8"} {...tagProps}>
-                {tag}
-              </Text>
+              <MotionBox variants={itemVariants} asChild={true}>
+                <Tag
+                  textStyle={{ lg: "lg" }}
+                  mb={"6"}
+                  color={"fg.muted"}
+                  textTransform={"uppercase"}
+                  p={"2"}
+                  fontWeight={"medium"}
+                  bgGradient="to-r"
+                  gradientFrom="bg"
+                  gradientTo="bg.muted"
+                  {...tagProps}
+                >
+                  {tag}
+                </Tag>
+              </MotionBox>
             )}
-
-            <Heading
-              textStyle={{ base: "5xl", md: "6xl" }}
-              as="h1"
-              {...headingProps}
-            >
-              {children}
-            </Heading>
+            <MotionBox variants={itemVariants} asChild={true}>
+              <Heading
+                textStyle={{ base: "4xl", md: "5xl" }}
+                as="h1"
+                {...headingProps}
+              >
+                {children}
+              </Heading>
+            </MotionBox>
           </Box>
 
           {afterContent}

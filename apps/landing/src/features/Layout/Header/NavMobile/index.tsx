@@ -6,7 +6,7 @@ const NavMobile = {
   Drawer: NavMobileDrawer,
   Navbar: NavMobileNavbar,
   Root: ({ children, ...props }: Drawer.RootProps) => (
-    <DrawerRoot size={"full"} {...props}>
+    <DrawerRoot size={"full"} initialFocusEl={() => null} {...props}>
       <DrawerBackdrop />
 
       {children}

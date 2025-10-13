@@ -17,7 +17,7 @@ type ContextT = {
 };
 const Context = createContext<ContextT>({
   initialized: false,
-  headerTheme: "system",
+  headerTheme: "dark",
   setHeaderTheme: () => {},
 });
 
@@ -28,17 +28,17 @@ type HeaderIntersectionObserverProps = PropsWithChildren;
 export default function HeaderObserverProvider({
   children,
 }: HeaderIntersectionObserverProps) {
-  const { theme = "light" } = useTheme();
+  const { theme = "system" } = useTheme();
   const [initialized, setInitialized] = useState(false);
   const [headerTheme, setHeaderTheme] = useState(theme);
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log("setHeaderTheme", { theme });
-
+    if (!initialized) {
+      setInitialized(true);
+    }
     setHeaderTheme(theme);
-    setInitialized(true);
-  }, [pathname, theme]);
+  }, [initialized, pathname, theme]);
 
   return (
     <Context.Provider

@@ -1,23 +1,31 @@
 "use client";
 
-import { Box, Container, Stack } from "@mutuals/ui";
+import { MotionBox, Box, Container, Stack } from "@mutuals/ui";
 
 import ActorCard from "@/features/Home/Actors/Card";
 import SectionHeader from "src/features/Shell/SectionHeader";
 import { useState } from "react";
 import ownersImage from "@/assets/owners-product-slider.webp";
 import partnersImage from "@/assets/partners-product-slider.webp";
+import { itemVariants } from "@/components/MotionBoxWrapper";
 
 export default function HomeActors() {
   const [active, setActive] = useState<"owners" | "partners">("owners");
 
   return (
-    <Box my="32">
+    <Box my={"32"}>
       <Container maxW="7xl">
-        <SectionHeader label={"tailored to your needs"}>
-          Versatile Solutions For Everyone
-        </SectionHeader>
-
+        <MotionBox
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={itemVariants}
+          asChild={true}
+        >
+          <SectionHeader label={"tailored to your needs"}>
+            Versatile Solutions For Everyone
+          </SectionHeader>
+        </MotionBox>
         <Stack gap={"6"} direction="row" wrap={{ base: "wrap", lg: "nowrap" }}>
           <ActorCard
             animate={active === "owners" ? "grow" : "shrink"}
@@ -29,7 +37,6 @@ export default function HomeActors() {
             }
             onHoverStart={() => setActive("owners")}
           />
-
           <ActorCard
             animate={active === "partners" ? "grow" : "shrink"}
             description="Project Partners"
