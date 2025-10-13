@@ -5,63 +5,95 @@ import {
   IconButton,
   Input,
   MutualsLogo,
-  Stack,
   InputGroup,
   Form,
   Field,
+  LinkListBox,
 } from "@mutuals/ui";
 import { IoSend } from "react-icons/io5";
-import ListBox from "@/features/Layout/Footer/ListBox";
 import Footer from "@/features/Layout/Footer/Footer";
 
 export default function LayoutFooter() {
   return (
-    <Box as="footer" role="contentinfo" maxW="100%" w="100%" pt="24">
-      <Container as={Stack} maxW="7xl" py={{ base: 6, lg: 12 }}>
+    <Box as="footer" role="contentinfo" maxW="100%" w="100%" pt="12">
+      <Container maxW="7xl" py={{ base: "6", lg: "12" }}>
         <Grid
-          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(6, 1fr)" }}
-          templateRows={{ lg: "2" }}
+          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
           gap={{ base: "12", lg: "12" }}
         >
-          <ListBox
+          <LinkListBox
             title={"Company"}
             links={[
-              { children: "Contact", href: "/contact" },
-              { children: "Blog", href: "/" },
+              {
+                children: "Contact",
+                target: "_blank",
+                href: "/contact",
+              },
+              {
+                children: "Blog",
+                target: "_blank",
+                href: "/blog",
+              },
             ]}
           />
-          <ListBox
+          <LinkListBox
             title={"Support"}
             links={[
-              { children: "Pricing", href: "/pricing" },
-              { children: "Help Center", href: "/" },
-              { children: "Safety Center", href: "/" },
-              { children: "Community Guidelines", href: "/" },
+              {
+                children: "Pricing",
+                target: "_blank",
+                href: "/pricing",
+              },
+              {
+                children: "Help Center",
+                target: "_blank",
+                href: "/",
+              },
+              {
+                children: "Safety Center",
+                target: "_blank",
+                href: "/",
+              },
+              {
+                children: "Community Guidelines",
+                href: "/",
+              },
             ]}
           />
 
-          <ListBox
+          <LinkListBox
             title={"Legal"}
             links={[
-              { children: "Cookies Policy", href: "/" },
-              { children: "Privacy Policy", href: "/" },
-              { children: "Terms of Service", href: "/" },
-              { children: "Law Enforcement", href: "/" },
+              {
+                children: "Cookies Policy",
+                href: "/cookies-policy",
+              },
+              {
+                children: "Privacy Policy",
+                href: "/privacy-policy",
+              },
+              {
+                children: "Terms of Service",
+                href: "/terms-of-service",
+              },
+              {
+                children: "Law Enforcement",
+                href: "/law-enforcement",
+              },
             ]}
           />
 
-          <ListBox
-            colSpan={{ base: 2, lg: 3 }}
-            rowSpan={{ lg: 2 }}
+          <LinkListBox
             alignItems={"flex-end"}
             justifyContent={"flex-start"}
+            colSpan={{ base: 2, lg: 1 }}
           >
             <Box>
               <MutualsLogo href={"/"} maxW={{ base: "32", lg: "48" }} />
             </Box>
-          </ListBox>
+          </LinkListBox>
 
-          <ListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 3 }}>
+          <LinkListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 1 }}>
             <Form w={"full"}>
               <Field id={"email"} label={"Email address"}>
                 <InputGroup
@@ -81,7 +113,7 @@ export default function LayoutFooter() {
                 </InputGroup>
               </Field>
             </Form>
-          </ListBox>
+          </LinkListBox>
         </Grid>
       </Container>
 

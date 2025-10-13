@@ -1,9 +1,6 @@
-"use client";
+import { StackProps, Stack } from "@mutuals/ui";
 
-import { PresenceProps, Stack, Presence, Theme, ClientOnly } from "@mutuals/ui";
-import { useHeaderObserver } from "@/providers/HeaderObserver";
-
-export type HeaderContainerWrapperProps = PresenceProps;
+export type HeaderContainerWrapperProps = StackProps;
 
 export default function HeaderContainerWrapper({
   children,
@@ -31,24 +28,32 @@ export default function HeaderContainerWrapper({
   useMotionValueEvent(scrollY, "change", (latest) => {
     onUpdate(latest);
   });*/
+  /*
   const { initialized, headerTheme } = useHeaderObserver();
+*/
 
   return (
-    <Presence
-      present={initialized}
-      animationName={{ _open: "fade-in", _closed: "fade-out" }}
-      animationDuration="moderate"
-      {...props}
-    >
-      <ClientOnly>
-        {() => (
-          <Theme appearance={headerTheme as "light" | "dark"}>
-            <Stack position="fixed" top="0" left="0" w={"full"} zIndex={10}>
-              {children}
-            </Stack>
-          </Theme>
+    /*
+    <ClientOnly>
+      <AnimatePresence>
+        {initialized && (
+          <MotionBox
+            key="container-wrapper"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <Theme appearance={headerTheme as "light" | "dark"}>
+*/
+    <Stack position="fixed" top="0" left="0" w={"full"} zIndex={10} {...props}>
+      {children}
+    </Stack>
+    /*
+            </Theme>
+          </MotionBox>
         )}
-      </ClientOnly>
-    </Presence>
+      </AnimatePresence>
+    </ClientOnly>
+*/
   );
 }

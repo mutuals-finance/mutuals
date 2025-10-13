@@ -22,11 +22,12 @@ function NavDesktopStack({ children, ...props }: StackProps) {
   return (
     <Stack
       direction={"row"}
-      rounded={"4xl"}
-      bgColor={"bg/20"}
+      rounded={"2xl"}
+      bgColor={"bg/25"}
       css={{
         backdropFilter: "blur(12px)",
       }}
+      shadow={"xs"}
       h="14"
       justifyContent="center"
       alignItems={"center"}
@@ -62,7 +63,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
         >
           {lastLinksProps && (
             <Link href={lastLinksProps.href} target="_blank" asChild={true}>
-              <Button size={"md"} variant={"subtle"} rounded={"4xl"}>
+              <Button size={"md"} variant={"subtle"}>
                 {lastLinksProps.children}
               </Button>
             </Link>
@@ -72,7 +73,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
             target="_blank"
             asChild={true}
           >
-            <Button size={"md"} variant={"solid"} rounded={"4xl"}>
+            <Button size={"md"} variant={"solid"}>
               Launch App
             </Button>
           </Link>

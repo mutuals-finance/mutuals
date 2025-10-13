@@ -17,7 +17,7 @@ type ContextT = {
 };
 const Context = createContext<ContextT>({
   initialized: false,
-  headerTheme: "system",
+  headerTheme: "dark",
   setHeaderTheme: () => {},
 });
 
@@ -34,8 +34,10 @@ export default function HeaderObserverProvider({
   const pathname = usePathname();
 
   useEffect(() => {
-    setHeaderTheme(!initialized ? "system" : theme);
-    setInitialized(true);
+    if (!initialized) {
+      setInitialized(true);
+    }
+    setHeaderTheme(theme);
   }, [initialized, pathname, theme]);
 
   return (

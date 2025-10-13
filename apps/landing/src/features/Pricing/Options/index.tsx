@@ -19,7 +19,7 @@ import items from "@/features/Pricing/Options/items";
 export default function PricingOptions() {
   return (
     <Container maxW="7xl" mt={{ base: "6", lg: "12" }} mb={"16"}>
-      <SimpleGrid gap={"2"} columns={{ base: 1, md: 3 }}>
+      <SimpleGrid gap={{ base: "2", lg: "6" }} columns={{ base: 1, md: 3 }}>
         {items.map(({ heading, label, description, features, ...props }) => (
           <Card.Root size={"md"} key={label} bg={"bg"} {...props}>
             <Card.Header>

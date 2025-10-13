@@ -12,9 +12,9 @@ import IconBox from "@/components/IconBox";
 
 export default function ContactOptions() {
   return (
-    <Container mt={{ base: "6", lg: "12" }} mb="32" maxW="6xl">
+    <Container mt={{ base: "6", lg: "12" }} mb="24" maxW="5xl">
       <Stack textAlign={"center"} alignItems={"center"}>
-        <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "12" }}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "6" }}>
           {items.map(
             ({
               icon,

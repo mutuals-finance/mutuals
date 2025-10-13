@@ -24,7 +24,7 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <Card.Root variant={"outline"} bg={"bg"} size={"lg"} w={"full"} {...props}>
+    <Card.Root variant={"outline"} w={"full"} {...props}>
       <Stack direction={"row"}>
         <Card.Body
           as={Stack}
@@ -38,10 +38,10 @@ export default function FeatureCard({
             {heading}
           </Heading>
 
-          <Text color={"fg.subtle"}>{description}</Text>
+          <Text color={"fg.muted"}>{description}</Text>
         </Card.Body>
 
-        <Box p={"2"}>
+        <Box p={"4"}>
           <IconBox size={"xs"} bg={"bg.muted"} color={"fg.muted"}>
             <Icon asChild transform={"rotate(45deg)"}>
               <IoArrowUp />

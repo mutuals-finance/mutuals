@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Button, Container, Stack, ScrollArea, Flex } from "@mutuals/ui";
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  ScrollArea,
+  Flex,
+  Bleed,
+} from "@mutuals/ui";
 import SectionHeader from "src/features/Shell/SectionHeader";
 import { IoCodeWorkingOutline, IoTimerOutline } from "react-icons/io5";
 import { RiExchange2Line } from "react-icons/ri";
@@ -40,30 +48,32 @@ export default function HomeValue() {
           Financial management for on-chain teams
         </SectionHeader>
 
-        <ScrollArea.Root w="full" size="xs">
-          <ScrollArea.Viewport>
-            <ScrollArea.Content py="4">
-              <Flex gap={{ base: "4", lg: "6" }} flexWrap="nowrap">
-                {values.map((value, index) => (
-                  <ValueCard
-                    key={value.heading}
-                    {...value}
-                    w={{
-                      base: "72",
-                      lg: "calc(33.33% - var(--chakra-spacing-6))",
-                    }}
-                    flexShrink="0"
-                  />
-                ))}
-              </Flex>
-            </ScrollArea.Content>
-          </ScrollArea.Viewport>
-          <ScrollArea.Scrollbar orientation="horizontal" />
-          <ScrollArea.Corner />
-        </ScrollArea.Root>
+        <Bleed inline="6">
+          <ScrollArea.Root w="full" size="xs">
+            <ScrollArea.Viewport>
+              <ScrollArea.Content py="4" px={{ base: "6", lg: "12" }}>
+                <Flex gap={"6"} flexWrap="nowrap">
+                  {values.map((value, index) => (
+                    <ValueCard
+                      key={value.heading}
+                      {...value}
+                      w={{
+                        base: "72",
+                        lg: "calc(33.33% - var(--chakra-spacing-6))",
+                      }}
+                      flexShrink="0"
+                    />
+                  ))}
+                </Flex>
+              </ScrollArea.Content>
+            </ScrollArea.Viewport>
 
-        <Stack align={"center"} mt={"12"}>
-          <Button size={"2xl"} variant={"surface"} rounded={"4xl"}>
+            <ScrollArea.Corner />
+          </ScrollArea.Root>
+        </Bleed>
+
+        <Stack align={"center"} mt={"6"}>
+          <Button size={"2xl"} variant={"subtle"}>
             Explore the Platform
           </Button>
         </Stack>

@@ -169,7 +169,6 @@ export default function ActorCard({
               size="xl"
               w={{ base: "full", lg: "auto" }}
               variant={"surface"}
-              rounded={"4xl"}
               {...buttonProps}
             >
               Learn More

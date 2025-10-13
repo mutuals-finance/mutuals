@@ -18,7 +18,7 @@ export default function ValueCard({
   ...props
 }: ValueCardProps) {
   return (
-    <Card.Root variant={variant} size={size} overflow="hidden" {...props}>
+    <Card.Root variant={variant} size={size} {...props}>
       {image && (
         <Card.Header>
           <AspectRatio
@@ -36,11 +36,11 @@ export default function ValueCard({
         <Heading as="h3" textStyle={"xl"}>
           {heading}
         </Heading>
+        <Text color={"fg.muted"} mt={"4"}>
+          {description}
+        </Text>
       </Card.Body>
-      <Card.Footer>
-        {" "}
-        <Text color={"fg.subtle"}>{description}</Text>
-      </Card.Footer>
+      <Card.Footer />
     </Card.Root>
   );
 }
