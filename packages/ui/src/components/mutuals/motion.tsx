@@ -4,10 +4,7 @@ import { motion, MotionProps } from "framer-motion";
 import { BoxProps, chakra } from "@chakra-ui/react";
 import { forwardRef } from "react";
 
-type MotionBoxProps = Omit<
-  MotionProps & Omit<BoxProps, "transition">,
-  "children"
->;
+export type MotionBoxProps = MotionProps & Omit<BoxProps, "transition">;
 
 const ChakraMotionBox = forwardRef<"div", MotionBoxProps>(
   ({ transition: _, ...props }, ref) => {

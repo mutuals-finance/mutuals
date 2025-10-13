@@ -1,3 +1,4 @@
+import { itemVariants } from "@/components/MotionBoxWrapper";
 import {
   type BoxProps,
   type HeadingProps,
@@ -7,6 +8,7 @@ import {
   Heading,
   Container,
   Tag,
+  MotionBox,
 } from "@mutuals/ui";
 
 interface PageHeaderProps extends BoxProps {
@@ -43,29 +45,32 @@ export default function ShellPageHeader({
         >
           <Box maxW={"xl"} mx={{ lg: "auto" }}>
             {!!tag && (
-              <Tag
-                textStyle={{ lg: "lg" }}
-                mb={"6"}
-                color={"fg.muted"}
-                textTransform={"uppercase"}
-                p={"2"}
-                fontWeight={"medium"}
-                bgGradient="to-r"
-                gradientFrom="bg"
-                gradientTo="bg.muted"
-                {...tagProps}
-              >
-                {tag}
-              </Tag>
+              <MotionBox variants={itemVariants} asChild={true}>
+                <Tag
+                  textStyle={{ lg: "lg" }}
+                  mb={"6"}
+                  color={"fg.muted"}
+                  textTransform={"uppercase"}
+                  p={"2"}
+                  fontWeight={"medium"}
+                  bgGradient="to-r"
+                  gradientFrom="bg"
+                  gradientTo="bg.muted"
+                  {...tagProps}
+                >
+                  {tag}
+                </Tag>
+              </MotionBox>
             )}
-
-            <Heading
-              textStyle={{ base: "4xl", md: "5xl" }}
-              as="h1"
-              {...headingProps}
-            >
-              {children}
-            </Heading>
+            <MotionBox variants={itemVariants} asChild={true}>
+              <Heading
+                textStyle={{ base: "4xl", md: "5xl" }}
+                as="h1"
+                {...headingProps}
+              >
+                {children}
+              </Heading>
+            </MotionBox>
           </Box>
 
           {afterContent}

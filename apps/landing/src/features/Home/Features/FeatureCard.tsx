@@ -6,9 +6,11 @@ import {
   GridItemProps,
   Icon,
   Box,
+  MotionBox,
 } from "@mutuals/ui";
 import { IoArrowUp } from "react-icons/io5";
 import IconBox from "@/components/IconBox";
+import { itemVariants } from "@/components/MotionBoxWrapper";
 
 interface FeatureCardProps extends GridItemProps {
   heading: string;
@@ -24,31 +26,33 @@ export default function FeatureCard({
   ...props
 }: FeatureCardProps) {
   return (
-    <Card.Root variant={"outline"} w={"full"} {...props}>
-      <Stack direction={"row"}>
-        <Card.Body
-          as={Stack}
-          direction={"column"}
-          justifyContent={"space-between"}
-          alignItems={"flex-start"}
-          gap={"2"}
-        >
-          {children}
-          <Heading as={"h3"} size={"xl"}>
-            {heading}
-          </Heading>
+    <MotionBox variants={itemVariants} asChild={true}>
+      <Card.Root variant={"outline"} w={"full"} {...props}>
+        <Stack direction={"row"}>
+          <Card.Body
+            as={Stack}
+            direction={"column"}
+            justifyContent={"space-between"}
+            alignItems={"flex-start"}
+            gap={"2"}
+          >
+            {children}
+            <Heading as={"h3"} size={"xl"}>
+              {heading}
+            </Heading>
 
-          <Text color={"fg.muted"}>{description}</Text>
-        </Card.Body>
+            <Text color={"fg.muted"}>{description}</Text>
+          </Card.Body>
 
-        <Box p={"4"}>
-          <IconBox size={"xs"} bg={"bg.muted"} color={"fg.muted"}>
-            <Icon asChild transform={"rotate(45deg)"}>
-              <IoArrowUp />
-            </Icon>
-          </IconBox>
-        </Box>
-      </Stack>
-    </Card.Root>
+          <Box p={"4"}>
+            <IconBox size={"xs"} bg={"bg.muted"} color={"fg.muted"}>
+              <Icon asChild transform={"rotate(45deg)"}>
+                <IoArrowUp />
+              </Icon>
+            </IconBox>
+          </Box>
+        </Stack>
+      </Card.Root>
+    </MotionBox>
   );
 }

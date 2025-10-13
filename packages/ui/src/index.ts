@@ -53,6 +53,7 @@ export {
   type NavLinkProps,
   LinkListBox,
   type LinkListBoxProps,
+  type MotionBoxProps,
   MotionBox,
   MutualsLogo,
   type UIProviderProps,
