@@ -82,7 +82,7 @@ export default function HomeValue() {
           </Bleed>
 
           <Stack align={"center"} mt={"6"}>
-            <Button size={"2xl"} variant={"subtle"}>
+            <Button size={"2xl"} variant={"surface"}>
               Explore the Platform
             </Button>
           </Stack>

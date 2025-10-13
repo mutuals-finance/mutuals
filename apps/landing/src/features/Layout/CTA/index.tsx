@@ -44,12 +44,7 @@ export default function CTA() {
                     target="_blank"
                     asChild={true}
                   >
-                    <Button
-                      size="2xl"
-                      variant="solid"
-                      colorPalette={"blue"}
-                      rounded={"4xl"}
-                    >
+                    <Button size="2xl" variant="solid" colorPalette={"blue"}>
                       Start for free
                     </Button>
                   </Link>
