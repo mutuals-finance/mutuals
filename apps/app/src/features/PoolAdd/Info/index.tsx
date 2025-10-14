@@ -1,8 +1,17 @@
-import { Field, FileUpload, Input, Textarea, Stack } from "@mutuals/ui";
+import {
+  Field,
+  FileUpload,
+  Input,
+  Textarea,
+  Stack,
+  type StackProps,
+} from "@mutuals/ui";
 
-export default function PoolAddFormInfo() {
+export type PoolAddInfoProps = StackProps;
+
+export default function PoolAddInfo({ children, ...props }: PoolAddInfoProps) {
   return (
-    <Stack>
+    <Stack {...props}>
       <Field label={"Owner"} id={"ownerAddress"}>
         <Input id="ownerAddress" />
       </Field>
@@ -29,6 +38,8 @@ export default function PoolAddFormInfo() {
       <Field id={"description"} label={"Description"}>
         <Textarea id="description" />
       </Field>
+
+      {children}
     </Stack>
   );
 }
