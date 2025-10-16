@@ -153,6 +153,7 @@ export {
   HoverCardTrigger,
   type InputGroupProps,
   InputGroup,
+  type Transform,
   createJsonTransform,
   type LinkButtonProps,
   LinkButton,

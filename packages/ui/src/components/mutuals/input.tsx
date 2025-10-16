@@ -65,29 +65,12 @@ export function createJsonTransform<
       if (!value) return undefined;
       try {
         const decoded = JSON.parse(value) as TObject;
-        const newFieldValue = mapInput(decoded);
-        /*
-        console.log("transform input", {
-          key,
-          decoded,
-          value,
-          newFieldValue,
-        });
-*/
-        return newFieldValue;
+        return mapInput(decoded);
       } catch {
         return undefined;
       }
     },
     output: (e, prevValue) => {
-      /*
-      console.log("transform output before", {
-        key,
-        defaultValue,
-        e,
-        prevValue,
-      });
-*/
       const prevDecoded: TObject = prevValue
         ? (JSON.parse(prevValue) as TObject)
         : ({} as TObject);
@@ -100,17 +83,7 @@ export function createJsonTransform<
         ...prevDecoded,
         [key]: newFieldValue,
       };
-      /*
-      console.log("transform output after", {
-        key,
-        merged,
-        prevDecoded,
-        defaultValue,
-        newFieldValue,
-        e,
-        prevValue,
-      });
-*/
+
       return JSON.stringify(merged);
     },
   };

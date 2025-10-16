@@ -1,10 +1,10 @@
 import { Stack } from "@mutuals/ui";
-import AllocationFormTree from "@/features/Allocation/FormTree";
+import ClaimTree from "@/features/Claim/Tree";
 
 export default function PoolAddClaims() {
   return (
     <Stack>
-      <AllocationFormTree id={"addClaims"} />
+      <ClaimTree id={"addClaims"} />
     </Stack>
   );
 }

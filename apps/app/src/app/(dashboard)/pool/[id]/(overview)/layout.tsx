@@ -7,7 +7,6 @@ import PoolOverviewDescription from "@/features/PoolOverview/Description";
 import ShellPoolOverview from "@/features/Shell/PoolOverview";
 import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
 import { Stack } from "@mutuals/ui";
-import AllocationTableCard from "@/features/Allocation/TableCard";
 
 const tabs = [
   {
@@ -53,7 +52,9 @@ export default async function PoolOverviewLayout({
         <Stack gap={"4"}>
           <PoolOverviewDescription {...props} />
           <PoolOverviewHandlers {...props} />
+          {/*
           <AllocationTableCard {...props} />
+*/}
           <AssetTableCard assets={props.balance?.assets?.slice(0, 10)} />
           <ActivityTableCard
             payee={address}
