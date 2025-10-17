@@ -2,7 +2,6 @@
 
 import {
   Button,
-  Text,
   useColorMode,
   IconButton,
   ButtonGroup,
@@ -36,13 +35,20 @@ export default function ShellDashboardHeaderUser() {
     <ButtonGroup size="sm">
       <Menu.Root>
         <Menu.Trigger asChild>
-          <IconButton
-            variant="ghost"
-            aria-label="Open navigation menu"
-            hideBelow={"lg"}
-          >
-            <IoEllipsisHorizontal />
-          </IconButton>
+          {!isConnected ? (
+            <IconButton
+              variant="ghost"
+              aria-label="Open navigation menu"
+              hideBelow={"lg"}
+            >
+              <IoEllipsisHorizontal />
+            </IconButton>
+          ) : (
+            <Button variant={"surface"} size={"sm"}>
+              <UserAvatar address={address} size={"2xs"} />
+              {shortenAddress(address)}
+            </Button>
+          )}
         </Menu.Trigger>
         <Portal>
           <Menu.Positioner>
@@ -89,25 +95,13 @@ export default function ShellDashboardHeaderUser() {
         </Portal>
       </Menu.Root>
 
-      <Button
-        variant={"solid"}
-        size={"sm"}
-        loading={isConnecting}
-        onClick={() =>
-          isConnected ? disconnectAndLogout() : router.push("/auth/login")
-        }
-      >
-        {isConnected ? (
-          <>
-            <UserAvatar address={address} size={"xs"} />
-            <Text as={"span"} fontFamily={"mono"}>
-              {shortenAddress(address)}
-            </Text>
-          </>
-        ) : (
-          <>Sign in</>
-        )}
-      </Button>
+      {!isConnected && (
+        <Link href={"/auth/login"} asChild={true}>
+          <Button variant={"solid"} size={"sm"} loading={isConnecting}>
+            Sign in
+          </Button>
+        </Link>
+      )}
     </ButtonGroup>
   );
 }

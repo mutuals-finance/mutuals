@@ -1,6 +1,6 @@
 "use client";
 
-import { AvatarFallback, type AvatarProps, AvatarRoot } from "@mutuals/ui";
+import { AvatarRoot, AvatarFallback, type AvatarProps } from "@mutuals/ui";
 import React from "react";
 import dynamic from "next/dynamic";
 
@@ -15,12 +15,20 @@ interface WalletAvatarProps extends AvatarProps {
 
 export default function WalletAvatar({
   address = "",
-  size = "xs",
+  size = "2xs",
+  variant = "subtle",
   ...props
 }: WalletAvatarProps) {
   return (
-    <AvatarRoot size={size} {...props}>
-      <AvatarFallback>
+    <AvatarRoot size={size} shape="rounded" variant={variant} {...props}>
+      <AvatarFallback
+        css={{
+          "& > *": {
+            width: "var(--avatar-size)",
+            height: "var(--avatar-size)",
+          },
+        }}
+      >
         <JazzIcon address={address} />
       </AvatarFallback>
     </AvatarRoot>
