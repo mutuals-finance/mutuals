@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "@mutuals/graphql-client-nextjs": "workspace:*",
-    "@mutuals/sdk": "workspace:*"
+    "@mutuals/sdk": "workspace:*",
+    "@mutuals/ui": "workspace:*"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",

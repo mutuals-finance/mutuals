@@ -3,7 +3,7 @@ import { ImageResponseOptions } from "next/server";
 import renderBaseIcon from "./base-icon";
 
 // 48, 96, 144,
-export const iconSizes = [192, 256, 512, 1024];
+export const iconSizes = [48, 96, 144, 192, 256, 512, 1024];
 
 export const defaultContentType = "image/png";
 

@@ -578,6 +578,9 @@ importers:
       '@mutuals/sdk':
         specifier: workspace:*
         version: link:../sdk
+      '@mutuals/ui':
+        specifier: workspace:*
+        version: link:../ui
       react:
         specifier: '>= 18.0.0'
         version: 19.0.0
