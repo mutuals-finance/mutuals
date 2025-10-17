@@ -24,6 +24,7 @@ import React, { useCallback } from "react";
 import AuthSignInCard from "@/features/Auth/SignInCard";
 import { PoolCreateInput } from "@mutuals/sdk-react";
 import PoolAddModal from "@/features/PoolAdd/Modal";
+import { poolAddSteps } from "@/features/PoolAdd/steps";
 import {
   IoChevronBackSharp,
   IoChevronForwardSharp,
@@ -31,11 +32,7 @@ import {
   IoSettingsSharp,
 } from "react-icons/io5";
 import PoolAddPanel from "@/features/PoolAdd/Panel";
-import {
-  initialClaims,
-  stepCollection,
-  stepItems,
-} from "@/features/PoolAdd/items";
+import { defaultClaims } from "@/features/Claim/utils";
 
 export default function PoolAdd() {
   const [modalOpen, setModalOpen] = useToggle(false);
@@ -70,7 +67,7 @@ export default function PoolAdd() {
 
   const steps = useSteps({
     defaultStep: 0,
-    count: stepCollection.items.length,
+    count: poolAddSteps.collection.items.length,
   });
 
   return (
@@ -83,7 +80,7 @@ export default function PoolAdd() {
         ownerAddress: address,
         name: "",
         description: "",
-        addClaims: initialClaims,
+        addClaims: defaultClaims,
       }}
       errors={
         !error
@@ -137,7 +134,7 @@ export default function PoolAdd() {
                     </Text>
                   </Stack>
                   <Stack direction="row" justifyContent={"flex-end"}>
-                    <Button variant={"subtle"}>
+                    <Button variant={"subtle"} onClick={() => methods.reset()}>
                       <IoRefreshSharp />
                       Reset
                     </Button>
@@ -181,11 +178,13 @@ export default function PoolAdd() {
                       <Fieldset.Content>
                         <FormErrorAlert name={"root.upsertPool"} />
 
-                        {Object.values(stepItems).map((step, index) => (
-                          <Steps.Content key={index} index={index}>
-                            {step.children}
-                          </Steps.Content>
-                        ))}
+                        {Object.values(poolAddSteps.items).map(
+                          (step, index) => (
+                            <Steps.Content key={index} index={index}>
+                              {step.children}
+                            </Steps.Content>
+                          ),
+                        )}
 
                         <Steps.CompletedContent>
                           <AuthSignInCard

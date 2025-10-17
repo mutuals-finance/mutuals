@@ -1,13 +1,13 @@
 "use client";
 
 import { InputGroup, NumberInput } from "@mutuals/ui";
-import { ExtensionRenderInputProps } from "../../types";
 import { useWatch } from "react-hook-form";
 import { PoolCreateInput } from "@mutuals/sdk-react";
 import { defaultValue, transform, type ValueInputData } from "./transform";
 import ValueInputSelect, { AllocationType } from "./Select";
+import { ExtensionRenderProps } from "../../types";
 
-export type ValueInputProps = ExtensionRenderInputProps;
+export type ValueInputProps = ExtensionRenderProps;
 
 export { defaultValue, type ValueInputData };
 

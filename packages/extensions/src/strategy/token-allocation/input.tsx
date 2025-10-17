@@ -1,8 +1,8 @@
-import { ExtensionRenderInputProps } from "../../types";
+import { ExtensionRenderProps } from "../../types";
 import { ValueInput } from "../../components/value-input";
 import { TokenAddressInput } from "../../components/token-address-input";
 
-export type TokenAllocationInputProps = ExtensionRenderInputProps;
+export type TokenAllocationInputProps = ExtensionRenderProps;
 
 export function TokenAllocationInput(props: TokenAllocationInputProps) {
   return (

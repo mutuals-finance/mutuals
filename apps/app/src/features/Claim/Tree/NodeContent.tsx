@@ -7,12 +7,10 @@ import {
   useTreeViewNodeContext,
   Input,
   Menu,
-  createListCollection,
-  SelectCollectionItemProps,
   Select,
   Group,
 } from "@mutuals/ui";
-import React, { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, useMemo } from "react";
 import {
   IoChevronForwardSharp,
   IoEllipsisHorizontalSharp,
@@ -21,35 +19,14 @@ import { PoolCreateInput } from "@mutuals/sdk-react";
 import { StateExtensions, StrategyExtensions } from "@mutuals/extensions";
 import { useWatch } from "react-hook-form";
 import { RiFolderReceivedLine, RiUserReceivedLine } from "react-icons/ri";
-import { ClaimTreeNodeRootProps } from "@/features/Claim/Tree/NodeRoot";
-
-export type ClaimTreeNodeProps = Omit<ClaimTreeNodeRootProps, "children">;
-
-const createAllocationCollection = (
-  config: {
-    [id: string]: { id: string; name: string };
-  },
-  configValue: string,
-) =>
-  createListCollection<SelectCollectionItemProps>({
-    items: Object.values(config).map(({ id, name }) => ({
-      value: id,
-      children: name,
-      configValue,
-    })),
-  });
-
-const SELECT_ITEMS = {
-  state: createAllocationCollection(StateExtensions.map, "state"),
-  strategy: createAllocationCollection(StrategyExtensions.map, "strategy"),
-};
+import { createClaimCollection } from "@/features/Claim/utils";
+import useClaimNodeId from "@/features/Claim/useClaimNodeId";
 
 export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
-  const nodeState = useTreeViewNodeContext();
-  const baseId = "addClaims.rootNode";
-  const id =
-    `${baseId}${nodeState.indexPath.map((p) => `.children.${p}`)}` as `addClaims.rootNode`;
+  const { isBranch } = useTreeViewNodeContext();
 
+  const { id } = useClaimNodeId();
+  console.log("NodeContent", { id });
   const [stateId, strategyId] = useWatch<PoolCreateInput>({
     name: [`${id}.stateId`, `${id}.strategyId`],
   });
@@ -61,8 +38,8 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
 
   return (
     <>
-      <Icon flex={"0 0 auto"}>
-        {nodeState.isBranch ? <RiFolderReceivedLine /> : <RiUserReceivedLine />}
+      <Icon>
+        {isBranch ? <RiFolderReceivedLine /> : <RiUserReceivedLine />}
       </Icon>
 
       <Select<string>
@@ -70,8 +47,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
         id={`${id}.stateId`}
         size={"md"}
         w={"28"}
-        flex={"0 0 auto"}
-        collection={SELECT_ITEMS.state}
+        collection={createClaimCollection(StateExtensions.map, "state")}
         positioning={{ sameWidth: false }}
         onClick={(e) => {
           e.stopPropagation();
@@ -85,10 +61,9 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
       <Select<string>
         placeholder={"Strategy"}
         id={`${id}.strategyId`}
-        collection={SELECT_ITEMS.strategy}
+        collection={createClaimCollection(StrategyExtensions.map, "strategy")}
         size={"md"}
-        w={"48"}
-        flex={"0 0 auto"}
+        w={"44"}
         positioning={{ sameWidth: false }}
         onClick={(e) => {
           e.stopPropagation();
@@ -99,12 +74,12 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
         }}
       />
 
-      {!nodeState.isBranch && (
+      {!isBranch && (
         <Input
           placeholder={"Recipient address"}
           id={`${id}.recipientAddress`}
           size={"md"}
-          w={"48"}
+          w={"64"}
           flex={"1 0 auto"}
           onClick={(e) => {
             e.stopPropagation();
@@ -116,8 +91,14 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
 
       {selectedStrategy?.render?.(renderProps)}
 
-      <Group position={"sticky"} right={"0"} gap={"0.5"} ml={"auto"}>
-        {nodeState.isBranch && (
+      <Group
+        position={"sticky"}
+        right={{ base: "6", lg: "4" }}
+        gap={"1"}
+        ml={"auto"}
+        pl={{ base: "2", lg: "0" }}
+      >
+        {isBranch && (
           <TreeView.BranchTrigger asChild>
             <IconButton
               css={{
@@ -132,7 +113,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
               onClick={(e) => {
                 e.stopPropagation();
               }}
-              size={{ base: "xs", lg: "xs" }}
+              size={{ base: "md", lg: "sm" }}
             >
               <TreeView.BranchIndicator asChild>
                 <IoChevronForwardSharp />
@@ -149,7 +130,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
             onClick={(e) => {
               e.stopPropagation();
             }}
-            size={{ base: "xs", lg: "xs" }}
+            size={{ base: "md", lg: "sm" }}
           >
             <IoEllipsisHorizontalSharp />
           </IconButton>

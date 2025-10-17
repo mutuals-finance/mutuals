@@ -1,4 +1,4 @@
-import { ExtensionRenderInputProps } from "../../types";
+import { ExtensionRenderProps } from "../../types";
 import { TokenAddressInput } from "../../components/token-address-input";
 import {
   createJsonTransform,
@@ -7,10 +7,10 @@ import {
 } from "@mutuals/ui";
 import { defaultValue, TokenGatingData } from "./index";
 
-export type TokenGatingInputProps = ExtensionRenderInputProps;
+export type TokenGatingInputProps = ExtensionRenderProps;
 
 export function TokenGatingInput(props: TokenGatingInputProps) {
-  const id = props.id as `addClaims.rootNode`;
+  const { id } = props;
 
   return (
     <>
@@ -32,7 +32,7 @@ export function TokenGatingInput(props: TokenGatingInputProps) {
           "value",
           defaultValue,
           (data) => data.value?.toString(),
-          (e) => (e.value ? e.valueAsNumber : undefined),
+          ({ valueAsNumber }) => valueAsNumber,
         )}
       />
     </>

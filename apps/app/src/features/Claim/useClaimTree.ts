@@ -5,19 +5,11 @@ import {
   ClaimCreateNode,
   ClaimCreateTree,
   PoolCreateInput,
-  stateIds,
-  strategyIds,
 } from "@mutuals/sdk-react";
 import { TreeView } from "@mutuals/ui";
-
-export const createClaim = (): ClaimCreateNode => ({
-  id: `${Date.now()}`,
-  value: 0,
-  stateId: stateIds.Offchain,
-  strategyId: strategyIds.DefaultAllocation,
-  children: [],
-  data: "",
-});
+import { useCallback } from "react";
+import { createClaim } from "@/features/Claim/utils";
+import { ClaimTreeHandlerProps } from "@/features/Claim/types";
 
 export type UseClaimTreeProps = {
   id?: "addClaims";
@@ -25,10 +17,10 @@ export type UseClaimTreeProps = {
 
 export type UseClaimTreeResult = {
   data: ClaimCreateTree;
-  remove: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
-  addBefore: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
-  addAfter: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
-  addNested: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
+  remove: ClaimTreeHandlerProps["onRemove"];
+  addBefore: ClaimTreeHandlerProps["onAddBefore"];
+  addAfter: ClaimTreeHandlerProps["onAddAfter"];
+  addNested: ClaimTreeHandlerProps["onAddNested"];
 };
 
 export default function useClaimTree({
@@ -41,34 +33,51 @@ export default function useClaimTree({
     name: id,
   });
 
-  const remove = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
-    setValue(id, data.remove([props.indexPath]));
-  };
+  const remove = useCallback(
+    (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
+      setValue(id, data.remove([props.indexPath]));
+    },
+    [id, data, setValue],
+  );
 
-  const addBefore = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
-    const { indexPath } = props;
-    const newNode = createClaim();
-    const newClaims = data.insertBefore(indexPath, [newNode]);
-    if (newClaims) {
-      setValue(id, newClaims);
-    }
-  };
+  const addBefore = useCallback(
+    (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
+      const { indexPath } = props;
+      const newClaims = data.insertBefore(indexPath, [createClaim()]);
+      if (newClaims) {
+        setValue(id, newClaims);
+      }
+    },
+    [id, data, setValue],
+  );
 
-  const addAfter = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
-    const { indexPath } = props;
-    const newNode = createClaim();
-    const newClaims = data.insertAfter(indexPath, [newNode]);
-    if (newClaims) {
-      setValue(id, newClaims);
-    }
-  };
+  const addAfter = useCallback(
+    (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
+      const { indexPath } = props;
+      const newClaims = data.insertAfter(indexPath, [createClaim()]);
+      if (newClaims) {
+        setValue(id, newClaims);
+      }
+    },
+    [id, data, setValue],
+  );
 
-  const addNested = (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
-    const { node, indexPath } = props;
-    const newNode = createClaim();
-    const children = [newNode, ...(node.children ?? [])];
-    setValue(id, data.replace(indexPath, { ...node, children }));
-  };
+  const addNested = useCallback(
+    (props: TreeView.NodeProviderProps<ClaimCreateNode>) => {
+      const { node, indexPath } = props;
+      const children = [createClaim(), ...(node.children ?? [])];
+      const newData = data.replace(indexPath, { ...node, children });
+      console.log({ indexPath, node, children, newData });
+      setValue(id, newData);
+    },
+    [id, data, setValue],
+  );
 
-  return { data, remove, addBefore, addAfter, addNested };
+  return {
+    data,
+    remove,
+    addBefore,
+    addAfter,
+    addNested,
+  };
 }

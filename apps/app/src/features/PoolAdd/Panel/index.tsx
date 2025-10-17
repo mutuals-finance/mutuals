@@ -12,7 +12,7 @@ import {
   Span,
   UseStepsReturn,
 } from "@mutuals/ui";
-import { stepCollection } from "@/features/PoolAdd/items";
+import { poolAddSteps } from "@/features/PoolAdd/steps";
 
 export type PoolAddPanelProps = UseStepsReturn;
 
@@ -21,11 +21,11 @@ export default function PoolAddPanel({ value, setStep }: PoolAddPanelProps) {
     <>
       <SelectRoot
         size={"lg"}
-        collection={stepCollection}
-        defaultValue={[stepCollection.items[0]!.value]}
+        collection={poolAddSteps.collection}
+        defaultValue={[poolAddSteps.collection.items[0]!.value]}
         value={[
-          stepCollection.items[
-            Math.min(value, stepCollection.items.length - 1)
+          poolAddSteps.collection.items[
+            Math.min(value, poolAddSteps.collection.items.length - 1)
           ]!.value,
         ]}
         onValueChange={(e) => {
@@ -37,7 +37,7 @@ export default function PoolAddPanel({ value, setStep }: PoolAddPanelProps) {
           <SelectValueText placeholder="Select step" />
         </SelectTrigger>
         <SelectContent portalled={false} maxW={"full"} minW={"64"}>
-          {stepCollection.items.map((step) => (
+          {poolAddSteps.collection.items.map((step) => (
             <SelectItem item={step} key={step.value}>
               <Stack>
                 <SelectItemText>{step.label}</SelectItemText>
@@ -54,7 +54,7 @@ export default function PoolAddPanel({ value, setStep }: PoolAddPanelProps) {
         <Card.Root>
           <Card.Body>
             <Steps.List h={"36"}>
-              {stepCollection.items.map((step, index) => (
+              {poolAddSteps.collection.items.map((step, index) => (
                 <Steps.Item
                   key={step.value}
                   index={index}

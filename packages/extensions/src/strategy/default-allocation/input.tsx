@@ -1,7 +1,7 @@
-import { ExtensionRenderInputProps } from "../../types";
+import { ExtensionRenderProps } from "../../types";
 import { ValueInput } from "../../components/value-input";
 
-export type DefaultAllocationInputProps = ExtensionRenderInputProps;
+export type DefaultAllocationInputProps = ExtensionRenderProps;
 
 export function DefaultAllocationInput(props: DefaultAllocationInputProps) {
   return <ValueInput {...props} />;

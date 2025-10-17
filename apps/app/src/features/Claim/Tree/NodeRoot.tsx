@@ -4,15 +4,9 @@ import { TreeView, useTreeViewContext, Portal, Menu, Box } from "@mutuals/ui";
 import React, { PropsWithChildren } from "react";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { BsArrowBarDown, BsArrowBarUp, BsArrowsCollapse } from "react-icons/bs";
-import { ClaimCreateNode } from "@mutuals/sdk-react";
+import { ClaimTreeNodeProps } from "@/features/Claim/types";
 
-export type ClaimTreeNodeRootProps =
-  TreeView.NodeRenderProps<ClaimCreateNode> & {
-    onAddNested?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
-    onAddAfter?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
-    onAddBefore?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
-    onRemove?: (props: TreeView.NodeProviderProps<ClaimCreateNode>) => void;
-  } & PropsWithChildren;
+export type ClaimTreeNodeRootProps = ClaimTreeNodeProps & PropsWithChildren;
 
 export default function ClaimTreeNodeRoot({
   onAddNested,
@@ -25,17 +19,21 @@ export default function ClaimTreeNodeRoot({
   const tree = useTreeViewContext();
   const { node, nodeState } = props;
 
+  const nodeProps = {
+    w: "full",
+    bg: "bg",
+    pr: "0",
+  };
+
   return (
     <>
       <Menu.Root positioning={{ hideWhenDetached: true }}>
         {nodeState.isBranch ? (
-          <TreeView.BranchControl role="none" w={"full"} bg={"bg"} pr={"0"}>
+          <TreeView.BranchControl role="none" {...nodeProps}>
             {children}
           </TreeView.BranchControl>
         ) : (
-          <TreeView.Item w={"full"} bg={"bg"} pr={"0"}>
-            {children}
-          </TreeView.Item>
+          <TreeView.Item {...nodeProps}>{children}</TreeView.Item>
         )}
         <Portal>
           <Menu.Positioner>

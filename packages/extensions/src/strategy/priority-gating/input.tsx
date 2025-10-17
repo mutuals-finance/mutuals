@@ -1,4 +1,4 @@
-import { ExtensionRenderInputProps } from "../../types";
+import { ExtensionRenderProps } from "../../types";
 import {
   createJsonTransform,
   NumberInput,
@@ -6,20 +6,18 @@ import {
 } from "@mutuals/ui";
 import { defaultValue, PriorityGatingData } from "./index";
 
-export type PriorityGatingInputProps = ExtensionRenderInputProps;
+export type PriorityGatingInputProps = ExtensionRenderProps;
 
-export function PriorityGatingInput(props: PriorityGatingInputProps) {
-  const id = props.id as `addClaims.rootNode`;
-
+export function PriorityGatingInput({ id }: PriorityGatingInputProps) {
   return (
     <>
       <NumberInput
-        id={`${id}.data.value`}
+        id={`${id}.data.priority`}
         name={`${id}.data`}
+        defaultValue={"0"}
         allowMouseWheel={true}
         step={1}
         min={0}
-        defaultValue={"0"}
         flexBasis={"28"}
         flexShrink={"0"}
         transform={createJsonTransform<
@@ -29,7 +27,7 @@ export function PriorityGatingInput(props: PriorityGatingInputProps) {
           "priority",
           defaultValue,
           (data) => data.priority.toString(),
-          (e) => (e.value ? e.valueAsNumber : undefined),
+          ({ valueAsNumber }) => valueAsNumber,
         )}
       />
     </>

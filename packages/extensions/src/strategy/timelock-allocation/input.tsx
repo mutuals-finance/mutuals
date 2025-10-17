@@ -1,4 +1,4 @@
-import { ExtensionRenderInputProps } from "../../types";
+import { ExtensionRenderProps } from "../../types";
 import { ValueInput } from "../../components/value-input";
 import {
   createJsonTransform,
@@ -8,10 +8,10 @@ import {
 } from "@mutuals/ui";
 import { type TimelockAllocationData, defaultValue } from "./index";
 
-export type TimelockAllocationInputProps = ExtensionRenderInputProps;
+export type TimelockAllocationInputProps = ExtensionRenderProps;
 
 export function TimelockAllocationInput(props: TimelockAllocationInputProps) {
-  const id = props.id as `addClaims.rootNode`;
+  const { id } = props;
 
   return (
     <>

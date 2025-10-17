@@ -36,7 +36,7 @@ const value = createJsonTransform<
   "value",
   defaultValue,
   (data) => data.value?.toString(),
-  (e) => (e.value ? e.valueAsNumber : undefined),
+  ({ valueAsNumber }) => valueAsNumber,
 );
 
 export const transform = {

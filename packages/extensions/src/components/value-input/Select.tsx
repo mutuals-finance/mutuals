@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@mutuals/ui";
 import React from "react";
-import { ExtensionRenderInputProps } from "../../types";
+import { ExtensionRenderProps } from "../../types";
 
 export type AllocationType = "fixed" | "percentage";
 
@@ -33,7 +33,7 @@ const allocationTypeCollection =
     })),
   });
 
-type ValueInputSelectProps = ExtensionRenderInputProps;
+type ValueInputSelectProps = ExtensionRenderProps;
 
 export default function ValueInputSelect({ id }: ValueInputSelectProps) {
   return (
@@ -51,16 +51,12 @@ export default function ValueInputSelect({ id }: ValueInputSelectProps) {
       {({ trigger, item }) => {
         const selected =
           allocationTypes[item?.value as keyof typeof allocationTypes];
-        return (
-          <>
-            {!trigger ? (
-              <Stack>
-                {selected?.icon} {selected?.name}
-              </Stack>
-            ) : (
-              <Stack w={"7"}>{selected?.icon}</Stack>
-            )}
-          </>
+        return !trigger ? (
+          <Stack>
+            {selected?.icon} {selected?.name}
+          </Stack>
+        ) : (
+          <Stack w={"7"}>{selected?.icon}</Stack>
         );
       }}
     </Select>
