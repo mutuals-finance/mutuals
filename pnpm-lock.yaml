@@ -578,15 +578,9 @@ importers:
       '@mutuals/sdk':
         specifier: workspace:*
         version: link:../sdk
-      '@mutuals/ui':
-        specifier: workspace:*
-        version: link:../ui
       react:
         specifier: '>= 18.0.0'
         version: 19.0.0
-      react-hook-form:
-        specifier: ^7.62.0
-        version: 7.62.0(react@19.0.0)
       viem:
         specifier: '>=2.0.0'
         version: 2.22.23(typescript@5.9.2)
@@ -14676,15 +14670,6 @@ packages:
       file-selector: 2.1.2
       prop-types: 15.8.1
       react: 19.1.1
-    dev: false
-
-  /react-hook-form@7.62.0(react@19.0.0):
-    resolution: {integrity: sha512-7KWFejc98xqG/F4bAxpL41NB3o1nnvQO1RWZT3TqRZYL8RryQETGfEdVnJN2fy1crCiBLLjkRBVK05j24FxJGA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      react: ^16.8.0 || ^17 || ^18 || ^19
-    dependencies:
-      react: 19.0.0
     dev: false
 
   /react-hook-form@7.62.0(react@19.1.1):

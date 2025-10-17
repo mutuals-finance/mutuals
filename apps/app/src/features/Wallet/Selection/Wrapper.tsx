@@ -32,7 +32,7 @@ export function WalletSelectionWrapper({
         {heading}
       </Heading>
 
-      <Text textStyle={{ lg: "lg" }} color={"fg.subtle"}>
+      <Text textStyle={{ lg: "lg" }} color={"fg.muted"}>
         {description}
       </Text>
 
