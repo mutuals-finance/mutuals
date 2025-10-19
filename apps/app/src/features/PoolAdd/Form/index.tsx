@@ -25,14 +25,11 @@ import AuthSignInCard from "@/features/Auth/SignInCard";
 import { PoolCreateInput } from "@mutuals/sdk-react";
 import PoolAddModal from "@/features/PoolAdd/Modal";
 import { poolAddSteps } from "@/features/PoolAdd/steps";
-import {
-  IoChevronBackSharp,
-  IoChevronForwardSharp,
-  IoRefreshSharp,
-  IoSettingsSharp,
-} from "react-icons/io5";
+import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
 import PoolAddPanel from "@/features/PoolAdd/Panel";
 import { defaultClaims } from "@/features/Claim/utils";
+import PoolAddFormResetButton from "@/features/PoolAdd/Form/ResetButton";
+import PoolAddFormSettingsButton from "@/features/PoolAdd/Form/SettingsButton";
 
 export default function PoolAdd() {
   const [modalOpen, setModalOpen] = useToggle(false);
@@ -80,6 +77,7 @@ export default function PoolAdd() {
         ownerAddress: address,
         name: "",
         description: "",
+        private: false,
         addClaims: defaultClaims,
       }}
       errors={
@@ -134,13 +132,8 @@ export default function PoolAdd() {
                     </Text>
                   </Stack>
                   <Stack direction="row" justifyContent={"flex-end"}>
-                    <Button variant={"subtle"} onClick={() => methods.reset()}>
-                      <IoRefreshSharp />
-                      Reset
-                    </Button>
-                    <IconButton variant={"subtle"}>
-                      <IoSettingsSharp />
-                    </IconButton>
+                    <PoolAddFormResetButton onAction={() => methods.reset()} />
+                    <PoolAddFormSettingsButton />
                   </Stack>
                 </Stack>
               </GridItem>

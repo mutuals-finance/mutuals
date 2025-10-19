@@ -19,6 +19,10 @@ import {
   NumberInputRoot as ChakraNumberInputRoot,
 } from "../../components/ui/number-input";
 import {
+  Switch as ChakraSwitch,
+  SwitchProps as ChakraSwitchProps,
+} from "../../components/ui/switch";
+import {
   SelectTrigger as ChakraSelectTrigger,
   SelectContent as ChakraSelectContent,
   SelectValueText as ChakraSelectValueText,
@@ -374,6 +378,46 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
 
           <SelectContent<TFieldValue> {...props} />
         </ChakraSelectRoot>
+      )}
+      {...controllerProps}
+    />
+  );
+}
+
+export interface SwitchInputProps
+  extends BaseInputProps<
+      boolean,
+      {
+        checked: boolean;
+      }
+    >,
+    Omit<ChakraSwitchProps, "transform" | "onChange" | "value"> {}
+
+export function SwitchInput({
+  id = "",
+  name = id,
+  rules,
+  transform,
+  controllerProps,
+  inputProps,
+  ...props
+}: SwitchInputProps) {
+  const { control } = useFormContext();
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({ field: { value, onChange, ...field } }) => (
+        <ChakraSwitch
+          id={id}
+          {...props}
+          checked={transform ? transform.input(value) : value}
+          onCheckedChange={(e) =>
+            onChange(transform ? transform.output(e, value) : e.checked)
+          }
+          inputProps={{ ...field, ...inputProps }}
+        />
       )}
       {...controllerProps}
     />
