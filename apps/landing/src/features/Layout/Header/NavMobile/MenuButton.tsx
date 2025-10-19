@@ -9,7 +9,7 @@ export default function NavMobileMenuButton({
   ...props
 }: NavMobileNavbarProps) {
   return (
-    <IconButton size={size} variant={variant} rounded={"4xl"} {...props}>
+    <IconButton size={size} variant={variant} {...props}>
       <Icon w="6" h={"6"}>
         {children}
       </Icon>

@@ -149,3 +149,10 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
+# Copilot plugin
+# https://plugins.jetbrains.com/plugin/17718-github-copilot
+.idea/**/copilotDiffState.xml
+.idea/**/copilot.data.migration.agent.xml
+.idea/**/copilot.data.migration.ask.xml
+.idea/**/copilot.data.migration.ask2agent.xml
+.idea/**/copilot.data.migration.edit.xml

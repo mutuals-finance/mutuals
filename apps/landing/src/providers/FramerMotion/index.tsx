@@ -8,9 +8,9 @@ export default function FramerMotionProvider({ children }: PropsWithChildren) {
     <MotionConfig
       transition={{
         type: "spring",
-        stiffness: 400,
+        stiffness: 100,
         damping: 12,
-        mass: 0.8,
+        mass: 0.6,
       }}
     >
       {children}

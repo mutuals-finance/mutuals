@@ -15,6 +15,7 @@
     "@mutuals/analytics-nextjs": "workspace:*",
     "@mutuals/metadata-nextjs": "workspace:*",
     "@mutuals/sdk-react": "workspace:*",
+    "@mutuals/extensions": "workspace:*",
     "@mutuals/ui": "workspace:*",
     "@tanstack/react-query": "^5.84.2",
     "@tanstack/react-table": "^8.21.3",

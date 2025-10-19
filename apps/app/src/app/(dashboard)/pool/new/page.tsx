@@ -14,9 +14,7 @@ export default function PoolAddPage() {
         overwrite: { pool: false, ["new"]: "New Payment Pool" },
       }}
       title={"New Payment Pool"}
-      description={
-        "A payment pool smart contract automatically routes on-chain payments to different destinations."
-      }
+      headerContainerProps={{ mb: "0" }}
     >
       <Container maxW={"7xl"}>
         <PoolAddForm />

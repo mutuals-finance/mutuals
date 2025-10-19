@@ -2,7 +2,8 @@ import { ImageResponse as NextImageResponse } from "next/og";
 import { ImageResponseOptions } from "next/server";
 import renderBaseIcon from "./base-icon";
 
-export const iconSizes = [48, 96, 144, 192, 256, 512, 1024];
+// 48, 96, 144,
+export const iconSizes = [32, 48, 96, 144, 192, 256, 512, 1024];
 
 export const defaultContentType = "image/png";
 
@@ -22,7 +23,7 @@ export class DefaultImageResponse extends NextImageResponse {
           color: "#09090B",
           backgroundColor: "#FAFAFA",
           borderRadius: "100%",
-          padding: "18%",
+          padding: "20%",
         },
       }),
       options,

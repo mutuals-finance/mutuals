@@ -19,6 +19,10 @@ import {
   NumberInputRoot as ChakraNumberInputRoot,
 } from "../../components/ui/number-input";
 import {
+  Switch as ChakraSwitch,
+  SwitchProps as ChakraSwitchProps,
+} from "../../components/ui/switch";
+import {
   SelectTrigger as ChakraSelectTrigger,
   SelectContent as ChakraSelectContent,
   SelectValueText as ChakraSelectValueText,
@@ -65,29 +69,12 @@ export function createJsonTransform<
       if (!value) return undefined;
       try {
         const decoded = JSON.parse(value) as TObject;
-        const newFieldValue = mapInput(decoded);
-        /*
-        console.log("transform input", {
-          key,
-          decoded,
-          value,
-          newFieldValue,
-        });
-*/
-        return newFieldValue;
+        return mapInput(decoded);
       } catch {
         return undefined;
       }
     },
     output: (e, prevValue) => {
-      /*
-      console.log("transform output before", {
-        key,
-        defaultValue,
-        e,
-        prevValue,
-      });
-*/
       const prevDecoded: TObject = prevValue
         ? (JSON.parse(prevValue) as TObject)
         : ({} as TObject);
@@ -100,17 +87,7 @@ export function createJsonTransform<
         ...prevDecoded,
         [key]: newFieldValue,
       };
-      /*
-      console.log("transform output after", {
-        key,
-        merged,
-        prevDecoded,
-        defaultValue,
-        newFieldValue,
-        e,
-        prevValue,
-      });
-*/
+
       return JSON.stringify(merged);
     },
   };
@@ -401,6 +378,46 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
 
           <SelectContent<TFieldValue> {...props} />
         </ChakraSelectRoot>
+      )}
+      {...controllerProps}
+    />
+  );
+}
+
+export interface SwitchInputProps
+  extends BaseInputProps<
+      boolean,
+      {
+        checked: boolean;
+      }
+    >,
+    Omit<ChakraSwitchProps, "transform" | "onChange" | "value"> {}
+
+export function SwitchInput({
+  id = "",
+  name = id,
+  rules,
+  transform,
+  controllerProps,
+  inputProps,
+  ...props
+}: SwitchInputProps) {
+  const { control } = useFormContext();
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({ field: { value, onChange, ...field } }) => (
+        <ChakraSwitch
+          id={id}
+          {...props}
+          checked={transform ? transform.input(value) : value}
+          onCheckedChange={(e) =>
+            onChange(transform ? transform.output(e, value) : e.checked)
+          }
+          inputProps={{ ...field, ...inputProps }}
+        />
       )}
       {...controllerProps}
     />

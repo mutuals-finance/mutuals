@@ -1,0 +1,35 @@
+{
+  "name": "@mutuals/extensions",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -b"
+  },
+  "peerDependencies": {
+    "@mutuals/ui": "workspace:*",
+    "react": ">= 18.0.0",
+    "viem": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "viem": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@mutuals/sdk-react": "workspace:*",
+    "@mutuals/graphql-client-nextjs": "workspace:*",
+    "react-hook-form": "^7.62.0"
+  },
+  "devDependencies": {
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
+    "@types/react": "^19.1.9",
+    "eslint": "^9.32.0",
+    "typescript": "^5.9.2"
+  }
+}

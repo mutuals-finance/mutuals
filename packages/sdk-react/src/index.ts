@@ -1,4 +1,10 @@
-export { MutualsClient, AllocationType, allocationIds } from "@mutuals/sdk";
+export {
+  MutualsClient,
+  AllocationType,
+  allocationIds,
+  stateIds,
+  strategyIds,
+} from "@mutuals/sdk";
 
 export {
   getAllocationDefaults,
@@ -32,13 +38,6 @@ export type {
   ExtensionRenderInputProps,
   ExtensionType,
 } from "./types";
-
-export {
-  StateExtensions,
-  StrategyExtensions,
-  stateIds,
-  strategyIds,
-} from "./extensions";
 
 export { MutualsProvider } from "./context";
 export {

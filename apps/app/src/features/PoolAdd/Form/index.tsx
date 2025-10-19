@@ -5,8 +5,6 @@ import { useToggle } from "react-use";
 import {
   Button,
   Fieldset,
-  IconButton,
-  Box,
   useSteps,
   Form,
   Group,
@@ -16,86 +14,27 @@ import {
   SimpleGrid,
   GridItem,
   Card,
-  SelectRoot,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValueText,
-  createListCollection,
-  SelectItemText,
-  Span,
-  createTreeCollection,
+  IconButton,
+  Text,
 } from "@mutuals/ui";
 import { useAccount } from "wagmi";
 import { usePoolCreate } from "@mutuals/graphql-client-nextjs/client";
 import { PoolStatus } from "@mutuals/graphql-client-nextjs";
 import React, { useCallback } from "react";
-import { IoChevronBackSharp } from "react-icons/io5";
 import AuthSignInCard from "@/features/Auth/SignInCard";
-import {
-  ClaimCreateNode,
-  PoolCreateInput,
-  stateIds,
-  strategyIds,
-} from "@mutuals/sdk-react";
+import { PoolCreateInput } from "@mutuals/sdk-react";
 import PoolAddModal from "@/features/PoolAdd/Modal";
-import PoolAddFormInfo from "@/features/PoolAdd/Form/Info";
-import PoolAddFormClaims from "@/features/PoolAdd/Form/Claims";
-
-const initialClaims = createTreeCollection<ClaimCreateNode>({
-  nodeToValue: (node) => node.id,
-  nodeToString: (node) => node.recipientAddress ?? node.id,
-  rootNode: {
-    id: "ROOT",
-    value: 0,
-    stateId: "",
-    strategyId: "",
-    data: "",
-    children: [
-      {
-        id: "1",
-        value: 0,
-        stateId: stateIds.Offchain,
-        strategyId: strategyIds.DefaultAllocation,
-        data: "",
-      },
-      {
-        id: "2",
-        value: 0,
-        stateId: stateIds.Offchain,
-        strategyId: strategyIds.DefaultAllocation,
-        data: "",
-      },
-    ],
-  },
-});
-
-const items = {
-  0: {
-    label: "Step 1",
-    description: "Enter pool information",
-    children: <PoolAddFormInfo />,
-  },
-  1: {
-    label: "Step 2",
-    description: "Configure pool allocations",
-    children: <PoolAddFormClaims />,
-  },
-};
-
-const collection = createListCollection({
-  items: Object.entries(items).map(([key, value]) => ({
-    ...value,
-    value: key,
-  })),
-});
+import { poolAddSteps } from "@/features/PoolAdd/steps";
+import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
+import PoolAddPanel from "@/features/PoolAdd/Panel";
+import { defaultClaims } from "@/features/Claim/utils";
+import PoolAddFormResetButton from "@/features/PoolAdd/Form/ResetButton";
+import PoolAddFormSettingsButton from "@/features/PoolAdd/Form/SettingsButton";
 
 export default function PoolAdd() {
   const [modalOpen, setModalOpen] = useToggle(false);
   const { address } = useAccount();
   const [upsertPool, { error, loading }] = usePoolCreate();
-
-  const signedId = false;
 
   const onSubmit = useCallback(
     (
@@ -125,7 +64,7 @@ export default function PoolAdd() {
 
   const steps = useSteps({
     defaultStep: 0,
-    count: collection.items.length,
+    count: poolAddSteps.collection.items.length,
   });
 
   return (
@@ -138,7 +77,8 @@ export default function PoolAdd() {
         ownerAddress: address,
         name: "",
         description: "",
-        addClaims: initialClaims,
+        private: false,
+        addClaims: defaultClaims,
       }}
       errors={
         !error
@@ -168,69 +108,57 @@ export default function PoolAdd() {
           >
             <SimpleGrid
               w={"full"}
-              columns={{ base: 1, lg: 7 }}
-              gap={{ base: "6", lg: "16" }}
+              columns={{ base: 1, lg: 9 }}
+              gap={{ base: "6", lg: "6" }}
             >
-              <GridItem colSpan={{ base: 1, lg: 2 }}>
-                <SelectRoot
-                  size={"lg"}
-                  collection={collection}
-                  defaultValue={[collection.items[0]!.value]}
-                  value={[
-                    collection.items[
-                      Math.min(steps.value, collection.items.length - 1)
-                    ]!.value,
-                  ]}
-                  onValueChange={(e) => {
-                    steps.setStep(Number(e.value[0]!));
-                  }}
-                  hideFrom={"lg"}
+              <GridItem colSpan={{ base: 1, lg: 6 }}>
+                <Stack direction="row" justifyContent={"space-between"}>
+                  <Stack direction={"row"} alignItems={"center"}>
+                    <Steps.PrevTrigger asChild>
+                      <IconButton
+                        variant="subtle"
+                        disabled={!steps.hasPrevStep}
+                      >
+                        <IoChevronBackSharp />
+                      </IconButton>
+                    </Steps.PrevTrigger>
+                    <Text
+                      as={"span"}
+                      textStyle={"sm"}
+                      color={!steps.hasPrevStep ? "fg.subtle" : "fg"}
+                      hideBelow={"lg"}
+                    >
+                      Previous
+                    </Text>
+                  </Stack>
+                  <Stack direction="row" justifyContent={"flex-end"}>
+                    <PoolAddFormResetButton onAction={() => methods.reset()} />
+                    <PoolAddFormSettingsButton />
+                  </Stack>
+                </Stack>
+              </GridItem>
+              <GridItem colSpan={{ base: 1, lg: 3 }} hideBelow={"lg"}>
+                <Stack
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"flex-end"}
                 >
-                  <SelectTrigger maxW={"32"} w="full">
-                    <SelectValueText placeholder="Select step" />
-                  </SelectTrigger>
-                  <SelectContent portalled={false} maxW={"full"} minW={"64"}>
-                    {collection.items.map((step) => (
-                      <SelectItem item={step} key={step.value}>
-                        <Stack gap={"0"}>
-                          <SelectItemText>{step.label}</SelectItemText>
-                          <Span color="fg.subtle" textStyle="sm">
-                            {step.description}
-                          </Span>
-                        </Stack>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </SelectRoot>
-
-                <Box position={"sticky"} top={"24"} left={"0"} hideBelow={"lg"}>
-                  <Card.Root>
-                    <Card.Body>
-                      <Steps.List h={"32"}>
-                        {collection.items.map((step, index) => (
-                          <Steps.Item
-                            key={step.value}
-                            index={index}
-                            title={step.label}
-                            direction={{ md: "column" }}
-                          >
-                            <Steps.Indicator />
-                            <Stack>
-                              <Steps.Title>{step.label}</Steps.Title>
-                              <Steps.Description>
-                                {step.description}
-                              </Steps.Description>
-                            </Stack>
-                            <Steps.Separator />
-                          </Steps.Item>
-                        ))}
-                      </Steps.List>
-                    </Card.Body>
-                  </Card.Root>
-                </Box>
+                  <Text
+                    as={"span"}
+                    textStyle={"sm"}
+                    color={!steps.hasNextStep ? "fg.subtle" : "fg"}
+                  >
+                    Next
+                  </Text>
+                  <Steps.NextTrigger asChild>
+                    <IconButton variant="subtle" disabled={!steps.hasNextStep}>
+                      <IoChevronForwardSharp />
+                    </IconButton>
+                  </Steps.NextTrigger>
+                </Stack>
               </GridItem>
 
-              <GridItem colSpan={{ base: 1, lg: 5 }}>
+              <GridItem colSpan={{ base: 1, lg: 6 }}>
                 <Card.Root
                   border={{ base: "none", lg: "1px solid" }}
                   borderColor={{ lg: "border" }}
@@ -243,11 +171,14 @@ export default function PoolAdd() {
                       <Fieldset.Content>
                         <FormErrorAlert name={"root.upsertPool"} />
 
-                        {collection.items.map((step, index) => (
-                          <Steps.Content key={index} index={index}>
-                            {step.children}
-                          </Steps.Content>
-                        ))}
+                        {Object.values(poolAddSteps.items).map(
+                          (step, index) => (
+                            <Steps.Content key={index} index={index}>
+                              {step.children}
+                            </Steps.Content>
+                          ),
+                        )}
+
                         <Steps.CompletedContent>
                           <AuthSignInCard
                             description={
@@ -263,24 +194,9 @@ export default function PoolAdd() {
                     pb={{ base: "0", lg: "6" }}
                   >
                     <Group w={"full"}>
-                      <Steps.PrevTrigger asChild>
-                        <IconButton
-                          variant="subtle"
-                          size="xl"
-                          disabled={!steps.hasPrevStep}
-                        >
-                          <IoChevronBackSharp />
-                        </IconButton>
-                      </Steps.PrevTrigger>
-
                       {steps.hasNextStep ? (
                         <Steps.NextTrigger asChild>
-                          <Button
-                            type="button"
-                            flex="1"
-                            variant="subtle"
-                            size="xl"
-                          >
+                          <Button type="button" flex="1" size="xl">
                             Continue
                           </Button>
                         </Steps.NextTrigger>
@@ -298,6 +214,13 @@ export default function PoolAdd() {
                     </Group>
                   </Card.Footer>
                 </Card.Root>
+              </GridItem>
+
+              <GridItem
+                order={{ base: "-1", lg: "2" }}
+                colSpan={{ base: 1, lg: 3 }}
+              >
+                <PoolAddPanel {...steps} />
               </GridItem>
             </SimpleGrid>
           </Steps.RootProvider>
