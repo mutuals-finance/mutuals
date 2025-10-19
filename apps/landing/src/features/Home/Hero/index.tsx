@@ -13,25 +13,10 @@ import {
   Bleed,
   MotionBox,
 } from "@mutuals/ui";
-import NextImage, { ImageProps as NextImageProps } from "next/image";
+import { ImageProps as NextImageProps } from "next/image";
 import PaymentTabs from "@/features/Home/Hero/PaymentTabs";
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
-
 type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
-
-function HomeHeroImage({ imageProps, ...props }: HomeHeroProps) {
-  return (
-    <Box
-      rounded={"2xl"}
-      overflow={"hidden"}
-      position={"absolute"}
-      shadow={"lg"}
-      {...props}
-    >
-      <NextImage {...imageProps} />
-    </Box>
-  );
-}
 
 export default function HomeHero() {
   return (
@@ -43,7 +28,7 @@ export default function HomeHero() {
           mb={{ base: "12", lg: "24" }}
         >
           <Stack
-            gap={{ base: "6", lg: "6" }}
+            gap={"6"}
             alignItems={{ lg: "center" }}
             textAlign={{ lg: "center" }}
           >
@@ -76,14 +61,14 @@ export default function HomeHero() {
                   target="_blank"
                   asChild={true}
                 >
-                  <Button size={"2xl"}>Start for free</Button>
+                  <Button size={"xl"}>Start for free</Button>
                 </Link>
                 <Link
                   href={"https://docs.mutuals.finance"}
                   target="_blank"
                   asChild={true}
                 >
-                  <Button size={"2xl"} variant={"subtle"}>
+                  <Button size={"xl"} variant={"subtle"}>
                     Learn more
                   </Button>
                 </Link>

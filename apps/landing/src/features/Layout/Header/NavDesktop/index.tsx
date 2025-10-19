@@ -27,7 +27,6 @@ function NavDesktopStack({ children, ...props }: StackProps) {
       css={{
         backdropFilter: "blur(12px)",
       }}
-      shadow={"xs"}
       h="14"
       justifyContent="center"
       alignItems={"center"}
