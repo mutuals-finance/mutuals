@@ -10,8 +10,8 @@ export function createManifest(
     description: "Reimagine Programmable Money.",
     start_url: "/",
     display: "standalone",
-    background_color: "#FAFAFA",
-    theme_color: "#FAFAFA",
+    background_color: "#f4f4f5",
+    theme_color: "#f4f4f5",
     icons: iconSizes.map((size) => ({
       src: `/icon/${size}`,
       sizes: `${size}x${size}`,

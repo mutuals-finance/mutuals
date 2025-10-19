@@ -1,4 +1,4 @@
-import { Button, Card, IconProps } from "@mutuals/ui";
+import { Button, Card, IconProps, Link } from "@mutuals/ui";
 import { IoChatbubblesOutline, IoPaperPlaneOutline } from "react-icons/io5";
 
 const items = [
@@ -9,9 +9,11 @@ const items = [
       "Discuss your enterprise requirements, explore personalized pricing options, or request a demo.",
     ],
     children: (
-      <Button variant={"surface"} mt={"6"} alignSelf={"stretch"} size={"lg"}>
-        Let's Chat
-      </Button>
+      <Link asChild={true} href={"mailto:hello@mutuals.finance"}>
+        <Button variant={"surface"} mt={"6"} alignSelf={"flex-start"}>
+          Let's Chat
+        </Button>
+      </Link>
     ),
   },
   {
