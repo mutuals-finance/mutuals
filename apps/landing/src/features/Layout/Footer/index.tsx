@@ -26,12 +26,10 @@ export default function LayoutFooter() {
             links={[
               {
                 children: "Contact",
-                target: "_blank",
                 href: "/contact",
               },
               {
                 children: "Blog",
-                target: "_blank",
                 href: "/blog",
               },
             ]}
@@ -41,17 +39,14 @@ export default function LayoutFooter() {
             links={[
               {
                 children: "Pricing",
-                target: "_blank",
                 href: "/pricing",
               },
               {
                 children: "Help Center",
-                target: "_blank",
                 href: "/",
               },
               {
                 children: "Safety Center",
-                target: "_blank",
                 href: "/",
               },
               {
