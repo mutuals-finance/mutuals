@@ -3,21 +3,16 @@ import {
   PoolCreateInput as MutualsPoolCreateInput,
 } from "@mutuals/graphql-client-nextjs";
 import { TreeCollection, TreeView } from "@mutuals/ui";
-import { Address } from "viem";
 
-export type ClaimCreateNode<TData = unknown> = MutualsClaimCreateInput & {
+export type ClaimCreateNode = MutualsClaimCreateInput & {
   id: string;
-  data?: TData;
 };
 
 export type ClaimCreateTree = TreeCollection<ClaimCreateNode>;
 
-export type PoolCreateInput = {
-  image: any;
-  ownerAddress: Address;
-} & Omit<MutualsPoolCreateInput, "addClaims"> & {
-    addClaims: ClaimCreateTree;
-  };
+export type PoolCreateInput = Omit<MutualsPoolCreateInput, "addClaims"> & {
+  addClaims: ClaimCreateTree;
+};
 
 export type ExtensionRenderInputProps = {
   id: `${string}.addClaims.${string}`;

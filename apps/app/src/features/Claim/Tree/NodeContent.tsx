@@ -26,7 +26,6 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
   const { isBranch } = useTreeViewNodeContext();
 
   const { id } = useClaimNodeId();
-  console.log("NodeContent", { id });
   const [stateId, strategyId] = useWatch<PoolCreateInput>({
     name: [`${id}.stateId`, `${id}.strategyId`],
   });

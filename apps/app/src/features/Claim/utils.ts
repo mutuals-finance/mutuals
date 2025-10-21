@@ -9,7 +9,7 @@ export const createClaim = (
   props?: Partial<ClaimCreateNode>,
 ): ClaimCreateNode => ({
   id: `${Date.now()}`,
-  value: 0,
+  recipientAddress: "",
   stateId: "offchain",
   strategyId: "default_allocation",
   children: [],

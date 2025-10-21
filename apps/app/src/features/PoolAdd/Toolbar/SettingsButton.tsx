@@ -17,14 +17,14 @@ import {
 import { IoSettingsSharp } from "react-icons/io5";
 import React from "react";
 
-type PoolAddFormSettingsButtonProps = {
+type PoolAddToolbarSettingsButtonProps = {
   popoverProps?: PopoverRootProps;
 } & IconButtonProps;
 
-export default function PoolAddFormSettingsButton({
+export default function PoolAddToolbarSettingsButton({
   popoverProps,
   ...props
-}: PoolAddFormSettingsButtonProps) {
+}: PoolAddToolbarSettingsButtonProps) {
   return (
     <PopoverRoot {...popoverProps}>
       <PopoverTrigger asChild>
@@ -32,7 +32,7 @@ export default function PoolAddFormSettingsButton({
           <IoSettingsSharp />
         </IconButton>
       </PopoverTrigger>
-      <PopoverContent maxW={"72"}>
+      <PopoverContent maxW={"64"}>
         <PopoverBody>
           <DataList.Root orientation="horizontal">
             <DataList.Item>
@@ -44,18 +44,27 @@ export default function PoolAddFormSettingsButton({
             <DataList.Item>
               <DataList.ItemLabel minW={"16"}>Donation</DataList.ItemLabel>
               <DataList.ItemValue>
-                <NumberInput
-                  w={"full"}
-                  size="xs"
-                  step={0.01}
-                  formatOptions={{
-                    style: "percent",
-                  }}
-                  allowMouseWheel={true}
-                  defaultValue={"0.1"}
-                  min={0}
-                  max={0}
-                />
+                <InputGroup
+                  startElementProps={{ paddingInlineStart: "1ch" }}
+                  startElement={"%"}
+                >
+                  <NumberInput
+                    inputProps={{
+                      ps: "3ch",
+                    }}
+                    w={"full"}
+                    step={0.1}
+                    id={"donationBps"}
+                    size="xs"
+                    allowMouseWheel={true}
+                    min={0}
+                    max={100}
+                    transform={{
+                      output: (e) => e.valueAsNumber,
+                      input: (value) => (!value ? 0 : String(value)),
+                    }}
+                  />
+                </InputGroup>
               </DataList.ItemValue>
             </DataList.Item>
             <DataList.Item>
@@ -65,12 +74,7 @@ export default function PoolAddFormSettingsButton({
                   startElement="/"
                   startElementProps={{ textStyle: "xs" }}
                 >
-                  <Input
-                    id={"slug"}
-                    size="xs"
-                    ps="3ch"
-                    defaultValue="prudent-armadillo"
-                  />
+                  <Input id={"slug"} size="xs" ps="3ch" />
                 </InputGroup>
               </DataList.ItemValue>
             </DataList.Item>

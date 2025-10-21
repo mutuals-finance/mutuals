@@ -91,6 +91,8 @@ export type Claim = Node & {
   children?: Maybe<Array<Claim>>;
   childrenCount: Scalars['Int']['output'];
   createdAt: Scalars['Time']['output'];
+  /** Extension (strategy and state) specific data. */
+  data?: Maybe<Scalars['JSON']['output']>;
   dbid: Scalars['DBID']['output'];
   id: Scalars['ID']['output'];
   label: Scalars['String']['output'];
@@ -101,7 +103,6 @@ export type Claim = Node & {
   state: Extension;
   strategy: Extension;
   updatedAt: Scalars['Time']['output'];
-  value: Scalars['HexString']['output'];
 };
 
 /** Creates claims. */
@@ -116,6 +117,8 @@ export type ClaimBulkCreate = {
 export type ClaimBulkCreateInput = {
   /** Children claims. */
   children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** Parent claim. */
   parent?: InputMaybe<Scalars['DBID']['input']>;
   /** Claim recipient address. */
@@ -124,8 +127,6 @@ export type ClaimBulkCreateInput = {
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 /** Deletes claims. */
@@ -175,6 +176,10 @@ export type ClaimBulkUpdate = {
 export type ClaimBulkUpdateInput = {
   /** Children claims. */
   children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Claim ID. */
+  claimId: Scalars['DBID']['input'];
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** Parent claim. */
   parent?: InputMaybe<Scalars['DBID']['input']>;
   /** Claim recipient address. */
@@ -183,8 +188,6 @@ export type ClaimBulkUpdateInput = {
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 /** Creates a new claim. */
@@ -196,6 +199,8 @@ export type ClaimCreate = {
 export type ClaimCreateInput = {
   /** Children claims. */
   children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** Parent claim. */
   parent?: InputMaybe<Scalars['DBID']['input']>;
   /** Claim recipient address. */
@@ -204,8 +209,6 @@ export type ClaimCreateInput = {
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 /** Deletes a claim. */
@@ -242,6 +245,10 @@ export type ClaimUpdate = {
 export type ClaimUpdateInput = {
   /** Children claims. */
   children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Claim ID. */
+  claimId: Scalars['DBID']['input'];
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** Parent claim. */
   parent?: InputMaybe<Scalars['DBID']['input']>;
   /** Claim recipient address. */
@@ -250,8 +257,6 @@ export type ClaimUpdateInput = {
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 export type ClearAllNotificationsPayload = {
@@ -505,18 +510,6 @@ export type MagicLinkAuth = {
 };
 
 export type Mutation = {
-  /** Creates claims. */
-  claimBulkCreate?: Maybe<ClaimBulkCreate>;
-  /** Deletes claims. */
-  claimBulkDelete?: Maybe<ClaimBulkDelete>;
-  /** Updates claims. */
-  claimBulkUpdate?: Maybe<ClaimBulkCreate>;
-  /** Creates a new claim. */
-  claimCreate?: Maybe<ClaimCreate>;
-  /** Deletes a claim. */
-  claimDelete?: Maybe<ClaimDelete>;
-  /** Updates a new claim. */
-  claimUpdate?: Maybe<ClaimUpdate>;
   /** Clears a users notifications. */
   clearNotifications?: Maybe<ClearAllNotificationsPayload>;
   /** Confirm the email change of the logged-in user. */
@@ -529,6 +522,18 @@ export type Mutation = {
   nonce?: Maybe<Nonce>;
   /** Updates a users notification settings. */
   notificationSettingsUpdate?: Maybe<NotificationSettings>;
+  /** Creates claims. */
+  poolClaimBulkCreate?: Maybe<ClaimBulkCreate>;
+  /** Deletes claims. */
+  poolClaimBulkDelete?: Maybe<ClaimBulkDelete>;
+  /** Updates claims. */
+  poolClaimBulkUpdate?: Maybe<ClaimBulkUpdate>;
+  /** Creates a new claim. */
+  poolClaimCreate?: Maybe<ClaimCreate>;
+  /** Deletes a claim. */
+  poolClaimDelete?: Maybe<ClaimDelete>;
+  /** Updates a new claim. */
+  poolClaimUpdate?: Maybe<ClaimUpdate>;
   /** Creates a pool. */
   poolCreate?: Maybe<PoolCreate>;
   /** Deletes a pool. */
@@ -574,40 +579,6 @@ export type Mutation = {
 };
 
 
-export type MutationClaimBulkCreateArgs = {
-  claims: Array<ClaimBulkCreateInput>;
-  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
-};
-
-
-export type MutationClaimBulkDeleteArgs = {
-  ids: Array<Scalars['DBID']['input']>;
-};
-
-
-export type MutationClaimBulkUpdateArgs = {
-  claims: Array<ClaimBulkUpdateInput>;
-  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
-  ids: Array<Scalars['DBID']['input']>;
-};
-
-
-export type MutationClaimCreateArgs = {
-  input: ClaimCreateInput;
-};
-
-
-export type MutationClaimDeleteArgs = {
-  id: Scalars['DBID']['input'];
-};
-
-
-export type MutationClaimUpdateArgs = {
-  id: Scalars['DBID']['input'];
-  input: ClaimUpdateInput;
-};
-
-
 export type MutationConfirmEmailChangeArgs = {
   token: Scalars['String']['input'];
 };
@@ -626,6 +597,44 @@ export type MutationEmailNotificationSettingsUpdateArgs = {
 
 export type MutationNotificationSettingsUpdateArgs = {
   settings: NotificationSettingsInput;
+};
+
+
+export type MutationPoolClaimBulkCreateArgs = {
+  claims: Array<ClaimBulkCreateInput>;
+  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimBulkDeleteArgs = {
+  claimIds: Array<Scalars['DBID']['input']>;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimBulkUpdateArgs = {
+  claims: Array<ClaimBulkUpdateInput>;
+  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimCreateArgs = {
+  input: ClaimCreateInput;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimDeleteArgs = {
+  claimId: Scalars['DBID']['input'];
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimUpdateArgs = {
+  input: ClaimUpdateInput;
+  poolId: Scalars['DBID']['input'];
 };
 
 
@@ -794,8 +803,10 @@ export type Pool = Node & {
   createdAt: Scalars['Time']['output'];
   dbid: Scalars['DBID']['output'];
   description: Scalars['String']['output'];
+  /** Basis point donation. */
+  donationBps: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
-  logo: Scalars['String']['output'];
+  image: Scalars['String']['output'];
   name: Scalars['String']['output'];
   owner: UserOrAccount;
   slug: Scalars['String']['output'];
@@ -827,12 +838,18 @@ export type PoolCreate = {
 };
 
 export type PoolCreateInput = {
-  /** List of claims to assign to the pool. */
-  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** List of claims to create and assign to the pool. */
+  addClaims?: InputMaybe<Array<ClaimCreateInput>>;
   /** Name of the pool. */
   description?: InputMaybe<Scalars['String']['input']>;
+  /** Basis point donation. */
+  donationBps?: InputMaybe<Scalars['Int']['input']>;
+  /** Name of the pool. */
+  image?: InputMaybe<Scalars['String']['input']>;
   /** Name of the pool. */
   name?: InputMaybe<Scalars['String']['input']>;
+  /** Name of the pool. */
+  owner?: InputMaybe<Scalars['String']['input']>;
   /** Whether a pool is shared with its recipients or not. */
   private?: InputMaybe<Scalars['Boolean']['input']>;
   /** Slug of the pool. */
@@ -917,9 +934,13 @@ export type PoolUpdate = {
 
 export type PoolUpdateInput = {
   /** List of claims to assign to the pool. */
-  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  addClaims?: InputMaybe<Array<ClaimCreateInput>>;
   /** Name of the pool. */
   description?: InputMaybe<Scalars['String']['input']>;
+  /** Basis point donation. */
+  donationBps?: InputMaybe<Scalars['Int']['input']>;
+  /** Image of the pool. */
+  image?: InputMaybe<Scalars['String']['input']>;
   /** Name of the pool. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Whether a pool is shared with its recipients or not. */
@@ -928,6 +949,8 @@ export type PoolUpdateInput = {
   removeClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
   /** Slug of the pool. */
   slug?: InputMaybe<Scalars['String']['input']>;
+  /** List of claims to assign to the pool. */
+  updateClaims?: InputMaybe<Array<ClaimUpdateInput>>;
 };
 
 export type PreverifyEmailInput = {

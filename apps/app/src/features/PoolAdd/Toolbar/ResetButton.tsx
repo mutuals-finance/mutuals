@@ -17,20 +17,20 @@ import {
 } from "@mutuals/ui";
 import { IoRefreshSharp } from "react-icons/io5";
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
-type PoolAddFormResetButtonProps = {
-  onAction?: ButtonProps["onClick"];
-  actionButtonProps?: Omit<ButtonProps, "onClick">;
+type PoolAddToolbarResetButtonProps = {
+  resetButtonProps?: Omit<ButtonProps, "onClick">;
   dialogProps?: DialogRootProps;
 } & ButtonProps;
 
-export default function PoolAddFormResetButton({
-  onAction,
-  actionButtonProps,
+export default function PoolAddToolbarResetButton({
+  resetButtonProps,
   dialogProps,
   ...props
-}: PoolAddFormResetButtonProps) {
+}: PoolAddToolbarResetButtonProps) {
   const [open, setOpen] = useState(false);
+  const { reset } = useFormContext();
 
   return (
     <DialogRoot
@@ -60,9 +60,9 @@ export default function PoolAddFormResetButton({
             <Button variant="outline">Cancel</Button>
           </DialogActionTrigger>
           <Button
-            {...actionButtonProps}
-            onClick={(args) => {
-              onAction?.(args);
+            {...resetButtonProps}
+            onClick={() => {
+              reset();
               setOpen(false);
             }}
           >

@@ -67,7 +67,6 @@ export default function useClaimTree({
       const { node, indexPath } = props;
       const children = [createClaim(), ...(node.children ?? [])];
       const newData = data.replace(indexPath, { ...node, children });
-      console.log({ indexPath, node, children, newData });
       setValue(id, newData);
     },
     [id, data, setValue],
