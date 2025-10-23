@@ -6,11 +6,14 @@
     "dev": "next dev --port 3002",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
   },
   "dependencies": {
-    "@mutuals/ui": "workspace:*",
+    "@mutuals/metadata-nextjs": "workspace:^",
     "next": "^15.4.6",
+    "nextra": "^4.6.0",
+    "nextra-theme-docs": "^4.6.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
@@ -21,6 +24,7 @@
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "eslint": "^9.32.0",
+    "pagefind": "^1.4.0",
     "typescript": "^5.9.2"
   }
 }
