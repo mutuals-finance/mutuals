@@ -5,7 +5,7 @@ import {
 import { TreeCollection, TreeView } from "@mutuals/ui";
 
 export type ClaimCreateNode = MutualsClaimCreateInput & {
-  id: string;
+  children: ClaimCreateNode[];
 };
 
 export type ClaimCreateTree = TreeCollection<ClaimCreateNode>;

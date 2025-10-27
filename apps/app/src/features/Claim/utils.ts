@@ -8,7 +8,7 @@ import {
 export const createClaim = (
   props?: Partial<ClaimCreateNode>,
 ): ClaimCreateNode => ({
-  id: `${Date.now()}`,
+  label: `${Date.now()}`,
   recipientAddress: "",
   stateId: "offchain",
   strategyId: "default_allocation",
@@ -18,8 +18,8 @@ export const createClaim = (
 });
 
 export const defaultClaims = createTreeCollection<ClaimCreateNode>({
-  nodeToValue: (node) => node.id,
-  nodeToString: (node) => node.recipientAddress ?? node.id,
+  nodeToValue: (node) => node.label ?? "",
+  nodeToString: (node) => node.recipientAddress ?? node.label,
   rootNode: createClaim({
     stateId: "",
     strategyId: "",

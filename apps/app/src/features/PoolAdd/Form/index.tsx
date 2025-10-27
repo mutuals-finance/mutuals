@@ -32,10 +32,11 @@ export default function PoolAdd() {
 
   const onSubmit = useCallback(
     (input: PoolCreateInput, status: PoolStatus) => {
+      createPool(input);
       if (status == PoolStatus.Active) {
         // setModalOpen(true);
       } else {
-        createPool(input);
+        //  createPool(input);
       }
     },
     [createPool],
@@ -140,7 +141,7 @@ export default function PoolAdd() {
                       <Button
                         flex="1"
                         type="submit"
-                        disabled={true}
+                        disabled={false}
                         loading={loading}
                       >
                         Confirm

@@ -18,10 +18,10 @@ export function usePoolCreate(): [
     ({ addClaims: _addClaims, ..._input }: PoolCreateInput) => {
       const addClaims = _addClaims
         .flatten()
-        .map(({ _parent, _children, _index, id: _id, children, ...node }) => ({
+        .map(({ _parent, _children, _index, children, ...node }) => ({
           ...node,
-          children: children?.map((c) => c.id) ?? [],
-          // TODO label, parentLabel, childrenLabels
+          childrenLabels: children?.map((c) => c.label) ?? [],
+          // TODO parentLabel, childrenLabels
         }));
       const input = { ..._input, addClaims };
 
