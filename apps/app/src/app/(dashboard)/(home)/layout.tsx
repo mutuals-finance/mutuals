@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, Suspense } from "react";
 import WalletList from "@/features/Wallet/List";
 import PoolList from "@/features/Pool/List";
 import DashboardHomeBalance from "src/features/DashboardHome/Balance";
@@ -23,7 +23,7 @@ export default async function DashboardHomeLayout({
   const [walletsQuery, poolQuery] = await Promise.all([me(), myPoolsGet()]);
 
   return (
-    <>
+    <Suspense>
       <Container maxW={"7xl"} mt={"6"}>
         <Stack gap={"6"}>
           <AlertRoot>
@@ -63,6 +63,6 @@ export default async function DashboardHomeLayout({
       </Container>
 
       {children}
-    </>
+    </Suspense>
   );
 }

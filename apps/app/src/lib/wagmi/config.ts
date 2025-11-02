@@ -17,7 +17,7 @@ const prodChains = [
 ];
 
 const devChains = [
-  ...prodChains,
+  //...prodChains,
   CHAINS_MAP.sepolia,
   CHAINS_MAP.polygonAmoy,
   CHAINS_MAP.polygonMumbai,
@@ -39,12 +39,18 @@ const chains = ({
 ];
 
 const connectors = [
-  metaMask({ dappMetadata: { name: appName } }),
   // NOTE: @magiclabs/wagmi-connector is not compatible with SSR
   // https://github.com/magiclabs/wagmi-magic-connector/issues/42#issuecomment-2771613002
   ...(isSSR()
     ? []
     : [
+        metaMask({ dappMetadata: { name: appName } }),
+        coinbaseWallet({
+          appName: appName,
+        }),
+        walletConnect({
+          projectId: WALLETCONNECT_PROJECT_ID,
+        }),
         dedicatedWalletConnector({
           chains,
           options: {
@@ -54,12 +60,6 @@ const connectors = [
             },
             magicSdkConfiguration: {},
           },
-        }),
-        coinbaseWallet({
-          appName: appName,
-        }),
-        walletConnect({
-          projectId: WALLETCONNECT_PROJECT_ID,
         }),
       ]),
 ] as CreateConnectorFn[];

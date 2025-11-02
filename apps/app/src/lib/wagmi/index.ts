@@ -11,3 +11,5 @@ export const config = createConfig({
   }),
   connectors,
 });
+
+export { connectors, chains, transports };

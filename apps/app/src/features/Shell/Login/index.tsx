@@ -8,11 +8,12 @@ import {
   AbsoluteCenter,
   Separator,
   Theme,
+  Heading,
+  VStack,
 } from "@mutuals/ui";
 import Image from "next/image";
 import signInImage from "@/assets/images/sign-in.png";
-import { PropsWithChildren } from "react";
-import WalletSelector from "@/features/Wallet/Selection";
+import React, { PropsWithChildren } from "react";
 
 export default function ShellLogin({ children }: PropsWithChildren) {
   return (
@@ -48,7 +49,7 @@ export default function ShellLogin({ children }: PropsWithChildren) {
 
         <Box
           position={"absolute"}
-          inset={{ base: "0", lg: "2" }}
+          inset={{ base: "0", lg: "3" }}
           rounded={{ lg: "4xl" }}
           overflow={"hidden"}
         >
@@ -65,7 +66,7 @@ export default function ShellLogin({ children }: PropsWithChildren) {
             gradientFrom="transparent"
             gradientVia="blue.100"
             gradientTo="blue.400"
-          ></Box>
+          />
         </Box>
       </GridItem>
 
@@ -76,33 +77,31 @@ export default function ShellLogin({ children }: PropsWithChildren) {
           display={"flex"}
           flexDirection={"column"}
           h={"full"}
-          py={{ base: "6", lg: "12" }}
+          pt={{ base: "6", lg: "24" }}
+          pb={"6"}
         >
-          <WalletSelector.Wrapper
-            heading="Sign in to Mutuals"
-            description={
-              "Choose your favourite method to sign in. You can always add more methods later."
-            }
-            tabs={[
-              {
-                title: "Continue With Wallet",
-                href: "/auth/login",
-                value: "wallet",
-              },
-              {
-                title: "Continue With Email",
-                href: "/auth/login/email",
-                value: "email",
-                tabProps: {
-                  disabled: false,
-                },
-              },
-            ]}
-          >
-            {children}
-          </WalletSelector.Wrapper>
+          <VStack gap={"4"} textAlign={"left"} alignItems={"stretch"}>
+            <Heading as={"h1"} textStyle={{ base: "4xl", lg: "5xl" }}>
+              Sign in to Mutuals
+            </Heading>
 
-          <Box pt={{ base: "4", lg: "12" }} mt={"auto"}>
+            <Text
+              textStyle={{ lg: "lg" }}
+              color={"fg.muted"}
+              mb={{ base: "2", lg: "6" }}
+            >
+              Choose your favourite method to sign in. You can always add more
+              methods later.
+            </Text>
+
+            {children}
+          </VStack>
+
+          <Box
+            pt={{ base: "6", lg: "12" }}
+            pb={{ base: "6", lg: "24" }}
+            mt={"auto"}
+          >
             <Separator mb={"4"} />
             <Text textStyle={"xs"} color={"fg.subtle"}>
               By connecting, you agree to Mutual’s Terms of Service and

@@ -27,7 +27,11 @@ export * from "./ui/menu";
 export * from "./ui/native-select";
 //export * from "./ui/number-input";
 export * from "./ui/pagination";
-export * from "./ui/password-input";
+//export * from "./ui/password-input";
+export {
+  PasswordStrengthMeter,
+  type PasswordStrengthMeterProps,
+} from "./ui/password-input";
 export * from "./ui/pin-input";
 export * from "./ui/popover";
 export * from "./ui/progress";

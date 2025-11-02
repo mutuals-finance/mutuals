@@ -10,16 +10,23 @@ import {
   IconButton,
   Icon,
   IconButtonProps,
+  ButtonGroup,
+  Link,
+  Button,
+  Menu,
 } from "@mutuals/ui";
-import { IoSearch } from "react-icons/io5";
+import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
 import Chain from "./Chain";
 import User from "./User";
 import { VscMenu } from "react-icons/vsc";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
+import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
+import { useUser } from "@openfort/react";
 
 export default function ShellDashboardHeader() {
   const { mobile, desktop } = useDashboardRoot();
+  const { isAuthenticated } = useUser();
 
   return (
     <Stack
@@ -59,7 +66,32 @@ export default function ShellDashboardHeader() {
 
       <Stack direction={"row"} gap={4} ml={"auto"}>
         <Chain />
-        <User />
+        <ButtonGroup>
+          <ShellDashboardHeaderUserMenu>
+            {!isAuthenticated ? (
+              <Menu.Trigger asChild>
+                <IconButton
+                  variant="ghost"
+                  aria-label="Open navigation menu"
+                  hideBelow={"lg"}
+                >
+                  <IoEllipsisHorizontal />
+                </IconButton>
+              </Menu.Trigger>
+            ) : (
+              <Menu.Trigger asChild>
+                <User />
+              </Menu.Trigger>
+            )}
+          </ShellDashboardHeaderUserMenu>
+          {!isAuthenticated && (
+            <Link href={"/auth/login"} asChild={true}>
+              <Button variant={"solid"} size={"sm"}>
+                Sign in
+              </Button>
+            </Link>
+          )}
+        </ButtonGroup>
       </Stack>
 
       <SidebarToggle

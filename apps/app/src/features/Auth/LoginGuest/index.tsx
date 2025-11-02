@@ -7,7 +7,8 @@ import metaMask from "@/assets/svg/connectors/metaMask.svg";
 import walletConnect from "@/assets/svg/connectors/walletConnect.svg";
 import Magic from "@/assets/svg/connectors/Magic.svg";
 import { Stack, StackProps } from "@mutuals/ui";
-import { useWalletAuth } from "@openfort/react";
+import { PiDetective } from "react-icons/pi";
+import { useGuestAuth } from "@openfort/react";
 
 const connectorIcons = {
   coinbaseWallet,
@@ -19,36 +20,35 @@ const connectorIcons = {
 function useConnectors() {
   const { connectors: _connectors } = useConnect();
 
-  const connectors = _connectors
-    .filter((c) => c.type !== "injected")
-    .map((connector) => ({
+  const connectors = _connectors.map((connector) => {
+    console.log("connector.id", connector);
+    return {
       ...connector,
       icon: connectorIcons[connector.type as keyof typeof connectorIcons],
-    }));
+    };
+  });
 
   return { connectors };
 }
 
-type AuthLoginWalletProps = StackProps;
+type AuthLoginGuestProps = StackProps;
 
-export default function AuthLoginWallet(props: AuthLoginWalletProps) {
-  const { connectors } = useConnectors();
-
-  const { connectWallet, walletConnectingTo } = useWalletAuth({
+export default function AuthLoginGuest(props: AuthLoginGuestProps) {
+  const { signUpGuest, isLoading } = useGuestAuth({
     throwOnError: true,
+    onSuccess: () => {},
+    onError: () => {},
+    onSettled: () => {},
   });
 
   return (
     <Stack {...props}>
-      {connectors?.map((connector) => (
-        <WalletSelectionButton
-          key={connector.id}
-          onClick={() => connectWallet({ connector: connector.id })}
-          name={connector.name}
-          image={{ src: connector.icon }}
-          loading={walletConnectingTo === connector.id}
-        />
-      ))}
+      <WalletSelectionButton
+        onClick={() => signUpGuest()}
+        name={"Continue as Guest"}
+        icon={{ children: <PiDetective /> }}
+        loading={isLoading}
+      />
     </Stack>
   );
 }

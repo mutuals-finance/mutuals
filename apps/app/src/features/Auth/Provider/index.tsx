@@ -54,13 +54,13 @@ export default function AuthProvider({
     (address: Address) => {
       if (!walletMap[address]) {
         void doLogin(address, {
-          onSuccess: () => router.push(redirectTo),
+          //onSuccess: () => router.push(redirectTo),
         });
       } else {
-        router.push(redirectTo);
+        //router.push(redirectTo);
       }
     },
-    [walletMap, doLogin, router, redirectTo],
+    [walletMap, doLogin],
   );
 
   const connectAndLogin = useCallback(

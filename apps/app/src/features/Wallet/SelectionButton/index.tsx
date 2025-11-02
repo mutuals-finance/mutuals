@@ -1,13 +1,16 @@
-import { Button, ButtonProps } from "@mutuals/ui";
-import { Connector } from "wagmi";
-import NextImage from "next/image";
+import { AvatarRoot, Button, ButtonProps, Icon, IconProps } from "@mutuals/ui";
+import NextImage, { ImageProps } from "next/image";
 
-interface WalletSelectionButtonProps extends ButtonProps {
-  connector?: Connector;
+interface WalletSelectionButtonProps extends Omit<ButtonProps, "name"> {
+  name?: string;
+  image?: Omit<ImageProps, "alt">;
+  icon?: IconProps;
 }
 
 export default function WalletConnectButton({
-  connector,
+  name,
+  image,
+  icon,
   ...props
 }: WalletSelectionButtonProps) {
   return (
@@ -15,18 +18,23 @@ export default function WalletConnectButton({
       w={"full"}
       size={"2xl"}
       justifyContent={"flex-start"}
-      variant="outline"
+      variant="subtle"
       {...props}
     >
-      {connector?.icon && (
+      {image && (
         <NextImage
-          src={connector.icon}
-          alt={connector?.name}
+          alt={name ?? "unknown"}
           width={"24"}
           height={"24"}
+          {...image}
         />
       )}
-      {connector?.name}
+      {icon && (
+        <AvatarRoot variant={"solid"}>
+          <Icon {...icon} />
+        </AvatarRoot>
+      )}
+      {name}
     </Button>
   );
 }

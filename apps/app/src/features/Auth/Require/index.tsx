@@ -1,7 +1,6 @@
 import React from "react";
 import { me } from "@mutuals/graphql-client-nextjs/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import RequireWallet from "./RequireWallet";
 
 export default async function AuthRequire({
@@ -18,7 +17,7 @@ export default async function AuthRequire({
       await cookies().then((c) => c.set("redirectURL", pathname));
     }
 
-    redirect(`${redirectUrl}`);
+    //redirect(`${redirectUrl}`);
   }
 
   return (
