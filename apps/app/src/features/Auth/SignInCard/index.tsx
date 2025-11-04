@@ -1,3 +1,4 @@
+import CallbackLinkButton from "@/components/CallbackLinkButton";
 import {
   Button,
   ButtonProps,
@@ -7,7 +8,6 @@ import {
   Center,
   Group,
   Icon,
-  Link,
 } from "@mutuals/ui";
 import React, { ReactNode } from "react";
 import { MdAccountBox } from "react-icons/md";
@@ -47,9 +47,7 @@ export default function AuthSignInCard({
             {actionProps && (
               <Button size={"sm"} variant="outline" {...actionProps} />
             )}
-            <Link href={"/auth/login"} asChild>
-              <Button size={"sm"}>Sign in</Button>
-            </Link>
+            <CallbackLinkButton size={"sm"}>Sign in</CallbackLinkButton>
           </Group>
         </EmptyState>
       </Card.Body>

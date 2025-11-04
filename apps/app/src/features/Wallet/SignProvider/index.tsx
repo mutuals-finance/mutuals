@@ -49,6 +49,7 @@ export default function SignMessageProvider({ children }: PropsWithChildren) {
 
   const signMessage = useCallback(
     async (options?: WalletSignOptions) => {
+      /*
       if (options?.modalProps) {
         setModalProps(options.modalProps);
       }
@@ -56,13 +57,21 @@ export default function SignMessageProvider({ children }: PropsWithChildren) {
       const result = await doSignRemoteMessage();
       setModalOpen(false);
       return result;
+*/
+      return {
+        signature: `0x` as `0x${string}`,
+        message: "string",
+        nonce: "string",
+      };
     },
     [doSignRemoteMessage, setModalOpen],
   );
 
   const abort = useCallback(() => {
+    /*
     setModalOpen(false);
     doAbortSignRemoteMessage();
+*/
   }, [doAbortSignRemoteMessage, setModalOpen]);
 
   const value = {

@@ -7,81 +7,94 @@ import {
   IoLogoGoogle,
   IoLogoTwitter,
 } from "react-icons/io5";
-import { OAuthProvider, useOAuth, useWallets } from "@openfort/react";
-import { useCallback } from "react";
-import { useEffectOnce } from "react-use";
-
-export type StoreCredentialsOptions = {
-  player: string;
-  accessToken: string;
-  refreshToken: string;
-};
+import {
+  AuthStateLogin,
+  AuthStateSignup,
+  TOAuthMethod,
+  useVerifyOAuth,
+} from "@getpara/react-sdk";
+import { useAuthState } from "@/features/Auth/StateProvider";
+import { SiFarcaster } from "react-icons/si";
+import { BsTelegram } from "react-icons/bs";
+import { useRef } from "react";
 
 export type AuthLoginSocialsProps = StackProps & {
-  credentials?: StoreCredentialsOptions;
+  onSelectSignupMethod?: (url: string, chosenMethod: string) => void;
+  onSelectLoginMethod?: (url: string) => void;
 };
 
 export default function AuthLoginSocials({
-  credentials,
+  onSelectSignupMethod,
+  onSelectLoginMethod,
   ...props
 }: AuthLoginSocialsProps) {
-  const {
-    initOAuth,
-    linkOauth,
-    storeCredentials,
-    isLoading,
-    isError,
-    isSuccess,
-    error,
-  } = useOAuth({
-    redirectTo: "http://localhost:3000/auth/login",
-    recoverWalletAutomatically: true,
-  });
+  const popupWindow = useRef<Window | null>(null);
+  const { verifyOAuth, isIdle, isError } = useVerifyOAuth();
+  const [authState, setAuthState] = useAuthState();
 
-  const { wallets, availableWallets } = useWallets();
+  const onOAuthLogin = (method: TOAuthMethod) => {
+    verifyOAuth(
+      {
+        // @ts-expect-error: TOAuthMethod is compatible with OAuthProvider
+        method,
+        onOAuthPopup: (oAuthPopup) => {
+          popupWindow.current = oAuthPopup;
+        },
+        isCanceled: () => Boolean(popupWindow.current?.closed),
+      },
+      {
+        onSuccess: (authState: AuthStateLogin | AuthStateSignup) => {
+          setAuthState(authState);
 
-  const handleOAuthCallback = useCallback(
-    async (options: StoreCredentialsOptions) => {
-      await storeCredentials({
-        ...options,
-        onSuccess: (e) => console.log("storeCredentials onSuccess", e),
-        onError: (e) => console.log("storeCredentials onError", e),
-        onSettled: (e) => console.log("storeCredentials onSettled", e),
-      });
-      //const newWallet = await createWallet();
-    },
-    [storeCredentials],
-  );
-
-  useEffectOnce(() => {
-    if (credentials) {
-      void handleOAuthCallback(credentials);
-    }
-    console.log(wallets, availableWallets);
-  });
+          switch (authState.stage) {
+            case "signup":
+              // New user: refer to 'Sign up a new user'
+              onSelectSignupMethod?.(authState.passkeyUrl ?? "", method);
+              break;
+            case "login":
+              // Returning user: refer to 'Log in an existing user'
+              onSelectLoginMethod?.(authState.passkeyUrl ?? "");
+              break;
+          }
+        },
+        onError: (error) => {
+          // Handle a canceled OAuth verification
+        },
+      },
+    );
+  };
 
   const socialProviders: IconButtonProps[] = [
     {
       "aria-label": "Sign in with Google",
       children: <IoLogoGoogle />,
-      onClick: () => initOAuth({ provider: OAuthProvider.GOOGLE }),
+      onClick: () => onOAuthLogin("GOOGLE"),
     },
     {
       "aria-label": "Sign in with X",
       children: <IoLogoTwitter />,
-      onClick: () => initOAuth({ provider: OAuthProvider.TWITTER }),
-      disabled: true,
+      onClick: () => onOAuthLogin("TWITTER"),
     },
     {
       "aria-label": "Sign in with Apple",
       children: <IoLogoApple />,
-      onClick: () => initOAuth({ provider: OAuthProvider.APPLE }),
-      disabled: true,
+      onClick: () => onOAuthLogin("APPLE"),
     },
     {
       "aria-label": "Sign in with Meta",
       children: <IoLogoFacebook />,
-      onClick: () => initOAuth({ provider: OAuthProvider.FACEBOOK }),
+      onClick: () => onOAuthLogin("FACEBOOK"),
+    },
+    {
+      "aria-label": "Sign in with Farcaster",
+      children: <SiFarcaster />,
+      onClick: () => onOAuthLogin("FARCASTER"),
+      disabled: true,
+    },
+    {
+      "aria-label": "Sign in with Telegram",
+      children: <BsTelegram />,
+      onClick: () => onOAuthLogin("TELEGRAM"),
       disabled: true,
     },
   ];

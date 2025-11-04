@@ -9,7 +9,7 @@ import {
   IoSunnySharp,
 } from "react-icons/io5";
 import { header as headerLinks } from "@/features/Shell/Dashboard/links";
-import { useSignOut } from "@openfort/react";
+import { useLogout } from "@getpara/react-sdk";
 
 type ShellDashboardHeaderUserMenuProps = Menu.RootProps;
 
@@ -17,14 +17,20 @@ export default function ShellDashboardHeaderUserMenu({
   children,
   ...props
 }: ShellDashboardHeaderUserMenuProps) {
-  const { signOut } = useSignOut({
-    throwOnError: true,
-    onSuccess: () => {},
-    onError: () => {},
-    onSettled: () => {},
-  });
+  const { logout, logoutAsync, isPending } = useLogout();
 
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const handleLogout = async () => {
+    try {
+      await logoutAsync({
+        clearPregenWallets: true, // Keep pregenerated wallets
+      });
+      console.log("Successfully logged out");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   return (
     <Menu.Root {...props}>
@@ -74,7 +80,11 @@ export default function ShellDashboardHeaderUserMenu({
             <Menu.Separator />
 
             <Menu.ItemGroup>
-              <Menu.Item value={"sign-out"} onClick={() => signOut()}>
+              <Menu.Item
+                value={"sign-out"}
+                onClick={handleLogout}
+                disabled={isPending}
+              >
                 <Box flex="1">Sign out</Box>
                 <IoLogOutSharp />
               </Menu.Item>

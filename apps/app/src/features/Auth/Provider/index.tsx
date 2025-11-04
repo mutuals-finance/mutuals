@@ -75,6 +75,7 @@ export default function AuthProvider({
   }, [disconnect]);
 
   useAccountEffect({
+    /*
     onConnect(data) {
       if (!walletMap[data.address]) {
         login(data.address);
@@ -84,6 +85,7 @@ export default function AuthProvider({
       void logout();
       router.push("/auth/login");
     },
+*/
   });
 
   const value = {

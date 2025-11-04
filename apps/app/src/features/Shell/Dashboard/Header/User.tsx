@@ -2,22 +2,17 @@
 
 import { Button, ButtonProps } from "@mutuals/ui";
 
-import { useWallets } from "@openfort/react";
 import UserAvatar from "@/features/Wallet/Avatar";
 import { shortenAddress } from "@/utils";
+import { useWallet } from "@getpara/react-sdk";
 
 export default function ShellDashboardHeaderUser(props: ButtonProps) {
-  const { activeWallet, isLoadingWallets } = useWallets({});
+  const { data: wallet, isLoading, error } = useWallet();
 
   return (
-    <Button
-      variant={"surface"}
-      size={"sm"}
-      loading={isLoadingWallets || !activeWallet}
-      {...props}
-    >
-      <UserAvatar size={"2xs"}>{activeWallet?.address}</UserAvatar>
-      {shortenAddress(activeWallet?.address)}
+    <Button variant={"surface"} size={"sm"} loading={isLoading} {...props}>
+      <UserAvatar size={"2xs"}>{wallet?.address}</UserAvatar>
+      {shortenAddress(wallet?.address)}
     </Button>
   );
 }

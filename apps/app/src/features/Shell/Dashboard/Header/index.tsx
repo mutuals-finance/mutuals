@@ -11,8 +11,6 @@ import {
   Icon,
   IconButtonProps,
   ButtonGroup,
-  Link,
-  Button,
   Menu,
 } from "@mutuals/ui";
 import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
@@ -22,12 +20,13 @@ import User from "./User";
 import { VscMenu } from "react-icons/vsc";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
-import { useUser } from "@openfort/react";
+import { useAccount } from "@getpara/react-sdk";
+import CallbackLinkButton from "@/components/CallbackLinkButton";
 
 export default function ShellDashboardHeader() {
   const { mobile, desktop } = useDashboardRoot();
-  const { isAuthenticated } = useUser();
-
+  const account = useAccount();
+  console.log("Account in header:", account);
   return (
     <Stack
       as="header"
@@ -68,7 +67,7 @@ export default function ShellDashboardHeader() {
         <Chain />
         <ButtonGroup>
           <ShellDashboardHeaderUserMenu>
-            {!isAuthenticated ? (
+            {!account.isConnected ? (
               <Menu.Trigger asChild>
                 <IconButton
                   variant="ghost"
@@ -84,12 +83,10 @@ export default function ShellDashboardHeader() {
               </Menu.Trigger>
             )}
           </ShellDashboardHeaderUserMenu>
-          {!isAuthenticated && (
-            <Link href={"/auth/login"} asChild={true}>
-              <Button variant={"solid"} size={"sm"}>
-                Sign in
-              </Button>
-            </Link>
+          {!account.isConnected && (
+            <CallbackLinkButton variant={"solid"} size={"sm"}>
+              Sign in
+            </CallbackLinkButton>
           )}
         </ButtonGroup>
       </Stack>

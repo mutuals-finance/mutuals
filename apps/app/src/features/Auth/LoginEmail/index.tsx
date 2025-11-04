@@ -13,7 +13,6 @@ import {
   Show,
   PasswordInput,
 } from "@mutuals/ui";
-import { useEmailAuth } from "@openfort/react";
 import { IoArrowForwardSharp, IoKeySharp, IoMailSharp } from "react-icons/io5";
 
 export type AuthLoginEmailProps = Omit<FormProps, "children">;
@@ -21,40 +20,10 @@ export type AuthLoginEmailProps = Omit<FormProps, "children">;
 export default function AuthLoginEmail(props: AuthLoginEmailProps) {
   const { open, onToggle } = useDisclosure();
 
-  const {
-    signInEmail,
-    signUpEmail,
-    linkEmail,
-    verifyEmail,
-    requestResetPassword,
-    resetPassword,
-    reset,
-    isLoading,
-    isError,
-    isSuccess,
-    isAwaitingInput,
-    requiresEmailVerification,
-    error,
-  } = useEmailAuth({
-    emailVerificationRedirectTo: "https://app.example.com/auth/callback",
-    throwOnError: true,
-    onSuccess: () => {},
-    onError: () => {},
-    onSettled: () => {},
-  });
-
-  const handleSignIn = async (email: string, password: string) => {
-    const result = await signInEmail({ email, password });
-    if (result.requiresEmailVerification) {
-      // prompt user to check inbox for the verification code
-    }
-  };
+  const handleSignIn = async (email: string, password: string) => {};
 
   return (
-    <Form
-      onSubmit={(data) => signInEmail({ email: "", password: "" })}
-      {...props}
-    >
+    <Form onSubmit={(data) => ({ email: "", password: "" })} {...props}>
       <InputGroup
         w={"full"}
         startElement={<IoMailSharp />}
