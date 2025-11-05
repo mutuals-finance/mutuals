@@ -22,11 +22,4 @@ export const WALLETCONNECT_PROJECT_ID =
 export const ANKR_URL = process.env.NEXT_PUBLIC_ANKR_URL || "";
 export const ANKR_API_KEY = process.env.NEXT_PUBLIC_ANKR_API_KEY || "";
 export const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "";
-export const MAGIC_PUBLISHABLE_API_KEY =
-  process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_API_KEY || "";
 export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN || "";
-export const OPENFORT_PUBLISHABLE_KEY =
-  process.env.NEXT_PUBLIC_OPENFORT_PUBLISHABLE_KEY || "";
-export const OPENFORT_SHIELD_PUBLISHABLE_KEY =
-  process.env.NEXT_PUBLIC_OPENFORT_SHIELD_PUBLISHABLE_KEY || "";
-export const PARA_API_KEY = process.env.NEXT_PUBLIC_PARA_API_KEY || "";

@@ -10,7 +10,7 @@ import MutualsProvider from "@/providers/MutualsProvider";
 import AnalyticsProvider from "@/providers/AnalyticsProvider";
 import PrivyProvider from "@/providers/PrivyProvider";
 import WagmiProvider from "@/providers/WagmiProvider";
-import QueryProvider from "@/providers/QueryProvider";
+import QueryClientProvider from "@/providers/QueryProvider";
 
 import "keen-slider/keen-slider.min.css";
 
@@ -23,7 +23,7 @@ export default async function Providers({ children }: PropsWithChildren) {
       <AnalyticsProvider>
         <ApolloProvider>
           <PrivyProvider>
-            <QueryProvider>
+            <QueryClientProvider>
               <WagmiProvider>
                 <SignMessageProvider>
                   <AuthProvider redirectTo={redirectURL} query={query}>
@@ -33,7 +33,7 @@ export default async function Providers({ children }: PropsWithChildren) {
                   </AuthProvider>
                 </SignMessageProvider>
               </WagmiProvider>
-            </QueryProvider>
+            </QueryClientProvider>
           </PrivyProvider>
         </ApolloProvider>
       </AnalyticsProvider>
