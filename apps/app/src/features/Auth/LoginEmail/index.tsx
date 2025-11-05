@@ -7,64 +7,173 @@ import {
   FormProps,
   Input,
   InputGroup,
+  PinInput,
+  Text,
+  DialogRoot,
+  DialogContent,
+  DialogFooter,
+  DialogBody,
+  DialogHeader,
+  DialogTitle,
+  DialogActionTrigger,
+  DialogCloseTrigger,
   Stack,
-  useDisclosure,
-  Presence,
-  Show,
-  PasswordInput,
 } from "@mutuals/ui";
-import { IoArrowForwardSharp, IoKeySharp, IoMailSharp } from "react-icons/io5";
+import { useLoginWithEmail } from "@privy-io/react-auth";
+import { useCallback, useState } from "react";
+import { IoArrowForwardSharp, IoMailSharp } from "react-icons/io5";
 
-export type AuthLoginEmailProps = Omit<FormProps, "children">;
+export type EmailLoginData = {
+  email: string;
+  code: string[];
+};
+
+export type AuthLoginEmailProps = Omit<FormProps<EmailLoginData>, "children">;
 
 export default function AuthLoginEmail(props: AuthLoginEmailProps) {
-  const { open, onToggle } = useDisclosure();
+  const [codeDialogOpen, setCodeDialogOpen] = useState(false);
 
-  const handleSignIn = async (email: string, password: string) => {};
+  const { sendCode, loginWithCode, state } = useLoginWithEmail({
+    onComplete: ({
+      user,
+      isNewUser,
+      wasAlreadyAuthenticated,
+      loginMethod,
+      loginAccount,
+    }) => {
+      console.log("User logged in successfully", user);
+      console.log("Is new user:", isNewUser);
+      console.log("Was already authenticated:", wasAlreadyAuthenticated);
+      console.log("Login method:", loginMethod);
+      console.log("Login account:", loginAccount);
+    },
+    onError: (error) => {
+      console.error("Login failed", error);
+    },
+  });
+
+  const onSubmit = useCallback(
+    async ({ email, code }: EmailLoginData) => {
+      if (state.status == "awaiting-code-input") {
+        await loginWithCode({ code: code.join("") });
+      } else {
+        await sendCode({ email: email });
+        setCodeDialogOpen(true);
+      }
+    },
+    [state, sendCode, loginWithCode, setCodeDialogOpen],
+  );
+
+  const codeSent = codeDialogOpen;
 
   return (
-    <Form onSubmit={(data) => ({ email: "", password: "" })} {...props}>
-      <InputGroup
-        w={"full"}
-        startElement={<IoMailSharp />}
-        endElement={
-          <Show when={!open}>
-            <IconButton variant="subtle" size="md" onClick={onToggle}>
-              <IoArrowForwardSharp />
-            </IconButton>
-          </Show>
-        }
-      >
-        <Input size="xl" id={"email"} placeholder={"Enter your email"} />
-      </InputGroup>
-
-      <Presence
-        present={open}
-        animationName={{ _open: "fade-in", _closed: "fade-out" }}
-        animationDuration="moderate"
-      >
-        <Stack>
-          <InputGroup flex={"1"} startElement={<IoKeySharp />}>
-            <PasswordInput
+    <Form
+      defaultValues={{ email: "", code: [] }}
+      onSubmit={onSubmit}
+      onSubmitInvalid={(data) => console.log("Invalid form data", data)}
+      {...props}
+    >
+      {({ getValues }) => (
+        <>
+          <InputGroup
+            w={"full"}
+            startElement={<IoMailSharp />}
+            endElement={
+              <IconButton
+                variant="subtle"
+                size="md"
+                loading={state.status == "sending-code"}
+                disabled={codeSent}
+                type={"submit"}
+              >
+                <IoArrowForwardSharp />
+              </IconButton>
+            }
+          >
+            <Input
               size="xl"
-              id={"password"}
-              placeholder="Enter your password"
+              id={"email"}
+              placeholder={"Enter your email"}
+              disabled={codeSent}
+              rules={{
+                required: true,
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "invalid email address",
+                },
+              }}
             />
           </InputGroup>
-          <Button variant="subtle" size="lg">
-            Sign in
-          </Button>
-          <Stack direction={"row"} justifyContent={"space-between"}>
-            <Button variant="ghost" size="xs">
-              Sign up instead
-            </Button>
 
-            <Button variant="ghost" size="xs">
-              Forgot password
-            </Button>
-          </Stack>
-        </Stack>
-      </Presence>
+          <DialogRoot
+            open={codeDialogOpen}
+            onOpenChange={(e) => setCodeDialogOpen(e.open)}
+          >
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Enter Code</DialogTitle>
+              </DialogHeader>
+              <DialogBody>
+                <Stack
+                  direction="column"
+                  alignItems={"center"}
+                  textAlign={"center"}
+                  gap={"6"}
+                >
+                  <Text textStyle={"md"}>
+                    Welcome to Mutuals! Please enter your code to continue:
+                  </Text>
+
+                  <PinInput
+                    size="xl"
+                    count={6}
+                    id={"code"}
+                    otp={true}
+                    disabled={state.status != "awaiting-code-input"}
+                  />
+
+                  <Stack
+                    gap="2"
+                    textStyle={"xs"}
+                    color={"fg.subtle"}
+                    alignItems={"center"}
+                    textAlign={"center"}
+                  >
+                    <Text>
+                      A one time authentication code has been sent to your
+                      email.
+                    </Text>
+                    <Text>
+                      It expires in 10 minutes.{" "}
+                      <Button
+                        unstyled={true}
+                        cursor={"pointer"}
+                        color={"fg.info"}
+                      >
+                        Resend code
+                      </Button>
+                    </Text>
+                  </Stack>
+                </Stack>
+              </DialogBody>
+              <DialogFooter>
+                <DialogActionTrigger asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DialogActionTrigger>
+                <Button
+                  loading={state.status == "submitting-code"}
+                  disabled={state.status == "done"}
+                  type={"button"}
+                  onClick={() => onSubmit(getValues())}
+                >
+                  Sign in
+                </Button>
+              </DialogFooter>
+              <DialogCloseTrigger />
+            </DialogContent>
+          </DialogRoot>
+        </>
+      )}
     </Form>
   );
 }

@@ -8,9 +8,9 @@ import AuthProvider from "@/features/Auth/Provider";
 import SignMessageProvider from "@/features/Wallet/SignProvider";
 import MutualsProvider from "@/providers/MutualsProvider";
 import AnalyticsProvider from "@/providers/AnalyticsProvider";
-import ParaProvider from "@/providers/ParaProvider";
+import PrivyProvider from "@/providers/PrivyProvider";
+import WagmiProvider from "@/providers/WagmiProvider";
 import QueryProvider from "@/providers/QueryProvider";
-import AuthStateProvider from "@/features/Auth/StateProvider";
 
 import "keen-slider/keen-slider.min.css";
 
@@ -22,9 +22,9 @@ export default async function Providers({ children }: PropsWithChildren) {
     <UIProvider>
       <AnalyticsProvider>
         <ApolloProvider>
-          <QueryProvider>
-            <ParaProvider>
-              <AuthStateProvider>
+          <PrivyProvider>
+            <QueryProvider>
+              <WagmiProvider>
                 <SignMessageProvider>
                   <AuthProvider redirectTo={redirectURL} query={query}>
                     <AnkrProvider>
@@ -32,9 +32,9 @@ export default async function Providers({ children }: PropsWithChildren) {
                     </AnkrProvider>
                   </AuthProvider>
                 </SignMessageProvider>
-              </AuthStateProvider>
-            </ParaProvider>
-          </QueryProvider>
+              </WagmiProvider>
+            </QueryProvider>
+          </PrivyProvider>
         </ApolloProvider>
       </AnalyticsProvider>
     </UIProvider>

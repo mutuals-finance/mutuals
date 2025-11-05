@@ -179,6 +179,8 @@ export {
   type PasswordInputProps,
   PasswordStrengthMeter,
   type PasswordStrengthMeterProps,
+  PinInput,
+  type PinInputProps,
   PopoverTitle,
   PopoverDescription,
   PopoverFooter,

@@ -1,7 +1,6 @@
 "use client";
 
 import { useColorMode, Portal, Box, Menu, Link } from "@mutuals/ui";
-
 import {
   IoLogOutSharp,
   IoMoonSharp,
@@ -9,7 +8,7 @@ import {
   IoSunnySharp,
 } from "react-icons/io5";
 import { header as headerLinks } from "@/features/Shell/Dashboard/links";
-import { useLogout } from "@getpara/react-sdk";
+import { useLogout } from "@privy-io/react-auth";
 
 type ShellDashboardHeaderUserMenuProps = Menu.RootProps;
 
@@ -17,20 +16,14 @@ export default function ShellDashboardHeaderUserMenu({
   children,
   ...props
 }: ShellDashboardHeaderUserMenuProps) {
-  const { logout, logoutAsync, isPending } = useLogout();
+  const { logout } = useLogout({
+    onSuccess: () => {
+      console.log("User successfully logged out");
+      // Redirect to landing page or perform other post-logout actions
+    },
+  });
 
   const { colorMode, toggleColorMode } = useColorMode();
-
-  const handleLogout = async () => {
-    try {
-      await logoutAsync({
-        clearPregenWallets: true, // Keep pregenerated wallets
-      });
-      console.log("Successfully logged out");
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
-  };
 
   return (
     <Menu.Root {...props}>
@@ -80,11 +73,7 @@ export default function ShellDashboardHeaderUserMenu({
             <Menu.Separator />
 
             <Menu.ItemGroup>
-              <Menu.Item
-                value={"sign-out"}
-                onClick={handleLogout}
-                disabled={isPending}
-              >
+              <Menu.Item value={"sign-out"} onClick={logout}>
                 <Box flex="1">Sign out</Box>
                 <IoLogOutSharp />
               </Menu.Item>

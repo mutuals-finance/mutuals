@@ -20,13 +20,13 @@ import User from "./User";
 import { VscMenu } from "react-icons/vsc";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
-import { useAccount } from "@getpara/react-sdk";
 import CallbackLinkButton from "@/components/CallbackLinkButton";
+import { usePrivy } from "@privy-io/react-auth";
 
 export default function ShellDashboardHeader() {
   const { mobile, desktop } = useDashboardRoot();
-  const account = useAccount();
-  console.log("Account in header:", account);
+  const { authenticated } = usePrivy();
+
   return (
     <Stack
       as="header"
@@ -67,7 +67,7 @@ export default function ShellDashboardHeader() {
         <Chain />
         <ButtonGroup>
           <ShellDashboardHeaderUserMenu>
-            {!account.isConnected ? (
+            {!authenticated ? (
               <Menu.Trigger asChild>
                 <IconButton
                   variant="ghost"
@@ -83,7 +83,7 @@ export default function ShellDashboardHeader() {
               </Menu.Trigger>
             )}
           </ShellDashboardHeaderUserMenu>
-          {!account.isConnected && (
+          {!authenticated && (
             <CallbackLinkButton variant={"solid"} size={"sm"}>
               Sign in
             </CallbackLinkButton>

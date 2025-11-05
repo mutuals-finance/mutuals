@@ -9,19 +9,15 @@ interface WagmiProviderProps {
   initialState?: State;
 }
 
+const queryClient = new QueryClient();
+
 export default function MutualsWagmiProvider({
   children,
   initialState,
 }: PropsWithChildren<WagmiProviderProps>) {
-  const queryClient = new QueryClient();
-
   return (
-    <WagmiProvider
-      config={config}
-      reconnectOnMount={true}
-      initialState={initialState}
-    >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </WagmiProvider>
+    <QueryClientProvider client={queryClient}>
+      <WagmiProvider config={config}>{children}</WagmiProvider>
+    </QueryClientProvider>
   );
 }
