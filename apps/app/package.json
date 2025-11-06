@@ -16,6 +16,7 @@
     "@mutuals/metadata-nextjs": "workspace:*",
     "@mutuals/sdk-react": "workspace:*",
     "@mutuals/ui": "workspace:*",
+    "@privy-io/node": "^0.4.0",
     "@privy-io/react-auth": "^3.5.1",
     "@privy-io/wagmi": "^2.0.2",
     "@tanstack/react-query": "^5.84.2",

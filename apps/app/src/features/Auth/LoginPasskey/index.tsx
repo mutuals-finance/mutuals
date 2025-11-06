@@ -6,7 +6,6 @@ import {
   useLoginWithPasskey,
   useSignupWithPasskey,
 } from "@privy-io/react-auth";
-import { MdArrowOutward } from "react-icons/md";
 import { IoFingerPrintSharp } from "react-icons/io5";
 
 type AuthLoginPasskeyProps = StackProps;
@@ -27,7 +26,7 @@ export default function AuthLoginPasskey({ ...props }: AuthLoginPasskeyProps) {
       />
 
       <Button variant={"ghost"} size="sm" onClick={() => signupWithPasskey()}>
-        Sign up with passkey <MdArrowOutward />
+        Sign up with passkey
       </Button>
     </Stack>
   );

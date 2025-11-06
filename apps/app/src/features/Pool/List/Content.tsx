@@ -1,22 +1,17 @@
-import {
-  ApolloQueryResult,
-  MyPoolsQuery,
-} from "@mutuals/graphql-client-nextjs";
-import { SimpleGrid, Form, HStack, Input, InputGroup } from "@mutuals/ui";
-import PoolCard from "@/features/Pool/Card";
 import PoolListEmptyState from "@/features/Pool/List/EmptyState";
-import { IoSearch } from "react-icons/io5";
+import { User } from "@privy-io/node";
 
-export type PoolListContentProps = ApolloQueryResult<MyPoolsQuery>;
+//export type PoolListContentProps = ApolloQueryResult<MyPoolsQuery>;
+export type PoolListContentProps = { user?: User };
 
-export default function PoolListContent({ data }: PoolListContentProps) {
-  const empty =
-    "viewerPools" in data.viewer! && data.viewer!.viewerPools!.length > 0;
+export default function PoolListContent(_: PoolListContentProps) {
+  const empty = true;
 
-  return !("viewerPools" in data.viewer!) || !empty ? (
+  return empty ? (
     <PoolListEmptyState />
   ) : (
     <>
+      {/*
       <HStack mb={"6"} gap={"6"} alignItems={"center"}>
         <Form flex={"1"}>
           <InputGroup startElement={<IoSearch />}>
@@ -33,6 +28,7 @@ export default function PoolListContent({ data }: PoolListContentProps) {
           <PoolCard key={key} {...viewerPool?.pool} />
         ))}
       </SimpleGrid>
+*/}
     </>
   );
 }

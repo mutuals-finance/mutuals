@@ -5,46 +5,51 @@ import React, {
   useCallback,
   PropsWithChildren,
   useContext,
+  useState,
+  SetStateAction,
+  Dispatch,
 } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateWallet } from "@privy-io/react-auth";
 
-export type AuthLoginQueryParams = {
+export type AuthShellQueryParams = {
   callbackUrl?: string;
 };
 
-type OnCompleteParams = {
+type OnLoginCompleteParams = {
   requiresWallet?: boolean;
   createWalletOptions?: { createAdditional?: boolean };
   callbackTimeout?: number;
 };
 
-type AuthLoginContextType = {
-  onComplete: (params?: OnCompleteParams) => Promise<void>;
+type AuthShellContextType = {
+  onLoginComplete: (params?: OnLoginCompleteParams) => Promise<void>;
   callbackUrl: string;
+  setCallbackUrl: Dispatch<SetStateAction<string>>;
 };
 
-const AuthLoginContext = createContext<AuthLoginContextType>({
-  onComplete: async () => {},
+const AuthShellContext = createContext<AuthShellContextType>({
+  onLoginComplete: async () => {},
   callbackUrl: "/",
+  setCallbackUrl: () => {},
 });
 
-export function useAuthLogin() {
-  return useContext(AuthLoginContext);
+export function useAuthShell() {
+  return useContext(AuthShellContext);
 }
 
-export type AuthLoginProviderContextProps =
-  PropsWithChildren<AuthLoginQueryParams>;
+export type AuthShellProviderContextProps =
+  PropsWithChildren<AuthShellQueryParams>;
 
-export default function AuthLoginProvider({
+export default function AuthShellProvider({
   children,
-  callbackUrl = "/",
-}: AuthLoginProviderContextProps) {
+}: AuthShellProviderContextProps) {
   const router = useRouter();
+  const [callbackUrl, setCallbackUrl] = useState<string>("/");
   const { createWallet } = useCreateWallet();
 
-  const onComplete = useCallback(
-    async (params?: OnCompleteParams) => {
+  const onLoginComplete = useCallback(
+    async (params?: OnLoginCompleteParams) => {
       if (params?.requiresWallet) {
         await createWallet({
           createAdditional: false,
@@ -63,13 +68,14 @@ export default function AuthLoginProvider({
   );
 
   const value = {
-    onComplete,
+    onLoginComplete,
     callbackUrl,
+    setCallbackUrl,
   };
 
   return (
-    <AuthLoginContext.Provider value={value}>
+    <AuthShellContext.Provider value={value}>
       {children}
-    </AuthLoginContext.Provider>
+    </AuthShellContext.Provider>
   );
 }

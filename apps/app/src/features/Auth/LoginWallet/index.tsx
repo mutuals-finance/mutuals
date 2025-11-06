@@ -3,13 +3,13 @@
 import WalletSelectionButton from "@/features/Wallet/SelectionButton";
 import { Stack, StackProps } from "@mutuals/ui";
 import { IoWalletSharp } from "react-icons/io5";
-import { useAuthLogin } from "@/features/Auth/Login/Provider";
 import { useConnectWallet } from "@privy-io/react-auth";
+import { useAuthShell } from "@/features/Shell/Login/Provider";
 
 type AuthLoginWalletProps = StackProps;
 
 export default function AuthLoginWallet({ ...props }: AuthLoginWalletProps) {
-  const { onComplete: onLoginComplete } = useAuthLogin();
+  const { onLoginComplete } = useAuthShell();
 
   const { connectWallet } = useConnectWallet({
     onSuccess: () => onLoginComplete({ requiresWallet: false }),

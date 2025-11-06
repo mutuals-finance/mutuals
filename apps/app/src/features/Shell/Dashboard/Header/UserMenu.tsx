@@ -9,6 +9,7 @@ import {
 } from "react-icons/io5";
 import { header as headerLinks } from "@/features/Shell/Dashboard/links";
 import { useLogout } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 
 type ShellDashboardHeaderUserMenuProps = Menu.RootProps;
 
@@ -16,10 +17,10 @@ export default function ShellDashboardHeaderUserMenu({
   children,
   ...props
 }: ShellDashboardHeaderUserMenuProps) {
+  const router = useRouter();
   const { logout } = useLogout({
     onSuccess: () => {
-      console.log("User successfully logged out");
-      // Redirect to landing page or perform other post-logout actions
+      router.refresh();
     },
   });
 

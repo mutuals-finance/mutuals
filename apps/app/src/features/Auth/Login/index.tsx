@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, StackProps } from "@mutuals/ui";
+import { Box, Heading, Stack, StackProps, Text } from "@mutuals/ui";
 
 import AuthLoginWallet from "@/features/Auth/LoginWallet";
 import AuthLoginEmail from "@/features/Auth/LoginEmail";
@@ -9,15 +9,37 @@ import AuthLoginGuest from "@/features/Auth/LoginGuest";
 
 import AuthLoginSeparator from "@/features/Auth/Login/Separator";
 import AuthLoginPasskey from "@/features/Auth/LoginPasskey";
-import AuthLoginProvider, {
-  AuthLoginQueryParams,
-} from "@/features/Auth/Login/Provider";
+import {
+  AuthShellQueryParams,
+  useAuthShell,
+} from "@/features/Shell/Login/Provider";
+import { useMount } from "react-use";
+import React from "react";
 
-type AuthLoginProps = StackProps & AuthLoginQueryParams;
+type AuthLoginProps = StackProps & AuthShellQueryParams;
 
-export default function AuthLogin({ callbackUrl, ...props }: AuthLoginProps) {
+export default function AuthLogin({
+  callbackUrl = "/",
+  ...props
+}: AuthLoginProps) {
+  const { setCallbackUrl } = useAuthShell();
+
+  useMount(() => {
+    setCallbackUrl(callbackUrl);
+  });
+
   return (
-    <AuthLoginProvider callbackUrl={callbackUrl}>
+    <>
+      <Box>
+        <Heading as={"h1"} textStyle={{ base: "4xl", lg: "5xl" }} mb={"2"}>
+          Sign in to Mutuals
+        </Heading>
+        <Text textStyle={{ lg: "lg" }} color={"fg.muted"}>
+          Choose your favourite method to sign in. You can always add more
+          methods later.
+        </Text>
+      </Box>
+
       <Stack gap={"6"} alignItems={"stretch"} {...props}>
         <AuthLoginEmail />
         <AuthLoginSocials gap="2" />
@@ -31,6 +53,13 @@ export default function AuthLogin({ callbackUrl, ...props }: AuthLoginProps) {
         <AuthLoginSeparator />
         <AuthLoginGuest />
       </Stack>
-    </AuthLoginProvider>
+
+      <Box>
+        <Text textStyle={"xs"} color={"fg.subtle"}>
+          By connecting, you agree to Mutual’s Terms of Service and acknowledge
+          that you have read and understand the Mutuals Disclaimer.
+        </Text>
+      </Box>
+    </>
   );
 }

@@ -1,13 +1,22 @@
-import { me } from "@mutuals/graphql-client-nextjs/server";
 import UserSettingsNotifications from "@/features/UserSettings/Notifications";
 import { Metadata } from "next";
+import AuthSignInCard from "@/features/Auth/SignInCard";
+import { me } from "@/lib/privy";
 
 export const metadata: Metadata = {
   title: "Notification Settings",
 };
 
 export default async function UserSettingsNotificationPage() {
-  const query = await me();
+  const user = await me();
 
-  return <UserSettingsNotifications {...query} />;
+  return !user ? (
+    <AuthSignInCard
+      description={
+        "To view and manage your notification settings you must sign in to your account."
+      }
+    />
+  ) : (
+    <UserSettingsNotifications user={user} />
+  );
 }

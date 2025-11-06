@@ -1,14 +1,13 @@
 import React from "react";
-import { me } from "@mutuals/graphql-client-nextjs/server";
 import WalletAdd from "@/features/Wallet/Add";
 import { Metadata } from "next";
+import { me } from "@/lib/privy";
 
 export const metadata: Metadata = {
   title: "Add Wallet",
 };
 
 export default async function NewWalletPage() {
-  const query = await me();
-
-  return <WalletAdd {...query} />;
+  const user = await me();
+  return <WalletAdd user={user} />;
 }

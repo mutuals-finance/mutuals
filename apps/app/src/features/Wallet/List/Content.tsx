@@ -1,25 +1,26 @@
-"use client";
-
-import WalletCard from "@/features/Wallet/Card";
 import { ScrollArea, Flex } from "@mutuals/ui";
+import { User } from "@privy-io/node";
 
-export type WalletListContentProps = {};
+import WalletCard, { WalletCardAccountType } from "@/features/Wallet/Card";
 
-export default function WalletListContent(_: WalletListContentProps) {
-  const wallets: any[] = [];
+export type WalletListContentProps = { user?: User };
+
+export default function WalletListContent({ user }: WalletListContentProps) {
+  const wallets = user?.linked_accounts.filter((account) =>
+    /^(wallet|smart_wallet)$/.test(account.type),
+  ) as WalletCardAccountType[] | undefined;
 
   return (
     <ScrollArea.Root w="full" size="xs">
       <ScrollArea.Viewport>
-        <ScrollArea.Content py="6">
+        <ScrollArea.Content pb="6">
           <Flex gap="6" flexWrap="nowrap">
             {wallets?.map((wallet) => (
               <WalletCard
-                {...wallet}
-                key={wallet?.dbid}
-                w="40"
+                key={wallet.walletIndex}
+                data={wallet}
+                w="52"
                 flexShrink="0"
-                isPrimaryWallet={false}
               />
             ))}
           </Flex>

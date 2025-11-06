@@ -30,8 +30,12 @@ import PoolAddPanel from "@/features/PoolAdd/Panel";
 import { defaultClaims } from "@/features/Claim/utils";
 import PoolAddFormResetButton from "@/features/PoolAdd/Form/ResetButton";
 import PoolAddFormSettingsButton from "@/features/PoolAdd/Form/SettingsButton";
+import { User } from "@privy-io/node";
+import FeatureUpcoming from "@/features/User/FeatureUpcoming";
 
-export default function PoolAdd() {
+export type PoolAddProps = { user?: User };
+
+export default function PoolAdd({ user }: PoolAddProps) {
   const [modalOpen, setModalOpen] = useToggle(false);
   const { address } = useAccount();
   const [upsertPool, { error, loading }] = usePoolCreate();
@@ -180,11 +184,19 @@ export default function PoolAdd() {
                         )}
 
                         <Steps.CompletedContent>
-                          <AuthSignInCard
-                            description={
-                              "You must sign in to your account to create a new payment pool."
-                            }
-                          />
+                          {!user ? (
+                            <AuthSignInCard
+                              description={
+                                "You must sign in to your account to create a new payment pool."
+                              }
+                            />
+                          ) : (
+                            <FeatureUpcoming
+                              description={
+                                "Creating pools is currently planned but not yet available for use."
+                              }
+                            />
+                          )}
                         </Steps.CompletedContent>
                       </Fieldset.Content>
                     </Fieldset.Root>

@@ -1,11 +1,11 @@
 "use client";
 
-import { IconButton, Form, FormProps, Input, InputGroup } from "@mutuals/ui";
+import { Button, Form, FormProps, Input, InputGroup } from "@mutuals/ui";
 import { useState } from "react";
-import { IoArrowForwardSharp, IoMailSharp } from "react-icons/io5";
-import { useAuthLogin } from "@/features/Auth/Login/Provider";
+import { IoMailSharp } from "react-icons/io5";
 import { useLoginWithEmail } from "@privy-io/react-auth";
 import AuthLoginEmailCodeDialog from "@/features/Auth/LoginEmail/CodeDialog";
+import { useAuthShell } from "@/features/Shell/Login/Provider";
 
 export type EmailLoginData = {
   email: string;
@@ -15,7 +15,7 @@ export type EmailLoginData = {
 export type AuthLoginEmailProps = Omit<FormProps<EmailLoginData>, "children">;
 
 export default function AuthLoginEmail(props: AuthLoginEmailProps) {
-  const { onComplete: onLoginComplete } = useAuthLogin();
+  const { onLoginComplete } = useAuthShell();
   const { state, loginWithCode, sendCode } = useLoginWithEmail({
     onComplete: ({ user }) => onLoginComplete({ requiresWallet: !user.wallet }),
   });
@@ -51,15 +51,15 @@ export default function AuthLoginEmail(props: AuthLoginEmailProps) {
         w={"full"}
         startElement={<IoMailSharp />}
         endElement={
-          <IconButton
+          <Button
             variant="subtle"
-            size="md"
+            size="sm"
             loading={!codeDialogOpen && state.status === "sending-code"}
             disabled={codeDialogOpen}
             type={"submit"}
           >
-            <IoArrowForwardSharp />
-          </IconButton>
+            Confirm
+          </Button>
         }
       >
         <Input

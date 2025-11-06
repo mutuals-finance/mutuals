@@ -1,20 +1,12 @@
-import { ApolloQueryResult, MeQuery } from "@mutuals/graphql-client-nextjs";
-import AuthSignInCard from "@/features/Auth/SignInCard";
+import { User } from "@privy-io/node";
+import FeatureUpcoming from "@/features/User/FeatureUpcoming";
 
-export type UserSettingsNotificationsProps = ApolloQueryResult<MeQuery>;
+export type UserSettingsNotificationsProps = { user?: User };
 
-export default function UserSettingsNotifications({
-  data,
-}: UserSettingsNotificationsProps) {
-  if (data?.viewer && "user" in data.viewer) {
-    return <>Notifications User Settings</>;
-  }
-
+export default function UserSettingsNotifications(
+  _: UserSettingsNotificationsProps,
+) {
   return (
-    <AuthSignInCard
-      description={
-        "To view and manage your notification settings you must sign in to your account."
-      }
-    />
+    <FeatureUpcoming description="Managing notification settings is currently planned but not yet available for use." />
   );
 }

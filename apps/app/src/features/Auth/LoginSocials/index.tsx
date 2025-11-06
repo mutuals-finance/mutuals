@@ -9,13 +9,13 @@ import {
   IoLogoTwitter,
 } from "react-icons/io5";
 import { useLoginWithOAuth } from "@privy-io/react-auth";
-import { useAuthLogin } from "../Login/Provider";
 import { SiFarcaster } from "react-icons/si";
+import { useAuthShell } from "@/features/Shell/Login/Provider";
 
 export type AuthLoginSocialsProps = StackProps;
 
 export default function AuthLoginSocials({ ...props }: AuthLoginSocialsProps) {
-  const { onComplete: onLoginComplete } = useAuthLogin();
+  const { onLoginComplete } = useAuthShell();
 
   const { initOAuth } = useLoginWithOAuth({
     onComplete: async ({ user }) => {

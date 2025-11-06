@@ -4,15 +4,22 @@ import { Button, ButtonProps } from "@mutuals/ui";
 
 import UserAvatar from "@/features/Wallet/Avatar";
 import { shortenAddress } from "@/utils";
-import { usePrivy } from "@privy-io/react-auth";
+import { User } from "@privy-io/node";
 
-export default function ShellDashboardHeaderUser(props: ButtonProps) {
-  const { ready, user } = usePrivy();
+export type ShellDashboardHeaderUserProps = ButtonProps & { user?: User };
+
+export default function ShellDashboardHeaderUser({
+  user,
+  ...props
+}: ShellDashboardHeaderUserProps) {
+  const wallet = user?.linked_accounts?.find(
+    (account) => account.type == "wallet",
+  );
 
   return (
-    <Button variant={"surface"} size={"sm"} loading={!ready} {...props}>
-      <UserAvatar size={"2xs"}>{user?.wallet?.address}</UserAvatar>
-      {shortenAddress(user?.wallet?.address)}
+    <Button variant={"surface"} size={"sm"} {...props}>
+      <UserAvatar size={"2xs"} address={wallet?.address} />
+      {shortenAddress(wallet?.address)}
     </Button>
   );
 }

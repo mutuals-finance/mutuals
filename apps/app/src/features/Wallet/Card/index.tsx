@@ -1,6 +1,5 @@
 import {
   Card,
-  Heading,
   IconButton,
   MenuContent,
   MenuItem,
@@ -9,94 +8,70 @@ import {
   Stack,
   Text,
   Group,
-  LinkButton,
+  Link,
+  Button,
 } from "@mutuals/ui";
 import React from "react";
 import { shortenAddress } from "@/utils";
 
 import UserAvatar from "src/features/Wallet/Avatar";
-import { Wallet } from "@mutuals/graphql-client-nextjs";
-import { DeepPartial } from "#/partial";
 import {
   IoEllipsisHorizontal,
   IoEyeOffOutline,
   IoOpenOutline,
 } from "react-icons/io5";
+import { type Wallet } from "@privy-io/react-auth";
 
-interface WalletCardProps extends DeepPartial<Wallet>, Card.RootProps {
-  isPrimaryWallet: boolean;
-}
+export type WalletCardAccountType = Wallet;
 
-export default function WalletCard({
-  isPrimaryWallet,
-  ...props
-}: WalletCardProps) {
-  const shortAddress = shortenAddress("chainAddress?.address");
-  const hasName = true;
-  const name = hasName ? "Company Multisig" : shortAddress;
+export type WalletCardProps = Card.RootProps & {
+  data?: WalletCardAccountType;
+};
 
+export default function WalletCard({ data, ...props }: WalletCardProps) {
   return (
-    <Card.Root as="article" {...props}>
+    <Card.Root as="article" size={"sm"} {...props}>
       <Card.Header
-        as={Stack}
         gap={"3"}
         pb={"3"}
         alignItems={"center"}
         textAlign={"center"}
       >
-        <UserAvatar address={"chainAddress?.address"} size={"sm"} />
+        <UserAvatar address={data?.address} size={"sm"} />
         <Stack gap={"2"} alignItems={"center"}>
-          <Heading
-            size="md"
-            as={"h3"}
-            fontFamily={!hasName ? "monospace" : "inherit"}
-          >
-            {name}
-          </Heading>
-
-          {hasName && (
-            <Text fontSize="sm" fontFamily={"monospace"}>
-              {shortAddress}
-            </Text>
-          )}
+          <Text textStyle="sm">{shortenAddress(data?.address)}</Text>
         </Stack>
       </Card.Header>
 
       <Card.Footer pt={"0"}>
-        <Group w={"full"} gap={"0.5"}>
-          <LinkButton
-            flex={"1"}
-            size={"sm"}
-            roundedRight={"0"}
-            variant={"subtle"}
-            href={`wallet/${"chainAddress?.address"}`}
-          >
-            Manage
-          </LinkButton>
-          <MenuRoot>
+        <MenuRoot>
+          <Group w={"full"} attached={true}>
+            <Link href={`wallet/${data?.address}`} flex="1" asChild={true}>
+              <Button size={"xs"} w="full" roundedRight={0} variant={"surface"}>
+                Manage
+              </Button>
+            </Link>
             <MenuTrigger asChild>
               <IconButton
-                size={"sm"}
-                roundedLeft={"0"}
-                variant={"subtle"}
-                flex={"0 auto"}
+                size={"xs"}
+                variant={"surface"}
                 aria-label="Wallet Options"
               >
                 <IoEllipsisHorizontal />
               </IconButton>
             </MenuTrigger>
-            <MenuContent>
-              <MenuItem value="Etherscan">
-                <IoOpenOutline />
-                Etherscan
-              </MenuItem>
-              <MenuItem value="Hide">
-                <IoEyeOffOutline />
-                Hide
-              </MenuItem>
-            </MenuContent>
-          </MenuRoot>
-        </Group>
+          </Group>
+          <MenuContent>
+            <MenuItem value="Etherscan">
+              <IoOpenOutline />
+              Etherscan
+            </MenuItem>
+            <MenuItem value="Hide">
+              <IoEyeOffOutline />
+              Hide
+            </MenuItem>
+          </MenuContent>
+        </MenuRoot>
       </Card.Footer>
     </Card.Root>
   );

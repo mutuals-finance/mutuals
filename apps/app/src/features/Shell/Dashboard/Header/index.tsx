@@ -16,16 +16,19 @@ import {
 import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
 import Chain from "./Chain";
-import User from "./User";
+import ShellDashboardHeaderUser from "./User";
 import { VscMenu } from "react-icons/vsc";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
 import CallbackLinkButton from "@/components/CallbackLinkButton";
-import { usePrivy } from "@privy-io/react-auth";
+import { User } from "@privy-io/node";
 
-export default function ShellDashboardHeader() {
+export type ShellDashboardHeaderProps = { user?: User };
+
+export default function ShellDashboardHeader({
+  user,
+}: ShellDashboardHeaderProps) {
   const { mobile, desktop } = useDashboardRoot();
-  const { authenticated } = usePrivy();
 
   return (
     <Stack
@@ -67,7 +70,7 @@ export default function ShellDashboardHeader() {
         <Chain />
         <ButtonGroup>
           <ShellDashboardHeaderUserMenu>
-            {!authenticated ? (
+            {!user ? (
               <Menu.Trigger asChild>
                 <IconButton
                   variant="ghost"
@@ -79,11 +82,11 @@ export default function ShellDashboardHeader() {
               </Menu.Trigger>
             ) : (
               <Menu.Trigger asChild>
-                <User />
+                <ShellDashboardHeaderUser user={user} />
               </Menu.Trigger>
             )}
           </ShellDashboardHeaderUserMenu>
-          {!authenticated && (
+          {!user && (
             <CallbackLinkButton variant={"solid"} size={"sm"}>
               Sign in
             </CallbackLinkButton>
