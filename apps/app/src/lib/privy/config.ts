@@ -10,6 +10,7 @@ export const config: PrivyClientConfig = {
       "wallet_connect",
     ],
   },
+  //customOAuthRedirectUrl: "/pool",
   embeddedWallets: {
     showWalletUIs: false,
   },

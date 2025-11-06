@@ -3,17 +3,28 @@
 import { IconButton, IconButtonProps, Stack, StackProps } from "@mutuals/ui";
 import {
   IoLogoApple,
+  IoLogoDiscord,
   IoLogoGithub,
   IoLogoGoogle,
-  IoLogoInstagram,
   IoLogoTwitter,
 } from "react-icons/io5";
 import { useLoginWithOAuth } from "@privy-io/react-auth";
+import { useAuthLogin } from "../Login/Provider";
+import { SiFarcaster } from "react-icons/si";
 
 export type AuthLoginSocialsProps = StackProps;
 
 export default function AuthLoginSocials({ ...props }: AuthLoginSocialsProps) {
-  const { initOAuth } = useLoginWithOAuth();
+  const { onComplete: onLoginComplete } = useAuthLogin();
+
+  const { initOAuth } = useLoginWithOAuth({
+    onComplete: async ({ user }) => {
+      await onLoginComplete({
+        requiresWallet: !user.wallet,
+        callbackTimeout: 100,
+      });
+    },
+  });
 
   const socialProviders: IconButtonProps[] = [
     {
@@ -27,19 +38,26 @@ export default function AuthLoginSocials({ ...props }: AuthLoginSocialsProps) {
       onClick: () => initOAuth({ provider: "twitter" }),
     },
     {
-      "aria-label": "Sign in with Apple",
-      children: <IoLogoApple />,
-      onClick: () => initOAuth({ provider: "apple" }),
-    },
-    {
       "aria-label": "Sign in with Github",
       children: <IoLogoGithub />,
       onClick: () => initOAuth({ provider: "github" }),
     },
     {
-      "aria-label": "Sign in with Instagram",
-      children: <IoLogoInstagram />,
+      "aria-label": "Sign in with Discord",
+      children: <IoLogoDiscord />,
+      onClick: () => initOAuth({ provider: "discord" }),
+    },
+    {
+      "aria-label": "Sign in with Apple",
+      children: <IoLogoApple />,
+      onClick: () => initOAuth({ provider: "apple" }),
+      disabled: true,
+    },
+    {
+      "aria-label": "Sign in with Farcaster",
+      children: <SiFarcaster />,
       onClick: () => initOAuth({ provider: "instagram" }),
+      disabled: true,
     },
   ];
 

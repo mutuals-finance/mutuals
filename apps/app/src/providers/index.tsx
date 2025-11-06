@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from "react";
 import AnkrProvider from "@/providers/AnkrProvider";
-import { me } from "@mutuals/graphql-client-nextjs/server";
 import { ApolloProvider } from "@mutuals/graphql-client-nextjs/providers";
 
 import UIProvider from "@/providers/UIProvider";
@@ -14,10 +13,9 @@ import QueryClientProvider from "@/providers/QueryProvider";
 
 import "keen-slider/keen-slider.min.css";
 
-export default async function Providers({ children }: PropsWithChildren) {
-  const redirectURL = "/";
-  const query = await me();
+export type ProvidersProps = PropsWithChildren;
 
+export default async function Providers({ children }: ProvidersProps) {
   return (
     <UIProvider>
       <AnalyticsProvider>
@@ -26,7 +24,7 @@ export default async function Providers({ children }: PropsWithChildren) {
             <QueryClientProvider>
               <WagmiProvider>
                 <SignMessageProvider>
-                  <AuthProvider redirectTo={redirectURL} query={query}>
+                  <AuthProvider>
                     <AnkrProvider>
                       <MutualsProvider>{children}</MutualsProvider>
                     </AnkrProvider>

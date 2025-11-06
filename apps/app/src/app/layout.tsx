@@ -8,7 +8,9 @@ import { Metadata, Viewport } from "next";
 export const metadata: Metadata = createMetadata();
 export const viewport: Viewport = createViewport();
 
-export default function RootLayout({ children }: PropsWithChildren) {
+type RootLayoutProps = PropsWithChildren;
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       className={Object.values(fonts)
