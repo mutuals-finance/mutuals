@@ -32,8 +32,8 @@ type AuthShellContextType = {
   onLoginError: (error?: Error) => void;
   error: Error | null;
   setError: Dispatch<SetStateAction<Error | null>>;
-  callbackUrl: string;
-  setCallbackUrl: Dispatch<SetStateAction<string>>;
+  callbackUrl: string | null;
+  setCallbackUrl: Dispatch<SetStateAction<string | null>>;
 };
 
 const AuthShellContext = createContext<AuthShellContextType>({
@@ -58,7 +58,7 @@ export default function AuthShellProvider({
 }: AuthShellProviderContextProps) {
   const router = useRouter();
   const [error, setError] = useState<Error | null>(null);
-  const [callbackUrl, setCallbackUrl] = useState<string>("/");
+  const [callbackUrl, setCallbackUrl] = useState<string | null>(null);
   const { createWallet } = useCreateWallet();
   const mixpanel = useMixpanel();
 
@@ -107,14 +107,15 @@ export default function AuthShellProvider({
           });
         }
       }
-
-      if (params?.callbackTimeout) {
-        await new Promise((resolve) =>
-          setTimeout(resolve, params?.callbackTimeout),
-        );
+      if (callbackUrl) {
+        if (params?.callbackTimeout) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, params?.callbackTimeout),
+          );
+        }
+        router.refresh();
+        router.push(callbackUrl);
       }
-      router.refresh();
-      router.push(callbackUrl);
     },
     [router, callbackUrl, createWallet, mixpanel],
   );

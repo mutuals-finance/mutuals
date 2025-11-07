@@ -30,8 +30,7 @@ export default function NavLink({
       textStyle={"xs"}
       textTransform={"uppercase"}
       letterSpacing={"wider"}
-      fontFamily={"heading"}
-      fontWeight={"500"}
+      fontWeight={"medium"}
       {...props}
     >
       {children} {external && <LuExternalLink />}

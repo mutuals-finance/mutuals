@@ -13,7 +13,7 @@ import {
   AuthShellQueryParams,
   useAuthShell,
 } from "@/features/Shell/Login/Provider";
-import { useMount } from "react-use";
+import { useLifecycles } from "react-use";
 import React from "react";
 
 type AuthLoginProps = StackProps & AuthShellQueryParams;
@@ -24,9 +24,10 @@ export default function AuthLogin({
 }: AuthLoginProps) {
   const { setCallbackUrl, error } = useAuthShell();
 
-  useMount(() => {
-    setCallbackUrl(callbackUrl);
-  });
+  useLifecycles(
+    () => setCallbackUrl(callbackUrl),
+    () => setCallbackUrl(null),
+  );
 
   return (
     <>

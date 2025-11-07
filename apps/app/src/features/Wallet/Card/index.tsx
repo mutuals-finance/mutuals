@@ -20,9 +20,9 @@ import {
   IoEyeOffOutline,
   IoOpenOutline,
 } from "react-icons/io5";
-import { type Wallet } from "@privy-io/react-auth";
+import { WalletWithMetadata } from "@privy-io/react-auth";
 
-export type WalletCardAccountType = Wallet;
+export type WalletCardAccountType = WalletWithMetadata;
 
 export type WalletCardProps = Card.RootProps & {
   data?: WalletCardAccountType;

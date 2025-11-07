@@ -8,7 +8,7 @@ export default function ShellLoginHeader(props?: StackProps) {
   const { callbackUrl } = useAuthShell();
   return (
     <Stack justifyContent={"space-between"} direction={"row"} {...props}>
-      <Link href={callbackUrl} asChild={true}>
+      <Link href={callbackUrl ?? "/"} asChild={true}>
         <IconButton variant={"ghost"} size="sm">
           <IoArrowBackSharp />
         </IconButton>

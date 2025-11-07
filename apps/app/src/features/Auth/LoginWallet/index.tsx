@@ -3,16 +3,13 @@
 import WalletSelectionButton from "@/features/Wallet/SelectionButton";
 import { Stack, StackProps } from "@mutuals/ui";
 import { IoWalletSharp } from "react-icons/io5";
-import { useConnectWallet, useWallets } from "@privy-io/react-auth";
+import { useConnectWallet } from "@privy-io/react-auth";
 import { useAuthShell } from "@/features/Shell/Login/Provider";
 
 type AuthLoginWalletProps = StackProps;
 
 export default function AuthLoginWallet({ ...props }: AuthLoginWalletProps) {
   const { onLoginComplete, onLoginError, onBeforeLogin } = useAuthShell();
-  const { wallets } = useWallets();
-
-  const primaryWallet = wallets?.[0];
 
   const { connectWallet } = useConnectWallet({
     onSuccess: async () => {
@@ -32,11 +29,6 @@ export default function AuthLoginWallet({ ...props }: AuthLoginWalletProps) {
   const handleLoginWallet = () => {
     onBeforeLogin();
     connectWallet({ walletChainType: "ethereum-only" });
-    /*
-    if (!primaryWallet) return;
-    await primaryWallet.loginOrLink().then(() => {
-    });
-    */
   };
 
   return (

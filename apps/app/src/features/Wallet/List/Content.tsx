@@ -1,33 +1,35 @@
-import { ScrollArea, Flex } from "@mutuals/ui";
-import { User } from "@privy-io/node";
+"use client";
 
-import WalletCard, { WalletCardAccountType } from "@/features/Wallet/Card";
+import { Show, For } from "@mutuals/ui";
+import { usePrivy } from "@privy-io/react-auth";
 
-export type WalletListContentProps = { user?: User };
+import WalletCard from "@/features/Wallet/Card";
+import AuthSiginInCard from "@/features/Auth/SignInCard";
+import React from "react";
 
-export default function WalletListContent({ user }: WalletListContentProps) {
-  const wallets = user?.linked_accounts.filter((account) =>
-    /^(wallet|smart_wallet)$/.test(account.type),
-  ) as WalletCardAccountType[] | undefined;
+export default function WalletListContent() {
+  const { authenticated, user } = usePrivy();
+
+  const wallets = user?.linkedAccounts.filter(
+    (account) => account.type == "wallet",
+  );
 
   return (
-    <ScrollArea.Root w="full" size="xs">
-      <ScrollArea.Viewport>
-        <ScrollArea.Content pb="6">
-          <Flex gap="6" flexWrap="nowrap">
-            {wallets?.map((wallet) => (
-              <WalletCard
-                key={wallet.walletIndex}
-                data={wallet}
-                w="52"
-                flexShrink="0"
-              />
-            ))}
-          </Flex>
-        </ScrollArea.Content>
-      </ScrollArea.Viewport>
-      <ScrollArea.Scrollbar orientation="horizontal" />
-      <ScrollArea.Corner />
-    </ScrollArea.Root>
+    <Show
+      when={authenticated}
+      fallback={
+        <AuthSiginInCard
+          description={
+            "To view and manage your wallets you must sign in to your account."
+          }
+        />
+      }
+    >
+      <For each={wallets}>
+        {(data) => (
+          <WalletCard key={data.address} data={data} w="52" flexShrink="0" />
+        )}
+      </For>
+    </Show>
   );
 }

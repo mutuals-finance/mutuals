@@ -27,7 +27,7 @@ export default function ShellDashboardHeaderAlert() {
             This version is pre-alpha. Do not use with real funds and expect
             bugs and breaking changes. It is for testing purposes only.
           </AlertTitle>
-          <Collapsible.Trigger>
+          <Collapsible.Trigger asChild={true}>
             <IconButton size={"2xs"} variant={"ghost"}>
               <IoCloseSharp />
             </IconButton>

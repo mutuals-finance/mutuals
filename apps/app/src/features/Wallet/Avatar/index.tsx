@@ -15,7 +15,7 @@ interface WalletAvatarProps extends AvatarProps {
 
 export default function WalletAvatar({
   address = "",
-  size = "2xs",
+  size = "xs",
   variant = "subtle",
   ...props
 }: WalletAvatarProps) {
@@ -23,9 +23,9 @@ export default function WalletAvatar({
     <AvatarRoot size={size} shape="rounded" variant={variant} {...props}>
       <AvatarFallback
         css={{
-          "& > *": {
-            width: "var(--avatar-size)",
-            height: "var(--avatar-size)",
+          "& svg": {
+            width: "var(--avatar-size) !important",
+            height: "var(--avatar-size) !important",
           },
         }}
       >
