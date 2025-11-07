@@ -15,7 +15,7 @@ import {
   DialogRootProps,
 } from "@mutuals/ui";
 import CountdownTimer from "@/components/CountdownTimer";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTimeoutFn } from "react-use";
 import { EmailLoginData } from "@/features/Auth/LoginEmail/index";
@@ -38,9 +38,10 @@ export default function AuthLoginEmailCodeDialog({
   onSubmitCode,
   isSubmitting = false,
   isComplete = false,
+  open,
   ...props
 }: AuthLoginEmailCodeDialogProps) {
-  const { getValues } = useFormContext<EmailLoginData>();
+  const { getValues, formState, resetField } = useFormContext<EmailLoginData>();
   const [isResending, setIsResending] = useState(false);
   const [showResentMessage, setShowResentMessage] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
@@ -48,14 +49,6 @@ export default function AuthLoginEmailCodeDialog({
   const [, , resetTimeout] = useTimeoutFn(() => {
     setShowResentMessage(false);
   }, RESENT_MESSAGE_DURATION);
-
-  useEffect(() => {
-    if (!props.open) {
-      setIsExpired(false);
-      setShowResentMessage(false);
-      setIsResending(false);
-    }
-  }, [props.open]);
 
   const handleResendCode = async () => {
     if (isResending || showResentMessage) return;
@@ -84,10 +77,16 @@ export default function AuthLoginEmailCodeDialog({
     setIsExpired(true);
   };
 
+  useEffect(() => {
+    if (!open) {
+      resetField("code", { defaultValue: [] });
+    }
+  }, [open, resetField]);
+
   const email = getValues().email;
 
   return (
-    <DialogRoot {...props}>
+    <DialogRoot open={open} {...props}>
       <DialogContent>
         <DialogBody>
           <Stack
@@ -108,7 +107,6 @@ export default function AuthLoginEmailCodeDialog({
               count={CODE_LENGTH}
               id={"code"}
               otp={true}
-              disabled={isComplete}
               rules={{
                 validate: {
                   complete: (value: string[]) =>
@@ -118,6 +116,7 @@ export default function AuthLoginEmailCodeDialog({
                     "Code must contain only digits",
                 },
               }}
+              disabled={isComplete}
             />
 
             <Stack
@@ -167,8 +166,8 @@ export default function AuthLoginEmailCodeDialog({
             <Button variant="outline">Cancel</Button>
           </DialogActionTrigger>
           <Button
-            loading={!isResending && isSubmitting}
-            disabled={isComplete}
+            loading={(!isResending && isSubmitting) || formState.isLoading}
+            disabled={isComplete || !formState.isValid}
             onClick={handleSubmit}
           >
             Sign in

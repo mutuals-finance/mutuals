@@ -2,22 +2,23 @@
 
 import { IconButton, IconButtonProps, Stack, StackProps } from "@mutuals/ui";
 import {
-  IoLogoApple,
   IoLogoDiscord,
   IoLogoGithub,
   IoLogoGoogle,
   IoLogoTwitter,
 } from "react-icons/io5";
-import { useLoginWithOAuth } from "@privy-io/react-auth";
+import { OAuthProviderType, useLoginWithOAuth } from "@privy-io/react-auth";
 import { SiFarcaster } from "react-icons/si";
 import { useAuthShell } from "@/features/Shell/Login/Provider";
+import { useState } from "react";
 
 export type AuthLoginSocialsProps = StackProps;
 
 export default function AuthLoginSocials({ ...props }: AuthLoginSocialsProps) {
-  const { onLoginComplete } = useAuthShell();
+  const { onLoginComplete, onLoginError, onBeforeLogin } = useAuthShell();
+  const [variant, setVariant] = useState<OAuthProviderType | null>(null);
 
-  const { initOAuth } = useLoginWithOAuth({
+  const { initOAuth, state } = useLoginWithOAuth({
     onComplete: async ({ user, isNewUser }) => {
       await onLoginComplete({
         requiresWallet: !user.wallet,
@@ -26,39 +27,56 @@ export default function AuthLoginSocials({ ...props }: AuthLoginSocialsProps) {
         user,
       });
     },
+    onError: (errorCode) => {
+      onLoginError(new Error(`Login failed: ${errorCode}`));
+    },
   });
+
+  const handleOAuthLogin = async (provider: OAuthProviderType) => {
+    setVariant(provider);
+    onBeforeLogin();
+    await initOAuth({ provider });
+  };
+
+  const loading = state.status == "loading" || state.status == "done";
 
   const socialProviders: IconButtonProps[] = [
     {
       "aria-label": "Sign in with Google",
       children: <IoLogoGoogle />,
-      onClick: () => initOAuth({ provider: "google" }),
+      onClick: () => handleOAuthLogin("google"),
+      loading: variant == "google" && loading,
     },
     {
       "aria-label": "Sign in with X",
       children: <IoLogoTwitter />,
-      onClick: () => initOAuth({ provider: "twitter" }),
+      onClick: () => handleOAuthLogin("twitter"),
+      loading: variant == "twitter" && loading,
     },
     {
       "aria-label": "Sign in with Github",
       children: <IoLogoGithub />,
-      onClick: () => initOAuth({ provider: "github" }),
+      onClick: () => handleOAuthLogin("github"),
+      loading: variant == "github" && loading,
     },
     {
       "aria-label": "Sign in with Discord",
       children: <IoLogoDiscord />,
-      onClick: () => initOAuth({ provider: "discord" }),
+      onClick: () => handleOAuthLogin("discord"),
+      loading: variant == "discord" && loading,
     },
-    {
+    /*  {
       "aria-label": "Sign in with Apple",
       children: <IoLogoApple />,
-      onClick: () => initOAuth({ provider: "apple" }),
+      onClick: () => handleOAuthLogin("apple"),
+      loading: variant == "apple" && loading,
       disabled: true,
-    },
+    },*/
     {
       "aria-label": "Sign in with Farcaster",
       children: <SiFarcaster />,
-      onClick: () => initOAuth({ provider: "instagram" }),
+      onClick: () => handleOAuthLogin("instagram"),
+      loading: variant == "instagram" && loading,
       disabled: true,
     },
   ];

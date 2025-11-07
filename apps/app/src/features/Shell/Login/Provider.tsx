@@ -27,13 +27,21 @@ type OnLoginCompleteParams = {
 };
 
 type AuthShellContextType = {
+  onBeforeLogin: () => void;
   onLoginComplete: (params?: OnLoginCompleteParams) => Promise<void>;
+  onLoginError: (error?: Error) => void;
+  error: Error | null;
+  setError: Dispatch<SetStateAction<Error | null>>;
   callbackUrl: string;
   setCallbackUrl: Dispatch<SetStateAction<string>>;
 };
 
 const AuthShellContext = createContext<AuthShellContextType>({
+  onBeforeLogin: () => {},
   onLoginComplete: async () => {},
+  onLoginError: () => {},
+  error: null,
+  setError: () => {},
   callbackUrl: "/",
   setCallbackUrl: () => {},
 });
@@ -49,9 +57,23 @@ export default function AuthShellProvider({
   children,
 }: AuthShellProviderContextProps) {
   const router = useRouter();
+  const [error, setError] = useState<Error | null>(null);
   const [callbackUrl, setCallbackUrl] = useState<string>("/");
   const { createWallet } = useCreateWallet();
   const mixpanel = useMixpanel();
+
+  const onLoginError = useCallback(
+    (loginError?: Error) => {
+      if (loginError) {
+        setError(loginError);
+      }
+    },
+    [setError],
+  );
+
+  const onBeforeLogin = useCallback(() => {
+    setError(null);
+  }, [setError]);
 
   const onLoginComplete = useCallback(
     async (params?: OnLoginCompleteParams) => {
@@ -99,8 +121,12 @@ export default function AuthShellProvider({
 
   const value = {
     onLoginComplete,
+    onBeforeLogin,
+    onLoginError,
     callbackUrl,
     setCallbackUrl,
+    error,
+    setError,
   };
 
   return (

@@ -11,10 +11,11 @@ type AuthLoginGuestProps = StackProps;
 
 export default function AuthLoginGuest({ ...props }: AuthLoginGuestProps) {
   const [loading, setLoading] = useState(false);
-  const { onLoginComplete } = useAuthShell();
+  const { onLoginComplete, onBeforeLogin } = useAuthShell();
   const { createGuestAccount } = useGuestAccounts();
 
   const handleCreateGuestAccount = async () => {
+    onBeforeLogin();
     setLoading(true);
     const user = await createGuestAccount();
     await onLoginComplete({

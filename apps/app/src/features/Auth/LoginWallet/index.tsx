@@ -9,7 +9,7 @@ import { useAuthShell } from "@/features/Shell/Login/Provider";
 type AuthLoginWalletProps = StackProps;
 
 export default function AuthLoginWallet({ ...props }: AuthLoginWalletProps) {
-  const { onLoginComplete } = useAuthShell();
+  const { onLoginComplete, onLoginError, onBeforeLogin } = useAuthShell();
   const { wallets } = useWallets();
 
   const primaryWallet = wallets?.[0];
@@ -22,21 +22,28 @@ export default function AuthLoginWallet({ ...props }: AuthLoginWalletProps) {
         identify: false,
       });
     },
+    onError: (errorCode) => {
+      if (errorCode != "generic_connect_wallet_error") {
+        onLoginError(new Error(`Wallet login failed: ${errorCode}`));
+      }
+    },
   });
 
-  const loginOrLink = async () => {
-    if (!primaryWallet) return;
+  const handleLoginWallet = () => {
+    onBeforeLogin();
+    connectWallet({ walletChainType: "ethereum-only" });
     /*
+    if (!primaryWallet) return;
     await primaryWallet.loginOrLink().then(() => {
     });
-*/
+    */
   };
 
   return (
     <Stack {...props}>
       <WalletSelectionButton
         name={"Connect your wallet"}
-        onClick={() => connectWallet({ walletChainType: "ethereum-only" })}
+        onClick={() => handleLoginWallet()}
         iconAvatarProps={{
           unstyled: true,
         }}
