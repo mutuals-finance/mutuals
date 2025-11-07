@@ -6,7 +6,9 @@ import UserAvatar from "@/features/Wallet/Avatar";
 import { shortenAddress } from "@/utils";
 import { User } from "@privy-io/node";
 
-export type ShellDashboardHeaderUserProps = ButtonProps & { user?: User };
+export type ShellDashboardHeaderUserProps = ButtonProps & {
+  user?: User;
+};
 
 export default function ShellDashboardHeaderUser({
   user,

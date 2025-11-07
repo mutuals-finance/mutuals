@@ -3,7 +3,7 @@ import ShellDashboard from "@/features/Shell/Dashboard";
 import { me } from "@/lib/privy";
 
 export default async function DashboardLayout({ children }: PropsWithChildren) {
-  const user = me();
+  const user = await me();
 
   return <ShellDashboard user={user}>{children}</ShellDashboard>;
 }

@@ -17,8 +17,10 @@ export default function ShellDashboard({
   return (
     <ShellDashboardRoot>
       <ShellDashboardHeader user={user} />
+
       <Stack gap="0" direction={"row"}>
         <ShellDashboardSidebar />
+
         <Box flex={"1 1 auto"} minW={"0"}>
           <ShellDashboardBody>{children}</ShellDashboardBody>
         </Box>
