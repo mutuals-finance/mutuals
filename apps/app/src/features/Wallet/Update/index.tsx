@@ -1,6 +1,9 @@
 import WalletForm from "@/features/Wallet/Form";
+import { User } from "@privy-io/node";
 
-export default function WalletUpdate({ address }: { address: string }) {
+export type WalletUpdateProps = { address: string; user?: User };
+
+export default function WalletUpdate({ user, address }: WalletUpdateProps) {
   return (
     <WalletForm.Drawer
       title={"Manage Wallet"}

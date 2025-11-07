@@ -27,8 +27,12 @@ export * from "./ui/menu";
 export * from "./ui/native-select";
 //export * from "./ui/number-input";
 export * from "./ui/pagination";
-export * from "./ui/password-input";
-export * from "./ui/pin-input";
+//export * from "./ui/password-input";
+export {
+  PasswordStrengthMeter,
+  type PasswordStrengthMeterProps,
+} from "./ui/password-input";
+//export * from "./ui/pin-input";
 export * from "./ui/popover";
 export * from "./ui/progress";
 export * from "./ui/progress-circle";
@@ -68,5 +72,6 @@ export * from "./mutuals/input";
 export * from "./mutuals/field";
 export * from "./mutuals/file-upload";
 export * from "./mutuals/form";
+export * from "./mutuals/form/index";
 export * from "./mutuals/form-error-alert";
 export * from "./mutuals/color-mode-menu";

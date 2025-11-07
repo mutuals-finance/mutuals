@@ -49,7 +49,6 @@ export const useMutualsClient = (
       ? config.ensPublicClient
       : context.mutualsClient._ensPublicClient;
   useEffect(() => {
-    console.log("publicClient", { chainId, publicClient, walletClient });
     context.initClient({
       chainId,
       publicClient,

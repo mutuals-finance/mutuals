@@ -15,12 +15,11 @@ export const NODE_ENV = process.env.NODE_ENV || "";
 export const IS_DEV = process.env.NODE_ENV !== "production";
 
 export const DEFAULT_SUBGRAPH = process.env.NEXT_PUBLIC_DEFAULT_SUBGRAPH || "";
+export const HOST = process.env.NEXT_PUBLIC_HOST || "http://localhost:3000";
 export const COVALENT_KEY = process.env.NEXT_PUBLIC_COVALENT_KEY || "";
 export const WALLETCONNECT_PROJECT_ID =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "";
 export const ANKR_URL = process.env.NEXT_PUBLIC_ANKR_URL || "";
 export const ANKR_API_KEY = process.env.NEXT_PUBLIC_ANKR_API_KEY || "";
 export const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "";
-export const MAGIC_PUBLISHABLE_API_KEY =
-  process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_API_KEY || "";
 export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN || "";

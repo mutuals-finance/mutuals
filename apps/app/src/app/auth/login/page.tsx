@@ -1,10 +1,13 @@
-import AuthLoginWallet from "@/features/Auth/LoginWallet";
+import AuthLogin from "@/features/Auth/Login";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign in with Wallet",
+  title: "Sign in",
 };
 
-export default function LoginPage() {
-  return <AuthLoginWallet />;
+export default async function LoginPage(props: {
+  searchParams: Promise<{ callbackUrl?: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  return <AuthLogin {...searchParams} />;
 }

@@ -1,18 +1,10 @@
-import { ApolloQueryResult, MeQuery } from "@mutuals/graphql-client-nextjs";
-import AuthSignInCard from "@/features/Auth/SignInCard";
+import { User } from "@privy-io/node";
+import FeatureUpcoming from "@/features/User/FeatureUpcoming";
 
-export type AddressBookListProps = ApolloQueryResult<MeQuery>;
+export type AddressBookListProps = { user?: User };
 
-export default function AddressBookList({ data }: AddressBookListProps) {
-  if (data?.viewer && "user" in data.viewer) {
-    return <>Address book</>;
-  }
-
+export default function AddressBookList(_: AddressBookListProps) {
   return (
-    <AuthSignInCard
-      description={
-        "To view and manage your address book you must sign in to your account."
-      }
-    />
+    <FeatureUpcoming description="Managing your address book is currently planned but not yet available for use." />
   );
 }

@@ -1,22 +1,24 @@
-import { EmptyState, Group, Button, Link } from "@mutuals/ui";
+import { Button, Link, Center, Icon } from "@mutuals/ui";
 import { HiViewGridAdd } from "react-icons/hi";
+import EmptyCard from "@/components/EmptyCard";
+import React from "react";
 
 export default function PoolListEmptyState() {
   return (
-    <EmptyState
-      icon={<HiViewGridAdd />}
+    <EmptyCard
       title="Start receiving funds"
       description="Add a new payment pool to get started"
-      size={"sm"}
+      icon={
+        <Center bg={"bg.muted"} color={"fg"} p={"4"} rounded={"xl"}>
+          <Icon size={"md"}>
+            <HiViewGridAdd />
+          </Icon>
+        </Center>
+      }
     >
-      <Group>
-        <Link asChild={true} href={"/pool/new"}>
-          <Button size={"sm"}>Create Payment Pool</Button>
-        </Link>
-        <Button variant="outline" size={"sm"}>
-          Import
-        </Button>
-      </Group>
-    </EmptyState>
+      <Link asChild={true} href={"/pool/new"}>
+        <Button size={"sm"}>Create Payment Pool</Button>
+      </Link>
+    </EmptyCard>
   );
 }

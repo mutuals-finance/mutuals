@@ -21,8 +21,7 @@ export default function AuthRequireWallet({
     const checkAddress = addresses && addresses.length > 0;
     const checkChain = chainId; //&& chain;
     if (!checkAddress || !checkChain) {
-      console.log({ redirectArgs, addresses, chain, chainId });
-      router.push(redirectArgs[0]!, redirectArgs?.[1]);
+      //router.push(redirectArgs[0]!, redirectArgs?.[1]);
     }
 
     // TODO check if wallet matches user

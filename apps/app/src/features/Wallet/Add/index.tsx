@@ -3,18 +3,16 @@
 import React, { PropsWithChildren } from "react";
 import { useAccount } from "wagmi";
 import WalletForm from "@/features/Wallet/Form";
-import { ApolloQueryResult, MeQuery } from "@mutuals/graphql-client-nextjs";
-import { walletMapFromViewerQuery } from "@/utils";
-import { Alert } from "@mutuals/ui";
 import AuthSignInCard from "@/features/Auth/SignInCard";
+import { User } from "@privy-io/node";
 
-interface WalletAddProps
-  extends PropsWithChildren,
-    ApolloQueryResult<MeQuery> {}
+interface WalletAddProps extends PropsWithChildren {
+  user?: User;
+}
 
-export default function WalletAdd({ children, data }: WalletAddProps) {
+export default function WalletAdd({ children, user }: WalletAddProps) {
   const account = useAccount();
-  const walletMap = walletMapFromViewerQuery(data);
+  //const walletMap = walletMapFromViewerQuery(data);
   const address = account.address ?? "";
 
   return (
@@ -22,7 +20,9 @@ export default function WalletAdd({ children, data }: WalletAddProps) {
       title={"Add Wallet"}
       defaultValues={{ name: "", address }}
     >
-      {!walletMap[address] ? (
+      {!user ? (
+        <AuthSignInCard />
+      ) : (
         <WalletForm.Content>
           {/*
           <Alert status={"info"} fontSize={"xs"}>
@@ -32,15 +32,16 @@ export default function WalletAdd({ children, data }: WalletAddProps) {
             in your settings.
           </Alert>
 */}
-          {!data.viewer ? <AuthSignInCard /> : children}
         </WalletForm.Content>
-      ) : (
+      )}
+      {/* {!walletMap[address] ? (
+        ) : (
         <Alert status="info" size={"lg"} title={"Account already in use"}>
           Your selected account is already linked with your profile. Please
           switch the account inside your wallet app or select another wallet
           provider and try again.
         </Alert>
-      )}
+      )}*/}
     </WalletForm.Drawer>
   );
 }

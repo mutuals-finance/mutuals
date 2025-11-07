@@ -1,6 +1,7 @@
-import { cookieStorage, createConfig, createStorage } from "wagmi";
+import { cookieStorage, createStorage } from "wagmi";
+import { createConfig } from "@privy-io/wagmi";
 
-import { chains, transports, connectors } from "./config";
+import { chains, transports } from "./config";
 
 export const config = createConfig({
   chains,
@@ -9,5 +10,6 @@ export const config = createConfig({
   storage: createStorage({
     storage: cookieStorage,
   }),
-  connectors,
 });
+
+export { chains, transports };

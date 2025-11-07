@@ -10,63 +10,103 @@ import {
   IconButton,
   Icon,
   IconButtonProps,
+  ButtonGroup,
+  Menu,
 } from "@mutuals/ui";
-import { IoSearch } from "react-icons/io5";
+import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
 import Chain from "./Chain";
-import User from "./User";
+import ShellDashboardHeaderUser from "./User";
 import { VscMenu } from "react-icons/vsc";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
+import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
+import CallbackLinkButton from "@/components/CallbackLinkButton";
+import { User } from "@privy-io/node";
+import ShellDashboardHeaderAlert from "@/features/Shell/Dashboard/Header/Alert";
 
-export default function ShellDashboardHeader() {
+export type ShellDashboardHeaderProps = { user?: User };
+
+export default function ShellDashboardHeader({
+  user,
+}: ShellDashboardHeaderProps) {
   const { mobile, desktop } = useDashboardRoot();
 
   return (
     <Stack
-      as="header"
+      gap={"0"}
       position="sticky"
-      h={{ base: "4rem", md: "4rem" }}
-      px={{ base: "6", lg: "12" }}
-      py={"6"}
-      zIndex={"50"}
       top={"0"}
       left={"0"}
-      w={"100%"}
-      alignItems={"center"}
-      justifyContent={"space-between"}
-      gap={{ base: "1", lg: "4" }}
-      borderBottomWidth="1px"
-      borderColor={"border"}
-      bg={"bg"}
-      direction={"row"}
+      w={"full"}
+      zIndex={"50"}
     >
-      <MutualsLogo w={{ base: "28", md: "28" }} href={"/"} />
+      {!!user && <ShellDashboardHeaderAlert />}
 
-      <AbsoluteCenter hideBelow={"lg"} w={"full"} maxW={"xs"}>
-        <Form w={"full"}>
-          <InputGroup startElement={<IoSearch />}>
-            <Input size={"md"} placeholder="Search users, pools and tokens" />
-          </InputGroup>
-        </Form>
-      </AbsoluteCenter>
+      <Stack
+        position={"relative"}
+        as="header"
+        h={{ base: "16", md: "16" }}
+        px={{ base: "6", lg: "12" }}
+        py={"6"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        gap={{ base: "1", lg: "4" }}
+        borderBottomWidth="1px"
+        borderColor={"border"}
+        bg={"bg"}
+        direction={"row"}
+      >
+        <MutualsLogo w={{ base: "28", md: "28" }} href={"/"} />
 
-      <SidebarToggle
-        aria-label={"Toggle Desktop Sidebar"}
-        hideBelow={"lg"}
-        onClick={desktop.onToggle}
-        mr={"auto"}
-      />
+        <AbsoluteCenter hideBelow={"lg"} w={"full"} maxW={"xs"}>
+          <Form w={"full"}>
+            <InputGroup startElement={<IoSearch />}>
+              <Input size={"md"} placeholder="Search users, pools and tokens" />
+            </InputGroup>
+          </Form>
+        </AbsoluteCenter>
 
-      <Stack direction={"row"} gap={4} ml={"auto"}>
-        <Chain />
-        <User />
+        <SidebarToggle
+          aria-label={"Toggle Desktop Sidebar"}
+          hideBelow={"lg"}
+          onClick={desktop.onToggle}
+          mr={"auto"}
+        />
+
+        <Stack direction={"row"} gap={4} ml={"auto"}>
+          <Chain />
+          <ButtonGroup>
+            <ShellDashboardHeaderUserMenu>
+              {!user ? (
+                <Menu.Trigger asChild>
+                  <IconButton
+                    variant="ghost"
+                    aria-label="Open navigation menu"
+                    hideBelow={"lg"}
+                  >
+                    <IoEllipsisHorizontal />
+                  </IconButton>
+                </Menu.Trigger>
+              ) : (
+                <Menu.Trigger asChild>
+                  <ShellDashboardHeaderUser user={user} />
+                </Menu.Trigger>
+              )}
+            </ShellDashboardHeaderUserMenu>
+            {!user && (
+              <CallbackLinkButton variant={"solid"} size={"sm"}>
+                Sign in
+              </CallbackLinkButton>
+            )}
+          </ButtonGroup>
+        </Stack>
+
+        <SidebarToggle
+          aria-label={"Toggle Mobile Sidebar"}
+          hideFrom={"lg"}
+          onClick={mobile.onToggle}
+        />
       </Stack>
-
-      <SidebarToggle
-        aria-label={"Toggle Mobile Sidebar"}
-        hideFrom={"lg"}
-        onClick={mobile.onToggle}
-      />
     </Stack>
   );
 }

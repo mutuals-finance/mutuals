@@ -1,20 +1,10 @@
-import { ApolloQueryResult, MeQuery } from "@mutuals/graphql-client-nextjs";
-import AuthSignInCard from "@/features/Auth/SignInCard";
+import { User } from "@privy-io/node";
+import FeatureUpcoming from "@/features/User/FeatureUpcoming";
 
-export type UserSettingsGeneralProps = ApolloQueryResult<MeQuery>;
+export type UserSettingsGeneralProps = { user?: User };
 
-export default function UserSettingsGeneral({
-  data,
-}: UserSettingsGeneralProps) {
-  if (data?.viewer && "user" in data.viewer) {
-    return <>General User Settings</>;
-  }
-
+export default function UserSettingsGeneral(_: UserSettingsGeneralProps) {
   return (
-    <AuthSignInCard
-      description={
-        "To view and manage your general settings you must sign in to your account."
-      }
-    />
+    <FeatureUpcoming description="Managing general settings is currently planned but not yet available for use." />
   );
 }

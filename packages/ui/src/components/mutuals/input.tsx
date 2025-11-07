@@ -29,6 +29,10 @@ import {
   SelectItem as ChakraSelectItem,
   SelectItemGroup as ChakraSelectItemGroup,
 } from "../../components/ui/select";
+import {
+  PasswordInput as ChakraPasswordInput,
+  PasswordInputProps as ChakraPasswordInputProps,
+} from "../../components/ui/password-input";
 import React, { ChangeEvent, ReactNode } from "react";
 
 function groupBy<T>(
@@ -205,6 +209,40 @@ export function NumberInput<TFieldValue = number | string>({
         >
           <ChakraNumberInputField {...inputProps} />
         </ChakraNumberInputRoot>
+      )}
+      {...controllerProps}
+    />
+  );
+}
+
+export interface PasswordInputProps
+  extends BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
+    Omit<ChakraPasswordInputProps, "transform" | "onChange" | "value"> {}
+
+export function PasswordInput({
+  id = "",
+  name = id,
+  rules,
+  transform,
+  controllerProps,
+  ...props
+}: PasswordInputProps) {
+  const { control } = useFormContext();
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({ field: { value, onChange, ...field } }) => (
+        <ChakraPasswordInput
+          id={id}
+          {...props}
+          value={transform ? transform.input(value) : value}
+          onChange={(e) =>
+            onChange(transform ? transform.output(e, value) : e.target.value)
+          }
+          {...field}
+        />
       )}
       {...controllerProps}
     />

@@ -5,16 +5,14 @@ import PoolListContent, {
 
 export type PoolListProps = PoolListContentProps;
 
-export default function PoolList(query: PoolListProps) {
-  const { data } = query;
-
-  return !data?.viewer ? (
+export default function PoolList(props: PoolListProps) {
+  return !props?.user ? (
     <AuthSiginInCard
       description={
         "To view and manage your payment pools you must sign in to your account."
       }
     />
   ) : (
-    <PoolListContent {...query} />
+    <PoolListContent {...props} />
   );
 }
