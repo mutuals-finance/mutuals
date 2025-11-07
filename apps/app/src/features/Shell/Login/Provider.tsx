@@ -113,7 +113,6 @@ export default function AuthShellProvider({
             setTimeout(resolve, params?.callbackTimeout),
           );
         }
-        router.refresh();
         router.push(callbackUrl);
       }
     },
