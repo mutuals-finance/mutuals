@@ -7,12 +7,21 @@ import {
   useSignupWithPasskey,
 } from "@privy-io/react-auth";
 import { IoFingerPrintSharp } from "react-icons/io5";
+import { useAuthShell } from "@/features/Shell/Login/Provider";
 
 type AuthLoginPasskeyProps = StackProps;
 
 export default function AuthLoginPasskey({ ...props }: AuthLoginPasskeyProps) {
-  const { signupWithPasskey } = useSignupWithPasskey();
-  const { loginWithPasskey } = useLoginWithPasskey();
+  const { onLoginComplete } = useAuthShell();
+  const { signupWithPasskey } = useSignupWithPasskey({
+    onComplete: ({ user, isNewUser }) =>
+      onLoginComplete({ requiresWallet: !user.wallet, isNewUser, user }),
+  });
+
+  const { loginWithPasskey } = useLoginWithPasskey({
+    onComplete: ({ user, isNewUser }) =>
+      onLoginComplete({ requiresWallet: !user.wallet, isNewUser, user }),
+  });
 
   return (
     <Stack alignItems={"center"} {...props}>

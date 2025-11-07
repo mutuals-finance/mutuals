@@ -17,7 +17,11 @@ export default function AuthLoginGuest({ ...props }: AuthLoginGuestProps) {
   const handleCreateGuestAccount = async () => {
     setLoading(true);
     const user = await createGuestAccount();
-    await onLoginComplete({ requiresWallet: !user.wallet });
+    await onLoginComplete({
+      requiresWallet: !user.wallet,
+      user,
+      isNewUser: true,
+    });
     setLoading(false);
   };
 

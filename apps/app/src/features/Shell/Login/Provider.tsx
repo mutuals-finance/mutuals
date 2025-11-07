@@ -10,7 +10,8 @@ import React, {
   Dispatch,
 } from "react";
 import { useRouter } from "next/navigation";
-import { useCreateWallet } from "@privy-io/react-auth";
+import { useCreateWallet, User } from "@privy-io/react-auth";
+import { useMixpanel } from "@mutuals/analytics-nextjs";
 
 export type AuthShellQueryParams = {
   callbackUrl?: string;
@@ -18,6 +19,9 @@ export type AuthShellQueryParams = {
 
 type OnLoginCompleteParams = {
   requiresWallet?: boolean;
+  user?: User;
+  isNewUser?: boolean;
+  identify?: boolean;
   createWalletOptions?: { createAdditional?: boolean };
   callbackTimeout?: number;
 };
@@ -47,15 +51,41 @@ export default function AuthShellProvider({
   const router = useRouter();
   const [callbackUrl, setCallbackUrl] = useState<string>("/");
   const { createWallet } = useCreateWallet();
+  const mixpanel = useMixpanel();
 
   const onLoginComplete = useCallback(
     async (params?: OnLoginCompleteParams) => {
+      const { identify = true } = params || {};
       if (params?.requiresWallet) {
         await createWallet({
           createAdditional: false,
           ...params?.createWalletOptions,
         });
       }
+
+      if (identify) {
+        mixpanel?.track(params?.isNewUser ? "sign up" : "sign in");
+        if (params?.user?.id) {
+          mixpanel?.identify(params?.user?.id);
+          let email = params?.user?.email?.address;
+          const account = params?.user?.linkedAccounts[0];
+          if (account) {
+            if ("email" in account && !email) {
+              email = !account.email ? undefined : account.email;
+            }
+
+            mixpanel?.people.set({
+              type: account.type,
+            });
+          }
+
+          mixpanel?.people.set({ ["$email"]: email });
+          mixpanel?.people.set({
+            walletAddress: params?.user?.wallet?.address,
+          });
+        }
+      }
+
       if (params?.callbackTimeout) {
         await new Promise((resolve) =>
           setTimeout(resolve, params?.callbackTimeout),
@@ -64,7 +94,7 @@ export default function AuthShellProvider({
       router.refresh();
       router.push(callbackUrl);
     },
-    [router, callbackUrl, createWallet],
+    [router, callbackUrl, createWallet, mixpanel],
   );
 
   const value = {

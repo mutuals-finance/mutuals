@@ -18,10 +18,12 @@ export default function AuthLoginSocials({ ...props }: AuthLoginSocialsProps) {
   const { onLoginComplete } = useAuthShell();
 
   const { initOAuth } = useLoginWithOAuth({
-    onComplete: async ({ user }) => {
+    onComplete: async ({ user, isNewUser }) => {
       await onLoginComplete({
         requiresWallet: !user.wallet,
         callbackTimeout: 100,
+        isNewUser,
+        user,
       });
     },
   });

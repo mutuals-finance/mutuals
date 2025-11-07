@@ -17,7 +17,8 @@ export type AuthLoginEmailProps = Omit<FormProps<EmailLoginData>, "children">;
 export default function AuthLoginEmail(props: AuthLoginEmailProps) {
   const { onLoginComplete } = useAuthShell();
   const { state, loginWithCode, sendCode } = useLoginWithEmail({
-    onComplete: ({ user }) => onLoginComplete({ requiresWallet: !user.wallet }),
+    onComplete: ({ user, isNewUser }) =>
+      onLoginComplete({ requiresWallet: !user.wallet, isNewUser, user }),
   });
   const [codeDialogOpen, setCodeDialogOpen] = useState(false);
 
