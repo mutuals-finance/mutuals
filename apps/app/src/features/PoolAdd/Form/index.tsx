@@ -23,8 +23,6 @@ import PoolAddModal from "@/features/PoolAdd/Modal";
 import { poolAddSteps } from "@/features/PoolAdd/steps";
 import PoolAddPanel from "@/features/PoolAdd/Panel";
 import { defaultClaims } from "@/features/Claim/utils";
-import PoolAddFormResetButton from "@/features/PoolAdd/Form/ResetButton";
-import PoolAddFormSettingsButton from "@/features/PoolAdd/Form/SettingsButton";
 import { User } from "@privy-io/node";
 import FeatureUpcoming from "@/features/User/FeatureUpcoming";
 import PoolAddToolbar from "@/features/PoolAdd/Toolbar";

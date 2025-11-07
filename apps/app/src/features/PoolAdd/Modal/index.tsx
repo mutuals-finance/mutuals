@@ -24,7 +24,7 @@ export default function PoolAddModal({
       onNext: async () => {
         const data = getValues();
         await createPool({
-          ownerAddress: data.ownerAddress,
+          ownerAddress: data.owner ?? "",
           salt: BigInt(0),
           allocations: /*data.allocations ?? */ [],
         });
