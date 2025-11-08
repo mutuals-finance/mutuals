@@ -8,6 +8,7 @@ import React, {
   useState,
   SetStateAction,
   Dispatch,
+  useMemo,
 } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateWallet, User } from "@privy-io/react-auth";
@@ -119,15 +120,18 @@ export default function AuthShellProvider({
     [router, callbackUrl, createWallet, mixpanel],
   );
 
-  const value = {
-    onLoginComplete,
-    onBeforeLogin,
-    onLoginError,
-    callbackUrl,
-    setCallbackUrl,
-    error,
-    setError,
-  };
+  const value = useMemo(
+    () => ({
+      onLoginComplete,
+      onBeforeLogin,
+      onLoginError,
+      callbackUrl,
+      setCallbackUrl,
+      error,
+      setError,
+    }),
+    [onLoginComplete, onBeforeLogin, onLoginError, callbackUrl, error],
+  );
 
   return (
     <AuthShellContext.Provider value={value}>
