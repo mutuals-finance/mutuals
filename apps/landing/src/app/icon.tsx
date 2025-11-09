@@ -10,7 +10,8 @@ export function generateImageMetadata() {
 
 export const contentType = defaultContentType;
 
-export default function Icon({ id }: { id: number }) {
+export default async function Icon(params: { id: Promise<number> }) {
+  const id = await params.id;
   return new DefaultImageResponse({
     width: id,
     height: id,

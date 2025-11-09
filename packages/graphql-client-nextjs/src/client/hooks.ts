@@ -1,4 +1,6 @@
-import { QueryHookOptions, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client/react";
+import { ApolloClient } from "@apollo/client";
+
 import {
   Exact,
   NonceCreateMutation,
@@ -22,7 +24,7 @@ import { USER_REGISTER } from "../graphql/data/mutations/UserRegister";
 import { USER_LOGIN_OR_REGISTER } from "../graphql/data/mutations/UserLoginOrRegister";
 
 export function useLazyGetUserByWalletAddress(
-  options?: QueryHookOptions<
+  options?: ApolloClient.QueryOptions<
     UserByAddressQuery,
     Exact<UserByAddressQueryVariables>
   >,
@@ -32,7 +34,7 @@ export function useLazyGetUserByWalletAddress(
 
 /*
 export function useViewerWallets(
-  options?: QueryHookOptions<
+  options?: ApolloClient.QueryOptions<
     ViewerWalletsQuery,
     Exact<ViewerWalletsQueryVariables>
   >,

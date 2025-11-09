@@ -11,20 +11,20 @@
   },
   "dependencies": {
     "@mutuals/metadata-nextjs": "workspace:^",
-    "next": "^15.4.6",
+    "next": "^16.0.1",
     "nextra": "^4.6.0",
     "nextra-theme-docs": "^4.6.0",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "@types/node": "^24.2.1",
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
-    "eslint": "^9.32.0",
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.39.1",
     "pagefind": "^1.4.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
