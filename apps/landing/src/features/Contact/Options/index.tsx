@@ -14,7 +14,7 @@ import { itemVariants } from "@/components/MotionBoxWrapper";
 
 export default function ContactOptions() {
   return (
-    <Container mt={{ base: "6", lg: "12" }} mb="24" maxW="5xl">
+    <Container mt={{ base: "6", lg: "12" }} mb="16" maxW="5xl">
       <Stack textAlign={"center"} alignItems={"center"}>
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "6" }}>
           {items.map(
