@@ -145,7 +145,7 @@ export default function PoolAdd({ user }: PoolAddProps) {
                   >
                     {steps.hasNextStep ? (
                       <Steps.NextTrigger asChild>
-                        <Button type="button" flex="1">
+                        <Button type="button" flex="1" size={"xl"}>
                           Continue
                         </Button>
                       </Steps.NextTrigger>
@@ -155,6 +155,7 @@ export default function PoolAdd({ user }: PoolAddProps) {
                         type="submit"
                         disabled={false}
                         loading={loading}
+                        size={"xl"}
                       >
                         Confirm
                       </Button>

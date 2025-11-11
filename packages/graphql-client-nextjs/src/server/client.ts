@@ -1,7 +1,14 @@
-import { ApolloClient, HttpLink, InMemoryCache, from } from "@apollo/client";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  CombinedGraphQLErrors,
+  ServerError,
+  ApolloLink,
+} from "@apollo/client";
 import { registerApolloClient } from "@apollo/client-integration-nextjs";
 import config from "../config";
-import { onError } from "@apollo/client/link/error";
+import { ErrorLink } from "@apollo/client/link/error";
 import { headers } from "next/headers";
 import { NetworkErrorLink } from "./networkErrorLink";
 
@@ -9,21 +16,18 @@ const makeClient = async () => {
   const cookie = await headers().then((h) => h.get("cookie") ?? "");
   const networkErrorIgnoreLink = new NetworkErrorLink((response) => {
     console.log(`[Network error]: ${response.networkError}`);
-
-    return { data: null, errors: [{ message: "Network error ignored" }] };
+    return { data: null, error: [{ message: "Network error ignored" }] };
   });
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors) {
-      graphQLErrors.forEach(({ message, locations, path }) =>
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-        ),
+  const errorLink = new ErrorLink(({ error, result }) => {
+    if (CombinedGraphQLErrors.is(error)) {
+      error.errors.forEach(({ message }) =>
+        console.log(`GraphQL error: ${message}`),
       );
-    }
-
-    if (networkError) {
-      console.log(`[Network error]: ${networkError}`);
+    } else if (ServerError.is(error)) {
+      console.log(`Server error: ${error.message}`);
+    } else if (error) {
+      console.log(`Other error: ${error.message}`);
     }
   });
 
@@ -34,7 +38,7 @@ const makeClient = async () => {
   });
 
   return new ApolloClient({
-    link: from([networkErrorIgnoreLink, errorLink, httpLink]),
+    link: ApolloLink.from([networkErrorIgnoreLink, errorLink, httpLink]),
     cache: new InMemoryCache(),
   });
 };

@@ -1,11 +1,13 @@
-import { HttpLink, from, HttpOptions } from "@apollo/client";
+import { CombinedGraphQLErrors, HttpLink } from "@apollo/client";
 import {
   ApolloClient,
   InMemoryCache,
   SSRMultipartLink,
 } from "@apollo/client-integration-nextjs";
 import config from "../config";
-import { onError } from "@apollo/client/link/error";
+import { ErrorLink } from "@apollo/client/link/error";
+import { ServerError } from "@apollo/client";
+import { ApolloLink } from "@apollo/client/core";
 
 const isLocalEnv = process.env.NODE_ENV !== "production";
 
@@ -17,18 +19,19 @@ export const makeClient =
   (opts: MakeClientOpts = {}) =>
   () => {
     const isSSr = typeof window === "undefined";
-    const errorLink = onError(({ graphQLErrors, networkError }) => {
-      if (graphQLErrors)
-        graphQLErrors.forEach(({ message, locations, path }) =>
-          console.log(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-          ),
+    const errorLink = new ErrorLink(({ error, result }) => {
+      if (CombinedGraphQLErrors.is(error)) {
+        error.errors.forEach(({ message }) =>
+          console.log(`GraphQL error: ${message}`),
         );
-
-      if (networkError) console.log(`[Network error]: ${networkError}`);
+      } else if (ServerError.is(error)) {
+        console.log(`Server error: ${error.message}`);
+      } else if (error) {
+        console.log(`Other error: ${error.message}`);
+      }
     });
 
-    const apiLink = (uri: string, options?: Omit<HttpOptions, "uri">) => {
+    const apiLink = (uri: string, options?: Omit<HttpLink.Options, "uri">) => {
       const httpApiLink = new HttpLink({
         // this needs to be an absolute url, as relative urls cannot be used in SSR
         uri,
@@ -47,7 +50,7 @@ export const makeClient =
       });
 
       return isSSr
-        ? from([
+        ? ApolloLink.from([
             errorLink,
             // in a SSR environment, if you use multipart features like
             // @defer, you need to decide how to handle these.
@@ -57,11 +60,10 @@ export const makeClient =
             }),
             httpApiLink,
           ])
-        : from([errorLink, httpApiLink]);
+        : ApolloLink.from([errorLink, httpApiLink]);
     };
 
     return new ApolloClient({
-      connectToDevTools: isLocalEnv,
       cache: new InMemoryCache(),
       link: apiLink(config.urls.data, { credentials: "include" }),
     });

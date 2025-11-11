@@ -3,15 +3,8 @@
 import { usePoolCreate as useMutualsPoolCreate } from "@mutuals/graphql-client-nextjs/client";
 import { useCallback } from "react";
 import { PoolCreateInput } from "@mutuals/sdk-react";
-import {
-  MutationResult,
-  PoolCreateMutation,
-} from "@mutuals/graphql-client-nextjs";
 
-export function usePoolCreate(): [
-  (input: PoolCreateInput) => void,
-  MutationResult<PoolCreateMutation>,
-] {
+export function usePoolCreate(): [(input: PoolCreateInput) => void, any] {
   const [baseCreatePool, result] = useMutualsPoolCreate();
 
   const createPool = useCallback(

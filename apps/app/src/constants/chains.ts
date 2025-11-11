@@ -17,7 +17,7 @@ import * as ETH_LOGO from "@/assets/svg/ethereum-logo.svg";
 import * as OPTIMISM_LOGO from "@/assets/svg/optimism-logo.svg";
 import * as MATIC_LOGO from "@/assets/svg/polygonMatic-logo.svg";
 
-import { ChainExt } from "#/chain";
+import { ChainExt, Chain } from "#/chain";
 
 const _chains = {
   arbitrumGoerli,
@@ -63,7 +63,7 @@ export const CHAIN_SHORT_NAME_MAP: Record<number, string> = {
   [localhost.id]: "local", // localhost
 };
 
-export const CHAINS = Object.entries(_chains).map(([key, chain]) => ({
+export const CHAINS: Chain[] = Object.entries(_chains).map(([key, chain]) => ({
   ...chain,
   ...({
     key,

@@ -14,7 +14,7 @@ import { ME_GET } from "../graphql/data/queries/MeGet";
 import { MY_POOLS_GET } from "../graphql/data/queries/MyPoolsGet";
 import { POOL_GET_BY_ID } from "../graphql/data/queries/PoolGetById";
 
-export async function me(options?: TQueryOptions<MeQueryVariables, MeQuery>) {
+export async function me(options?: TQueryOptions<MeQuery, MeQueryVariables>) {
   return query({
     query: ME_GET,
     ...options,
@@ -22,7 +22,7 @@ export async function me(options?: TQueryOptions<MeQueryVariables, MeQuery>) {
 }
 
 export async function myPoolsGet(
-  options?: TQueryOptions<MyPoolsQueryVariables, MyPoolsQuery>,
+  options?: TQueryOptions<MyPoolsQuery, MyPoolsQueryVariables>,
 ) {
   return query({
     query: MY_POOLS_GET,
@@ -31,7 +31,7 @@ export async function myPoolsGet(
 }
 
 export async function getPoolById(
-  options?: TQueryOptions<PoolGetByIdQueryVariables, PoolGetByIdQuery>,
+  options: TQueryOptions<PoolGetByIdQuery, PoolGetByIdQueryVariables>,
 ) {
   return query({
     query: POOL_GET_BY_ID,

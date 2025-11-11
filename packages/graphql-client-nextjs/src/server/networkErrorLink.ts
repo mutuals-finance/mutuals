@@ -1,15 +1,9 @@
-import {
-  ApolloLink,
-  FetchResult,
-  NextLink,
-  Observable,
-  Operation,
-} from "@apollo/client/core";
+import { ApolloLink, Observable } from "@apollo/client/core";
 
 export interface INetworkResponse {
   networkError: any;
-  operation: Operation;
-  forward?: NextLink;
+  operation: ApolloLink.Operation;
+  forward?: ApolloLink.ForwardFunction;
 }
 
 export type ResultData = {
@@ -28,11 +22,9 @@ export class NetworkErrorLink extends ApolloLink {
   }
 
   request(
-    operation: Operation,
-    forward?: NextLink,
-  ): Observable<FetchResult> | null {
-    if (!forward) return null;
-
+    operation: ApolloLink.Operation,
+    forward: ApolloLink.ForwardFunction,
+  ): Observable<ApolloLink.Result> {
     return new Observable((observer) => {
       const subscription = forward(operation).subscribe({
         next: (result) => observer.next(result),
