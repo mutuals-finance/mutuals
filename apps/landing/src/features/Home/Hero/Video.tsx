@@ -16,7 +16,7 @@ export default function HomeHeroVideo(props: BoxProps) {
       pointerEvents={"none"}
       {...props}
     >
-      <AspectRatio ratio={{ base: 1, md: 4893 / 1964 }} w={"full"}>
+      <AspectRatio ratio={{ base: 2106 / 4014, md: 4893 / 1964 }} w={"full"}>
         <video loop={true} autoPlay={true} muted={true}>
           <source src={"/hero-gradient-bg.mp4"} type="video/mp4" />
           Your browser does not support the video tag.
