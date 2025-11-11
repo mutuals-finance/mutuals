@@ -25,14 +25,7 @@ export default function NavLink({
   const isActive = pathname === props.href;
 
   const link = (
-    <Link
-      color={"inherit"}
-      textStyle={"xs"}
-      textTransform={"uppercase"}
-      letterSpacing={"wider"}
-      fontWeight={"medium"}
-      {...props}
-    >
+    <Link color={"inherit"} textStyle={"sm"} fontWeight={"medium"} {...props}>
       {children} {external && <LuExternalLink />}
     </Link>
   );

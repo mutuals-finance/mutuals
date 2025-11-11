@@ -4,22 +4,18 @@ export type NavWrapperProps = StackProps;
 
 export default function NavWrapper({ children, ...props }: NavWrapperProps) {
   return (
-    <Stack
-      h={{ base: "20", lg: "20" }}
-      direction={"row"}
-      alignItems={"center"}
-      w={"full"}
-      {...props}
-    >
-      <Container
-        display={"flex"}
-        maxW={"7xl"}
-        alignItems="center"
-        justifyContent={"space-between"}
-      >
-        <MutualsLogo href={"/"} w={{ base: "32", lg: "32" }} />
+    <Stack h={"4.6rem"} direction={"row"} alignItems={"center"} w={"full"}>
+      <Container maxW={"7xl"}>
+        <Stack
+          direction={"row"}
+          alignItems="center"
+          justifyContent={"space-between"}
+          {...props}
+        >
+          <MutualsLogo href={"/"} w={{ base: "28", lg: "28" }} />
 
-        {children}
+          {children}
+        </Stack>
       </Container>
     </Stack>
   );
