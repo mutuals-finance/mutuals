@@ -1,21 +1,35 @@
+"use client";
+
 import React from "react";
 
+import { usePrivy } from "@privy-io/react-auth";
+import { Flex, For, ScrollArea, Show } from "@mutuals/ui";
+import WalletCardSkeleton from "@/features/Wallet/Card/Skeleton";
 import WalletListContent from "@/features/Wallet/List/Content";
-import AuthSiginInCard from "@/features/Auth/SignInCard";
-import { User } from "@privy-io/node";
 
 //type WalletListProps = ApolloQueryResult<MeQuery>;
 
-type WalletListProps = { user?: User };
+export default function WalletList() {
+  const { ready } = usePrivy();
 
-export default async function WalletList({ user }: WalletListProps) {
-  return !user ? (
-    <AuthSiginInCard
-      description={
-        "To view and manage your wallets you must sign in to your account."
-      }
-    />
-  ) : (
-    <WalletListContent user={user} />
+  return (
+    <ScrollArea.Root w="full" size="xs">
+      <ScrollArea.Viewport>
+        <ScrollArea.Content pb="6">
+          <Flex gap="6" flexWrap="nowrap">
+            <Show
+              when={ready}
+              fallback={
+                <For each={[...Array(4).keys()]}>
+                  {(i) => <WalletCardSkeleton key={i} w="64" flexShrink="0" />}
+                </For>
+              }
+            >
+              <WalletListContent />
+            </Show>
+          </Flex>
+        </ScrollArea.Content>
+      </ScrollArea.Viewport>
+    </ScrollArea.Root>
   );
 }

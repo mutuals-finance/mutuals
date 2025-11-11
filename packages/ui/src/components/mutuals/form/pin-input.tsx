@@ -18,6 +18,7 @@ export function PinInput({
   rules,
   transform,
   controllerProps,
+  inputProps,
   ...props
 }: PinInputProps) {
   const { control } = useFormContext();
@@ -34,7 +35,7 @@ export function PinInput({
           onValueChange={(e) =>
             onChange(transform ? transform.output(e, value) : e.value)
           }
-          {...field}
+          inputProps={{ ...inputProps, ...field }}
         />
       )}
       {...controllerProps}

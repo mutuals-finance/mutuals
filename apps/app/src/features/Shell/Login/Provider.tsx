@@ -8,6 +8,7 @@ import React, {
   useState,
   SetStateAction,
   Dispatch,
+  useMemo,
 } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateWallet, User } from "@privy-io/react-auth";
@@ -27,13 +28,21 @@ type OnLoginCompleteParams = {
 };
 
 type AuthShellContextType = {
+  onBeforeLogin: () => void;
   onLoginComplete: (params?: OnLoginCompleteParams) => Promise<void>;
-  callbackUrl: string;
-  setCallbackUrl: Dispatch<SetStateAction<string>>;
+  onLoginError: (error?: Error) => void;
+  error: Error | null;
+  setError: Dispatch<SetStateAction<Error | null>>;
+  callbackUrl: string | null;
+  setCallbackUrl: Dispatch<SetStateAction<string | null>>;
 };
 
 const AuthShellContext = createContext<AuthShellContextType>({
+  onBeforeLogin: () => {},
   onLoginComplete: async () => {},
+  onLoginError: () => {},
+  error: null,
+  setError: () => {},
   callbackUrl: "/",
   setCallbackUrl: () => {},
 });
@@ -49,9 +58,23 @@ export default function AuthShellProvider({
   children,
 }: AuthShellProviderContextProps) {
   const router = useRouter();
-  const [callbackUrl, setCallbackUrl] = useState<string>("/");
+  const [error, setError] = useState<Error | null>(null);
+  const [callbackUrl, setCallbackUrl] = useState<string | null>(null);
   const { createWallet } = useCreateWallet();
   const mixpanel = useMixpanel();
+
+  const onLoginError = useCallback(
+    (loginError?: Error) => {
+      if (loginError) {
+        setError(loginError);
+      }
+    },
+    [setError],
+  );
+
+  const onBeforeLogin = useCallback(() => {
+    setError(null);
+  }, [setError]);
 
   const onLoginComplete = useCallback(
     async (params?: OnLoginCompleteParams) => {
@@ -85,23 +108,30 @@ export default function AuthShellProvider({
           });
         }
       }
-
-      if (params?.callbackTimeout) {
-        await new Promise((resolve) =>
-          setTimeout(resolve, params?.callbackTimeout),
-        );
+      if (callbackUrl) {
+        if (params?.callbackTimeout) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, params?.callbackTimeout),
+          );
+        }
+        router.push(callbackUrl);
       }
-      router.refresh();
-      router.push(callbackUrl);
     },
     [router, callbackUrl, createWallet, mixpanel],
   );
 
-  const value = {
-    onLoginComplete,
-    callbackUrl,
-    setCallbackUrl,
-  };
+  const value = useMemo(
+    () => ({
+      onLoginComplete,
+      onBeforeLogin,
+      onLoginError,
+      callbackUrl,
+      setCallbackUrl,
+      error,
+      setError,
+    }),
+    [onLoginComplete, onBeforeLogin, onLoginError, callbackUrl, error],
+  );
 
   return (
     <AuthShellContext.Provider value={value}>

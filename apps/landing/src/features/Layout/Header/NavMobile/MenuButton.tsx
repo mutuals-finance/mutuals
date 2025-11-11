@@ -4,7 +4,7 @@ interface NavMobileNavbarProps extends IconButtonProps {}
 
 export default function NavMobileMenuButton({
   size = "xl",
-  variant = "subtle",
+  variant = "ghost",
   children,
   ...props
 }: NavMobileNavbarProps) {

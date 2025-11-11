@@ -15,23 +15,32 @@ export type EmailLoginData = {
 export type AuthLoginEmailProps = Omit<FormProps<EmailLoginData>, "children">;
 
 export default function AuthLoginEmail(props: AuthLoginEmailProps) {
-  const { onLoginComplete } = useAuthShell();
+  const { onLoginComplete, onLoginError, onBeforeLogin } = useAuthShell();
   const { state, loginWithCode, sendCode } = useLoginWithEmail({
     onComplete: ({ user, isNewUser }) =>
       onLoginComplete({ requiresWallet: !user.wallet, isNewUser, user }),
+    onError: (errorCode) =>
+      onLoginError(new Error(`Email login failed: ${errorCode}`)),
   });
+
   const [codeDialogOpen, setCodeDialogOpen] = useState(false);
+
+  const loading =
+    state.status === "sending-code" ||
+    state.status === "submitting-code" ||
+    state.status === "done";
 
   const handleSubmit = async (data: EmailLoginData) => {
     if (state.status === "awaiting-code-input" && codeDialogOpen) {
       // User submitted code input -> Submit the code
-      await loginWithCode({ code: data.code.join("") });
       setCodeDialogOpen(false);
+      await loginWithCode({ code: data.code.join("") });
     } else if (state.status === "awaiting-code-input" && !codeDialogOpen) {
       // User submitted email input after closing the dialog -> don't submit the code and open dialog instead
       setCodeDialogOpen(true);
     } else {
       // User submitted email input -> send code and open dialog
+      onBeforeLogin();
       await sendCode({ email: data.email });
       setCodeDialogOpen(true);
     }
@@ -55,7 +64,7 @@ export default function AuthLoginEmail(props: AuthLoginEmailProps) {
           <Button
             variant="subtle"
             size="sm"
-            loading={!codeDialogOpen && state.status === "sending-code"}
+            loading={!codeDialogOpen && loading}
             disabled={codeDialogOpen}
             type={"submit"}
           >

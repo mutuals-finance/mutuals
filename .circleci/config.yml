@@ -40,7 +40,7 @@ jobs:
             (?!apps\/|packages\/).* run-shared true .circleci/noop.yml
             (apps\/app|packages)\/.* run-app true .circleci/app/config.yml
             (apps\/landing|packages)\/.* run-landing true .circleci/landing/config.yml
-            (apps\/app|packages)\/.* run-docs true .circleci/docs/config.yml
+            (apps\/docs|packages)\/.* run-docs true .circleci/docs/config.yml
             (apps\/contracts|packages\/eslint-config|packages\/typescript-config|packages\/graphql-client-nextjs)\/.* run-contracts true .circleci/contracts/config.yml
       - path-filtering/generate-config
       - run:

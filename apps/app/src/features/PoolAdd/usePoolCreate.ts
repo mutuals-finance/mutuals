@@ -1,0 +1,32 @@
+"use client";
+
+import { usePoolCreate as useMutualsPoolCreate } from "@mutuals/graphql-client-nextjs/client";
+import { useCallback } from "react";
+import { PoolCreateInput } from "@mutuals/sdk-react";
+
+export function usePoolCreate(): [(input: PoolCreateInput) => void, any] {
+  const [baseCreatePool, result] = useMutualsPoolCreate();
+
+  const createPool = useCallback(
+    ({ addClaims: _addClaims, ..._input }: PoolCreateInput) => {
+      const addClaims = _addClaims
+        .flatten()
+        .map(({ _parent, _children, _index, children, ...node }) => ({
+          ...node,
+          children: children?.map((c) => c.label) ?? [],
+          // TODO parentLabel, childrenLabels
+        }));
+      const input = { ..._input, addClaims };
+
+      void baseCreatePool({
+        fetchPolicy: "no-cache",
+        variables: {
+          input,
+        },
+      });
+    },
+    [baseCreatePool],
+  );
+
+  return [createPool, result];
+}

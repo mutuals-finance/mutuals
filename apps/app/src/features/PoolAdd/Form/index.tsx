@@ -7,63 +7,43 @@ import {
   Fieldset,
   useSteps,
   Form,
-  Group,
-  Stack,
   FormErrorAlert,
   Steps,
   SimpleGrid,
   GridItem,
   Card,
-  IconButton,
-  Text,
 } from "@mutuals/ui";
 import { useAccount } from "wagmi";
-import { usePoolCreate } from "@mutuals/graphql-client-nextjs/client";
+import { usePoolCreate } from "@/features/PoolAdd/usePoolCreate";
 import { PoolStatus } from "@mutuals/graphql-client-nextjs";
 import React, { useCallback } from "react";
 import AuthSignInCard from "@/features/Auth/SignInCard";
 import { PoolCreateInput } from "@mutuals/sdk-react";
 import PoolAddModal from "@/features/PoolAdd/Modal";
 import { poolAddSteps } from "@/features/PoolAdd/steps";
-import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
 import PoolAddPanel from "@/features/PoolAdd/Panel";
 import { defaultClaims } from "@/features/Claim/utils";
-import PoolAddFormResetButton from "@/features/PoolAdd/Form/ResetButton";
-import PoolAddFormSettingsButton from "@/features/PoolAdd/Form/SettingsButton";
 import { User } from "@privy-io/node";
 import FeatureUpcoming from "@/features/User/FeatureUpcoming";
+import PoolAddToolbar from "@/features/PoolAdd/Toolbar";
 
 export type PoolAddProps = { user?: User };
 
 export default function PoolAdd({ user }: PoolAddProps) {
   const [modalOpen, setModalOpen] = useToggle(false);
   const { address } = useAccount();
-  const [upsertPool, { error, loading }] = usePoolCreate();
+  const [createPool, { error, loading }] = usePoolCreate();
 
   const onSubmit = useCallback(
-    (
-      {
-        image: _image,
-        ownerAddress: _ownerAddress,
-        // TODO enable claims add
-        addClaims: _addClaims,
-        ...input
-      }: PoolCreateInput,
-      status: PoolStatus,
-    ) => {
+    (input: PoolCreateInput, status: PoolStatus) => {
+      createPool(input);
       if (status == PoolStatus.Active) {
-        setModalOpen(true);
+        // setModalOpen(true);
       } else {
-        void upsertPool({
-          fetchPolicy: "no-cache",
-          variables: {
-            input,
-          },
-          onCompleted: (d) => console.log("onCompleted: upsertPool", d),
-        });
+        //  createPool(input);
       }
     },
-    [setModalOpen, upsertPool],
+    [createPool],
   );
 
   const steps = useSteps({
@@ -78,10 +58,13 @@ export default function PoolAdd({ user }: PoolAddProps) {
         console.log("Submit: invalid");
       }}
       defaultValues={{
-        ownerAddress: address,
-        name: "",
+        owner: address,
+        name: "Prudent Armadillo",
         description: "",
+        image: "",
+        slug: "prudent-armadillo",
         private: false,
+        donationBps: 1,
         addClaims: defaultClaims,
       }}
       errors={
@@ -115,52 +98,7 @@ export default function PoolAdd({ user }: PoolAddProps) {
               columns={{ base: 1, lg: 9 }}
               gap={{ base: "6", lg: "6" }}
             >
-              <GridItem colSpan={{ base: 1, lg: 6 }}>
-                <Stack direction="row" justifyContent={"space-between"}>
-                  <Stack direction={"row"} alignItems={"center"}>
-                    <Steps.PrevTrigger asChild>
-                      <IconButton
-                        variant="subtle"
-                        disabled={!steps.hasPrevStep}
-                      >
-                        <IoChevronBackSharp />
-                      </IconButton>
-                    </Steps.PrevTrigger>
-                    <Text
-                      as={"span"}
-                      textStyle={"sm"}
-                      color={!steps.hasPrevStep ? "fg.subtle" : "fg"}
-                      hideBelow={"lg"}
-                    >
-                      Previous
-                    </Text>
-                  </Stack>
-                  <Stack direction="row" justifyContent={"flex-end"}>
-                    <PoolAddFormResetButton onAction={() => methods.reset()} />
-                    <PoolAddFormSettingsButton />
-                  </Stack>
-                </Stack>
-              </GridItem>
-              <GridItem colSpan={{ base: 1, lg: 3 }} hideBelow={"lg"}>
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  justifyContent={"flex-end"}
-                >
-                  <Text
-                    as={"span"}
-                    textStyle={"sm"}
-                    color={!steps.hasNextStep ? "fg.subtle" : "fg"}
-                  >
-                    Next
-                  </Text>
-                  <Steps.NextTrigger asChild>
-                    <IconButton variant="subtle" disabled={!steps.hasNextStep}>
-                      <IoChevronForwardSharp />
-                    </IconButton>
-                  </Steps.NextTrigger>
-                </Stack>
-              </GridItem>
+              <PoolAddToolbar {...steps} />
 
               <GridItem colSpan={{ base: 1, lg: 6 }}>
                 <Card.Root
@@ -205,25 +143,23 @@ export default function PoolAdd({ user }: PoolAddProps) {
                     px={{ base: "0", lg: "6" }}
                     pb={{ base: "0", lg: "6" }}
                   >
-                    <Group w={"full"}>
-                      {steps.hasNextStep ? (
-                        <Steps.NextTrigger asChild>
-                          <Button type="button" flex="1" size="xl">
-                            Continue
-                          </Button>
-                        </Steps.NextTrigger>
-                      ) : (
-                        <Button
-                          type="submit"
-                          flex="1"
-                          variant="solid"
-                          size="xl"
-                          disabled={true}
-                        >
-                          Confirm
+                    {steps.hasNextStep ? (
+                      <Steps.NextTrigger asChild>
+                        <Button type="button" flex="1" size={"xl"}>
+                          Continue
                         </Button>
-                      )}
-                    </Group>
+                      </Steps.NextTrigger>
+                    ) : (
+                      <Button
+                        flex="1"
+                        type="submit"
+                        disabled={false}
+                        loading={loading}
+                        size={"xl"}
+                      >
+                        Confirm
+                      </Button>
+                    )}
                   </Card.Footer>
                 </Card.Root>
               </GridItem>

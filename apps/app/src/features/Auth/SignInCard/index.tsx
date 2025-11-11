@@ -19,6 +19,7 @@ export default function AuthSignInCard({
     <EmptyCard
       title={title}
       description={description}
+      w={"full"}
       icon={
         <Center bg={"bg.muted"} color={"fg"} p={"4"} rounded={"xl"}>
           <Icon size={"md"}>

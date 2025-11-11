@@ -91,6 +91,8 @@ export type Claim = Node & {
   children?: Maybe<Array<Claim>>;
   childrenCount: Scalars['Int']['output'];
   createdAt: Scalars['Time']['output'];
+  /** Extension (strategy and state) specific data. */
+  data?: Maybe<Scalars['JSON']['output']>;
   dbid: Scalars['DBID']['output'];
   id: Scalars['ID']['output'];
   label: Scalars['String']['output'];
@@ -101,7 +103,6 @@ export type Claim = Node & {
   state: Extension;
   strategy: Extension;
   updatedAt: Scalars['Time']['output'];
-  value: Scalars['HexString']['output'];
 };
 
 /** Creates claims. */
@@ -116,6 +117,8 @@ export type ClaimBulkCreate = {
 export type ClaimBulkCreateInput = {
   /** Children claims. */
   children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** Parent claim. */
   parent?: InputMaybe<Scalars['DBID']['input']>;
   /** Claim recipient address. */
@@ -124,8 +127,6 @@ export type ClaimBulkCreateInput = {
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 /** Deletes claims. */
@@ -175,6 +176,10 @@ export type ClaimBulkUpdate = {
 export type ClaimBulkUpdateInput = {
   /** Children claims. */
   children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Claim ID. */
+  claimId: Scalars['DBID']['input'];
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** Parent claim. */
   parent?: InputMaybe<Scalars['DBID']['input']>;
   /** Claim recipient address. */
@@ -183,8 +188,6 @@ export type ClaimBulkUpdateInput = {
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 /** Creates a new claim. */
@@ -194,18 +197,20 @@ export type ClaimCreate = {
 };
 
 export type ClaimCreateInput = {
-  /** Children claims. */
-  children?: InputMaybe<Array<Scalars['DBID']['input']>>;
-  /** Parent claim. */
-  parent?: InputMaybe<Scalars['DBID']['input']>;
+  /** Children claim labels. */
+  childrenLabels?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
+  /** Claim label. */
+  label?: InputMaybe<Scalars['String']['input']>;
+  /** Parent claim label. */
+  parentLabel?: InputMaybe<Scalars['String']['input']>;
   /** Claim recipient address. */
   recipientAddress?: InputMaybe<Scalars['Address']['input']>;
   /** State id. */
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 /** Deletes a claim. */
@@ -242,6 +247,10 @@ export type ClaimUpdate = {
 export type ClaimUpdateInput = {
   /** Children claims. */
   children?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** Claim ID. */
+  claimId: Scalars['DBID']['input'];
+  /** Extension (strategy and state) specific data. */
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** Parent claim. */
   parent?: InputMaybe<Scalars['DBID']['input']>;
   /** Claim recipient address. */
@@ -250,8 +259,6 @@ export type ClaimUpdateInput = {
   stateId: Scalars['String']['input'];
   /** Strategy id. */
   strategyId: Scalars['String']['input'];
-  /** The allocated value of the claim. */
-  value: Scalars['HexString']['input'];
 };
 
 export type ClearAllNotificationsPayload = {
@@ -505,18 +512,6 @@ export type MagicLinkAuth = {
 };
 
 export type Mutation = {
-  /** Creates claims. */
-  claimBulkCreate?: Maybe<ClaimBulkCreate>;
-  /** Deletes claims. */
-  claimBulkDelete?: Maybe<ClaimBulkDelete>;
-  /** Updates claims. */
-  claimBulkUpdate?: Maybe<ClaimBulkCreate>;
-  /** Creates a new claim. */
-  claimCreate?: Maybe<ClaimCreate>;
-  /** Deletes a claim. */
-  claimDelete?: Maybe<ClaimDelete>;
-  /** Updates a new claim. */
-  claimUpdate?: Maybe<ClaimUpdate>;
   /** Clears a users notifications. */
   clearNotifications?: Maybe<ClearAllNotificationsPayload>;
   /** Confirm the email change of the logged-in user. */
@@ -529,6 +524,18 @@ export type Mutation = {
   nonce?: Maybe<Nonce>;
   /** Updates a users notification settings. */
   notificationSettingsUpdate?: Maybe<NotificationSettings>;
+  /** Creates claims. */
+  poolClaimBulkCreate?: Maybe<ClaimBulkCreate>;
+  /** Deletes claims. */
+  poolClaimBulkDelete?: Maybe<ClaimBulkDelete>;
+  /** Updates claims. */
+  poolClaimBulkUpdate?: Maybe<ClaimBulkUpdate>;
+  /** Creates a new claim. */
+  poolClaimCreate?: Maybe<ClaimCreate>;
+  /** Deletes a claim. */
+  poolClaimDelete?: Maybe<ClaimDelete>;
+  /** Updates a new claim. */
+  poolClaimUpdate?: Maybe<ClaimUpdate>;
   /** Creates a pool. */
   poolCreate?: Maybe<PoolCreate>;
   /** Deletes a pool. */
@@ -559,6 +566,8 @@ export type Mutation = {
   tokensDeactivateAll?: Maybe<DeactivateAllUserTokens>;
   /** Remove user. */
   userDelete?: Maybe<UserDelete>;
+  /** Create JWT token. */
+  userLoginOrRegister?: Maybe<UserLoginOrRegister>;
   /** Register a new user. */
   userRegister?: Maybe<UserRegister>;
   /** Sends an email with the user removal link for the logged-in user. */
@@ -571,40 +580,6 @@ export type Mutation = {
   walletDelete?: Maybe<WalletDelete>;
   /** Updates a new wallet. */
   walletUpdate?: Maybe<WalletUpdate>;
-};
-
-
-export type MutationClaimBulkCreateArgs = {
-  claims: Array<ClaimBulkCreateInput>;
-  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
-};
-
-
-export type MutationClaimBulkDeleteArgs = {
-  ids: Array<Scalars['DBID']['input']>;
-};
-
-
-export type MutationClaimBulkUpdateArgs = {
-  claims: Array<ClaimBulkUpdateInput>;
-  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
-  ids: Array<Scalars['DBID']['input']>;
-};
-
-
-export type MutationClaimCreateArgs = {
-  input: ClaimCreateInput;
-};
-
-
-export type MutationClaimDeleteArgs = {
-  id: Scalars['DBID']['input'];
-};
-
-
-export type MutationClaimUpdateArgs = {
-  id: Scalars['DBID']['input'];
-  input: ClaimUpdateInput;
 };
 
 
@@ -626,6 +601,44 @@ export type MutationEmailNotificationSettingsUpdateArgs = {
 
 export type MutationNotificationSettingsUpdateArgs = {
   settings: NotificationSettingsInput;
+};
+
+
+export type MutationPoolClaimBulkCreateArgs = {
+  claims: Array<ClaimBulkCreateInput>;
+  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimBulkDeleteArgs = {
+  claimIds: Array<Scalars['DBID']['input']>;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimBulkUpdateArgs = {
+  claims: Array<ClaimBulkUpdateInput>;
+  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimCreateArgs = {
+  input: ClaimCreateInput;
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimDeleteArgs = {
+  claimId: Scalars['DBID']['input'];
+  poolId: Scalars['DBID']['input'];
+};
+
+
+export type MutationPoolClaimUpdateArgs = {
+  input: ClaimUpdateInput;
+  poolId: Scalars['DBID']['input'];
 };
 
 
@@ -692,6 +705,12 @@ export type MutationTokenVerifyArgs = {
 
 export type MutationUserDeleteArgs = {
   token: Scalars['String']['input'];
+};
+
+
+export type MutationUserLoginOrRegisterArgs = {
+  authMechanism: AuthMechanism;
+  input: UserLoginOrRegisterInput;
 };
 
 
@@ -794,8 +813,10 @@ export type Pool = Node & {
   createdAt: Scalars['Time']['output'];
   dbid: Scalars['DBID']['output'];
   description: Scalars['String']['output'];
+  /** Basis point donation. */
+  donationBps: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
-  logo: Scalars['String']['output'];
+  image: Scalars['String']['output'];
   name: Scalars['String']['output'];
   owner: UserOrAccount;
   slug: Scalars['String']['output'];
@@ -827,12 +848,18 @@ export type PoolCreate = {
 };
 
 export type PoolCreateInput = {
-  /** List of claims to assign to the pool. */
-  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  /** List of claims to create and assign to the pool. */
+  addClaims?: InputMaybe<Array<ClaimCreateInput>>;
   /** Name of the pool. */
   description?: InputMaybe<Scalars['String']['input']>;
+  /** Basis point donation. */
+  donationBps?: InputMaybe<Scalars['Int']['input']>;
+  /** Name of the pool. */
+  image?: InputMaybe<Scalars['String']['input']>;
   /** Name of the pool. */
   name?: InputMaybe<Scalars['String']['input']>;
+  /** Name of the pool. */
+  owner?: InputMaybe<Scalars['String']['input']>;
   /** Whether a pool is shared with its recipients or not. */
   private?: InputMaybe<Scalars['Boolean']['input']>;
   /** Slug of the pool. */
@@ -917,9 +944,13 @@ export type PoolUpdate = {
 
 export type PoolUpdateInput = {
   /** List of claims to assign to the pool. */
-  addClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
+  addClaims?: InputMaybe<Array<ClaimCreateInput>>;
   /** Name of the pool. */
   description?: InputMaybe<Scalars['String']['input']>;
+  /** Basis point donation. */
+  donationBps?: InputMaybe<Scalars['Int']['input']>;
+  /** Image of the pool. */
+  image?: InputMaybe<Scalars['String']['input']>;
   /** Name of the pool. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Whether a pool is shared with its recipients or not. */
@@ -928,6 +959,8 @@ export type PoolUpdateInput = {
   removeClaims?: InputMaybe<Array<Scalars['DBID']['input']>>;
   /** Slug of the pool. */
   slug?: InputMaybe<Scalars['String']['input']>;
+  /** List of claims to assign to the pool. */
+  updateClaims?: InputMaybe<Array<ClaimUpdateInput>>;
 };
 
 export type PreverifyEmailInput = {
@@ -1391,6 +1424,24 @@ export type UserInput = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Login an existing user or register a new one. */
+export type UserLoginOrRegister = {
+  errors: Array<UserError>;
+  /** JWT refresh token, required to re-generate access token. */
+  refreshToken?: Maybe<Scalars['String']['output']>;
+  /** Informs whether users need to confirm their email address. */
+  requiresConfirmation?: Maybe<Scalars['Boolean']['output']>;
+  /** JWT token, required to authenticate. */
+  token?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<User>;
+};
+
+/** Fields required to login or register a user. */
+export type UserLoginOrRegisterInput = {
+  /** Base of frontend URL that will be needed to create confirmation URL. Required when account confirmation is enabled. */
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UserOrAccount = EvmAccount | User;
 
 /** Register a new user. */
@@ -1596,6 +1647,14 @@ export type TokensDeactivateAllMutationVariables = Exact<{ [key: string]: never;
 
 export type TokensDeactivateAllMutation = { tokensDeactivateAll?: { errors: Array<{ field?: string | null, message?: string | null, code: UserErrorCode }> } | null };
 
+export type UserLoginOrRegisterMutationVariables = Exact<{
+  authMechanism: AuthMechanism;
+  input: UserLoginOrRegisterInput;
+}>;
+
+
+export type UserLoginOrRegisterMutation = { userLoginOrRegister?: { requiresConfirmation?: boolean | null, token?: string | null, refreshToken?: string | null, user?: { id: string, dbid: any, username?: string | null, isAuthenticatedUser?: boolean | null } | null, errors: Array<{ field?: string | null, message?: string | null, code: UserErrorCode }> } | null };
+
 export type UserRegisterMutationVariables = Exact<{
   authMechanism: AuthMechanism;
   input: UserRegisterInput;
@@ -1640,6 +1699,7 @@ export const NonceCreateDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const PoolCreateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PoolCreate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PoolCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"poolCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pool"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PoolCreateMutation, PoolCreateMutationVariables>;
 export const TokenCreateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TokenCreate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"audience"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokenCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"audience"},"value":{"kind":"Variable","name":{"kind":"Name","value":"audience"}}},{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<TokenCreateMutation, TokenCreateMutationVariables>;
 export const TokensDeactivateAllDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TokensDeactivateAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokensDeactivateAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<TokensDeactivateAllMutation, TokensDeactivateAllMutationVariables>;
+export const UserLoginOrRegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UserLoginOrRegister"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserLoginOrRegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userLoginOrRegister"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requiresConfirmation"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"isAuthenticatedUser"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UserLoginOrRegisterMutation, UserLoginOrRegisterMutationVariables>;
 export const UserRegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UserRegister"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AuthMechanism"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserRegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRegister"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authMechanism"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authMechanism"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requiresConfirmation"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"isAuthenticatedUser"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UserRegisterMutation, UserRegisterMutationVariables>;
 export const WalletCreateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"WalletCreate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"WalletCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"walletCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wallet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"account"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<WalletCreateMutation, WalletCreateMutationVariables>;
 export const UserByAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserByAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChainAddressInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"chainAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chainAddress"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Error"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"dbid"}}]}}]}}]}}]} as unknown as DocumentNode<UserByAddressQuery, UserByAddressQueryVariables>;

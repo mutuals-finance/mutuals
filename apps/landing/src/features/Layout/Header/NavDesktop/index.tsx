@@ -18,48 +18,26 @@ interface NavDesktopProps extends HeaderContainerWrapperProps {
   links?: LinkProps[];
 }
 
-function NavDesktopStack({ children, ...props }: StackProps) {
-  return (
-    <Stack
-      direction={"row"}
-      rounded={"2xl"}
-      bgColor={"bg/25"}
-      css={{
-        backdropFilter: "blur(12px)",
-      }}
-      h="14"
-      justifyContent="center"
-      alignItems={"center"}
-      {...props}
-    >
-      {children}
-    </Stack>
-  );
-}
 export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
   const lastIndex = links?.length - 1;
   const lastLinksProps = links[lastIndex];
 
   return (
-    <HeaderContainerWrapper {...props}>
-      <NavWrapper>
-        <AbsoluteCenter>
-          <NavDesktopStack
-            px={{ base: "6", lg: "12" }}
-            textAlign={"center"}
-            gap="12"
-          >
-            {links.slice(0, -1).map((props, index) => (
-              <NavLink key={index} {...props} />
-            ))}
-          </NavDesktopStack>
-        </AbsoluteCenter>
+    <HeaderContainerWrapper
+      bgColor={"bg/25"}
+      css={{
+        backdropFilter: "blur(12px)",
+      }}
+      {...props}
+    >
+      <NavWrapper gap={"12"}>
+        <Stack gap={"12"} direction={"row"}>
+          {links.slice(0, -1).map((props, index) => (
+            <NavLink key={index} {...props} />
+          ))}
+        </Stack>
 
-        <NavDesktopStack
-          px={{ base: "2", lg: "2" }}
-          gap={{ base: "2", lg: "2" }}
-          separator={<StackSeparator h={"4"} alignSelf={"center"} />}
-        >
+        <Stack ml={"auto"} gap={"4"} direction={"row"}>
           {lastLinksProps && (
             <Link href={lastLinksProps.href} target="_blank" asChild={true}>
               <Button size={"md"} variant={"subtle"}>
@@ -76,7 +54,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
               Launch App
             </Button>
           </Link>
-        </NavDesktopStack>
+        </Stack>
       </NavWrapper>
     </HeaderContainerWrapper>
   );

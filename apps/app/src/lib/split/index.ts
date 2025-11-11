@@ -8,7 +8,7 @@ export async function getPoolDetailsFromRouteParams(params: { id: string }) {
   //const id = decodePrefixedAddress(params.id);
   const { data } = await getPoolById({ variables: params });
 
-  if (!("poolById" in data)) {
+  if (!data || !("poolById" in data)) {
     notFound();
   }
 

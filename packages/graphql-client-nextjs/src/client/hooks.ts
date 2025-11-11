@@ -1,4 +1,6 @@
-import { QueryHookOptions, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client/react";
+import { ApolloClient } from "@apollo/client";
+
 import {
   Exact,
   NonceCreateMutation,
@@ -9,6 +11,7 @@ import {
   TokensDeactivateAllMutationVariables,
   UserByAddressQuery,
   UserByAddressQueryVariables,
+  UserLoginOrRegisterMutationVariables,
   UserRegisterMutationVariables,
 } from "../graphql/data/__generated__/graphql";
 import { GET_USER_BY_WALLET_ADDRESS } from "../graphql/data/queries/GetUserByWalletAddress";
@@ -18,9 +21,10 @@ import { POOL_CREATE } from "../graphql/data/mutations/PoolCreate";
 import { TOKENS_DEACTIVATE_ALL } from "../graphql/data/mutations/TokensDeactivateAll";
 import { TOKEN_CREATE } from "../graphql/data/mutations/TokenCreate";
 import { USER_REGISTER } from "../graphql/data/mutations/UserRegister";
+import { USER_LOGIN_OR_REGISTER } from "../graphql/data/mutations/UserLoginOrRegister";
 
 export function useLazyGetUserByWalletAddress(
-  options?: QueryHookOptions<
+  options?: ApolloClient.QueryOptions<
     UserByAddressQuery,
     Exact<UserByAddressQueryVariables>
   >,
@@ -30,7 +34,7 @@ export function useLazyGetUserByWalletAddress(
 
 /*
 export function useViewerWallets(
-  options?: QueryHookOptions<
+  options?: ApolloClient.QueryOptions<
     ViewerWalletsQuery,
     Exact<ViewerWalletsQueryVariables>
   >,
@@ -49,6 +53,12 @@ export function useAddWallet(
 
 export function useUserRegister(variables?: UserRegisterMutationVariables) {
   return useMutation(USER_REGISTER, { variables });
+}
+
+export function useUserLoginOrRegister(
+  variables?: UserLoginOrRegisterMutationVariables,
+) {
+  return useMutation(USER_LOGIN_OR_REGISTER, { variables });
 }
 
 export function useTokenCreate(variables?: TokenCreateMutationVariables) {

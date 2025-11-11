@@ -12,8 +12,8 @@ export type PoolAddInfoProps = StackProps;
 export default function PoolAddInfo({ children, ...props }: PoolAddInfoProps) {
   return (
     <Stack {...props}>
-      <Field label={"Owner"} id={"ownerAddress"}>
-        <Input id="ownerAddress" />
+      <Field label={"Owner"} id={"owner"}>
+        <Input id="owner" />
       </Field>
 
       <Field id={"image"} label={"Image"}>
@@ -26,7 +26,7 @@ export default function PoolAddInfo({ children, ...props }: PoolAddInfoProps) {
             label: "Upload pool image",
             gap: "2",
             iconProps: {
-              color: "fg.muted",
+              color: "fg.subtle",
               fontSize: "md",
             },
           }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Heading, Stack, StackProps, Text } from "@mutuals/ui";
+import { Alert, Box, Heading, Stack, StackProps, Text } from "@mutuals/ui";
 
 import AuthLoginWallet from "@/features/Auth/LoginWallet";
 import AuthLoginEmail from "@/features/Auth/LoginEmail";
@@ -13,7 +13,7 @@ import {
   AuthShellQueryParams,
   useAuthShell,
 } from "@/features/Shell/Login/Provider";
-import { useMount } from "react-use";
+import { useLifecycles } from "react-use";
 import React from "react";
 
 type AuthLoginProps = StackProps & AuthShellQueryParams;
@@ -22,11 +22,12 @@ export default function AuthLogin({
   callbackUrl = "/",
   ...props
 }: AuthLoginProps) {
-  const { setCallbackUrl } = useAuthShell();
+  const { setCallbackUrl, error } = useAuthShell();
 
-  useMount(() => {
-    setCallbackUrl(callbackUrl);
-  });
+  useLifecycles(
+    () => setCallbackUrl(callbackUrl),
+    () => setCallbackUrl(null),
+  );
 
   return (
     <>
@@ -41,6 +42,11 @@ export default function AuthLogin({
       </Box>
 
       <Stack gap={"6"} alignItems={"stretch"} {...props}>
+        {!!error && (
+          <Alert status={"error"} title={"Error"}>
+            {error.message}
+          </Alert>
+        )}
         <AuthLoginEmail />
         <AuthLoginSocials gap="2" />
 

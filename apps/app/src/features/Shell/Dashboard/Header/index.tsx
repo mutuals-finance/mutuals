@@ -12,24 +12,26 @@ import {
   IconButtonProps,
   ButtonGroup,
   Menu,
+  Button,
 } from "@mutuals/ui";
 import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
 import Chain from "./Chain";
-import ShellDashboardHeaderUser from "./User";
 import { VscMenu } from "react-icons/vsc";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
 import CallbackLinkButton from "@/components/CallbackLinkButton";
 import { User } from "@privy-io/node";
 import ShellDashboardHeaderAlert from "@/features/Shell/Dashboard/Header/Alert";
+import { usePrivy } from "@privy-io/react-auth";
+import UserAvatar from "@/features/Wallet/Avatar";
+import { shortenAddress } from "@/utils";
 
 export type ShellDashboardHeaderProps = { user?: User };
 
-export default function ShellDashboardHeader({
-  user,
-}: ShellDashboardHeaderProps) {
+export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
   const { mobile, desktop } = useDashboardRoot();
+  const { ready, user, authenticated } = usePrivy();
 
   return (
     <Stack
@@ -40,7 +42,7 @@ export default function ShellDashboardHeader({
       w={"full"}
       zIndex={"50"}
     >
-      {!!user && <ShellDashboardHeaderAlert />}
+      {authenticated && <ShellDashboardHeaderAlert />}
 
       <Stack
         position={"relative"}
@@ -77,24 +79,28 @@ export default function ShellDashboardHeader({
           <Chain />
           <ButtonGroup>
             <ShellDashboardHeaderUserMenu>
-              {!user ? (
-                <Menu.Trigger asChild>
-                  <IconButton
-                    variant="ghost"
-                    aria-label="Open navigation menu"
-                    hideBelow={"lg"}
-                  >
+              <Menu.Trigger asChild>
+                <Button variant={"subtle"} size={"sm"} loading={!ready}>
+                  {!authenticated ? (
                     <IoEllipsisHorizontal />
-                  </IconButton>
-                </Menu.Trigger>
-              ) : (
-                <Menu.Trigger asChild>
-                  <ShellDashboardHeaderUser user={user} />
-                </Menu.Trigger>
-              )}
+                  ) : (
+                    <>
+                      <UserAvatar
+                        size={"2xs"}
+                        address={user?.wallet?.address}
+                      />
+                      {shortenAddress(user?.wallet?.address)}
+                    </>
+                  )}
+                </Button>
+              </Menu.Trigger>
             </ShellDashboardHeaderUserMenu>
-            {!user && (
-              <CallbackLinkButton variant={"solid"} size={"sm"}>
+            {ready && !authenticated && (
+              <CallbackLinkButton
+                variant={"solid"}
+                size={"sm"}
+                loading={!ready}
+              >
                 Sign in
               </CallbackLinkButton>
             )}

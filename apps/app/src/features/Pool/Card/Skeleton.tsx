@@ -1,30 +1,23 @@
 import {
-  Box,
   Card,
-  Flex,
   Skeleton,
   SkeletonCircle,
   SkeletonText,
+  Stack,
 } from "@mutuals/ui";
 
 export default function PoolCardSkeleton() {
   return (
-    <Card.Root variant={"outline"} bg={"bg.1"} size={"sm"}>
-      <Card.Header as={Flex} alignItems={"center"} gap={"3"}>
-        <Box flexShrink={0}>
-          <SkeletonCircle size="3.2rem" />
-        </Box>
-
-        <Box flex="1" py={"6"}>
+    <Card.Root variant={"outline"} size={"sm"}>
+      <Card.Header>
+        <Stack alignItems={"flex-start"} gap={"6"}>
+          <SkeletonCircle size="16" />
           <SkeletonText lineClamp={2} />
-        </Box>
+        </Stack>
       </Card.Header>
       <Card.Body>
-        <SkeletonText lineClamp={2} />
+        <Skeleton h="6" w={"full"} />
       </Card.Body>
-      <Card.Footer>
-        <Skeleton height="16" w={"full"} />
-      </Card.Footer>
     </Card.Root>
   );
 }

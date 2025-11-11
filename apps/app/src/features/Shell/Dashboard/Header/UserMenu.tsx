@@ -8,7 +8,7 @@ import {
   IoSunnySharp,
 } from "react-icons/io5";
 import { header as headerLinks } from "@/features/Shell/Dashboard/links";
-import { useLogout } from "@privy-io/react-auth";
+import { useLogout, usePrivy } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 
 type ShellDashboardHeaderUserMenuProps = Menu.RootProps;
@@ -23,6 +23,7 @@ export default function ShellDashboardHeaderUserMenu({
       router.refresh();
     },
   });
+  const { authenticated } = usePrivy();
 
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -71,14 +72,18 @@ export default function ShellDashboardHeaderUserMenu({
               </Menu.Item>
             </Menu.ItemGroup>
 
-            <Menu.Separator />
+            {authenticated && (
+              <>
+                <Menu.Separator />
 
-            <Menu.ItemGroup>
-              <Menu.Item value={"sign-out"} onClick={logout}>
-                <Box flex="1">Sign out</Box>
-                <IoLogOutSharp />
-              </Menu.Item>
-            </Menu.ItemGroup>
+                <Menu.ItemGroup>
+                  <Menu.Item value={"sign-out"} onClick={logout}>
+                    <Box flex="1">Sign out</Box>
+                    <IoLogOutSharp />
+                  </Menu.Item>
+                </Menu.ItemGroup>
+              </>
+            )}
           </Menu.Content>
         </Menu.Positioner>
       </Portal>

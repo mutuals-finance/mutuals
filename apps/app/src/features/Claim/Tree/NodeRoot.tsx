@@ -63,7 +63,7 @@ export default function ClaimTreeNodeRoot({
                 onClick={(e) => {
                   e.stopPropagation();
                   onAddNested?.(props);
-                  tree.expand([node.id]);
+                  tree.expand([node?.label ?? ""]);
                 }}
               >
                 <BsArrowsCollapse />

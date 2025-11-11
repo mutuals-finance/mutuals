@@ -12,21 +12,29 @@ import {
   Stack,
   Bleed,
   MotionBox,
+  Card,
+  AspectRatio,
+  AbsoluteCenter,
+  Tabs,
 } from "@mutuals/ui";
-import { ImageProps as NextImageProps } from "next/image";
-import PaymentTabs from "@/features/Home/Hero/PaymentTabs";
+
+import NextImage, { ImageProps as NextImageProps } from "next/image";
+
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
+
 type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
+
+import desktopPaymentsIcon from "@/assets/payment/all-desktop.svg";
+import mobilePaymentsIcon from "@/assets/payment/all-mobile.svg";
+import payBgImage from "@/assets/bg-hero-top-left.png";
+import HomeHeroVideo from "@/features/Home/Hero/Video";
+import HomeHeroImage from "@/features/Home/Hero/Image";
 
 export default function HomeHero() {
   return (
     <MotionBoxWrapper asChild={true}>
-      <Box pt={"20"} mb={{ base: "16", lg: "32" }}>
-        <Container
-          maxW={{ base: "xl", lg: "4xl" }}
-          mt="12"
-          mb={{ base: "12", lg: "24" }}
-        >
+      <Box pt={"4.6rem"}>
+        <Container maxW={{ base: "xl", lg: "4xl" }} my={"12"}>
           <Stack
             gap={"6"}
             alignItems={{ lg: "center" }}
@@ -46,14 +54,13 @@ export default function HomeHero() {
             </MotionBox>
             <MotionBox variants={itemVariants} asChild={true}>
               <Box w={"full"} maxW={"3xl"}>
-                <Text textStyle={{ base: "md", lg: "lg" }} color={"fg.muted"}>
+                <Text textStyle={{ base: "md", lg: "lg" }}>
                   Mutuals enables complex payment workflows through customizable
                   app integrations. Streamline payment processing with
                   automated, flexible, and trustless on-chain execution.
                 </Text>
               </Box>
             </MotionBox>
-
             <MotionBox variants={itemVariants} asChild={true}>
               <Group gap="4">
                 <Link
@@ -77,13 +84,14 @@ export default function HomeHero() {
           </Stack>
         </Container>
 
-        <Container maxW={"7xl"}>
-          <Bleed inline={{ base: "6", lg: "0" }} my={"16"}>
+        <Box position={"relative"}>
+          <Container maxW={"6xl"} position={"relative"}>
             <MotionBox variants={itemVariants} asChild={true}>
-              <PaymentTabs />
+              <HomeHeroImage />
             </MotionBox>
-          </Bleed>
-        </Container>
+          </Container>
+          <HomeHeroVideo />
+        </Box>
       </Box>
     </MotionBoxWrapper>
   );

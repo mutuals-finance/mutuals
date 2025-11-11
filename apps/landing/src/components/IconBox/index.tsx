@@ -9,11 +9,11 @@ export default function IconBox({
   ...props
 }: IconBoxProps) {
   const sizeProps = {
-    xs: { w: "8", h: "8", rounded: "2xl", fontSize: "md" },
-    sm: { w: "10", h: "10", rounded: "2xl", fontSize: "lg" },
-    md: { w: "12", h: "12", rounded: "2xl", fontSize: "xl" },
-    lg: { w: "14", h: "14", rounded: "2xl", fontSize: "2xl" },
-    xl: { w: "16", h: "16", rounded: "3xl", fontSize: "3xl" },
+    xs: { w: "8", h: "8", rounded: "lg", fontSize: "md" },
+    sm: { w: "10", h: "10", rounded: "xl", fontSize: "lg" },
+    md: { w: "12", h: "12", rounded: "xl", fontSize: "xl" },
+    lg: { w: "14", h: "14", rounded: "xl", fontSize: "2xl" },
+    xl: { w: "16", h: "16", rounded: "xl", fontSize: "3xl" },
   }[size];
 
   return (

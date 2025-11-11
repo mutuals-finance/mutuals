@@ -1,17 +1,39 @@
+"use client";
+
 import PoolListEmptyState from "@/features/Pool/List/EmptyState";
-import { User } from "@privy-io/node";
+import { usePrivy } from "@privy-io/react-auth";
+import { For, Show, GridItem } from "@mutuals/ui";
+import AuthSiginInCard from "@/features/Auth/SignInCard";
+import React from "react";
 
 //export type PoolListContentProps = ApolloQueryResult<MyPoolsQuery>;
-export type PoolListContentProps = { user?: User };
 
-export default function PoolListContent(_: PoolListContentProps) {
-  const empty = true;
+export default function PoolListContent() {
+  const { authenticated } = usePrivy();
 
-  return empty ? (
-    <PoolListEmptyState />
-  ) : (
-    <>
-      {/*
+  return (
+    <Show
+      when={authenticated}
+      fallback={
+        <GridItem colSpan={{ base: 2, lg: 3 }}>
+          <AuthSiginInCard
+            description={
+              "To view and manage your pools you must sign in to your account."
+            }
+          />
+        </GridItem>
+      }
+    >
+      <For
+        each={[]}
+        fallback={
+          <GridItem colSpan={{ base: 2, lg: 3 }}>
+            <PoolListEmptyState />
+          </GridItem>
+        }
+      >
+        {() => <></>}
+        {/*
       <HStack mb={"6"} gap={"6"} alignItems={"center"}>
         <Form flex={"1"}>
           <InputGroup startElement={<IoSearch />}>
@@ -20,15 +42,11 @@ export default function PoolListContent(_: PoolListContentProps) {
         </Form>
       </HStack>
 
-      <SimpleGrid
-        templateColumns={"repeat(auto-fill, minmax(16rem, 1fr))"}
-        gap={4}
-      >
-        {data.viewer!.viewerPools!.map((viewerPool, key) => (
-          <PoolCard key={key} {...viewerPool?.pool} />
-        ))}
-      </SimpleGrid>
+      {data.viewer!.viewerPools!.map((viewerPool, key) => (
+        <PoolCard key={key} {...viewerPool?.pool} />
+      ))}
 */}
-    </>
+      </For>
+    </Show>
   );
 }
