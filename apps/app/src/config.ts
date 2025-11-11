@@ -25,7 +25,7 @@ export const siteUrl =
     : defaultSiteUrl;
 export const siteContactEmail =
   process.env.NEXT_PUBLIC_SITE_CONTACT_EMAIL ?? "";
-export const siteCopyrightText = "Mutuals Finance, Inc.";
+export const siteCopyrightText = "Mutuals Finance";
 
 /**
  * 0 = no refetch
