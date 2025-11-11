@@ -1,9 +1,8 @@
 import nextra from "nextra";
 
 const withNextra = nextra({
-  search: false,
+  search: true,
+  defaultShowCopyCode: true,
 });
 
-export default withNextra({
-  // ... Add regular Next.js options here
-});
+export default withNextra({});
