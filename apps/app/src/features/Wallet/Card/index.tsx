@@ -30,30 +30,30 @@ export type WalletCardProps = Card.RootProps & {
 
 export default function WalletCard({ data, ...props }: WalletCardProps) {
   return (
-    <Card.Root as="article" size={"sm"} {...props}>
+    <Card.Root as="article" size={"lg"} {...props}>
       <Card.Header
-        gap={"3"}
-        pb={"3"}
+        pb={"4"}
+        gap={"4"}
         alignItems={"center"}
         textAlign={"center"}
       >
-        <UserAvatar address={data?.address} size={"sm"} />
+        <UserAvatar address={data?.address} shape="full" size={"lg"} />
         <Stack gap={"2"} alignItems={"center"}>
-          <Text textStyle="sm">{shortenAddress(data?.address)}</Text>
+          <Text textStyle="md">{shortenAddress(data?.address)}</Text>
         </Stack>
       </Card.Header>
 
-      <Card.Footer pt={"0"}>
+      <Card.Footer>
         <MenuRoot>
           <Group w={"full"} attached={true}>
             <Link href={`wallet/${data?.address}`} flex="1" asChild={true}>
-              <Button size={"xs"} w="full" roundedRight={0} variant={"surface"}>
+              <Button size={"md"} w="full" roundedRight={0} variant={"surface"}>
                 Manage
               </Button>
             </Link>
             <MenuTrigger asChild>
               <IconButton
-                size={"xs"}
+                size={"md"}
                 variant={"surface"}
                 aria-label="Wallet Options"
               >

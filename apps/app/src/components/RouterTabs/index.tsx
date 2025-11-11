@@ -17,6 +17,7 @@ export interface RouterTabsProps extends Tabs.RootProps {
 export default function RouterTabs({
   tabs,
   children,
+  css,
   ...props
 }: RouterTabsProps) {
   const pathname = usePathname();
@@ -24,13 +25,20 @@ export default function RouterTabs({
 
   return (
     <>
-      <Tabs.Root value={current?.value} {...props}>
+      <Tabs.Root
+        value={current?.value}
+        css={{
+          "--tabs-indicator-bg": "transparent",
+          "--tabs-indicator-shadow": "none",
+          ...css,
+        }}
+        {...props}
+      >
         <Tabs.List>
           <Tabs.Indicator
-            shadow={"none"}
             borderBottom={"2px solid"}
             borderColor={"fg"}
-            bg={"transparent"}
+            rounded={"0"}
           />
 
           {tabs?.map(({ title, value, tabProps, ..._props }) => {

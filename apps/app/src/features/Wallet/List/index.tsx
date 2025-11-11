@@ -21,7 +21,7 @@ export default function WalletList() {
               when={ready}
               fallback={
                 <For each={[...Array(4).keys()]}>
-                  {(i) => <WalletCardSkeleton key={i} w="52" flexShrink="0" />}
+                  {(i) => <WalletCardSkeleton key={i} w="64" flexShrink="0" />}
                 </For>
               }
             >

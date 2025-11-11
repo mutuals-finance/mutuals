@@ -17,10 +17,11 @@ export default function WalletAvatar({
   address = "",
   size = "xs",
   variant = "subtle",
+  shape = "rounded",
   ...props
 }: WalletAvatarProps) {
   return (
-    <AvatarRoot size={size} shape="rounded" variant={variant} {...props}>
+    <AvatarRoot size={size} shape={shape} variant={variant} {...props}>
       <AvatarFallback
         css={{
           "& svg": {

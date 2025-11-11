@@ -27,7 +27,7 @@ export default function WalletListContent() {
     >
       <For each={wallets}>
         {(data) => (
-          <WalletCard key={data.address} data={data} w="52" flexShrink="0" />
+          <WalletCard key={data.address} data={data} w="64" flexShrink="0" />
         )}
       </For>
     </Show>
