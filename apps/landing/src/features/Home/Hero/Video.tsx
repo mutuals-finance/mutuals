@@ -8,7 +8,10 @@ export default function HomeHeroVideo(props: BoxProps) {
       bottom={"0"}
       left={"0"}
       w={"full"}
-      transform={"translateY(-50%)"}
+      transform={{
+        base: "translateY(-25%)",
+        md: "translateY(-50%)",
+      }}
       overflow={"hidden"}
       roundedBottom={"2xl"}
       pt={"1px"}

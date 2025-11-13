@@ -13,6 +13,7 @@ import NavWrapper from "@/features/Layout/Header/NavWrapper";
 import HeaderContainerWrapper, {
   HeaderContainerWrapperProps,
 } from "@/features/Layout/Header/ContainerWrapper";
+import NavContainer from "@/features/Layout/Header/NavContainer";
 
 interface NavDesktopProps extends HeaderContainerWrapperProps {
   links?: LinkProps[];
@@ -24,23 +25,25 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
 
   return (
     <HeaderContainerWrapper
-      bgColor={"bg/25"}
+      bgColor={"bg/50"}
       css={{
         backdropFilter: "blur(12px)",
       }}
+      borderBottom={"1px solid"}
+      borderColor={"border"}
       {...props}
     >
       <NavWrapper gap={"12"}>
-        <Stack gap={"12"} direction={"row"}>
+        <NavContainer gap={"0"}>
           {links.slice(0, -1).map((props, index) => (
             <NavLink key={index} {...props} />
           ))}
-        </Stack>
+        </NavContainer>
 
         <Stack ml={"auto"} gap={"4"} direction={"row"}>
           {lastLinksProps && (
             <Link href={lastLinksProps.href} target="_blank" asChild={true}>
-              <Button size={"md"} variant={"subtle"}>
+              <Button size={"md"} variant={"surface"}>
                 {lastLinksProps.children}
               </Button>
             </Link>

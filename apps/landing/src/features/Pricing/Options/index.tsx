@@ -73,7 +73,7 @@ export default function PricingOptions() {
                     target="_blank"
                     asChild={true}
                   >
-                    <Button w="full" size={"md"} variant={"solid"}>
+                    <Button w="full" size={"lg"} variant={"solid"}>
                       Get Started
                     </Button>
                   </Link>

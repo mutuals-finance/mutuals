@@ -4,6 +4,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { IconType } from "react-icons";
+import { forwardRef } from "react";
 
 export interface LinkProps
   extends Omit<ChakraLinkProps, "href">,
@@ -17,29 +18,28 @@ export type NavLinkProps = LinkProps & {
   icon: IconType;
 };
 
-export function Link({
-  children,
-  asChild = true,
-  href,
-  linkProps,
-  ...props
-}: LinkProps) {
-  // const pathname = usePathname();
-  // const isActive = pathname === href.toString();
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
+  ({ children, asChild = true, href, linkProps, ...props }, ref) => {
+    // const pathname = usePathname();
+    // const isActive = pathname === href.toString();
 
-  return (
-    <ChakraLink
-      asChild={asChild}
-      href={asChild ? undefined : href.toString()}
-      {...props}
-    >
-      {!asChild ? (
-        children
-      ) : (
-        <NextLink href={href} {...linkProps}>
-          {children}
-        </NextLink>
-      )}
-    </ChakraLink>
-  );
-}
+    return (
+      <ChakraLink
+        asChild={asChild}
+        href={asChild ? undefined : href.toString()}
+        ref={ref}
+        {...props}
+      >
+        {!asChild ? (
+          children
+        ) : (
+          <NextLink href={href} {...linkProps}>
+            {children}
+          </NextLink>
+        )}
+      </ChakraLink>
+    );
+  },
+);
+
+Link.displayName = "Link";

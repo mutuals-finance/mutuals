@@ -10,6 +10,8 @@ import {
 } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
 import { LuExternalLink } from "react-icons/lu";
+import { useEffect, useRef } from "react";
+import { useLayout } from "@/features/Layout/Provider";
 
 export interface NavLinkProps extends LinkProps {
   external?: boolean;
@@ -23,14 +25,52 @@ export default function NavLink({
 }: NavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === props.href;
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  const { setActiveRef, setHoveredRef } = useLayout();
+
+  useEffect(() => {
+    if (isActive) {
+      setActiveRef(linkRef);
+    }
+
+    return () => {
+      if (isActive) {
+        setActiveRef(null);
+      }
+    };
+  }, [isActive, setActiveRef]);
+
+  const handleMouseEnter = () => {
+    setHoveredRef(linkRef);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredRef(null);
+  };
 
   const link = (
-    <Link color={"inherit"} textStyle={"sm"} fontWeight={"medium"} {...props}>
+    <Link
+      ref={linkRef}
+      display={"flex"}
+      textStyle={"sm"}
+      color={"inherit"}
+      fontWeight={"normal"}
+      zIndex="1"
+      paddingInline={"4"}
+      minW={"10"}
+      h={"10"}
+      textAlign={"center"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
       {children} {external && <LuExternalLink />}
     </Link>
   );
 
-  return props.links && props.links.length > 0 && props.links.length <= 0 ? (
+  return props.links && props.links.length > 0 ? (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>{link}</HoverCard.Trigger>
       <Portal>
