@@ -5,6 +5,8 @@ import "nextra-theme-docs/style.css";
 import { Metadata, Viewport } from "next";
 import { PropsWithChildren } from "react";
 import { createMetadata, createViewport } from "@mutuals/metadata-nextjs";
+import fonts from "@mutuals/ui/font";
+import "./globals.css";
 
 export const metadata: Metadata = createMetadata({
   title: "Mutuals Documentation",
@@ -22,16 +24,14 @@ const footer = <Footer>{new Date().getFullYear()} © Mutuals.</Footer>;
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html
-      // Not required, but good for SEO
       lang="en"
-      // Required to be set
       dir="ltr"
-      // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
-      suppressHydrationWarning
+      suppressHydrationWarning={true}
+      className={Object.values(fonts)
+        .map((f) => f.variable)
+        .join(" ")}
     >
-      <Head>
-        {/* Your additional tags should be passed as `children` of `<Head>` element */}
-      </Head>
+      <Head></Head>
       <body>
         <Layout
           navbar={navbar}
