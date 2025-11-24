@@ -10,7 +10,7 @@ export const defaultContentType = "image/png";
 export function defaultGenerateImageMetadata() {
   return iconSizes.map((size) => ({
     id: size,
-    contentType: "image/png",
+    contentType: defaultContentType,
     size: { width: size, height: size },
   }));
 }

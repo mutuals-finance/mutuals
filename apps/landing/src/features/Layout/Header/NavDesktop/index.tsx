@@ -29,8 +29,6 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
       css={{
         backdropFilter: "blur(12px)",
       }}
-      borderBottom={"1px solid"}
-      borderColor={"border"}
       {...props}
     >
       <NavWrapper gap={"12"}>
