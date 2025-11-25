@@ -12,7 +12,6 @@ import SignModal, {
   type WalletSignDialogProps,
 } from "@/features/Wallet/SignModal";
 import useSignRemoteMessage, {
-  SignMessageResult,
   UseSignRemoteMessageState,
 } from "../useSignRemoteMessage";
 
@@ -21,7 +20,9 @@ export type WalletSignOptions = {
 };
 
 type WalletSignContextType = {
-  signMessage: (options?: WalletSignOptions) => SignMessageResult;
+  signMessage: (
+    options?: WalletSignOptions,
+  ) => Promise<{ signature: `0x${string}`; message: string; nonce: string }>;
   abort: () => void;
 } & Partial<UseSignRemoteMessageState>;
 
