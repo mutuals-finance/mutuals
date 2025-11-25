@@ -41,7 +41,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
         <Stack ml={"auto"} gap={"4"} direction={"row"}>
           {lastLinksProps && (
             <Link href={lastLinksProps.href} target="_blank" asChild={true}>
-              <Button size={"md"} variant={"surface"}>
+              <Button size={"md"} variant={"subtle"}>
                 {lastLinksProps.children}
               </Button>
             </Link>

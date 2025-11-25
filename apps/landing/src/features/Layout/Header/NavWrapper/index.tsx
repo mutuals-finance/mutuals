@@ -12,7 +12,7 @@ export default function NavWrapper({ children, ...props }: NavWrapperProps) {
           justifyContent={"space-between"}
           {...props}
         >
-          <MutualsLogo href={"/"} w={{ base: "28", lg: "28" }} />
+          <MutualsLogo href={"/"} w={"28"} />
 
           {children}
         </Stack>

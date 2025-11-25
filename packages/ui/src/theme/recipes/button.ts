@@ -1,14 +1,12 @@
 import { defineRecipe } from "@chakra-ui/react";
 
 const variants = {
-  blur: {
+  blurred: {
     true: {
+      bg: "colorPalette.600/75",
       css: {
         backdropFilter: "blur(12px)",
-        "--mix-background":
-          "color-mix(in srgb, var(--bg-currentcolor) 80%, transparent)",
       },
-      bg: "var(--mix-background, var(--bg-currentcolor))",
       //background: "var(--mix-background, var(--colors-red-300))",
       //       "--mix-background":
       //         "color-mix(in srgb, var(--colors-red-300) 40%, transparent)",
@@ -28,5 +26,5 @@ const variants = {
 export default defineRecipe({
   variants,
   defaultVariants: { enlarge: true },
-  base: { fontWeight: "500" },
+  base: { fontWeight: "400" },
 });
