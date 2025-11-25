@@ -19,6 +19,7 @@ import {
 
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 import ShellDashboardSidebarFooter from "@/features/Shell/Dashboard/Sidebar/Footer";
+import { VscMenu } from "react-icons/vsc";
 
 export default function ShellDashboardSidebarDesktop() {
   const { desktop } = useDashboardRoot();
@@ -45,6 +46,18 @@ export default function ShellDashboardSidebarDesktop() {
     >
       <Stack flex={"1"}>
         <Stack gap={"6"} mb={"auto"}>
+          <IconButton
+            size={"md"}
+            variant={"ghost"}
+            aria-label={"Toggle Desktop Sidebar"}
+            onClick={desktop.onToggle}
+            mr={"auto"}
+          >
+            <Icon size={"lg"}>
+              <VscMenu />
+            </Icon>
+          </IconButton>
+
           {Object.keys(sidebarItems).map((section) => (
             <ShellDashboardSidebarDesktopSection
               key={section}

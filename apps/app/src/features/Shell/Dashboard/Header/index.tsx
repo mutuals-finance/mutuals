@@ -68,13 +68,6 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
           </Form>
         </AbsoluteCenter>
 
-        <SidebarToggle
-          aria-label={"Toggle Desktop Sidebar"}
-          hideBelow={"lg"}
-          onClick={desktop.onToggle}
-          mr={"auto"}
-        />
-
         <Stack direction={"row"} gap={4} ml={"auto"}>
           <Chain />
           <ButtonGroup>

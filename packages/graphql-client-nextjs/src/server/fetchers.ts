@@ -14,13 +14,6 @@ import { ME_GET } from "../graphql/data/queries/MeGet";
 import { MY_POOLS_GET } from "../graphql/data/queries/MyPoolsGet";
 import { POOL_GET_BY_ID } from "../graphql/data/queries/PoolGetById";
 
-export async function me(options?: TQueryOptions<MeQuery, MeQueryVariables>) {
-  return query({
-    query: ME_GET,
-    ...options,
-  });
-}
-
 export async function myPoolsGet(
   options?: TQueryOptions<MyPoolsQuery, MyPoolsQueryVariables>,
 ) {

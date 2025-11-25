@@ -47,25 +47,13 @@ export default function SignMessageProvider({ children }: PropsWithChildren) {
     setModalProps,
   ] = useState<Partial<WalletSignDialogProps>>({});
 
-  const signMessage = useCallback(
-    async (options?: WalletSignOptions) => {
-      /*
-      if (options?.modalProps) {
-        setModalProps(options.modalProps);
-      }
-      setModalOpen(true);
-      const result = await doSignRemoteMessage();
-      setModalOpen(false);
-      return result;
-*/
-      return {
-        signature: `0x` as `0x${string}`,
-        message: "string",
-        nonce: "string",
-      };
-    },
-    [doSignRemoteMessage, setModalOpen],
-  );
+  const signMessage = useCallback(async (options?: WalletSignOptions) => {
+    return {
+      signature: `0x` as `0x${string}`,
+      message: "string",
+      nonce: "string",
+    };
+  }, []);
 
   const abort = useCallback(() => {
     /*

@@ -13,6 +13,7 @@ import React, {
 import { useRouter } from "next/navigation";
 import { useCreateWallet, User } from "@privy-io/react-auth";
 import { useMixpanel } from "@mutuals/analytics-nextjs";
+import { useUserRegister } from "@mutuals/graphql-client-nextjs/client";
 
 export type AuthShellQueryParams = {
   callbackUrl?: string;
@@ -61,6 +62,7 @@ export default function AuthShellProvider({
   const [error, setError] = useState<Error | null>(null);
   const [callbackUrl, setCallbackUrl] = useState<string | null>(null);
   const { createWallet } = useCreateWallet();
+  const [registerUser, result] = useUserRegister();
   const mixpanel = useMixpanel();
 
   const onLoginError = useCallback(
@@ -79,7 +81,7 @@ export default function AuthShellProvider({
   const onLoginComplete = useCallback(
     async (params?: OnLoginCompleteParams) => {
       const { identify = true } = params || {};
-      if (params?.requiresWallet) {
+      if (params?.requiresWallet && !params.user?.isGuest) {
         await createWallet({
           createAdditional: false,
           ...params?.createWalletOptions,
@@ -108,6 +110,15 @@ export default function AuthShellProvider({
           });
         }
       }
+
+      if (params?.isNewUser) {
+        await registerUser({
+          variables: {
+            input: { did: params.user?.id, redirectUrl: callbackUrl },
+          },
+        });
+      }
+
       if (callbackUrl) {
         if (params?.callbackTimeout) {
           await new Promise((resolve) =>

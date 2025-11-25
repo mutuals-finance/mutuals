@@ -14,7 +14,6 @@ export const POOL_GET_BY_ID = graphql(/* GraphQL */ `
         updatedAt
         owner {
           ... on User {
-            username
             dbid
           }
           ... on EVMAccount {

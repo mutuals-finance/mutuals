@@ -1,17 +1,12 @@
 import { graphql } from "../__generated__";
 
 export const USER_REGISTER = graphql(/* GraphQL */ `
-  mutation UserRegister(
-    $authMechanism: AuthMechanism!
-    $input: UserRegisterInput!
-  ) {
-    userRegister(authMechanism: $authMechanism, input: $input) {
+  mutation UserRegister($input: UserRegisterInput!) {
+    userRegister(input: $input) {
       requiresConfirmation
       user {
         id
         dbid
-        username
-        isAuthenticatedUser
       }
       errors {
         field
