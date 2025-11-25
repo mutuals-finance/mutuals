@@ -1,12 +1,9 @@
 "use client";
 
 import { Box, BoxProps } from "@mutuals/ui";
-
 import NavMobile from "@/features/Layout/Header/NavMobile";
 import NavDesktop from "@/features/Layout/Header/NavDesktop";
 import links from "@/features/Layout/links";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useLayout } from "@/features/Layout/Provider";
 
 export type HeaderProps = Omit<BoxProps, "children">;

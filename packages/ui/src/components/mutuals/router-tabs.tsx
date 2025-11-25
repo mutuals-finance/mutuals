@@ -46,6 +46,7 @@ export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
               py: "2",
               px: { base: "2", lg: "4" },
               children: title,
+              indicator: false,
               ..._props,
             };
 

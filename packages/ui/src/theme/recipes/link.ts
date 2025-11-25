@@ -1,31 +1,46 @@
 import { defineRecipe } from "@chakra-ui/react";
 
 export default defineRecipe({
+  base: {
+    fontWeight: "medium",
+  },
   variants: {
-    visual: {
+    variant: {
+      underline: {
+        _current: {
+          textDecoration: "none",
+          _hover: {
+            textDecoration: "underline",
+            textUnderlineOffset: "3px",
+            textDecorationColor: "currentColor/20",
+          },
+        },
+      },
+
+      plain: {
+        _current: {
+          textDecoration: "underline",
+          textUnderlineOffset: "3px",
+          textDecorationColor: "currentColor/20",
+        },
+      },
+
       solid: {
-        textStyle: "link",
+        fontWeight: "medium",
+        color: "colorPalette.fg/100",
         _hover: {
-          color: "fg.muted",
+          color: "colorPalette.fg/70",
         },
-        _active: {
-          color: "fg.subtle",
+        _current: {
+          color: "colorPalette.fg/70",
+          _hover: {
+            color: "colorPalette.fg/100",
+          },
         },
       },
-      subtle: {
-        textStyle: "link",
-        color: "fg.subtle",
-        _hover: {
-          color: "fg",
-        },
-        _active: {
-          color: "fg.muted",
-        },
-      },
-      plain: {},
     },
   },
   defaultVariants: {
-    visual: "solid",
+    variant: "solid",
   },
 });

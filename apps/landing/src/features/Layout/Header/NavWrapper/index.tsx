@@ -1,22 +1,20 @@
-import { Container, MutualsLogo, Stack, StackProps } from "@mutuals/ui";
+import { Container, MutualsLogo, Stack, ContainerProps } from "@mutuals/ui";
 
-export type NavWrapperProps = StackProps;
+export type NavWrapperProps = ContainerProps;
 
 export default function NavWrapper({ children, ...props }: NavWrapperProps) {
   return (
-    <Stack h={"4.6rem"} direction={"row"} alignItems={"center"} w={"full"}>
-      <Container maxW={"7xl"}>
-        <Stack
-          direction={"row"}
-          alignItems="center"
-          justifyContent={"space-between"}
-          {...props}
-        >
-          <MutualsLogo href={"/"} w={"28"} />
+    <Container display="flex" maxW={"7xl"} h={"4.6rem"} {...props}>
+      <Stack
+        direction={"row"}
+        alignItems="center"
+        justifyContent={"space-between"}
+        w={"full"}
+      >
+        <MutualsLogo href={"/"} w={"28"} />
 
-          {children}
-        </Stack>
-      </Container>
-    </Stack>
+        {children}
+      </Stack>
+    </Container>
   );
 }

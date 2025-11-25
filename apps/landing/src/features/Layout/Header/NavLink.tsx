@@ -25,47 +25,9 @@ export default function NavLink({
 }: NavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === props.href;
-  const linkRef = useRef<HTMLAnchorElement>(null);
-  const { setActiveRef, setHoveredRef } = useLayout();
-
-  useEffect(() => {
-    if (isActive) {
-      setActiveRef(linkRef);
-    }
-
-    return () => {
-      if (isActive) {
-        setActiveRef(null);
-      }
-    };
-  }, [isActive, setActiveRef]);
-
-  const handleMouseEnter = () => {
-    setHoveredRef(linkRef);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredRef(null);
-  };
 
   const link = (
-    <Link
-      ref={linkRef}
-      display={"flex"}
-      textStyle={"sm"}
-      color={"inherit"}
-      zIndex="1"
-      paddingInline={"4"}
-      minW={"20"}
-      h={"10"}
-      textAlign={"center"}
-      alignItems={"center"}
-      justifyContent={"center"}
-      fontWeight={"medium"}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
+    <Link textStyle={"sm"} {...props}>
       {children} {external && <LuExternalLink />}
     </Link>
   );

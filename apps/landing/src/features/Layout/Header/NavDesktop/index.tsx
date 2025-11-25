@@ -1,19 +1,10 @@
-import {
-  Button,
-  StackSeparator,
-  Stack,
-  type LinkProps,
-  Link,
-  AbsoluteCenter,
-  StackProps,
-} from "@mutuals/ui";
+import { Button, Stack, type LinkProps, Link } from "@mutuals/ui";
 
 import NavLink from "@/features/Layout/Header/NavLink";
 import NavWrapper from "@/features/Layout/Header/NavWrapper";
 import HeaderContainerWrapper, {
   HeaderContainerWrapperProps,
 } from "@/features/Layout/Header/ContainerWrapper";
-import NavContainer from "@/features/Layout/Header/NavContainer";
 
 interface NavDesktopProps extends HeaderContainerWrapperProps {
   links?: LinkProps[];
@@ -31,12 +22,12 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
       }}
       {...props}
     >
-      <NavWrapper gap={"12"}>
-        <NavContainer gap={"0"}>
+      <NavWrapper>
+        <Stack gap={"12"} mx={"12"} direction={"row"}>
           {links.slice(0, -1).map((props, index) => (
             <NavLink key={index} {...props} />
           ))}
-        </NavContainer>
+        </Stack>
 
         <Stack ml={"auto"} gap={"4"} direction={"row"}>
           {lastLinksProps && (

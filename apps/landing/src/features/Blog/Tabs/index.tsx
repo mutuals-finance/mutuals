@@ -1,7 +1,4 @@
 import { Container, ContainerProps, RouterTabs } from "@mutuals/ui";
-import { PropsWithChildren } from "react";
-import ShellPageHeader from "@/features/Shell/PageHeader";
-import BlogHero from "@/features/Blog/Hero";
 
 const tabs = [
   {

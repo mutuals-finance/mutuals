@@ -12,7 +12,7 @@ export default function BlogLayout({ children }: PropsWithChildren) {
       </ShellPageHeader>
       <BlogHero />
       <BlogTabs>
-        <Box pt={{ base: "6", lg: "12" }}>{children}</Box>
+        <Box my={"6"}>{children}</Box>
       </BlogTabs>
     </>
   );
