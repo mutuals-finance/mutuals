@@ -2,29 +2,24 @@ import {
   Button,
   ButtonProps,
   Center,
+  EmptyStateCard,
+  EmptyStateCardProps,
   Icon,
   Link,
-  EmptyStateCard,
-  type EmptyStateCardProps,
 } from "@mutuals/ui";
-import React from "react";
 import { LuConstruction } from "react-icons/lu";
+import React from "react";
 
-export type FeatureUpcomingProps = Omit<
-  EmptyStateCardProps,
-  "children" | "title"
-> & {
+export type BlogGridProps = Omit<EmptyStateCardProps, "children" | "title"> & {
   title?: EmptyStateCardProps["title"];
-  actionProps?: ButtonProps;
 };
 
-export default function FeatureUpcoming({
-  actionProps,
-  title = "Coming soon",
-  description = "This feature is currently planned or already in the development process.",
+export default function BlogGrid({
+  title = "This Story's in the Works",
+  description = "We're crafting something thoughtful here. Check back soon to read what we've been working on.",
   colorPalette = "gray",
   ...props
-}: FeatureUpcomingProps) {
+}: BlogGridProps) {
   return (
     <EmptyStateCard
       title={title}
@@ -44,9 +39,8 @@ export default function FeatureUpcoming({
       }
       {...props}
     >
-      {actionProps && <Button size={"sm"} variant="outline" {...actionProps} />}
       <Link href={"mailto:hello@mutuals.finance"} asChild={true}>
-        <Button size={"md"} colorPalette={"gray"}>
+        <Button size={"sm"} colorPalette={"gray"}>
           Let us know you need this
         </Button>
       </Link>

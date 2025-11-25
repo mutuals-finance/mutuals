@@ -54,14 +54,14 @@ export default function NavLink({
       display={"flex"}
       textStyle={"sm"}
       color={"inherit"}
-      fontWeight={"normal"}
       zIndex="1"
       paddingInline={"4"}
-      minW={"10"}
+      minW={"20"}
       h={"10"}
       textAlign={"center"}
       alignItems={"center"}
       justifyContent={"center"}
+      fontWeight={"medium"}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       {...props}

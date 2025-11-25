@@ -1,11 +1,17 @@
 import CallbackLinkButton from "@/components/CallbackLinkButton";
-import { Button, ButtonProps, Center, Icon } from "@mutuals/ui";
+import {
+  Button,
+  ButtonProps,
+  Center,
+  Icon,
+  EmptyStateCard,
+  type EmptyStateCard,
+} from "@mutuals/ui";
 import React from "react";
 import { MdAccountBox } from "react-icons/md";
-import EmptyCard, { type EmptyCardProps } from "@/components/EmptyCard";
 
-export type AuthSignInCardProps = Omit<EmptyCardProps, "children" | "title"> & {
-  title?: EmptyCardProps["title"];
+export type AuthSignInCardProps = Omit<EmptyStateCard, "children" | "title"> & {
+  title?: EmptyStateCard["title"];
   actionProps?: ButtonProps;
 };
 
@@ -16,7 +22,7 @@ export default function AuthSignInCard({
   ...props
 }: AuthSignInCardProps) {
   return (
-    <EmptyCard
+    <EmptyStateCard
       title={title}
       description={description}
       w={"full"}
@@ -31,6 +37,6 @@ export default function AuthSignInCard({
     >
       {actionProps && <Button size={"sm"} variant="outline" {...actionProps} />}
       <CallbackLinkButton size={"sm"}>Sign in</CallbackLinkButton>
-    </EmptyCard>
+    </EmptyStateCard>
   );
 }
