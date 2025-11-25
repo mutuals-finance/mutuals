@@ -5,13 +5,16 @@ import {
   Center,
   Icon,
   EmptyStateCard,
-  type EmptyStateCard,
+  type EmptyStateCardProps,
 } from "@mutuals/ui";
 import React from "react";
 import { MdAccountBox } from "react-icons/md";
 
-export type AuthSignInCardProps = Omit<EmptyStateCard, "children" | "title"> & {
-  title?: EmptyStateCard["title"];
+export type AuthSignInCardProps = Omit<
+  EmptyStateCardProps,
+  "children" | "title"
+> & {
+  title?: EmptyStateCardProps["title"];
   actionProps?: ButtonProps;
 };
 
