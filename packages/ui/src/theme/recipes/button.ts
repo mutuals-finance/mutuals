@@ -1,43 +1,32 @@
 import { defineRecipe } from "@chakra-ui/react";
 
-/*
 const variants = {
-  blackWhite: {
-    background: "black",
-    color: "white",
-    _hover: {
-      background: "gray.700",
-    },
-    _active: {
-      background: "gray.600",
-    },
-    _dark: {
-      background: "white",
-      color: "black",
-      _hover: {
-        background: "gray.200",
+  blur: {
+    true: {
+      css: {
+        backdropFilter: "blur(12px)",
+        "--mix-background":
+          "color-mix(in srgb, var(--bg-currentcolor) 80%, transparent)",
       },
+      bg: "var(--mix-background, var(--bg-currentcolor))",
+      //background: "var(--mix-background, var(--colors-red-300))",
+      //       "--mix-background":
+      //         "color-mix(in srgb, var(--colors-red-300) 40%, transparent)",
+    },
+  },
+  enlarge: {
+    true: {
+      willChange: "transform",
+      transition: "scale 0.1s ease-in",
       _active: {
-        background: "gray.300",
+        scale: "0.95",
       },
     },
   },
 };
-*/
 
 export default defineRecipe({
-  variants: {
-    size: {
-      xl: {
-        extend: {
-          fontSize: "xl",
-          px: "6",
-          h: "16",
-        },
-      },
-    },
-  },
-  base: {
-    fontWeight: "400",
-  },
+  variants,
+  defaultVariants: { enlarge: true },
+  base: { fontWeight: "500" },
 });

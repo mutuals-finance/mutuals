@@ -48,17 +48,31 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
         position={"relative"}
         as="header"
         h={{ base: "16", md: "16" }}
-        px={{ base: "6", lg: "12" }}
+        pl={{ base: "6", lg: "4" }}
+        pr={{ base: "6", lg: "12" }}
         py={"6"}
         alignItems={"center"}
         justifyContent={"space-between"}
         gap={{ base: "1", lg: "4" }}
-        borderBottomWidth="1px"
-        borderColor={"border"}
-        bg={"bg"}
+        bgColor={"bg/50"}
+        css={{
+          backdropFilter: "blur(12px)",
+        }}
         direction={"row"}
       >
-        <MutualsLogo w={{ base: "28", md: "28" }} href={"/"} />
+        <Stack
+          direction={"row"}
+          mr={"auto"}
+          w={{ lg: "52" }}
+          justify={"space-between"}
+        >
+          <MutualsLogo w={"28"} href={"/"} />
+          <SidebarToggle
+            aria-label={"Toggle Desktop Sidebar"}
+            onClick={desktop.onToggle}
+            hideBelow={"lg"}
+          />
+        </Stack>
 
         <AbsoluteCenter hideBelow={"lg"} w={"full"} maxW={"xs"}>
           <Form w={"full"}>
@@ -102,8 +116,8 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
 
         <SidebarToggle
           aria-label={"Toggle Mobile Sidebar"}
-          hideFrom={"lg"}
           onClick={mobile.onToggle}
+          hideFrom={"lg"}
         />
       </Stack>
     </Stack>
@@ -112,12 +126,7 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
 
 function SidebarToggle(props: IconButtonProps) {
   return (
-    <IconButton
-      size={"md"}
-      aria-label={"Toggle Sidebar"}
-      variant={"ghost"}
-      {...props}
-    >
+    <IconButton size={"md"} variant={"ghost"} {...props}>
       <Icon size={"lg"}>
         <VscMenu />
       </Icon>

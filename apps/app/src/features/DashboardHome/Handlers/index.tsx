@@ -14,31 +14,31 @@ export default function DashboardHandlers() {
             "aria-label": "Withdraw",
             children: <BiArrowToTop />,
             href: "/withdraw",
-            variant: "surface",
+            variant: "subtle",
           },
           {
             "aria-label": "Deposit",
             children: <BiArrowToBottom />,
             href: "/deposit",
-            variant: "surface",
+            variant: "subtle",
           },
           {
             "aria-label": "Create Pool",
             children: <RiApps2AddFill />,
             href: "/pool/new", //
-            variant: "surface",
+            variant: "subtle",
           },
           {
             "aria-label": "Add Wallet",
             children: <IoWalletSharp />,
             href: "/wallet/new", // wallet/new
-            variant: "surface",
+            variant: "subtle",
           },
           {
             "aria-label": "Settings",
             children: <IoSettingsSharp />,
             href: "/settings",
-            variant: "surface",
+            variant: "subtle",
           },
         ]}
       />
