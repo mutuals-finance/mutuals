@@ -13,6 +13,8 @@ import {
   ButtonGroup,
   Menu,
   Button,
+  Show,
+  Box,
 } from "@mutuals/ui";
 import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
@@ -86,22 +88,37 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
           <Chain />
           <ButtonGroup>
             <ShellDashboardHeaderUserMenu>
-              {authenticated && (
-                <Menu.Trigger asChild={true} hideFrom={"lg"}>
-                  <Button variant={"subtle"} size={"sm"} loading={!ready}>
-                    <UserButtonContent />
-                  </Button>
-                </Menu.Trigger>
-              )}
+              <Menu.Trigger asChild={true}>
+                <Box>
+                  <Show when={authenticated}>
+                    <Button
+                      variant={"subtle"}
+                      size={"sm"}
+                      loading={!ready}
+                      hideFrom={"lg"}
+                    >
+                      <UserButtonContent />
+                    </Button>
+                  </Show>
 
-              <Menu.Trigger asChild={true} hideBelow={"lg"}>
-                <Button variant={"subtle"} size={"sm"} loading={!ready}>
-                  {!authenticated ? (
-                    <IoEllipsisHorizontal />
-                  ) : (
-                    <UserButtonContent />
-                  )}
-                </Button>
+                  <Button
+                    variant={"subtle"}
+                    size={"sm"}
+                    loading={!ready}
+                    hideBelow={"lg"}
+                  >
+                    <Show
+                      when={authenticated}
+                      fallback={
+                        <Icon>
+                          <IoEllipsisHorizontal />
+                        </Icon>
+                      }
+                    >
+                      <UserButtonContent />
+                    </Show>
+                  </Button>
+                </Box>
               </Menu.Trigger>
             </ShellDashboardHeaderUserMenu>
             {ready && !authenticated && (
