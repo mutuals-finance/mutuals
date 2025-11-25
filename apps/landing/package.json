@@ -9,6 +9,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
+    "@mutuals/analytics-nextjs": "workspace:^",
     "@mutuals/metadata-nextjs": "workspace:^",
     "@mutuals/ui": "workspace:*",
     "framer-motion": "^12.23.24",

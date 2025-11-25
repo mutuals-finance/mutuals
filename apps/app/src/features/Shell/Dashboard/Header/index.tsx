@@ -86,18 +86,20 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
           <Chain />
           <ButtonGroup>
             <ShellDashboardHeaderUserMenu>
-              <Menu.Trigger asChild>
+              {authenticated && (
+                <Menu.Trigger asChild={true} hideFrom={"lg"}>
+                  <Button variant={"subtle"} size={"sm"} loading={!ready}>
+                    <UserButtonContent />
+                  </Button>
+                </Menu.Trigger>
+              )}
+
+              <Menu.Trigger asChild={true} hideBelow={"lg"}>
                 <Button variant={"subtle"} size={"sm"} loading={!ready}>
                   {!authenticated ? (
                     <IoEllipsisHorizontal />
                   ) : (
-                    <>
-                      <UserAvatar
-                        size={"2xs"}
-                        address={user?.wallet?.address}
-                      />
-                      {shortenAddress(user?.wallet?.address)}
-                    </>
+                    <UserButtonContent />
                   )}
                 </Button>
               </Menu.Trigger>
@@ -131,5 +133,16 @@ function SidebarToggle(props: IconButtonProps) {
         <VscMenu />
       </Icon>
     </IconButton>
+  );
+}
+
+function UserButtonContent() {
+  const { user } = usePrivy();
+
+  return (
+    <>
+      <UserAvatar size={"2xs"} address={user?.wallet?.address} />
+      {shortenAddress(user?.wallet?.address)}
+    </>
   );
 }

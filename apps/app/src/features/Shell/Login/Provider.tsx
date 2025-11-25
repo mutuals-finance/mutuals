@@ -81,7 +81,7 @@ export default function AuthShellProvider({
   const onLoginComplete = useCallback(
     async (params?: OnLoginCompleteParams) => {
       const { identify = true } = params || {};
-      if (params?.requiresWallet && !params.user?.isGuest) {
+      if (params?.requiresWallet) {
         await createWallet({
           createAdditional: false,
           ...params?.createWalletOptions,
