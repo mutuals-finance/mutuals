@@ -1,5 +1,6 @@
 {
   "name": "@mutuals/cms",
+  "private": true,
   "version": "1.0.0",
   "description": "A blank template to get started with Payload 3.0",
   "license": "MIT",
@@ -18,8 +19,12 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "3.65.0",
     "@payloadcms/next": "3.65.0",
+    "@payloadcms/plugin-redirects": "^3.65.0",
+    "@payloadcms/plugin-seo": "^3.65.0",
     "@payloadcms/richtext-lexical": "3.65.0",
+    "@payloadcms/storage-vercel-blob": "^3.65.0",
     "@payloadcms/ui": "3.65.0",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
@@ -28,23 +33,22 @@
     "payload": "3.65.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "sharp": "0.34.2",
-    "@payloadcms/db-postgres": "3.65.0"
+    "sharp": "0.34.2"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
+    "@playwright/test": "1.56.1",
+    "@testing-library/react": "16.3.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.1",
-    "typescript": "^5.9.3",
-    "@playwright/test": "1.56.1",
-    "@testing-library/react": "16.3.0",
     "@vitejs/plugin-react": "4.5.2",
+    "eslint": "^9.39.1",
     "jsdom": "26.1.0",
     "playwright": "1.56.1",
     "playwright-core": "1.56.1",
+    "typescript": "^5.9.3",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.2.3"
   },
