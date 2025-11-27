@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 
 import { isAdmin } from "@/access/isAdmin";
 import { publishedOnly } from "@/access/publishedOnly";
-import { Banner } from "@/blocks/Banner";
 import richText from "../fields/richText";
 import { slugField } from "@/fields/slug";
 import { formatPreviewURL } from "@/utilities/formatPreviewURL";
@@ -176,14 +175,7 @@ export const Posts: CollectionConfig = {
     {
       name: "content",
       type: "blocks",
-      blockReferences: [
-        Banner,
-        "blogContent",
-        "code",
-        "blogMarkdown",
-        "mediaBlock",
-        "reusableContentBlock",
-      ],
+      blockReferences: ["blogContent", "code"],
       blocks: [],
       required: true,
     },

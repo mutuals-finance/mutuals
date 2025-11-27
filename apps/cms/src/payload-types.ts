@@ -68,8 +68,6 @@ export interface Config {
   blocks: {
     blogContent: BlogContent;
     blogMarkdown: BlogMarkdown;
-    mediaBlock: MediaBlock;
-    reusableContentBlock: ReusableContentBlock;
     code: Code;
   };
   collections: {
@@ -77,7 +75,6 @@ export interface Config {
     posts: Post;
     categories: Category;
     users: User;
-    'reusable-content': ReusableContent;
     redirects: Redirect;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -94,7 +91,6 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    'reusable-content': ReusableContentSelect<false> | ReusableContentSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -140,13 +136,6 @@ export interface UserAuthOperations {
  */
 export interface BlogContent {
   blogContentFields: {
-    settings?: {
-      /**
-       * Leave blank for system default
-       */
-      theme?: ('light' | 'dark') | null;
-      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown') | null;
-    };
     richText: {
       root: {
         type: string;
@@ -173,13 +162,6 @@ export interface BlogContent {
  */
 export interface BlogMarkdown {
   blogMarkdownFields: {
-    settings?: {
-      /**
-       * Leave blank for system default
-       */
-      theme?: ('light' | 'dark') | null;
-      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown') | null;
-    };
     markdown: string;
   };
   id?: string | null;
@@ -188,136 +170,10 @@ export interface BlogMarkdown {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "mediaBlock".
- */
-export interface MediaBlock {
-  mediaBlockFields: {
-    settings?: {
-      /**
-       * Leave blank for system default
-       */
-      theme?: ('light' | 'dark') | null;
-      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown') | null;
-    };
-    position?: ('default' | 'wide') | null;
-    media: number | Media;
-    caption?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  /**
-   * Choose an upload to render if the visitor is using dark mode.
-   */
-  darkModeFallback?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reusableContentBlock".
- */
-export interface ReusableContentBlock {
-  reusableContentBlockFields: {
-    settings?: {
-      /**
-       * Leave blank for system default
-       */
-      theme?: ('light' | 'dark') | null;
-      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown') | null;
-    };
-    reusableContent: number | ReusableContent;
-    customId?: string | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'reusableContentBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reusable-content".
- */
-export interface ReusableContent {
-  id: number;
-  title: string;
-  layout: {
-    bannerFields: {
-      settings?: {
-        /**
-         * Leave blank for system default
-         */
-        theme?: ('light' | 'dark') | null;
-        background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown') | null;
-      };
-      type?: ('default' | 'success' | 'warning' | 'error') | null;
-      addCheckmark?: boolean | null;
-      content: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-    };
-    id?: string | null;
-    blockName?: string | null;
-    blockType: 'banner';
-  }[];
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "code".
  */
 export interface Code {
   codeFields: {
-    settings?: {
-      /**
-       * Leave blank for system default
-       */
-      theme?: ('light' | 'dark') | null;
-      background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown') | null;
-    };
     language?: ('none' | 'js' | 'ts') | null;
     code: string;
     codeBlips?:
@@ -388,44 +244,7 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  content: (
-    | {
-        bannerFields: {
-          settings?: {
-            /**
-             * Leave blank for system default
-             */
-            theme?: ('light' | 'dark') | null;
-            background?: ('solid' | 'transparent' | 'gradientUp' | 'gradientDown') | null;
-          };
-          type?: ('default' | 'success' | 'warning' | 'error') | null;
-          addCheckmark?: boolean | null;
-          content: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-        };
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'banner';
-      }
-    | BlogContent
-    | Code
-    | BlogMarkdown
-    | MediaBlock
-    | ReusableContentBlock
-  )[];
+  content: (BlogContent | Code)[];
   relatedPosts?: (number | Post)[] | null;
   slug?: string | null;
   authorType?: ('guest' | 'team') | null;
@@ -449,6 +268,29 @@ export interface Post {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  /**
+   * Choose an upload to render if the visitor is using dark mode.
+   */
+  darkModeFallback?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -559,10 +401,6 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
-        relationTo: 'reusable-content';
-        value: number | ReusableContent;
-      } | null)
-    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null);
@@ -641,29 +479,7 @@ export interface PostsSelect<T extends boolean = true> {
   category?: T;
   tags?: T;
   excerpt?: T;
-  content?:
-    | T
-    | {
-        banner?:
-          | T
-          | {
-              bannerFields?:
-                | T
-                | {
-                    settings?:
-                      | T
-                      | {
-                          theme?: T;
-                          background?: T;
-                        };
-                    type?: T;
-                    addCheckmark?: T;
-                    content?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-      };
+  content?: T | {};
   relatedPosts?: T;
   slug?: T;
   authorType?: T;
@@ -728,38 +544,6 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reusable-content_select".
- */
-export interface ReusableContentSelect<T extends boolean = true> {
-  title?: T;
-  layout?:
-    | T
-    | {
-        banner?:
-          | T
-          | {
-              bannerFields?:
-                | T
-                | {
-                    settings?:
-                      | T
-                      | {
-                          theme?: T;
-                          background?: T;
-                        };
-                    type?: T;
-                    addCheckmark?: T;
-                    content?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

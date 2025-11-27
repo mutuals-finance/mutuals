@@ -10,7 +10,6 @@ import { Users } from "@/collections/Users";
 import { Media } from "@/collections/Media";
 import { Posts } from "@/collections/Posts";
 import { Categories } from "@/collections/Categories";
-import { ReusableContent } from "@/collections/ReusableContent";
 import { revalidateRedirects } from "@/hooks/revalidateRedirects";
 
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
@@ -19,8 +18,6 @@ import { seoPlugin } from "@payloadcms/plugin-seo";
 import { BlogContent } from "@/blocks/BlogContent";
 import { Code } from "@/blocks/Code";
 import { BlogMarkdown } from "@/blocks/BlogMarkdown";
-import { MediaBlock } from "@/blocks/Media";
-import { ReusableContent as ReusableContentBlock } from "@/blocks/ReusableContent";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -35,182 +32,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  blocks: [
-    BlogContent,
-    BlogMarkdown,
-    /*
-    CodeExampleBlock,
-    MediaExampleBlock,
-    Callout,
-    CallToAction,
-    DownloadBlock,
-    LightDarkImageBlock,
-    TableWithDrawersBlock,
-    YoutubeBlock,
-    CardGrid,
-    CaseStudyCards,
-    CaseStudiesHighlight,
-    UploadBlock,
-    CaseStudyParallax,
-    CodeFeature,
-    Content,
-    ContentGrid,
-    ComparisonTable,
-    Form,
-    HoverCards,
-    HoverHighlights,
-    LinkGrid,
-    LogoGrid,
-*/
-    MediaBlock,
-    /*
-    MediaContent,
-    MediaContentAccordion,
-    RestExamplesBlock,
-    Pricing,
-*/
-    ReusableContentBlock,
-    /*
-    ResourceBlock,
-    Slider,
-    Statement,
-    Steps,
-    StickyHighlights,
-    ExampleTabs,
-    {
-      slug: "spotlight",
-      fields: [
-        {
-          name: "element",
-          type: "select",
-          options: [
-            {
-              label: "H1",
-              value: "h1",
-            },
-            {
-              label: "H2",
-              value: "h2",
-            },
-            {
-              label: "H3",
-              value: "h3",
-            },
-            {
-              label: "Paragraph",
-              value: "p",
-            },
-          ],
-        },
-        {
-          name: "richText",
-          type: "richText",
-          editor: lexicalEditor(),
-        },
-      ],
-      interfaceName: "SpotlightBlock",
-    },
-    {
-      slug: "video",
-      fields: [
-        {
-          name: "url",
-          type: "text",
-        },
-      ],
-      interfaceName: "VideoBlock",
-    },
-    {
-      slug: "br",
-      fields: [
-        {
-          name: "ignore",
-          type: "text",
-        },
-      ],
-
-      interfaceName: "BrBlock",
-    },
-    VideoDrawerBlock,
-    {
-      slug: "commandLine",
-      fields: [
-        {
-          name: "command",
-          type: "text",
-        },
-      ],
-      interfaceName: "CommandLineBlock",
-    },
-    {
-      slug: "command",
-      fields: [
-        {
-          name: "command",
-          type: "text",
-          required: true,
-        },
-      ],
-      labels: {
-        plural: "Command Lines",
-        singular: "Command Line",
-      },
-    },
-    {
-      slug: "link",
-      fields: [link()],
-      labels: {
-        plural: "Links",
-        singular: "Link",
-      },
-    },
-    {
-      slug: "templateCards",
-      fields: [
-        {
-          name: "templates",
-          type: "array",
-          fields: [
-            {
-              name: "name",
-              type: "text",
-              required: true,
-            },
-            {
-              name: "description",
-              type: "textarea",
-              required: true,
-            },
-            {
-              name: "image",
-              type: "text",
-              required: true,
-            },
-            {
-              name: "slug",
-              type: "text",
-              required: true,
-            },
-            {
-              name: "order",
-              type: "number",
-              required: true,
-            },
-          ],
-          labels: {
-            plural: "Templates",
-            singular: "Template",
-          },
-        },
-      ],
-      interfaceName: "TemplateCardsBlock",
-    },
-    BannerBlock,
-    CodeBlock,
-*/
-    Code,
-  ],
-  collections: [Media, Posts, Categories, Users, ReusableContent],
+  blocks: [BlogContent, BlogMarkdown, Code],
+  collections: [Media, Posts, Categories, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

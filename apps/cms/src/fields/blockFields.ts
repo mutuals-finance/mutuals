@@ -68,6 +68,7 @@ export const blockFields = ({ name, fields, overrides }: Args): Field =>
         },
       },
       fields: [
+        /*
         {
           type: "collapsible",
           fields: [
@@ -89,6 +90,7 @@ export const blockFields = ({ name, fields, overrides }: Args): Field =>
           ],
           label: "Settings",
         },
+*/
         ...fields,
       ],
       label: false,
