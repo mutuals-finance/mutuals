@@ -45,6 +45,9 @@ export default buildConfig({
     },
   }),
   sharp,
+  graphQL: {
+    disablePlaygroundInProduction: false,
+  },
   plugins: [
     seoPlugin({
       collections: ["posts"],
