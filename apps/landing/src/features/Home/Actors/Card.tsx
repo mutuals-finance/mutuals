@@ -180,7 +180,7 @@ export default function ActorCard({
                 <Button
                   size="xl"
                   w={{ base: "full", lg: "auto" }}
-                  variant={"surface"}
+                  variant={"subtle"}
                   {...buttonProps}
                 >
                   Learn More

@@ -4,13 +4,7 @@ const textStyles = defineTextStyles({
   link: {
     description: "The link style - used for links",
     value: {
-      fontWeight: "500",
-      textDecoration: "none",
-      textDecorationLine: "none",
-      _hover: {
-        textDecoration: "none",
-        textDecorationLine: "none",
-      },
+      fontWeight: "semibold",
     },
   },
 }) as Record<string, NonNullable<unknown>>;

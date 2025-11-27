@@ -1,13 +1,20 @@
-import { Button, ButtonProps, Center, Icon, Link } from "@mutuals/ui";
+import {
+  Button,
+  ButtonProps,
+  Center,
+  Icon,
+  Link,
+  EmptyStateCard,
+  type EmptyStateCardProps,
+} from "@mutuals/ui";
 import React from "react";
-import EmptyCard, { type EmptyCardProps } from "@/components/EmptyCard";
 import { LuConstruction } from "react-icons/lu";
 
 export type FeatureUpcomingProps = Omit<
-  EmptyCardProps,
+  EmptyStateCardProps,
   "children" | "title"
 > & {
-  title?: EmptyCardProps["title"];
+  title?: EmptyStateCardProps["title"];
   actionProps?: ButtonProps;
 };
 
@@ -19,7 +26,7 @@ export default function FeatureUpcoming({
   ...props
 }: FeatureUpcomingProps) {
   return (
-    <EmptyCard
+    <EmptyStateCard
       title={title}
       description={description}
       colorPalette={colorPalette}
@@ -39,10 +46,10 @@ export default function FeatureUpcoming({
     >
       {actionProps && <Button size={"sm"} variant="outline" {...actionProps} />}
       <Link href={"mailto:hello@mutuals.finance"} asChild={true}>
-        <Button size={"sm"} colorPalette={"gray"}>
-          Let Us Know You Need This
+        <Button size={"md"} colorPalette={"gray"}>
+          Let us know you need this
         </Button>
       </Link>
-    </EmptyCard>
+    </EmptyStateCard>
   );
 }

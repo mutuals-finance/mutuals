@@ -4,6 +4,9 @@ parameters:
   run-shared:
     type: boolean
     default: false
+  run-cms:
+    type: boolean
+    default: false
   run-landing:
     type: boolean
     default: false
@@ -16,6 +19,7 @@ parameters:
   run-contracts:
     type: boolean
     default: false
+
 workflows:
   run-app:
     jobs:

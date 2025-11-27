@@ -10,6 +10,8 @@ import {
 } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
 import { LuExternalLink } from "react-icons/lu";
+import { useEffect, useRef } from "react";
+import { useLayout } from "@/features/Layout/Provider";
 
 export interface NavLinkProps extends LinkProps {
   external?: boolean;
@@ -25,12 +27,12 @@ export default function NavLink({
   const isActive = pathname === props.href;
 
   const link = (
-    <Link color={"inherit"} textStyle={"sm"} fontWeight={"medium"} {...props}>
+    <Link textStyle={"sm"} {...props}>
       {children} {external && <LuExternalLink />}
     </Link>
   );
 
-  return props.links && props.links.length > 0 && props.links.length <= 0 ? (
+  return props.links && props.links.length > 0 ? (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>{link}</HoverCard.Trigger>
       <Portal>

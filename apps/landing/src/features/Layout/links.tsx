@@ -13,9 +13,9 @@ const links: NavLinkProps[] = [
     href: "/contact",
   },
   { children: "Socials", href: "/socials" },
-  { children: "Blog", external: true, href: "/blog" },
+  { children: "Blog", href: "/blog/" },
   {
-    children: "Docs",
+    children: "Documentation",
     external: true,
     target: "_blank",
     href: "https://docs.mutuals.finance",

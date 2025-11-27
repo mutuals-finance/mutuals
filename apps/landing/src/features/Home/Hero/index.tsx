@@ -68,7 +68,7 @@ export default function HomeHero() {
                   target="_blank"
                   asChild={true}
                 >
-                  <Button size={"xl"}>Start for free</Button>
+                  <Button size={"xl"}>Launch app</Button>
                 </Link>
                 <Link
                   href={"https://docs.mutuals.finance"}
@@ -76,7 +76,7 @@ export default function HomeHero() {
                   asChild={true}
                 >
                   <Button size={"xl"} variant={"subtle"}>
-                    Learn more
+                    Documentation
                   </Button>
                 </Link>
               </Group>

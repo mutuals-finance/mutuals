@@ -13,7 +13,7 @@ export function usePoolCreate(): [(input: PoolCreateInput) => void, any] {
         .flatten()
         .map(({ _parent, _children, _index, children, ...node }) => ({
           ...node,
-          children: children?.map((c) => c.label) ?? [],
+          children: children?.map((c) => c.label!) ?? [],
           // TODO parentLabel, childrenLabels
         }));
       const input = { ..._input, addClaims };

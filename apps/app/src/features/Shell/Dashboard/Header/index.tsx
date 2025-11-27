@@ -13,6 +13,8 @@ import {
   ButtonGroup,
   Menu,
   Button,
+  Show,
+  Box,
 } from "@mutuals/ui";
 import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
@@ -48,17 +50,31 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
         position={"relative"}
         as="header"
         h={{ base: "16", md: "16" }}
-        px={{ base: "6", lg: "12" }}
+        pl={{ base: "6", lg: "4" }}
+        pr={{ base: "6", lg: "12" }}
         py={"6"}
         alignItems={"center"}
         justifyContent={"space-between"}
         gap={{ base: "1", lg: "4" }}
-        borderBottomWidth="1px"
-        borderColor={"border"}
-        bg={"bg"}
+        bgColor={"bg/50"}
+        css={{
+          backdropFilter: "blur(12px)",
+        }}
         direction={"row"}
       >
-        <MutualsLogo w={{ base: "28", md: "28" }} href={"/"} />
+        <Stack
+          direction={"row"}
+          mr={"auto"}
+          w={{ lg: "52" }}
+          justify={"space-between"}
+        >
+          <MutualsLogo w={"28"} href={"/"} />
+          <SidebarToggle
+            aria-label={"Toggle Desktop Sidebar"}
+            onClick={desktop.onToggle}
+            hideBelow={"lg"}
+          />
+        </Stack>
 
         <AbsoluteCenter hideBelow={"lg"} w={"full"} maxW={"xs"}>
           <Form w={"full"}>
@@ -68,31 +84,41 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
           </Form>
         </AbsoluteCenter>
 
-        <SidebarToggle
-          aria-label={"Toggle Desktop Sidebar"}
-          hideBelow={"lg"}
-          onClick={desktop.onToggle}
-          mr={"auto"}
-        />
-
         <Stack direction={"row"} gap={4} ml={"auto"}>
           <Chain />
           <ButtonGroup>
             <ShellDashboardHeaderUserMenu>
-              <Menu.Trigger asChild>
-                <Button variant={"subtle"} size={"sm"} loading={!ready}>
-                  {!authenticated ? (
-                    <IoEllipsisHorizontal />
-                  ) : (
-                    <>
-                      <UserAvatar
-                        size={"2xs"}
-                        address={user?.wallet?.address}
-                      />
-                      {shortenAddress(user?.wallet?.address)}
-                    </>
-                  )}
-                </Button>
+              <Menu.Trigger asChild={true}>
+                <Box>
+                  <Show when={authenticated}>
+                    <Button
+                      variant={"subtle"}
+                      size={"sm"}
+                      loading={!ready}
+                      hideFrom={"lg"}
+                    >
+                      <UserButtonContent />
+                    </Button>
+                  </Show>
+
+                  <Button
+                    variant={"subtle"}
+                    size={"sm"}
+                    loading={!ready}
+                    hideBelow={"lg"}
+                  >
+                    <Show
+                      when={authenticated}
+                      fallback={
+                        <Icon>
+                          <IoEllipsisHorizontal />
+                        </Icon>
+                      }
+                    >
+                      <UserButtonContent />
+                    </Show>
+                  </Button>
+                </Box>
               </Menu.Trigger>
             </ShellDashboardHeaderUserMenu>
             {ready && !authenticated && (
@@ -109,8 +135,8 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
 
         <SidebarToggle
           aria-label={"Toggle Mobile Sidebar"}
-          hideFrom={"lg"}
           onClick={mobile.onToggle}
+          hideFrom={"lg"}
         />
       </Stack>
     </Stack>
@@ -119,15 +145,21 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
 
 function SidebarToggle(props: IconButtonProps) {
   return (
-    <IconButton
-      size={"md"}
-      aria-label={"Toggle Sidebar"}
-      variant={"ghost"}
-      {...props}
-    >
+    <IconButton size={"md"} variant={"ghost"} {...props}>
       <Icon size={"lg"}>
         <VscMenu />
       </Icon>
     </IconButton>
+  );
+}
+
+function UserButtonContent() {
+  const { user } = usePrivy();
+
+  return (
+    <>
+      <UserAvatar size={"2xs"} address={user?.wallet?.address} />
+      {shortenAddress(user?.wallet?.address)}
+    </>
   );
 }

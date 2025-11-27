@@ -3,14 +3,14 @@ import { ImageResponseOptions } from "next/server";
 import renderBaseIcon from "./base-icon";
 
 // 48, 96, 144,
-export const iconSizes = [32, 48, 96, 144, 192, 256, 512, 1024];
+export const iconSizes = [48, 72, 96, 144, 192, 512, 1024];
 
 export const defaultContentType = "image/png";
 
 export function defaultGenerateImageMetadata() {
   return iconSizes.map((size) => ({
     id: size,
-    contentType: "image/png",
+    contentType: defaultContentType,
     size: { width: size, height: size },
   }));
 }

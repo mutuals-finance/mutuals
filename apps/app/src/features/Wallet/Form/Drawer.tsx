@@ -48,6 +48,7 @@ export function WalletFormDrawer({
       };
 
       try {
+        /*
         const { signature, message, nonce } = await signMessage({
           modalProps: {
             prompt:
@@ -55,7 +56,7 @@ export function WalletFormDrawer({
           },
         });
 
-        /*  const res = await addWallet({
+          const res = await addWallet({
             variables: {
               chainAddress,
               authMechanism: {

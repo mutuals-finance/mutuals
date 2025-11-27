@@ -1,7 +1,6 @@
 "use client";
 
 import { PropsWithChildren } from "react";
-import RouterTabs from "@/components/RouterTabs";
 import {
   Button,
   DrawerBackdrop,
@@ -14,6 +13,7 @@ import {
   DrawerContext,
   DrawerHeader,
   DrawerTitle,
+  RouterTabs,
 } from "@mutuals/ui";
 import { useRouter } from "next/navigation";
 

@@ -6,43 +6,39 @@ import {
   StackProps,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
-import mobilePaymentsIcon from "@/assets/payment/all-mobile.svg";
-import desktopPaymentsIcon from "@/assets/payment/all-desktop.svg";
+import mobilePaymentsIcon from "@/assets/payment/hero-mobile.svg";
+import desktopPaymentsIcon from "@/assets/payment/hero-desktop.svg";
 
 export default function HomeHeroImage(props: StackProps) {
   return (
     <Stack
-      p={"3"}
-      bgColor={"bg.emphasized/25"}
+      p={{ base: "6", md: "12" }}
+      bgColor={{ _light: "white/25", _dark: "white/0" }}
       css={{
         backdropFilter: "blur(12px)",
       }}
+      bgImage={
+        "radial-gradient(circle at 1px 1px, {colors.fg.subtle/50} 1px, transparent 0)"
+      }
+      bgSize={"var(--chakra-sizes-6) var(--chakra-sizes-6)"}
+      alignItems={"center"}
       rounded={"2xl"}
       {...props}
     >
-      <Stack
-        p={{ base: "6", md: "12" }}
-        bgColor={"white"}
-        bgImage={
-          "radial-gradient(circle at 1px 1px, {colors.fg.subtle/25} 1px, transparent 0)"
-        }
-        bgSize={"var(--chakra-sizes-6) var(--chakra-sizes-6)"}
-        alignItems={"center"}
-        rounded={"2xl"}
-      >
-        <HomeHeroRatioImage
-          hideFrom={"md"}
-          ratio={2106 / 4014}
+      <Box rounded={"2xl"} hideFrom={"md"}>
+        <NextImage
           src={mobilePaymentsIcon}
           alt={"Mutuals payment mobile options image"}
+          width={800}
         />
-        <HomeHeroRatioImage
-          hideBelow={"md"}
-          ratio={4893 / 1964}
+      </Box>
+      <Box rounded={"2xl"} hideBelow={"md"}>
+        <NextImage
           src={desktopPaymentsIcon}
           alt={"Mutuals payment desktop options image"}
+          width={800}
         />
-      </Stack>
+      </Box>
     </Stack>
   );
 }

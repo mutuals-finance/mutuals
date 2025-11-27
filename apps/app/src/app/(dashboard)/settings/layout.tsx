@@ -1,7 +1,6 @@
 import { PropsWithChildren } from "react";
-import RouterTabs from "@/components/RouterTabs";
 import ShellPage from "@/features/Shell/Page";
-import { Container } from "@mutuals/ui";
+import { Container, RouterTabs } from "@mutuals/ui";
 
 export default async function UserSettingsLayout({
   children,

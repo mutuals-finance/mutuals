@@ -74,4 +74,6 @@ export * from "./mutuals/file-upload";
 export * from "./mutuals/form";
 export * from "./mutuals/form/index";
 export * from "./mutuals/form-error-alert";
+export * from "./mutuals/router-tabs";
 export * from "./mutuals/color-mode-menu";
+export * from "./mutuals/empty-state-card";

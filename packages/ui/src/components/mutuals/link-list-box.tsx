@@ -39,7 +39,7 @@ export function LinkListBox({
         )}
         {links.length > 0 &&
           links.map((props, index) => (
-            <Link fontSize={"sm"} key={index} {...props} />
+            <Link textStyle={"sm"} variant="plain" key={index} {...props} />
           ))}
         {children}
       </Stack>

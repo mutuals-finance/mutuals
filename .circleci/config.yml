@@ -6,6 +6,9 @@ parameters:
   run-shared:
     type: boolean
     default: false
+  run-cms:
+    type: boolean
+    default: false
   run-landing:
     type: boolean
     default: false
@@ -39,6 +42,7 @@ jobs:
             .* run-shared true .circleci/shared-config.yml
             (?!apps\/|packages\/).* run-shared true .circleci/noop.yml
             (apps\/app|packages)\/.* run-app true .circleci/app/config.yml
+            (apps\/cms|packages)\/.* run-cms true .circleci/cms/config.yml
             (apps\/landing|packages)\/.* run-landing true .circleci/landing/config.yml
             (apps\/docs|packages)\/.* run-docs true .circleci/docs/config.yml
             (apps\/contracts|packages\/eslint-config|packages\/typescript-config|packages\/graphql-client-nextjs)\/.* run-contracts true .circleci/contracts/config.yml

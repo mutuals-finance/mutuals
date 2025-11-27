@@ -4,7 +4,7 @@ import {
 } from "@mutuals/graphql-client-nextjs";
 import { TreeCollection, TreeView } from "@mutuals/ui";
 
-export type ClaimCreateNode = MutualsClaimCreateInput & {
+export type ClaimCreateNode = Omit<MutualsClaimCreateInput, "children"> & {
   children: ClaimCreateNode[];
 };
 

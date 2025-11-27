@@ -57,11 +57,13 @@ export default function NavMobileDrawer({
             <Link
               key={index}
               href={href}
-              p={"6"}
+              py={"4"}
+              px={"6"}
               w={"full"}
               textStyle={"lg"}
               asChild
               focusRing={"none"}
+              indicator={false}
               {...link}
             >
               <Center inline gap="6" flex={"1"} justifyContent={"flex-start"}>

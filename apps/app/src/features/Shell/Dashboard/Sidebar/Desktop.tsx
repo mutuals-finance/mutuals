@@ -102,7 +102,7 @@ function ShellDashboardSidebarDesktopSection({
               justifyContent={"flex-start"}
               px={"0.95rem"}
               gap={"4"}
-              size={"lg"}
+              size={"xl"}
               fontSize={"sm"}
               textAlign={"left"}
               overflow={"hidden"}

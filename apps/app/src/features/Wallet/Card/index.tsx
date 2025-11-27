@@ -10,17 +10,16 @@ import {
   Group,
   Link,
   Button,
+  Box,
+  MenuItemGroup,
 } from "@mutuals/ui";
 import React from "react";
 import { shortenAddress } from "@/utils";
 
 import UserAvatar from "src/features/Wallet/Avatar";
-import {
-  IoEllipsisHorizontal,
-  IoEyeOffOutline,
-  IoOpenOutline,
-} from "react-icons/io5";
+import { IoEllipsisHorizontal, IoEyeOffSharp } from "react-icons/io5";
 import { WalletWithMetadata } from "@privy-io/react-auth";
+import { RiExternalLinkFill } from "react-icons/ri";
 
 export type WalletCardAccountType = WalletWithMetadata;
 
@@ -46,30 +45,41 @@ export default function WalletCard({ data, ...props }: WalletCardProps) {
       <Card.Footer>
         <MenuRoot>
           <Group w={"full"} attached={true}>
-            <Link href={`wallet/${data?.address}`} flex="1" asChild={true}>
-              <Button size={"md"} w="full" roundedRight={0} variant={"surface"}>
+            <Link href={`/wallet/${data?.address}`} flex="1" asChild={true}>
+              <Button size={"md"} w="full" roundedRight={0} variant={"subtle"}>
                 Manage
               </Button>
             </Link>
             <MenuTrigger asChild>
               <IconButton
                 size={"md"}
-                variant={"surface"}
+                variant={"subtle"}
                 aria-label="Wallet Options"
               >
                 <IoEllipsisHorizontal />
               </IconButton>
             </MenuTrigger>
           </Group>
-          <MenuContent>
-            <MenuItem value="Etherscan">
-              <IoOpenOutline />
-              Etherscan
-            </MenuItem>
-            <MenuItem value="Hide">
-              <IoEyeOffOutline />
-              Hide
-            </MenuItem>
+          <MenuContent minW={"44"}>
+            <MenuItemGroup title={"Handle wallet"}>
+              <Link
+                asChild={true}
+                href={`https://etherscan.io/address/${data?.address}`}
+                target={"_blank"}
+                rel={"noreferrer noopener"}
+                w={"full"}
+              >
+                <MenuItem value="etherscan">
+                  <Box flex={"1"}>Inspect</Box>
+                  <RiExternalLinkFill />
+                </MenuItem>
+              </Link>
+
+              <MenuItem value="hide" disabled={true}>
+                <Box flex={"1"}>Hide</Box>
+                <IoEyeOffSharp />
+              </MenuItem>
+            </MenuItemGroup>
           </MenuContent>
         </MenuRoot>
       </Card.Footer>

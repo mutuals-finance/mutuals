@@ -1,8 +1,11 @@
 "use client";
 
-import { DrawerRootProps, useBreakpointValue } from "@mutuals/ui";
-
-import RouterTabs, { RouterTabProps } from "@/components/RouterTabs";
+import {
+  DrawerRootProps,
+  useBreakpointValue,
+  RouterTabs,
+  type RouterTabProps,
+} from "@mutuals/ui";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import ShellPoolOverviewSidebarMobile from "@/features/Shell/PoolOverview/Sidebar/Mobile";
 import ShellPoolOverviewSidebarDesktop from "@/features/Shell/PoolOverview/Sidebar/Desktop";
