@@ -12,15 +12,15 @@
     "next": "15.x"
   },
   "devDependencies": {
-    "@types/node": "^24.10.0",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.1",
     "react": "^19.2.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@mutuals/ui": "workspace:^",
-    "mixpanel-browser": "^2.71.1"
+    "mixpanel-browser": "^2.72.0"
   }
 }

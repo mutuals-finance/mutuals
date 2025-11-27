@@ -1,11 +1,11 @@
 import { Footer, Layout, Navbar } from "nextra-theme-docs";
 import { Head } from "nextra/components";
 import { getPageMap } from "nextra/page-map";
-import "nextra-theme-docs/style.css";
 import { Metadata, Viewport } from "next";
 import { PropsWithChildren } from "react";
 import { createMetadata, createViewport } from "@mutuals/metadata-nextjs";
 import fonts from "@mutuals/ui/font";
+import "nextra-theme-docs/style.css";
 import "./globals.css";
 
 export const metadata: Metadata = createMetadata({

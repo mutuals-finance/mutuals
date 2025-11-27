@@ -27,7 +27,7 @@
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "@types/react": "^19.2.2",
+    "@types/react": "^19.2.7",
     "eslint": "^9.39.1",
     "typescript": "^5.9.3"
   }
