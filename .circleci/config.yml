@@ -23,7 +23,7 @@ parameters:
     default: false
 
 orbs:
-  path-filtering: circleci/path-filtering@2.0.0
+  path-filtering: circleci/path-filtering@2.2.0
   circleci-cli: circleci/circleci-cli@0.1.9
   continuation: circleci/continuation@1.0.0
 
