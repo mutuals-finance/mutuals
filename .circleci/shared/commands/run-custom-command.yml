@@ -6,4 +6,4 @@ parameters:
 steps:
   - run:
       name: Run Custom Command
-      command: pnpm <>
+      command: pnpm <<parameters.command>>
