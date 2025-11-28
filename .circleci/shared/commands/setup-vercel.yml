@@ -1,9 +1,8 @@
 description: "Setup Vercel CLI and environment"
 parameters:
   vercel-environment:
-    type: enum
+    type: string
     default: preview
-    enum: ["preview", "production"]
   vercel-project-id:
     type: string
   vercel-org-id:

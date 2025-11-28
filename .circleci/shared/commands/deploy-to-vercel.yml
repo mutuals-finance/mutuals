@@ -1,9 +1,8 @@
 description: "Build and deploy to Vercel"
 parameters:
   vercel-environment:
-    type: enum
+    type: string
     default: preview
-    enum: ["preview", "production"]
 steps:
   - run:
       name: Build Project Artifacts
