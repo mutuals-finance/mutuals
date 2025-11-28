@@ -2,8 +2,11 @@ description: "Run a custom pnpm command"
 parameters:
   command:
     type: string
-    description: "The pnpm command to run (e.g., 'payload migrate')"
+    description: "The pnpm command to run"
+  workspace:
+    type: string
+    description: "The workspace/folder name to run the command in"
 steps:
   - run:
       name: Run Custom Command
-      command: pnpm <<parameters.command>>
+      command: pnpm --filter <<parameters.workspace>> <<parameters.command>>
