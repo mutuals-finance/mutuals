@@ -49,6 +49,7 @@ jobs:
             (apps\/docs|packages)\/.* run-docs true .circleci/docs/config.yml
             (apps\/contracts|packages\/eslint-config|packages\/typescript-config|packages\/graphql-client-nextjs)\/.* run-contracts true .circleci/contracts/config.yml
             .* run-noop true .circleci/noop.yml
+      - path-filtering/generate-config
       - run:
           name: Validate config
           command: circleci config validate /tmp/generated-config.yml
