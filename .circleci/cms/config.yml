@@ -42,9 +42,9 @@ jobs:
           vercel-project-id: <<parameters.vercel-project-id>>
           vercel-org-id: <<parameters.vercel-org-id>>
           vercel-token: <<parameters.vercel-token>>
-      - run-custom-command:
-          command: "payload migrate"
-          workspace: "cms"
+#      - run-custom-command:
+#          command: "payload migrate"
+#          workspace: "cms"
       - deploy-to-vercel:
         vercel-environment: <<parameters.vercel-environment>>
 
