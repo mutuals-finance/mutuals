@@ -1,0 +1,29 @@
+description: "Setup Vercel CLI and environment"
+parameters:
+  vercel-environment:
+    type: string
+    default: preview
+  vercel-project-id:
+    type: string
+  vercel-org-id:
+    type: string
+  vercel-token:
+    type: string
+steps:
+  - run:
+      name: Setup Environment Variables
+      command: |
+        # Writing parameters to BASH_ENV for persistence across all subsequent run steps.
+        echo 'export VERCEL_ORG_ID="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
+        echo 'export VERCEL_PROJECT_ID="'<<parameters.vercel-project-id>>'"' >> "$BASH_ENV"
+        echo 'export VERCEL_TOKEN="'<<parameters.vercel-token>>'"' >> "$BASH_ENV"
+        echo 'export TURBO_TEAM="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
+        echo 'export TURBO_TOKEN="'<<parameters.vercel-token>>'"' >> "$BASH_ENV"
+  - run:
+      name: Install Vercel CLI
+      command: npm install --global vercel@latest
+  - run:
+      name: Pull Vercel Environment Information
+      command: |
+        . "$BASH_ENV"
+        vercel pull --yes --environment=<<parameters.vercel-environment>> --token=$VERCEL_TOKEN

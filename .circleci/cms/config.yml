@@ -20,6 +20,34 @@ parameters:
     type: boolean
     default: false
 
+jobs:
+  deploy-cms:
+    executor: node-large
+    parameters:
+      vercel-environment:
+        type: enum
+        default: preview
+        enum: ["preview", "production"]
+      vercel-project-id:
+        type: string
+      vercel-org-id:
+        type: string
+      vercel-token:
+        type: string
+    steps:
+      - checkout
+      - setup-pnpm
+      - setup-vercel:
+          vercel-environment: <<parameters.vercel-environment>>
+          vercel-project-id: <<parameters.vercel-project-id>>
+          vercel-org-id: <<parameters.vercel-org-id>>
+          vercel-token: <<parameters.vercel-token>>
+      - run-custom-command:
+          command: "payload migrate"
+          workspace: "cms"
+      - deploy-to-vercel:
+        vercel-environment: <<parameters.vercel-environment>>
+
 workflows:
   run-cms:
     jobs:
@@ -27,7 +55,7 @@ workflows:
           name: "[cms] lint"
       - test:
           name: "[cms] test"
-      - deploy: &base
+      - deploy-cms: &base
           name: "[cms] deploy staging"
           vercel-project-id: $VERCEL_PROJECT_ID_CMS
           vercel-org-id: $VERCEL_ORG_ID
@@ -39,7 +67,7 @@ workflows:
           filters:
             branches:
               ignore: /main/
-      - deploy:
+      - deploy-cms:
           <<: *base
           name: "[cms] deploy production"
           vercel-environment: production

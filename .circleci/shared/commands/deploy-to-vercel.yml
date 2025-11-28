@@ -1,0 +1,26 @@
+description: "Build and deploy to Vercel"
+parameters:
+  vercel-environment:
+    type: string
+    default: preview
+steps:
+  - run:
+      name: Build Project Artifacts
+      command: |
+        . "$BASH_ENV"
+
+        opts=(--token=$VERCEL_TOKEN)
+        if [[ "<<parameters.vercel-environment>>" == "production" ]]; then
+          opts+=(--prod)
+        fi
+        vercel build "${opts[@]}"
+  - run:
+      name: Deploy Project Artifacts to Vercel
+      command: |
+        . "$BASH_ENV"
+
+        opts=(--prebuilt --token=$VERCEL_TOKEN)
+        if [[ "<<parameters.vercel-environment>>" == "production" ]]; then
+          opts+=(--prod)
+        fi
+        vercel deploy "${opts[@]}"

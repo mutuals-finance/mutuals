@@ -1,13 +1,10 @@
-docker:
-  - image: node:22
-
-resource_class: large
+executor: node-large
 
 parameters:
   vercel-environment:
     type: enum
     default: preview
-    enum: [ "preview", "production" ]
+    enum: ["preview", "production"]
   vercel-project-id:
     type: string
   vercel-org-id:
@@ -17,56 +14,11 @@ parameters:
 
 steps:
   - checkout
-  - run:
-      name: Setup Environment Variables
-      command: |
-        echo 'export VERCEL_ORG_ID="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
-        echo 'export VERCEL_PROJECT_ID="'<<parameters.vercel-project-id>>'"' >> "$BASH_ENV"
-        echo 'export VERCEL_TOKEN="'<<parameters.vercel-token>>'"' >> "$BASH_ENV"
-        echo 'export TURBO_TEAM="'$VERCEL_ORG_ID'"' >> "$BASH_ENV"
-        echo 'export TURBO_TOKEN="'$VERCEL_TOKEN'"' >> "$BASH_ENV"
-  - restore_cache:
-      name: Restore pnpm Cache
-      keys:
-        - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-  - run:
-      name: Use Latest Corepack
-      command: |
-        echo "Before: corepack version => $(corepack --version || echo 'not installed')"
-        npm install -g corepack@latest
-        echo "After : corepack version => $(corepack --version)"
-  - run:
-      name: Install pnpm Package Manager
-      command: |
-        corepack enable
-        corepack prepare pnpm@latest-9 --activate
-        pnpm config set store-dir .pnpm-store
-  - run:
-      name: Install Vercel CLI
-      command: npm install --global vercel@latest
-  - run:
-      name: Pull Vercel Environment Information
-      command: vercel pull --yes --environment=<<parameters.vercel-environment>> --token=$VERCEL_TOKEN
-  - run:
-      name: Build Project Artifacts
-      command: |
-        opts=(--token=$VERCEL_TOKEN)
-        if [[ <<parameters.vercel-environment>> == "production" ]]; then
-          opts+=(--prod)
-        fi
-
-        vercel build "${opts[@]}"
-  - run:
-      name: Deploy Project Artifacts to Vercel
-      command: |
-        opts=(--prebuilt --token=$VERCEL_TOKEN)
-
-        if [[ <<parameters.vercel-environment>> == "production" ]]; then
-          opts+=(--prod)
-        fi
-        vercel deploy "${opts[@]}"
-  - save_cache:
-      name: Save pnpm Cache
-      key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-      paths:
-        - .pnpm-store
+  - setup-pnpm
+  - setup-vercel:
+      vercel-environment: <>
+      vercel-project-id: <>
+      vercel-org-id: <>
+      vercel-token: <>
+  - deploy-to-vercel:
+      vercel-environment: <>
