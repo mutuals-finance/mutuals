@@ -1,0 +1,9 @@
+description: "Run a custom pnpm command"
+parameters:
+  command:
+    type: string
+    description: "The pnpm command to run (e.g., 'payload migrate')"
+steps:
+  - run:
+      name: Run Custom Command
+      command: pnpm <>
