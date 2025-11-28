@@ -16,9 +16,9 @@ steps:
   - checkout
   - setup-pnpm
   - setup-vercel:
-      vercel-environment: <>
-      vercel-project-id: <>
-      vercel-org-id: <>
-      vercel-token: <>
+      vercel-environment: <<parameters.vercel-environment>>
+      vercel-project-id: <<parameters.vercel-project-id>>
+      vercel-org-id: <<parameters.vercel-org-id>>
+      vercel-token: <<parameters.vercel-token>>
   - deploy-to-vercel:
-      vercel-environment: <>
+    vercel-environment: <<parameters.vercel-environment>>
