@@ -7,16 +7,20 @@ steps:
   - run:
       name: Build Project Artifacts
       command: |
+        . "$BASH_ENV"
+
         opts=(--token=$VERCEL_TOKEN)
-        if [[ <> == "production" ]]; then
+        if [[ "<<parameters.vercel-environment>>" == "production" ]]; then
           opts+=(--prod)
         fi
         vercel build "${opts[@]}"
   - run:
       name: Deploy Project Artifacts to Vercel
       command: |
+        . "$BASH_ENV"
+
         opts=(--prebuilt --token=$VERCEL_TOKEN)
-        if [[ <> == "production" ]]; then
+        if [[ "<<parameters.vercel-environment>>" == "production" ]]; then
           opts+=(--prod)
         fi
         vercel deploy "${opts[@]}"

@@ -13,11 +13,12 @@ steps:
   - run:
       name: Setup Environment Variables
       command: |
-        echo 'export VERCEL_ORG_ID="'<>'"' >> "$BASH_ENV"
-        echo 'export VERCEL_PROJECT_ID="'<>'"' >> "$BASH_ENV"
-        echo 'export VERCEL_TOKEN="'<>'"' >> "$BASH_ENV"
-        echo 'export TURBO_TEAM="'$VERCEL_ORG_ID'"' >> "$BASH_ENV"
-        echo 'export TURBO_TOKEN="'$VERCEL_TOKEN'"' >> "$BASH_ENV"
+        # Writing parameters to BASH_ENV for persistence across all subsequent run steps.
+        echo 'export VERCEL_ORG_ID="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
+        echo 'export VERCEL_PROJECT_ID="'<<parameters.vercel-project-id>>'"' >> "$BASH_ENV"
+        echo 'export VERCEL_TOKEN="'<<parameters.vercel-token>>'"' >> "$BASH_ENV"
+        echo 'export TURBO_TEAM="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
+        echo 'export TURBO_TOKEN="'<<parameters.vercel-token>>'"' >> "$BASH_ENV"
   - run:
       name: Install Vercel CLI
       command: npm install --global vercel@latest
