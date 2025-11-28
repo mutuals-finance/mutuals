@@ -21,4 +21,4 @@ steps:
       vercel-org-id: <<parameters.vercel-org-id>>
       vercel-token: <<parameters.vercel-token>>
   - deploy-to-vercel:
-    vercel-environment: <<parameters.vercel-environment>>
+      vercel-environment: <<parameters.vercel-environment>>

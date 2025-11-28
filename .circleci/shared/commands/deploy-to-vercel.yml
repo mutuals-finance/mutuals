@@ -5,7 +5,7 @@ parameters:
     default: preview
 steps:
   - run:
-      name: Build Project Artifacts
+      name: Build project artifacts
       command: |
         . "$BASH_ENV"
 
@@ -15,7 +15,7 @@ steps:
         fi
         vercel build "${opts[@]}"
   - run:
-      name: Deploy Project Artifacts to Vercel
+      name: Deploy project artifacts to Vercel
       command: |
         . "$BASH_ENV"
 

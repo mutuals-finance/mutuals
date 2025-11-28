@@ -8,5 +8,5 @@ parameters:
     description: "The workspace/folder name to run the command in"
 steps:
   - run:
-      name: Run Custom Command
+      name: Run custom command
       command: pnpm --filter <<parameters.workspace>> <<parameters.command>>
