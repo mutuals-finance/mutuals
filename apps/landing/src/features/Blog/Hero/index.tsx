@@ -57,7 +57,7 @@ export default function BlogHero() {
               </Text>
             </Box>
             <Box>
-              <Button variant={"ghost"}>Read more</Button>
+              <Button variant={"subtle"}>Read more</Button>
             </Box>
           </Stack>
         </GridItem>
