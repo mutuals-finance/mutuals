@@ -8,7 +8,7 @@ steps:
       name: Build project artifacts
       command: |
         . "$BASH_ENV"
-        echo "Environment: <<parameters.vercel-environment>>"
+
         opts=(--token=$VERCEL_TOKEN)
         if [[ "<<parameters.vercel-environment>>" == "production" ]]; then
           opts+=(--prod)
@@ -18,7 +18,7 @@ steps:
       name: Deploy project artifacts to Vercel
       command: |
         . "$BASH_ENV"
-        echo "Environment: <<parameters.vercel-environment>>"
+
         opts=(--prebuilt --token=$VERCEL_TOKEN)
         if [[ "<<parameters.vercel-environment>>" == "production" ]]; then
           opts+=(--prod)
