@@ -11,7 +11,7 @@ parameters:
     type: string
 steps:
   - run:
-      name: Setup Environment Variables
+      name: Setup environment variables
       command: |
         # Writing parameters to BASH_ENV for persistence across all subsequent run steps.
         echo 'export VERCEL_ORG_ID="'<<parameters.vercel-org-id>>'"' >> "$BASH_ENV"
@@ -23,7 +23,7 @@ steps:
       name: Install Vercel CLI
       command: npm install --global vercel@latest
   - run:
-      name: Pull Vercel Environment Information
+      name: Pull Vercel environment information
       command: |
         . "$BASH_ENV"
         vercel pull --yes --environment=<<parameters.vercel-environment>> --token=$VERCEL_TOKEN
