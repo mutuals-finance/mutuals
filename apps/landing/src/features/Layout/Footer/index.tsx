@@ -43,15 +43,21 @@ export default function LayoutFooter() {
               },
               {
                 children: "Help Center",
-                href: "/",
+                href: "https://docs.mutuals.finance/",
+                target: "_blank",
+                rel: "noopener noreferrer",
               },
               {
                 children: "Safety Center",
-                href: "/",
+                href: "https://docs.mutuals.finance/",
+                target: "_blank",
+                rel: "noopener noreferrer",
               },
               {
                 children: "Community Guidelines",
-                href: "/",
+                href: "https://docs.mutuals.finance/",
+                target: "_blank",
+                rel: "noopener noreferrer",
               },
             ]}
           />
