@@ -8,6 +8,7 @@
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build --webpack",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --port 3003 --turbopack",
+    "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
@@ -32,8 +33,7 @@
     "next": "^16.0.5",
     "payload": "3.65.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "sharp": "0.34.2"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",

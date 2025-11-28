@@ -4,7 +4,6 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
-import sharp from "sharp";
 
 import { Users } from "@/collections/Users";
 import { Media } from "@/collections/Media";
@@ -24,10 +23,7 @@ const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
-    autoLogin: {
-      email: "dev@payloadcms.com",
-      password: "test",
-    },
+    user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -44,10 +40,6 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || "",
     },
   }),
-  sharp,
-  graphQL: {
-    disablePlaygroundInProduction: false,
-  },
   plugins: [
     seoPlugin({
       collections: ["posts"],
