@@ -37,7 +37,7 @@ jobs:
           name: Generate shared configuration
           command: circleci config pack .circleci/shared >> .circleci/shared-config.yml
       - path-filtering/set-parameters:
-          base-revision: << pipeline.git.branch >>
+          base-revision: << pipeline.git.base_revision >>
           mapping: |
             .* run-shared true .circleci/shared-config.yml
             (?!apps\/|packages\/).* run-shared true .circleci/noop.yml
