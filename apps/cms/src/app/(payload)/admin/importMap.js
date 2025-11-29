@@ -26,7 +26,7 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
-import { BlogMarkdownField as BlogMarkdownField_56d4480acc26516a7f77c240ba7b194a } from '@/blocks/BlogMarkdown/Field'
+import { BlogMarkdownField as BlogMarkdownField_32a01989ab54823f4c0d98f44ae8c06c } from '../../../../../../packages/payload/src/blocks/BlogMarkdown/Field'
 import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
 export const importMap = {
@@ -58,6 +58,6 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
-  "@/blocks/BlogMarkdown/Field#BlogMarkdownField": BlogMarkdownField_56d4480acc26516a7f77c240ba7b194a,
+  "./blocks/BlogMarkdown/Field#BlogMarkdownField": BlogMarkdownField_32a01989ab54823f4c0d98f44ae8c06c,
   "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
 }

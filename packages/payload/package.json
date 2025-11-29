@@ -2,6 +2,7 @@
   "name": "@mutuals/payload",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "exports": {
     "./*": "./src/*.ts",
     "./access": "./src/access/index.ts",
@@ -11,12 +12,12 @@
     "./hooks": "./src/hooks/index.ts",
     "./utils": "./src/utils/index.ts",
     "./payload-types": "./src/payload-types.ts",
-    "./payload-config": "./src/payload.config.ts"
+    "./payload-config/*": "./src/payload.config.ts"
   },
   "scripts": {
     "clean": "rm -rf node_modules .pnpm-lock.yaml",
-    "generate:importmap": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts NODE_OPTIONS=--no-deprecation payload generate:types",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "eslint . --max-warnings=0",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",

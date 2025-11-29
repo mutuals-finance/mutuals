@@ -19,6 +19,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@mutuals/payload": "workspace:*",
     "@payloadcms/db-postgres": "3.65.0",
     "@payloadcms/next": "3.65.0",
     "@payloadcms/plugin-redirects": "^3.65.0",
