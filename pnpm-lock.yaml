@@ -171,33 +171,15 @@ importers:
       '@payloadcms/next':
         specifier: 3.65.0
         version: 3.65.0(@types/react@19.2.7)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.0.5)(payload@3.65.0)(react-dom@19.2.0)(react@19.2.0)(typescript@5.9.3)
-      '@payloadcms/plugin-redirects':
-        specifier: ^3.65.0
-        version: 3.65.0(payload@3.65.0)
-      '@payloadcms/plugin-seo':
-        specifier: ^3.65.0
-        version: 3.65.0(@types/react@19.2.7)(monaco-editor@0.55.1)(next@16.0.5)(payload@3.65.0)(react-dom@19.2.0)(react@19.2.0)(typescript@5.9.3)
-      '@payloadcms/richtext-lexical':
-        specifier: 3.65.0
-        version: 3.65.0(@faceless-ui/modal@3.0.0)(@faceless-ui/scroll-info@2.0.0)(@payloadcms/next@3.65.0)(@types/react@19.2.7)(monaco-editor@0.55.1)(next@16.0.5)(payload@3.65.0)(react-dom@19.2.0)(react@19.2.0)(typescript@5.9.3)(yjs@13.6.27)
-      '@payloadcms/storage-vercel-blob':
-        specifier: ^3.65.0
-        version: 3.65.0(@types/react@19.2.7)(monaco-editor@0.55.1)(next@16.0.5)(payload@3.65.0)(react-dom@19.2.0)(react@19.2.0)(typescript@5.9.3)
-      '@payloadcms/ui':
-        specifier: 3.65.0
-        version: 3.65.0(@types/react@19.2.7)(monaco-editor@0.55.1)(next@16.0.5)(payload@3.65.0)(react-dom@19.2.0)(react@19.2.0)(typescript@5.9.3)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      dotenv:
-        specifier: 16.4.7
-        version: 16.4.7
       graphql:
         specifier: ^16.8.1
         version: 16.12.0
       next:
         specifier: ^16.0.5
-        version: 16.0.5(@babel/core@7.28.5)(@playwright/test@1.56.1)(react-dom@19.2.0)(react@19.2.0)
+        version: 16.0.5(react-dom@19.2.0)(react@19.2.0)
       payload:
         specifier: 3.65.0
         version: 3.65.0(graphql@16.12.0)(typescript@5.9.3)
@@ -214,12 +196,6 @@ importers:
       '@mutuals/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@playwright/test':
-        specifier: 1.56.1
-        version: 1.56.1
-      '@testing-library/react':
-        specifier: 16.3.0
-        version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3)(@types/react@19.2.7)(react-dom@19.2.0)(react@19.2.0)
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.1
@@ -229,30 +205,12 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.7)
-      '@vitejs/plugin-react':
-        specifier: 4.5.2
-        version: 4.5.2(vite@7.2.4)
       eslint:
         specifier: ^9.39.1
         version: 9.39.1
-      jsdom:
-        specifier: 26.1.0
-        version: 26.1.0
-      playwright:
-        specifier: 1.56.1
-        version: 1.56.1
-      playwright-core:
-        specifier: 1.56.1
-        version: 1.56.1
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-      vite-tsconfig-paths:
-        specifier: 5.1.4
-        version: 5.1.4(typescript@5.9.3)(vite@7.2.4)
-      vitest:
-        specifier: 3.2.3
-        version: 3.2.3(@types/node@24.10.1)(jsdom@26.1.0)
 
   apps/contracts:
     devDependencies:
@@ -671,10 +629,10 @@ importers:
   packages/payload:
     dependencies:
       '@payloadcms/db-postgres':
-        specifier: 3.65.0
+        specifier: '>=3'
         version: 3.65.0(payload@3.65.0)
       '@payloadcms/next':
-        specifier: 3.65.0
+        specifier: '>=3'
         version: 3.65.0(@types/react@19.2.7)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.0.5)(payload@3.65.0)(react-dom@19.2.0)(react@19.2.0)(typescript@5.9.3)
       '@payloadcms/plugin-redirects':
         specifier: ^3.65.0
@@ -698,13 +656,13 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       graphql:
-        specifier: ^16.8.1
+        specifier: '>=16'
         version: 16.12.0
       next:
         specifier: '>=15'
         version: 16.0.5(@babel/core@7.28.5)(@playwright/test@1.56.1)(react-dom@19.2.0)(react@19.2.0)
       payload:
-        specifier: 3.65.0
+        specifier: '>=3'
         version: 3.65.0(graphql@16.12.0)(typescript@5.9.3)
       react:
         specifier: ^19.2.0
@@ -6678,7 +6636,7 @@ packages:
       graphql-http: 1.22.4(graphql@16.12.0)
       graphql-playground-html: 1.6.30
       http-status: 2.1.0
-      next: 16.0.5(@babel/core@7.28.5)(@playwright/test@1.56.1)(react-dom@19.2.0)(react@19.2.0)
+      next: 16.0.5(react-dom@19.2.0)(react@19.2.0)
       path-to-regexp: 6.3.0
       payload: 3.65.0(graphql@16.12.0)(typescript@5.9.3)
       qs-esm: 7.0.2
@@ -6844,7 +6802,7 @@ packages:
       date-fns: 4.1.0
       dequal: 2.0.3
       md5: 2.3.0
-      next: 16.0.5(@babel/core@7.28.5)(@playwright/test@1.56.1)(react-dom@19.2.0)(react@19.2.0)
+      next: 16.0.5(react-dom@19.2.0)(react@19.2.0)
       object-to-formdata: 4.5.1
       payload: 3.65.0(graphql@16.12.0)(typescript@5.9.3)
       qs-esm: 7.0.2

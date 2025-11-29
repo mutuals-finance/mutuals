@@ -15,8 +15,6 @@
     "./payload-config/*": "./src/payload.config.ts"
   },
   "scripts": {
-    "clean": "rm -rf node_modules .pnpm-lock.yaml",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "eslint . --max-warnings=0",
     "test": "pnpm run test:int && pnpm run test:e2e",
@@ -24,11 +22,13 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "peerDependencies": {
-    "next": ">=15"
+    "next": ">=15",
+    "graphql": ">=16",
+    "payload": ">=3",
+    "@payloadcms/next": ">=3",
+    "@payloadcms/db-postgres": ">=3"
   },
   "dependencies": {
-    "@payloadcms/db-postgres": "3.65.0",
-    "@payloadcms/next": "3.65.0",
     "@payloadcms/plugin-redirects": "^3.65.0",
     "@payloadcms/plugin-seo": "^3.65.0",
     "@payloadcms/richtext-lexical": "3.65.0",
@@ -36,8 +36,6 @@
     "@payloadcms/ui": "3.65.0",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
-    "graphql": "^16.8.1",
-    "payload": "3.65.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
