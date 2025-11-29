@@ -1,22 +1,29 @@
 {
-  "name": "@mutuals/cms",
+  "name": "@mutuals/payload",
+  "version": "0.0.1",
   "private": true,
-  "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
-  "license": "MIT",
-  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./access": "./src/access/index.ts",
+    "./blocks/*": "./src/blocks/*/index.ts",
+    "./collections": "./src/collections/index.ts",
+    "./fields": "./src/fields/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./utils": "./src/utils/index.ts",
+    "./payload-types": "./src/payload-types.ts",
+    "./payload-config": "./src/payload.config.ts"
+  },
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build --webpack",
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --port 3003 --turbopack",
-    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint . --max-warnings 0",
-    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "clean": "rm -rf node_modules .pnpm-lock.yaml",
+    "generate:importmap": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "eslint . --max-warnings=0",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+  },
+  "peerDependencies": {
+    "next": ">=15"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.65.0",
@@ -29,7 +36,6 @@
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
-    "next": "^16.0.5",
     "payload": "3.65.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

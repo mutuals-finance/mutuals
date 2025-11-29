@@ -7,8 +7,6 @@ steps:
   - run:
       name: Build project artifacts
       command: |
-        . "$BASH_ENV"
-
         opts=(--token=$VERCEL_TOKEN)
         if [[ "<<parameters.vercel-environment>>" == "production" ]]; then
           opts+=(--prod)

@@ -1,0 +1,8 @@
+{
+  "extends": "@mutuals/typescript-config/next.json",
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+  ],
+  "exclude": ["node_modules", "src/payload-types.ts", ".next"]
+}

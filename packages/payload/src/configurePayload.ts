@@ -1,26 +1,22 @@
+import path from "path";
+import { fileURLToPath } from "url";
+import { buildConfig, type Config } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import path from "path";
-import { buildConfig } from "payload";
-import { fileURLToPath } from "url";
-
-import { Users } from "@/collections/Users";
-import { Media } from "@/collections/Media";
-import { Posts } from "@/collections/Posts";
-import { Categories } from "@/collections/Categories";
-import { revalidateRedirects } from "@/hooks/revalidateRedirects";
-
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { seoPlugin } from "@payloadcms/plugin-seo";
-import { BlogContent } from "@/blocks/BlogContent";
-import { Code } from "@/blocks/Code";
-import { BlogMarkdown } from "@/blocks/BlogMarkdown";
+import { Users, Media, Posts, Categories } from "./collections";
+import { revalidateRedirects } from "./hooks";
+import { deepMerge } from "./utils";
+import { BlogContent } from "./blocks/BlogContent";
+import { Code } from "./blocks/Code";
+import { BlogMarkdown } from "./blocks/BlogMarkdown";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-export default buildConfig({
+const baseConfig: Config = {
   admin: {
     user: Users.slug,
     importMap: {
@@ -65,4 +61,8 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || "",
     }),
   ],
-});
+};
+
+export const configurePayload = (overrides?: Partial<Config>) => {
+  return buildConfig(deepMerge(baseConfig, overrides ?? {}));
+};

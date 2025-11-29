@@ -9,7 +9,7 @@
     "lint": "eslint . --max-warnings=0"
   },
   "peerDependencies": {
-    "next": "15.x"
+    "next": ">=15"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
