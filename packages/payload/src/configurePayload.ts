@@ -9,9 +9,7 @@ import { seoPlugin } from "@payloadcms/plugin-seo";
 import { Users, Media, Posts, Categories } from "./collections";
 import { revalidateRedirects } from "./hooks";
 import { deepMerge } from "./utils";
-import { BlogContent } from "./blocks/BlogContent";
-import { Code } from "./blocks/Code";
-import { BlogMarkdown } from "./blocks/BlogMarkdown";
+import { Code, BlogMarkdown, BlogContent } from "./blocks";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
