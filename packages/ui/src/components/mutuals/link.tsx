@@ -10,8 +10,7 @@ import { forwardRef } from "react";
 import { usePathname } from "next/navigation";
 
 export interface LinkProps
-  extends Omit<ChakraLinkProps, "href">,
-    Pick<NextLinkProps, "href"> {
+  extends Omit<ChakraLinkProps, "href">, Partial<Pick<NextLinkProps, "href">> {
   linkProps?: Omit<NextLinkProps, "href" | "children">;
   exact?: boolean;
   indicator?: boolean;
@@ -30,7 +29,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       asChild = true,
       exact = false,
       indicator = true,
-      href,
+      href = "",
       linkProps,
       ...props
     },

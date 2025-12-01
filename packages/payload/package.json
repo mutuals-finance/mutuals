@@ -1,0 +1,59 @@
+{
+  "name": "@mutuals/payload",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./access": "./src/access/index.ts",
+    "./blocks/*": "./src/blocks/*/index.ts",
+    "./collections": "./src/collections/index.ts",
+    "./fields": "./src/fields/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./utils": "./src/utils/index.ts",
+    "./payload-types": "./src/payload-types.ts",
+    "./payload-config/*": "./src/payload.config.ts"
+  },
+  "scripts": {
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "eslint . --max-warnings=0",
+    "test": "pnpm run test:int && pnpm run test:e2e",
+    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+  },
+  "peerDependencies": {
+    "next": ">=15",
+    "graphql": ">=16",
+    "payload": ">=3",
+    "@payloadcms/next": ">=3",
+    "@payloadcms/db-postgres": ">=3"
+  },
+  "dependencies": {
+    "@payloadcms/plugin-redirects": "^3.65.0",
+    "@payloadcms/plugin-seo": "^3.65.0",
+    "@payloadcms/richtext-lexical": "3.65.0",
+    "@payloadcms/storage-vercel-blob": "^3.65.0",
+    "@payloadcms/ui": "3.65.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "16.4.7",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@mutuals/eslint-config": "workspace:*",
+    "@mutuals/typescript-config": "workspace:*",
+    "@playwright/test": "1.56.1",
+    "@testing-library/react": "16.3.0",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "4.5.2",
+    "eslint": "^9.39.1",
+    "jsdom": "26.1.0",
+    "playwright": "1.56.1",
+    "playwright-core": "1.56.1",
+    "typescript": "^5.9.3",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "3.2.3"
+  }
+}

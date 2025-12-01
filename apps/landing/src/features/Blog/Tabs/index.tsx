@@ -1,32 +1,24 @@
-import { Container, ContainerProps, RouterTabs } from "@mutuals/ui";
+import {
+  Container,
+  ContainerProps,
+  RouterTabs,
+  RouterTabsProps,
+} from "@mutuals/ui";
 
-const tabs = [
-  {
-    title: "All",
-    value: "all",
-    href: `/blog`,
-  },
-  {
-    title: "Product",
-    value: "product",
-    href: `/blog/product`,
-  },
-  {
-    title: "Resources",
-    value: "resources",
-    href: `/blog/resources`,
-  },
-  {
-    title: "Announcement",
-    value: "announcement",
-    href: `/blog/announcement`,
-  },
-];
+export type BlogTabsProps = ContainerProps & {
+  tabs?: RouterTabsProps["tabs"];
+  tabsProps?: Omit<RouterTabsProps, "tabs">;
+};
 
-export default function BlogTabs({ children }: ContainerProps) {
+export default function BlogTabs({
+  children,
+  tabs,
+  tabsProps,
+  ...props
+}: BlogTabsProps) {
   return (
-    <Container maxW={"7xl"}>
-      <RouterTabs tabs={tabs} size={"lg"}>
+    <Container maxW={"7xl"} {...props}>
+      <RouterTabs tabs={tabs} size={"lg"} {...tabsProps}>
         {children}
       </RouterTabs>
     </Container>
