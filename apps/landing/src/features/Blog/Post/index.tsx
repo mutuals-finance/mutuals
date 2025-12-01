@@ -1,4 +1,4 @@
-import { Post } from "@mutuals/payload/payload-types";
+import { Post, User } from "@mutuals/payload/payload-types";
 import {
   AvatarRoot,
   Bleed,
@@ -11,29 +11,17 @@ import {
   AvatarFallback,
   HStack,
   AvatarImage,
+  AvatarImageProps,
+  StackProps,
 } from "@mutuals/ui";
 import { itemVariants } from "@/components/MotionBoxWrapper";
 import BlogPostImage from "@/features/Blog/PostImage";
 import CmsProse from "@/components/CmsProse";
 import BlogPostMetaStack from "@/features/Blog/PostMeta";
-import NextImage from "next/image";
+import { getImageProps } from "next/image";
 
 export default function BlogPost(data: Partial<Post>) {
-  const {
-    authorType,
-    category,
-    content,
-    excerpt,
-    featuredMedia,
-    guestAuthor,
-    guestSocials,
-    image,
-    publishedOn,
-    relatedPosts,
-    title,
-    videoUrl,
-    authors,
-  } = data;
+  const { content, excerpt, image, title, authors } = data;
 
   return (
     <Box pt={"20"}>
@@ -57,39 +45,18 @@ export default function BlogPost(data: Partial<Post>) {
                 alignItems={"stretch"}
               >
                 <BlogPostImage w={"full"} maxW={"4xl"} image={image} />
-                <Stack gap="6">
-                  {authors
-                    ?.filter((a) => typeof a == "object")
-                    .map((author) => (
-                      <HStack key={author.id} gap="2">
-                        <AvatarRoot>
-                          <AvatarFallback
-                            name={`${author.firstName} ${author.lastName}`}
-                          />
-                          {typeof author.photo == "object" &&
-                            author.photo &&
-                            author.photo.url && (
-                              <AvatarImage asChild={true}>
-                                <NextImage
-                                  width={48}
-                                  height={48}
-                                  src={author.photo.url}
-                                  alt={`${author.firstName} ${author.lastName}`}
-                                />
-                              </AvatarImage>
-                            )}
-                        </AvatarRoot>
-                        <Stack gap="0">
-                          <Text fontWeight="medium">
-                            {author.firstName} {author.lastName}
-                          </Text>
-                          <Text color="fg.muted" textStyle="sm">
-                            {author.email}
-                          </Text>
-                        </Stack>
-                      </HStack>
-                    ))}
-                </Stack>
+                <Box>
+                  <Text fontWeight={"medium"} textStyle={"sm"} mb={"2"}>
+                    Author
+                  </Text>
+                  <Stack gap="6">
+                    {authors
+                      ?.filter((a) => typeof a == "object")
+                      .map((author) => (
+                        <CMSUserAvatar key={author.id} user={author} />
+                      ))}
+                  </Stack>
+                </Box>
               </Stack>
             </Bleed>
             <Box w={"full"}>
@@ -112,5 +79,38 @@ export default function BlogPost(data: Partial<Post>) {
         </Stack>
       </Container>
     </Box>
+  );
+}
+
+type CMSUserAvatarProps = StackProps & { user: User };
+
+function CMSUserAvatar({ user, ...props }: CMSUserAvatarProps) {
+  let imageProps: AvatarImageProps = {};
+  console.log("Photo", user.photo);
+  if (typeof user.photo == "object" && user.photo) {
+    const { fill: _, ...nextImageProps } = getImageProps({
+      src: user.photo.url ?? "",
+      alt: user.photo.alt,
+      fill: true,
+    }).props;
+
+    imageProps = nextImageProps;
+  }
+
+  return (
+    <HStack gap="2" {...props}>
+      <AvatarRoot overflow={"hidden"}>
+        <AvatarFallback name={`${user.firstName} ${user.lastName}`} />
+        <AvatarImage w={"4"} h={"4"} {...imageProps} />
+      </AvatarRoot>
+      <Stack gap="0">
+        <Text fontWeight="medium">
+          {user.firstName} {user.lastName}
+        </Text>
+        <Text color="fg.muted" textStyle="sm">
+          {user.email}
+        </Text>
+      </Stack>
+    </HStack>
   );
 }
