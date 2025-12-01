@@ -35,7 +35,7 @@ export default function BlogPostCard({
 }: BlogPostCardProps) {
   const { title, slug } = data;
   const href = `/blog/${slug}`;
-
+  console.log("BlogPostCard", data);
   if (featured) {
     return (
       <Stack
