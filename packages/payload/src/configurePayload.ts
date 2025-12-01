@@ -52,7 +52,7 @@ const baseConfig: Config = {
       collections: {
         media: {
           generateFileURL: ({ filename }) =>
-            `https://${process.env.NEXT_PUBLIC_CMS_URL}/${filename}`,
+            `${process.env.BLOB_BASE_URL}/${filename}`,
         },
       },
       enabled: Boolean(process.env.BLOB_STORAGE_ENABLED) || false,
