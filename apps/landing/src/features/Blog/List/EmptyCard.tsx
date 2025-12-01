@@ -1,6 +1,5 @@
 import {
   Button,
-  ButtonProps,
   Center,
   EmptyStateCard,
   EmptyStateCardProps,
@@ -10,16 +9,19 @@ import {
 import { LuConstruction } from "react-icons/lu";
 import React from "react";
 
-export type BlogGridProps = Omit<EmptyStateCardProps, "children" | "title"> & {
+export type BlogListEmptyCardProps = Omit<
+  EmptyStateCardProps,
+  "children" | "title"
+> & {
   title?: EmptyStateCardProps["title"];
 };
 
-export default function BlogGrid({
-  title = "This Story's in the Works",
+export default function BlogListEmptyCard({
+  title = "This story is in the works",
   description = "We're crafting something thoughtful here. Check back soon to read what we've been working on.",
   colorPalette = "gray",
   ...props
-}: BlogGridProps) {
+}: BlogListEmptyCardProps) {
   return (
     <EmptyStateCard
       title={title}
