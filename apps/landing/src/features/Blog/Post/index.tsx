@@ -86,7 +86,7 @@ type CMSUserAvatarProps = StackProps & { user: User };
 
 function CMSUserAvatar({ user, ...props }: CMSUserAvatarProps) {
   let imageProps: AvatarImageProps = {};
-  console.log("Photo", user.photo);
+
   if (typeof user.photo == "object" && user.photo) {
     const { fill: _, ...nextImageProps } = getImageProps({
       src: user.photo.url ?? "",
