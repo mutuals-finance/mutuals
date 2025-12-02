@@ -19,7 +19,7 @@ export default async function ShellPoolOverview({
   ...props
 }: ShellPoolOverviewProps) {
   const defaultOpen = sidebarProps.tabs.some(({ href }) =>
-    href.toString().includes((children as any)?.props?.childPropSegment ?? ""),
+    href?.toString().includes((children as any)?.props?.childPropSegment ?? ""),
   );
 
   return (

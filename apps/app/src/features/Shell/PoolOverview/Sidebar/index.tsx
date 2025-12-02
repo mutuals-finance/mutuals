@@ -34,7 +34,7 @@ export default function ShellPoolOverviewSidebar({
   const params = useParams<{ id: string }>();
   const router = useRouter();
 
-  const index = tabs.findIndex((t) => pathname == t.href.toString());
+  const index = tabs.findIndex((t) => pathname == t.href?.toString());
 
   const isClosed = index < 0;
 

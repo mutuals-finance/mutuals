@@ -6,13 +6,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname, "../.."),
   },
-  serverExternalPackages: [
-    "thread-stream",
-    "pino",
-    "pino-worker",
-    "pino-file",
-    "pino-pretty",
-  ],
+  serverExternalPackages: ["pino", "pino-pretty", "thread-stream"],
   experimental: {
     optimizePackageImports: ["@mutuals/ui", "@chakra-ui/react"],
   },
