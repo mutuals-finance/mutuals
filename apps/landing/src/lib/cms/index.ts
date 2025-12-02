@@ -113,6 +113,7 @@ export const fetchPost = async (
     draft,
     limit: 1,
     select: {
+      slug: true,
       authors: true,
       authorType: true,
       category: true,

@@ -9,8 +9,9 @@ import {
   Text,
   TextProps,
   VStack,
+  Breadcrumbs,
+  type BreadcrumbsProps,
 } from "@mutuals/ui";
-import Breadcrumbs, { type BreadcrumbsProps } from "@/components/Breadcrumbs";
 
 export interface ShellPageProps extends Omit<BoxProps, "title"> {
   breadcrumbsProps?: BreadcrumbsProps;

@@ -5,7 +5,6 @@ import {
   Box,
   Container,
   Heading,
-  MotionBox,
   Stack,
   Text,
   AvatarFallback,
@@ -13,29 +12,50 @@ import {
   AvatarImage,
   AvatarImageProps,
   StackProps,
+  Breadcrumbs,
+  Button,
+  Link,
+  IconButton,
+  For,
 } from "@mutuals/ui";
-import { itemVariants } from "@/components/MotionBoxWrapper";
 import BlogPostImage from "@/features/Blog/PostImage";
 import CmsProse from "@/components/CmsProse";
 import BlogPostMetaStack from "@/features/Blog/PostMeta";
 import { getImageProps } from "next/image";
+import {
+  IoArrowBackSharp,
+  IoLogoFacebook,
+  IoLogoLinkedin,
+  IoLogoTwitter,
+} from "react-icons/io5";
 
 export default function BlogPost(data: Partial<Post>) {
-  const { content, excerpt, image, title, authors } = data;
+  const { content, excerpt, image, title, authors, category } = data;
 
   return (
     <Box pt={"20"}>
       <Container maxW={"4xl"} my={{ base: "6", lg: "12" }}>
         <Stack direction={"column"} gap={"6"}>
-          <BlogPostMetaStack data={data} size={"lg"} />
+          <Stack direction={"row"} align={"center"}>
+            <Link
+              asChild={true}
+              href={`/blog/${typeof category == "object" ? category.slug : ""}`}
+            >
+              <IconButton size={"xs"} variant={"subtle"}>
+                <IoArrowBackSharp />
+              </IconButton>
+            </Link>
 
-          <Box>
-            <MotionBox variants={itemVariants} asChild={true}>
-              <Heading textStyle={{ base: "4xl", md: "6xl" }} as="h1" mb={"6"}>
-                {title}
-              </Heading>
-            </MotionBox>
-          </Box>
+            <Breadcrumbs
+              overwrite={{ home: false, post: false, slug: false }}
+            />
+          </Stack>
+
+          <Heading textStyle={{ base: "4xl", md: "6xl" }} as="h1" mb={"6"}>
+            {title}
+          </Heading>
+
+          <BlogPostMetaStack data={data} size={"lg"} />
 
           <Stack direction={"column"} gap={"6"}>
             <Bleed inline={{ lg: "48" }}>
@@ -45,18 +65,71 @@ export default function BlogPost(data: Partial<Post>) {
                 alignItems={"stretch"}
               >
                 <BlogPostImage w={"full"} maxW={"4xl"} image={image} />
-                <Box>
-                  <Text fontWeight={"medium"} textStyle={"sm"} mb={"2"}>
-                    Author
-                  </Text>
-                  <Stack gap="6">
-                    {authors
-                      ?.filter((a) => typeof a == "object")
-                      .map((author) => (
-                        <CMSUserAvatar key={author.id} user={author} />
-                      ))}
-                  </Stack>
-                </Box>
+                <Stack gap="6">
+                  <Box>
+                    <Text fontWeight={"medium"} textStyle={"sm"} mb={"2"}>
+                      Author
+                    </Text>
+                    <Stack>
+                      {authors
+                        ?.filter((a) => typeof a == "object")
+                        .map((author) => (
+                          <CMSUserAvatar key={author.id} user={author} />
+                        ))}
+                    </Stack>
+                  </Box>
+
+                  <Box mt={{ lg: "auto" }}>
+                    <Text fontWeight={"medium"} textStyle={"sm"} mb={"2"}>
+                      Share
+                    </Text>
+                    <Stack direction={{ base: "row", lg: "column" }}>
+                      <For
+                        each={[
+                          {
+                            key: "linkedin",
+                            children: (
+                              <>
+                                <IoLogoLinkedin />
+                                <Box hideBelow={"lg"}>Share on LinkedIn</Box>
+                              </>
+                            ),
+                          },
+                          {
+                            key: "x",
+                            children: (
+                              <>
+                                <IoLogoTwitter />
+                                <Box hideBelow={"lg"}> Share on X</Box>
+                              </>
+                            ),
+                          },
+                          {
+                            key: "facebook",
+                            children: (
+                              <>
+                                <IoLogoFacebook />
+                                <Box hideBelow={"lg"}>Share on Facebook</Box>
+                              </>
+                            ),
+                          },
+                        ]}
+                      >
+                        {({ key, children }) => (
+                          <Button
+                            key={key}
+                            size={"sm"}
+                            variant={"subtle"}
+                            textAlign={{ lg: "left" }}
+                            justifyContent={{ lg: "flex-start" }}
+                          >
+                            {children}
+                          </Button>
+                        )}
+                      </For>
+                    </Stack>
+                  </Box>
+                </Stack>
               </Stack>
             </Bleed>
             <Box w={"full"}>
@@ -92,6 +165,7 @@ function CMSUserAvatar({ user, ...props }: CMSUserAvatarProps) {
       src: user.photo.url ?? "",
       alt: user.photo.alt,
       fill: true,
+      loading: "eager",
     }).props;
 
     imageProps = nextImageProps;

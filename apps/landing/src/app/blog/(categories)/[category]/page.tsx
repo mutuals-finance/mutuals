@@ -15,7 +15,7 @@ export default async function BlogCategoryPage({
 }: PageProps<"/blog/[category]">) {
   const { category } = await params;
   const posts = await getPosts(category);
-  console.log("posts", posts);
+
   if (!posts) {
     return notFound();
   }

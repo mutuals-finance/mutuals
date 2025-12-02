@@ -21,9 +21,9 @@ export class DefaultImageResponse extends NextImageResponse {
       renderBaseIcon({
         style: {
           color: "#09090B",
-          backgroundColor: "#f4f4f5",
-          borderRadius: "100%",
-          padding: "20%",
+          //backgroundColor: "#f4f4f5",
+          //borderRadius: "100%",
+          padding: "12%",
         },
       }),
       options,

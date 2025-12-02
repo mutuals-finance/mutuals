@@ -83,6 +83,13 @@ export {
   BreadcrumbLink,
   BreadcrumbCurrentLink,
   BreadcrumbEllipsis,
+  // custom breadcrumb
+  type BreadcrumbsProps,
+  Breadcrumbs,
+  type BreadcrumbsContentItemProps,
+  BreadcrumbsContentItem,
+  type BreadcrumbsContentProps,
+  BreadcrumbsContent,
   type CheckboxProps,
   Checkbox,
   type CheckboxCardProps,

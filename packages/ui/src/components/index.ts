@@ -78,3 +78,4 @@ export * from "./mutuals/router-tabs";
 export * from "./mutuals/color-mode-menu";
 export * from "./mutuals/empty-state-card";
 export * from "./mutuals/date-time";
+export * from "./mutuals/breadcrumbs";
