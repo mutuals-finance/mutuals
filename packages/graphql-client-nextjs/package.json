@@ -32,6 +32,6 @@
     "@apollo/client": "^4.0.9",
     "@apollo/client-integration-nextjs": "^0.14.1",
     "@apollo/experimental-nextjs-app-support": "^0.14.0",
-    "next": "^16.0.5"
+    "next": "^16.0.6"
   }
 }

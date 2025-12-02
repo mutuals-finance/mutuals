@@ -32,7 +32,6 @@ export function Breadcrumbs({ overwrite, ...props }: BreadcrumbsProps) {
       const param = Object.keys(params).find(
         (key) => decodeURIComponent(params[key]) == path,
       );
-      console.log("formatOverwrite", { overwrite, param, path });
 
       // 1. check if route param matches overwrite key
       // 2. check if route path matches overwrite key
