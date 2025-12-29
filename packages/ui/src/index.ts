@@ -161,6 +161,8 @@ export {
   // FileUploadRoot,
   // FileUploadTrigger,
   // FileUploadDropzone,
+  FooterMeta,
+  type FooterMetaProps,
   HoverCardContent,
   HoverCardArrow,
   HoverCardRoot,

@@ -62,8 +62,10 @@ export default function PoolAddPanel({ value, setStep }: PoolAddPanelProps) {
                   direction={{ md: "column" }}
                 >
                   <Steps.Indicator />
-                  <Stack>
-                    <Steps.Title textStyle="md">{step.label}</Steps.Title>
+                  <Stack gap={"0"}>
+                    <Steps.Title mb="0" textStyle="lg">
+                      {step.label}
+                    </Steps.Title>
                     <Steps.Description textStyle="sm">
                       {step.description}
                     </Steps.Description>

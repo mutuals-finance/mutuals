@@ -18,7 +18,9 @@
     "nextra": "^4.6.0",
     "nextra-theme-docs": "^4.6.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-icons": "^5.5.0",
+    "react-use": "^17.6.0"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",

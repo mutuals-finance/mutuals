@@ -1,23 +1,23 @@
 ---
+title: Overview
 description: Mutuals is an open-source, decentralized protocol for managing on-chain payments.
 ---
 
-import {Callout} from 'nextra/components'
+import { Alert } from '@mutuals/ui'
 
-# Overview
-
-<Callout type="warning">
+<Alert status="warning" title={"Work in Progress"} mb={"4"}>
   This documentation is being actively developed. Please check back regularly for updates and new content.
-</Callout>
+</Alert>
 
-**Mutuals** is an open-source, decentralized protocol for managing on-chain payments.
+Mutuals is an open-source, decentralized protocol for managing on-chain payments.
 Applications use it for automated revenue distribution, for example splitting payments across multiple recipients or streaming earnings to stakeholders continuously.
 The decentralized nature of the system makes payment flows transparent, trustless, automated, and censorship resistant.
 Mutuals consists of smart contracts deployed across multiple blockchain networks using open-source protocols.
 Together, the contracts form a flexible payment infrastructure system.
 The job of the protocol is to route incoming payments to all designated recipients according to predefined rules.
+
 ```mermaid
-flowchart TD
+flowchart LR
     Pool(["Pool"]) L_Pool_A_0@-- "0.4 ETH" --> A["alice.eth"]
     Pool L_Pool_B_0@-- 1y / 120,000 USDC --> B["0xd23…5D2"]
     Pool L_Pool_C_0@-- 30d / 9,500 USDC --> C(["Group"])

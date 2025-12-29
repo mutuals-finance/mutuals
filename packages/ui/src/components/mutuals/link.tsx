@@ -8,12 +8,15 @@ import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { IconType } from "react-icons";
 import { forwardRef } from "react";
 import { usePathname } from "next/navigation";
+import { LuArrowUpRight } from "react-icons/lu";
 
 export interface LinkProps
   extends Omit<ChakraLinkProps, "href">, Partial<Pick<NextLinkProps, "href">> {
   linkProps?: Omit<NextLinkProps, "href" | "children">;
   exact?: boolean;
   indicator?: boolean;
+  external?: boolean;
+  arrow?: boolean;
 }
 
 export type NavLinkProps = LinkProps & {
@@ -30,7 +33,11 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       exact = false,
       indicator = true,
       href = "",
+      external,
       linkProps,
+      rel,
+      target,
+      arrow = true,
       ...props
     },
     ref,
@@ -51,14 +58,19 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         asChild={asChild}
         href={asChild ? undefined : href.toString()}
         ref={ref}
-        data-current={current ? true : undefined}
+        target={!target && external ? "_blank" : target}
+        rel={!rel && external ? "noopener noreferrer" : rel}
+        aria-current={current ? "page" : undefined}
+        data-current={current ? "true" : undefined}
         {...props}
       >
         {!asChild ? (
-          children
+          <>
+            {children} {arrow && external && <LuArrowUpRight />}{" "}
+          </>
         ) : (
           <NextLink href={href} {...linkProps}>
-            {children}
+            {children} {arrow && external && <LuArrowUpRight />}
           </NextLink>
         )}
       </ChakraLink>

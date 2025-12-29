@@ -19,7 +19,7 @@ export default function PoolAddToolbar({
 }: PoolAddPanelProps) {
   return (
     <>
-      <GridItem colSpan={{ base: 1, lg: 6 }}>
+      <GridItem colSpan={{ base: 1, lg: 8 }}>
         <Stack direction="row" justifyContent={"space-between"}>
           <Stack direction={"row"} alignItems={"center"}>
             <Steps.PrevTrigger asChild>
