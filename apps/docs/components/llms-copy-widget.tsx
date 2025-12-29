@@ -45,14 +45,14 @@ const CopyMarkdownButton = (
 
 const ActionMenu = (props: IconButtonProps) => {
   const readUrl = encodeURIComponent(
-    `Use web browsing to access links and information: ${location.href}.mdx.\n\nI want to ask questions about it.
+    `Use web browsing to access links and information: https://mutuals.finance/page.mdx.\n\nI want to ask questions about it.
     `,
   );
 
   const items = [
     {
       label: "View as markdown",
-      href: `${location.href}.mdx`,
+      href: `https://docs.mutuals.finance//page.mdx`,
       icon: BsMarkdown,
     },
     {
