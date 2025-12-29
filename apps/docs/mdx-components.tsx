@@ -2,7 +2,6 @@ import { useMDXComponents as getNextraComponents } from "nextra/mdx-components";
 import { TOC } from "@/theme/toc";
 import {
   Box,
-  Link,
   Blockquote,
   Text,
   Strong,
@@ -22,11 +21,12 @@ import {
   Img,
   Table,
   Callout,
+  Anchor,
 } from "@/components/mdx";
 
 const defaultComponents = getNextraComponents({
   Box,
-  a: Link,
+  a: Anchor,
   blockquote: Blockquote,
   img: Img,
   Image: Img,

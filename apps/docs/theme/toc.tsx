@@ -13,7 +13,7 @@ const TocLink = chakra(Link, {
   },
 });
 
-export const TOC: FC<Omit<EvaluateResult, "default">> = ({ toc }) => {
+export const TOC: FC<Pick<EvaluateResult, "toc">> = ({ toc }) => {
   //const activeItem = useScrollSpy(items.map((entry) => entry.url));
 
   return (

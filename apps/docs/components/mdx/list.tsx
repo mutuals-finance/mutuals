@@ -1,6 +1,9 @@
-import { Box, type BoxProps } from "@mutuals/ui";
+import { Box } from "@mutuals/ui";
+import { ComponentPropsWithoutRef } from "react";
 
-export const Ol = (props: BoxProps) => {
+type OlProps = ComponentPropsWithoutRef<"ol">;
+
+export const Ol = (_props: OlProps) => {
   return (
     <Box
       as="ol"
@@ -20,12 +23,13 @@ export const Ol = (props: BoxProps) => {
           marginBottom: "0.5em",
         },
       }}
-      {...props}
     />
   );
 };
 
-export const Ul = (props: BoxProps) => {
+type UlProps = ComponentPropsWithoutRef<"ul">;
+
+export const Ul = (_props: UlProps) => {
   return (
     <Box
       as="ul"
@@ -45,11 +49,12 @@ export const Ul = (props: BoxProps) => {
           marginBottom: "0.5em",
         },
       }}
-      {...props}
     />
   );
 };
 
-export const Li = (props: BoxProps) => {
-  return <Box as="li" css={{ marginY: "0.8em" }} {...props} />;
+type LiProps = ComponentPropsWithoutRef<"li">;
+
+export const Li = (_props: LiProps) => {
+  return <Box as="li" css={{ marginY: "0.8em" }} />;
 };

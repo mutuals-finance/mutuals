@@ -7,10 +7,10 @@ import {
 } from "@mutuals/ui";
 import React, { isValidElement, PropsWithChildren } from "react";
 
-interface CalloutProps {
+export type CalloutProps = {
   "data-type": string;
   children: React.ReactNode;
-}
+};
 
 export const Callout: React.FC<CalloutProps> = (props) => {
   const status = props["data-type"];
