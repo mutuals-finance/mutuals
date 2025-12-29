@@ -52,7 +52,7 @@ const ActionMenu = (props: IconButtonProps) => {
   const items = [
     {
       label: "View as markdown",
-      href: `https://docs.mutuals.finance//page.mdx`,
+      href: `https://docs.mutuals.finance/page.mdx`,
       icon: BsMarkdown,
     },
     {
