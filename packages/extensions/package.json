@@ -23,13 +23,13 @@
   "dependencies": {
     "@mutuals/graphql-client-nextjs": "workspace:*",
     "@mutuals/sdk-react": "workspace:*",
-    "react-hook-form": "^7.67.0"
+    "react-hook-form": "^7.69.0"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
     "@types/react": "^19.2.7",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "typescript": "^5.9.3"
   }
 }

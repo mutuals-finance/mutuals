@@ -14,7 +14,9 @@ import textStyles from "./foundations/text-styles";
 import layerStyles from "./foundations/layer-styles";
 import colors from "./foundations/colors";
 
-const customConfig = defineConfig({
+export { createSystem, defaultConfig, defineConfig, mergeConfigs };
+
+export const customConfig = defineConfig({
   theme: {
     // styles,
     textStyles,
@@ -26,6 +28,6 @@ const customConfig = defineConfig({
   },
 });
 
-const systemConfig = mergeConfigs(defaultConfig, customConfig);
+export const systemConfig = mergeConfigs(defaultConfig, customConfig);
 
 export default createSystem(systemConfig);
