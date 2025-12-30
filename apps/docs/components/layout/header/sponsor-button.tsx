@@ -1,5 +1,5 @@
 import { Button, type ButtonProps, Link } from "@mutuals/ui";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeartSharp } from "react-icons/io5";
 
 export const SponsorButton = (props: ButtonProps) => (
   <Link
@@ -17,7 +17,7 @@ export const SponsorButton = (props: ButtonProps) => (
       }}
       {...props}
     >
-      <IoHeartOutline />
+      <IoHeartSharp />
       Sponsor
     </Button>
   </Link>

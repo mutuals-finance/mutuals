@@ -22,12 +22,34 @@ import {
   Group,
   Link,
 } from "@mutuals/ui";
-import { VersionMenu } from "@/components/layout/version-menu";
+import { VersionMenu } from "@/components/layout/header/version-menu";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { SponsorButton } from "@/components/layout/sponsor-button";
+import { SponsorButton } from "@/components/layout/header/sponsor-button";
 import { IoLogoGithub } from "react-icons/io";
+
+const primaryNavItems = [
+  {
+    label: "Docs",
+    value: "docs",
+    href: "/",
+    external: false,
+  },
+  {
+    label: "Support",
+    value: "support",
+    href: "/support",
+    external: false,
+  },
+  {
+    label: "Homepage",
+    value: "homepage",
+    href: "https://mutuals.finance",
+    external: true,
+    arrow: true,
+  },
+];
 
 const HeaderRoot = chakra("header", {
   base: {
@@ -46,15 +68,7 @@ const HeaderRoot = chakra("header", {
 
 const TopNavLink = chakra(Link, {
   base: {
-    fontSize: "sm",
-    color: "fg.muted",
-    _currentPage: {
-      color: "fg",
-      fontWeight: "medium",
-    },
-    _hover: {
-      color: "fg",
-    },
+    textStyle: "sm",
   },
   variants: {
     variant: {
@@ -72,18 +86,9 @@ const TopNavLink = chakra(Link, {
 
 const TopNavMobileLink = chakra(Link, {
   base: {
-    display: "block",
     py: "2",
     px: "4",
-    color: "fg.muted",
     w: "full",
-    _currentPage: {
-      color: "fg",
-      fontWeight: "medium",
-    },
-    _hover: {
-      color: "fg",
-    },
   },
 });
 
@@ -98,32 +103,10 @@ const HeaderLogoLink = () => {
 };
 
 const HeaderPrimaryNavbar = () => {
-  const items = [
-    {
-      label: "Docs",
-      value: "docs",
-      href: "/",
-      external: false,
-    },
-    {
-      label: "Support",
-      value: "support",
-      href: "/support",
-      external: false,
-    },
-    {
-      label: "Homepage",
-      value: "homepage",
-      href: "https://mutuals.finance",
-      external: true,
-      arrow: true,
-    },
-  ];
-
   return (
     <HStack gap="8" minH="48px" aria-label="primary navigation">
       <HeaderLogoLink />
-      {items.map(({ label = "", ...item }) => (
+      {primaryNavItems.map(({ label = "", ...item }) => (
         <TopNavLink key={label} {...item}>
           {label}
         </TopNavLink>
@@ -159,7 +142,7 @@ const HeaderSocialLinks = () => {
     <Group>
       {items?.map(({ label, icon: LinkIcon, ...props }) => (
         <Link key={label} {...props} asChild={true}>
-          <IconButton size={"xs"} variant="subtle" aria-label={`${label} link`}>
+          <IconButton size={"xs"} variant="ghost" aria-label={`${label} link`}>
             <LinkIcon />
           </IconButton>
         </Link>
@@ -171,8 +154,6 @@ const HeaderSocialLinks = () => {
 const HeaderMobileMenuDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const closeMenu = () => setIsOpen(false);
-
-  const primaryNavItems: NavLinkProps[] = [];
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
@@ -194,22 +175,24 @@ const HeaderMobileMenuDropdown = () => {
       onOpenChange={(e) => setIsOpen(e.open)}
     >
       <DrawerTrigger asChild>
-        <IconButton variant="subtle" size="sm">
+        <IconButton variant="outline" size="md">
           <AiOutlineMenu />
         </IconButton>
       </DrawerTrigger>
       <Portal>
         <DrawerBackdrop />
-        <DrawerContent borderTopRadius="md" maxH="var(--content-height)">
+        <DrawerContent borderTopRadius="md" pt="6" maxH="var(--content-height)">
           <DrawerCloseTrigger asChild>
-            <IconButton size="sm" variant="subtle">
+            <IconButton size="md" variant="ghost">
               <AiOutlineClose />
             </IconButton>
           </DrawerCloseTrigger>
-          <DrawerBody display="flex" flexDir="column" gap="10" py="5" flex="1">
+          <DrawerBody display="flex" flexDir="column" gap="4" flex="1">
             <VStack align="start" justify="stretch">
-              {primaryNavItems.map((item) => (
-                <TopNavMobileLink key={item.title} {...item} />
+              {primaryNavItems.map(({ label, ...item }) => (
+                <TopNavMobileLink key={label} {...item}>
+                  {label}
+                </TopNavMobileLink>
               ))}
             </VStack>
             {/*
@@ -243,7 +226,7 @@ const HeaderMobileMenuDropdown = () => {
 
 const HeaderDesktopActions = () => {
   return (
-    <HStack gap="2" minH="48px" flexShrink="1" minW="0">
+    <HStack gap="2" flexShrink="1" minW="0">
       <SponsorButton hideBelow="lg" />
       {/*
       <HeaderVersionMenu />
@@ -255,7 +238,7 @@ const HeaderDesktopActions = () => {
 */}
       <HeaderSocialLinks />
       <ColorModeButton
-        variant={"subtle"}
+        variant={"ghost"}
         size={"xs"}
         _icon={{
           width: "1.2em",

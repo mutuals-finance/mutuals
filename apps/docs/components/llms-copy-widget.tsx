@@ -22,7 +22,7 @@ export type LLMSCopyWidgetProps = Omit<EvaluateResult, "default">;
 
 export const LLMSCopyWidget = (props: LLMSCopyWidgetProps) => {
   return (
-    <ButtonGroup attached={true} variant="surface" size="sm">
+    <ButtonGroup attached={true} variant="outline" size="xs">
       <CopyMarkdownButton {...props} />
       <ActionMenu borderStartRadius="0">
         <LuChevronDown />

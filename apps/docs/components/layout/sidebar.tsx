@@ -102,7 +102,10 @@ const Sidenav: FC<{ pageMap: PageMapItem[] }> = ({ pageMap }) => {
               <TreeView.Item asChild>
                 <Link
                   href={node.href!}
+                  fontWeight={"normal"}
+                  color={"fg"}
                   {...(node.external && { external: true })}
+                  asChild={true}
                 >
                   <TreeView.ItemText>{node.name}</TreeView.ItemText>
                 </Link>
@@ -120,7 +123,6 @@ const SidebarContainer: FC<BoxProps & { children: ReactNode }> = ({
   ...props
 }) => (
   <Box
-    className="no-bg-scrollbar"
     as="aside"
     position="sticky"
     top="var(--header-height)"
@@ -137,12 +139,11 @@ const SidebarContainer: FC<BoxProps & { children: ReactNode }> = ({
 export function SidebarStart({ pageMap, ...props }: SidebarProps) {
   return (
     <SidebarContainer
-      pe="5"
-      ms="-3"
-      py="8"
-      width="16rem"
+      px="2"
+      pb="12"
+      w="64"
       hideBelow="md"
-      fontSize="sm"
+      textStyle="sm"
       {...props}
     >
       <Sidenav pageMap={pageMap} />
@@ -152,15 +153,8 @@ export function SidebarStart({ pageMap, ...props }: SidebarProps) {
 
 export function SidebarEnd({ children, ...props }: BoxProps) {
   return (
-    <SidebarContainer
-      pt="8"
-      pb="8"
-      px="2"
-      width="16rem"
-      hideBelow="xl"
-      {...props}
-    >
-      <Stack gap="4" align="flex-start">
+    <SidebarContainer pb="12" px="2" w="52" hideBelow="xl" {...props}>
+      <Stack gap="4" align="stretch" w={"full"}>
         {children}
       </Stack>
     </SidebarContainer>

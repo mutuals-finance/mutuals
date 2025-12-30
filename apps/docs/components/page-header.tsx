@@ -2,12 +2,15 @@
 
 import { Box, Heading, Stack, Text } from "@mutuals/ui";
 import { LLMSCopyWidget } from "./llms-copy-widget";
-import { EvaluateResult } from "nextra";
+import { EvaluateResult, PageMapItem } from "nextra";
 
-export type PageHeaderProps = Omit<EvaluateResult, "default">;
+export type PageHeaderProps = Omit<EvaluateResult, "default"> & {
+  pageMap: PageMapItem[];
+};
 
-export const PageHeader = (props: PageHeaderProps) => {
+export const PageHeader = ({ pageMap: _, ...props }: PageHeaderProps) => {
   const { title, description } = props.metadata;
+
   return (
     <Stack gap="4" pb="4" position="relative">
       <Heading as="h1" size="4xl" fontWeight="semibold">

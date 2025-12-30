@@ -1,5 +1,4 @@
 import { useMDXComponents as getNextraComponents } from "nextra/mdx-components";
-import { TOC } from "@/theme/toc";
 import {
   Box,
   Blockquote,
@@ -23,6 +22,7 @@ import {
   Callout,
   Anchor,
 } from "@/components/mdx";
+import { PageWrapper } from "@/components/page-wrapper";
 
 const defaultComponents = getNextraComponents({
   Box,
@@ -61,14 +61,7 @@ const defaultComponents = getNextraComponents({
   // BorderRadiusTokenDoc,
   // BreakpointDoc,
   // AspectRatioTokenDoc,
-  wrapper({ children, toc }) {
-    return (
-      <>
-        <div style={{ flexGrow: 1, padding: 20 }}>{children}</div>
-        <TOC toc={toc} />
-      </>
-    );
-  },
+  wrapper: PageWrapper,
 });
 
 export const useMDXComponents = (components = {}) => ({
