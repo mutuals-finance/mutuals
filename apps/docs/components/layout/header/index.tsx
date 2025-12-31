@@ -28,26 +28,25 @@ import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { SponsorButton } from "@/components/layout/header/sponsor-button";
 import { IoLogoGithub } from "react-icons/io";
+import { useConfig } from "@/context";
 
 const primaryNavItems = [
   {
     label: "Docs",
     value: "docs",
-    href: "/",
+    href: "/docs",
     external: false,
   },
   {
     label: "Support",
     value: "support",
     href: "/support",
-    external: false,
   },
   {
-    label: "Homepage",
-    value: "homepage",
-    href: "https://mutuals.finance",
-    external: true,
-    arrow: true,
+    label: "Development",
+    value: "development",
+    href: "/development",
+    external: false,
   },
 ];
 
@@ -94,21 +93,19 @@ const TopNavMobileLink = chakra(Link, {
 
 const HeaderLogoLink = () => {
   return (
-    <MutualsLogo
-      href="https://mutuals.finance"
-      aria-label="Mutuals, Back to homepage"
-      w={"28"}
-    />
+    <MutualsLogo href="/" aria-label="Mutuals, Back to docs home" w={"28"} />
   );
 };
 
 const HeaderPrimaryNavbar = () => {
+  const config = useConfig();
+  const items = config.normalizePagesResult.topLevelNavbarItems;
   return (
-    <HStack gap="8" minH="48px" aria-label="primary navigation">
+    <HStack gap="12" minH="48px" aria-label="primary navigation">
       <HeaderLogoLink />
-      {primaryNavItems.map(({ label = "", ...item }) => (
-        <TopNavLink key={label} {...item}>
-          {label}
+      {items.map(({ name, ...item }) => (
+        <TopNavLink key={item.route} href={item.route}>
+          {item.title}
         </TopNavLink>
       ))}
     </HStack>

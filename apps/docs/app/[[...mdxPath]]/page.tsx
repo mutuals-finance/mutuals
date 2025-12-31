@@ -1,7 +1,6 @@
 import { generateStaticParamsFor, importPage } from "nextra/pages";
 import { useMDXComponents as getMDXComponents } from "../../mdx-components";
 import { MDXPagination } from "@/components/mdx-pagination";
-import { getPageMap } from "nextra/page-map";
 import { PageHeader } from "@/components/page-header";
 
 export type PageProps = {
@@ -18,16 +17,15 @@ export async function generateMetadata(props: { params: any }) {
 
 const Wrapper = getMDXComponents().wrapper;
 
-export default async function Page({ params: _params, ...props }: PageProps) {
-  const params = await _params;
+export default async function Page(props: PageProps) {
+  const params = await props.params;
   const { default: MDXContent, ...result } = await importPage(params.mdxPath);
-  const pageMap = await getPageMap();
 
   return (
     <Wrapper {...result}>
-      <PageHeader pageMap={pageMap} {...result} />
-      <MDXContent params={params} {...props} />
-      <MDXPagination pageMap={pageMap} />
+      <PageHeader {...result} />
+      <MDXContent params={params} />
+      <MDXPagination />
     </Wrapper>
   );
 }

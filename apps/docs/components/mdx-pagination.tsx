@@ -1,18 +1,13 @@
 "use client";
 
 import { Pagination } from "@/components/pagination";
-import { PageMapItem } from "nextra";
-import { usePathname } from "next/navigation";
-import { normalizePages } from "nextra/normalize-pages";
+import { useConfig } from "@/context";
+import { Show } from "@mutuals/ui";
 
-export type MDXPaginationProps = { pageMap: PageMapItem[] }; //Omit<EvaluateResult, "default">;
-
-export function MDXPagination({ pageMap }: MDXPaginationProps) {
-  const pathname = usePathname();
-  const { flatDocsDirectories, activeIndex } = normalizePages({
-    list: pageMap,
-    route: pathname,
-  });
+export function MDXPagination() {
+  const { normalizePagesResult } = useConfig();
+  const { flatDocsDirectories, activeIndex, activeThemeContext } =
+    normalizePagesResult;
 
   const previous =
     activeIndex > 0 ? flatDocsDirectories[activeIndex - 1] : null;
@@ -22,22 +17,24 @@ export function MDXPagination({ pageMap }: MDXPaginationProps) {
       : null;
 
   return (
-    <Pagination
-      mt="20"
-      gap="8"
-      previous={
-        previous
-          ? {
-              title: String(previous.title ?? previous.name),
-              url: previous.route,
-            }
-          : null
-      }
-      next={
-        next
-          ? { title: String(next.title ?? next.name), url: next.route }
-          : null
-      }
-    />
+    <Show when={activeThemeContext.pagination}>
+      <Pagination
+        mt="20"
+        gap="8"
+        previous={
+          previous
+            ? {
+                title: String(previous.title ?? previous.name),
+                url: previous.route,
+              }
+            : null
+        }
+        next={
+          next
+            ? { title: String(next.title ?? next.name), url: next.route }
+            : null
+        }
+      />{" "}
+    </Show>
   );
 }

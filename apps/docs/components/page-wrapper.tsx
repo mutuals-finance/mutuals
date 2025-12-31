@@ -11,15 +11,13 @@ export const PageWrapper: FC<
   PropsWithChildren<Omit<EvaluateResult, "default">>
 > = async ({ children, ...result }) => {
   const pageMap = await getPageMap();
-
   return (
     <>
       <Stack
         flex="1"
         w="full"
         px={{ md: "12" }}
-        pt="12"
-        pb="16"
+        py="12"
         overflow="auto"
         minHeight="var(--content-height)"
       >

@@ -18,6 +18,7 @@ import {
   Link,
   TreeView,
   createTreeCollection,
+  Show,
 } from "@mutuals/ui";
 import {
   useEffect,
@@ -32,6 +33,7 @@ import { IoChevronForward } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import type { PageMapItem } from "nextra";
 import { normalizePages } from "nextra/normalize-pages";
+import { useConfig } from "@/context";
 
 interface TreeNode {
   id: string;
@@ -137,27 +139,34 @@ const SidebarContainer: FC<BoxProps & { children: ReactNode }> = ({
 );
 
 export function SidebarStart({ pageMap, ...props }: SidebarProps) {
+  const { normalizePagesResult } = useConfig();
+
   return (
-    <SidebarContainer
-      px="2"
-      pb="12"
-      w="64"
-      hideBelow="md"
-      textStyle="sm"
-      {...props}
-    >
-      <Sidenav pageMap={pageMap} />
-    </SidebarContainer>
+    <Show when={!!normalizePagesResult.activeThemeContext.sidebar}>
+      <SidebarContainer
+        px="2"
+        pb="12"
+        w="64"
+        hideBelow="md"
+        textStyle="sm"
+        {...props}
+      >
+        <Sidenav pageMap={pageMap} />
+      </SidebarContainer>
+    </Show>
   );
 }
 
 export function SidebarEnd({ children, ...props }: BoxProps) {
+  const { normalizePagesResult } = useConfig();
   return (
-    <SidebarContainer pb="12" px="2" w="52" hideBelow="xl" {...props}>
-      <Stack gap="4" align="stretch" w={"full"}>
-        {children}
-      </Stack>
-    </SidebarContainer>
+    <Show when={!!normalizePagesResult.activeThemeContext.toc}>
+      <SidebarContainer pb="12" px="2" w="52" hideBelow="xl" {...props}>
+        <Stack gap="4" align="stretch" w={"full"}>
+          {children}
+        </Stack>
+      </SidebarContainer>
+    </Show>
   );
 }
 
@@ -186,6 +195,8 @@ export function MobileSidebarNav({
   pageMap,
   ...props
 }: SidebarProps & Omit<DrawerRootProps, "children">) {
+  const { normalizePagesResult } = useConfig();
+
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const pathnameRef = useRef(pathname);
@@ -198,33 +209,35 @@ export function MobileSidebarNav({
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <DrawerRoot
-      open={isOpen}
-      placement="bottom"
-      onPointerDownOutside={closeMenu}
-      onEscapeKeyDown={closeMenu}
-      onOpenChange={(e) => setIsOpen(e.open)}
-      {...props}
-    >
-      <DrawerTrigger asChild>
-        <MobileMenuButton aria-label="Open menu">
-          <AiOutlineMenu />
-          <Breadcrumbs separator={<AiOutlineRight />} />
-        </MobileMenuButton>
-      </DrawerTrigger>
-      <Portal>
-        <DrawerBackdrop />
-        <DrawerContent borderTopRadius="md" maxH="var(--content-height)">
-          <DrawerCloseTrigger asChild>
-            <IconButton size="sm" variant="ghost">
-              <AiOutlineClose />
-            </IconButton>
-          </DrawerCloseTrigger>
-          <DrawerBody display="flex" flexDir="column" gap="6" py="5" flex="1">
-            <Sidenav pageMap={pageMap} />
-          </DrawerBody>
-        </DrawerContent>
-      </Portal>
-    </DrawerRoot>
+    <Show when={normalizePagesResult.activeThemeContext.sidebar}>
+      <DrawerRoot
+        open={isOpen}
+        placement="bottom"
+        onPointerDownOutside={closeMenu}
+        onEscapeKeyDown={closeMenu}
+        onOpenChange={(e) => setIsOpen(e.open)}
+        {...props}
+      >
+        <DrawerTrigger asChild={true}>
+          <MobileMenuButton aria-label="Open menu">
+            <AiOutlineMenu />
+            <Breadcrumbs separator={<AiOutlineRight />} />
+          </MobileMenuButton>
+        </DrawerTrigger>
+        <Portal>
+          <DrawerBackdrop />
+          <DrawerContent borderTopRadius="md" maxH="var(--content-height)">
+            <DrawerCloseTrigger asChild>
+              <IconButton size="sm" variant="ghost">
+                <AiOutlineClose />
+              </IconButton>
+            </DrawerCloseTrigger>
+            <DrawerBody display="flex" flexDir="column" gap="6" py="5" flex="1">
+              <Sidenav pageMap={pageMap} />
+            </DrawerBody>
+          </DrawerContent>
+        </Portal>
+      </DrawerRoot>
+    </Show>
   );
 }

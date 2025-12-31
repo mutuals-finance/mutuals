@@ -23,6 +23,7 @@ import {
   Anchor,
 } from "@/components/mdx";
 import { PageWrapper } from "@/components/page-wrapper";
+import { Card, CardGroup } from "@/components/mdx/card";
 
 const defaultComponents = getNextraComponents({
   Box,
@@ -46,9 +47,10 @@ const defaultComponents = getNextraComponents({
   // steps: Steps,
   callout: Callout,
   // "code-group": CodeGroup,
-  // card: Card,
-  // "card-group": CardGroup,
-  // Card,
+  card: Card,
+  "card-group": CardGroup,
+  CardGroup,
+  Card,
   // hr: Hr,
   // PropTable,
   // ComponentGrid,

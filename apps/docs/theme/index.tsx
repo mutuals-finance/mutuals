@@ -10,6 +10,7 @@ import {
 } from "@mutuals/ui";
 import { Header } from "@/components/layout/header";
 import system from "@/theme/system";
+import { ConfigProvider } from "@/context";
 
 export const MutualsTheme: FC<{
   children: ReactNode;
@@ -17,17 +18,19 @@ export const MutualsTheme: FC<{
 }> = ({ children, pageMap }) => {
   return (
     <UIProvider value={system}>
-      <SkipNavLink>Skip to Content</SkipNavLink>
-      <Header />
-      <main>
-        <MobileSidebarNav pageMap={pageMap} />
-        <Container display="flex">
-          <SidebarStart pageMap={pageMap} />
-          <SkipNavContent />
-          {children}
-        </Container>
-      </main>
-      <Footer />
+      <ConfigProvider pageMap={pageMap}>
+        <SkipNavLink>Skip to Content</SkipNavLink>
+        <Header />
+        <main>
+          <MobileSidebarNav pageMap={pageMap} />
+          <Container display="flex">
+            <SidebarStart pageMap={pageMap} />
+            <SkipNavContent />
+            {children}
+          </Container>
+        </main>
+        <Footer />
+      </ConfigProvider>
     </UIProvider>
   );
 };
