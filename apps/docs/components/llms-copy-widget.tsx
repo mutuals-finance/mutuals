@@ -17,6 +17,7 @@ import { EvaluateResult } from "nextra";
 import { AiOutlineOpenAI } from "react-icons/ai";
 import { RiClaudeFill } from "react-icons/ri";
 import { SiPerplexity } from "react-icons/si";
+import { usePathname } from "next/navigation";
 
 export type LLMSCopyWidgetProps = Omit<EvaluateResult, "default">;
 
@@ -44,15 +45,17 @@ const CopyMarkdownButton = (
 };
 
 const ActionMenu = (props: IconButtonProps) => {
+  const pathname = usePathname();
+
   const readUrl = encodeURIComponent(
-    `Use web browsing to access links and information: https://mutuals.finance/page.mdx.\n\nI want to ask questions about it.
+    `Use web browsing to access links and information: https://mutuals.finance${pathname}.mdx.\n\nI want to ask questions about it.
     `,
   );
 
   const items = [
     {
       label: "View as markdown",
-      href: `https://docs.mutuals.finance/page.mdx`,
+      href: `https://docs.mutuals.finance${pathname}.mdx`,
       icon: BsMarkdown,
     },
     {

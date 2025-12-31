@@ -1,5 +1,5 @@
 # Mutuals
-Mutuals Finance is an open-source, decentralized protocol for managing on‑chain payments. 
+Mutuals Finance is an open-source, decentralized protocol for managing on‑chain payments.
 It enables automated, trustless revenue distribution, token splitting, and earnings tracking with zero protocol fees and support across 7+ networks (Ethereum, Polygon, Base, Optimism, Arbitrum, Avalanche, BNB, and zkSync).
 
 ```mermaid
@@ -8,10 +8,10 @@ flowchart TD
     Pool L_Pool_B_0@-- 1y / 120,000 USDC --> B["0xd23…5D2"]
     Pool L_Pool_C_0@-- 30d / 9,500 USDC --> C(["Group"])
     C L_C_D_0@-- 50% --> D["bob.eth"] & E["0x56E…117"]
-    L_Pool_A_0@{ animation: slow } 
-    L_Pool_B_0@{ animation: slow } 
-    L_Pool_C_0@{ animation: slow } 
-    L_C_D_0@{ animation: slow } 
+    L_Pool_A_0@{ animation: slow }
+    L_Pool_B_0@{ animation: slow }
+    L_Pool_C_0@{ animation: slow }
+    L_C_D_0@{ animation: slow }
     L_C_E_0@{ animation: slow }
 ```
 
@@ -39,7 +39,7 @@ To build all apps and packages, run the following command:
 
 ```
 cd mutuals
-pnpm build
+bun build
 ```
 
 ## Develop
@@ -48,7 +48,7 @@ To develop all apps and packages, run the following command:
 
 ```
 cd mutuals
-pnpm dev
+bun dev
 ```
 
 ## Remote Caching
@@ -59,7 +59,7 @@ By default, Turborepo will cache locally. To enable Remote Caching you will need
 
 ```
 cd my-turborepo
-npx turbo login
+bunx turbo login
 ```
 
 This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
@@ -67,7 +67,7 @@ This will authenticate the Turborepo CLI with your [Vercel account](https://verc
 Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
 
 ```
-npx turbo link
+bunx turbo link
 ```
 
 ## Useful Links

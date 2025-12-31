@@ -1,5 +1,5 @@
 {
-  "name": "mutuals",
+  "name": "@mutuals/root",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -27,21 +27,13 @@
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
     "@turbo/gen": "^2.7.2",
+    "@changesets/cli": "^2.29.8",
     "prettier": "^3.7.4",
     "turbo": "^2.7.2"
   },
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "bun@1.3.3",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
-  "dependencies": {
-    "@changesets/cli": "^2.29.8"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "sharp",
-      "unrs-resolver"
-    ]
-  }
+  "workspaces": ["apps/*", "packages/*"]
 }
