@@ -69,7 +69,7 @@ const convertToTreeNodes = (
 
 const Sidenav: FC<{ pageMap: PageMapItem[] }> = ({ pageMap }) => {
   const pathname = usePathname();
-  const { docsDirectories } = normalizePages({
+  const { activePath } = normalizePages({
     list: pageMap,
     route: pathname,
   });
@@ -82,10 +82,10 @@ const Sidenav: FC<{ pageMap: PageMapItem[] }> = ({ pageMap }) => {
         rootNode: {
           id: "ROOT",
           name: "",
-          children: convertToTreeNodes(docsDirectories),
+          children: convertToTreeNodes(activePath[1]?.children || []),
         },
       }),
-    [docsDirectories],
+    [activePath],
   );
 
   return (

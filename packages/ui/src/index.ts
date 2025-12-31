@@ -56,6 +56,7 @@ export {
   type MotionBoxProps,
   MotionBox,
   MutualsLogo,
+  type MutualsLogoProps,
   type UIProviderProps,
   UIProvider,
   AccordionItemTrigger,

@@ -3,17 +3,21 @@ title: Mutuals Docs
 description: Your all-in-one resource for Mutuals
 ---
 
-import {IoBookSharp, IoConstructSharp, IoHelpBuoy} from "react-icons/io5";
+import {
+  IoBookOutline,
+  IoConstructOutline,
+  IoHelpBuoyOutline
+} from "react-icons/io5";
 import { CardGroup, Card } from '@/components/mdx/card'
 
 <CardGroup columns={{base:1, md:3}}>
-  <Card href={"/docs"} title={"Documentation"} icon={<IoBookSharp/>}>
+  <Card href={"/docs"} title={"Documentation"} icon={<IoBookOutline/>}>
     Explore the core concepts, architecture, and features of the Mutuals protocol.
   </Card>
-  <Card href={"/support"} title={"Support"} icon={<IoHelpBuoy />}>
+  <Card href={"/support"} title={"Support"} icon={<IoHelpBuoyOutline />}>
     Find answers to common questions, troubleshooting tips, and guidance on using Mutuals effectively.
   </Card>
-  <Card href={"/development"} title={"Development"} icon={<IoConstructSharp/>}>
+  <Card href={"/development"} title={"Development"} icon={<IoConstructOutline/>}>
     Dive into the technical details of building Mutuals.
   </Card>
 </CardGroup>

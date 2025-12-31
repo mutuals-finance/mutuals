@@ -2,7 +2,6 @@
 
 import {
   MutualsLogo,
-  NavLinkProps,
   Box,
   Container,
   HStack,
@@ -15,19 +14,16 @@ import {
   DrawerBody,
   DrawerCloseTrigger,
   DrawerContent,
-  DrawerFooter,
   DrawerRoot,
   DrawerTrigger,
   ColorModeButton,
-  Group,
   Link,
+  MutualsLogoProps,
 } from "@mutuals/ui";
-import { VersionMenu } from "@/components/layout/header/version-menu";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { SponsorButton } from "@/components/layout/header/sponsor-button";
-import { IoLogoGithub } from "react-icons/io";
 import { useConfig } from "@/context";
 
 const primaryNavItems = [
@@ -74,10 +70,11 @@ const TopNavLink = chakra(Link, {
       tab: {
         py: "2",
         borderBottomWidth: "2px",
+        roundedBottom: "none",
         borderColor: "transparent",
         transition: "border-color 0.2s",
         _hover: { borderColor: "border" },
-        _currentPage: { borderColor: "teal.solid!" },
+        _currentPage: { borderColor: "colorPalette.solid!" },
       },
     },
   },
@@ -91,9 +88,14 @@ const TopNavMobileLink = chakra(Link, {
   },
 });
 
-const HeaderLogoLink = () => {
+const HeaderLogoLink = (props: MutualsLogoProps) => {
   return (
-    <MutualsLogo href="/" aria-label="Mutuals, Back to docs home" w={"28"} />
+    <MutualsLogo
+      href="/"
+      aria-label="Mutuals, Back to docs home"
+      w={"28"}
+      {...props}
+    />
   );
 };
 
@@ -101,8 +103,8 @@ const HeaderPrimaryNavbar = () => {
   const config = useConfig();
   const items = config.normalizePagesResult.topLevelNavbarItems;
   return (
-    <HStack gap="12" minH="48px" aria-label="primary navigation">
-      <HeaderLogoLink />
+    <HStack gap="6" minH="48px" aria-label="primary navigation">
+      <HeaderLogoLink mr={"12"} />
       {items.map(({ name, ...item }) => (
         <TopNavLink key={item.route} href={item.route}>
           {item.title}
@@ -112,39 +114,18 @@ const HeaderPrimaryNavbar = () => {
   );
 };
 
-interface HeaderVersionMenuProps {
-  containerRef?: React.RefObject<HTMLElement | null>;
-}
-
-const HeaderVersionMenu = ({ containerRef }: HeaderVersionMenuProps) => (
-  <VersionMenu
-    items={[{ title: "0.0.x", value: "alpha", url: "#" }]}
-    portalRef={containerRef}
-  />
-);
-
-const HeaderSocialLinks = () => {
-  const items: NavLinkProps[] = [
-    {
-      label: "Github",
-      value: "github",
-      icon: IoLogoGithub,
-      href: "https://github.com/mutuals-finance",
-      external: true,
-      arrow: false,
-    },
-  ];
-
+const HeaderSecondaryNavbar = () => {
+  const { normalizePagesResult } = useConfig();
+  const activeTopLevel = normalizePagesResult.activePath[0];
+  const items = activeTopLevel?.children ?? [];
   return (
-    <Group>
-      {items?.map(({ label, icon: LinkIcon, ...props }) => (
-        <Link key={label} {...props} asChild={true}>
-          <IconButton size={"xs"} variant="ghost" aria-label={`${label} link`}>
-            <LinkIcon />
-          </IconButton>
-        </Link>
+    <HStack as="nav" gap="6" aria-label="secondary navigation">
+      {items?.map(({ ...item }) => (
+        <TopNavLink key={item.route} href={item.route} variant={"tab"}>
+          {item.title}
+        </TopNavLink>
       ))}
-    </Group>
+    </HStack>
   );
 };
 
@@ -152,7 +133,6 @@ const HeaderMobileMenuDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const closeMenu = () => setIsOpen(false);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
   const pathnameRef = useRef(pathname);
 
@@ -206,15 +186,6 @@ const HeaderMobileMenuDropdown = () => {
             </VStack>
 */}
           </DrawerBody>
-          <DrawerFooter
-            py="2"
-            justifyContent="space-between"
-            borderTop="1px solid"
-            borderColor="border"
-            ref={containerRef}
-          >
-            <HeaderSocialLinks />
-          </DrawerFooter>
         </DrawerContent>
       </Portal>
     </DrawerRoot>
@@ -233,10 +204,9 @@ const HeaderDesktopActions = () => {
         trigger={<SearchButton width="256px" size="sm" flexShrink="1" />}
       />
 */}
-      <HeaderSocialLinks />
       <ColorModeButton
-        variant={"ghost"}
-        size={"xs"}
+        variant={"subtle"}
+        size={"sm"}
         _icon={{
           width: "1.2em",
           height: "1.2em",
@@ -266,9 +236,7 @@ const HeaderDesktopNavbar = () => {
         <Spacer />
         <HeaderDesktopActions />
       </HStack>
-      {/*
       <HeaderSecondaryNavbar />
-*/}
     </Box>
   );
 };

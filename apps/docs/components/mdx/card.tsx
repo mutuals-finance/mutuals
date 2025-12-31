@@ -7,6 +7,7 @@ import {
   Link,
   type LinkProps,
   Card as UiCard,
+  Box,
 } from "@mutuals/ui";
 import { LuChevronRight } from "react-icons/lu";
 import { ReactNode } from "react";
@@ -44,7 +45,7 @@ export const Card = (props: CardProps) => {
       <UiCard.Root _groupHover={{ bg: "bg.subtle" }} transition="colors 0.2s">
         <UiCard.Body gap="2" flex={"1"}>
           {icon && <Icon boxSize="2em">{icon}</Icon>}
-          <UiCard.Title mt="2">
+          <UiCard.Title>
             <HStack gap="1">
               {title}
               <CardTitleIcon>
@@ -52,7 +53,9 @@ export const Card = (props: CardProps) => {
               </CardTitleIcon>
             </HStack>
           </UiCard.Title>
-          <UiCard.Description>{children}</UiCard.Description>
+          <Box textStyle={"sm"} color={"fg.muted"}>
+            {children}
+          </Box>
         </UiCard.Body>
       </UiCard.Root>
     </Link>

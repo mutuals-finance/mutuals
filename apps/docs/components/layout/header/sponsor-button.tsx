@@ -11,7 +11,7 @@ export const SponsorButton = (props: ButtonProps) => (
     <Button
       aria-label="Sponsor Mutuals on Open Collective"
       variant="subtle"
-      size="xs"
+      size={"sm"}
       _icon={{
         color: "red.500",
       }}
