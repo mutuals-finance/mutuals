@@ -143,14 +143,7 @@ export function SidebarStart({ pageMap, ...props }: SidebarProps) {
 
   return (
     <Show when={!!normalizePagesResult.activeThemeContext.sidebar}>
-      <SidebarContainer
-        px="2"
-        pb="12"
-        w="64"
-        hideBelow="md"
-        textStyle="sm"
-        {...props}
-      >
+      <SidebarContainer py="6" w="64" hideBelow="md" textStyle="sm" {...props}>
         <Sidenav pageMap={pageMap} />
       </SidebarContainer>
     </Show>
@@ -161,7 +154,7 @@ export function SidebarEnd({ children, ...props }: BoxProps) {
   const { normalizePagesResult } = useConfig();
   return (
     <Show when={!!normalizePagesResult.activeThemeContext.toc}>
-      <SidebarContainer pb="12" px="2" w="52" hideBelow="xl" {...props}>
+      <SidebarContainer py="6" w="52" hideBelow="xl" {...props}>
         <Stack gap="4" align="stretch" w={"full"}>
           {children}
         </Stack>

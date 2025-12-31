@@ -26,26 +26,6 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { SponsorButton } from "@/components/layout/header/sponsor-button";
 import { useConfig } from "@/context";
 
-const primaryNavItems = [
-  {
-    label: "Docs",
-    value: "docs",
-    href: "/docs",
-    external: false,
-  },
-  {
-    label: "Support",
-    value: "support",
-    href: "/support",
-  },
-  {
-    label: "Development",
-    value: "development",
-    href: "/development",
-    external: false,
-  },
-];
-
 const HeaderRoot = chakra("header", {
   base: {
     bg: "bg",
@@ -68,13 +48,14 @@ const TopNavLink = chakra(Link, {
   variants: {
     variant: {
       tab: {
+        color: "fg",
         py: "2",
         borderBottomWidth: "2px",
         roundedBottom: "none",
         borderColor: "transparent",
         transition: "border-color 0.2s",
-        _hover: { borderColor: "border" },
-        _currentPage: { borderColor: "colorPalette.solid!" },
+        _hover: { borderColor: "border", color: "fg" },
+        _currentPage: { borderColor: "colorPalette.solid!", color: "fg" },
       },
     },
   },
@@ -136,6 +117,9 @@ const HeaderMobileMenuDropdown = () => {
   const pathname = usePathname();
   const pathnameRef = useRef(pathname);
 
+  const config = useConfig();
+  const items = config.normalizePagesResult.topLevelNavbarItems;
+
   useEffect(() => {
     if (pathnameRef.current !== pathname) {
       setIsOpen(false);
@@ -166,9 +150,9 @@ const HeaderMobileMenuDropdown = () => {
           </DrawerCloseTrigger>
           <DrawerBody display="flex" flexDir="column" gap="4" flex="1">
             <VStack align="start" justify="stretch">
-              {primaryNavItems.map(({ label, ...item }) => (
-                <TopNavMobileLink key={label} {...item}>
-                  {label}
+              {items.map(({ ...item }) => (
+                <TopNavMobileLink key={item.route} href={item.route}>
+                  {item.title}
                 </TopNavMobileLink>
               ))}
             </VStack>

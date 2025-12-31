@@ -5,19 +5,25 @@ description: Your all-in-one resource for Mutuals
 
 import {
   IoBookOutline,
-  IoConstructOutline,
+  IoConstructOutline, IoDocumentTextOutline, IoExtensionPuzzleOutline,
   IoHelpBuoyOutline
 } from "react-icons/io5";
 import { CardGroup, Card } from '@/components/mdx/card'
 
 <CardGroup columns={{base:1, md:3}}>
-  <Card href={"/docs"} title={"Documentation"} icon={<IoBookOutline/>}>
-    Explore the core concepts, architecture, and features of the Mutuals protocol.
+  <Card href={"/concepts/overview"} title={"Concepts"} icon={<IoBookOutline/>}>
+    Learn the fundamental concepts and principles behind Mutuals, including key terminology and architecture.
   </Card>
-  <Card href={"/support"} title={"Support"} icon={<IoHelpBuoyOutline />}>
+  <Card href={"/contracts/overview"} title={"Contracts"} icon={<IoDocumentTextOutline />}>
+    Get detailed information about Mutuals smart contracts, including deployment guides and usage instructions.
+  </Card>
+  <Card href={"/sdks/overview"} title={"SDKs"} icon={<IoConstructOutline/>}>
+    Explore the Mutuals Software Development Kits (SDKs) for building applications on the Mutuals platform.
+  </Card>
+  <Card href={"/apis/overview"} title={"APIs"} icon={<IoExtensionPuzzleOutline/>}>
+    Discover the Mutuals Application Programming Interfaces (APIs) for integrating with the Mutuals platform.
+  </Card>
+  <Card href={"/support/overview"} title={"Support"} icon={<IoHelpBuoyOutline />}>
     Find answers to common questions, troubleshooting tips, and guidance on using Mutuals effectively.
-  </Card>
-  <Card href={"/development"} title={"Development"} icon={<IoConstructOutline/>}>
-    Dive into the technical details of building Mutuals.
   </Card>
 </CardGroup>
