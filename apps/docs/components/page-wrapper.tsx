@@ -17,7 +17,7 @@ export const PageWrapper: FC<
         flex="1"
         w="full"
         px={{ md: "12" }}
-        py="12"
+        py="6"
         overflow="auto"
         minHeight="var(--content-height)"
       >

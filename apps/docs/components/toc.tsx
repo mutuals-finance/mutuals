@@ -22,17 +22,14 @@ export const TOC: FC<
   return (
     <Box as="nav" textStyle="sm">
       <Text fontWeight="medium">On this page</Text>
-      <Stack mt="3">
+      <Stack mt="2">
         {toc.map((item, index) => (
           <TocLink
             data-toc
             id={item.id}
             key={item.id}
             href={`${pathname}/#${item.id}`}
-            /*
-            aria-current={item.id === activeItem ? "page" : undefined}
-*/
-            css={{ "--toc-depth": item.depth }}
+            css={{ "--toc-depth": item.depth - 2 }}
           >
             {item.value}
           </TocLink>

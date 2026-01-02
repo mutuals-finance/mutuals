@@ -25,6 +25,7 @@ import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { SponsorButton } from "@/components/layout/header/sponsor-button";
 import { useConfig } from "@/context";
+import { MenuItem, PageItem } from "nextra/normalize-pages";
 
 const HeaderRoot = chakra("header", {
   base: {
@@ -83,11 +84,20 @@ const HeaderLogoLink = (props: MutualsLogoProps) => {
 const HeaderPrimaryNavbar = () => {
   const config = useConfig();
   const items = config.normalizePagesResult.topLevelNavbarItems;
+
+  const getFirstChildRoute = (item: PageItem | MenuItem): string => {
+    const firstChild = item.children?.[0];
+    if (firstChild?.children?.length) {
+      return firstChild.children[0]?.route!;
+    }
+    return firstChild?.route || item.route;
+  };
+
   return (
     <HStack gap="6" minH="48px" aria-label="primary navigation">
       <HeaderLogoLink mr={"12"} />
-      {items.map(({ name, ...item }) => (
-        <TopNavLink key={item.route} href={item.route}>
+      {items.map((item) => (
+        <TopNavLink key={item.route} href={getFirstChildRoute(item)}>
           {item.title}
         </TopNavLink>
       ))}
@@ -95,14 +105,32 @@ const HeaderPrimaryNavbar = () => {
   );
 };
 
+const getFirstChildRoute = (item: PageItem | MenuItem): string => {
+  if (item.route && !item.children?.length) {
+    return item.route;
+  }
+  const firstChild = item.children?.[0];
+  if (!firstChild) return item.route;
+  return getFirstChildRoute(firstChild);
+};
+
 const HeaderSecondaryNavbar = () => {
   const { normalizePagesResult } = useConfig();
-  const activeTopLevel = normalizePagesResult.activePath[0];
+  const activeTopLevel = normalizePagesResult.activePath.find(
+    (p) => p.children?.length,
+  );
   const items = activeTopLevel?.children ?? [];
+
+  if (!items.length) return null;
+
   return (
     <HStack as="nav" gap="6" aria-label="secondary navigation">
-      {items?.map(({ ...item }) => (
-        <TopNavLink key={item.route} href={item.route} variant={"tab"}>
+      {items.map((item) => (
+        <TopNavLink
+          key={item.route}
+          href={getFirstChildRoute(item)}
+          variant={"tab"}
+        >
           {item.title}
         </TopNavLink>
       ))}
@@ -119,6 +147,9 @@ const HeaderMobileMenuDropdown = () => {
 
   const config = useConfig();
   const items = config.normalizePagesResult.topLevelNavbarItems;
+
+  const activeTopLevel = config.normalizePagesResult.activePath[0];
+  const secondaryNavItems = activeTopLevel?.children ?? [];
 
   useEffect(() => {
     if (pathnameRef.current !== pathname) {
@@ -150,24 +181,28 @@ const HeaderMobileMenuDropdown = () => {
           </DrawerCloseTrigger>
           <DrawerBody display="flex" flexDir="column" gap="4" flex="1">
             <VStack align="start" justify="stretch">
-              {items.map(({ ...item }) => (
-                <TopNavMobileLink key={item.route} href={item.route}>
-                  {item.title}
-                </TopNavMobileLink>
-              ))}
-            </VStack>
-            {/*
-            <VStack align="start" justify="stretch">
-              {secondaryNavItems.map((item) => (
+              {items.map((item) => (
                 <TopNavMobileLink
-                  key={item.title}
-                  href={item.url || "#"}
-                  aria-current={item.current ? "page" : undefined}
+                  key={item.route}
+                  href={getFirstChildRoute(item)}
                 >
                   {item.title}
                 </TopNavMobileLink>
               ))}
             </VStack>
+            {/*
+            {secondaryNavItems.length > 0 && (
+              <VStack align="start" justify="stretch">
+                {secondaryNavItems.map((item) => (
+                  <TopNavMobileLink
+                    key={item.route}
+                    href={getFirstChildRoute(item)}
+                  >
+                    {item.title}
+                  </TopNavMobileLink>
+                ))}
+              </VStack>
+            )}
 */}
           </DrawerBody>
         </DrawerContent>
