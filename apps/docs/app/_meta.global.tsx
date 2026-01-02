@@ -10,6 +10,7 @@ import {
   IoHelpCircleOutline,
   IoLogoReact,
 } from "react-icons/io5";
+import { LuScale, LuUnplug } from "react-icons/lu";
 
 const meta = {
   index: {
@@ -39,8 +40,55 @@ const meta = {
         ),
         type: "page",
         items: {
-          index: "Introduction",
-          extensions: "Extensions",
+          "getting-started": {
+            items: {
+              index: "Introduction",
+              example: "A simple example",
+            },
+          },
+          terminology: {
+            items: {
+              index: "Overview",
+            },
+          },
+        },
+      },
+      extensions: {
+        title: (
+          <HStack gap={"2"}>
+            <Icon>
+              <LuUnplug />
+            </Icon>
+            Extensions
+          </HStack>
+        ),
+        type: "page",
+        items: {
+          index: "Overview",
+        },
+      },
+      comparison: {
+        title: (
+          <HStack gap={"2"}>
+            <Icon>
+              <LuScale />
+            </Icon>
+            Comparison
+          </HStack>
+        ),
+        type: "page",
+        items: {
+          index: "Overview",
+          web2: {
+            items: {
+              index: "Overview",
+            },
+          },
+          web3: {
+            items: {
+              index: "Overview",
+            },
+          },
         },
       },
     },
@@ -94,7 +142,11 @@ const meta = {
         ),
         type: "page",
         items: {
-          index: "Introduction",
+          "getting-started": {
+            items: {
+              index: "Introduction",
+            },
+          },
         },
       },
       core: {
@@ -142,7 +194,7 @@ const meta = {
         ),
         type: "page",
         items: {
-          introduction: {
+          "getting-started": {
             items: {
               index: "Introduction",
               quickstart: "Quickstart",

@@ -101,11 +101,11 @@ const NavItem: FC<NavItemProps> = ({ node, pathname, isTopLevel }) => {
 
   if (isTopLevel && hasChildren) {
     return (
-      <Stack gap="2" mt="4" _first={{ mt: 0 }}>
+      <Stack gap="2" my={"2"} _first={{ mt: "0" }}>
         <HStack ps="4" fontWeight="semibold">
           {node.name}
         </HStack>
-        <Stack gap="1px">
+        <Stack gap="0.5" ps="2">
           {node.children!.map((c) => (
             <NavItem key={c.id} node={c} pathname={pathname} />
           ))}
@@ -116,7 +116,7 @@ const NavItem: FC<NavItemProps> = ({ node, pathname, isTopLevel }) => {
 
   if (hasChildren) {
     return (
-      <Stack gap="1px">
+      <Stack gap="2">
         <SideNavItem
           as="button"
           w="full"
@@ -132,7 +132,7 @@ const NavItem: FC<NavItemProps> = ({ node, pathname, isTopLevel }) => {
           />
         </SideNavItem>
         {open && (
-          <Stack gap="1px" ps="3">
+          <Stack gap="0.5" ps="2">
             {node.children!.map((c) => (
               <NavItem key={c.id} node={c} pathname={pathname} />
             ))}

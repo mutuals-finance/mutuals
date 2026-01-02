@@ -13,16 +13,17 @@ export const PageHeader = (props: PageHeaderProps) => {
     <Stack gap="4" pb="4">
       <Stack
         gap="4"
-        direction="row"
-        justify="space-between"
+        direction={{ base: "column", md: "row" }}
+        justify={{ md: "space-between" }}
         align={"flex-start"}
       >
+        <Box flexShrink={"0"} order={{ md: "1" }}>
+          <LLMSCopyWidget {...props} />
+        </Box>
+
         <Heading as="h1" size="4xl" fontWeight="semibold">
           {title}
         </Heading>
-        <Box flexShrink={"0"}>
-          <LLMSCopyWidget {...props} />
-        </Box>
       </Stack>
 
       <Text color="fg.muted" textStyle={"lg"}>
