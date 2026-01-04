@@ -32,7 +32,7 @@ export default function PoolOverviewDescription({
         <PoolCard.Logo
           src={""}
           alt={pool?.name ?? "Unknown Payment Pool"}
-          boxSize={"3.4rem"}
+          size={"lg"}
         />
         <Stack>
           <Heading as={"h1"} size={"2xl"}>

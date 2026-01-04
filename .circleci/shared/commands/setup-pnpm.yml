@@ -1,0 +1,26 @@
+description: "Setup pnpm with caching"
+steps:
+  - restore_cache:
+      name: Restore pnpm cache
+      keys:
+        - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+  - run:
+      name: Use latest Corepack
+      command: |
+        echo "Before: corepack version => $(corepack --version || echo 'not installed')"
+        npm install -g corepack@latest
+        echo "After : corepack version => $(corepack --version)"
+  - run:
+      name: Install pnpm package manager
+      command: |
+        corepack enable
+        corepack prepare pnpm@latest-9 --activate
+        pnpm config set store-dir .pnpm-store
+  - run:
+      name: Install dependencies
+      command: pnpm install
+  - save_cache:
+      name: Save pnpm cache
+      key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      paths:
+        - .pnpm-store

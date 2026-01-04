@@ -1,39 +1,30 @@
 "use client";
 
 import PoolListEmptyState from "@/features/Pool/List/EmptyState";
-import { usePrivy } from "@privy-io/react-auth";
-import { For, Show, GridItem } from "@mutuals/ui";
-import AuthSiginInCard from "@/features/Auth/SignInCard";
+import { For, GridItem } from "@mutuals/ui";
 import React from "react";
+import { useViewerPoolList } from "@mutuals/graphql-client-nextjs/client";
+import { Pool } from "@mutuals/graphql-client-nextjs";
+import PoolCard from "@/features/Pool/Card";
 
 //export type PoolListContentProps = ApolloQueryResult<MyPoolsQuery>;
 
 export default function PoolListContent() {
-  const { authenticated } = usePrivy();
+  const { data, loading } = useViewerPoolList();
+
+  const pools = (data?.viewer?.pools ?? []) as Array<Pool>;
 
   return (
-    <Show
-      when={authenticated}
+    <For
+      each={pools}
       fallback={
-        <GridItem colSpan={{ base: 2, lg: 3 }}>
-          <AuthSiginInCard
-            description={
-              "To view and manage your pools you must sign in to your account."
-            }
-          />
+        <GridItem gridColumn={"1 / -1"}>
+          <PoolListEmptyState />
         </GridItem>
       }
     >
-      <For
-        each={[]}
-        fallback={
-          <GridItem colSpan={{ base: 2, lg: 3 }}>
-            <PoolListEmptyState />
-          </GridItem>
-        }
-      >
-        {() => <></>}
-        {/*
+      {(pool) => <PoolCard key={pool.id} {...pool} />}
+      {/*
       <HStack mb={"6"} gap={"6"} alignItems={"center"}>
         <Form flex={"1"}>
           <InputGroup startElement={<IoSearch />}>
@@ -46,7 +37,6 @@ export default function PoolListContent() {
         <PoolCard key={key} {...viewerPool?.pool} />
       ))}
 */}
-      </For>
-    </Show>
+    </For>
   );
 }

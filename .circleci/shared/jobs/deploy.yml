@@ -14,7 +14,7 @@ parameters:
 
 steps:
   - checkout
-  - setup-bun
+  - setup-pnpm
   - setup-vercel:
       vercel-environment: <<parameters.vercel-environment>>
       vercel-project-id: <<parameters.vercel-project-id>>

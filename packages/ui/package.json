@@ -11,7 +11,7 @@
     "lint": "eslint . --max-warnings 0",
     "typegen": "chakra typegen ./src/theme/index.ts",
     "snippet-add-all": "chakra snippet add --all",
-    "postinstall": "bun typegen"
+    "postinstall": "pnpm typegen"
   },
   "dependencies": {
     "@chakra-ui/charts": "^3.30.0",
