@@ -7,12 +7,10 @@ import {
   useWriteContract,
   UseWriteContractParameters,
 } from "wagmi";
-
-import { FACTORY_ADDRESS } from "src/constants";
-
-import { SplitFactory__factory } from "@/../../types/typechain";
-import { randomBytes } from "ethers";
-import { Address } from "viem";
+import { Address, hexToBigInt, keccak256 } from "viem";
+import { generatePrivateKey } from "viem/accounts";
+import { FACTORY_ADDRESS } from "@/constants";
+import { SplitFactory__factory } from "#/typechain";
 
 export type CreateSplitArgs = [Address[], bigint[], string, boolean, bigint];
 
@@ -30,17 +28,14 @@ export default function useCreateSplit({
   metadataLocked,
   ...props
 }: UseCreateSplitProps) {
-  const salt = randomBytes(32).reduce(
-    (acc, val) => acc + BigInt(val),
-    BigInt("0"),
-  );
+  const salt = hexToBigInt(keccak256(generatePrivateKey()));
 
   const simulate = useSimulateContract({
     address: FACTORY_ADDRESS,
     abi: SplitFactory__factory.abi,
     functionName: "createSplit",
     args: [
-      payees,
+      payees as Address[],
       shares.map((s) => BigInt(s)),
       uri,
       !!metadataLocked,

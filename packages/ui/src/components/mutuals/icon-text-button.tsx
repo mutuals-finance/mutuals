@@ -5,7 +5,7 @@ import { Link, LinkProps } from "./link";
 type IconTextButtonProps = IconButtonProps & LinkProps;
 
 const IconTextButton = forwardRef<HTMLButtonElement, IconTextButtonProps>(
-  function ({ href, size = "lg", w = "16", ...props }, ref) {
+  function ({ href, size = "lg", w = "16", linkProps, ...props }, ref) {
     const _props = { size, w, h: w, ...props };
 
     return (
@@ -13,7 +13,7 @@ const IconTextButton = forwardRef<HTMLButtonElement, IconTextButtonProps>(
         {!href ? (
           <IconButton {...(_props as IconButtonProps)} ref={ref} />
         ) : (
-          <Link href={href} asChild={true}>
+          <Link href={href} linkProps={linkProps} asChild={true}>
             <IconButton {...(_props as IconButtonProps)} ref={ref} />
           </Link>
         )}

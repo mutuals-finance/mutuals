@@ -11,7 +11,7 @@ export default function ValueCell({
   const price = getValue() ?? "";
 
   return (
-    <Text as={"span"} {...props}>
+    <Text as={"span"} fontVariantNumeric={"tabular-nums"} {...props}>
       {formatUSDPrice(price)}
     </Text>
   );

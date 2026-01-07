@@ -1,10 +1,12 @@
 import { Table as ChakraTable } from "@mutuals/ui";
 import { flexRender, Row, type RowData } from "@tanstack/react-table";
 
-type BodyRowProps<TData extends RowData> = Row<TData>;
+export type BodyRowProps<TData extends RowData> = Row<TData> & {
+  cellProps?: ChakraTable.CellProps;
+};
 
 export default function BodyRow<TData extends RowData>({
-  showRowBorder = true,
+  cellProps,
   ...row
 }: BodyRowProps<TData> & { showRowBorder?: boolean }) {
   return (
@@ -12,8 +14,8 @@ export default function BodyRow<TData extends RowData>({
       {row.getVisibleCells().map((cell) => (
         <ChakraTable.Cell
           key={cell.id}
-          css={{ width: `${cell.column.getSize()}px` }}
-          borderBottomWidth={!showRowBorder ? "0px" : "1px"}
+          {...cellProps}
+          css={{ width: `${cell.column.getSize()}px`, ...cellProps?.css }}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </ChakraTable.Cell>

@@ -1,10 +1,9 @@
 import React from "react";
 import AssetTable from "@/features/Asset/Table";
-import { getAccountBalance } from "@/lib/ankr";
-import ContentCard from "@/components/ContentCard";
 import ShellPage from "@/features/Shell/Page";
 import { Container } from "@mutuals/ui";
 import { Metadata } from "next";
+import { getTokenBalances } from "@/lib/moralis";
 
 export const metadata: Metadata = {
   title: "Assets",
@@ -13,21 +12,12 @@ export const metadata: Metadata = {
 export default async function PoolAssetsPage() {
   const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
 
-  const balance = await getAccountBalance({
-    walletAddress: address,
-    blockchain: "eth",
-    pageSize: 50,
-  });
+  const assets = await getTokenBalances(address, 1);
 
   return (
     <ShellPage breadcrumbsEnabled={false} title={"Assets"}>
       <Container as={"section"} maxW={"7xl"}>
-        <ContentCard
-          bodyProps={{ p: "0" }}
-          css={{ overflow: "auto !important" }}
-        >
-          <AssetTable assets={balance?.assets} tableProps={{ size: "sm" }} />
-        </ContentCard>
+        <AssetTable assets={assets} />
       </Container>
     </ShellPage>
   );

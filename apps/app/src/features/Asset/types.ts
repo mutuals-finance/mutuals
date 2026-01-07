@@ -1,10 +1,12 @@
-import { Balance, GetAccountBalanceReply } from "@ankr.com/ankr.js/dist/types";
 import { CellContext } from "@tanstack/react-table";
 import type { TableProps } from "@/components/Table";
+import { ERC20TokenBalance } from "@/lib/moralis";
 
-export type AssetTableProps = Partial<
-  Omit<GetAccountBalanceReply, "totalBalanceUsd">
-> &
-  Omit<TableProps<Balance>, "data" | "columns">;
+export type AssetTableProps = {
+  assets?: ERC20TokenBalance[];
+} & Omit<TableProps<ERC20TokenBalance>, "data" | "columns">;
 
-export type AssetTableCellProps = CellContext<Balance, string | undefined>;
+export type AssetTableCellProps = CellContext<
+  ERC20TokenBalance,
+  bigint | string | number | null | undefined
+>;

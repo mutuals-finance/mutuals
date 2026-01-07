@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import { getAccountBalance, getTokenTransfers } from "@/lib/ankr";
 import { getPoolDetailsFromRouteParams } from "@/lib/split";
 import ActivityTableCard from "@/features/Activity/TableCard";
 import AssetTableCard from "@/features/Asset/TableCard";
@@ -7,17 +6,18 @@ import PoolOverviewDescription from "@/features/PoolOverview/Description";
 import ShellPoolOverview from "@/features/Shell/PoolOverview";
 import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
 import { Stack } from "@mutuals/ui";
+import { getTokenBalances } from "@/lib/moralis";
 
 const tabs = [
   {
     title: "Withdraw",
     value: "withdraw",
-    href: "/pool/2s4NOxbwvXdpJ9daLIqqvBnpl7V/withdraw",
+    href: "/pool/example/withdraw",
   },
   {
     title: "Deposit",
     value: "deposit",
-    href: "/pool/2s4NOxbwvXdpJ9daLIqqvBnpl7V/deposit",
+    href: "/pool/example/deposit",
   },
 ];
 
@@ -33,16 +33,19 @@ export default async function PoolOverviewLayout({
 
   const queries = await Promise.all([
     getPoolDetailsFromRouteParams(await params),
-    getAccountBalance({ walletAddress: address, blockchain: "eth" }),
-    getTokenTransfers({ address: [address], blockchain: "eth" }),
+    getTokenBalances(address, 1),
+    /*
+
+getTokenTransfers({ address: [address], blockchain: "eth" }),
+*/
   ]);
 
   const pool = queries[0];
 
   const props = {
     pool,
-    balance: queries[1]!,
-    activity: queries[2]!,
+    assets: queries[1], // queries[1]!,
+    activity: undefined, //queries[2]!,
   };
 
   return (
@@ -55,11 +58,13 @@ export default async function PoolOverviewLayout({
           {/*
           <AllocationTableCard {...props} />
 */}
-          <AssetTableCard assets={props.balance?.assets?.slice(0, 10)} />
+          <AssetTableCard assets={props.assets.slice(0, 10)} />
+          {/*
           <ActivityTableCard
             payee={address}
-            transfers={props.activity.transfers.slice(0, 10)}
+            transfers={props.activity?.transfers?.slice(0, 10)}
           />
+*/}
         </Stack>
       }
       contentProps={{ pool }}

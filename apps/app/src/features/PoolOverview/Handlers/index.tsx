@@ -8,10 +8,11 @@ import {
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import { Pool } from "@mutuals/graphql-client-nextjs";
-import { IconTextButtonProps } from "@mutuals/ui";
+import { Bleed, IconTextButtonProps } from "@mutuals/ui";
+import { DeepPartial } from "#/partial";
 
 interface PoolHandlersProps {
-  pool?: Pool;
+  pool?: DeepPartial<Pool>;
 }
 
 export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
@@ -19,46 +20,40 @@ export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
     {
       "aria-label": "Withdraw",
       children: <IoPushOutline />,
-      href: `/pool/${pool?.dbid}/withdraw`,
-      variant: "subtle",
+      href: `/pool/${pool?.slug}/withdraw`,
+      variant: "surface",
+      linkProps: { scroll: false },
     },
     {
       "aria-label": "Deposit",
       children: <IoDownloadOutline />,
-      href: `/pool/${pool?.dbid}/deposit`,
-      variant: "subtle",
+      href: `/pool/${pool?.slug}/deposit`,
+      linkProps: { scroll: false },
+      variant: "surface",
     },
     {
       "aria-label": "Settings",
       children: <IoSettingsOutline />,
-      href: `/pool/${pool?.dbid}/settings`,
-      variant: "subtle",
+      href: `/pool/${pool?.slug}/settings`,
+      variant: "surface",
     },
     {
       "aria-label": "Activity",
       children: <IoSwapHorizontalOutline />,
       href: `/pool/${pool?.dbid}/activity`,
-      variant: "subtle",
+      variant: "surface",
     },
     {
       "aria-label": "Assets",
       children: <IoWalletOutline />,
       href: `/pool/${pool?.dbid}/assets`,
-      variant: "subtle",
+      variant: "surface",
     },
   ];
 
   return (
-    <ShellIconButtonList
-      items={items}
-      as={"article"}
-      my={"12"}
-      ml={{ base: -6, lg: -12 }}
-      px={{ base: 6, lg: 12 }}
-      w={{
-        base: "calc(100% + var(--chakra-space-12))",
-        lg: "calc(100% + var(--chakra-space-24))",
-      }}
-    />
+    <Bleed inline={{ base: "6", lg: "10" }} my={"12"}>
+      <ShellIconButtonList items={items} as={"article"} />
+    </Bleed>
   );
 }

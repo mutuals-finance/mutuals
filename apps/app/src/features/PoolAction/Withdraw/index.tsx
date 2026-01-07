@@ -11,7 +11,7 @@ export default async function PoolActionWithdrawPage(
 ) {
   return (
     <WithdrawForm {...props}>
-      <Text>
+      <Text textStyle={"sm"} color={"fg.muted"}>
         Withdraw funds from your Payment Pool. You may either withdraw for your
         own or distribute to all other recipients.
       </Text>

@@ -145,7 +145,7 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
 
 function SidebarToggle(props: IconButtonProps) {
   return (
-    <IconButton size={"sm"} variant={"subtle"} {...props}>
+    <IconButton size={"sm"} variant={"ghost"} {...props}>
       <Icon size={"md"}>
         <AiOutlineMenu />
       </Icon>

@@ -7,22 +7,30 @@ import {
 } from "@tanstack/react-table";
 import React from "react";
 
-import BodyRow from "@/components/Table/BodyRow";
-import HeaderRow from "@/components/Table/HeaderRow";
+import BodyRow, { type BodyRowProps } from "@/components/Table/BodyRow";
+import HeaderRow, { type HeaderRowProps } from "@/components/Table/HeaderRow";
 
-export interface TableProps<TData extends RowData>
-  extends Omit<TableOptions<TData>, "getCoreRowModel"> {
+export interface TableProps<TData extends RowData> extends Omit<
+  TableOptions<TData>,
+  "getCoreRowModel"
+> {
   containerProps?: ChakraTable.ScrollAreaProps;
-  headProps?: ChakraTable.HeaderProps;
+  headerProps?: ChakraTable.HeaderProps;
+  bodyProps?: ChakraTable.BodyProps;
+  bodyRowProps?: Pick<BodyRowProps<TData>, "cellProps">;
+  headerRowProps?: Pick<HeaderRowProps<TData>, "cellProps">;
   tableProps?: ChakraTable.RootProps & { showRowBorder?: boolean };
   headerHidden?: boolean;
 }
 
 export default function Table<TData extends RowData>({
   containerProps,
-  headProps,
+  headerProps,
   headerHidden = false,
   tableProps,
+  headerRowProps,
+  bodyRowProps,
+  bodyProps,
   ...props
 }: TableProps<TData>) {
   const table = useReactTable<TData>({
@@ -34,24 +42,25 @@ export default function Table<TData extends RowData>({
     <ChakraTable.ScrollArea w="full" {...containerProps}>
       <ChakraTable.Root w="full" {...tableProps}>
         {!headerHidden && (
-          <ChakraTable.Header {...headProps}>
-            {table
-              ?.getHeaderGroups()
-              ?.map((headerGroup) => (
-                <HeaderRow<TData> {...headerGroup} key={headerGroup.id} />
-              ))}
-          </ChakraTable.Header>
-        )}
-        <ChakraTable.Body>
-          {table
-            ?.getRowModel()
-            ?.rows?.map((row) => (
-              <BodyRow<TData>
-                {...row}
-                showRowBorder={tableProps?.showRowBorder}
-                key={row.id}
+          <ChakraTable.Header {...headerProps}>
+            {table?.getHeaderGroups()?.map((headerGroup) => (
+              <HeaderRow<TData>
+                {...headerGroup}
+                {...headerRowProps}
+                key={headerGroup.id}
               />
             ))}
+          </ChakraTable.Header>
+        )}
+        <ChakraTable.Body {...bodyProps}>
+          {table?.getRowModel()?.rows?.map((row) => (
+            <BodyRow<TData>
+              {...row}
+              showRowBorder={tableProps?.showRowBorder}
+              {...bodyRowProps}
+              key={row.id}
+            />
+          ))}
         </ChakraTable.Body>
       </ChakraTable.Root>
     </ChakraTable.ScrollArea>

@@ -24,14 +24,13 @@ export default async function PoolActivityPage() {
       }
       breadcrumbsEnabled={false}
     >
-      <Container as={"section"} maxW={"container.xl"}>
+      <Container as={"section"} maxW={"7xl"}>
         <ActivityTableCard
           cardProps={{
             css: { overflow: "auto !important" },
             bodyProps: { p: "0" },
           }}
           transfers={activity?.transfers ?? []}
-          size={"sm"}
           payee={address}
         />
       </Container>

@@ -16,7 +16,14 @@ export default function PoolListEmptyState() {
       }
     >
       <Link asChild={true} href={"/pool/new"}>
-        <Button size={"sm"}>Create Payment Pool</Button>
+        <Button size={"sm"} variant={"solid"}>
+          Create Payment Pool
+        </Button>
+      </Link>
+      <Link asChild={true} href={"/pool/example"}>
+        <Button size={"sm"} variant={"subtle"}>
+          View Example Pool
+        </Button>
       </Link>
     </EmptyStateCard>
   );
