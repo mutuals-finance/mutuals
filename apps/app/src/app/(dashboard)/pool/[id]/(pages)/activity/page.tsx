@@ -30,7 +30,10 @@ export default async function PoolActivityPage() {
             css: { overflow: "auto !important" },
             bodyProps: { p: "0" },
           }}
+          /*
           transfers={activity?.transfers ?? []}
+*/
+          transfers={activity ?? []}
           payee={address}
         />
       </Container>
