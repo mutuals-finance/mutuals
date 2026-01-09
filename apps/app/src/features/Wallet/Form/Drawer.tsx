@@ -89,7 +89,7 @@ export function WalletFormDrawer({
       {...props}
     >
       <DrawerBackdrop />
-      <DrawerContent>
+      <DrawerContent roundedTop={"xl"}>
         <DrawerCloseTrigger />
 
         <DrawerHeader>

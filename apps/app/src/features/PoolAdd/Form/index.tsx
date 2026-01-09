@@ -54,9 +54,6 @@ export default function PoolAdd({ user }: PoolAddProps) {
   return (
     <Form<PoolCreateInput>
       onSubmit={(values) => onSubmit(values, PoolStatus.Active)}
-      onSubmitInvalid={() => {
-        console.log("Submit: invalid");
-      }}
       defaultValues={{
         owner: address,
         name: "Prudent Armadillo",

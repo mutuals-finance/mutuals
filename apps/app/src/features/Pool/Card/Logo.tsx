@@ -13,13 +13,15 @@ export type PoolCardLogoProps = AvatarRootProps & {
 };
 
 export default function PoolCardLogo({
-  src = "bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu",
-  alt = "Unknown Pool",
+  src = "",
+  alt = "",
   ...props
 }: PoolCardLogoProps) {
   const imageProps = getImageProps({
     src,
     alt,
+    width: 120,
+    height: 120,
   }) as AvatarImageProps;
 
   return (

@@ -15,12 +15,14 @@ export default function DashboardHandlers() {
             children: <BiArrowToTop />,
             href: "/withdraw",
             variant: "surface",
+            linkProps: { scroll: false },
           },
           {
             "aria-label": "Deposit",
             children: <BiArrowToBottom />,
             href: "/deposit",
             variant: "surface",
+            linkProps: { scroll: false },
           },
           {
             "aria-label": "Create Pool",
@@ -33,6 +35,7 @@ export default function DashboardHandlers() {
             children: <IoWalletSharp />,
             href: "/wallet/new",
             variant: "surface",
+            linkProps: { scroll: false },
           },
           {
             "aria-label": "Settings",

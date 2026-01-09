@@ -1,4 +1,3 @@
-import { MORALIS_KEY } from "@/constants";
 import { ERC20TokenBalance } from "@/lib/moralis/types";
 import { unstable_cache } from "next/cache";
 
@@ -57,6 +56,8 @@ const fetchTokenBalances = async (
   address: string,
   chainId: number,
 ): Promise<ERC20TokenBalance[]> => {
+  return [];
+  /*
   const chain = getChainName(chainId);
   const url = `https://deep-index.moralis.io/api/v2.2/wallets/${address}/tokens?chain=${chain}&limit=25`;
 
@@ -93,6 +94,7 @@ const fetchTokenBalances = async (
     nativeToken: asset.native_token ?? false,
     portfolioPercentage: asset.portfolio_percentage ?? null,
   }));
+*/
 };
 
 export const getTokenBalances = unstable_cache(

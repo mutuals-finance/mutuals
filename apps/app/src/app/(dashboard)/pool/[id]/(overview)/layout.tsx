@@ -7,6 +7,7 @@ import ShellPoolOverview from "@/features/Shell/PoolOverview";
 import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
 import { Stack } from "@mutuals/ui";
 import { getTokenBalances } from "@/lib/moralis";
+import { getTokenTransfers } from "@/lib/ankr";
 
 const tabs = [
   {
@@ -34,10 +35,7 @@ export default async function PoolOverviewLayout({
   const queries = await Promise.all([
     getPoolDetailsFromRouteParams(await params),
     getTokenBalances(address, 1),
-    /*
-
-getTokenTransfers({ address: [address], blockchain: "eth" }),
-*/
+    getTokenTransfers({ address: [address], blockchain: "eth" }),
   ]);
 
   const pool = queries[0];
@@ -45,7 +43,7 @@ getTokenTransfers({ address: [address], blockchain: "eth" }),
   const props = {
     pool,
     assets: queries[1], // queries[1]!,
-    activity: undefined, //queries[2]!,
+    activity: queries[2]!,
   };
 
   return (
@@ -59,12 +57,10 @@ getTokenTransfers({ address: [address], blockchain: "eth" }),
           <AllocationTableCard {...props} />
 */}
           <AssetTableCard assets={props.assets.slice(0, 10)} />
-          {/*
           <ActivityTableCard
             payee={address}
-            transfers={props.activity?.transfers?.slice(0, 10)}
+            transfers={props.activity?.slice(0, 10)}
           />
-*/}
         </Stack>
       }
       contentProps={{ pool }}

@@ -49,22 +49,18 @@ export default function PoolOverviewDescription({
       </Stack>
 
       <Wrap gap={{ base: "4", lg: "12" }}>
-        <StatRoot size={"sm"} flexGrow={"0"}>
+        <StatRoot size={"sm"} flexGrow={"0"} minW={"32"}>
           <StatLabel>Total Income</StatLabel>
-          <StatValueText textStyle={"3xl"}>
-            {formatUSDPrice("29183.80")}
-          </StatValueText>
+          <StatValueText textStyle={"3xl"}>{formatUSDPrice("0")}</StatValueText>
         </StatRoot>
-        <StatRoot size={"sm"} flexGrow={"0"}>
+        <StatRoot size={"sm"} flexGrow={"0"} minW={"32"}>
           <StatLabel>Balance</StatLabel>
-          <StatValueText textStyle={"3xl"}>
-            {formatUSDPrice("14900.92")}
-          </StatValueText>
+          <StatValueText textStyle={"3xl"}>{formatUSDPrice("0")}</StatValueText>
         </StatRoot>
-        <StatRoot size={"sm"} flexGrow={"0"}>
+        <StatRoot size={"sm"} flexGrow={"0"} minW={"32"}>
           <StatLabel>Withdraws</StatLabel>
           <StatValueText textStyle={"3xl"}>
-            {formatUSDPrice((29183.8 - 14900.92).toString())}
+            {formatUSDPrice((0).toString())}
           </StatValueText>
         </StatRoot>
       </Wrap>
