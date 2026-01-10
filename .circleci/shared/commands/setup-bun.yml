@@ -3,7 +3,7 @@ steps:
   - restore_cache:
       name: Restore bun cache
       keys:
-        - bun-packages-{{ checksum "bun.lockb" }}
+        - bun-packages-{{ checksum "bun.lock" }}
   - run:
       name: Install bun
       command: |
@@ -15,7 +15,7 @@ steps:
       command: bun install --frozen-lockfile
   - save_cache:
       name: Save bun cache
-      key: bun-packages-{{ checksum "bun.lockb" }}
+      key: bun-packages-{{ checksum "bun.lock" }}
       paths:
         - ~/.bun/install/cache
         - node_modules
