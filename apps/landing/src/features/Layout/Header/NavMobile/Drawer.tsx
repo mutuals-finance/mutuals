@@ -9,7 +9,6 @@ import {
   Box,
   Center,
   Stack,
-  StackSeparator,
   ButtonProps,
   Group,
   IconButton,
@@ -22,8 +21,7 @@ import NavMobileMenuButton from "@/features/Layout/Header/NavMobile/MenuButton";
 import { BiX } from "react-icons/bi";
 
 interface MobileNavProps
-  extends Omit<Drawer.ContentProps, "children">,
-    PropsWithChildren {
+  extends Omit<Drawer.ContentProps, "children">, PropsWithChildren {
   links?: LinkProps[];
   closeButtonProps?: ButtonProps;
 }
@@ -52,7 +50,7 @@ export default function NavMobileDrawer({
       </DrawerHeader>
 
       <DrawerBody p="0">
-        <Stack direction={"column"} gap={"0"} separator={<StackSeparator />}>
+        <Stack direction={"column"} gap={"1"} pt={"6"}>
           {(links || []).map(({ href = "/", children, ...link }, index) => (
             <Link
               key={index}

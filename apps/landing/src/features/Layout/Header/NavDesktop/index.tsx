@@ -23,7 +23,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
       {...props}
     >
       <NavWrapper>
-        <Stack gap={"12"} mx={"12"} direction={"row"}>
+        <Stack gap={"8"} mx={"12"} direction={"row"}>
           {links.slice(0, -1).map((props, index) => (
             <NavLink key={index} {...props} />
           ))}
@@ -32,7 +32,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
         <Stack ml={"auto"} gap={"4"} direction={"row"}>
           {lastLinksProps && (
             <Link href={lastLinksProps.href} target="_blank" asChild={true}>
-              <Button size={"md"} variant={"subtle"}>
+              <Button size={"md"} variant="subtle">
                 {lastLinksProps.children}
               </Button>
             </Link>
@@ -43,7 +43,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
             asChild={true}
           >
             <Button size={"md"} variant={"solid"}>
-              Launch App
+              Launch app
             </Button>
           </Link>
         </Stack>

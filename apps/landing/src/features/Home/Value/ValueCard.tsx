@@ -1,15 +1,6 @@
-import {
-  Text,
-  Heading,
-  Card,
-  IconProps,
-  AspectRatio,
-  Box,
-  Icon,
-} from "@mutuals/ui";
+import { Text, Heading, Card, IconProps, AspectRatio, Icon } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import IconBox from "@/components/IconBox";
-import { IoArrowUp } from "react-icons/io5";
 
 interface ValueCardProps extends Card.RootProps {
   heading: string;
@@ -23,7 +14,7 @@ export default function ValueCard({
   heading,
   description,
   variant = "outline",
-  size = "md",
+  size = "sm",
   image,
   ...props
 }: ValueCardProps) {
@@ -44,7 +35,11 @@ export default function ValueCard({
 
       {icon && (
         <Card.Header>
-          <IconBox size={"sm"} bg={"bg.muted"} color={"fg.muted"}>
+          <IconBox
+            size={"sm"}
+            bg={"colorPalette.subtle"}
+            color={"colorPalette.fg"}
+          >
             <Icon>{icon}</Icon>
           </IconBox>
         </Card.Header>
@@ -53,7 +48,7 @@ export default function ValueCard({
         <Heading as="h3" textStyle={"xl"}>
           {heading}
         </Heading>
-        <Text color={"fg.muted"} mt={"4"}>
+        <Text color={"fg.muted"} textStyle="sm" mt={"4"}>
           {description}
         </Text>
       </Card.Body>

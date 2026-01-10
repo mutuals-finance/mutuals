@@ -1,46 +1,37 @@
-"use client";
-
 import {
   Box,
   Button,
   Container,
   Stack,
-  ScrollArea,
-  Flex,
-  Bleed,
   MotionBox,
   SimpleGrid,
 } from "@mutuals/ui";
-import SectionHeader from "src/features/Shell/SectionHeader";
-import { IoCodeWorkingOutline, IoTimerOutline } from "react-icons/io5";
-import { RiExchange2Line } from "react-icons/ri";
 import ValueCard from "./ValueCard";
-import SplitPaymentsImage from "@/assets/home/split-payments.png";
-import TrackEarningsImage from "@/assets/home/track-earnings.png";
-import AutomatePaymentsImage from "@/assets/home/automate-payments.png";
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
+import {
+  LuChartNoAxesCombined,
+  LuFileCode2,
+  LuShieldCheck,
+} from "react-icons/lu";
 
 const values = [
   {
-    heading: "Split tokens",
+    heading: "Programmable Payments",
     description:
-      "Mutuals processes payments and allocates funds to recipients based on preset rules.",
-    icon: <RiExchange2Line />,
-    // image: SplitPaymentsImage,
+      "Build custom payment strategies using hooks or choose from pre-built options. Define exactly how funds flow from shared pools. No coding is required for standard setups.",
+    icon: <LuFileCode2 />,
   },
   {
-    heading: "Automate payments",
+    heading: "Borderless, Trustless Payments",
     description:
-      "Mutuals automates blockchain payments to ensure timely, rule-based transfers without manual intervention.",
-    icon: <IoCodeWorkingOutline />,
-    //image: AutomatePaymentsImage,
+      "Send payments globally at a fraction of traditional costs. Once rules are set, their enforcement is guaranteed through smart contracts.",
+    icon: <LuShieldCheck />,
   },
   {
-    heading: "Track earnings",
+    heading: "Put Idle Assets to Work",
     description:
-      "Mutuals tracks on-chain earnings in real time, giving recipients clear, transparent insights into their payouts.",
-    icon: <IoTimerOutline />,
-    // image: TrackEarningsImage,
+      "Integrate any existing DeFi protocol, to automatically earn yield on assets that would otherwise sit idle. Easy to set up using the same programmable logic.",
+    icon: <LuChartNoAxesCombined />,
   },
 ];
 export default function HomeValue() {
@@ -48,11 +39,6 @@ export default function HomeValue() {
     <MotionBoxWrapper asChild={true}>
       <Box my={"6"}>
         <Container maxW="6xl">
-          {/*<MotionBox variants={itemVariants} asChild={true}>
-            <SectionHeader label={"Explore Mutuals"}>
-              Financial management for on-chain teams
-            </SectionHeader>
-          </MotionBox>*/}
           <SimpleGrid columns={{ base: 1, lg: 3 }} gap={"6"} mt={"0"}>
             {values.map((value, index) => (
               <MotionBox
@@ -65,7 +51,7 @@ export default function HomeValue() {
             ))}
           </SimpleGrid>
           <Stack align={"center"} mt={"12"}>
-            <Button size={"2xl"} variant={"subtle"}>
+            <Button size={"xl"} variant={"subtle"}>
               Explore the Platform
             </Button>
           </Stack>

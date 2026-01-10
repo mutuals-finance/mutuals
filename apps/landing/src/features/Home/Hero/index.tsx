@@ -46,10 +46,16 @@ export default function HomeHero() {
             </MotionBox>
             <MotionBox variants={itemVariants} asChild={true}>
               <Box w={"full"} maxW={"3xl"}>
-                <Text textStyle={{ base: "md", lg: "lg" }}>
-                  Mutuals enables complex payment workflows through customizable
-                  app integrations. Streamline payment processing with
-                  automated, flexible, and trustless on-chain execution.
+                <Text textStyle={{ base: "md", lg: "lg" }} color={"fg.muted"}>
+                  Use Mutuals’ unopinionated infrastructure to create any
+                  payment strategy you can imagine.{" "}
+                  {/*
+                  Automate instant payments,
+                  enforce trustless rules, and plug in DeFi protocols to earn on
+                  idle assets.
+*/}
+                  Low-cost, global, and built for both crypto-natives and
+                  mainstream users.
                 </Text>
               </Box>
             </MotionBox>
@@ -60,15 +66,15 @@ export default function HomeHero() {
                   target="_blank"
                   asChild={true}
                 >
-                  <Button size={"xl"}>Launch app</Button>
+                  <Button size={"xl"}>Start building</Button>
                 </Link>
                 <Link
                   href={"https://docs.mutuals.finance"}
                   target="_blank"
                   asChild={true}
                 >
-                  <Button size={"xl"} variant={"subtle"}>
-                    Documentation
+                  <Button size={"xl"} variant={"ghost"} blurred={true}>
+                    Explore docs
                   </Button>
                 </Link>
               </Group>
