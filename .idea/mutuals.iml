@@ -27,6 +27,8 @@
       <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/registry/artifacts" />
       <excludeFolder url="file://$MODULE_DIR$/packages/sdk-react/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/apps/docs/public/_pagefind" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/cms/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/extensions/.turbo" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
