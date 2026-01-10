@@ -2,17 +2,17 @@
 
 import { query } from "./client";
 import {
-  PoolGetByIdQuery,
-  PoolGetByIdQueryVariables,
+  PoolQuery,
+  PoolQueryVariables,
 } from "../graphql/data/__generated__/graphql";
 import { TQueryOptions } from "../types";
-import { POOL_GET_BY_ID } from "../graphql/data/queries/PoolGetById";
+import { POOL } from "../graphql/data/queries/Pool";
 
-export async function getPoolById(
-  options: TQueryOptions<PoolGetByIdQuery, PoolGetByIdQueryVariables>,
+export async function getPool(
+  options: TQueryOptions<PoolQuery, PoolQueryVariables>,
 ) {
   return query({
-    query: POOL_GET_BY_ID,
+    query: POOL,
     ...options,
   });
 }

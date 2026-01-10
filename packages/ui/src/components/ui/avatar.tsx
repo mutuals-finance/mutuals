@@ -1,12 +1,18 @@
 import {
   Avatar as ChakraAvatar,
   AvatarGroup as ChakraAvatarGroup,
+  AvatarGroupProps as ChakraAvatarGroupProps,
 } from "@chakra-ui/react";
 import * as React from "react";
 
+export type AvatarRootProps = ChakraAvatar.RootProps;
+export type AvatarGroupProps = ChakraAvatarGroupProps;
+export type AvatarFallbackProps = ChakraAvatar.FallbackProps;
+export type AvatarImageProps = ChakraAvatar.ImageProps;
+
 type ImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
-export interface AvatarProps extends ChakraAvatar.RootProps {
+export interface AvatarProps extends AvatarRootProps {
   name?: string;
   src?: string;
   srcSet?: string;

@@ -1,0 +1,44 @@
+---
+title: Extension
+description: |
+  An extension allows developers to customize payment pool behavior by attaching external smart contracts to nodes in the allocation tree.
+  A single extension can serve multiple pools, intercepting and modifying execution at specific points during pool operations.
+  Each pool configures its own extension arrangement through its allocation tree structure.
+---
+
+## Types
+
+Extensions come in two variants:
+
+**State extensions** manage how allocation tree nodes are stored and maintain data integrity.
+
+**Strategy extensions** control withdrawal execution, validating whether a requested amount matches the maximum allowed payout for a recipient.
+
+## Hook Functions
+
+Extensions implement hooks at key points in the pool lifecycle. You can implement any combination—use one, several, or none depending on your needs.
+
+### Initialization
+
+- `beforeInitialize`: Runs before pool creation
+- `afterInitialize`: Runs after pool creation
+
+These hooks execute only once per pool and enable custom setup logic or validation checks.
+
+### Withdrawals
+
+- `beforeWithdraw`: Runs before withdrawal execution
+- `afterWithdraw`: Runs after withdrawal execution
+
+### Deposits
+
+- `beforeDeposit`: Runs before deposit execution
+- `afterDeposit`: Runs after deposit execution
+
+### Required Interface
+
+- `getPayable`: Returns the maximum withdrawable amount for a recipient
+
+## Building with Extensions
+
+Extensions let you prototype new mechanisms without building from scratch. By leveraging the core pool infrastructure, you can focus on your specific logic while reducing development time.

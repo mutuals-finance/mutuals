@@ -22,17 +22,19 @@ import { DeepPartial } from "#/partial";
 
 export type PoolCardProps = DeepPartial<Pool>;
 
-function PoolCard({ dbid, name, status, contract }: PoolCardProps) {
+function PoolCard({ name, status, slug, contract }: PoolCardProps) {
   return (
     <LinkBox as="article">
       <Card.Root>
         <Card.Header>
           <HStack alignItems={"flex-start"}>
             <HStack flex={"1"}>
+              {/*
               <PoolCardLogo alt={name} />
+*/}
 
               <Box>
-                <Heading size="sm" as={"h3"}>
+                <Heading size="md" as={"h3"}>
                   {!name || name == "" ? "Unknown Pool" : name}
                 </Heading>
 
@@ -69,7 +71,7 @@ function PoolCard({ dbid, name, status, contract }: PoolCardProps) {
           </Button>
         </Card.Footer>
       </Card.Root>
-      {!!dbid && <LinkOverlay as={NextLink} href={`/pool/${dbid}`} />}
+      {!!slug && <LinkOverlay as={NextLink} href={`/pool/${slug}`} />}
     </LinkBox>
   );
 }

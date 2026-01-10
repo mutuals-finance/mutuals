@@ -1,30 +1,29 @@
 ---
-description: Mutuals is an open-source, decentralized protocol for managing on-chain payments.
+title: Mutuals Docs
+description: Your all-in-one resource for Mutuals
 ---
 
-import {Callout} from 'nextra/components'
+import {
+  IoBookOutline,
+  IoConstructOutline, IoDocumentTextOutline, IoExtensionPuzzleOutline,
+  IoHelpBuoyOutline
+} from "react-icons/io5";
+import { CardGroup, Card } from '@/components/mdx/card'
 
-# Overview
-
-<Callout type="warning">
-  This documentation is being actively developed. Please check back regularly for updates and new content.
-</Callout>
-
-**Mutuals** is an open-source, decentralized protocol for managing on-chain payments.
-Applications use it for automated revenue distribution, for example splitting payments across multiple recipients or streaming earnings to stakeholders continuously.
-The decentralized nature of the system makes payment flows transparent, trustless, automated, and censorship resistant.
-Mutuals consists of smart contracts deployed across multiple blockchain networks using open-source protocols.
-Together, the contracts form a flexible payment infrastructure system.
-The job of the protocol is to route incoming payments to all designated recipients according to predefined rules.
-```mermaid
-flowchart TD
-    Pool(["Pool"]) L_Pool_A_0@-- "0.4 ETH" --> A["alice.eth"]
-    Pool L_Pool_B_0@-- 1y / 120,000 USDC --> B["0xd23…5D2"]
-    Pool L_Pool_C_0@-- 30d / 9,500 USDC --> C(["Group"])
-    C L_C_D_0@-- 50% --> D["bob.eth"] & E["0x56E…117"]
-    L_Pool_A_0@{ animation: slow }
-    L_Pool_B_0@{ animation: slow }
-    L_Pool_C_0@{ animation: slow }
-    L_C_D_0@{ animation: slow }
-    L_C_E_0@{ animation: slow }
-```
+<CardGroup columns={{base:1, md:3}}>
+  <Card href={"/concepts/overview"} title={"Concepts"} icon={<IoBookOutline/>}>
+    Learn the fundamental concepts and principles behind Mutuals, including key terminology and architecture.
+  </Card>
+  <Card href={"/contracts/overview"} title={"Contracts"} icon={<IoDocumentTextOutline />}>
+    Get detailed information about Mutuals smart contracts, including deployment guides and usage instructions.
+  </Card>
+  <Card href={"/sdks/overview"} title={"SDKs"} icon={<IoConstructOutline/>}>
+    Explore the Mutuals Software Development Kits (SDKs) for building applications on the Mutuals platform.
+  </Card>
+  <Card href={"/apis/overview/introduction"} title={"APIs"} icon={<IoExtensionPuzzleOutline/>}>
+    Discover the Mutuals Application Programming Interfaces (APIs) for integrating with the Mutuals platform.
+  </Card>
+  <Card href={"/support/overview"} title={"Support"} icon={<IoHelpBuoyOutline />}>
+    Find answers to common questions, troubleshooting tips, and guidance on using Mutuals effectively.
+  </Card>
+</CardGroup>

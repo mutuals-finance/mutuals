@@ -2,11 +2,11 @@ import { DataListItem, DataListRoot, DataListItemProps } from "@mutuals/ui";
 import React, { useMemo } from "react";
 import { formatPrice } from "src/utils";
 import { type WithdrawData } from "@/features/PoolAction/types";
-import { Balance } from "@ankr.com/ankr.js/dist/types";
+import { ERC20TokenBalance } from "@/lib/moralis";
 
 export interface SummaryTableProps extends WithdrawData {
   shares?: any[];
-  data?: Balance[];
+  data?: ERC20TokenBalance[];
 }
 
 export default function SummaryTable({
@@ -28,7 +28,7 @@ export default function SummaryTable({
           }
 
           return {
-            balance: total.balance + Number(asset.balanceUsd),
+            balance: total.balance + Number(asset.usdValue),
             assetCount: total.assetCount + Number(asset.balance),
           };
         },

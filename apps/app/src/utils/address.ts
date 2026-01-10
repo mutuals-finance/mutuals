@@ -1,4 +1,4 @@
-import { getAddress, isAddress } from "ethers";
+import { isAddress, getAddress } from "viem";
 
 export function shortenAddress(address = "", chars = 4) {
   const parsed = isAddress(address);

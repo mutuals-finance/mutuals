@@ -2,10 +2,11 @@ import React from "react";
 import ShellPage, { ShellPageProps } from "@/features/Shell/Page";
 import PoolCard from "@/features/Pool/Card";
 import { Pool } from "@mutuals/graphql-client-nextjs";
-import { Tag } from "@mutuals/ui";
+import { HStack } from "@mutuals/ui";
+import { DeepPartial } from "#/partial";
 
 export interface ShellPoolProps extends ShellPageProps {
-  pool?: Pool;
+  pool?: DeepPartial<Pool>;
 }
 
 export default function ShellPool({
@@ -19,22 +20,15 @@ export default function ShellPool({
         overwrite: {
           pool: false,
           id: (
-            <Tag
-              rounded="full"
-              size={"md"}
-              startElement={
-                <PoolCard.Logo
-                  src={""}
-                  alt={pool?.name ?? "Unknown Payment Pool"}
-                  boxSize="0.8rem"
-                  p={"0"}
-                  rounded={"0"}
-                  border={"none"}
-                />
-              }
-            >
+            <HStack>
+              <PoolCard.Logo
+                src={pool?.image}
+                alt={pool?.name}
+                size="xs"
+                variant={"outline"}
+              />
               {pool?.name}
-            </Tag>
+            </HStack>
           ),
         },
       }}

@@ -1,2 +1,3 @@
 export * from "./client";
-export * from "./hooks";
+export * from "./queries";
+export * from "./mutations";

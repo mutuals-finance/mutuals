@@ -5,19 +5,20 @@ import Table, { TableProps } from "@/components/Table";
 import { createColumnHelper } from "@tanstack/react-table";
 import { WithdrawFormContentProps } from "@/features/PoolAction/Withdraw/Form/Content";
 import { Checkbox } from "@mutuals/ui";
-import { Balance } from "@ankr.com/ankr.js/dist/types";
 import { useMemo } from "react";
+import { ERC20TokenBalance } from "@/lib/moralis";
 
 type WithdrawTableProps = WithdrawFormContentProps &
-  Omit<TableProps<Balance>, "columns">;
+  Omit<TableProps<ERC20TokenBalance>, "columns">;
 
-const columnHelper = createColumnHelper<Balance>();
+const columnHelper = createColumnHelper<ERC20TokenBalance>();
 
 export default function WithdrawTable({ ...props }: WithdrawTableProps) {
   const columns = useMemo(
     () => [
       columnHelper.display({
         id: "selected",
+        maxSize: 40,
         header: ({ table }) => (
           <Checkbox
             {...{
@@ -40,35 +41,40 @@ export default function WithdrawTable({ ...props }: WithdrawTableProps) {
           />
         ),
       }),
-      columnHelper.accessor("contractAddress", {
+      columnHelper.accessor("tokenAddress", {
         header: "Token",
         cell: (context) => (
           <AssetIconCell
             {...context}
-            imageProps={{ size: "xs" }}
-            onlyImage={true}
+            labelProps={{ textStyle: "xs" }}
+            imageProps={{ size: "xs", variant: "outline" }}
+          />
+        ),
+      }),
+      columnHelper.accessor("usdValue", {
+        header: "",
+        cell: (context) => (
+          <AssetBalanceCell
+            badgeProps={{ size: "xs" }}
+            textProps={{ textStyle: "xs" }}
+            {...context}
           />
         ),
       }),
       columnHelper.accessor("balance", {
         header: "",
-        cell: (context) => <AssetBalanceCell {...context} />,
-      }),
-      columnHelper.accessor("balanceUsd", {
-        header: "",
-        cell: (context) => <AssetValueCell {...context} />,
+        cell: (context) => <AssetValueCell textStyle={"xs"} {...context} />,
       }),
     ],
     [],
   );
 
   return (
-    <Table<Balance>
+    <Table<ERC20TokenBalance>
       tableProps={{ size: "sm" }}
       containerProps={{ w: "full" }}
-      // @ts-expect-error: is expected to be a TableProps<Balance>
-      columns={columns}
       {...props}
+      columns={columns}
     />
   );
 }

@@ -23,7 +23,10 @@ export const defaultClaims = createTreeCollection<ClaimCreateNode>({
   rootNode: createClaim({
     stateId: "",
     strategyId: "",
-    children: [createClaim(), createClaim()],
+    children: [
+      createClaim({ label: `0-${Date.now()}` }),
+      createClaim({ label: `1-${Date.now()}` }),
+    ],
   }),
 });
 

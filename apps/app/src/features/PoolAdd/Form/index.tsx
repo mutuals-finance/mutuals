@@ -54,9 +54,6 @@ export default function PoolAdd({ user }: PoolAddProps) {
   return (
     <Form<PoolCreateInput>
       onSubmit={(values) => onSubmit(values, PoolStatus.Active)}
-      onSubmitInvalid={() => {
-        console.log("Submit: invalid");
-      }}
       defaultValues={{
         owner: address,
         name: "Prudent Armadillo",
@@ -95,12 +92,12 @@ export default function PoolAdd({ user }: PoolAddProps) {
           >
             <SimpleGrid
               w={"full"}
-              columns={{ base: 1, lg: 9 }}
+              columns={{ base: 1, lg: 11 }}
               gap={{ base: "6", lg: "6" }}
             >
               <PoolAddToolbar {...steps} />
 
-              <GridItem colSpan={{ base: 1, lg: 6 }}>
+              <GridItem colSpan={{ base: 1, lg: 8 }}>
                 <Card.Root
                   border={{ base: "none", lg: "1px solid" }}
                   borderColor={{ lg: "border" }}

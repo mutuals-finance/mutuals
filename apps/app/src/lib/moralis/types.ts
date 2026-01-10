@@ -1,0 +1,22 @@
+export type ERC20TokenBalance = {
+  tokenAddress: string;
+  symbol: string;
+  name: string;
+  logo: string | null;
+  thumbnail: string | null;
+  decimals: number;
+  balance: string;
+  possibleSpam: boolean;
+  verifiedContract: boolean;
+  totalSupply: string | null;
+  totalSupplyFormatted: string | null;
+  percentageRelativeToTotalSupply: number | null;
+  balanceFormatted: string;
+  usdPrice: string | null;
+  usdPrice24hrPercentChange: string | null;
+  usdPrice24hrUsdChange: string | null;
+  usdValue: number | null;
+  usdValue24hrUsdChange: string | null;
+  nativeToken: boolean;
+  portfolioPercentage: number | null;
+};

@@ -20,13 +20,7 @@ export function EmptyStateCard({
   ...props
 }: EmptyStateCardProps) {
   return (
-    <Card.Root
-      size={"sm"}
-      bg={"bg"}
-      rounded={"4xl"}
-      colorPalette={colorPalette}
-      {...props}
-    >
+    <Card.Root size={"sm"} bg={"bg"} colorPalette={colorPalette} {...props}>
       <Card.Body>
         <EmptyState
           icon={icon}

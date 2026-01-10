@@ -1,10 +1,11 @@
-import { BoxProps, VStack, MotionBox, DrawerRootProps } from "@mutuals/ui";
-import React from "react";
+"use client";
 
-export interface SidebarWrapperProps extends BoxProps {
-  open?: boolean;
-  placement?: DrawerRootProps["placement"];
-}
+import { Box, BoxProps, VStack, DrawerRootProps } from "@mutuals/ui";
+import React from "react";
+import { useFirstMountState } from "react-use";
+
+export type SidebarWrapperProps = Omit<BoxProps, "transition"> &
+  Pick<DrawerRootProps, "open" | "placement" | "skipAnimationOnMount">;
 
 export function SidebarWrapper({
   open = true,
@@ -12,35 +13,37 @@ export function SidebarWrapper({
   width,
   w,
   placement = "start",
+  skipAnimationOnMount,
+  ...props
 }: SidebarWrapperProps) {
+  const isFirstMount = useFirstMountState();
+
+  const shouldAnimate = !skipAnimationOnMount || !isFirstMount;
+
   return (
-    <MotionBox
+    <Box
       position={{ base: "fixed", lg: "sticky" }}
       top={"0"}
-      left={"0"}
+      left={placement === "start" ? "0" : "auto"}
+      right={placement === "end" ? "0" : "auto"}
       h={"100vh"}
       display={"flex"}
       flex={"0 0 auto"}
       overflow={"hidden"}
-      borderRightWidth={{ lg: placement === "start" ? "1px" : "0px" }}
-      borderLeftWidth={{ lg: placement === "end" ? "1px" : "0px" }}
-      borderTopWidth={{ lg: placement === "bottom" ? "1px" : "0px" }}
-      borderBottomWidth={{ lg: placement === "top" ? "1px" : "0px" }}
-      borderColor={{ lg: "border" }}
-      animate={open ? "open" : "closed"}
-      variants={{
-        open: {
-          width: (width || w) as string,
-        },
-        closed: {
-          width: 0,
-        },
+      data-state={open ? "open" : "closed"}
+      _open={{
+        width: width || w,
+        transition: shouldAnimate ? "width 0.2s ease-in-out" : "none",
       }}
-      onChange={(open) => !open}
+      _closed={{
+        width: 0,
+        transition: shouldAnimate ? "width 0.2s ease-in-out" : "none",
+      }}
+      {...props}
     >
       <VStack flex="1" alignItems={"stretch"} overflow={"hidden"} gap={"0"}>
         {children}
       </VStack>
-    </MotionBox>
+    </Box>
   );
 }

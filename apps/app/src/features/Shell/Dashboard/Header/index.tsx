@@ -19,7 +19,6 @@ import {
 import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
 import Chain from "./Chain";
-import { VscMenu } from "react-icons/vsc";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
 import CallbackLinkButton from "@/components/CallbackLinkButton";
@@ -28,6 +27,7 @@ import ShellDashboardHeaderAlert from "@/features/Shell/Dashboard/Header/Alert";
 import { usePrivy } from "@privy-io/react-auth";
 import UserAvatar from "@/features/Wallet/Avatar";
 import { shortenAddress } from "@/utils";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export type ShellDashboardHeaderProps = { user?: User };
 
@@ -145,9 +145,9 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
 
 function SidebarToggle(props: IconButtonProps) {
   return (
-    <IconButton size={"md"} variant={"ghost"} {...props}>
-      <Icon size={"lg"}>
-        <VscMenu />
+    <IconButton size={"sm"} variant={"ghost"} {...props}>
+      <Icon size={"md"}>
+        <AiOutlineMenu />
       </Icon>
     </IconButton>
   );

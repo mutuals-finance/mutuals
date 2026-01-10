@@ -11,24 +11,20 @@ interface ShellPoolOverviewProps extends Omit<StackProps, "content"> {
   sidebarProps: Omit<ShellPoolOverviewSidebarProps, "children">;
 }
 
-export default async function ShellPoolOverview({
+export default function ShellPoolOverview({
   children,
   content,
   contentProps,
   sidebarProps,
   ...props
 }: ShellPoolOverviewProps) {
-  const defaultOpen = sidebarProps.tabs.some(({ href }) =>
-    href?.toString().includes((children as any)?.props?.childPropSegment ?? ""),
-  );
-
   return (
     <Stack direction={"row"} gap={"0"} w={"full"} {...props}>
       <ShellPool flex={"1"} minWidth={"0"} {...contentProps}>
         <Container maxW={"7xl"}>{content}</Container>
       </ShellPool>
 
-      <ShellPoolOverviewSidebar defaultOpen={defaultOpen} {...sidebarProps}>
+      <ShellPoolOverviewSidebar {...sidebarProps}>
         {children}
       </ShellPoolOverviewSidebar>
     </Stack>

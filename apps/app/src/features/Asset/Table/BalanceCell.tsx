@@ -1,24 +1,37 @@
-import { Stack, Tag, TagLabel, Text, TextProps } from "@mutuals/ui";
+import {
+  Stack,
+  type StackProps,
+  Badge,
+  type BadgeProps,
+  Text,
+  type TextProps,
+} from "@mutuals/ui";
 
 import { formatCurrencyAmount } from "@/utils";
 import { AssetTableCellProps } from "@/features/Asset/types";
 
-export type AssetTableBalanceCellProps = AssetTableCellProps & TextProps;
+export type AssetTableBalanceCellProps = AssetTableCellProps &
+  StackProps & {
+    textProps?: TextProps;
+    badgeProps?: BadgeProps;
+  };
 
 export default function AssetTableBalanceCell({
   row,
   getValue,
+  textProps,
+  badgeProps,
   ...props
 }: AssetTableBalanceCellProps) {
-  const { tokenSymbol } = row.original;
+  const { symbol } = row.original;
   return (
-    <Stack direction={"row"} alignItems={"center"}>
-      <Text as={"span"} {...props}>
+    <Stack direction={"row"} alignItems={"center"} {...props}>
+      <Text as={"span"} fontVariantNumeric={"tabular-nums"} {...textProps}>
         {formatCurrencyAmount(getValue())}
-      </Text>{" "}
-      <Tag size="sm" rounded={"md"} colorPalette={"primary"}>
-        <TagLabel fontSize={"2xs"}>{tokenSymbol}</TagLabel>
-      </Tag>
+      </Text>
+      <Badge colorPalette={"primary"} {...badgeProps}>
+        {symbol}
+      </Badge>
     </Stack>
   );
 }

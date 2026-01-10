@@ -38,21 +38,28 @@ export default function WalletCard({ data, ...props }: WalletCardProps) {
       >
         <UserAvatar address={data?.address} shape="full" size={"lg"} />
         <Stack gap={"2"} alignItems={"center"}>
-          <Text textStyle="md">{shortenAddress(data?.address)}</Text>
+          <Text textStyle="md" fontVariantNumeric={"tabular-nums"}>
+            {shortenAddress(data?.address)}
+          </Text>
         </Stack>
       </Card.Header>
 
       <Card.Footer>
         <MenuRoot>
           <Group w={"full"} attached={true}>
-            <Link href={`/wallet/${data?.address}`} flex="1" asChild={true}>
-              <Button size={"md"} w="full" roundedRight={0} variant={"subtle"}>
+            <Link
+              href={`/wallet/${data?.address}`}
+              flex="1"
+              linkProps={{ scroll: false }}
+              asChild={true}
+            >
+              <Button size={"sm"} w="full" roundedRight={0} variant={"subtle"}>
                 Manage
               </Button>
             </Link>
             <MenuTrigger asChild>
               <IconButton
-                size={"md"}
+                size={"sm"}
                 variant={"subtle"}
                 aria-label="Wallet Options"
               >

@@ -69,6 +69,7 @@ export * from "./mutuals/link";
 export * from "./mutuals/link-list-box";
 export * from "./mutuals/icon-text-button";
 export * from "./mutuals/input";
+export * from "./mutuals/footer-meta";
 export * from "./mutuals/field";
 export * from "./mutuals/file-upload";
 export * from "./mutuals/form";

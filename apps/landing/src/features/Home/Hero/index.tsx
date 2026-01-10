@@ -10,23 +10,15 @@ import {
   Link,
   BoxProps,
   Stack,
-  Bleed,
   MotionBox,
-  Card,
-  AspectRatio,
-  AbsoluteCenter,
-  Tabs,
 } from "@mutuals/ui";
 
-import NextImage, { ImageProps as NextImageProps } from "next/image";
+import { ImageProps as NextImageProps } from "next/image";
 
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
 
 type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 
-import desktopPaymentsIcon from "@/assets/payment/all-desktop.svg";
-import mobilePaymentsIcon from "@/assets/payment/all-mobile.svg";
-import payBgImage from "@/assets/bg-hero-top-left.png";
 import HomeHeroVideo from "@/features/Home/Hero/Video";
 import HomeHeroImage from "@/features/Home/Hero/Image";
 

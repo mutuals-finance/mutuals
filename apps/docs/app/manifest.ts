@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return createManifest({
-    name: "Mutuals Website",
-    short_name: "Mutuals Website",
+    name: "Mutuals Documentation",
+    short_name: "Mutuals Documentation",
   });
 }

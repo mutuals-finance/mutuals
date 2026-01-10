@@ -23,7 +23,7 @@ export default function AssetTableIconCell({
   onlyLabel = false,
   ...props
 }: AssetTableIconCellProps) {
-  const { thumbnail, tokenName, tokenSymbol } = row.original;
+  const { logo, name, symbol } = row.original;
   return (
     <HStack
       alignItems={"center"}
@@ -33,16 +33,16 @@ export default function AssetTableIconCell({
     >
       {!onlyLabel && (
         <AssetCard.Logo
-          src={thumbnail}
-          alt={tokenName}
+          src={logo ?? ""}
+          alt={name}
           flexShrink={"0"}
           {...imageProps}
         />
       )}
       {!onlyImage && (
         <AssetCard.Label
-          tokenName={tokenName}
-          tokenSymbol={tokenSymbol}
+          tokenName={name}
+          tokenSymbol={symbol}
           {...labelProps}
         />
       )}

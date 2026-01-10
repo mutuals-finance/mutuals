@@ -23,3 +23,4 @@ export const ANKR_URL = process.env.NEXT_PUBLIC_ANKR_URL || "";
 export const ANKR_API_KEY = process.env.NEXT_PUBLIC_ANKR_API_KEY || "";
 export const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "";
 export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN || "";
+export const MORALIS_KEY = process.env.NEXT_PUBLIC_MORALIS_KEY || "";

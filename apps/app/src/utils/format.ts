@@ -1,6 +1,7 @@
 // Number formatting follows the standards defined by Uniswap
 
 import { format, FormatOptions, fromUnixTime } from "date-fns";
+import { EvmAddress } from "@moralisweb3/common-evm-utils";
 
 const FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat("en-US", {
   notation: "standard",
@@ -292,7 +293,7 @@ const TYPE_TO_FORMATTER_RULES = {
   [NumberType.NFTCollectionStats]: ntfCollectionStatsFormatter,
 };
 
-function getFormatterRule(input: number, type: NumberType) {
+function getFormatterRule(input: bigint | number, type: NumberType) {
   const rules = TYPE_TO_FORMATTER_RULES[type];
   for (let i = 0; i < rules.length; i++) {
     const rule = rules[i];
@@ -308,7 +309,7 @@ function getFormatterRule(input: number, type: NumberType) {
 }
 
 export function formatNumber(
-  input: number,
+  input: bigint | number,
   type: NumberType = NumberType.TokenNonTx,
   placeholder = "-",
 ) {
@@ -322,11 +323,15 @@ export function formatNumber(
 }
 
 export function formatCurrencyAmount(
-  amount: string | undefined,
+  amount: EvmAddress | bigint | string | number | null | undefined,
   type: NumberType = NumberType.TokenNonTx,
   placeholder?: string,
 ) {
-  return formatNumber(amount ? parseFloat(amount) : 0.0, type, placeholder);
+  return formatNumber(
+    amount ? parseFloat(String(amount)) : 0.0,
+    type,
+    placeholder,
+  );
 }
 
 export function formatPrice(
@@ -351,14 +356,17 @@ export function formatTimestamp(
   return format(fromUnixTime(Number(timestamp)), formatString, options);
 }
 
-export function formatNumberOrString(price: number | string, type: NumberType) {
+export function formatNumberOrString(
+  price: bigint | number | string,
+  type: NumberType,
+) {
   if (price === null || price === undefined) return "-";
   if (typeof price === "string") return formatNumber(parseFloat(price), type);
   return formatNumber(price, type);
 }
 
 export function formatUSDPrice(
-  price: number | string,
+  price: bigint | number | string,
   type: NumberType = NumberType.FiatTokenPrice,
 ) {
   return formatNumberOrString(price, type);

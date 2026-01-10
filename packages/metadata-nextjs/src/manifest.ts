@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { iconSizes, defaultContentType } from "./icon";
 
 export function createManifest(
   props?: MetadataRoute.Manifest,
@@ -9,15 +8,23 @@ export function createManifest(
     short_name: "Mutuals",
     description: "Reimagine Programmable Money.",
     start_url: "/",
+    theme_color: "#2973FF",
+    background_color: "#000000",
     display: "standalone",
-    background_color: "#f4f4f5",
-    theme_color: "#f4f4f5",
-    icons: iconSizes.map((size) => ({
-      src: `/icon/${size}`,
-      sizes: `${size}x${size}`,
-      type: defaultContentType,
-      purpose: "maskable",
-    })),
+    icons: [
+      {
+        src: "/web-app-manifest-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/web-app-manifest-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
+      },
+    ],
     ...props,
   };
 }

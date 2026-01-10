@@ -127,8 +127,10 @@ export const Posts: CollectionConfig = {
                   if (!category) {
                     throw new Error("Category not found");
                   } else {
-                    revalidatePath(`/posts/${category.slug}`);
-                    console.log(`Revalidated: /posts/${category.slug}`);
+                    revalidatePath(`/blog`);
+                    console.log(`Revalidated: /blog`);
+                    revalidatePath(`/blog/${category.slug}`);
+                    console.log(`Revalidated: /blog/${category.slug}`);
                   }
 
                   if (value !== previousValue) {
@@ -142,9 +144,9 @@ export const Posts: CollectionConfig = {
                     if (!previousCategory) {
                       throw new Error("Previous category not found");
                     } else {
-                      revalidatePath(`/posts/${previousCategory.slug}`);
+                      revalidatePath(`/blog/${previousCategory.slug}`);
                       console.log(
-                        `Revalidated: /posts/${previousCategory.slug}`,
+                        `Revalidated: /blog/${previousCategory.slug}`,
                       );
                     }
                   }
@@ -274,39 +276,10 @@ export const Posts: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc, previousDoc, req }) => {
+      async ({ doc }) => {
         try {
-          const category = await req.payload.findByID({
-            id: doc.category,
-            collection: "categories",
-            select: {
-              slug: true,
-            },
-          });
-
-          const previousCategory = await req.payload.findByID({
-            id: previousDoc.category,
-            collection: "categories",
-            select: {
-              slug: true,
-            },
-          });
-
-          if (!category) {
-            throw new Error("Category not found");
-          } else {
-            revalidatePath(`/${category.slug}/${doc.slug}`);
-            console.log(`Revalidated: /posts/${category.slug}/${doc.slug}`);
-          }
-
-          if (!previousCategory) {
-            throw new Error("Previous category not found");
-          } else {
-            revalidatePath(`/${previousCategory.slug}/${previousDoc.slug}`);
-            console.log(
-              `Revalidated: /posts/${previousCategory.slug}/${previousDoc.slug}`,
-            );
-          }
+          revalidatePath(`/blog/post/${doc.slug}`);
+          console.log(`Revalidated: /blog/post/${doc.slug}`);
         } catch (error) {
           console.error(error);
         }
@@ -326,10 +299,10 @@ export const Posts: CollectionConfig = {
           if (!category) {
             throw new Error("Category not found");
           } else {
-            revalidatePath(`/${category.slug}`);
-            revalidatePath(`/${category.slug}/${doc.slug}`);
-            console.log(`Revalidated: /posts/${category.slug}`);
-            console.log(`Revalidated: /posts/${category.slug}/${doc.slug}`);
+            revalidatePath(`/blog`);
+            console.log(`Revalidated: /blog`);
+            revalidatePath(`/blog/${category.slug}`);
+            console.log(`Revalidated: /blog/${category.slug}`);
           }
         } catch (error) {
           console.error(error);

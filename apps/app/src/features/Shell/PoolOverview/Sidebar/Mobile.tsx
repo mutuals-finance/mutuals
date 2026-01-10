@@ -16,11 +16,17 @@ export default function ShellPoolOverviewSidebarMobile({
   ...props
 }: ShellPoolOverviewSidebarMobileProps) {
   return (
-    <DrawerRoot {...props} size={"lg"}>
+    <DrawerRoot size={"lg"} {...props}>
       <DrawerBackdrop />
-      <DrawerContent>
+      <DrawerContent
+        display={"flex"}
+        flexDirection="column"
+        roundedTop={"xl"}
+        flex={"1"}
+        overflow={"hidden"}
+      >
         <DrawerCloseTrigger />
-        <DrawerHeader>
+        <DrawerHeader flexShrink={"0"}>
           <DrawerTitle>Manage Funds</DrawerTitle>
         </DrawerHeader>
 

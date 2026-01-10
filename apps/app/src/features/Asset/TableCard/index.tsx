@@ -1,8 +1,18 @@
 import ContentCard, { type ContentCardProps } from "@/components/ContentCard";
 
-import { Box, LinkButton, ConditionalValue } from "@mutuals/ui";
+import {
+  Button,
+  Center,
+  ConditionalValue,
+  EmptyState,
+  Wrap,
+  Icon,
+  Link,
+} from "@mutuals/ui";
 import { AssetTableProps } from "@/features/Asset/types";
 import AssetTable from "@/features/Asset/Table";
+import { RiTokenSwapLine } from "react-icons/ri";
+import React from "react";
 
 export interface AssetTableCardProps extends AssetTableProps {
   cardProps?: ContentCardProps;
@@ -15,19 +25,43 @@ export default function AssetTableCard({
   tableProps,
   ...props
 }: AssetTableCardProps) {
+  const assets = props.assets ?? [];
   return (
     <ContentCard
       {...cardProps}
       title={cardProps.title}
       bodyProps={{ p: "0", ...cardProps.bodyProps }}
     >
-      <AssetTable tableProps={{ size, ...tableProps }} {...props} />
-
-      <Box p={"var(--card-padding)"} alignSelf={"flex-end"}>
-        <LinkButton href={"/assets"} size={size} variant={"subtle"}>
-          Show all
-        </LinkButton>
-      </Box>
+      {assets.length > 0 ? (
+        <AssetTable tableProps={{ size, ...tableProps }} {...props} />
+      ) : (
+        <EmptyState
+          p={"12"}
+          icon={
+            <Center bg={"bg.muted"} color={"fg"} p={"4"} rounded={"xl"}>
+              <Icon size={"md"}>
+                <RiTokenSwapLine />
+              </Icon>
+            </Center>
+          }
+          title="No assets found"
+          description="Start by depositing assets into your payment pool"
+          size={"sm"}
+        >
+          <Wrap justifyContent={"center"}>
+            <Link asChild={true} href={"/pool/new"}>
+              <Button size={"sm"} variant={"solid"}>
+                Deposit to Payment Pool
+              </Button>
+            </Link>
+            <Link asChild={true} href={"/pool/example"}>
+              <Button size={"sm"} variant={"subtle"}>
+                View on Etherscan
+              </Button>
+            </Link>
+          </Wrap>
+        </EmptyState>
+      )}
     </ContentCard>
   );
 }

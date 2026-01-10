@@ -1,0 +1,23 @@
+---
+title: 'Example: A simple payment pool'
+description: |
+  This simple example shows how a payment pool routes incoming funds to various recipients.
+---
+
+Several types of allocations are shown, including direct payments to individual addresses, time-locked allocations, and group distributions.
+Recipients receive funds according to their specified shares or conditions.
+Mutuals distinguishes different ways to define recipients in the allocation tree.
+These include Ethereum Name Service (ENS) names, wallet addresses, phone numbers, email addresses, or groups of multiple recipients.
+
+```mermaid
+flowchart LR
+    Pool(["Pool"]) L_Pool_A_0@-- "0.4 ETH" --> A["alice.eth"]
+    Pool L_Pool_B_0@-- 1y / 120,000 USDC --> B["0xd23…5D2"]
+    Pool L_Pool_C_0@-- 30d / 9,500 USDC --> C(["Group"])
+    C L_C_D_0@-- 50% --> D["bob.eth"] & E["0x56E…117"]
+    L_Pool_A_0@{ animation: slow }
+    L_Pool_B_0@{ animation: slow }
+    L_Pool_C_0@{ animation: slow }
+    L_C_D_0@{ animation: slow }
+    L_C_E_0@{ animation: slow }
+```

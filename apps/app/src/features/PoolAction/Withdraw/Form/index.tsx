@@ -6,7 +6,7 @@ import { Form } from "@mutuals/ui";
 export type WithdrawFormProps = WithdrawFormContentProps;
 
 export default function PoolActionWithdrawForm(props: WithdrawFormProps) {
-  const assets = props.balance!.assets.reduce(
+  const assets = props.balance?.reduce(
     (all, current, index) => ({
       [index]: true,
       ...all,

@@ -1,21 +1,22 @@
 import {
   Box,
   Heading,
-  HStack,
   Stack,
   StatLabel,
   StatRoot,
   Text,
   StatValueText,
+  Wrap,
 } from "@mutuals/ui";
 
 import { formatUSDPrice } from "src/utils";
 
 import { type Pool } from "@mutuals/graphql-client-nextjs";
 import PoolCard from "@/features/Pool/Card";
+import { DeepPartial } from "#/partial";
 
 interface PoolOverviewDescriptionProps {
-  pool?: Pool;
+  pool?: DeepPartial<Pool>;
 }
 
 export default function PoolOverviewDescription({
@@ -32,38 +33,37 @@ export default function PoolOverviewDescription({
         <PoolCard.Logo
           src={""}
           alt={pool?.name ?? "Unknown Payment Pool"}
-          boxSize={"3.4rem"}
+          size={"xl"}
+          shape={"rounded"}
         />
         <Stack>
           <Heading as={"h1"} size={"2xl"}>
             {pool?.name}
           </Heading>
           <Box maxW={"sm"}>
-            <Text lineClamp={{ base: 3, lg: 3 }}>{pool?.description}</Text>
+            <Text lineClamp={{ base: 3, lg: 3 }} color={"fg.muted"}>
+              {pool?.description}
+            </Text>
           </Box>
         </Stack>
       </Stack>
 
-      <HStack gap={{ base: "4", lg: "12" }} justifyContent={"flex-start"}>
-        <StatRoot flex={"0"}>
+      <Wrap gap={{ base: "4", lg: "12" }}>
+        <StatRoot size={"sm"} flexGrow={"0"} minW={"32"}>
           <StatLabel>Total Income</StatLabel>
-          <StatValueText fontSize={"3xl"}>
-            {formatUSDPrice("29183.80")}
-          </StatValueText>
+          <StatValueText textStyle={"3xl"}>{formatUSDPrice("0")}</StatValueText>
         </StatRoot>
-        <StatRoot flex={"0"}>
+        <StatRoot size={"sm"} flexGrow={"0"} minW={"32"}>
           <StatLabel>Balance</StatLabel>
-          <StatValueText fontSize={"3xl"}>
-            {formatUSDPrice("14900.92")}
-          </StatValueText>
+          <StatValueText textStyle={"3xl"}>{formatUSDPrice("0")}</StatValueText>
         </StatRoot>
-        <StatRoot flex={"0"}>
+        <StatRoot size={"sm"} flexGrow={"0"} minW={"32"}>
           <StatLabel>Withdraws</StatLabel>
-          <StatValueText fontSize={"3xl"}>
-            {formatUSDPrice((29183.8 - 14900.92).toString())}
+          <StatValueText textStyle={"3xl"}>
+            {formatUSDPrice((0).toString())}
           </StatValueText>
         </StatRoot>
-      </HStack>
+      </Wrap>
     </Stack>
   );
 }

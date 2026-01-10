@@ -17,25 +17,27 @@ export default async function PoolSettingsLayout({
     {
       title: "General",
       value: "general",
-      href: `/pool/maticmum:${pool?.contract?.address}/settings`,
+      href: `/pool/${pool?.slug}/settings`,
     },
     {
       title: "Security",
       value: "security",
-      href: `/pool/maticmum:${pool?.contract?.address}/settings/security`,
+      href: `/pool/${pool?.slug}/settings/security`,
     },
     {
       title: "Notifications",
       value: "notifications",
-      href: `/pool/maticmum:${pool?.contract?.address}/settings/notifications`,
+      href: `/pool/${pool?.slug}/settings/notifications`,
     },
   ];
 
   return (
-    <ShellPage breadcrumbsEnabled={false} title={"Settings"}>
-      <RouterTabs tabs={tabs} mb={"6"}>
-        <Container maxW={"7xl"}>{children}</Container>
-      </RouterTabs>
+    <ShellPage breadcrumbsEnabled={false} title={"Payment Pool Settings"}>
+      <Container maxW={"7xl"}>
+        <RouterTabs tabs={tabs} mb={"6"}>
+          {children}
+        </RouterTabs>
+      </Container>
     </ShellPage>
   );
 }

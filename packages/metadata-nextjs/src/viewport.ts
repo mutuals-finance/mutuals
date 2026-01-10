@@ -2,8 +2,8 @@ import type { Viewport } from "next";
 
 export const defaultViewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#020203" },
-    { media: "(prefers-color-scheme: dark)", color: "#020203" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090B" },
   ],
 };
 

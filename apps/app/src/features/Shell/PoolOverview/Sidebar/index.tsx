@@ -36,22 +36,28 @@ export default function ShellPoolOverviewSidebar({
 
   const index = tabs.findIndex((t) => pathname == t.href?.toString());
 
-  const isClosed = index < 0;
-
   const wrapperProps: DrawerRootProps = {
-    open: !isClosed,
-    onExitComplete: () =>
-      router.push(`/pool/${decodeURIComponent(params.id)}`, { scroll: false }),
-    placement: "right" as DrawerRootProps["placement"],
+    open: index >= 0,
+    onOpenChange: ({ open }) => {
+      if (!open) {
+        router.push(`/pool/${decodeURIComponent(params.id)}`, {
+          scroll: false,
+        });
+      }
+    },
+    placement: { base: "bottom", lg: "end" },
+    skipAnimationOnMount: true,
     children: <RouterTabs tabs={tabs}>{children}</RouterTabs>,
     ...props,
   };
 
-  return !isLargerLg ? (
-    <ShellPoolOverviewSidebarMobile {...wrapperProps}>
-      {wrapperProps.children}
-    </ShellPoolOverviewSidebarMobile>
-  ) : (
-    <ShellPoolOverviewSidebarDesktop w={"27rem"} {...wrapperProps} />
+  return (
+    <>
+      {!isLargerLg ? (
+        <ShellPoolOverviewSidebarMobile {...wrapperProps} />
+      ) : (
+        <ShellPoolOverviewSidebarDesktop {...wrapperProps} />
+      )}
+    </>
   );
 }
