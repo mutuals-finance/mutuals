@@ -16,7 +16,7 @@ function inWhere<T extends string>(selector: T): T {
 
 export const Prose = chakra("div", {
   base: {
-    color: "fg.muted",
+    color: "fg",
     maxWidth: "74ch",
     fontSize: "sm",
     lineHeight: "1.7em",
@@ -264,19 +264,19 @@ export const Prose = chakra("div", {
   variants: {
     size: {
       md: {
-        fontSize: "sm",
-      },
-      lg: {
         fontSize: "md",
       },
-      xl: {
+      lg: {
         fontSize: "lg",
       },
-      "2xl": {
+      xl: {
         fontSize: "xl",
       },
-      "3xl": {
+      "2xl": {
         fontSize: "2xl",
+      },
+      "3xl": {
+        fontSize: "3xl",
       },
     },
   },

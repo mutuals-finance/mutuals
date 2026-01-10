@@ -12,17 +12,20 @@ export default {
   },
 */
   colors: {
+    brand: {
+      solid: { value: "{colors.brand.600}" }, // #2973FF - your dark blue for solid buttons
+      contrast: { value: "white" }, // white text on brand buttons
+      fg: { value: "{colors.brand.700}" }, // darker blue for text/icons
+      muted: { value: "{colors.brand.200}" }, // light blue for muted backgrounds
+      subtle: { value: "{colors.brand.100}" }, // very light blue for subtle backgrounds
+      emphasized: { value: "{colors.brand.300}" }, // medium-light for emphasized states
+      focusRing: { value: "{colors.brand.500}" }, // medium blue for focus rings
+      border: { value: "{colors.brand.300}" }, // for outline variant borders
+    },
+
     /*
 
-brand: {
-  solid: { value: "{colors.brand.500}" },
-  contrast: { value: "{colors.brand.100}" },
-  fg: { value: "{colors.brand.700}" },
-  muted: { value: "{colors.brand.100}" },
-  subtle: { value: "{colors.brand.200}" },
-  emphasized: { value: "{colors.brand.300}" },
-  focusRing: { value: "{colors.brand.500}" },
-},
+
 
 alpha: {
   1: {

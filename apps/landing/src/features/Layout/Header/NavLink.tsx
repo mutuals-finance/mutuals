@@ -8,27 +8,15 @@ import {
   Strong,
   Portal,
 } from "@mutuals/ui";
-import { usePathname } from "next/navigation";
-import { LuExternalLink } from "react-icons/lu";
-import { useEffect, useRef } from "react";
-import { useLayout } from "@/features/Layout/Provider";
 
 export interface NavLinkProps extends LinkProps {
-  external?: boolean;
   links?: NavLinkProps[];
 }
 
-export default function NavLink({
-  children,
-  external = false,
-  ...props
-}: NavLinkProps) {
-  const pathname = usePathname();
-  const isActive = pathname === props.href;
-
+export default function NavLink({ children, ...props }: NavLinkProps) {
   const link = (
-    <Link textStyle={"sm"} {...props}>
-      {children} {external && <LuExternalLink />}
+    <Link textStyle={"md"} variant={"plain"} fontWeight={"normal"} {...props}>
+      {children}
     </Link>
   );
 

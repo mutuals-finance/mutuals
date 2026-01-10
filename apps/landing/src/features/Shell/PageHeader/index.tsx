@@ -3,11 +3,11 @@ import {
   type BoxProps,
   type HeadingProps,
   type ContainerProps,
-  type TagProps,
+  type BadgeProps,
   Box,
   Heading,
   Container,
-  Tag,
+  Badge,
   MotionBox,
 } from "@mutuals/ui";
 
@@ -15,7 +15,7 @@ interface PageHeaderProps extends BoxProps {
   tag?: string;
   headingProps?: HeadingProps;
   containerProps?: ContainerProps;
-  tagProps?: TagProps;
+  tagProps?: BadgeProps;
   afterContent?: React.ReactNode;
 }
 
@@ -46,20 +46,18 @@ export default function ShellPageHeader({
           <Box maxW={"xl"} mx={{ lg: "auto" }}>
             {!!tag && (
               <MotionBox variants={itemVariants} asChild={true}>
-                <Tag
-                  textStyle={{ lg: "lg" }}
+                <Badge
                   mb={"6"}
                   color={"fg.muted"}
                   textTransform={"uppercase"}
                   p={"2"}
-                  fontWeight={"medium"}
                   bgGradient="to-r"
-                  gradientFrom="bg"
-                  gradientTo="bg.muted"
+                  gradientFrom="brand.100"
+                  gradientTo="brand.300"
                   {...tagProps}
                 >
                   {tag}
-                </Tag>
+                </Badge>
               </MotionBox>
             )}
             <MotionBox variants={itemVariants} asChild={true}>
