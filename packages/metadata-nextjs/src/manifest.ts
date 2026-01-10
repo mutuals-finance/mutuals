@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { iconSizes, defaultContentType } from "./icon";
 
 export function createManifest(
   props?: MetadataRoute.Manifest,
