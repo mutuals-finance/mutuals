@@ -48,6 +48,7 @@ const variants = {
       },
     },
   },
+  variant: { solid: {}, subtle: {}, surface: {}, ghost: {}, outline: {} },
 };
 
 export default defineRecipe({
