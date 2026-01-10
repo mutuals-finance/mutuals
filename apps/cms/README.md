@@ -1,4 +1,4 @@
-# Payload Blank Template
+# @mutuals/cms
 
 This template comes configured with the bare minimum to get started on anything you need.
 
