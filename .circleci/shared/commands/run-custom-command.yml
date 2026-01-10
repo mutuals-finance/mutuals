@@ -1,12 +1,12 @@
-description: "Run a custom pnpm command"
+description: "Run a custom bun command"
 parameters:
   command:
     type: string
-    description: "The pnpm command to run"
+    description: "The bun command to run"
   workspace:
     type: string
     description: "The workspace/folder name to run the command in"
 steps:
   - run:
       name: Run custom command
-      command: pnpm --filter <<parameters.workspace>> <<parameters.command>>
+      command: bun --filter <<parameters.workspace>> <<parameters.command>>
