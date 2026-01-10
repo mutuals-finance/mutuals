@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  An unopinionated and powerful protocol for on-chain payment processing.
+  The unopinionated and powerful protocol for on-chain payment processing.
 <p>
 
 <p align="center">
