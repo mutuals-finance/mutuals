@@ -1,26 +1,35 @@
 export default {
   radii: {
-    l1: { value: "0.4rem" },
-    l2: { value: "0.575rem" },
-    l3: { value: "0.8rem" },
+    l1: { value: "{radii.md}" },
+    l2: { value: "{radii.lg}" },
+    l3: { value: "{radii.xl}" },
   },
-  /*
-  radii: {
-    l1: { value: "0.375rem" },
-    l2: { value: "0.5rem" },
-    l3: { value: "0.75rem" },
-  },
-*/
   colors: {
     brand: {
-      solid: { value: "{colors.brand.600}" }, // #2973FF - your dark blue for solid buttons
-      contrast: { value: "white" }, // white text on brand buttons
-      fg: { value: "{colors.brand.700}" }, // darker blue for text/icons
-      muted: { value: "{colors.brand.200}" }, // light blue for muted backgrounds
-      subtle: { value: "{colors.brand.100}" }, // very light blue for subtle backgrounds
-      emphasized: { value: "{colors.brand.300}" }, // medium-light for emphasized states
-      focusRing: { value: "{colors.brand.500}" }, // medium blue for focus rings
-      border: { value: "{colors.brand.300}" }, // for outline variant borders
+      contrast: {
+        value: { _light: "white", _dark: "white" },
+      },
+      fg: {
+        value: { _light: "{colors.brand.800}", _dark: "{colors.brand.300}" },
+      },
+      subtle: {
+        value: { _light: "{colors.brand.200}", _dark: "{colors.brand.900}" },
+      },
+      muted: {
+        value: { _light: "{colors.brand.300}", _dark: "{colors.brand.800}" },
+      },
+      emphasized: {
+        value: { _light: "{colors.brand.400}", _dark: "{colors.brand.700}" },
+      },
+      solid: {
+        value: { _light: "{colors.brand.600}", _dark: "{colors.brand.600}" },
+      },
+      focusRing: {
+        value: { _light: "{colors.brand.500}", _dark: "{colors.brand.500}" },
+      },
+      border: {
+        value: { _light: "{colors.brand.500}", _dark: "{colors.brand.400}" },
+      },
     },
 
     /*

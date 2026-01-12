@@ -10,7 +10,7 @@ const items = [
     ],
     children: (
       <Link asChild={true} href={"mailto:hello@mutuals.finance"}>
-        <Button variant={"surface"} mt={"6"} alignSelf={"flex-start"}>
+        <Button variant={"subtle"} size="sm" mt={"6"} alignSelf={"flex-start"}>
           Let's Chat
         </Button>
       </Link>

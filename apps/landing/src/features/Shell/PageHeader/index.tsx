@@ -47,13 +47,20 @@ export default function ShellPageHeader({
             {!!tag && (
               <MotionBox variants={itemVariants} asChild={true}>
                 <Badge
+                  colorPalette="brand"
+                  size={"lg"}
                   mb={"6"}
-                  color={"fg.muted"}
+                  textStyle={"2xs"}
+                  letterSpacing={"wide"}
                   textTransform={"uppercase"}
-                  p={"2"}
-                  bgGradient="to-r"
-                  gradientFrom="brand.100"
-                  gradientTo="brand.300"
+                  rounded={"full"}
+                  bg={"bg"}
+                  bgGradient="to-tr"
+                  fontWeight={"medium"}
+                  color={"fg"}
+                  gradientFrom="colorPalette.muted/10"
+                  gradientVia="colorPalette.emphasized/30"
+                  gradientTo="colorPalette.subtle/20"
                   {...tagProps}
                 >
                   {tag}

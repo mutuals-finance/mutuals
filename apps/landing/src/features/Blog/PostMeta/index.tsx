@@ -1,5 +1,4 @@
 import {
-  Badge,
   DateTime,
   Flex,
   Icon,
@@ -7,10 +6,10 @@ import {
   Stack,
   StackProps,
   Text,
+  StackSeparator,
 } from "@mutuals/ui";
 import { IoCalendarOutline } from "react-icons/io5";
 import { Post } from "@mutuals/payload/payload-types";
-import { LuDot } from "react-icons/lu";
 
 export type BlogPostMetaStackProps = StackProps & {
   data?: Partial<Post>;
@@ -23,10 +22,10 @@ export default function BlogPostMetaStack({
   ...props
 }: BlogPostMetaStackProps) {
   const stackGap = {
-    xs: 1,
-    sm: 2,
-    md: 4,
-    lg: 4,
+    xs: 2,
+    sm: 4,
+    md: 6,
+    lg: 6,
   }[size];
 
   const flexGap = {
@@ -47,19 +46,27 @@ export default function BlogPostMetaStack({
     <Stack
       direction={"row"}
       alignItems={"center"}
-      separator={<LuDot />}
+      separator={<StackSeparator />}
       gap={stackGap}
       {...props}
     >
       {data?.category && typeof data.category == "object" && (
-        <Link asChild={true} href={`/blog/${data.category.slug}/`}>
-          <Badge size={size} colorPalette="purple">
-            {data.category.name}
-          </Badge>
+        <Link
+          asChild={true}
+          href={`/blog/${data.category.slug}/`}
+          textStyle={textStyle}
+          colorPalette={"brand"}
+        >
+          {data.category.name}
         </Link>
       )}
 
-      <Flex gap={flexGap} textStyle={textStyle} alignItems={"center"}>
+      <Flex
+        gap={flexGap}
+        textStyle={textStyle}
+        alignItems={"center"}
+        color={"fg.muted"}
+      >
         <Icon>
           <IoCalendarOutline />
         </Icon>
