@@ -46,7 +46,7 @@ jobs:
           command: "payload migrate"
           workspace: "@mutuals/cms"
       - deploy-to-vercel:
-        vercel-environment: <<parameters.vercel-environment>>
+          vercel-environment: <<parameters.vercel-environment>>
 
 workflows:
   run-cms:

@@ -41,7 +41,7 @@ export default function BlogPost(data: Partial<Post>) {
               asChild={true}
               href={`/blog/${typeof category == "object" ? category.slug : ""}`}
             >
-              <IconButton size={"xs"} variant={"subtle"}>
+              <IconButton size={"xs"} variant={"ghost"}>
                 <IoArrowBackSharp />
               </IconButton>
             </Link>

@@ -126,5 +126,5 @@ export default defineRecipe({
     },
   ],
   defaultVariants: { enlarge: true },
-  base: { fontWeight: "400", rounded: "full" },
+  base: { fontWeight: "400" },
 });
