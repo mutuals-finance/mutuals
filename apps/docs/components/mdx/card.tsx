@@ -13,7 +13,7 @@ import { LuChevronRight } from "react-icons/lu";
 import { ReactNode } from "react";
 
 export const CardGroup = (props: SimpleGridProps) => {
-  return <SimpleGrid gap="6" mt="6" mb="10" minChildWidth="240px" {...props} />;
+  return <SimpleGrid gap="6" mt="6" mb="10" {...props} />;
 };
 
 const CardTitleIcon = (props: IconProps) => {
@@ -25,7 +25,7 @@ const CardTitleIcon = (props: IconProps) => {
       _groupHover={{ opacity: "1", translate: "0" }}
       _groupFocus={{ opacity: "1", translate: "0" }}
       {...props}
-      asChild
+      asChild={true}
     />
   );
 };
@@ -44,7 +44,11 @@ export const Card = (props: CardProps) => {
     <Link href={href} className="group" alignItems={"stretch"} asChild={true}>
       <UiCard.Root _groupHover={{ bg: "bg.subtle" }} transition="colors 0.2s">
         <UiCard.Body gap="2" flex={"1"}>
-          {icon && <Icon boxSize="2em">{icon}</Icon>}
+          {icon && (
+            <Icon boxSize="2em" color={"brand.fg"}>
+              {icon}
+            </Icon>
+          )}
           <UiCard.Title>
             <HStack gap="1">
               {title}

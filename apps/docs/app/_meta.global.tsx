@@ -46,6 +46,7 @@ const meta = {
               example: "A simple example",
             },
           },
+          "liquidity-model": {},
           terminology: {
             items: {
               index: "Overview",

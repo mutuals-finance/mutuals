@@ -1,19 +1,44 @@
 ---
-title: Mutuals Docs
-description: Your all-in-one resource for Mutuals
+title: Mutuals Documentation
+description: Mutuals is the unopinionated and powerful protocol for on-chain payment processing.
 ---
 
-import {
+import {LuHandshake} from "react-icons/lu";import {
   IoBookOutline,
   IoConstructOutline, IoDocumentTextOutline, IoExtensionPuzzleOutline,
-  IoHelpBuoyOutline
+  IoHelpBuoyOutline, IoLogoGithub
 } from "react-icons/io5";
 import { CardGroup, Card } from '@/components/mdx/card'
 
+
+## Get Familiar with Mutuals
+
 <CardGroup columns={{base:1, md:3}}>
-  <Card href={"/concepts/overview"} title={"Concepts"} icon={<IoBookOutline/>}>
+  <Card href={"/concepts/overview/getting-started"} title={"Concepts"} icon={<IoBookOutline/>}>
     Learn the fundamental concepts and principles behind Mutuals, including key terminology and architecture.
   </Card>
+  <Card href={"/contracts/overview"} title={"Contracts"} icon={<IoDocumentTextOutline />}>
+    Get detailed information about Mutuals smart contracts, including deployment guides and usage instructions.
+  </Card>
+</CardGroup>
+
+## Resources
+
+<CardGroup columns={{base:1, md:3}}>
+  <Card href={"/support/overview"} title={"Support"} icon={<IoHelpBuoyOutline />}>
+    Find answers to common questions, troubleshooting tips, and guidance on using Mutuals effectively.
+  </Card>
+  <Card href={"mailto:hello@mutuals.finance"} title={"Request sales"} icon={<LuHandshake  />}>
+    Click here to request a demo or reach out at hello@mutuals.finance
+  </Card>
+  <Card href={"https://github.com/mutuals-finance"} title={"Source code"} icon={<IoLogoGithub  />}>
+    View the Mutuals open-source codebase on GitHub and contribute to the project
+  </Card>
+</CardGroup>
+
+## Integrate Mutuals
+
+<CardGroup columns={{base:1, md:3}}>
   <Card href={"/contracts/overview"} title={"Contracts"} icon={<IoDocumentTextOutline />}>
     Get detailed information about Mutuals smart contracts, including deployment guides and usage instructions.
   </Card>
@@ -22,8 +47,5 @@ import { CardGroup, Card } from '@/components/mdx/card'
   </Card>
   <Card href={"/apis/overview/introduction"} title={"APIs"} icon={<IoExtensionPuzzleOutline/>}>
     Discover the Mutuals Application Programming Interfaces (APIs) for integrating with the Mutuals platform.
-  </Card>
-  <Card href={"/support/overview"} title={"Support"} icon={<IoHelpBuoyOutline />}>
-    Find answers to common questions, troubleshooting tips, and guidance on using Mutuals effectively.
   </Card>
 </CardGroup>

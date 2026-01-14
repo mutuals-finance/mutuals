@@ -44,7 +44,7 @@ const HeaderRoot = chakra("header", {
 
 const TopNavLink = chakra(Link, {
   base: {
-    textStyle: "sm",
+    textStyle: "md",
   },
   variants: {
     variant: {
@@ -97,7 +97,12 @@ const HeaderPrimaryNavbar = () => {
     <HStack gap="6" minH="48px" aria-label="primary navigation">
       <HeaderLogoLink mr={"12"} />
       {items.map((item) => (
-        <TopNavLink key={item.route} href={getFirstChildRoute(item)}>
+        <TopNavLink
+          key={item.route}
+          href={getFirstChildRoute(item)}
+          variant={"plain"}
+          fontWeight={"normal"}
+        >
           {item.title}
         </TopNavLink>
       ))}
@@ -129,6 +134,7 @@ const HeaderSecondaryNavbar = () => {
         <TopNavLink
           key={item.route}
           href={getFirstChildRoute(item)}
+          textStyle={"sm"}
           variant={"tab"}
         >
           {item.title}
