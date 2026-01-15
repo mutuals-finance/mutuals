@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { isAdmin, publishedOnly } from "../access";
 import { slugField, richText } from "../fields";
 import { formatPreviewURL } from "../utils";
+import { revalidatePageHook } from "../hooks/revalidate-path";
 
 export const Posts: CollectionConfig = {
   slug: "posts",
@@ -275,16 +276,7 @@ export const Posts: CollectionConfig = {
     relatedPosts: true,
   },
   hooks: {
-    afterChange: [
-      async ({ doc }) => {
-        try {
-          revalidatePath(`/blog/post/${doc.slug}`);
-          console.log(`Revalidated: /blog/post/${doc.slug}`);
-        } catch (error) {
-          console.error(error);
-        }
-      },
-    ],
+    afterChange: [revalidatePageHook],
     afterDelete: [
       async ({ doc, req }) => {
         try {
