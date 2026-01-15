@@ -7,7 +7,7 @@ import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import { Users, Media, Posts, Categories } from "./collections";
-import { revalidateRedirects } from "./hooks";
+import { revalidateRedirects } from "./hooks/revalidate-redirects";
 import { deepMerge } from "./utils";
 import { Code, BlogMarkdown, BlogContent } from "./blocks";
 
