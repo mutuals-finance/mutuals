@@ -1,7 +1,7 @@
 import type { CollectionAfterChangeHook, TypeWithID } from "payload";
 import { revalidatePath } from "next/cache";
 
-export const revalidatePageHook: CollectionAfterChangeHook<TypeWithID> = ({
+export const revalidatePage: CollectionAfterChangeHook<TypeWithID> = ({
   doc,
   previousDoc,
   req: { payload },

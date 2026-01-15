@@ -33,37 +33,39 @@ export default function BlogPostCard({
           direction={{ base: "column", lg: "row" }}
           gap={{ base: "6", lg: "12" }}
         >
-          <BlogPostImage
-            image={data.image}
-            flex={{ base: "1", lg: "0 0 60%" }}
-            bg={"bg.muted"}
-          />
-
+          <Stack flex={{ base: "1", lg: "0 0 50%" }}>
+            <BlogPostImage image={data.image} bg={"bg.muted"} />
+          </Stack>
           <Stack
             py={{ lg: "12" }}
-            gap={"0"}
+            gap={"4"}
             align={{ base: "center", lg: "flex-start" }}
             textAlign={{ base: "center", lg: "left" }}
           >
-            <BlogPostMetaStack data={data} mb={"4"} alignSelf={"stretch"} />
-
-            <Heading
-              as="h1"
-              size={{
-                base: "2xl",
-                lg: "4xl",
-              }}
-              fontWeight={"medium"}
-            >
-              {title}
-            </Heading>
-
-            <PostExcerptBox
-              featured={featured}
+            <BlogPostMetaStack
               data={data}
-              textStyle={{ base: "md", lg: "lg" }}
-              mb={"4"}
+              alignSelf={"stretch"}
+              hideBelow={"lg"}
             />
+
+            <Stack gap={"2"}>
+              <Heading
+                as="h1"
+                size={{
+                  base: "2xl",
+                  lg: "4xl",
+                }}
+                fontWeight={"medium"}
+              >
+                {title}
+              </Heading>
+
+              <PostExcerptBox
+                featured={featured}
+                data={data}
+                textStyle={{ base: "md", lg: "lg" }}
+              />
+            </Stack>
 
             <Box>
               <Link href={href} variant={"underline"}>
@@ -78,20 +80,16 @@ export default function BlogPostCard({
   }
 
   return (
-    <LinkBox asChild={true}>
-      <Card.Root variant={"outline"} border="none" w={"full"} {...props}>
-        <Card.Header px={"0"} pt={"0"}>
-          <BlogPostMetaStack data={data} size={"xs"} />
-          <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
-        </Card.Header>
-        <Card.Body px={"0"} pb={"0"}>
-          <Heading as={"h3"} size={"xl"}>
-            {title}
-          </Heading>
-        </Card.Body>
+    <Box w={"full"} {...props}>
+      <BlogPostMetaStack data={data} size={"xs"} mb={"2"} />
+      <LinkBox>
+        <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} mb={"2"} />
+        <Heading as={"h3"} size={"xl"}>
+          {title}
+        </Heading>
         <LinkOverlay href={href} />
-      </Card.Root>
-    </LinkBox>
+      </LinkBox>
+    </Box>
   );
 }
 
