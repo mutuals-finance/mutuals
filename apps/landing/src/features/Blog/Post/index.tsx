@@ -1,7 +1,6 @@
 import { Post, User } from "@mutuals/payload/payload-types";
 import {
   AvatarRoot,
-  Bleed,
   Box,
   Container,
   Heading,
@@ -13,21 +12,15 @@ import {
   AvatarImageProps,
   StackProps,
   Breadcrumbs,
-  Button,
   Link,
   IconButton,
-  For,
+  DateTime,
+  Badge,
 } from "@mutuals/ui";
 import BlogPostImage from "@/features/Blog/PostImage";
 import CmsProse from "@/components/CmsProse";
-import BlogPostMetaStack from "@/features/Blog/PostMeta";
 import { getImageProps } from "next/image";
-import {
-  IoArrowBackSharp,
-  IoLogoFacebook,
-  IoLogoLinkedin,
-  IoLogoTwitter,
-} from "react-icons/io5";
+import { IoArrowBackSharp } from "react-icons/io5";
 
 export default function BlogPost(data: Partial<Post>) {
   const { content, excerpt, image, title, authors, category } = data;
@@ -36,35 +29,74 @@ export default function BlogPost(data: Partial<Post>) {
     <Box pt={"20"}>
       <Container maxW={"4xl"} my={{ base: "6", lg: "12" }}>
         <Stack direction={"column"} gap={"6"}>
-          <Stack direction={"row"} align={"center"}>
-            <Link
-              asChild={true}
-              href={`/blog/${typeof category == "object" ? category.slug : ""}`}
-            >
-              <IconButton size={"xs"} variant={"ghost"}>
-                <IoArrowBackSharp />
-              </IconButton>
-            </Link>
+          <Stack
+            direction={"row"}
+            align={"center"}
+            w={"full"}
+            justify={"space-between"}
+          >
+            <Stack direction={"row"} align={"center"}>
+              <Link
+                asChild={true}
+                href={`/blog/${typeof category == "object" ? category.slug : ""}`}
+              >
+                <IconButton size={"xs"} variant={"ghost"}>
+                  <IoArrowBackSharp />
+                </IconButton>
+              </Link>
 
-            <Breadcrumbs
-              overwrite={{ home: false, post: false, slug: false }}
-            />
+              <Breadcrumbs
+                overwrite={{ home: false, post: false, slug: false }}
+              />
+            </Stack>
+
+            <Text asChild={true} textStyle={"sm"} color="fg.muted">
+              <DateTime timestamp={data?.publishedOn} />
+            </Text>
           </Stack>
 
-          <Heading textStyle={{ base: "4xl", md: "6xl" }} as="h1" mb={"6"}>
+          <Box textAlign={"center"}>
+            {data?.category && typeof data.category == "object" && (
+              <Link asChild={true} href={`/blog/${data.category.slug}/`}>
+                <Badge
+                  colorPalette="brand"
+                  size={"lg"}
+                  textStyle={"xs"}
+                  letterSpacing={"wide"}
+                  textTransform={"uppercase"}
+                  rounded={"full"}
+                  bg={"bg"}
+                  bgGradient="to-tr"
+                  fontWeight={"medium"}
+                  color={"fg"}
+                  gradientFrom="colorPalette.muted/10"
+                  gradientVia="colorPalette.emphasized/30"
+                  gradientTo="colorPalette.subtle/20"
+                >
+                  {data.category.name}
+                </Badge>
+              </Link>
+            )}
+          </Box>
+
+          <Heading
+            textStyle={{ base: "4xl", md: "6xl" }}
+            as="h1"
+            mb={"6"}
+            textAlign={"center"}
+          >
             {title}
           </Heading>
 
-          <BlogPostMetaStack data={data} size={"lg"} />
-
           <Stack direction={"column"} gap={"6"}>
-            <Bleed inline={{ lg: "48" }}>
-              <Stack
-                direction={{ base: "column", lg: "row" }}
-                gap={"6"}
-                alignItems={"stretch"}
-              >
-                <BlogPostImage w={"full"} maxW={"4xl"} image={image} />
+            <Stack
+              direction={{ base: "column", lg: "row" }}
+              gap={"6"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <BlogPostImage w={"full"} maxW={"4xl"} image={image} />
+              {/*
                 <Stack gap="6">
                   <Box>
                     <Text fontWeight={"medium"} textStyle={"sm"} mb={"2"}>
@@ -130,11 +162,12 @@ export default function BlogPost(data: Partial<Post>) {
                     </Stack>
                   </Box>
                 </Stack>
-              </Stack>
-            </Bleed>
+*/}
+            </Stack>
+
             <Box w={"full"}>
               <Box>
-                <CmsProse data={excerpt} size={{ base: "xl", lg: "3xl" }} />
+                <CmsProse data={excerpt} size={{ base: "lg", lg: "lg" }} />
               </Box>
 
               {content?.map((data) => (
@@ -142,7 +175,7 @@ export default function BlogPost(data: Partial<Post>) {
                   {data.blockType == "blogContent" && (
                     <CmsProse
                       data={data.blogContentFields.richText}
-                      size={{ base: "md", lg: "lg" }}
+                      size={{ base: "md", lg: "md" }}
                     />
                   )}
                 </Box>

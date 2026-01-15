@@ -8,7 +8,7 @@ const getAllPosts = async (draft = false) =>
     ? await fetchAllPosts()
     : await unstable_cache(fetchAllPosts, [`posts-all`])();
 
-export default async function BlogPage() {
+export default async function BlogCategoryPage() {
   const posts = await getAllPosts();
 
   if (!posts) {

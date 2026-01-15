@@ -10,7 +10,7 @@ export default function BlogPostImage({ image, ...props }: BlogPostImageProps) {
   return (
     <Show when={image && typeof image != "number" && "url" in image}>
       <AspectRatio
-        ratio={16 / 9}
+        ratio={21 / 9}
         rounded={"2xl"}
         overflow={"hidden"}
         {...props}

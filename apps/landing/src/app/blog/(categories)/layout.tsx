@@ -16,7 +16,9 @@ const getCategories = async (draft = false) =>
     ? await fetchCategories()
     : await unstable_cache(fetchCategories, ["categories"])();
 
-export default async function BlogLayout({ children }: PropsWithChildren) {
+export default async function BlogCategoriesLayout({
+  children,
+}: PropsWithChildren) {
   const [categories, featuredPost] = await Promise.all([
     getCategories(),
     getFeaturedPost(),

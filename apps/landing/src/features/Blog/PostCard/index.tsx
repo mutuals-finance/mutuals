@@ -28,56 +28,64 @@ export default function BlogPostCard({
 
   if (featured) {
     return (
-      <Stack
-        direction={{ base: "column", lg: "row" }}
-        gap={{ base: "6", lg: "12" }}
-      >
-        <BlogPostImage
-          image={data.image}
-          flex={{ base: "1", lg: "0 0 60%" }}
-          bg={"bg.muted"}
-        />
-
-        <Stack py={{ lg: "12" }} gap={"0"}>
-          <BlogPostMetaStack data={data} mb={"4"} />
-
-          <Heading
-            as="h1"
-            size={{
-              base: "2xl",
-              lg: "4xl",
-            }}
-            fontWeight={"medium"}
-          >
-            {title}
-          </Heading>
-
-          <PostExcerptBox
-            featured={featured}
-            data={data}
-            textStyle={{ base: "md", lg: "xl" }}
+      <LinkBox asChild={true}>
+        <Stack
+          direction={{ base: "column", lg: "row" }}
+          gap={{ base: "6", lg: "12" }}
+        >
+          <BlogPostImage
+            image={data.image}
+            flex={{ base: "1", lg: "0 0 60%" }}
+            bg={"bg.muted"}
           />
 
-          <Box>
-            <Link href={href} variant={"underline"}>
-              Read more
-            </Link>
-          </Box>
+          <Stack
+            py={{ lg: "12" }}
+            gap={"0"}
+            align={{ base: "center", lg: "flex-start" }}
+            textAlign={{ base: "center", lg: "left" }}
+          >
+            <BlogPostMetaStack data={data} mb={"4"} alignSelf={"stretch"} />
+
+            <Heading
+              as="h1"
+              size={{
+                base: "2xl",
+                lg: "4xl",
+              }}
+              fontWeight={"medium"}
+            >
+              {title}
+            </Heading>
+
+            <PostExcerptBox
+              featured={featured}
+              data={data}
+              textStyle={{ base: "md", lg: "lg" }}
+              mb={"4"}
+            />
+
+            <Box>
+              <Link href={href} variant={"underline"}>
+                Read more
+              </Link>
+            </Box>
+          </Stack>
+          <LinkOverlay href={href} />
         </Stack>
-      </Stack>
+      </LinkBox>
     );
   }
 
   return (
     <LinkBox asChild={true}>
-      <Card.Root variant={"outline"} w={"full"} size={"sm"} {...props}>
-        <Card.Header>
+      <Card.Root variant={"outline"} border="none" w={"full"} {...props}>
+        <Card.Header px={"0"} pt={"0"}>
+          <BlogPostMetaStack data={data} size={"xs"} />
           <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
         </Card.Header>
-        <Card.Body>
-          <BlogPostMetaStack data={data} mb={"2"} />
-
-          <Heading as={"h3"} size={"lg"}>
+        <Card.Body px={"0"} pb={"0"}>
+          <Heading as={"h3"} size={"xl"}>
             {title}
           </Heading>
         </Card.Body>
@@ -97,7 +105,7 @@ type PostExcerptBoxProps = BoxProps & BlogPostCardContentProps;
 function PostExcerptBox({ data, featured: _, ...props }: PostExcerptBoxProps) {
   const { excerpt } = data;
   return (
-    <Box {...props}>
+    <Box color="fg.muted" lineClamp="2" {...props}>
       <CmsProse data={excerpt} />
     </Box>
   );

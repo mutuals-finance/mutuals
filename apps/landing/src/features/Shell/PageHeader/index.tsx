@@ -50,7 +50,7 @@ export default function ShellPageHeader({
                   colorPalette="brand"
                   size={"lg"}
                   mb={"6"}
-                  textStyle={"2xs"}
+                  textStyle={"xs"}
                   letterSpacing={"wide"}
                   textTransform={"uppercase"}
                   rounded={"full"}
