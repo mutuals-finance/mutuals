@@ -5,8 +5,8 @@ import { MotionBox, Box, Container, Stack } from "@mutuals/ui";
 import ActorCard from "@/features/Home/Actors/Card";
 import SectionHeader from "src/features/Shell/SectionHeader";
 import { useState } from "react";
-import ownersImage from "@/assets/owners-product-slider.webp";
-import partnersImage from "@/assets/partners-product-slider.webp";
+import ownersImage from "@/assets/owners-product-slider.jpg";
+import partnersImage from "@/assets/partners-product-slider.jpg";
 import { itemVariants } from "@/components/MotionBoxWrapper";
 
 export default function HomeActors() {
@@ -22,27 +22,27 @@ export default function HomeActors() {
           variants={itemVariants}
           asChild={true}
         >
-          <SectionHeader label={"tailored to your needs"}>
-            Versatile Solutions For Everyone
+          <SectionHeader label={"Tailored to your needs"}>
+            Built for Depth, Intuitive Use
           </SectionHeader>
         </MotionBox>
         <Stack gap={"6"} direction="row" wrap={{ base: "wrap", lg: "nowrap" }}>
           <ActorCard
             animate={active === "owners" ? "grow" : "shrink"}
-            description="Project Owners"
-            title="Simplified and automated revenue distribution."
+            description="Architects and Builders"
+            title="Full Control over Programmable Payments"
             image={ownersImage}
             benefit={
-              "Mutuals provides solutions to distribute payments, automate income streams and track your project earnings."
+              "Automate global payroll, integrate DeFi protocols, and much more, leveraging full composability with the on-chain ecosystem with technical sovereignty."
             }
             onHoverStart={() => setActive("owners")}
           />
           <ActorCard
             animate={active === "partners" ? "grow" : "shrink"}
-            description="Project Partners"
-            title="Transparent and trustless income guarantees."
+            description="Global Recipients"
+            title="Frictionless Access with Zero Configuration"
             benefit={
-              "Mutuals on-chain solution splits income streams based on predetermined configurations that are immutable by design."
+              "Programmable money without the hurdles of web3. Receive payments directly to an email, phone number, social handle, or passkey."
             }
             image={partnersImage}
             onHoverStart={() => setActive("partners")}

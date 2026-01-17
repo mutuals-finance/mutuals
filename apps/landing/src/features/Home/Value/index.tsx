@@ -5,6 +5,7 @@ import {
   Stack,
   MotionBox,
   SimpleGrid,
+  Link,
 } from "@mutuals/ui";
 import ValueCard from "./ValueCard";
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
@@ -51,9 +52,16 @@ export default function HomeValue() {
             ))}
           </SimpleGrid>
           <Stack align={"center"} mt={"12"}>
-            <Button size={"xl"} variant={"subtle"}>
-              Explore the Platform
-            </Button>
+            <Link
+              href={"https://app.mutuals.finance"}
+              external={true}
+              arrow={false}
+              asChild={true}
+            >
+              <Button size={"xl"} variant={"subtle"}>
+                Explore the platform
+              </Button>
+            </Link>
           </Stack>
         </Container>
       </Box>

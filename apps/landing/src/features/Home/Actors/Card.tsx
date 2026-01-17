@@ -14,6 +14,7 @@ import {
   List,
   Heading,
   FlexProps,
+  Link,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
 import { IoArrowUp } from "react-icons/io5";
@@ -82,16 +83,16 @@ export default function ActorCard({
         onHoverEnd={onHoverEnd}
       >
         <Card.Root
-          size={"lg"}
+          size={"md"}
           w={"full"}
           direction={{ base: "column", sm: "row" }}
-          gap={"6"}
-          minH={{ lg: "lg" }}
+          gap={"0"}
+          minH={{ lg: "29rem" }}
           variant={"outline"}
           {...props}
         >
           <MotionConfig transition={{ type: "tween", duration: 0.2 }}>
-            <Stack flex={"1"} gap={"0"} maxW={{ sm: "xl" }}>
+            <Stack flex={"1"} gap={"0"} maxW={{ sm: "26rem" }}>
               <MotionBox
                 fontSize={"3xl"}
                 animate={animate}
@@ -106,7 +107,7 @@ export default function ActorCard({
                   },
                 })}
               >
-                <Card.Header>
+                <Card.Header pt={{ mdDown: "0" }}>
                   <Stack direction={"column"} gap={"3"}>
                     <Flex
                       hideBelow="md"
@@ -116,7 +117,7 @@ export default function ActorCard({
                       justifyContent={"center"}
                       bg={"bg.inverted"}
                       color={"fg.inverted"}
-                      rounded={"0.4em"}
+                      rounded={"0.28em"}
                       {...iconBoxProps}
                     >
                       <Icon
@@ -145,9 +146,9 @@ export default function ActorCard({
                     </Heading>
 
                     <Heading
-                      maxW={"sm"}
+                      maxW={"12em"}
                       fontSize={"inherit"}
-                      lineHeight={"1.2"}
+                      lineHeight={"1.12"}
                     >
                       {title}
                     </Heading>
@@ -161,14 +162,12 @@ export default function ActorCard({
                     <AnimatePresence>
                       {isGrown && (
                         <MotionBox
-                          maxW={{ sm: "xs" }}
+                          maxW={{ sm: "sm" }}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                         >
-                          <Text color={"fg.muted"} textStyle={"lg"}>
-                            {benefit}
-                          </Text>
+                          <Text color={"fg.muted"}>{benefit}</Text>
                         </MotionBox>
                       )}
                     </AnimatePresence>
@@ -177,14 +176,21 @@ export default function ActorCard({
               </Card.Body>
 
               <Card.Footer>
-                <Button
-                  size="xl"
-                  w={{ base: "full", lg: "auto" }}
-                  variant={"subtle"}
-                  {...buttonProps}
+                <Link
+                  href={"https://docs.mutuals.finance/"}
+                  external={true}
+                  arrow={false}
+                  asChild={true}
                 >
-                  Learn More
-                </Button>
+                  <Button
+                    size="xl"
+                    w={{ base: "full", lg: "auto" }}
+                    variant={"subtle"}
+                    {...buttonProps}
+                  >
+                    Learn More
+                  </Button>
+                </Link>
               </Card.Footer>
             </Stack>
             {image && (
@@ -198,8 +204,8 @@ export default function ActorCard({
                     right={{ lg: "6" }}
                     top={{ lg: "6" }}
                     bottom={{ lg: "6" }}
-                    h={{ base: "sm", lg: "unset" }}
-                    rounded={"lg"}
+                    h={{ base: "2xs", lg: "unset" }}
+                    rounded={"l3"}
                     overflow={"hidden"}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

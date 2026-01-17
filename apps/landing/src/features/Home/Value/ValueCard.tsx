@@ -14,7 +14,7 @@ export default function ValueCard({
   heading,
   description,
   variant = "outline",
-  size = "sm",
+  size = "md",
   image,
   ...props
 }: ValueCardProps) {
@@ -52,7 +52,6 @@ export default function ValueCard({
           {description}
         </Text>
       </Card.Body>
-      <Card.Footer />
     </Card.Root>
   );
 }
