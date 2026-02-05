@@ -11,10 +11,9 @@ import {
   AvatarImage,
   AvatarImageProps,
   StackProps,
-  Breadcrumbs,
   Link,
-  IconButton,
   DateTime,
+  IconButton,
   Badge,
 } from "@mutuals/ui";
 import BlogPostImage from "@/features/Blog/PostImage";
@@ -40,14 +39,10 @@ export default function BlogPost(data: Partial<Post>) {
                 asChild={true}
                 href={`/blog/categories/${typeof category == "object" ? category.slug : ""}`}
               >
-                <IconButton size={"xs"} variant={"ghost"}>
+                <IconButton variant={"ghost"}>
                   <IoArrowBackSharp />
                 </IconButton>
               </Link>
-
-              <Breadcrumbs
-                overwrite={{ home: false, post: false, slug: false }}
-              />
             </Stack>
 
             <Text asChild={true} textStyle={"sm"} color="fg.muted">
@@ -62,19 +57,10 @@ export default function BlogPost(data: Partial<Post>) {
                 href={`/blog/categories/${data.category.slug}/`}
               >
                 <Badge
-                  colorPalette="brand"
                   size={"lg"}
                   textStyle={"xs"}
-                  letterSpacing={"wide"}
-                  textTransform={"uppercase"}
-                  rounded={"full"}
-                  bg={"bg"}
-                  bgGradient="to-tr"
-                  fontWeight={"medium"}
-                  color={"fg"}
-                  gradientFrom="colorPalette.muted/10"
-                  gradientVia="colorPalette.emphasized/30"
-                  gradientTo="colorPalette.subtle/20"
+                  colorPalette={"brand"}
+                  variant={"gradient"}
                 >
                   {data.category.name}
                 </Badge>

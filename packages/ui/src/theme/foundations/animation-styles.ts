@@ -1,10 +1,10 @@
 import { defineAnimationStyles } from "@chakra-ui/react";
 
 export default defineAnimationStyles({
-  "gradient-slide": {
+  gradientSlide: {
     value: {
-      animationName: "slide-bg",
-      animationDuration: "6s",
+      animationName: "slideBg",
+      animationDuration: "10s",
       animationTimingFunction: "linear",
       animationIterationCount: "infinite",
     },

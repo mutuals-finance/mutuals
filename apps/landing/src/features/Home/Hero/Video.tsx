@@ -25,6 +25,14 @@ export default function HomeHeroVideo(props: BoxProps) {
           Your browser does not support the video tag.
         </video>
       </AspectRatio>
+      <Box
+        position={"absolute"}
+        top={"0"}
+        left={"0"}
+        w={"full"}
+        h={"full"}
+        bg={{ _light: "bg/25", _dark: "bg/50" }}
+      />
 
       <Box
         position={"absolute"}

@@ -53,32 +53,33 @@ export default function HomeValue() {
             ))}
           </SimpleGrid>
           <VStack align={"center"} mt={"6"} gap={"6"}>
-            <VStack w="full" gap={"2"}>
-              <For
-                each={[
-                  { width: "100%", delay: "0s" },
-                  { width: "92%", delay: "-1.5s" },
-                  { width: "84%", delay: "-3s" },
-                  { width: "76%", delay: "-4.5s" },
-                ]}
-              >
-                {(item, index) => (
-                  <Box
-                    key={index}
-                    width={item.width}
-                    h="1"
-                    rounded="full"
-                    bgImage={
-                      "linear-gradient(to right,{colors.teal.400},{colors.brand.solid},{colors.purple.500},{colors.brand.emphasized},{colors.teal.400})"
-                    }
-                    bgSize="200% 100%"
-                    animationStyle="gradient-slide"
-                    animationDelay={item.delay}
-                    opacity={1 - index * 0.15}
-                  />
-                )}
-              </For>
-            </VStack>
+            <MotionBox variants={itemVariants} asChild={true}>
+              <VStack w="full" gap={"2"}>
+                <For
+                  each={[
+                    { width: "100%", delay: "0s" },
+                    { width: "92%", delay: "-1.5s" },
+                    { width: "84%", delay: "-3s" },
+                    { width: "76%", delay: "-4.5s" },
+                  ]}
+                >
+                  {(item, index) => (
+                    <Box
+                      width={item.width}
+                      height="1"
+                      key={index}
+                      rounded="full"
+                      bgImage={
+                        "linear-gradient(to right,{colors.cyan.muted},{colors.yellow.solid},{colors.brand.emphasized},{colors.brand.solid},{colors.purple.emphasized},{colors.orange.solid})"
+                      }
+                      animationStyle="gradientSlide"
+                      animationDelay={item.delay}
+                      opacity={0.5 - index * 0.1}
+                    />
+                  )}
+                </For>
+              </VStack>
+            </MotionBox>
 
             <Link
               href={"https://app.mutuals.finance"}

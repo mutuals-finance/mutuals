@@ -1,5 +1,4 @@
 import {
-  Badge,
   ConditionalValue,
   DateTime,
   Link,
@@ -35,9 +34,9 @@ export default function BlogPostMetaStack({
 
   const badgeTextStyle = {
     xs: "2xs",
-    sm: "2xs",
-    md: "xs",
-    lg: "xs",
+    sm: "xs",
+    md: "sm",
+    lg: "sm",
   }[size];
 
   const textStyle = {
@@ -57,22 +56,13 @@ export default function BlogPostMetaStack({
     >
       {data?.category && typeof data.category == "object" && (
         <Link asChild={true} href={`/blog/${data.category.slug}/`}>
-          <Badge
-            size={badgeSize}
+          <Text
             textStyle={badgeTextStyle}
-            letterSpacing={"wide"}
-            textTransform={"uppercase"}
-            rounded={"full"}
-            bg={"bg"}
-            bgGradient="to-tr"
-            fontWeight={"medium"}
-            color={"fg"}
-            gradientFrom="colorPalette.muted/10"
-            gradientVia="colorPalette.emphasized/30"
-            gradientTo="colorPalette.subtle/20"
+            variant={"subtag"}
+            colorPalette={"brand"}
           >
             {data.category.name}
-          </Badge>
+          </Text>
         </Link>
       )}
 
