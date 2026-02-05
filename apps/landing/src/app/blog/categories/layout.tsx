@@ -46,7 +46,7 @@ export default async function BlogCategoriesLayout({
       <ShellPageHeader tag={"Blog"}>
         Updates from the Mutuals team
       </ShellPageHeader>
-      {featuredPost && <BlogFeaturedPost data={featuredPost} />}
+      <BlogFeaturedPost data={featuredPost} />
       <BlogTabs tabs={tabs!}>
         <Box my={"6"}>{children}</Box>
       </BlogTabs>

@@ -28,7 +28,7 @@ const items = [
       "Publicly visible donation badge",
       "Dedicated requirements",
     ],
-    variant: "subtle",
+    variant: "plain",
   },
 ].map((i) => ({
   ...i,

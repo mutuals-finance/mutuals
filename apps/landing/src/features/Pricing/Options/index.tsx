@@ -24,7 +24,7 @@ export default function PricingOptions() {
       <SimpleGrid gap={{ base: "2", lg: "6" }} columns={{ base: 1, md: 3 }}>
         {items.map(({ heading, label, description, features, ...props }) => (
           <MotionBox variants={itemVariants} key={label} asChild={true}>
-            <Card.Root size={"md"} bg={"bg"} {...props}>
+            <Card.Root {...props}>
               <Card.Header>
                 <Heading textStyle={{ base: "2xl", md: "4xl" }}>
                   {heading}
@@ -73,7 +73,12 @@ export default function PricingOptions() {
                     target="_blank"
                     asChild={true}
                   >
-                    <Button w="full" size={"lg"} variant={"solid"}>
+                    <Button
+                      w="full"
+                      size={"md"}
+                      variant={"subtle"}
+                      rounded={"full"}
+                    >
                       Get Started
                     </Button>
                   </Link>

@@ -61,12 +61,11 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         target={!target && external ? "_blank" : target}
         rel={!rel && external ? "noopener noreferrer" : rel}
         aria-current={current ? "page" : undefined}
-        data-current={current ? "true" : undefined}
         {...props}
       >
         {!asChild ? (
           <>
-            {children} {arrow && external && <LuArrowUpRight />}{" "}
+            {children} {arrow && external && <LuArrowUpRight />}
           </>
         ) : (
           <NextLink href={href} {...linkProps}>

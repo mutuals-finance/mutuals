@@ -40,7 +40,7 @@ export default function HomeFeatures() {
               index={4}
               heading="Blog"
               description="Updates, guides, and community insights to help you get the most out of Mutuals."
-              href={"/blog"}
+              href={"/blog/categories"}
             />
           </SimpleGrid>
         </Container>

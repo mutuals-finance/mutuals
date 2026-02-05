@@ -13,6 +13,7 @@ import semanticTokens from "./foundations/semantic-tokens";
 import textStyles from "./foundations/text-styles";
 import layerStyles from "./foundations/layer-styles";
 import colors from "./foundations/colors";
+import animationStyles from "./foundations/animation-styles";
 
 export { createSystem, defaultConfig, defineConfig, mergeConfigs };
 
@@ -25,6 +26,7 @@ export const customConfig = defineConfig({
     semanticTokens,
     recipes,
     slotRecipes,
+    animationStyles,
   },
 });
 

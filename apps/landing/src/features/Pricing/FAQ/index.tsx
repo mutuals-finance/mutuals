@@ -14,7 +14,7 @@ import ShellSectionCard from "@/features/Shell/SectionCard";
 export default function PricingFAQ() {
   return (
     <Container my="32" maxW="7xl">
-      <SimpleGrid columns={{ base: 1, lg: 5 }} gap={{ base: "0", lg: "6" }}>
+      <SimpleGrid columns={{ base: 1, lg: 5 }} gap={{ base: "0", lg: "12" }}>
         <GridItem colSpan={{ base: 1, md: 2 }}>
           <ShellSectionCard
             sectionHeaderProps={{
@@ -25,7 +25,7 @@ export default function PricingFAQ() {
           />
         </GridItem>
         <GridItem colSpan={{ base: 1, md: 3 }}>
-          <AccordionRoot multiple size={"lg"}>
+          <AccordionRoot multiple>
             {items.map(({ title, children, ...props }, i) => (
               <AccordionItem key={i} value={title} {...props}>
                 <AccordionItemTrigger py={"4"}>

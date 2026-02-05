@@ -183,7 +183,8 @@ export default function ActorCard({
                   asChild={true}
                 >
                   <Button
-                    size="xl"
+                    size="lg"
+                    rounded={"full"}
                     w={{ base: "full", lg: "auto" }}
                     variant={"subtle"}
                     {...buttonProps}

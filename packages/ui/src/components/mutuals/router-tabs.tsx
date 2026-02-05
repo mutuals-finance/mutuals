@@ -37,8 +37,9 @@ export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
             rounded={"0"}
           />
 
-          {tabs?.map(({ title, value, tabProps, ..._props }) => {
-            const __props = {
+          {tabs?.map(({ title, value, tabProps, href, ...restProps }) => {
+            const linkProps = {
+              href,
               textAlign: "center",
               justifyContent: "center",
               w: "full",
@@ -47,8 +48,8 @@ export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
               px: { base: "2", lg: "4" },
               children: title,
               indicator: false,
-              ..._props,
-            };
+              ...restProps,
+            } as const;
 
             return (
               <Tabs.Trigger
@@ -59,9 +60,9 @@ export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
                 {...tabProps}
               >
                 {tabProps?.disabled ? (
-                  <Text {...__props} />
+                  <Text {...linkProps} />
                 ) : (
-                  <Link {...__props} />
+                  <Link {...linkProps} />
                 )}
               </Tabs.Trigger>
             );

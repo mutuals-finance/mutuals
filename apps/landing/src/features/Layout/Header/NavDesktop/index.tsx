@@ -29,20 +29,14 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
           ))}
         </Stack>
 
-        <Stack ml={"auto"} gap={"4"} direction={"row"}>
-          {lastLinksProps && (
-            <Link href={lastLinksProps.href} target="_blank" asChild={true}>
-              <Button size={"md"} variant="subtle">
-                {lastLinksProps.children}
-              </Button>
-            </Link>
-          )}
+        <Stack direction={"row"} ml={"auto"} gap={"8"}>
+          {lastLinksProps && <NavLink {...lastLinksProps} />}
           <Link
             href={"https://app.mutuals.finance"}
             target="_blank"
             asChild={true}
           >
-            <Button size={"md"} variant={"solid"}>
+            <Button size={"md"} colorPalette={"whiteAlpha"} rounded={"full"}>
               Launch app
             </Button>
           </Link>

@@ -2,10 +2,11 @@ import {
   Box,
   Button,
   Container,
-  Stack,
   MotionBox,
   SimpleGrid,
   Link,
+  For,
+  VStack,
 } from "@mutuals/ui";
 import ValueCard from "./ValueCard";
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
@@ -51,18 +52,45 @@ export default function HomeValue() {
               </MotionBox>
             ))}
           </SimpleGrid>
-          <Stack align={"center"} mt={"12"}>
+          <VStack align={"center"} mt={"6"} gap={"6"}>
+            <VStack w="full" gap={"2"}>
+              <For
+                each={[
+                  { width: "100%", delay: "0s" },
+                  { width: "92%", delay: "-1.5s" },
+                  { width: "84%", delay: "-3s" },
+                  { width: "76%", delay: "-4.5s" },
+                ]}
+              >
+                {(item, index) => (
+                  <Box
+                    key={index}
+                    width={item.width}
+                    h="1"
+                    rounded="full"
+                    bgImage={
+                      "linear-gradient(to right,{colors.teal.400},{colors.brand.solid},{colors.purple.500},{colors.brand.emphasized},{colors.teal.400})"
+                    }
+                    bgSize="200% 100%"
+                    animationStyle="gradient-slide"
+                    animationDelay={item.delay}
+                    opacity={1 - index * 0.15}
+                  />
+                )}
+              </For>
+            </VStack>
+
             <Link
               href={"https://app.mutuals.finance"}
               external={true}
               arrow={false}
               asChild={true}
             >
-              <Button size={"xl"} variant={"subtle"}>
+              <Button size={"lg"} rounded={"full"}>
                 Explore the platform
               </Button>
             </Link>
-          </Stack>
+          </VStack>
         </Container>
       </Box>
     </MotionBoxWrapper>

@@ -5,7 +5,7 @@ type BlogFeaturedPostProps = Omit<BlogPostCardProps, "featured">;
 
 export default function BlogFeaturedPost(props: BlogFeaturedPostProps) {
   return (
-    <Container maxW={"7xl"} my={{ base: "12", lg: "24" }}>
+    <Container maxW={"7xl"} py={{ base: "12", lg: "24" }}>
       <BlogPostCard {...props} featured={true} />
     </Container>
   );
