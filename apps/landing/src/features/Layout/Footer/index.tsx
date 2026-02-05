@@ -39,7 +39,7 @@ export default function LayoutFooter() {
                 },
                 {
                   children: "Blog",
-                  href: "/blog/categories",
+                  href: "/blog",
                 },
               ]}
             />

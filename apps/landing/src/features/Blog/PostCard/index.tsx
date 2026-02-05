@@ -15,11 +15,11 @@ import BlogPostMetaStack from "@/features/Blog/PostMeta";
 
 export type BlogPostCardProps = Omit<Card.RootProps, "children"> & {
   featured?: boolean;
-  data: Partial<Post>;
+  data?: Partial<Post>;
 };
 
 export default function BlogPostCard({
-  data,
+  data = {},
   featured = false,
   ...props
 }: BlogPostCardProps) {

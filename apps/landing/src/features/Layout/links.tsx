@@ -12,11 +12,10 @@ const links: NavLinkProps[] = [
     children: "Contact",
     href: "/contact",
   },
-  { children: "Blog", href: "/blog/categories" },
+  { children: "Blog", href: "/blog", linkProps: { scroll: true } },
   {
     children: "Documentation",
     external: true,
-    target: "_blank",
     href: "https://docs.mutuals.finance",
   },
 ];

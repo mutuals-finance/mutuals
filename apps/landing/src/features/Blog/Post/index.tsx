@@ -37,7 +37,7 @@ export default function BlogPost(data: Partial<Post>) {
             <Stack direction={"row"} align={"center"}>
               <Link
                 asChild={true}
-                href={`/blog/categories/${typeof category == "object" ? category.slug : ""}`}
+                href={`/blog/${typeof category == "object" ? category.slug : ""}`}
               >
                 <IconButton variant={"ghost"}>
                   <IoArrowBackSharp />
@@ -52,10 +52,7 @@ export default function BlogPost(data: Partial<Post>) {
 
           <Box textAlign={"center"}>
             {data?.category && typeof data.category == "object" && (
-              <Link
-                asChild={true}
-                href={`/blog/categories/${data.category.slug}/`}
-              >
+              <Link asChild={true} href={`/blog/${data.category.slug}/`}>
                 <Badge
                   size={"lg"}
                   textStyle={"xs"}

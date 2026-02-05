@@ -1,5 +1,6 @@
 import BlogList from "@/features/Blog/List";
 import { fetchAllPosts } from "@/lib/cms";
+import { Box } from "@mutuals/ui";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
@@ -15,5 +16,9 @@ export default async function BlogCategoryPage() {
     return notFound();
   }
 
-  return <BlogList data={posts} />;
+  return (
+    <Box w={"full"}>
+      <BlogList data={posts} />
+    </Box>
+  );
 }

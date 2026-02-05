@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { createOpenGraph } from "@mutuals/metadata-nextjs";
 
+export const dynamic = "force-static";
+
 export type BlogPostPageProps = PageProps<"/blog/post/[slug]">;
 
 const getPost = async (slug: string, draft = false) =>

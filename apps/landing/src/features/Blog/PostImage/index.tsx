@@ -19,6 +19,8 @@ export default function BlogPostImage({ image, ...props }: BlogPostImageProps) {
           src={(image as Media).url!}
           alt={(image as Media).alt}
           fill={true}
+          style={{ objectFit: "cover" }}
+          sizes="450px"
         />
       </AspectRatio>
     </Show>

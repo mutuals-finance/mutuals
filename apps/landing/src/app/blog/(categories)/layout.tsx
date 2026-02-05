@@ -42,7 +42,7 @@ export default async function BlogCategoriesLayout({
   ];
 
   return (
-    <>
+    <Box key={1}>
       <ShellPageHeader tag={"Blog"}>
         Updates from the Mutuals team
       </ShellPageHeader>
@@ -50,6 +50,6 @@ export default async function BlogCategoriesLayout({
       <BlogTabs tabs={tabs!}>
         <Box my={"6"}>{children}</Box>
       </BlogTabs>
-    </>
+    </Box>
   );
 }
