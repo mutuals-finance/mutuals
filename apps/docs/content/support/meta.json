@@ -1,0 +1,7 @@
+{
+  "title": "Support",
+  "root": true,
+  "icon": "LifeBuoy",
+  "pages": ["overview"]
+}
+

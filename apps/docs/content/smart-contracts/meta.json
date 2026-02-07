@@ -1,0 +1,7 @@
+{
+  "title": "Smart Contracts",
+  "root": true,
+  "icon": "ReceiptText",
+  "pages": ["overview"]
+}
+

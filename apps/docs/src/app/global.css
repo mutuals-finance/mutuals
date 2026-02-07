@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+@theme {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  @apply font-heading font-medium;
+}
+
+body {
+  @apply font-sans;
+}
+
+.bg-dots-gradient-blue {
+  background-image:
+    radial-gradient(theme(colors.sky.500 / 0.4) 0.5px, transparent 1px),
+    linear-gradient(to bottom, theme(colors.sky.200 / 0.5), theme(colors.sky.100 / 0.3), transparent);
+  background-size: 10px 10px, auto;
+  background-repeat: repeat, no-repeat;
+
+  @variant dark {
+    background-image:
+      radial-gradient(theme(colors.sky.600 / 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, theme(colors.sky.700 / 0.2), theme(colors.sky.950 / 0.4), transparent);
+  }
+}
+

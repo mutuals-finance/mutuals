@@ -3,33 +3,39 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3002",
     "build": "next build",
+    "dev": "next dev --port 3002",
     "start": "next start",
-    "lint": "eslint . --max-warnings 0",
-    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
+    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
+    "postinstall": "fumadocs-mdx",
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
     "@mutuals/metadata-nextjs": "workspace:^",
     "@mutuals/ui": "workspace:*",
-    "@theguild/remark-mermaid": "^0.3.0",
-    "eslint-config-next": "^16.1.1",
-    "next": "^16.1.1",
-    "nextra": "^4.6.1",
-    "nextra-theme-docs": "^4.6.1",
+    "fumadocs-core": "16.4.11",
+    "fumadocs-mdx": "14.2.6",
+    "fumadocs-ui": "16.4.11",
+    "lucide-react": "^0.563.0",
+    "mermaid": "^11.12.2",
+    "next": "16.1.4",
+    "next-themes": "^0.4.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
-    "react-use": "^17.6.0"
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/mdx": "^2.0.13",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.2",
-    "pagefind": "^1.4.0",
-    "typescript": "^5.9.3"
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "eslint": "^9.39.2"
   }
 }
