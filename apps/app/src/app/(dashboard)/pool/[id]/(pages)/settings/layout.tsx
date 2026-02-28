@@ -1,7 +1,12 @@
 import { PropsWithChildren } from "react";
 import ShellPage from "@/features/Shell/Page";
-import { getPoolDetailsFromRouteParams } from "@/lib/split";
 import { Container, RouterTabs } from "@mutuals/ui";
+import { getPool } from "@mutuals/graphql-client-nextjs/server";
+import { notFound } from "next/navigation";
+import {
+  getFragmentData,
+  PoolWithOwnerAndContractFragmentDoc,
+} from "@mutuals/graphql-client-nextjs";
 
 export default async function PoolSettingsLayout({
   children,
@@ -11,7 +16,15 @@ export default async function PoolSettingsLayout({
     id: string;
   }>;
 }>) {
-  const pool = await getPoolDetailsFromRouteParams(await params);
+  const { data, error } = await getPool({
+    variables: { slug: (await params).id },
+  });
+
+  if (error || !data?.pool || "message" in data?.pool) {
+    notFound();
+  }
+
+  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data?.pool);
 
   const tabs = [
     {

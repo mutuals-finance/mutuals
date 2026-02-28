@@ -5,7 +5,6 @@ import {
   Heading,
   LinkBox,
   LinkOverlay,
-  Text,
   StatRoot,
   StatLabel,
   HStack,
@@ -14,15 +13,16 @@ import {
 } from "@mutuals/ui";
 import NextLink from "next/link";
 
-import { shortenAddress } from "@/utils";
-
 import PoolCardLogo from "@/features/Pool/Card/Logo";
-import { Pool, PoolStatus } from "@mutuals/graphql-client-nextjs";
+import {
+  PoolStatus,
+  PoolWithOwnerAndContractFragment,
+} from "@mutuals/graphql-client-nextjs";
 import { DeepPartial } from "#/partial";
 
-export type PoolCardProps = DeepPartial<Pool>;
+export type PoolCardProps = DeepPartial<PoolWithOwnerAndContractFragment>;
 
-function PoolCard({ name, status, slug, contract }: PoolCardProps) {
+function PoolCard({ name, status, slug }: PoolCardProps) {
   return (
     <LinkBox as="article">
       <Card.Root>
@@ -38,11 +38,13 @@ function PoolCard({ name, status, slug, contract }: PoolCardProps) {
                   {!name || name == "" ? "Unknown Pool" : name}
                 </Heading>
 
+                {/*
                 {!!contract && (
                   <Text fontFamily={"mono"} fontSize={"xs"}>
                     {shortenAddress(contract.address)}
                   </Text>
                 )}
+*/}
               </Box>
             </HStack>
 

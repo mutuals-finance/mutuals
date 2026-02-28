@@ -1,42 +1,46 @@
 "use client";
 
 import PoolListEmptyState from "@/features/Pool/List/EmptyState";
-import { For, GridItem } from "@mutuals/ui";
+import { For, GridItem, Input, InputGroup, Form } from "@mutuals/ui";
 import React from "react";
-import { useViewerPoolList } from "@mutuals/graphql-client-nextjs/client";
-import { Pool } from "@mutuals/graphql-client-nextjs";
+
 import PoolCard from "@/features/Pool/Card";
+import { IoSearch } from "react-icons/io5";
+import {
+  FragmentType,
+  getFragmentData,
+  UserPoolListWithOwnerAndContractFragmentDoc,
+} from "@mutuals/graphql-client-nextjs";
 
-//export type PoolListContentProps = ApolloQueryResult<MyPoolsQuery>;
+export type PoolListContentProps = FragmentType<
+  typeof UserPoolListWithOwnerAndContractFragmentDoc
+>;
 
-export default function PoolListContent() {
-  const { data, loading } = useViewerPoolList();
-
-  const pools = (data?.viewer?.pools ?? []) as Array<Pool>;
+export default function PoolListContent(props: PoolListContentProps) {
+  const pools =
+    getFragmentData(UserPoolListWithOwnerAndContractFragmentDoc, props).pools ??
+    [];
 
   return (
-    <For
-      each={pools}
-      fallback={
-        <GridItem gridColumn={"1 / -1"}>
-          <PoolListEmptyState />
-        </GridItem>
-      }
-    >
-      {(pool) => <PoolCard key={pool.id} {...pool} />}
-      {/*
-      <HStack mb={"6"} gap={"6"} alignItems={"center"}>
+    <>
+      <GridItem gridColumn={"1 / -1"}>
         <Form flex={"1"}>
           <InputGroup startElement={<IoSearch />}>
             <Input id="" placeholder="Search..." />
           </InputGroup>
         </Form>
-      </HStack>
+      </GridItem>
 
-      {data.viewer!.viewerPools!.map((viewerPool, key) => (
-        <PoolCard key={key} {...viewerPool?.pool} />
-      ))}
-*/}
-    </For>
+      <For
+        each={pools as any[]}
+        fallback={
+          <GridItem gridColumn={"1 / -1"}>
+            <PoolListEmptyState />
+          </GridItem>
+        }
+      >
+        {(pool) => <PoolCard key={pool.id} {...pool} />}
+      </For>
+    </>
   );
 }

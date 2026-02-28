@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import AnkrProvider from "@/providers/AnkrProvider";
-import { ApolloProvider } from "@mutuals/graphql-client-nextjs/providers";
+import { ApolloProvider } from "@mutuals/graphql-client-nextjs/components";
 
 import UIProvider from "@/providers/UIProvider";
 import AuthProvider from "@/features/Auth/Provider";
@@ -10,8 +10,6 @@ import AnalyticsProvider from "@/providers/AnalyticsProvider";
 import PrivyProvider from "@/providers/PrivyProvider";
 import WagmiProvider from "@/providers/WagmiProvider";
 import QueryClientProvider from "@/providers/QueryProvider";
-
-import "keen-slider/keen-slider.min.css";
 
 export type ProvidersProps = PropsWithChildren;
 

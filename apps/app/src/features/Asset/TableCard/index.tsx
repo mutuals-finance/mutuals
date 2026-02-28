@@ -25,7 +25,7 @@ export default function AssetTableCard({
   tableProps,
   ...props
 }: AssetTableCardProps) {
-  const assets = props.assets ?? [];
+  const assets = [];
   return (
     <ContentCard
       {...cardProps}

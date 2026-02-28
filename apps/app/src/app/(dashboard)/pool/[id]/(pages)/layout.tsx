@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "react";
-import { getPoolDetailsFromRouteParams } from "@/lib/split";
 import ShellPool from "@/features/Shell/Pool";
 
 export default async function PoolPagesLayout({
@@ -10,7 +9,7 @@ export default async function PoolPagesLayout({
     id: string;
   }>;
 }>) {
-  const pool = await getPoolDetailsFromRouteParams(await params);
+  const queryOptions = { variables: { slug: (await params).id } };
 
-  return <ShellPool pool={pool}>{children}</ShellPool>;
+  return <ShellPool queryOptions={queryOptions}>{children}</ShellPool>;
 }

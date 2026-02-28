@@ -33,7 +33,6 @@ export default function ShellIconButtonList({
           </Flex>
         </ScrollArea.Content>
       </ScrollArea.Viewport>
-      <ScrollArea.Scrollbar orientation="horizontal" />
       <ScrollArea.Corner />
     </ScrollArea.Root>
   );

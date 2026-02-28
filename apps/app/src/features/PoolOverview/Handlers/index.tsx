@@ -7,15 +7,28 @@ import {
 } from "react-icons/io5";
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
-import { Pool } from "@mutuals/graphql-client-nextjs";
+import {
+  PoolWithOwnerAndContractFragmentDoc,
+  getFragmentData,
+} from "@mutuals/graphql-client-nextjs";
 import { Bleed, IconTextButtonProps } from "@mutuals/ui";
-import { DeepPartial } from "#/partial";
+import { getPool, GetPoolOptions } from "@mutuals/graphql-client-nextjs/server";
 
-interface PoolHandlersProps {
-  pool?: DeepPartial<Pool>;
-}
+export type PoolHandlersProps = {
+  queryOptions?: GetPoolOptions;
+};
 
-export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
+export default async function PoolOverviewHandlers({
+  queryOptions,
+}: PoolHandlersProps) {
+  const { data, error } = await getPool(queryOptions);
+
+  if (error || !data?.pool || "message" in data.pool) {
+    return null;
+  }
+
+  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data.pool);
+
   const items: IconTextButtonProps[] = [
     {
       "aria-label": "Withdraw",
@@ -40,13 +53,13 @@ export default function PoolOverviewHandlers({ pool }: PoolHandlersProps) {
     {
       "aria-label": "Activity",
       children: <IoSwapHorizontalOutline />,
-      href: `/pool/${pool?.dbid}/activity`,
+      href: `/pool/${pool?.slug}/activity`,
       variant: "surface",
     },
     {
       "aria-label": "Assets",
       children: <IoWalletOutline />,
-      href: `/pool/${pool?.dbid}/assets`,
+      href: `/pool/${pool?.slug}/assets`,
       variant: "surface",
     },
   ];

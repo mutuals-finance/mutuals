@@ -11,17 +11,28 @@ import {
 
 import { formatUSDPrice } from "src/utils";
 
-import { type Pool } from "@mutuals/graphql-client-nextjs";
+import {
+  PoolWithOwnerAndContractFragmentDoc,
+  getFragmentData,
+} from "@mutuals/graphql-client-nextjs";
 import PoolCard from "@/features/Pool/Card";
-import { DeepPartial } from "#/partial";
+import { getPool, GetPoolOptions } from "@mutuals/graphql-client-nextjs/server";
 
-interface PoolOverviewDescriptionProps {
-  pool?: DeepPartial<Pool>;
-}
+export type PoolOverviewDescriptionProps = {
+  queryOptions?: GetPoolOptions;
+};
 
-export default function PoolOverviewDescription({
-  pool,
+export default async function PoolOverviewDescription({
+  queryOptions,
 }: PoolOverviewDescriptionProps) {
+  const { data, error } = await getPool(queryOptions);
+
+  if (error || !data?.pool || "message" in data.pool) {
+    return null;
+  }
+
+  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data.pool);
+
   return (
     <Stack gap={"12"} as={"article"}>
       <Stack

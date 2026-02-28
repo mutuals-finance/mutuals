@@ -5,9 +5,7 @@ import DashboardHomeBalance from "src/features/DashboardHome/Balance";
 import DashboardHomeHandlers from "@/features/DashboardHome/Handlers";
 import { Box, Container, Heading, Stack } from "@mutuals/ui";
 
-export default async function DashboardHomeLayout({
-  children,
-}: PropsWithChildren) {
+export default function DashboardHomeLayout({ children }: PropsWithChildren) {
   return (
     <>
       <Container maxW={"7xl"} mt={"6"}>

@@ -6,9 +6,16 @@ import { For, GridItem, Show, SimpleGrid } from "@mutuals/ui";
 import React from "react";
 import PoolCardSkeleton from "@/features/Pool/Card/Skeleton";
 import AuthSiginInCard from "@/features/Auth/SignInCard";
+import { useViewerPoolList } from "@mutuals/graphql-client-nextjs/client";
+import PoolListEmptyState from "@/features/Pool/List/EmptyState";
 
 export default function PoolList() {
   const { authenticated, ready } = usePrivy();
+  const { data, loading: queryLoading } = useViewerPoolList({
+    skip: !authenticated,
+  });
+
+  const loading = !ready || (authenticated && queryLoading);
 
   return (
     <SimpleGrid
@@ -16,7 +23,7 @@ export default function PoolList() {
       gap={6}
     >
       <Show
-        when={ready}
+        when={!loading}
         fallback={
           <For each={[...Array(3).keys()]}>
             {(i) => <PoolCardSkeleton key={i} />}
@@ -35,7 +42,13 @@ export default function PoolList() {
             </GridItem>
           }
         >
-          <PoolListContent />
+          <GridItem gridColumn={"1 / -1"}>
+            {data?.viewer && data.viewer.__typename === "User" ? (
+              <PoolListContent {...data.viewer} />
+            ) : (
+              <PoolListEmptyState />
+            )}
+          </GridItem>
         </Show>
       </Show>
     </SimpleGrid>

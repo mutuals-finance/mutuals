@@ -13,10 +13,9 @@ export async function getPoolDetailsFromRouteParams(params: { id: string }) {
       description:
         "An example payment pool used for demonstration purposes. Do not use in scenarios requiring real funds.",
       slug: "example",
-      dbid: "",
       donationBps: 100,
       image: "",
-      owner: { id: "", dbid: "" },
+      owner: { id: "" },
       status: PoolStatus.Active,
       createdAt: new Date(0).toISOString(),
       updatedAt: new Date(0).toISOString(),

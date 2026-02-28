@@ -7,19 +7,16 @@ import { useToggle } from "react-use";
 
 import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
-import { type Pool } from "@mutuals/graphql-client-nextjs";
+
 import { WithdrawData } from "@/features/PoolAction/types";
-import { DeepPartial } from "#/partial";
 import { ERC20TokenBalance } from "@/lib/moralis";
 
 export interface WithdrawFormContentProps extends StackProps {
   balance?: ERC20TokenBalance[];
-  pool?: DeepPartial<Pool>;
 }
 
 export default function PoolActionWithdrawFormContent({
   balance = [],
-  pool,
   children,
   ...props
 }: WithdrawFormContentProps) {
