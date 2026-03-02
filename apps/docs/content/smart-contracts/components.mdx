@@ -1,0 +1,157 @@
+---
+title: Components
+description: This document provides technical documentation for the three core contracts of the Mutuals protocol.
+---
+
+## Pool Contract
+
+The Pool contract serves as the central execution engine for claim processing. Each pool is deployed as a UUPS upgradeable proxy, giving the owner the ability to upgrade logic while maintaining state and funds.
+
+### Initialization
+
+After deployment, the Pool must be initialized with an owner address, initial modules, and trusted attesters. This function can only be called once.
+
+```solidity
+function initialize(
+    address owner,
+    address[] calldata modules,
+    bytes[] calldata modulesData,
+    address[] calldata trustedAttesters
+) public initializer
+```
+
+The function sets up ownership, installs the provided modules, and records the trusted attesters for security.
+
+### Executing Claims
+
+The Pool provides three execution functions. The `releaseSingle` function processes one claim at a time. The `release` function processes multiple claims with automatic transfer aggregation when claims share the same token and recipient. The `releaseSeparate` function processes multiple claims with separate transfers for each.
+
+```solidity
+function releaseSingle(Claim calldata claim, bytes calldata validationArgs, bytes calldata distributionArgs) external
+function release(Claim[] calldata claims, bytes[] calldata validationArgs, bytes[] calldata distributionArgs) external
+function releaseSeparate(Claim[] calldata claims, bytes[] calldata validationArgs, bytes[] calldata distributionArgs) external
+```
+
+All execution functions are protected against pausing and reentrancy. When paused, claim execution reverts while module management remains available.
+
+### Managing Modules
+
+The owner can install and uninstall modules. Installation verifies the module is registered and attested before adding it to the active set.
+
+```solidity
+function installModule(address module, bytes calldata data) external onlyOwner
+function uninstallModule(address module, bytes calldata data) external onlyOwner
+```
+
+Uninstalling a module prevents future claims from using it. Existing claims referencing the module will fail after uninstallation.
+
+### Emergency Controls
+
+The pause and unpause functions allow the owner to temporarily suspend claim execution for emergency response.
+
+```solidity
+function pause() external onlyOwner
+function unpause() external onlyOwner
+```
+
+### Upgrading
+
+The Pool uses the UUPS pattern for upgrades. Only the owner can upgrade the implementation.
+
+```solidity
+function upgradeTo(address newImplementation) external onlyOwner
+```
+
+The ERC-7201 storage pattern ensures upgrades preserve state when the storage struct layout is maintained.
+
+---
+
+## PoolFactory Contract
+
+The PoolFactory deploys pool instances at deterministic addresses using CREATE2.
+
+### Creating Pools
+
+The `createPool` function deploys a proxy and initializes it in one transaction.
+
+```solidity
+function createPool(
+    address owner,
+    address[] calldata modules,
+    bytes[] calldata modulesData,
+    address[] calldata trustedAttesters
+) external returns (address pool)
+```
+
+The salt is computed from the sender and all parameters, ensuring consistent addresses for the same inputs.
+
+### Predicting Addresses
+
+Applications can calculate pool addresses before deployment.
+
+```solidity
+function predictPoolAddress(
+    address owner,
+    address[] calldata modules,
+    bytes[] calldata modulesData,
+    address[] calldata trustedAttesters
+) external view returns (address)
+```
+
+This enables workflows like pre-funding pools or displaying addresses before deployment.
+
+---
+
+## ModuleRegistry Contract
+
+The ModuleRegistry tracks module registrations and security attestations.
+
+### Registering Modules
+
+Developers register modules before pools can use them.
+
+```solidity
+function registerModule(address module, string calldata moduleId) external
+```
+
+Registration records the module's address, identifier, and code hash.
+
+### Attesting Modules
+
+Trusted parties attest to modules they've reviewed.
+
+```solidity
+function attestModule(address module, bytes calldata attestationData) external
+```
+
+Attestation data might include audit reports or approval evidence.
+
+### Checking Trust
+
+Pools verify all trusted attesters have approved a module before installation.
+
+```solidity
+function isModuleTrusted(
+    address module,
+    address[] calldata trustedAttesters
+) external view returns (bool)
+```
+
+---
+
+## Integration Example
+
+Creating a pool and executing a claim:
+
+```solidity
+// Create pool
+address pool = factory.createPool(
+    msg.sender,
+    [validator, distributor],
+    [merkleRoot, ""],
+    [trustedAttester]
+);
+
+// Execute claim
+IPool(pool).releaseSingle(claim, proof, "");
+```

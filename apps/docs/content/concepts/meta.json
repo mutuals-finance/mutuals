@@ -2,6 +2,11 @@
   "title": "Concepts",
   "icon": "Pi",
   "root": true,
-  "pages": ["overview","example","flow-of-funds","modules","comparison","terminology"]
+  "pages": [
+    "overview",
+    "flow-of-funds",
+    "modules",
+    "terminology"
+  ]
 }
 

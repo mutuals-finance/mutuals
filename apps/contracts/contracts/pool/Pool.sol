@@ -245,32 +245,27 @@ contract Pool is
     return getPoolStorage().totalReleased[token];
   }
 
-  function _processBatchedValidation(Claim[] calldata claims, bytes[] calldata validationArgs) internal {
+  /**
+   * @notice Validates all claims individually - more gas efficient than batching with array copies
+   * @dev Claims are validated one by one. Module lookup is cached when the same validator is used consecutively.
+   */
+  function _processBatchedValidation(Claim[] calldata claims, bytes[] calldata validationArgs) internal view {
     uint256 len = claims.length;
-    uint256 startIdx = 0;
-    address currentValidator = claims[0].validationModule;
+    address cachedValidator = address(0);
+    bool isCachedValidatorInstalled = false;
 
-    for (uint256 i = 1; i <= len; i++) {
-      if (i == len || claims[i].validationModule != currentValidator) {
-        if (!getPoolStorage().installedModules[currentValidator]) revert ModuleNotInstalled(currentValidator);
+    for (uint256 i = 0; i < len; i++) {
+      address validator = claims[i].validationModule;
 
-        // Create sub-arrays for the batch
-        uint256 batchSize = i - startIdx;
-        Claim[] memory claimsBatch = new Claim[](batchSize);
-        bytes[] memory argsBatch = new bytes[](batchSize);
-
-        for (uint256 j = 0; j < batchSize; j++) {
-          claimsBatch[j] = claims[startIdx + j];
-          argsBatch[j] = validationArgs[startIdx + j];
-        }
-
-        IValidationModule(currentValidator).validateRuntimeBatch(claimsBatch, argsBatch);
-
-        if (i < len) {
-          startIdx = i;
-          currentValidator = claims[i].validationModule;
-        }
+      // Cache validator check to save gas when same validator is used consecutively
+      if (validator != cachedValidator) {
+        cachedValidator = validator;
+        isCachedValidatorInstalled = getPoolStorage().installedModules[validator];
+        if (!isCachedValidatorInstalled) revert ModuleNotInstalled(validator);
       }
+
+      // Validate each claim individually - no array copying needed
+      IValidationModule(validator).validateRuntime(claims[i], validationArgs[i]);
     }
   }
 

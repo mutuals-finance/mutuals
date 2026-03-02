@@ -1,0 +1,111 @@
+---
+title: Modules
+description: Modules extend the protocol's functionality through standardized interfaces. This document explains the two module types and their reference implementations.
+---
+
+## Module Interfaces
+
+All modules implement the base `IModule` interface which provides lifecycle hooks and ERC-165 introspection.
+
+```solidity
+interface IModule {
+    function moduleId() external pure returns (string memory);
+    function onInstall(bytes calldata data) external;
+    function onUninstall(bytes calldata data) external;
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+}
+```
+
+The `moduleId` returns a unique identifier for the module. The install and uninstall hooks allow modules to initialize and clean up state. The `supportsInterface` function enables interface detection through ERC-165.
+
+## Validation Modules
+
+Validation modules verify whether claims are authorized. They implement a view function that checks proofs or signatures without modifying state.
+
+```solidity
+interface IValidationModule is IModule {
+    function validateRuntime(Claim calldata claim, bytes calldata validationArgs) external view;
+}
+```
+
+The function reverts if validation fails, causing the entire claim transaction to revert. This fail-fast behavior ensures invalid claims don't waste gas on distribution calculations.
+
+### Merkle Tree Validation
+
+The Merkle tree validation module stores a single root hash per pool. Claims provide Merkle proofs demonstrating inclusion in the tree.
+
+During validation, the module hashes the claim data to produce a leaf, then verifies the proof connects the leaf to the stored root. This approach is gas-efficient for large recipient sets since the pool stores only 32 bytes regardless of set size.
+
+The module provides an `updateRoot` function that pools can call to change the Merkle root, enabling dynamic recipient lists without redeployment.
+
+### Onchain Mapping Validation
+
+The onchain mapping module maintains a mapping from claim IDs to boolean values. Validation simply checks if the claim ID is marked as allowed.
+
+This approach is simpler than Merkle trees but less gas-efficient for large sets. Each recipient requires a storage write to enable their claim. The module works well for small recipient lists or situations where claims need to be revoked individually.
+
+## Distribution Modules
+
+Distribution modules calculate release amounts and track claimed state. They implement three functions that work together during claim execution.
+
+```solidity
+interface IDistributionModule is IModule {
+    function releasable(Claim calldata claim, bytes calldata distributionArgs)
+        external view returns (TransferInstruction memory);
+
+    function preDistributionHook(Claim calldata claim, bytes calldata distributionArgs)
+        external returns (PreHookResult memory);
+
+    function postDistributionHook(Claim calldata claim, bytes calldata distributionContext)
+        external;
+}
+```
+
+The `releasable` function is view-only and calculates amounts without state changes. Applications call this to preview releases. The `preDistributionHook` performs the same calculation but returns context data for post-processing. The `postDistributionHook` updates state after successful transfers using the saved context.
+
+### Direct Distribution
+
+The Direct distribution module supports fixed-amount and percentage-based allocations. For fixed amounts, the module tracks claimed amounts and subtracts them from the total allocation. For percentages, it calculates allocations based on the pool's total historical inflows.
+
+The module encodes the claimed amount as context data during the pre-hook. The post-hook decodes this amount and adds it to the tracking mapping. This pattern ensures amounts are only recorded after successful transfers.
+
+### Vesting Distribution
+
+The Vesting module implements linear vesting schedules. The module stores a pool-wide start time and calculates vested amounts based on elapsed time.
+
+The calculation divides total allocation by duration to get the per-second rate, then multiplies by elapsed seconds. Already-claimed amounts are subtracted to get the currently releasable amount. This makes the releasable amount increase gradually over the vesting period.
+
+The vesting calculation follows this formula:
+
+```
+vested(t) = min((totalAllocation × elapsed) / duration, totalAllocation)
+releasable(t) = vested(t) - alreadyClaimed
+```
+
+Where elapsed is the time since the pool's start time.
+
+### Priority Distribution
+
+The Priority module creates waterfall distributions where one claim depends on another. The module checks the previous claim's releasable amount before allowing the current claim to proceed.
+
+This enables senior/junior tranche structures. The senior tranche is set up with a normal distribution module. The junior tranche uses the Priority module with the senior claim as its dependency. The junior claim only releases after the senior claim meets its threshold.
+
+### Token-Gated Distribution
+
+The Token-Gated module requires recipients to hold a minimum balance of an external token. The module queries the recipient's balance during validation and returns zero if the balance is insufficient.
+
+This enables distributions gated to governance token holders or NFT owners. The gate can use any ERC20, ERC721, or ERC1155 token as the requirement.
+
+## Developing Custom Modules
+
+Custom modules follow the same interface patterns. Validation modules implement `validateRuntime` to check authorization. Distribution modules implement the three-function pattern for calculation and state management.
+
+Modules should use pool-scoped storage by keying mappings on `msg.sender`. This prevents state collisions when the same module is installed in multiple pools. The module should also validate all inputs and use custom errors for gas efficiency.
+
+Before deployment, custom modules should undergo security audits. Malicious or buggy modules can steal funds or corrupt state. After audit, modules should be registered in the ModuleRegistry and attested by trusted parties.
+
+## Module Composition
+
+Modules can be composed to create complex behaviors. A pool might use Merkle validation for authorization and Priority distribution for waterfall payouts. Another pool might combine onchain mapping validation with vesting distribution for team token releases.
+
+The module system's flexibility allows pools to mix and match authorization and distribution strategies without modifying core contracts. New modules can be added to the ecosystem by implementing the interfaces and going through the registration and attestation process.
