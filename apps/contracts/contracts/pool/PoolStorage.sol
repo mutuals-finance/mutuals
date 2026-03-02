@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.29;
+
+// The Claim struct ideally lives in types/Token.sol to avoid circular dependencies!
+// import { Claim } from "../types/Token.sol";
+
+// ERC-7201 (Namespaced Storage Layout) compatible slot.
+// Evaluated at compile time, costs zero gas to compute.
+// bytes32(uint256(keccak256("Mutuals.ModularPool.Storage")) - 1)
+bytes32 constant _POOL_STORAGE_SLOT = bytes32(uint256(keccak256("Mutuals.ModularPool.Storage")) - 1);
+
+struct PoolStorage {
+  // --------------------------------------------------------------------------
+  // SECURITY & TRUST
+  // --------------------------------------------------------------------------
+
+  /// @notice Array of auditors/DAOs that this specific pool trusts for module security.
+  address[] trustedAttesters;
+
+  // --------------------------------------------------------------------------
+  // MODULE MANAGEMENT
+  // --------------------------------------------------------------------------
+
+  /// @notice Tracks which modules are currently installed and active in the pool.
+  mapping(address => bool) installedModules;
+
+  // --------------------------------------------------------------------------
+  // FINANCIAL STATE
+  // --------------------------------------------------------------------------
+
+  /// @notice Stores the historical total released amount per token.
+  /// @dev Essential for accurately calculating percentage-based distributions over time.
+  mapping(address => uint256) totalReleased;
+
+  // --------------------------------------------------------------------------
+  // INTROSPECTION (ERC-165)
+  // --------------------------------------------------------------------------
+
+  /// @notice Fallback mapping for dynamic interface support (if required).
+  mapping(bytes4 => uint256) supportedIfaces;
+}
+
+/**
+ * @notice Loads the storage reference from the dedicated namespace slot.
+ * @dev Protects against storage collisions during proxy upgrades.
+ * @return _storage The reference to the PoolStorage structure.
+ */
+function getPoolStorage() pure returns (PoolStorage storage _storage) {
+  assembly ("memory-safe") {
+    _storage.slot := _POOL_STORAGE_SLOT
+  }
+}
