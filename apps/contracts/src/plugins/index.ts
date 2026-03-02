@@ -12,7 +12,6 @@ import 'hardhat-ignore-warnings';
 import '@/config/environment';
 import '@/tasks';
 import { extendEnvironment } from 'hardhat/config';
-import { lazyFunction, lazyObject } from 'hardhat/plugins';
 import { namedAccounts } from '@/config/accounts';
 import { trace, log } from '@/utils/log';
 import {
@@ -27,23 +26,28 @@ import {
 } from '@/plugins/network';
 
 /**
- * Note: extendEnvironment cannot take async functions
- *
+ * Hardhat v2 environment extension
  */
 extendEnvironment((hre) => {
-  hre.log = lazyFunction(() => log);
-  hre.trace = lazyFunction(() => trace);
-  if (hre.network.config.live) {
-    hre.log('Using alchemy + hd wallet signer');
+  // Cast to custom HRE type to add our extensions
+  const customHre = hre as unknown as CustomHardHatRuntimeEnvironment;
+
+  // Add custom utilities to HRE
+  customHre.log = log;
+  customHre.trace = trace;
+
+  if (customHre.network.live) {
+    customHre.log('Using alchemy + hd wallet signer');
   } else {
-    hre.namedAccounts = lazyObject(() => namedAccounts);
-    hre.log('Using hardhat signer');
+    customHre.namedAccounts = namedAccounts;
+    customHre.log('Using hardhat signer');
   }
-  hre.getSigners = lazyFunction(() => hre.ethers.getSigners);
-  hre.isNetworkStaging = lazyFunction(() => isNetworkStaging);
-  hre.isNetworkLocal = lazyFunction(() => isNetworkLocal);
-  hre.isNetworkProduction = lazyFunction(() => isNetworkProduction);
-  hre.deployNonUpgradeable = lazyFunction(() => deployNonUpgradeable);
-  hre.deployOrUpgradeProxy = lazyFunction(() => deployOrUpgradeProxy);
-  hre.deployOrUpgradeBeacon = lazyFunction(() => deployOrUpgradeBeacon);
+
+  customHre.getSigners = () => customHre.ethers.getSigners();
+  customHre.isNetworkStaging = isNetworkStaging;
+  customHre.isNetworkLocal = isNetworkLocal;
+  customHre.isNetworkProduction = isNetworkProduction;
+  customHre.deployNonUpgradeable = deployNonUpgradeable;
+  customHre.deployOrUpgradeProxy = deployOrUpgradeProxy;
+  customHre.deployOrUpgradeBeacon = deployOrUpgradeBeacon;
 });

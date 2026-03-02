@@ -5,10 +5,11 @@ import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 
-import {IPool} from "../interfaces/IPool.sol";
-import {IDistributionModule} from "../interfaces/IDistributionModule.sol";
-import {Claim, TransferInstruction, PreHookResult, TokenType, Token} from "../types/Token.sol";
-import {BaseModule} from "./BaseModule.sol";
+import {IPool} from "../../interfaces/IPool.sol";
+import {IDistributionModule} from "../../interfaces/IDistributionModule.sol";
+import {Claim, TransferInstruction, TokenType, Token} from "../../types/Token.sol";
+import {PreHookResult} from "../../types/PreHookResult.sol";
+import {BaseModule} from "../BaseModule.sol";
 
 /**
  * @title Direct Distribution Module
@@ -44,7 +45,7 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
   function onInstall(bytes calldata /* data */) external override {}
   function onUninstall(bytes calldata /* data */) external override {}
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IDistributionModule).interfaceId || super.supportsInterface(interfaceId);
   }
 
@@ -67,7 +68,7 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
 
     return PreHookResult({
       instruction: inst,
-      distributionContext: context,
+      postHookContext: context,
       requiresPostHook: true
     });
   }
@@ -78,7 +79,7 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
   }
 
   function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    DirectConfig memory config = abi.decode(claim.distributionData, (DirectConfig));
+    DirectConfig memory config = abi.decode(claim.distributorData, (DirectConfig));
 
     uint256 maxAllocation;
 

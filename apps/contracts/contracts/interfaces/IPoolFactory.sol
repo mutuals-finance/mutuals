@@ -27,13 +27,15 @@ interface IPoolFactory {
    * @param salt A random or deterministic number to allow multiple unique pools for the same owner.
    * @param initialModules The module addresses to be installed during initialization.
    * @param initialModuleData The configuration data for the initial modules.
+   * @param trustedAttesters The list of auditors/entities this pool trusts for module security.
    * @return The address of the deployed and configured Pool.
    */
   function createPool(
     address owner,
     uint256 salt,
     address[] calldata initialModules,
-    bytes[] calldata initialModuleData
+    bytes[] calldata initialModuleData,
+    address[] calldata trustedAttesters
   ) external returns (address);
 
   /* -------------------------------------------------------------------------- */

@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {IERC1155} from "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
-import {IDistributionModule} from "../interfaces/IDistributionModule.sol";
-import {Claim, TransferInstruction, PreHookResult, TokenType, Token} from "../types/Token.sol";
-import {BaseModule} from "./BaseModule.sol";
+import {IDistributionModule} from "../../interfaces/IDistributionModule.sol";
+import {Claim, TransferInstruction, TokenType, Token} from "../../types/Token.sol";
+import {PreHookResult} from "../../types/PreHookResult.sol";
+import {BaseModule} from "../BaseModule.sol";
 
 /**
  * @title Token Limit Distribution Module
@@ -42,7 +44,7 @@ contract TokenLimitDistributionModule is IDistributionModule, BaseModule {
   function onInstall(bytes calldata /* data */) external override {}
   function onUninstall(bytes calldata /* data */) external override {}
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IDistributionModule).interfaceId || super.supportsInterface(interfaceId);
   }
 
@@ -59,7 +61,7 @@ contract TokenLimitDistributionModule is IDistributionModule, BaseModule {
 
     return PreHookResult({
       instruction: inst,
-      distributionContext: context,
+      postHookContext: context,
       requiresPostHook: true
     });
   }
@@ -70,7 +72,7 @@ contract TokenLimitDistributionModule is IDistributionModule, BaseModule {
   }
 
   function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    GatedClaimConfig memory config = abi.decode(claim.distributionData, (GatedClaimConfig));
+    GatedClaimConfig memory config = abi.decode(claim.distributorData, (GatedClaimConfig));
 
     // 1. Check the Gate Balance
     uint256 userBalance = _getGateBalance(config.gate, config.recipient);

@@ -2,10 +2,10 @@
 pragma solidity ^0.8.20;
 
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
-
-import {IValidationModule} from "../interfaces/IValidationModule.sol";
-import {Claim} from "../types/Token.sol";
-import {BaseModule} from "./BaseModule.sol";
+import {IModule} from "../../interfaces/IModule.sol";
+import {IValidationModule} from "../../interfaces/IValidationModule.sol";
+import {Claim} from "../../types/Token.sol";
+import {BaseModule} from "../BaseModule.sol";
 
 /**
  * @title Onchain Mapping Validation Module
@@ -42,7 +42,7 @@ contract OnchainMappingValidationModule is IValidationModule, BaseModule {
     // Nested mappings cannot be easily deleted, omitted for gas savings.
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IValidationModule).interfaceId || super.supportsInterface(interfaceId);
   }
 

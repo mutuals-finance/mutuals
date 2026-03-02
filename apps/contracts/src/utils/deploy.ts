@@ -1,7 +1,8 @@
 import path from 'node:path';
 
 import { readJsonSync, writeJsonSync } from 'fs-extra';
-import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types';
+import type { Deployment } from 'hardhat-deploy/types';
 
 type ContractConfig = Record<string, { proxyAddress: string }>;
 
@@ -120,14 +121,14 @@ export const deployRegistryContract = async ({
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
   return hre.deployOrUpgradeProxy({
-    contractName: 'Registry',
+    contractName: 'ModuleRegistry',
     args: await Promise.all([
       hre.ethers
         .getNamedSigner('mutualsStagingDeployer')
-        .then(({ address }: SignerWithAddress) => address),
+        .then((signer: HardhatEthersSigner) => signer.address),
     ]),
     options: {
-      initializer: '__Registry_init',
+      initializer: 'initialize',
       kind: 'uups',
     },
   });
@@ -138,18 +139,16 @@ export const deployPoolFactoryContract = async ({
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
-  return hre.deployOrUpgradeProxy({
+  const poolImplementation = await hre.deployments.get('Pool').then((deployment: Deployment) => deployment.address);
+
+  return hre.deployNonUpgradeable({
     contractName: 'PoolFactory',
-    args: await Promise.all([
-      hre.ethers
+    args: [
+      poolImplementation,
+      await hre.ethers
         .getNamedSigner('mutualsStagingDeployer')
-        .then(({ address }: SignerWithAddress) => address),
-      hre.deployments.get('Pool').then(({ address }) => address),
-    ]),
-    options: {
-      initializer: '__PoolFactory_init',
-      kind: 'uups',
-    },
+        .then((signer: HardhatEthersSigner) => signer.address),
+    ],
   });
 };
 
@@ -158,79 +157,71 @@ export const deployPoolBeaconContract = async ({
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
+  const registryAddress = await hre.deployments.get('ModuleRegistry').then((deployment: Deployment) => deployment.address);
+
   return hre.deployOrUpgradeBeacon({
     contractName: 'Pool',
-    args: [0, 0, [], []],
+    args: [registryAddress],
   });
 };
 
-export const deployDefaultAllocationContract = async ({
+export const deployDirectDistributionModuleContract = async ({
   hre,
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
   return hre.deployNonUpgradeable({
-    contractName: 'DefaultAllocation',
+    contractName: 'DirectDistributionModule',
   });
 };
 
-export const deployTimelockAllocationContract = async ({
+export const deployVestingDistributionModuleContract = async ({
   hre,
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
   return hre.deployNonUpgradeable({
-    contractName: 'TimelockAllocation',
+    contractName: 'VestingDistributionModule',
   });
 };
 
-export const deployTokenAllocationContract = async ({
+export const deployTokenLimitDistributionModuleContract = async ({
   hre,
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
   return hre.deployNonUpgradeable({
-    contractName: 'TokenAllocation',
+    contractName: 'TokenLimitDistributionModule',
   });
 };
 
-export const deployPriorityGatingContract = async ({
+export const deployPriorityDistributionModuleContract = async ({
   hre,
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
   return hre.deployNonUpgradeable({
-    contractName: 'PriorityGating',
+    contractName: 'PriorityDistributionModule',
   });
 };
 
-export const deployTokenGatingContract = async ({
+export const deployOnchainMappingValidationModuleContract = async ({
   hre,
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
   return hre.deployNonUpgradeable({
-    contractName: 'TokenGating',
+    contractName: 'OnchainMappingValidationModule',
   });
 };
 
-export const deployOnchainStateContract = async ({
+export const deployMerkleTreeValidationModuleContract = async ({
   hre,
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
   return hre.deployNonUpgradeable({
-    contractName: 'OnchainState',
-  });
-};
-
-export const deployOffchainStateContract = async ({
-  hre,
-}: {
-  hre: CustomHardHatRuntimeEnvironment;
-}) => {
-  return hre.deployNonUpgradeable({
-    contractName: 'OffchainState',
+    contractName: 'MerkleTreeValidationModule',
   });
 };
 

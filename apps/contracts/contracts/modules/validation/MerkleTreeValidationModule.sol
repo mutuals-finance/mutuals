@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
-import {IValidationModule} from "../interfaces/IValidationModule.sol";
-import {Claim} from "../types/Token.sol";
-import {BaseModule} from "./BaseModule.sol";
+import {IModule} from "../../interfaces/IModule.sol";
+import {IValidationModule} from "../../interfaces/IValidationModule.sol";
+import {Claim} from "../../types/Token.sol";
+import {BaseModule} from "../BaseModule.sol";
 
 /**
  * @title Merkle Validation Module
@@ -42,7 +43,7 @@ contract MerkleValidationModule is IValidationModule, BaseModule {
     delete poolRoots[msg.sender];
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IValidationModule).interfaceId || super.supportsInterface(interfaceId);
   }
 

@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-import {IDistributionModule} from "../interfaces/IDistributionModule.sol";
-import {Claim, TransferInstruction, PreHookResult, TokenType, Token} from "../types/Token.sol";
-import {BaseModule} from "./BaseModule.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import {IDistributionModule} from "../../interfaces/IDistributionModule.sol";
+import {Claim, TransferInstruction, TokenType, Token} from "../../types/Token.sol";
+import {PreHookResult} from "../../types/PreHookResult.sol";
+import {BaseModule} from "../BaseModule.sol";
 
 /**
  * @title Priority Distribution Module
@@ -38,7 +40,7 @@ contract PriorityDistributionModule is IDistributionModule, BaseModule {
   function onInstall(bytes calldata /* data */) external override {}
   function onUninstall(bytes calldata /* data */) external override {}
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IDistributionModule).interfaceId || super.supportsInterface(interfaceId);
   }
 
@@ -59,7 +61,7 @@ contract PriorityDistributionModule is IDistributionModule, BaseModule {
 
     return PreHookResult({
       instruction: inst,
-      distributionContext: context,
+      postHookContext: context,
       requiresPostHook: true
     });
   }
@@ -72,11 +74,11 @@ contract PriorityDistributionModule is IDistributionModule, BaseModule {
   // --- Internal Logic ---
 
   function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    PriorityConfig memory config = abi.decode(claim.distributionData, (PriorityConfig));
+    PriorityConfig memory config = abi.decode(claim.distributorData, (PriorityConfig));
 
     // 1. Evaluate the Priority Condition by querying the other module
     // We fetch the current releasable amount of the "previousClaim"
-    TransferInstruction memory previousInst = IDistributionModule(config.previousClaim.distributionModule)
+    TransferInstruction memory previousInst = IDistributionModule(config.previousClaim.distributorModule)
       .releasable(config.previousClaim, ""); // Passing empty args for the previous claim check
 
     // If previous releasable <= threshold, execution is blocked.

@@ -1,7 +1,7 @@
 import { withSnapshot } from '#/test/utils';
 import { generatePoolArgs } from '@/utils/pool';
 import { expect } from 'chai';
-import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types';
 import { ethers, parseEther, ZeroAddress } from 'ethers';
 import Claim from '@/utils/claim';
 import { ClaimStruct } from '#/types/typechain/contracts/pool/Pool';
@@ -23,7 +23,7 @@ const createPoolWith = async ({
 }: {
   hre: CustomHardHatRuntimeEnvironment;
   claims: ClaimStruct[];
-  from: { create: SignerWithAddress; run: SignerWithAddress };
+  from: { create: HardhatEthersSigner; run: HardhatEthersSigner };
   buildArgs: (tree: SimpleMerkleTree) => { [key: number]: string[][] };
 }) => {
   const unassigned0 = await hre.ethers.getNamedSigner('unassigned0');
@@ -72,10 +72,10 @@ const setupTest = withSnapshot(
   async (hre) => {
     const [poolOwnerHonest, recipient0, recipient1, recipient2] =
       (await Promise.all(namedSigners.map(hre.ethers.getNamedSigner))) as [
-        SignerWithAddress,
-        SignerWithAddress,
-        SignerWithAddress,
-        SignerWithAddress,
+        HardhatEthersSigner,
+        HardhatEthersSigner,
+        HardhatEthersSigner,
+        HardhatEthersSigner,
       ];
 
     const encoder = hre.ethers.AbiCoder.defaultAbiCoder();

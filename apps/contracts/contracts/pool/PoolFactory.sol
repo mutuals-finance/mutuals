@@ -57,7 +57,8 @@ contract PoolFactory is IPoolFactory, Ownable {
     address owner,
     uint256 salt,
     address[] calldata initialModules,
-    bytes[] calldata initialModuleData
+    bytes[] calldata initialModuleData,
+    address[] calldata trustedAttesters
   ) external override returns (address) {
     bytes32 combinedSalt = getSalt(owner, salt);
     address addr = Create2.computeAddress(combinedSalt, _PROXY_BYTECODE_HASH);
@@ -71,7 +72,8 @@ contract PoolFactory is IPoolFactory, Ownable {
       Pool(payable(addr)).initialize(
         owner,
         initialModules,
-        initialModuleData
+        initialModuleData,
+        trustedAttesters
       );
 
       // Register the pool in the factory's state

@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import {IDistributionModule} from "../../interfaces/IDistributionModule.sol";
-import {Claim, TransferInstruction, PreHookResult, TokenType, Token} from "../../types/Token.sol";
-import {BaseModule} from ".,/BaseModule.sol";
+import {Claim, TransferInstruction, TokenType, Token} from "../../types/Token.sol";
+import {PreHookResult} from "../../types/PreHookResult.sol";
+import {BaseModule} from "../BaseModule.sol";
 
 /**
  * @title Vesting Distribution Module
@@ -47,7 +49,7 @@ contract VestingDistributionModule is IDistributionModule, BaseModule {
     delete poolStartTimes[msg.sender];
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IDistributionModule).interfaceId || super.supportsInterface(interfaceId);
   }
 
@@ -61,7 +63,7 @@ contract VestingDistributionModule is IDistributionModule, BaseModule {
 
     return PreHookResult({
       instruction: inst,
-      distributionContext: context,
+      postHookContext: context,
       requiresPostHook: true
     });
   }
@@ -72,7 +74,7 @@ contract VestingDistributionModule is IDistributionModule, BaseModule {
   }
 
   function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    VestingConfig memory config = abi.decode(claim.distributionData, (VestingConfig));
+    VestingConfig memory config = abi.decode(claim.distributorData, (VestingConfig));
     uint256 startTime = poolStartTimes[msg.sender];
 
     if (startTime == 0) revert PoolNotInitialized();

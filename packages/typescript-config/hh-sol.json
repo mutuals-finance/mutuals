@@ -5,7 +5,7 @@
   "compilerOptions": {
     "composite": true,
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true
   }
 }

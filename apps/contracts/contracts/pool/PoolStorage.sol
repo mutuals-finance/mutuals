@@ -46,7 +46,8 @@ struct PoolStorage {
  * @return _storage The reference to the PoolStorage structure.
  */
 function getPoolStorage() pure returns (PoolStorage storage _storage) {
+  bytes32 slot = _POOL_STORAGE_SLOT;
   assembly ("memory-safe") {
-    _storage.slot := _POOL_STORAGE_SLOT
+    _storage.slot := slot
   }
 }

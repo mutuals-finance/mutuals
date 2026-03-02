@@ -14,7 +14,8 @@ import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/P
 import { ReentrancyGuardUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 
 import { PoolStorage, getPoolStorage } from "./PoolStorage.sol";
-import { TokenLibrary, Token, TokenType, Claim, TransferInstruction, PreHookResult } from "../types/Token.sol";
+import { TokenLibrary, Token, TokenType, Claim, TransferInstruction } from "../types/Token.sol";
+import { PreHookResult } from "../types/PreHookResult.sol";
 
 /**
  * @title Pool
@@ -168,13 +169,13 @@ contract Pool is
     for (uint256 i = 0; i < len; i++) {
       Claim calldata claim = claims[i];
 
-      if (!getPoolStorage().installedModules[claim.distributionModule]) revert ModuleNotInstalled(claim.distributionModule);
+      if (!getPoolStorage().installedModules[claim.distributorModule]) revert ModuleNotInstalled(claim.distributorModule);
 
       PreHookResult memory res;
-      try IDistributionModule(claim.distributionModule).preDistributionHook(claim, distributionArgs[i]) returns (PreHookResult memory _res) {
+      try IDistributionModule(claim.distributorModule).preDistributionHook(claim, distributionArgs[i]) returns (PreHookResult memory _res) {
         res = _res;
       } catch (bytes memory reason) {
-        revert ExecutionReverted(claim.distributionModule, reason);
+        revert ExecutionReverted(claim.distributorModule, reason);
       }
 
       if (i == 0) {
@@ -193,7 +194,7 @@ contract Pool is
         totalAmount += res.instruction.amount;
       }
 
-      distributionContexts[i] = res.distributionContext;
+      distributionContexts[i] = res.postHookContext;
       requiresPostHook[i] = res.requiresPostHook;
     }
 
@@ -206,8 +207,8 @@ contract Pool is
     // 4. State Update (Post Hooks)
     for (uint256 i = 0; i < len; i++) {
       if (requiresPostHook[i]) {
-        try IDistributionModule(claims[i].distributionModule).postDistributionHook(claims[i], distributionContexts[i]) {}
-        catch (bytes memory reason) { revert ExecutionReverted(claims[i].distributionModule, reason); }
+        try IDistributionModule(claims[i].distributorModule).postDistributionHook(claims[i], distributionContexts[i]) {}
+        catch (bytes memory reason) { revert ExecutionReverted(claims[i].distributorModule, reason); }
       }
     }
 
@@ -253,7 +254,17 @@ contract Pool is
       if (i == len || claims[i].validationModule != currentValidator) {
         if (!getPoolStorage().installedModules[currentValidator]) revert ModuleNotInstalled(currentValidator);
 
-        IValidationModule(currentValidator).validateRuntimeBatch(claims[startIdx:i], validationArgs[startIdx:i]);
+        // Create sub-arrays for the batch
+        uint256 batchSize = i - startIdx;
+        Claim[] memory claimsBatch = new Claim[](batchSize);
+        bytes[] memory argsBatch = new bytes[](batchSize);
+
+        for (uint256 j = 0; j < batchSize; j++) {
+          claimsBatch[j] = claims[startIdx + j];
+          argsBatch[j] = validationArgs[startIdx + j];
+        }
+
+        IValidationModule(currentValidator).validateRuntimeBatch(claimsBatch, argsBatch);
 
         if (i < len) {
           startIdx = i;
@@ -264,14 +275,14 @@ contract Pool is
   }
 
   function _processDistribution(Claim calldata claim, bytes calldata distributionArgs) internal {
-    if (!getPoolStorage().installedModules[claim.distributionModule]) revert ModuleNotInstalled(claim.distributionModule);
+    if (!getPoolStorage().installedModules[claim.distributorModule]) revert ModuleNotInstalled(claim.distributorModule);
 
     // 1. Compute Flow
     PreHookResult memory res;
-    try IDistributionModule(claim.distributionModule).preDistributionHook(claim, distributionArgs) returns (PreHookResult memory _res) {
+    try IDistributionModule(claim.distributorModule).preDistributionHook(claim, distributionArgs) returns (PreHookResult memory _res) {
       res = _res;
     } catch (bytes memory reason) {
-      revert ExecutionReverted(claim.distributionModule, reason);
+      revert ExecutionReverted(claim.distributorModule, reason);
     }
 
     // 2. Settlement
@@ -279,8 +290,8 @@ contract Pool is
 
     // 3. State Update
     if (res.requiresPostHook) {
-      try IDistributionModule(claim.distributionModule).postDistributionHook(claim, res.distributionContext) {}
-      catch (bytes memory reason) { revert ExecutionReverted(claim.distributionModule, reason); }
+      try IDistributionModule(claim.distributorModule).postDistributionHook(claim, res.postHookContext) {}
+      catch (bytes memory reason) { revert ExecutionReverted(claim.distributorModule, reason); }
     }
   }
 
