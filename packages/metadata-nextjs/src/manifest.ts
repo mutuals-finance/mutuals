@@ -8,7 +8,7 @@ export function createManifest(
     short_name: "Mutuals",
     description: "Reimagine Programmable Money.",
     start_url: "/",
-    background_color: "#111111",
+    background_color: "#000000",
     display: "standalone",
     icons: [
       {

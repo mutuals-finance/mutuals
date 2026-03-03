@@ -48,7 +48,13 @@ const variants = {
       },
     },
   },
-  variant: { solid: {}, subtle: {}, surface: {}, ghost: {}, outline: {} },
+  variant: {
+    gradient: {
+      color: "colorPalette.contrast",
+      bgImage:
+        "linear-gradient(to bottom right, {colors.colorPalette.muted}, {colors.colorPalette.emphasized}, {colors.colorPalette.muted}, {colors.colorPalette.muted}, {colors.colorPalette.muted})",
+    },
+  },
 };
 
 export default defineRecipe({

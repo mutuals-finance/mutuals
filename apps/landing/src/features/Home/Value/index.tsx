@@ -3,10 +3,11 @@ import {
   Button,
   Container,
   MotionBox,
-  SimpleGrid,
-  Link,
-  For,
   VStack,
+  Link,
+  ScrollArea,
+  Flex,
+  Bleed,
 } from "@mutuals/ui";
 import ValueCard from "./ValueCard";
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
@@ -39,55 +40,37 @@ const values = [
 export default function HomeValue() {
   return (
     <MotionBoxWrapper asChild={true}>
-      <Box my={"6"}>
+      <Box>
         <Container maxW="6xl">
-          <SimpleGrid columns={{ base: 1, lg: 3 }} gap={"6"} mt={"0"}>
-            {values.map((value, index) => (
-              <MotionBox
-                variants={itemVariants}
-                key={value.heading}
-                asChild={true}
-              >
-                <ValueCard {...value} />
-              </MotionBox>
-            ))}
-          </SimpleGrid>
-          <VStack align={"center"} mt={"6"} gap={"6"}>
-            <MotionBox variants={itemVariants} asChild={true}>
-              <VStack w="full" gap={"2"}>
-                <For
-                  each={[
-                    { width: "100%", delay: "0s" },
-                    { width: "92%", delay: "-1.5s" },
-                    { width: "84%", delay: "-3s" },
-                    { width: "76%", delay: "-4.5s" },
-                  ]}
-                >
-                  {(item, index) => (
-                    <Box
-                      width={item.width}
-                      height="1"
-                      key={index}
-                      rounded="full"
-                      bgImage={
-                        "linear-gradient(to right,{colors.cyan.muted},{colors.yellow.solid},{colors.brand.emphasized},{colors.brand.solid},{colors.purple.emphasized},{colors.orange.solid})"
-                      }
-                      animationStyle="gradientSlide"
-                      animationDelay={item.delay}
-                      opacity={0.5 - index * 0.1}
-                    />
-                  )}
-                </For>
-              </VStack>
-            </MotionBox>
+          <Bleed inline="6">
+            <ScrollArea.Root w="full" mb={"6"}>
+              <ScrollArea.Viewport>
+                <ScrollArea.Content p="6">
+                  <Flex gap="6" flexWrap="nowrap">
+                    {values.map((value, index) => (
+                      <MotionBox
+                        variants={itemVariants}
+                        key={value.heading}
+                        asChild={true}
+                      >
+                        <ValueCard w={"xs"} flexShrink="0" {...value} />
+                      </MotionBox>
+                    ))}
+                  </Flex>
+                </ScrollArea.Content>
+              </ScrollArea.Viewport>
+              <ScrollArea.Corner />
+            </ScrollArea.Root>
+          </Bleed>
 
+          <VStack>
             <Link
               href={"https://app.mutuals.finance"}
               external={true}
               arrow={false}
               asChild={true}
             >
-              <Button size={"lg"} rounded={"full"}>
+              <Button size={"xl"} rounded={"full"}>
                 Explore the platform
               </Button>
             </Link>

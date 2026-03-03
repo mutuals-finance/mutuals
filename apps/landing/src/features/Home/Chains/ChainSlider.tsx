@@ -4,13 +4,17 @@ import KeenSlider, {
   type KeenSliderProps,
 } from "@/components/KeenSlider/KeenSlider";
 import KeenSliderSlide from "@/components/KeenSlider/KeenSliderSlide";
-import { Stack, Text, Heading } from "@mutuals/ui";
+import { Box } from "@mutuals/ui";
 import NextImage, { type ImageProps } from "next/image";
 
 const animation = { duration: 4 * 10000, easing: (t: number) => t };
 
 interface ValueCardProps extends KeenSliderProps {
-  networks: Array<{ name: string; icon: ImageProps["src"] }>;
+  networks: Array<{
+    name: string;
+    base: ImageProps["src"];
+    dark: ImageProps["src"];
+  }>;
 }
 
 export default function ChainSlider({
@@ -31,7 +35,7 @@ export default function ChainSlider({
             slides: { perView: 6, spacing: 12 },
           },
         },
-        slides: { perView: 3 },
+        slides: { perView: 3, spacing: 6 },
         created(s) {
           s.moveToIdx(5, true, animation);
         },
@@ -46,18 +50,28 @@ export default function ChainSlider({
       {...props}
     >
       {networks.map((network) => (
-        <KeenSliderSlide key={network.name}>
-          <Stack gap={"3"} alignItems={"center"} justifyContent={"center"}>
+        <KeenSliderSlide
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          key={network.name}
+        >
+          <Box display={{ _dark: "none" }}>
             <NextImage
-              src={network.icon}
+              src={network.base}
               alt={network.name}
-              height={"64"}
-              style={{ objectFit: "cover" }}
+              width={102}
+              style={{ objectFit: "contain" }}
             />
-            <Text as={"h4"} fontSize={"xs"}>
-              {network.name}
-            </Text>
-          </Stack>
+          </Box>
+          <Box display={{ base: "none", _dark: "block" }}>
+            <NextImage
+              src={network.dark}
+              alt={`${network.name} dark mode`}
+              width={102}
+              style={{ objectFit: "contain" }}
+            />
+          </Box>
         </KeenSliderSlide>
       ))}
     </KeenSlider>
