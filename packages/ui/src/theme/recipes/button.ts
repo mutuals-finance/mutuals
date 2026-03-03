@@ -49,6 +49,11 @@ const variants = {
     },
   },
   variant: {
+    solid: {},
+    subtle: {},
+    surface: {},
+    outline: {},
+    ghost: {},
     gradient: {
       color: "colorPalette.contrast",
       bgImage:
