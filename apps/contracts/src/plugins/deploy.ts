@@ -67,7 +67,10 @@ const deployBase = async <TContract extends BaseContract>({
   hre.trace('...awaiting deployment transaction', contractName);
   const deployTx = contract.deploymentTransaction();
   if (deployTx) {
-    await deployTx.wait(5);
+    // On live networks, wait for multiple confirmations.
+    // On local networks (hardhat/localhost), 1 confirmation is enough to avoid deadlocks.
+    const confirmations = hre.network.live ? 5 : 1;
+    await deployTx.wait(confirmations);
   }
   await contract.waitForDeployment();
 
