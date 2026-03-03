@@ -36,7 +36,7 @@ const setupTest = withSnapshot(['pool', 'registry'], async (hre) => {
 });
 
 describe('PoolFactory.createPool', () => {
-  context('When called with valid parameters', () => {
+  describe('When called with valid parameters', () => {
     it('should deploy a beacon proxy', async () => {
       const { createPoolArgs0, poolOwnerHonest } = await setupTest();
 
