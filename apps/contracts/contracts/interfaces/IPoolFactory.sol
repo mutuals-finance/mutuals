@@ -23,6 +23,7 @@ interface IPoolFactory {
   /**
    * @notice Creates a new Pool and initializes it immediately.
    * @dev If the pool already exists at this address, it safely returns the address (idempotent).
+   * @param registry The protocol registry for module attestations.
    * @param owner The owner/admin of the new pool.
    * @param salt A random or deterministic number to allow multiple unique pools for the same owner.
    * @param initialModules The module addresses to be installed during initialization.
@@ -31,6 +32,7 @@ interface IPoolFactory {
    * @return The address of the deployed and configured Pool.
    */
   function createPool(
+    address registry,
     address owner,
     uint256 salt,
     address[] calldata initialModules,

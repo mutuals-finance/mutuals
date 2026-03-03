@@ -1,5 +1,5 @@
 import { Addressable } from 'ethers';
-import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 export const registerExtension = async ({
   hre,
@@ -12,7 +12,7 @@ export const registerExtension = async ({
 
   const from = await hre.ethers
     .getNamedSigner('mutualsStagingDeployer')
-    .then((s: HardhatEthersSigner) => s.address);
+    .then((s: SignerWithAddress) => s.address);
 
 
   const receipt = await hre.deployments.execute(

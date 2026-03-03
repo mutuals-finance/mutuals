@@ -1,8 +1,8 @@
 import path from 'node:path';
 
 import { readJsonSync, writeJsonSync } from 'fs-extra';
-import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types';
 import type { Deployment } from 'hardhat-deploy/types';
+import {SignerWithAddress} from "@nomicfoundation/hardhat-ethers/signers";
 
 type ContractConfig = Record<string, { proxyAddress: string }>;
 
@@ -125,7 +125,7 @@ export const deployRegistryContract = async ({
     args: await Promise.all([
       hre.ethers
         .getNamedSigner('mutualsStagingDeployer')
-        .then((signer: HardhatEthersSigner) => signer.address),
+        .then((signer: SignerWithAddress) => signer.address),
     ]),
     options: {
       initializer: 'initialize',
@@ -147,7 +147,7 @@ export const deployPoolFactoryContract = async ({
       poolImplementation,
       await hre.ethers
         .getNamedSigner('mutualsStagingDeployer')
-        .then((signer: HardhatEthersSigner) => signer.address),
+        .then((signer: SignerWithAddress) => signer.address),
     ],
   });
 };
@@ -157,11 +157,8 @@ export const deployPoolBeaconContract = async ({
 }: {
   hre: CustomHardHatRuntimeEnvironment;
 }) => {
-  const registryAddress = await hre.deployments.get('ModuleRegistry').then((deployment: Deployment) => deployment.address);
-
   return hre.deployOrUpgradeBeacon({
     contractName: 'Pool',
-    args: [registryAddress],
   });
 };
 

@@ -43,9 +43,9 @@ import type {
 } from '#/types/typechain';
 import type {
   FactoryOptions,
-  HardhatEthersSigner,
   HardhatEthersHelpers,
 } from '@nomicfoundation/hardhat-ethers/types';
+import type { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import {
   DefenderDeployOptions,
   DeployFactoryOpts,
@@ -213,7 +213,7 @@ declare global {
   >;
   type TypeChainBaseContract = Contract & { contractName: string };
   type NamedSigners = {
-    [Property in keyof NamedAccounts]: HardhatEthersSigner;
+    [Property in keyof NamedAccounts]: SignerWithAddress;
   };
   type DeepPartial<T> = {
     [P in keyof T]?: DeepPartial<T[P]>;
@@ -246,7 +246,7 @@ declare global {
     defender: CustomHardhatUpgrades;
     network: Omit<Network, 'name'> & { name: keyof typeof networks };
     ethers: defaultEthers & HardhatEthersHelpers;
-    getSigners: () => Promise<HardhatEthersSigner[]>;
+    getSigners: () => Promise<SignerWithAddress[]>;
     deployOrUpgradeProxy: DeployOrUpgradeProxyFunction;
     deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction;
     deployNonUpgradeable: DeployNonUpgradeableFunction;

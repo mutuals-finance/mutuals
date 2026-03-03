@@ -36,33 +36,37 @@ contract Pool is
   /* -------------------------------------------------------------------------- */
 
   /// @notice Global protocol registry for module attestations.
-  /// @dev Immutable to save gas on proxy delegatecalls.
-  IModuleRegistry public immutable REGISTRY;
+  /// @dev Stored in ERC-7201 namespaced storage to work with beacon proxies.
+  function registry() public view returns (IModuleRegistry) {
+    return getPoolStorage().registry;
+  }
 
   /* -------------------------------------------------------------------------- */
   /* INITIALIZATION                                                             */
   /* -------------------------------------------------------------------------- */
 
   /// @custom:oz-upgrades-unsafe-allow constructor
-  constructor(address _registry) {
-    require(_registry != address(0), "Invalid Registry");
-    REGISTRY = IModuleRegistry(_registry);
+  constructor() {
     _disableInitializers();
   }
 
   /**
    * @notice Initializes the proxy clone of the pool.
+   * @param _registry The protocol registry for module attestations.
    * @param initialOwner The admin of this pool.
    * @param initialModules The modules to be installed immediately.
    * @param initialModuleData The setup data for the initial modules.
    * @param _trustedAttesters The list of auditors/entities this pool trusts for module security.
    */
   function initialize(
+    address _registry,
     address initialOwner,
     address[] calldata initialModules,
     bytes[] calldata initialModuleData,
     address[] calldata _trustedAttesters
   ) public initializer {
+    if (_registry == address(0)) revert InvalidModuleAddress();
+
     __Ownable_init(initialOwner);
     __UUPSUpgradeable_init();
     __Pausable_init();
@@ -70,6 +74,9 @@ contract Pool is
 
     uint256 len = initialModules.length;
     if (len != initialModuleData.length) revert ArrayLengthMismatch();
+
+    // Set the registry in ERC-7201 storage
+    getPoolStorage().registry = IModuleRegistry(_registry);
 
     // Set the trusted attesters in ERC-7201 storage
     getPoolStorage().trustedAttesters = _trustedAttesters;
@@ -115,7 +122,7 @@ contract Pool is
     if (module == address(0)) revert InvalidModuleAddress();
 
     // Does this module have a valid attestation from an entity we trust?
-    if (!REGISTRY.isAttestedByAny(module, getPoolStorage().trustedAttesters)) {
+    if (!registry().isAttestedByAny(module, getPoolStorage().trustedAttesters)) {
       revert UntrustedModule(module);
     }
 
@@ -201,7 +208,7 @@ contract Pool is
     // 3. Settlement (Aggregated Transfer)
     if (totalAmount > 0) {
       aggInst.amount = totalAmount;
-      _executeTransfer(aggInst, 0);
+      _executeTransfer(aggInst);
     }
 
     // 4. State Update (Post Hooks)
@@ -281,7 +288,7 @@ contract Pool is
     }
 
     // 2. Settlement
-    _executeTransfer(res.instruction, claim.id);
+    _executeTransfer(res.instruction);
 
     // 3. State Update
     if (res.requiresPostHook) {
@@ -290,7 +297,7 @@ contract Pool is
     }
   }
 
-  function _executeTransfer(TransferInstruction memory inst, uint256 claimId) internal {
+  function _executeTransfer(TransferInstruction memory inst) internal {
     if (inst.amount == 0 && inst.tokenId == 0 && inst.tokenType != TokenType.ERC721) return;
 
     inst.token.executeTransfer(

@@ -54,6 +54,7 @@ contract PoolFactory is IPoolFactory, Ownable {
 
   /// @inheritdoc IPoolFactory
   function createPool(
+    address registry,
     address owner,
     uint256 salt,
     address[] calldata initialModules,
@@ -70,6 +71,7 @@ contract PoolFactory is IPoolFactory, Ownable {
 
       // Cast to the Pool interface and call the initializer
       Pool(payable(addr)).initialize(
+        registry,
         owner,
         initialModules,
         initialModuleData,

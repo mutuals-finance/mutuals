@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-// The Claim struct ideally lives in types/Token.sol to avoid circular dependencies!
-// import { Claim } from "../types/Token.sol";
+import { IModuleRegistry } from "../interfaces/IModuleRegistry.sol";
 
 // ERC-7201 (Namespaced Storage Layout) compatible slot.
 // Evaluated at compile time, costs zero gas to compute.
@@ -13,6 +12,9 @@ struct PoolStorage {
   // --------------------------------------------------------------------------
   // SECURITY & TRUST
   // --------------------------------------------------------------------------
+
+  /// @notice Global protocol registry for module attestations.
+  IModuleRegistry registry;
 
   /// @notice Array of auditors/DAOs that this specific pool trusts for module security.
   address[] trustedAttesters;

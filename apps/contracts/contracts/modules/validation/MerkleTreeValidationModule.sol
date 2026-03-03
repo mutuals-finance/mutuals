@@ -10,11 +10,11 @@ import {Claim} from "../../types/Token.sol";
 import {BaseModule} from "../BaseModule.sol";
 
 /**
- * @title Merkle Validation Module
+ * @title Merkle Tree Validation Module
  * @notice Validates claims using an off-chain generated Merkle Tree.
  * @dev The Merkle Root is stored per-pool. The leaf is the keccak256 hash of the entire Claim struct.
  */
-contract MerkleValidationModule is IValidationModule, BaseModule {
+contract MerkleTreeValidationModule is IValidationModule, BaseModule {
   // Maps the Pool address (msg.sender) to its current Merkle Root
   mapping(address => bytes32) public poolRoots;
 
@@ -27,7 +27,7 @@ contract MerkleValidationModule is IValidationModule, BaseModule {
 
   /// @inheritdoc IModule
   function moduleId() external pure override returns (string memory) {
-    return "mutuals.merkle-validation-module.1.0.0";
+    return "mutuals.merkle-tree-validation-module.1.0.0";
   }
 
   /// @inheritdoc IModule
