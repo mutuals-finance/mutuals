@@ -23,11 +23,11 @@ type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
 export default function HomeHero() {
   return (
     <MotionBoxWrapper asChild={true}>
-      <Box pt={"4.6rem"}>
-        <Box position={"relative"} pt={"16"} mb={"6"}>
+      <Box>
+        <Box position={"relative"} pt={"4.6rem"}>
           <HomeHeroVideo />
 
-          <Container maxW={{ base: "xl", lg: "4xl" }} mb={"16"}>
+          <Container maxW={{ base: "xl", lg: "4xl" }} my={"16"}>
             <Stack
               gap={"6"}
               alignItems={{ lg: "center" }}
@@ -92,7 +92,7 @@ export default function HomeHero() {
             </Stack>
           </Container>
 
-          <Box position={"relative"}>
+          <Box position={"relative"} mb={"16"}>
             <Container maxW={"5xl"} position={"relative"}>
               <MotionBox variants={itemVariants} asChild={true}>
                 <HomeHeroImage />
