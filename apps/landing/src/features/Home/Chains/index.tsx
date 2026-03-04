@@ -18,14 +18,54 @@ import ZkSyncIcon from "@/assets/networks/zksync_black.svg";
 import ZkSyncDarkIcon from "@/assets/networks/zksync_white.svg";
 
 const networks = [
-  { name: "Ethereum", base: EthereumIcon, dark: EthereumDarkIcon },
-  { name: "Polygon", base: PolygonIcon, dark: PolygonDarkIcon },
-  { name: "Base", base: BaseIcon, dark: BaseDarkIcon },
-  { name: "Optimism", base: OptimismIcon, dark: OptimismDarkIcon },
-  { name: "Arbitrum", base: ArbitrumIcon, dark: ArbitrumDarkIcon },
-  { name: "Avalanche", base: AvalancheIcon, dark: AvalancheDarkIcon },
-  { name: "BNB", base: BNBIcon, dark: BNBDarkIcon },
-  { name: "ZkSync", base: ZkSyncIcon, dark: ZkSyncDarkIcon },
+  {
+    name: "Ethereum",
+    base: EthereumIcon,
+    dark: EthereumDarkIcon,
+    href: "https://ethereum.org/",
+  },
+  {
+    name: "Polygon",
+    base: PolygonIcon,
+    dark: PolygonDarkIcon,
+    href: "https://polygon.technology/",
+  },
+  {
+    name: "Base",
+    base: BaseIcon,
+    dark: BaseDarkIcon,
+    href: "https://www.base.org/",
+  },
+  {
+    name: "Optimism",
+    base: OptimismIcon,
+    dark: OptimismDarkIcon,
+    href: "https://www.optimism.io/",
+  },
+  {
+    name: "Arbitrum",
+    base: ArbitrumIcon,
+    dark: ArbitrumDarkIcon,
+    href: "https://arbitrum.io/",
+  },
+  {
+    name: "Avalanche",
+    base: AvalancheIcon,
+    dark: AvalancheDarkIcon,
+    href: "https://www.avax.network/",
+  },
+  {
+    name: "BNB",
+    base: BNBIcon,
+    dark: BNBDarkIcon,
+    href: "https://www.bnbchain.org/",
+  },
+  {
+    name: "ZkSync",
+    base: ZkSyncIcon,
+    dark: ZkSyncDarkIcon,
+    href: "https://www.zksync.io/",
+  },
 ];
 
 export default function HomeChains() {

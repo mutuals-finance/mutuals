@@ -25,7 +25,7 @@ const values = [
     icon: <LuFileCode2 />,
   },
   {
-    heading: "Borderless, Trustless Payments",
+    heading: "Borderless and Trustless",
     description:
       "Send payments globally at a fraction of traditional costs. Once rules are set, their enforcement is guaranteed through smart contracts.",
     icon: <LuShieldCheck />,
