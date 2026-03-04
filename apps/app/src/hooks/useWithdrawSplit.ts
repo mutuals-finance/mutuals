@@ -2,13 +2,11 @@ import { Balance } from "@ankr.com/ankr.js/dist/types";
 import { useCallback } from "react";
 import {
   useAccount,
-  useSimulateContract,
   UseSimulateContractParameters,
   useTransactionReceipt,
   useWriteContract,
 } from "wagmi";
 
-import { Split__factory } from "#/typechain";
 import { Address } from "viem";
 
 export type WithdrawSplitArgs = [boolean, Address[], Address];
@@ -26,6 +24,7 @@ export default function useWithdrawSplit(
     .filter((a) => a.tokenType !== "NATIVE")
     .map((a) => a.contractAddress);
 
+  /*
   const simulate = useSimulateContract({
     address: address as Address,
     abi: Split__factory.abi,
@@ -37,14 +36,17 @@ export default function useWithdrawSplit(
     ] as WithdrawSplitArgs,
     ...props,
   });
+*/
 
   const { writeContract: _writeContract, ...write } = useWriteContract(props);
 
   const writeContract = useCallback(() => {
+    /*
     if (simulate?.data?.request) {
       _writeContract(simulate.data.request);
     }
-  }, [_writeContract, simulate]);
+*/
+  }, [_writeContract]);
 
   const tx = useTransactionReceipt({ hash: write.data });
 
