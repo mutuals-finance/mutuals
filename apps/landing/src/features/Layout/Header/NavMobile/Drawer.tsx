@@ -59,9 +59,9 @@ export default function NavMobileDrawer({
               px={"6"}
               w={"full"}
               textStyle={"lg"}
+              variant={"plain"}
+              fontWeight={"normal"}
               asChild
-              focusRing={"none"}
-              indicator={false}
               {...link}
             >
               <Center inline gap="6" flex={"1"} justifyContent={"flex-start"}>
@@ -75,7 +75,13 @@ export default function NavMobileDrawer({
               target="_blank"
               asChild={true}
             >
-              <Button variant="solid" size="xl" w={"full"}>
+              <Button
+                colorPalette={"brand"}
+                variant={"gradient"}
+                rounded={"full"}
+                size="xl"
+                w={"full"}
+              >
                 Launch App
               </Button>
             </Link>

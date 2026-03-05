@@ -1,5 +1,3 @@
-import { Box, Container, Heading } from "@mutuals/ui";
-import ChainSlider from "@/features/Home/Chains/ChainSlider";
 import EthereumIcon from "@/assets/networks/ethereum_black.svg";
 import EthereumDarkIcon from "@/assets/networks/ethereum_white.svg";
 import PolygonIcon from "@/assets/networks/polygon_black.svg";
@@ -16,8 +14,9 @@ import BNBIcon from "@/assets/networks/bnb_black.svg";
 import BNBDarkIcon from "@/assets/networks/bnb_white.svg";
 import ZkSyncIcon from "@/assets/networks/zksync_black.svg";
 import ZkSyncDarkIcon from "@/assets/networks/zksync_white.svg";
+import { Network } from "@/features/Home/Networks/types";
 
-const networks = [
+const networks: Array<Network> = [
   {
     name: "Ethereum",
     base: EthereumIcon,
@@ -68,18 +67,4 @@ const networks = [
   },
 ];
 
-export default function HomeChains() {
-  return (
-    <Box my={"32"}>
-      <Container maxW="7xl">
-        <Heading as={"h2"} variant={"subtag"} mb={"6"} fontSize={"xs"}>
-          Available on {networks.length - 1}+ networks
-        </Heading>
-      </Container>
-
-      <Box position={"relative"}>
-        <ChainSlider networks={networks} />
-      </Box>
-    </Box>
-  );
-}
+export default networks;

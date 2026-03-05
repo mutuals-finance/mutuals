@@ -42,7 +42,7 @@ export default function CTA() {
               <Button
                 size="xl"
                 colorPalette={"brand"}
-                blurred={true}
+                variant={"gradient"}
                 rounded={"full"}
               >
                 Start for free

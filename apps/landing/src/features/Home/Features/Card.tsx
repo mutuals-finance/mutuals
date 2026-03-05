@@ -14,15 +14,15 @@ import { IoArrowUp } from "react-icons/io5";
 import IconBox from "@/components/IconBox";
 import { itemVariants } from "@/components/MotionBoxWrapper";
 
-interface FeatureCardProps extends GridItemProps {
+export type HomeFeaturesCardProps = GridItemProps & {
   heading: string;
   description: string;
   index?: number;
   href?: LinkProps["href"];
   linkProps?: Omit<LinkProps, "href">;
-}
+};
 
-export default function FeatureCard({
+export default function HomeFeaturesCard({
   heading,
   index: _,
   description,
@@ -30,15 +30,14 @@ export default function FeatureCard({
   href,
   linkProps,
   ...props
-}: FeatureCardProps) {
+}: HomeFeaturesCardProps) {
   const asLink = Boolean(href);
 
   const element = (
     <Card.Root
       variant={"outline"}
       w={"full"}
-      _groupHover={{ colorPalette: "brand" }}
-      borderColor={"colorPalette.border"}
+      _hover={{ bg: "bg.muted" }}
       transition={"all 0.1s ease-in-out"}
       {...props}
     >
