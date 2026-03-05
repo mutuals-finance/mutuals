@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   experimental: { optimizePackageImports: ["@mutuals/ui", "@chakra-ui/react"] },
-  images: { remotePatterns: [{ hostname: "*" }] },
+  images: { unoptimized: true, remotePatterns: [{ hostname: "*" }] },
 };
 
 export default withPayload(nextConfig);

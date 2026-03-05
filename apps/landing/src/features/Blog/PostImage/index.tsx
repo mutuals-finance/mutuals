@@ -9,12 +9,7 @@ export type BlogPostImageProps = AspectRatioProps & {
 export default function BlogPostImage({ image, ...props }: BlogPostImageProps) {
   return (
     <Show when={image && typeof image != "number" && "url" in image}>
-      <AspectRatio
-        ratio={16 / 9}
-        rounded={"2xl"}
-        overflow={"hidden"}
-        {...props}
-      >
+      <AspectRatio ratio={16 / 9} rounded={"l3"} overflow={"hidden"} {...props}>
         <NextImage
           src={(image as Media).url!}
           alt={(image as Media).alt}

@@ -1,13 +1,12 @@
 "use client";
 
-import { MotionBox, Box, Container, Stack } from "@mutuals/ui";
+import { Box, Container, Stack } from "@mutuals/ui";
 
 import ActorCard from "@/features/Home/Actors/Card";
 import SectionHeader from "src/features/Shell/SectionHeader";
 import { useState } from "react";
 import ownersImage from "@/assets/owners-product-slider.png";
 import partnersImage from "@/assets/partners-product-slider.png";
-import { itemVariants } from "@/components/MotionBoxWrapper";
 
 export default function HomeActors() {
   const [active, setActive] = useState<"owners" | "partners">("owners");
@@ -15,17 +14,9 @@ export default function HomeActors() {
   return (
     <Box my={"16"}>
       <Container maxW="7xl">
-        <MotionBox
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={itemVariants}
-          asChild={true}
-        >
-          <SectionHeader label={"Tailored to your needs"}>
-            Built for Depth with Intuitive Use
-          </SectionHeader>
-        </MotionBox>
+        <SectionHeader label={"Tailored to your needs"}>
+          Built for Depth with Intuitive Use
+        </SectionHeader>
         <Stack gap={"6"} direction="row" wrap={{ base: "wrap", lg: "nowrap" }}>
           <ActorCard
             animate={active === "owners" ? "grow" : "shrink"}
