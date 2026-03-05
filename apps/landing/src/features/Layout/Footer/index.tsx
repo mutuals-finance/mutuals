@@ -2,17 +2,12 @@ import {
   Box,
   Container,
   Grid,
-  IconButton,
-  Input,
   MutualsLogo,
-  InputGroup,
-  Form,
-  Field,
   LinkListBox,
   Theme,
 } from "@mutuals/ui";
-import { IoSend } from "react-icons/io5";
 import Footer from "@/features/Layout/Footer/Footer";
+import LayoutFooterNewsletterForm from "@/features/Layout/Footer/NewsletterForm";
 
 export default function LayoutFooter() {
   return (
@@ -103,26 +98,12 @@ export default function LayoutFooter() {
               </Box>
             </LinkListBox>
 
-            <LinkListBox title={"Stay Up To Date"} colSpan={{ base: 2, lg: 1 }}>
-              <Form w={"full"}>
-                <Field id={"email"} label={"Email address"}>
-                  <InputGroup
-                    w={"full"}
-                    flex="1"
-                    endElement={
-                      <IconButton
-                        size="sm"
-                        variant={"ghost"}
-                        aria-label="Subscribe"
-                      >
-                        <IoSend />
-                      </IconButton>
-                    }
-                  >
-                    <Input id="email" placeholder="Your Email Address" />
-                  </InputGroup>
-                </Field>
-              </Form>
+            <LinkListBox
+              title={"Stay Up To Date"}
+              colSpan={{ base: 2, lg: 2 }}
+              maxW={{ lg: "96" }}
+            >
+              <LayoutFooterNewsletterForm />
             </LinkListBox>
           </Grid>
         </Container>

@@ -9,6 +9,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
+    "@beehiiv/sdk": "^0.1.9",
     "@mutuals/analytics-nextjs": "workspace:^",
     "@mutuals/metadata-nextjs": "workspace:^",
     "@mutuals/payload": "workspace:*",
