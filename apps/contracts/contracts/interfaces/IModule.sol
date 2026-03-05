@@ -11,22 +11,18 @@ import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 interface IModule is IERC165 {
   /**
    * @notice Initialize module data for the pool.
-   * @dev Called by the Pool during `installModule`.
    * @param data Optional bytes array to be decoded and used by the module to setup initial state.
    */
   function onInstall(bytes calldata data) external;
 
   /**
    * @notice Clear module data for the pool.
-   * @dev Called by the Pool during uninstall (if implemented).
    * @param data Optional bytes array to be decoded and used by the module to clear state.
    */
   function onUninstall(bytes calldata data) external;
 
   /**
    * @notice Return a unique identifier for the module.
-   * @dev This function MUST return a string in the format "vendor.module.semver".
-   * The vendor and module names MUST NOT contain a period character.
    * @return The module ID.
    */
   function moduleId() external view returns (string memory);

@@ -10,15 +10,17 @@ import {BaseModule} from "../BaseModule.sol";
 /**
  * @title Vesting Distribution Module
  * @notice Linearly unlocks tokens over a specific duration.
- * @dev Replaces the legacy 'TimelockAllocation' extension.
  */
 contract VestingDistributionModule is IDistributionModule, BaseModule {
-  // mapping(pool => poolStartTime)
+
+  /* -------------------------------------------------------------------------- */
+  /* STATE VARIABLES & STRUCTS                                                  */
+  /* -------------------------------------------------------------------------- */
+
   mapping(address => uint256) public poolStartTimes;
-  // mapping(pool => mapping(claimId => claimedAmount))
   mapping(address => mapping(uint256 => uint256)) public alreadyClaimed;
 
-  struct VestingConfig {
+  struct Config {
     TokenType tokenType;
     Token token;
     address recipient;
@@ -29,14 +31,16 @@ contract VestingDistributionModule is IDistributionModule, BaseModule {
 
   error PoolNotInitialized();
 
+  /* -------------------------------------------------------------------------- */
+  /* MODULE INTERFACE FUNCTIONS                                                 */
+  /* -------------------------------------------------------------------------- */
+
+  /// @inheritdoc IModule
   function moduleId() external pure override returns (string memory) {
     return "mutuals.vesting-distribution-module.1.0.0";
   }
 
-  /**
-   * @notice Sets the global start time for the pool.
-   * @param data ABI-encoded uint256 representing the start timestamp.
-   */
+  /// @inheritdoc IModule
   function onInstall(bytes calldata data) external override {
     if (data.length > 0) {
       poolStartTimes[msg.sender] = abi.decode(data, (uint256));
@@ -45,36 +49,64 @@ contract VestingDistributionModule is IDistributionModule, BaseModule {
     }
   }
 
+  /// @inheritdoc IModule
   function onUninstall(bytes calldata /* data */) external override {
     delete poolStartTimes[msg.sender];
   }
 
+  /// @inheritdoc IERC165
   function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IDistributionModule).interfaceId || super.supportsInterface(interfaceId);
   }
 
+  /* -------------------------------------------------------------------------- */
+  /* AGGREGATION & ALLOCATION                                                   */
+  /* -------------------------------------------------------------------------- */
+
+  /// @inheritdoc IDistributionModule
+  function aggregationParameters(Claim calldata claim) external pure override returns (uint256, uint256, bool) {
+    Config memory config = abi.decode(claim.distributorData, (Config));
+    return (config.totalAllocation, 0, false);
+  }
+
+  /// @inheritdoc IDistributionModule
+  function totalAllocated(Claim calldata claim, uint256 /* totalPoolInflow */) external pure override returns (uint256) {
+    Config memory config = abi.decode(claim.distributorData, (Config));
+    return config.totalAllocation;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* DISTRIBUTION FUNCTIONS                                                     */
+  /* -------------------------------------------------------------------------- */
+
+  /// @inheritdoc IDistributionModule
   function releasable(Claim calldata claim, bytes calldata distributionArgs) external view override returns (TransferInstruction memory) {
     return _releasable(claim, distributionArgs);
   }
 
+  /// @inheritdoc IDistributionModule
   function preDistributionHook(Claim calldata claim, bytes calldata distributionArgs) external override returns (PreHookResult memory) {
     TransferInstruction memory inst = _releasable(claim, distributionArgs);
-    bytes memory context = abi.encode(inst.amount);
 
     return PreHookResult({
       instruction: inst,
-      postHookContext: context,
+      postHookContext: abi.encode(inst.amount),
       requiresPostHook: true
     });
   }
 
+  /// @inheritdoc IDistributionModule
   function postDistributionHook(Claim calldata claim, bytes calldata distributionContext) external override {
     uint256 claimedNow = abi.decode(distributionContext, (uint256));
     alreadyClaimed[msg.sender][claim.id] += claimedNow;
   }
 
+  /* -------------------------------------------------------------------------- */
+  /* INTERNAL LOGIC                                                             */
+  /* -------------------------------------------------------------------------- */
+
   function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    VestingConfig memory config = abi.decode(claim.distributorData, (VestingConfig));
+    Config memory config = abi.decode(claim.distributorData, (Config));
     uint256 startTime = poolStartTimes[msg.sender];
 
     if (startTime == 0) revert PoolNotInitialized();

@@ -12,7 +12,7 @@ import {
   type ButtonProps,
 } from "@mutuals/ui";
 import { itemVariants } from "@/components/MotionBoxWrapper";
-import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { LuSquareCheck } from "react-icons/lu";
 
 export type PricingOptionsCardProps = Card.RootProps & {
   heading: string;
@@ -56,17 +56,19 @@ export default function PricingOptionsCard({
 
           <List.Root gap={"0"} as={Stack} variant="plain" textStyle="sm">
             {features.map((feature) => (
-              <List.Item
-                key={feature}
-                as={Flex}
-                gap="0"
-                alignItems={"flex-start"}
-              >
-                <List.Indicator w="4" h={"4"} color={"colorPalette.emphasized"}>
-                  <IoCheckmarkCircleOutline />
-                </List.Indicator>
+              <List.Item key={feature}>
+                <Flex gap="0" alignItems={"flex-start"}>
+                  <List.Indicator
+                    w={"4"}
+                    h={"4"}
+                    color={"colorPalette.emphasized"}
+                    mt={"0.2rem"}
+                  >
+                    <LuSquareCheck />
+                  </List.Indicator>
 
-                <Text>{feature}</Text>
+                  <Text>{feature}</Text>
+                </Flex>
               </List.Item>
             ))}
           </List.Root>

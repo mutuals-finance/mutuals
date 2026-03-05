@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.29;
 
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -13,50 +13,87 @@ import {BaseModule} from "../BaseModule.sol";
 
 /**
  * @title Direct Distribution Module
- * @notice Allows recipients to claim a fixed amount or a proportional share (percentage/shares) of the total pool inflow.
- * @dev Replaces the legacy 'DefaultAllocation' extension, utilizing OZ Math.mulDiv for overflow-safe precision.
+ * @notice Allows recipients to claim a fixed amount or a proportional share of the total pool inflow.
  */
 contract DirectDistributionModule is IDistributionModule, BaseModule {
-  // State: Tracks how much has already been claimed per Pool -> Claim ID
+
+  /* -------------------------------------------------------------------------- */
+  /* STATE VARIABLES & STRUCTS                                                  */
+  /* -------------------------------------------------------------------------- */
+
   mapping(address => mapping(uint256 => uint256)) public alreadyClaimed;
 
-  struct DirectConfig {
+  struct Config {
     TokenType tokenType;
     Token token;
     address recipient;
-    uint256 tokenId; // Used for ERC721/1155
-    uint256 value;   // Fixed amount OR the numerator (shares/percentage)
-    uint256 denominator; // Used only if isPercentage is true (e.g., 10000 for BPS, 1e18 for WAD, or totalShares)
-    bool isPercentage; // If true, calculates: (totalReceived * value) / denominator
+    uint256 tokenId;
+    uint256 value;
+    uint256 denominator;
+    bool isPercentage;
   }
 
   error InsufficientAllocation();
   error PercentageNotSupportedForNFTs();
   error InvalidDenominator();
 
-  // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-  // ┃    Module interface functions    ┃
-  // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+  /* -------------------------------------------------------------------------- */
+  /* MODULE INTERFACE FUNCTIONS                                                 */
+  /* -------------------------------------------------------------------------- */
 
+  /// @inheritdoc IModule
   function moduleId() external pure override returns (string memory) {
     return "mutuals.direct-distribution-module.1.0.0";
   }
 
+  /// @inheritdoc IModule
   function onInstall(bytes calldata /* data */) external override {}
+
+  /// @inheritdoc IModule
   function onUninstall(bytes calldata /* data */) external override {}
 
+  /// @inheritdoc IERC165
   function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IDistributionModule).interfaceId || super.supportsInterface(interfaceId);
   }
 
-  // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-  // ┃    Distribution functions        ┃
-  // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+  /* -------------------------------------------------------------------------- */
+  /* AGGREGATION & ALLOCATION                                                   */
+  /* -------------------------------------------------------------------------- */
 
+  /// @inheritdoc IDistributionModule
+  function aggregationParameters(Claim calldata claim) external pure override returns (uint256, uint256, bool) {
+    Config memory config = abi.decode(claim.distributorData, (Config));
+    if (config.isPercentage) {
+      if (config.denominator == 0) revert InvalidDenominator();
+      uint256 bps = Math.mulDiv(config.value, 10000, config.denominator);
+      return (0, bps, false);
+    } else {
+      return (config.value, 0, false);
+    }
+  }
+
+  /// @inheritdoc IDistributionModule
+  function totalAllocated(Claim calldata claim, uint256 totalPoolInflow) external pure override returns (uint256) {
+    Config memory config = abi.decode(claim.distributorData, (Config));
+    if (config.isPercentage) {
+      if (config.tokenType == TokenType.ERC721) revert PercentageNotSupportedForNFTs();
+      if (config.denominator == 0) revert InvalidDenominator();
+      return Math.mulDiv(totalPoolInflow, config.value, config.denominator);
+    }
+    return config.value;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* DISTRIBUTION FUNCTIONS                                                     */
+  /* -------------------------------------------------------------------------- */
+
+  /// @inheritdoc IDistributionModule
   function releasable(Claim calldata claim, bytes calldata distributionArgs) external view override returns (TransferInstruction memory) {
     return _releasable(claim, distributionArgs);
   }
 
+  /// @inheritdoc IDistributionModule
   function preDistributionHook(Claim calldata claim, bytes calldata distributionArgs) external override returns (PreHookResult memory) {
     TransferInstruction memory inst = _releasable(claim, distributionArgs);
 
@@ -64,35 +101,33 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
       revert InsufficientAllocation();
     }
 
-    bytes memory context = abi.encode(inst.amount);
-
     return PreHookResult({
       instruction: inst,
-      postHookContext: context,
+      postHookContext: abi.encode(inst.amount),
       requiresPostHook: true
     });
   }
 
+  /// @inheritdoc IDistributionModule
   function postDistributionHook(Claim calldata claim, bytes calldata distributionContext) external override {
     uint256 claimedNow = abi.decode(distributionContext, (uint256));
     alreadyClaimed[msg.sender][claim.id] += claimedNow;
   }
 
+  /* -------------------------------------------------------------------------- */
+  /* INTERNAL LOGIC                                                             */
+  /* -------------------------------------------------------------------------- */
+
   function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    DirectConfig memory config = abi.decode(claim.distributorData, (DirectConfig));
+    Config memory config = abi.decode(claim.distributorData, (Config));
 
     uint256 maxAllocation;
 
     if (config.isPercentage) {
-      if (config.tokenType == TokenType.ERC721) revert PercentageNotSupportedForNFTs();
-      if (config.denominator == 0) revert InvalidDenominator();
-
-      // Calculate Total Historical Inflow: Current Balance + Everything the pool has ever released
-      uint256 currentBalance = _getPoolBalance(msg.sender, config.token, config.tokenType);
+      uint256 currentBalance = _poolBalance(msg.sender, config.token, config.tokenType);
       uint256 historicalReleased = IPool(msg.sender).totalReleased(Token.unwrap(config.token));
       uint256 totalReceived = currentBalance + historicalReleased;
 
-      // Safe, high-precision calculation: (totalReceived * value) / denominator
       maxAllocation = Math.mulDiv(totalReceived, config.value, config.denominator);
     } else {
       maxAllocation = config.value;
@@ -101,7 +136,6 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
     uint256 claimed = alreadyClaimed[msg.sender][claim.id];
     uint256 available = maxAllocation > claimed ? maxAllocation - claimed : 0;
 
-    // Optional: User can request a smaller, partial claim
     if (distributionArgs.length > 0 && available > 0) {
       uint256 requestedAmount = abi.decode(distributionArgs, (uint256));
       if (requestedAmount > 0 && requestedAmount < available) {
@@ -119,7 +153,7 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
     });
   }
 
-  function _getPoolBalance(address pool, Token token, TokenType tokenType) internal view returns (uint256) {
+  function _poolBalance(address pool, Token token, TokenType tokenType) internal view returns (uint256) {
     if (tokenType == TokenType.NATIVE) {
       return pool.balance;
     } else if (tokenType == TokenType.ERC20) {
