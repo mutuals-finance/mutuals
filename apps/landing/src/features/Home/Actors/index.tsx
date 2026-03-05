@@ -5,15 +5,15 @@ import { MotionBox, Box, Container, Stack } from "@mutuals/ui";
 import ActorCard from "@/features/Home/Actors/Card";
 import SectionHeader from "src/features/Shell/SectionHeader";
 import { useState } from "react";
-import ownersImage from "@/assets/owners-product-slider.jpg";
-import partnersImage from "@/assets/partners-product-slider.jpg";
+import ownersImage from "@/assets/owners-product-slider.png";
+import partnersImage from "@/assets/partners-product-slider.png";
 import { itemVariants } from "@/components/MotionBoxWrapper";
 
 export default function HomeActors() {
   const [active, setActive] = useState<"owners" | "partners">("owners");
 
   return (
-    <Box my={"32"}>
+    <Box my={"16"}>
       <Container maxW="7xl">
         <MotionBox
           initial="hidden"
@@ -23,7 +23,7 @@ export default function HomeActors() {
           asChild={true}
         >
           <SectionHeader label={"Tailored to your needs"}>
-            Built for Depth, Intuitive Use
+            Built for Depth with Intuitive Use
           </SectionHeader>
         </MotionBox>
         <Stack gap={"6"} direction="row" wrap={{ base: "wrap", lg: "nowrap" }}>
@@ -31,7 +31,7 @@ export default function HomeActors() {
             animate={active === "owners" ? "grow" : "shrink"}
             description="Architects and Builders"
             title="Full Control over Programmable Payments"
-            image={ownersImage}
+            image={partnersImage}
             benefit={
               "Automate global payroll, integrate DeFi protocols, and much more, leveraging full composability with the on-chain ecosystem with technical sovereignty."
             }
@@ -44,7 +44,7 @@ export default function HomeActors() {
             benefit={
               "Programmable money without the hurdles of web3. Receive payments directly to an email, phone number, social handle, or passkey."
             }
-            image={partnersImage}
+            image={ownersImage}
             onHoverStart={() => setActive("partners")}
           />
         </Stack>

@@ -6,10 +6,10 @@ import {
   StackProps,
 } from "@mutuals/ui";
 import NextImage, { ImageProps } from "next/image";
-import mobilePaymentsIcon from "@/assets/payment/hero-mobile.svg";
-import mobilePaymentsDarkIcon from "@/assets/payment/hero-mobile-dark.svg";
-import desktopPaymentsIcon from "@/assets/payment/hero-desktop.svg";
-import desktopPaymentsDarkIcon from "@/assets/payment/hero-desktop-dark.svg";
+import mobilePaymentsIcon from "@/assets/hero/hero-mobile.svg";
+import mobilePaymentsDarkIcon from "@/assets/hero/hero-mobile-dark.svg";
+import desktopPaymentsIcon from "@/assets/hero/hero-desktop.svg";
+import desktopPaymentsDarkIcon from "@/assets/hero/hero-desktop-dark.svg";
 
 export default function HomeHeroImage(props: StackProps) {
   return (

@@ -87,7 +87,7 @@ export default function ActorCard({
           w={"full"}
           direction={{ base: "column", sm: "row" }}
           gap={"0"}
-          minH={{ lg: "29rem" }}
+          minH={{ lg: "32rem" }}
           variant={"outline"}
           {...props}
         >
@@ -181,12 +181,13 @@ export default function ActorCard({
                   external={true}
                   arrow={false}
                   asChild={true}
+                  w={{ base: "full", lg: "auto" }}
                 >
                   <Button
                     size="lg"
                     rounded={"full"}
-                    w={{ base: "full", lg: "auto" }}
                     variant={"subtle"}
+                    w={{ base: "full", lg: "auto" }}
                     {...buttonProps}
                   >
                     Learn More
@@ -205,7 +206,7 @@ export default function ActorCard({
                     right={{ lg: "6" }}
                     top={{ lg: "6" }}
                     bottom={{ lg: "6" }}
-                    h={{ base: "2xs", lg: "unset" }}
+                    h={{ base: "xs", lg: "unset" }}
                     rounded={"l3"}
                     overflow={"hidden"}
                     initial={{ opacity: 0 }}
@@ -216,6 +217,7 @@ export default function ActorCard({
                       src={image}
                       alt={"Mutuals for " + title}
                       fill={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       style={{
                         objectFit: isLargerLg ? "cover" : "cover",
                         objectPosition: isLargerLg ? "center" : "center top",

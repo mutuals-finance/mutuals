@@ -6,7 +6,7 @@ import HomeFeaturesCard from "@/features/Home/Features/Card";
 export default function HomeFeatures() {
   return (
     <MotionBoxWrapper asChild={true}>
-      <Box my="16">
+      <Box my={"16"}>
         <Container maxW="7xl">
           <SimpleGrid columns={{ base: 1, lg: 2 }} gap={"6"}>
             <GridItem colSpan={{ base: 1, lg: 2 }}>

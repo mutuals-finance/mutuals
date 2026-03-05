@@ -24,7 +24,7 @@ export default function HomeNetworksCard({
       bg={"bg.muted"}
       _hover={{ bg: "bg.emphasized" }}
       transition={"background-color 0.2s ease-in-out"}
-      rounded={"2xl"}
+      rounded={"l3"}
       p={"4"}
       {...props}
     >
@@ -36,23 +36,33 @@ export default function HomeNetworksCard({
         </IconBox>
       </Box>
 
-      <Stack position={"relative"} alignSelf={"stretch"} w={"full"} p={"0"}>
-        <Box display={{ _dark: "none" }}>
-          <NextImage
-            src={base}
-            alt={name}
-            fill={true}
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-        <Box display={{ base: "none", _dark: "block" }}>
-          <NextImage
-            src={dark}
-            alt={`${name} dark mode`}
-            fill={true}
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
+      <Stack
+        position={"relative"}
+        alignSelf={"stretch"}
+        w={"full"}
+        p={"0"}
+        display={{ _dark: "none" }}
+      >
+        <NextImage
+          src={base}
+          alt={name}
+          fill={true}
+          style={{ objectFit: "contain" }}
+        />
+      </Stack>
+      <Stack
+        position={"relative"}
+        alignSelf={"stretch"}
+        w={"full"}
+        p={"0"}
+        display={{ base: "none", _dark: "flex" }}
+      >
+        <NextImage
+          src={dark}
+          alt={`${name} dark mode`}
+          fill={true}
+          style={{ objectFit: "contain" }}
+        />
       </Stack>
     </Link>
   );

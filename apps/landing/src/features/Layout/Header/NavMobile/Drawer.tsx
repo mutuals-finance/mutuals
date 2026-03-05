@@ -13,6 +13,7 @@ import {
   Group,
   IconButton,
   ColorModeButton,
+  Separator,
 } from "@mutuals/ui";
 import { PropsWithChildren } from "react";
 import NavWrapper from "@/features/Layout/Header/NavWrapper";
@@ -85,6 +86,8 @@ export default function NavMobileDrawer({
                 Launch App
               </Button>
             </Link>
+
+            <Separator />
 
             <Stack direction="row" gap={6} justify={"space-between"}>
               <Group>
