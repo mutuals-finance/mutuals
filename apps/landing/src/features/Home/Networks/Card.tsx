@@ -4,7 +4,7 @@ import NextImage from "next/image";
 import { Network } from "@/features/Home/Networks/types";
 import { LuArrowUpRight } from "react-icons/lu";
 
-export type HomeNetworksCardProps = Omit<LinkProps, "href"> & Network;
+export type HomeNetworksCardProps = Omit<LinkProps, "href" | "base"> & Network;
 
 export default function HomeNetworksCard({
   href,
