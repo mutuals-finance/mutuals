@@ -70,9 +70,7 @@ export default function HomeValue() {
               arrow={false}
               asChild={true}
             >
-              <Button size={"xl"} rounded={"full"}>
-                Explore the platform
-              </Button>
+              <Button size={"xl"}>Explore the platform</Button>
             </Link>
           </VStack>
         </Container>

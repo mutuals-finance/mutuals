@@ -36,9 +36,7 @@ export default function NavDesktop({ links = [], ...props }: NavDesktopProps) {
             target="_blank"
             asChild={true}
           >
-            <Button size={"md"} rounded={"full"}>
-              Launch app
-            </Button>
+            <Button size={"md"}>Launch app</Button>
           </Link>
         </Stack>
       </NavWrapper>

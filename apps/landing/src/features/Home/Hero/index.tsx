@@ -83,9 +83,7 @@ export default function HomeHero() {
                     target="_blank"
                     asChild={true}
                   >
-                    <Button size={"xl"} rounded={"full"}>
-                      Launch app
-                    </Button>
+                    <Button size={"xl"}>Launch app</Button>
                   </Link>
                 </Box>
               </MotionBox>

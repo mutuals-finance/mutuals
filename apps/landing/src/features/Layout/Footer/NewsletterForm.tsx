@@ -12,7 +12,7 @@ import {
 } from "@mutuals/ui";
 
 import { IoSend, IoCheckmarkCircle } from "react-icons/io5";
-import { useNewsletterSubscription } from "./useNewsletterSubscription";
+import { useNewsletterSubscription } from "@/features/Layout/useNewsletterSubscription";
 
 export type LayoutFooterNewsletterFormProps = Omit<
   StackProps,
@@ -45,7 +45,6 @@ export default function LayoutFooterNewsletterForm(
           const hasBackendError = status === "error";
           const isInvalid = hasValidationError || hasBackendError;
 
-          // Determine which error to show (validation takes priority)
           const errorMessage = hasValidationError
             ? emailError.message
             : hasBackendError

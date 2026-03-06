@@ -39,12 +39,7 @@ export default function CTA() {
               target="_blank"
               asChild={true}
             >
-              <Button
-                size="xl"
-                colorPalette={"brand"}
-                variant={"gradient"}
-                rounded={"full"}
-              >
+              <Button size="xl" colorPalette={"brand"} variant={"gradient"}>
                 Start for free
               </Button>
             </Link>

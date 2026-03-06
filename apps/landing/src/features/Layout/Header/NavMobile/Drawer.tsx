@@ -79,7 +79,6 @@ export default function NavMobileDrawer({
               <Button
                 colorPalette={"brand"}
                 variant={"gradient"}
-                rounded={"full"}
                 size="xl"
                 w={"full"}
               >

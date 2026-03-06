@@ -78,13 +78,7 @@ export default function PricingOptionsCard({
               target="_blank"
               asChild={true}
             >
-              <Button
-                w="full"
-                size={"md"}
-                variant={"subtle"}
-                rounded={"full"}
-                {...buttonProps}
-              >
+              <Button w="full" size={"md"} variant={"subtle"} {...buttonProps}>
                 Get Started
               </Button>
             </Link>

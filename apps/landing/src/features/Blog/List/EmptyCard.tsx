@@ -32,7 +32,7 @@ export default function BlogListEmptyCard({
           bg={"colorPalette.muted"}
           color={"colorPalette.fg"}
           p={"4"}
-          rounded={"xl"}
+          rounded={"l3"}
         >
           <Icon size={"md"}>
             <LuConstruction />
