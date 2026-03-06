@@ -18,9 +18,6 @@ import {
   ANALYTICS_SUPER_PROPERTIES,
 } from "@mutuals/analytics-nextjs";
 import { useUserRegister } from "@mutuals/graphql-client-nextjs/client";
-  ANALYTICS_EVENTS,
-  ANALYTICS_SUPER_PROPERTIES,
-} from "@/lib/analytics-events";
 
 export type AuthShellQueryParams = {
   callbackUrl?: string;
