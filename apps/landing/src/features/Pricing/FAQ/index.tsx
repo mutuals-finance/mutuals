@@ -25,7 +25,7 @@ export default function PricingFAQ() {
           />
         </GridItem>
         <GridItem colSpan={{ base: 1, md: 3 }}>
-          <AccordionRoot multiple>
+          <AccordionRoot multiple={true}>
             {items.map(({ title, children, ...props }, i) => (
               <AccordionItem key={i} value={title} {...props}>
                 <AccordionItemTrigger py={"4"}>
