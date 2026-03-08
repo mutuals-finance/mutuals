@@ -1,5 +1,5 @@
-import React, { type PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
-export default function BlogRootLayout({ children }: PropsWithChildren) {
+export default function BlogLayout({ children }: PropsWithChildren) {
   return <>{children}</>;
 }

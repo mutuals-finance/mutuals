@@ -1,27 +1,31 @@
-import { unstable_cache } from "next/cache";
-import { PropsWithChildren } from "react";
 import { Box } from "@mutuals/ui";
-import { fetchCategories, fetchFeaturedPost } from "@/lib/cms";
 import ShellPageHeader from "@/features/Shell/PageHeader";
-import BlogTabs from "@/features/Blog/Tabs";
 import BlogFeaturedPost from "@/features/Blog/FeaturedPost";
+import BlogTabs from "@/features/Blog/Tabs";
+import BlogList from "@/features/Blog/List";
+import { fetchCategories, fetchFeaturedPost } from "@/lib/cms";
+import { Post } from "@mutuals/payload/payload-types";
 
-const getFeaturedPost = async (draft = false) =>
-  draft
-    ? await fetchFeaturedPost()
-    : await unstable_cache(fetchFeaturedPost, ["featured-post"])();
+async function getFeaturedPost() {
+  "use cache";
+  return await fetchFeaturedPost();
+}
 
-const getCategories = async (draft = false) =>
-  draft
-    ? await fetchCategories()
-    : await unstable_cache(fetchCategories, ["categories"])();
+async function getCategories() {
+  "use cache";
+  return await fetchCategories();
+}
 
-export default async function BlogCategoriesLayout({
-  children,
-}: PropsWithChildren) {
-  const [categories, featuredPost] = await Promise.all([
-    getCategories(),
+export type BlogPageContentProps = {
+  posts: Partial<Post>[];
+};
+
+export default async function BlogLayoutContent({
+  posts,
+}: BlogPageContentProps) {
+  const [featuredPost, categories] = await Promise.all([
     getFeaturedPost(),
+    getCategories(),
   ]);
 
   const tabs = [
@@ -47,8 +51,10 @@ export default async function BlogCategoriesLayout({
         Updates from the Mutuals team
       </ShellPageHeader>
       <BlogFeaturedPost data={featuredPost} />
-      <BlogTabs tabs={tabs!}>
-        <Box my={"6"}>{children}</Box>
+      <BlogTabs tabs={tabs}>
+        <Box my={"6"}>
+          <BlogList data={posts} />
+        </Box>
       </BlogTabs>
     </>
   );

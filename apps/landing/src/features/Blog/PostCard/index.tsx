@@ -1,11 +1,11 @@
 import {
+  LinkBox,
+  LinkOverlay,
   Card,
   Box,
   Link,
   Heading,
   Stack,
-  LinkOverlay,
-  LinkBox,
   BoxProps,
 } from "@mutuals/ui";
 import { Post } from "@mutuals/payload/payload-types";
@@ -28,7 +28,7 @@ export default function BlogPostCard({
 
   if (featured) {
     return (
-      <LinkBox asChild={true}>
+      <LinkBox>
         <Card.Root border={"none"}>
           <Stack
             direction={{ base: "column", lg: "row" }}
@@ -71,31 +71,28 @@ export default function BlogPostCard({
                   </Link>
                 </Box>
               </Stack>
-              <LinkOverlay href={href} />
             </Card.Body>
           </Stack>
         </Card.Root>
+        <LinkOverlay href={href} />
       </LinkBox>
     );
   }
 
   return (
-    <Card.Root w={"full"} {...props}>
-      <Card.Header>
-        <BlogPostMetaStack data={data} size={"xs"} />
-      </Card.Header>
-      <LinkBox>
+    <LinkBox>
+      <Card.Root w={"full"} {...props}>
+        <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
+
         <Card.Body>
-          <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
-        </Card.Body>
-        <Card.Footer>
-          <Heading as={"h3"} size={"xl"}>
+          <BlogPostMetaStack data={data} size={"xs"} />
+          <Heading as={"h3"} size={"xl"} mt={"2"}>
             {title}
           </Heading>
-        </Card.Footer>
-        <LinkOverlay href={href} />
-      </LinkBox>
-    </Card.Root>
+        </Card.Body>
+      </Card.Root>
+      <LinkOverlay href={href} />
+    </LinkBox>
   );
 }
 
