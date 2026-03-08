@@ -58,6 +58,14 @@ const variants = {
       color: "colorPalette.contrast",
       bgImage:
         "linear-gradient(to bottom right, {colors.colorPalette.muted}, {colors.colorPalette.emphasized}, {colors.colorPalette.muted}, {colors.colorPalette.muted}, {colors.colorPalette.muted})",
+      _hover: {
+        bgImage:
+          "linear-gradient(to bottom right, {colors.colorPalette.subtle}, {colors.colorPalette.muted}, {colors.colorPalette.subtle}, {colors.colorPalette.subtle}, {colors.colorPalette.subtle})",
+      },
+      _active: {
+        bgImage:
+          "linear-gradient(to bottom right, {colors.colorPalette.subtle}, {colors.colorPalette.muted}, {colors.colorPalette.subtle}, {colors.colorPalette.subtle}, {colors.colorPalette.subtle})",
+      },
     },
   },
 };

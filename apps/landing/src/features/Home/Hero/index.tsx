@@ -27,7 +27,11 @@ export default function HomeHero() {
         <Box position={"relative"} pt={"4.6rem"}>
           <HomeHeroVideo />
 
-          <Container maxW={{ base: "xl", lg: "4xl" }} my={"16"}>
+          <Container
+            maxW={{ base: "xl", lg: "4xl" }}
+            mt={"16"}
+            mb={{ base: "8", lg: "16" }}
+          >
             <Stack
               gap={"6"}
               alignItems={{ lg: "center" }}
@@ -90,7 +94,7 @@ export default function HomeHero() {
             </Stack>
           </Container>
 
-          <Box position={"relative"} mb={"16"}>
+          <Box position={"relative"} mb={"2"}>
             <Container maxW={"5xl"} position={"relative"}>
               <MotionBox variants={itemVariants} asChild={true}>
                 <HomeHeroImage />

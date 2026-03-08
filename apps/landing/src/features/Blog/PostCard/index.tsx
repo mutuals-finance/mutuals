@@ -7,11 +7,14 @@ import {
   Heading,
   Stack,
   BoxProps,
+  Icon,
 } from "@mutuals/ui";
 import { Post } from "@mutuals/payload/payload-types";
 import CmsProse from "@/components/CmsProse";
 import BlogPostImage from "@/features/Blog/PostImage";
 import BlogPostMetaStack from "@/features/Blog/PostMeta";
+import IconBox from "@/components/IconBox";
+import { LuArrowUpRight } from "react-icons/lu";
 
 export type BlogPostCardProps = Omit<Card.RootProps, "children"> & {
   featured?: boolean;
@@ -28,8 +31,12 @@ export default function BlogPostCard({
 
   if (featured) {
     return (
-      <LinkBox>
-        <Card.Root border={"none"}>
+      <LinkBox className="group">
+        <Card.Root
+          border={"none"}
+          _groupHover={{ bg: "bg.muted", transition: "all 0.1s ease-in-out" }}
+          {...props}
+        >
           <Stack
             direction={{ base: "column", lg: "row" }}
             gap={{ base: "0", lg: "6" }}
@@ -38,7 +45,7 @@ export default function BlogPostCard({
               <BlogPostImage image={data.image} bg={"bg.muted"} />
             </Stack>
 
-            <Card.Body>
+            <Card.Body px={{ mdDown: "0" }}>
               <Stack gap={"4"}>
                 <BlogPostMetaStack
                   data={data}
@@ -80,9 +87,23 @@ export default function BlogPostCard({
   }
 
   return (
-    <LinkBox>
-      <Card.Root w={"full"} {...props}>
-        <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
+    <LinkBox className="group">
+      <Card.Root
+        w={"full"}
+        _groupHover={{ bg: "bg.muted", transition: "all 0.1s ease-in-out" }}
+        {...props}
+      >
+        <Box position={"relative"}>
+          <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
+
+          <Box p="2" position={"absolute"} bottom={"0"} right={"0"}>
+            <IconBox size={"xs"} bg={"blackAlpha.700"} color={"gray.300"}>
+              <Icon asChild={true}>
+                <LuArrowUpRight />
+              </Icon>
+            </IconBox>
+          </Box>
+        </Box>
 
         <Card.Body>
           <BlogPostMetaStack data={data} size={"xs"} />
