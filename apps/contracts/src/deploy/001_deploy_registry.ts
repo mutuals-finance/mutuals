@@ -3,15 +3,15 @@ import { deployRegistryContract, finalizeDeployments } from '@/utils/deploy';
 
 export const deploy: DeployFunction = async (environment) => {
   const hre = environment as unknown as CustomHardHatRuntimeEnvironment;
-  hre.trace(`deploy-registry`);
+  hre.trace(`deploy-module-registry`);
 
-  const Registry = await deployRegistryContract({
+  const ModuleRegistry = await deployRegistryContract({
     hre,
   });
 
-  await finalizeDeployments({ hre, contracts: { Registry } });
+  await finalizeDeployments({ hre, contracts: { ModuleRegistry } });
 };
 
 export default deploy;
 deploy.dependencies = ['preconditions'];
-deploy.tags = ['all', 'registry'];
+deploy.tags = ['all', 'registry', 'module-registry'];

@@ -2,9 +2,12 @@ import {
   Box,
   Button,
   Container,
-  Stack,
   MotionBox,
-  SimpleGrid,
+  VStack,
+  Link,
+  ScrollArea,
+  Flex,
+  Bleed,
 } from "@mutuals/ui";
 import ValueCard from "./ValueCard";
 import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
@@ -22,7 +25,7 @@ const values = [
     icon: <LuFileCode2 />,
   },
   {
-    heading: "Borderless, Trustless Payments",
+    heading: "Borderless and Trustless",
     description:
       "Send payments globally at a fraction of traditional costs. Once rules are set, their enforcement is guaranteed through smart contracts.",
     icon: <LuShieldCheck />,
@@ -37,24 +40,39 @@ const values = [
 export default function HomeValue() {
   return (
     <MotionBoxWrapper asChild={true}>
-      <Box my={"6"}>
+      <Box>
         <Container maxW="6xl">
-          <SimpleGrid columns={{ base: 1, lg: 3 }} gap={"6"} mt={"0"}>
-            {values.map((value, index) => (
-              <MotionBox
-                variants={itemVariants}
-                key={value.heading}
-                asChild={true}
-              >
-                <ValueCard {...value} />
-              </MotionBox>
-            ))}
-          </SimpleGrid>
-          <Stack align={"center"} mt={"12"}>
-            <Button size={"xl"} variant={"subtle"}>
-              Explore the Platform
-            </Button>
-          </Stack>
+          <Bleed inline="6">
+            <ScrollArea.Root w="full" mb={"6"}>
+              <ScrollArea.Viewport>
+                <ScrollArea.Content p="6">
+                  <Flex gap="6" flexWrap="nowrap">
+                    {values.map((value, index) => (
+                      <MotionBox
+                        variants={itemVariants}
+                        key={value.heading}
+                        asChild={true}
+                      >
+                        <ValueCard w={"xs"} flexShrink="0" {...value} />
+                      </MotionBox>
+                    ))}
+                  </Flex>
+                </ScrollArea.Content>
+              </ScrollArea.Viewport>
+              <ScrollArea.Corner />
+            </ScrollArea.Root>
+          </Bleed>
+
+          <VStack>
+            <Link
+              href={"https://app.mutuals.finance"}
+              external={true}
+              arrow={false}
+              asChild={true}
+            >
+              <Button size={"xl"}>Explore the platform</Button>
+            </Link>
+          </VStack>
         </Container>
       </Box>
     </MotionBoxWrapper>

@@ -1,5 +1,4 @@
 import { fetchAllPosts, fetchPost } from "@/lib/cms";
-import { unstable_cache } from "next/cache";
 import BlogPost from "@/features/Blog/Post";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
@@ -7,10 +6,10 @@ import { createOpenGraph } from "@mutuals/metadata-nextjs";
 
 export type BlogPostPageProps = PageProps<"/blog/post/[slug]">;
 
-const getPost = async (slug: string, draft = false) =>
-  draft
-    ? await fetchPost(slug)
-    : await unstable_cache(fetchPost, ["post", `post-${slug}`])(slug);
+async function getPost(slug: string) {
+  "use cache";
+  return await fetchPost(slug);
+}
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
@@ -24,8 +23,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 }
 
 export async function generateStaticParams() {
-  const getAllPosts = unstable_cache(fetchAllPosts, [`posts-all`]);
-  const posts = await getAllPosts();
+  const posts = await fetchAllPosts();
 
   return posts
     .map(({ slug }) => ({
@@ -37,9 +35,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const draft = true;
   const { slug } = await params;
-  const post = await getPost(slug, draft);
+  const post = await getPost(slug);
 
   let ogImage: null | string = null;
 
@@ -58,8 +55,6 @@ export async function generateMetadata({
       post.image?.url
     ) {
       ogImage = post.image.url;
-    } else if (post.featuredMedia === "videoUrl" && post.videoUrl) {
-      ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/api/og?type=blog&title=${post.title}`;
     }
   }
 

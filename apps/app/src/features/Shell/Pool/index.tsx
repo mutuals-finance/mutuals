@@ -1,19 +1,31 @@
 import React from "react";
 import ShellPage, { ShellPageProps } from "@/features/Shell/Page";
 import PoolCard from "@/features/Pool/Card";
-import { Pool } from "@mutuals/graphql-client-nextjs";
 import { HStack } from "@mutuals/ui";
-import { DeepPartial } from "#/partial";
+import {
+  getFragmentData,
+  PoolWithOwnerAndContractFragmentDoc,
+} from "@mutuals/graphql-client-nextjs";
+import { getPool, GetPoolOptions } from "@mutuals/graphql-client-nextjs/server";
+import { notFound } from "next/navigation";
 
 export interface ShellPoolProps extends ShellPageProps {
-  pool?: DeepPartial<Pool>;
+  queryOptions?: GetPoolOptions;
 }
 
-export default function ShellPool({
-  pool,
+export default async function ShellPool({
+  queryOptions,
   children,
   ...props
 }: ShellPoolProps) {
+  const { data, error } = await getPool(queryOptions);
+
+  if (error || !data?.pool || "message" in data?.pool) {
+    notFound();
+  }
+
+  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data?.pool);
+
   return (
     <ShellPage
       breadcrumbsProps={{

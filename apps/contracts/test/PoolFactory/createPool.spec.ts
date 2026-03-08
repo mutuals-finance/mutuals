@@ -9,21 +9,21 @@ const setupTest = withSnapshot(['pool', 'registry'], async (hre) => {
     hre.ethers.getNamedSigner('poolOwnerMalicious'),
   ]);
 
-  const registry = await hre.ethers.getContract('Registry');
+  const registry = await hre.ethers.getContract('ModuleRegistry');
 
   const createPoolArgs0 = generatePoolArgs.create(
-    poolOwnerHonest.address,
-    registry.target
+    registry.target,
+    poolOwnerHonest.address
   );
 
   const createPoolArgs1 = generatePoolArgs.create(
-    poolOwnerHonest.address,
-    registry.target
+    registry.target,
+    poolOwnerHonest.address
   );
 
   const initPoolArgsMalicious = generatePoolArgs.init(
-    poolOwnerMalicious.address,
-    registry.target
+    registry.target,
+    poolOwnerMalicious.address
   );
 
   return {
@@ -36,7 +36,7 @@ const setupTest = withSnapshot(['pool', 'registry'], async (hre) => {
 });
 
 describe('PoolFactory.createPool', () => {
-  context('When called with valid parameters', () => {
+  describe('When called with valid parameters', () => {
     it('should deploy a beacon proxy', async () => {
       const { createPoolArgs0, poolOwnerHonest } = await setupTest();
 

@@ -7,8 +7,11 @@ const nextConfig: NextConfig = {
     root: path.join(__dirname, "../.."),
   },
   reactStrictMode: true,
-  experimental: { optimizePackageImports: ["@mutuals/ui", "@chakra-ui/react"] },
-  images: { remotePatterns: [{ hostname: "*" }] },
+  cacheComponents: true,
+  experimental: {
+    optimizePackageImports: ["@mutuals/ui", "@chakra-ui/react"],
+  },
+  images: { unoptimized: true, remotePatterns: [{ hostname: "*" }] },
 };
 
 export default withPayload(nextConfig);

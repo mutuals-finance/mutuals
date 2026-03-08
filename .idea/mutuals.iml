@@ -24,11 +24,11 @@
       <excludeFolder url="file://$MODULE_DIR$/apps/contracts/cache" />
       <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/extension/strategy/artifacts" />
       <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/factory/artifacts" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/registry/artifacts" />
       <excludeFolder url="file://$MODULE_DIR$/packages/sdk-react/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/apps/docs/public/_pagefind" />
       <excludeFolder url="file://$MODULE_DIR$/apps/cms/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/packages/extensions/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/contracts/contracts/module-registry/artifacts" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

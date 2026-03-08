@@ -5,14 +5,19 @@ import {
   PoolQuery,
   PoolQueryVariables,
 } from "../graphql/data/__generated__/graphql";
-import { TQueryOptions } from "../types";
 import { POOL } from "../graphql/data/queries/Pool";
+import { ApolloClient } from "@apollo/client";
 
-export async function getPool(
-  options: TQueryOptions<PoolQuery, PoolQueryVariables>,
-) {
+export async function getPool(options?: GetPoolOptions) {
   return query({
     query: POOL,
     ...options,
   });
 }
+
+export type GetPoolOptions = Omit<
+  ApolloClient.QueryOptions<PoolQuery, PoolQueryVariables>,
+  "query"
+>;
+
+export type GetPoolResult = ApolloClient.QueryResult<PoolQuery>;

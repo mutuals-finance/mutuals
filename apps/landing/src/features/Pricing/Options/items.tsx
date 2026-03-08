@@ -1,14 +1,11 @@
-import { Card } from "@mutuals/ui";
+import { PricingOptionsCardProps } from "@/features/Pricing/Options/Card";
 
 const items = [
   {
-    label: "for free",
     heading: "Regular Usage",
     description: "There is no fee for using Mutuals.",
-    variant: "outline",
   },
   {
-    label: "your preferred amount",
     heading: "Donation",
     description:
       "Support us by donating a portion of your withdrawals (optional).",
@@ -16,10 +13,8 @@ const items = [
       "Custom donation per withdrawal",
       "Publicly visible donation badge",
     ],
-    variant: "outline",
   },
   {
-    label: "for free, but additional costs possible",
     heading: "Customized",
     description:
       "Connect with our team for larger projects with dedicated requirements, annual contracts, and more.",
@@ -28,7 +23,9 @@ const items = [
       "Publicly visible donation badge",
       "Dedicated requirements",
     ],
-    variant: "subtle",
+    colorPalette: "brand",
+    borderColor: { base: "brand.200", _dark: "brand.800" },
+    buttonProps: { variant: "gradient" },
   },
 ].map((i) => ({
   ...i,
@@ -38,13 +35,6 @@ const items = [
     "No Fees or hidden costs",
     ...(i.features ?? []),
   ],
-})) as Array<
-  Card.RootProps & {
-    heading: string;
-    label: string;
-    description: string;
-    features: string[];
-  }
->;
+})) as Array<PricingOptionsCardProps>;
 
 export default items;

@@ -1,14 +1,12 @@
-import { Addressable, ParamType } from 'ethers';
+import { Addressable } from 'ethers';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 export const registerExtension = async ({
   hre,
   target,
-  encode = { types: [], values: [] },
 }: {
   hre: CustomHardHatRuntimeEnvironment;
   target: string | Addressable;
-  encode?: { types: readonly (string | ParamType)[]; values: readonly any[] };
 }) => {
   hre.log('registerExtension:', target);
 
@@ -16,19 +14,17 @@ export const registerExtension = async ({
     .getNamedSigner('mutualsStagingDeployer')
     .then((s: SignerWithAddress) => s.address);
 
-  const abiEncoder = hre.ethers.AbiCoder.defaultAbiCoder();
 
   const receipt = await hre.deployments.execute(
-    'Registry',
+    'ModuleRegistry',
     {
       from,
     },
-    'register',
-    target,
-    abiEncoder.encode(encode.types, encode.values)
+    'registerModule',
+    target
   );
 
-  hre.log('Registered extension', target, 'in registry', receipt.to);
+  hre.log('Registered module', target, 'in registry', receipt.to);
 
   return receipt;
 };

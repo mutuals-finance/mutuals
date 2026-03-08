@@ -3,15 +3,23 @@ import { graphql } from "../__generated__";
 export const USER_REGISTER = graphql(/* GraphQL */ `
   mutation UserRegister($input: UserRegisterInput!) {
     userRegister(input: $input) {
-      requiresConfirmation
-      user {
-        id
-        dbid
-      }
-      errors {
-        field
+      ... on ErrUserAlreadyExists {
         message
-        code
+      }
+      ... on ErrAuthenticationFailed {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+      }
+      ... on Error {
+        message
+      }
+      ... on UserRegisterPayload {
+        user {
+          id
+        }
+        requiresConfirmation
       }
     }
   }

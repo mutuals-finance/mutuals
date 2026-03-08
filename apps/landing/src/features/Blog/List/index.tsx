@@ -1,22 +1,11 @@
-import { GridItem, SimpleGrid, type SimpleGridProps } from "@mutuals/ui";
-import { Post } from "@mutuals/payload/payload-types";
-import BlogListEmptyCard from "@/features/Blog/List/EmptyCard";
-import BlogPostCard from "@/features/Blog/PostCard";
+import BlogListGrid from "@/features/Blog/List/Grid";
+import BlogListCarousel from "@/features/Blog/List/Carousel";
+import BlogListRoot from "@/features/Blog/List/Root";
 
-export type BlogListProps = SimpleGridProps & { data: Partial<Post>[] };
+const BlogList = {
+  Root: BlogListRoot,
+  Grid: BlogListGrid,
+  Carousel: BlogListCarousel,
+};
 
-export default function BlogList({ data, ...props }: BlogListProps) {
-  if (data.length <= 0) {
-    return <BlogListEmptyCard />;
-  }
-
-  return (
-    <SimpleGrid columns={{ base: 1, lg: 3 }} gap="6" {...props}>
-      {data.map((post) => (
-        <GridItem key={post.id}>
-          <BlogPostCard data={post} />
-        </GridItem>
-      ))}
-    </SimpleGrid>
-  );
-}
+export default BlogList;

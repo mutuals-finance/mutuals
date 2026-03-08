@@ -33,21 +33,19 @@ import type {
   Pool,
   PoolFactory,
   UpgradeableBeacon,
-  Registry,
-  DefaultAllocation,
-  PriorityGating,
-  TimelockAllocation,
-  TokenAllocation,
-  TokenGating,
-  OffchainState,
-  OnchainState,
+  ModuleRegistry,
+  DirectDistributionModule,
+  VestingDistributionModule,
+  TokenLimitDistributionModule,
+  PriorityDistributionModule,
+  OnchainMappingValidationModule,
+  MerkleTreeValidationModule,
 } from '#/types/typechain';
-import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
-import {
+import type {
   FactoryOptions,
-  HardhatEthersSigner,
   HardhatEthersHelpers,
 } from '@nomicfoundation/hardhat-ethers/types';
+import type { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import {
   DefenderDeployOptions,
   DeployFactoryOpts,
@@ -215,7 +213,7 @@ declare global {
   >;
   type TypeChainBaseContract = Contract & { contractName: string };
   type NamedSigners = {
-    [Property in keyof NamedAccounts]: HardhatEthersSigner;
+    [Property in keyof NamedAccounts]: SignerWithAddress;
   };
   type DeepPartial<T> = {
     [P in keyof T]?: DeepPartial<T[P]>;
@@ -223,16 +221,15 @@ declare global {
   let hre: CustomHardHatRuntimeEnvironment; // todo remove from global types to prevent usage
 
   export interface Contracts {
-    Registry?: InstanceOfContract<Registry>;
+    ModuleRegistry?: InstanceOfContract<ModuleRegistry>;
     PoolFactory?: InstanceOfContract<PoolFactory>;
     Pool?: InstanceOfContract<Pool>;
-    DefaultAllocation?: InstanceOfContract<DefaultAllocation>;
-    PriorityGating?: InstanceOfContract<PriorityGating>;
-    TimelockAllocation?: InstanceOfContract<TimelockAllocation>;
-    TokenAllocation?: InstanceOfContract<TokenAllocation>;
-    TokenGating?: InstanceOfContract<TokenGating>;
-    OffchainState?: InstanceOfContract<OffchainState>;
-    OnchainState?: InstanceOfContract<OnchainState>;
+    DirectDistributionModule?: InstanceOfContract<DirectDistributionModule>;
+    VestingDistributionModule?: InstanceOfContract<VestingDistributionModule>;
+    TokenLimitDistributionModule?: InstanceOfContract<TokenLimitDistributionModule>;
+    PriorityDistributionModule?: InstanceOfContract<PriorityDistributionModule>;
+    OnchainMappingValidationModule?: InstanceOfContract<OnchainMappingValidationModule>;
+    MerkleTreeValidationModule?: InstanceOfContract<MerkleTreeValidationModule>;
     UpgradeableBeacon?: InstanceOfContract<UpgradeableBeacon>;
   }
 

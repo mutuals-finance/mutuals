@@ -12,7 +12,11 @@ import React, {
 } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateWallet, User } from "@privy-io/react-auth";
-import { useMixpanel } from "@mutuals/analytics-nextjs";
+import {
+  useMixpanel,
+  ANALYTICS_EVENTS,
+  ANALYTICS_SUPER_PROPERTIES,
+} from "@mutuals/analytics-nextjs";
 import { useUserRegister } from "@mutuals/graphql-client-nextjs/client";
 
 export type AuthShellQueryParams = {
@@ -89,7 +93,13 @@ export default function AuthShellProvider({
       }
 
       if (identify) {
-        mixpanel?.track(params?.isNewUser ? "sign up" : "sign in");
+        // Track sign up or sign in with consistent naming
+        mixpanel?.track(
+          params?.isNewUser
+            ? ANALYTICS_EVENTS.SIGN_UP
+            : ANALYTICS_EVENTS.SIGN_IN,
+        );
+
         if (params?.user?.id) {
           mixpanel?.identify(params?.user?.id);
           let email = params?.user?.email?.address;
@@ -100,23 +110,28 @@ export default function AuthShellProvider({
             }
 
             mixpanel?.people.set({
-              type: account.type,
+              [ANALYTICS_SUPER_PROPERTIES.ACCOUNT_TYPE]: account.type,
             });
           }
 
-          mixpanel?.people.set({ ["$email"]: email });
           mixpanel?.people.set({
-            walletAddress: params?.user?.wallet?.address,
+            [ANALYTICS_SUPER_PROPERTIES.EMAIL]: email,
+          });
+          mixpanel?.people.set({
+            [ANALYTICS_SUPER_PROPERTIES.WALLET_ADDRESS]:
+              params?.user?.wallet?.address,
           });
         }
       }
 
       if (params?.isNewUser) {
+        /*
         await registerUser({
           variables: {
-            input: { did: params.user?.id, redirectUrl: callbackUrl },
+            input: { id: params.user?.id, redirectUrl: callbackUrl },
           },
         });
+*/
       }
 
       if (callbackUrl) {

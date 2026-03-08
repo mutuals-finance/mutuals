@@ -1,7 +1,8 @@
 import type { CollectionConfig } from "payload";
 
 import { isAdmin } from "../access";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
+import { revalidatePage } from "../hooks/revalidate-page";
 
 export const Categories: CollectionConfig = {
   slug: "categories",
@@ -66,18 +67,13 @@ export const Categories: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc, previousDoc }) => {
-        revalidatePath(`/posts/${doc.slug}`);
+      revalidatePage,
+      async () => {
         revalidateTag("archives", {});
-
-        if (doc.slug !== previousDoc?.slug) {
-          revalidatePath(`/posts/${previousDoc?.slug}`);
-        }
       },
     ],
     afterDelete: [
       async ({ doc }) => {
-        revalidatePath(`/posts/${doc.slug}`);
         revalidateTag("archives", {});
       },
     ],

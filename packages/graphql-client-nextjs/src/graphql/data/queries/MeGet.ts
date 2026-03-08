@@ -1,6 +1,14 @@
 import { graphql } from "../__generated__";
 
-export const ME_GET = graphql(/* GraphQL */ `
-  query Me {
+export const VIEWER = graphql(/* GraphQL */ `
+  query Viewer {
+    viewer {
+      ... on User {
+        id
+      }
+      ... on ErrNotAuthorized {
+        message
+      }
+    }
   }
 `);

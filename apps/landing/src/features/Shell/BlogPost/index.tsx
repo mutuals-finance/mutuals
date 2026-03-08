@@ -7,7 +7,7 @@ import {
   Box,
   Heading,
   Container,
-  Text,
+  Badge,
   MotionBox,
 } from "@mutuals/ui";
 
@@ -40,16 +40,13 @@ export default function ShellBlogPost({
           <Box maxW={"xl"} mx={{ lg: "auto" }}>
             {!!tag && (
               <MotionBox variants={itemVariants} asChild={true}>
-                <Text
-                  textStyle={"sm"}
-                  as={"span"}
-                  fontWeight={"medium"}
-                  color={"brand.fg"}
-                  textTransform={"uppercase"}
-                  letterSpacing={"wider"}
+                <Badge
+                  textStyle={"xs"}
+                  colorPalette={"brand"}
+                  variant={"gradient"}
                 >
                   {tag}
-                </Text>
+                </Badge>
               </MotionBox>
             )}
             <MotionBox variants={itemVariants} asChild={true}>

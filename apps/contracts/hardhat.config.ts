@@ -23,7 +23,6 @@ export const getConfig = (
     paths: {
       deploy: './src/deploy',
       sources: './contracts',
-      //cache: './hh-cache',
     },
     tracer,
     typechain,

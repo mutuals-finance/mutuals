@@ -6,17 +6,13 @@ import ShellDashboardHeader from "@/features/Shell/Dashboard/Header";
 import ShellDashboardSidebar from "@/features/Shell/Dashboard/Sidebar";
 import ShellDashboardRoot from "@/features/Shell/Dashboard/Root";
 import ShellDashboardFooter from "@/features/Shell/Dashboard/Footer";
-import { User } from "@privy-io/node";
 
-export type ShellDashboardProps = PropsWithChildren<{ user?: User }>;
+export type ShellDashboardProps = PropsWithChildren;
 
-export default function ShellDashboard({
-  user,
-  children,
-}: ShellDashboardProps) {
+export default function ShellDashboard({ children }: ShellDashboardProps) {
   return (
     <ShellDashboardRoot>
-      <ShellDashboardHeader user={user} />
+      <ShellDashboardHeader />
 
       <Stack gap="0" direction={"row"}>
         <ShellDashboardSidebar />

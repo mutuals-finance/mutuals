@@ -6,10 +6,10 @@ import { Link, LinkProps } from "./link";
 
 export type RouterTabProps = {
   title: string;
-} & Pick<Tabs.TriggerProps, "value"> & {
-    tabProps?: Omit<Tabs.TriggerProps, "asChild" | "value">;
-  } & TextProps &
-  LinkProps;
+  tabProps?: Omit<Tabs.TriggerProps, "asChild" | "value">;
+} & Pick<Tabs.TriggerProps, "value"> &
+  Pick<LinkProps, "href" | "linkProps"> &
+  Omit<TextProps, "children">;
 
 export interface RouterTabsProps extends Tabs.RootProps {
   tabs?: RouterTabProps[];
@@ -37,35 +37,66 @@ export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
             rounded={"0"}
           />
 
-          {tabs?.map(({ title, value, tabProps, ..._props }) => {
-            const __props = {
-              textAlign: "center",
-              justifyContent: "center",
-              w: "full",
-              alignSelf: "stretch",
-              py: "2",
-              px: { base: "2", lg: "4" },
-              children: title,
-              indicator: false,
-              ..._props,
-            };
+          {tabs?.map(
+            ({
+              title,
+              value,
+              tabProps,
+              href,
+              linkProps: _linkProps,
+              ...restProps
+            }) => {
+              // Extract only safe props that work on both Text and Link
+              const {
+                color,
+                fontSize,
+                fontWeight,
+                textAlign,
+                opacity,
+                cursor,
+              } = restProps;
 
-            return (
-              <Tabs.Trigger
-                key={"trigger" + "-" + value}
-                value={value}
-                p={"0"}
-                unstyled={true}
-                {...tabProps}
-              >
-                {tabProps?.disabled ? (
-                  <Text {...__props} />
-                ) : (
-                  <Link {...__props} />
-                )}
-              </Tabs.Trigger>
-            );
-          })}
+              const commonProps = {
+                color,
+                fontSize,
+                fontWeight,
+                textAlign: textAlign ?? ("center" as const),
+                opacity,
+                cursor,
+                justifyContent: "center",
+                w: "full",
+                alignSelf: "stretch",
+                py: "2",
+                px: { base: "2", lg: "4" },
+              };
+
+              return (
+                <Tabs.Trigger
+                  key={"trigger" + "-" + value}
+                  value={value}
+                  p={"0"}
+                  unstyled={true}
+                  {...tabProps}
+                >
+                  {tabProps?.disabled ? (
+                    <Text {...commonProps}>{title}</Text>
+                  ) : (
+                    <Link
+                      href={href}
+                      indicator={false}
+                      linkProps={{
+                        scroll: false,
+                        ..._linkProps,
+                      }}
+                      {...commonProps}
+                    >
+                      {title}
+                    </Link>
+                  )}
+                </Tabs.Trigger>
+              );
+            },
+          )}
         </Tabs.List>
       </Tabs.Root>
       {children}

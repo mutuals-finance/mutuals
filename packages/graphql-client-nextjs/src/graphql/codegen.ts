@@ -14,7 +14,7 @@ const defaultConfig = {
     numericEnums: true,
   },
   presetConfig: {
-    fragmentMasking: false,
+    fragmentMasking: { unmaskFunctionName: "getFragmentData" },
   },
 } as unknown as CodegenConfig["generates"];
 

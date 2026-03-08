@@ -15,6 +15,7 @@ import {
   Button,
   Show,
   Box,
+  type StackProps,
 } from "@mutuals/ui";
 import { IoEllipsisHorizontal, IoSearch } from "react-icons/io5";
 
@@ -22,18 +23,17 @@ import Chain from "./Chain";
 import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
 import ShellDashboardHeaderUserMenu from "@/features/Shell/Dashboard/Header/UserMenu";
 import CallbackLinkButton from "@/components/CallbackLinkButton";
-import { User } from "@privy-io/node";
 import ShellDashboardHeaderAlert from "@/features/Shell/Dashboard/Header/Alert";
 import { usePrivy } from "@privy-io/react-auth";
 import UserAvatar from "@/features/Wallet/Avatar";
 import { shortenAddress } from "@/utils";
 import { AiOutlineMenu } from "react-icons/ai";
 
-export type ShellDashboardHeaderProps = { user?: User };
+export type ShellDashboardHeaderProps = StackProps;
 
-export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
+export default function ShellDashboardHeader(props: ShellDashboardHeaderProps) {
   const { mobile, desktop } = useDashboardRoot();
-  const { ready, user, authenticated } = usePrivy();
+  const { ready, authenticated } = usePrivy();
 
   return (
     <Stack
@@ -43,6 +43,7 @@ export default function ShellDashboardHeader(_: ShellDashboardHeaderProps) {
       left={"0"}
       w={"full"}
       zIndex={"50"}
+      {...props}
     >
       {authenticated && <ShellDashboardHeaderAlert />}
 

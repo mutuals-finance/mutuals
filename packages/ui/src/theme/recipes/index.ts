@@ -4,6 +4,7 @@ import { default as chakraText } from "./text";
 import { default as chakraHeading } from "./heading";
 import { default as chakraLink } from "./link";
 import { default as chakraInput } from "./input";
+import { default as chakraBadge } from "./badge";
 
 export default {
   button: chakraButton,
@@ -12,4 +13,5 @@ export default {
   text: chakraText,
   heading: chakraHeading,
   input: chakraInput,
+  badge: chakraBadge,
 };

@@ -1,14 +1,11 @@
 import {
+  ConditionalValue,
   DateTime,
-  Flex,
-  Icon,
   Link,
   Stack,
   StackProps,
   Text,
-  StackSeparator,
 } from "@mutuals/ui";
-import { IoCalendarOutline } from "react-icons/io5";
 import { Post } from "@mutuals/payload/payload-types";
 
 export type BlogPostMetaStackProps = StackProps & {
@@ -28,52 +25,50 @@ export default function BlogPostMetaStack({
     lg: 6,
   }[size];
 
-  const flexGap = {
-    xs: 0.5,
-    sm: 1,
-    md: 1,
-    lg: 2,
-  }[size];
+  const badgeSize = {
+    xs: "md",
+    sm: "lg",
+    md: "lg",
+    lg: "lg",
+  }[size] as ConditionalValue<"sm" | "md" | "lg" | "xs">;
 
-  const textStyle = {
-    xs: "xs",
+  const badgeTextStyle = {
+    xs: "2xs",
     sm: "xs",
     md: "sm",
     lg: "sm",
   }[size];
 
+  const textStyle = {
+    xs: "xs",
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+  }[size];
+
   return (
     <Stack
       direction={"row"}
-      alignItems={"center"}
-      separator={<StackSeparator />}
+      align={"center"}
+      justify={"space-between"}
       gap={stackGap}
       {...props}
     >
       {data?.category && typeof data.category == "object" && (
-        <Link
-          asChild={true}
-          href={`/blog/${data.category.slug}/`}
-          textStyle={textStyle}
-          colorPalette={"brand"}
-        >
-          {data.category.name}
+        <Link asChild={true} href={`/blog/${data.category.slug}/`}>
+          <Text
+            textStyle={badgeTextStyle}
+            variant={"subtag"}
+            colorPalette={"brand"}
+          >
+            {data.category.name}
+          </Text>
         </Link>
       )}
 
-      <Flex
-        gap={flexGap}
-        textStyle={textStyle}
-        alignItems={"center"}
-        color={"fg.muted"}
-      >
-        <Icon>
-          <IoCalendarOutline />
-        </Icon>
-        <Text asChild={true}>
-          <DateTime timestamp={data?.publishedOn} />
-        </Text>
-      </Flex>
+      <Text textStyle={textStyle} color={"fg.muted"} asChild={true}>
+        <DateTime timestamp={data?.publishedOn} />
+      </Text>
     </Stack>
   );
 }

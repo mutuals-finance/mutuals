@@ -7,7 +7,7 @@ export default defineRecipe({
         color: "fg.subtle",
       },
       subtag: {
-        color: "fg.subtle",
+        color: "colorPalette.solid",
         fontFamily: "heading",
         textTransform: "uppercase",
         letterSpacing: "widest",

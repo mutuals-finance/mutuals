@@ -1,16 +1,20 @@
 import { graphql } from "../__generated__";
 
 export const POOL = graphql(/* GraphQL */ `
-  query Pool($id: DBID, $slug: String, $contractId: DBID) {
+  query Pool($id: ID, $slug: String, $contractId: ID) {
     pool(id: $id, slug: $slug, contractId: $contractId) {
-      id
-      dbid
-      status
-      name
-      description
-      slug
-      createdAt
-      updatedAt
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+      }
+      ... on Error {
+        message
+      }
+      ... on Pool {
+        ...PoolWithOwnerAndContract
+      }
     }
   }
 `);

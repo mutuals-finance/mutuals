@@ -1,0 +1,48 @@
+---
+title: Security
+description: The protocol implements security through multiple layers. Access control restricts administrative functions to the pool owner. Reentrancy protection prevents callback attacks. Module isolation ensures failures in external code don't corrupt pool state. Storage namespacing prevents collisions during upgrades.
+---
+
+### Access Control
+
+The Pool contract restricts administrative functions to the owner. This includes module management, pausing, and upgrades. For production deployments, the owner should be a multisig wallet or governance contract.
+
+### Reentrancy Protection
+
+All state-modifying functions use the `nonReentrant` modifier to prevent malicious tokens or modules from re-entering during execution.
+
+### Module Isolation
+
+Module calls are wrapped in try-catch blocks. If a module reverts, the catch block handles the error without corrupting pool state.
+
+### Pausability
+
+The Pool includes pause and unpause functions for emergency response. When paused, claim execution reverts while module management remains available.
+
+### Upgrade Safety
+
+The UUPS pattern restricts upgrades to the owner. The ERC-7201 storage pattern ensures upgrades preserve state when the storage struct layout is maintained.
+
+## Module Trust Model
+
+Pool owners specify trusted attesters during initialization. Before installing a module, the Pool verifies all trusted attesters have attested to it. This creates a flexible trust model where different pools can have different security requirements.
+
+## Best Practices
+
+### For Pool Owners
+
+Use multisig wallets for pool ownership. Only install attested modules from trusted sources. Test upgrades thoroughly before deploying to mainnet. Plan for emergency response procedures.
+
+### For Module Developers
+
+Follow Checks-Effects-Interactions pattern. Use custom errors instead of string reverts. Validate all inputs thoroughly. Use pool-scoped storage to prevent collisions. Get professional audits before deployment.
+
+### For Integrators
+
+Validate claims off-chain before submitting transactions. Handle errors gracefully. Monitor events for transaction results. Test thoroughly on testnets.
+
+## Known Considerations
+
+- **Owner Centralization:** Pool owners have significant control. Mitigation: Use multisigs or governance contracts.
+- **Module Trust:** Malicious modules can steal funds. Mitigation: Only use attested modules from reputable sources.
+- **Upgrade Risks:** Upgrades can introduce bugs. Mitigation: Test thoroughly and use audits for significant changes.

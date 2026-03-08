@@ -4,8 +4,7 @@
   "private": true,
   "exports": {
     ".": "./src/index.ts",
-    "./thegraph": "./src/thegraph/index.ts",
-    "./providers": "./src/providers/index.ts",
+    "./components": "./src/components/index.ts",
     "./client": "./src/client/index.ts",
     "./server": "./src/server/index.ts"
   },
@@ -16,22 +15,22 @@
     "typecheck": "tsc -b"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "6.1.0",
-    "@graphql-codegen/client-preset": "5.2.2",
-    "@graphql-typed-document-node/core": "^3.2.0",
+    "@graphql-codegen/cli": "6.1.2",
+    "@graphql-codegen/client-preset": "5.2.3",
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "@types/node": "^25.0.3",
-    "@types/react": "^19.2.7",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.2",
-    "react": "^19.2.3",
+    "eslint": "^10.0.2",
+    "react": "^19.2.4",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@apollo/client": "^4.0.11",
+    "@apollo/client": "^4.1.6",
     "@apollo/client-integration-nextjs": "^0.14.3",
-    "@apollo/experimental-nextjs-app-support": "^0.14.3",
-    "next": "^16.1.1"
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "graphql": "^16.13.0",
+    "next": "^16.1.6"
   }
 }

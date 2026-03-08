@@ -15,13 +15,17 @@ import {
 export interface FormProps<
   TFieldValues extends FieldValues = FieldValues,
   TContext = never,
-> extends Omit<StackProps, "children" | "onSubmit">,
+>
+  extends
+    Omit<StackProps, "children" | "onSubmit">,
     UseFormProps<TFieldValues, TContext> {
   onSubmit?: SubmitHandler<TFieldValues>;
   onSubmitInvalid?: SubmitErrorHandler<TFieldValues>;
   children:
     | React.ReactNode
     | ((method: UseFormReturn<TFieldValues, TContext>) => React.ReactNode);
+  noValidate?: boolean;
+  autoComplete?: string;
 }
 
 export function Form<

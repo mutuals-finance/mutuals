@@ -1,70 +1,61 @@
 import {
-  Card,
+  Button,
   Container,
-  Heading,
-  Icon,
-  MotionBox,
+  Link,
   SimpleGrid,
   Stack,
   Text,
+  Box,
+  ContainerProps,
 } from "@mutuals/ui";
-import items from "@/features/Contact/Options/items";
-import IconBox from "@/components/IconBox";
-import { itemVariants } from "@/components/MotionBoxWrapper";
+import { IoChatbubblesOutline, IoPaperPlaneOutline } from "react-icons/io5";
+import ContactOptionsCard from "@/features/Contact/Options/Card";
 
-export default function ContactOptions() {
+export type ContactOptionsProps = ContainerProps;
+
+export default function ContactOptions(props: ContactOptionsProps) {
   return (
-    <Container mt={{ base: "6", lg: "12" }} mb="16" maxW="5xl">
+    <Container mt={{ base: "6", lg: "12" }} mb="16" maxW="5xl" {...props}>
       <Stack textAlign={"center"} alignItems={"center"}>
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "6" }}>
-          {items.map(
-            ({
-              icon,
-              heading,
-              description,
-              children,
-              variant = "outline",
-              bg = "bg",
-              size = "md",
-              ...props
-            }) => (
-              <MotionBox variants={itemVariants} key={heading} asChild={true}>
-                <Card.Root variant={variant} size={size} bg={bg} {...props}>
-                  <Card.Header>
-                    <Stack direction={"row"} alignItems={"flex-start"}>
-                      <Heading textStyle={{ base: "2xl", lg: "3xl" }}>
-                        {heading}
-                      </Heading>
+          <ContactOptionsCard
+            heading={"Contact Us"}
+            icon={<IoChatbubblesOutline />}
+          >
+            <Text color={"fg.muted"} textStyle={"md"}>
+              Discuss your enterprise requirements, explore personalized pricing
+              options, or request a demo.
+            </Text>
 
-                      {!!icon && (
-                        <IconBox
-                          size={"xs"}
-                          color={"fg.muted"}
-                          bg="gray.muted"
-                          ml={"auto"}
-                        >
-                          <Icon asChild>{icon}</Icon>
-                        </IconBox>
-                      )}
-                    </Stack>
-                  </Card.Header>
-                  <Card.Body>
-                    {!!description?.length && description.length > 0 && (
-                      <Stack gap={"1"}>
-                        {description.map((paragraph, i) => (
-                          <Text key={i} color={"fg.muted"} textStyle={"md"}>
-                            {paragraph}
-                          </Text>
-                        ))}
-                      </Stack>
-                    )}
-
-                    {children}
-                  </Card.Body>
-                </Card.Root>
-              </MotionBox>
-            ),
-          )}
+            <Box mt={"4"}>
+              <Link asChild={true} href={"mailto:hello@mutuals.finance"}>
+                <Button variant={"subtle"}>Let's Chat</Button>
+              </Link>
+            </Box>
+          </ContactOptionsCard>
+          <ContactOptionsCard
+            heading={"Get in touch"}
+            icon={<IoPaperPlaneOutline />}
+          >
+            <Text color={"fg.muted"} textStyle={"md"}>
+              Found a bug?{" "}
+              <Link
+                href={"https://github.com/mutuals-finance/mutuals/issues/new"}
+                external={true}
+                arrow={false}
+                variant={"underline"}
+              >
+                File a GitHub issue
+              </Link>{" "}
+              and our team will review it right away.
+              <br />
+              Need something else?{" "}
+              <Link href={"mailto:hello@mutuals.finance"} variant={"underline"}>
+                Send us a note
+              </Link>
+              .
+            </Text>
+          </ContactOptionsCard>
         </SimpleGrid>
       </Stack>
     </Container>

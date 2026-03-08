@@ -11,33 +11,37 @@
     "lint": "eslint . --max-warnings 0",
     "typegen": "chakra typegen ./src/theme/index.ts",
     "snippet-add-all": "chakra snippet add --all",
+    "snippet-add-all:force": "chakra snippet add --all --force",
     "postinstall": "bun typegen"
   },
   "dependencies": {
-    "@chakra-ui/charts": "^3.30.0",
-    "@chakra-ui/react": "3.30.0",
+    "@chakra-ui/charts": "^3.34.0",
+    "@chakra-ui/react": "3.34.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@floating-ui/react": "^0.27.19",
     "@hookform/error-message": "^2.0.1",
+    "@tiptap/pm": "^3.20.0",
+    "@tiptap/react": "^3.20.0",
     "date-fns": "^4.1.0",
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.34.5",
     "next-themes": "^0.4.6",
-    "recharts": "^3.6.0"
+    "recharts": "^3.7.0"
   },
   "peerDependencies": {
-    "next": "15.x",
-    "react-hook-form": "7.x",
-    "react-icons": "5.x"
+    "next": "16.1.6",
+    "react-hook-form": "7.71.2",
+    "react-icons": "^5.6.0"
   },
   "devDependencies": {
-    "@chakra-ui/cli": "3.30.0",
+    "@chakra-ui/cli": "3.34.0",
     "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "@types/node": "^25.0.3",
-    "@types/react": "^19.2.7",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.2",
-    "react": "^19.2.3",
+    "eslint": "^10.0.2",
+    "react": "^19.2.4",
     "typescript": "^5.9.3"
   }
 }

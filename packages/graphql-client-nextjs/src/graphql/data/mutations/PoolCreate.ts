@@ -3,15 +3,19 @@ import { graphql } from "../__generated__";
 export const POOL_CREATE = graphql(/* GraphQL */ `
   mutation PoolCreate($input: PoolCreateInput!) {
     poolCreate(input: $input) {
-      pool {
-        dbid
-        name
-        description
-      }
-      errors {
-        field
+      ... on ErrInvalidInput {
         message
-        code
+      }
+      ... on ErrNotAuthorized {
+        message
+      }
+      ... on Error {
+        message
+      }
+      ... on PoolCreatePayload {
+        pool {
+          ...PoolWithOwnerAndContract
+        }
       }
     }
   }

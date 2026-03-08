@@ -14,12 +14,13 @@ export default function ValueCard({
   heading,
   description,
   variant = "outline",
-  size = "sm",
+  bg = "transparent",
+  size = "md",
   image,
   ...props
 }: ValueCardProps) {
   return (
-    <Card.Root variant={variant} size={size} {...props}>
+    <Card.Root variant={variant} size={size} bg={bg} {...props}>
       {image && (
         <Card.Header>
           <AspectRatio
@@ -52,7 +53,6 @@ export default function ValueCard({
           {description}
         </Text>
       </Card.Body>
-      <Card.Footer />
     </Card.Root>
   );
 }

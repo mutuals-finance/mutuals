@@ -13,6 +13,7 @@ import {
 import { ActivityTableProps } from "@/features/Activity/types";
 import React from "react";
 import { GrTransaction } from "react-icons/gr";
+import { getTokenTransfers } from "@/lib/ankr";
 
 export interface ActivityTableCardProps extends ActivityTableProps {
   cardProps?: ContentCardProps;
@@ -25,7 +26,12 @@ export default function ActivityTableCard({
   tableProps,
   ...props
 }: ActivityTableCardProps) {
-  const transfers = props.transfers ?? [];
+  const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
+
+  const transfers = getTokenTransfers({
+    address: [address],
+    blockchain: "eth",
+  });
 
   return (
     <ContentCard
@@ -34,7 +40,12 @@ export default function ActivityTableCard({
       bodyProps={{ p: "0", ...cardProps.bodyProps }}
     >
       {transfers.length > 0 ? (
-        <ActivityTable tableProps={{ size, ...tableProps }} {...props} />
+        <ActivityTable
+          tableProps={{ size, ...tableProps }}
+          payee={address}
+          transfers={transfers}
+          {...props}
+        />
       ) : (
         <EmptyState
           p={"12"}

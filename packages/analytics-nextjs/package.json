@@ -9,18 +9,18 @@
     "lint": "eslint . --max-warnings=0"
   },
   "peerDependencies": {
-    "next": ">=15"
+    "next": ">=16.1.6"
   },
   "devDependencies": {
-    "@types/node": "^25.0.3",
-    "@types/react": "^19.2.7",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.2",
-    "react": "^19.2.3",
+    "eslint": "^10.0.2",
+    "react": "^19.2.4",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@mutuals/ui": "workspace:^",
-    "mixpanel-browser": "^2.73.0"
+    "mixpanel-browser": "^2.75.0"
   }
 }

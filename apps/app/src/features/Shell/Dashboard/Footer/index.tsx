@@ -20,7 +20,7 @@ export default function ShellDashboardFooter() {
               {
                 children: "Blog",
                 target: "_blank",
-                href: "https://mutuals.finance/blog",
+                href: "https://mutuals.finance/blog/categories",
               },
             ]}
           />

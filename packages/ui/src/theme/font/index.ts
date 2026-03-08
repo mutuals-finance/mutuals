@@ -1,8 +1,8 @@
-import Inter from "./Inter";
+import Geist from "./Geist";
 import Satoshi from "./Satoshi";
 
 const fonts = {
-  Inter,
+  Geist,
   Satoshi,
 };
 

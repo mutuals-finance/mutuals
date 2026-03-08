@@ -1,7 +1,6 @@
 import { Post, User } from "@mutuals/payload/payload-types";
 import {
   AvatarRoot,
-  Bleed,
   Box,
   Container,
   Heading,
@@ -12,129 +11,93 @@ import {
   AvatarImage,
   AvatarImageProps,
   StackProps,
-  Breadcrumbs,
-  Button,
   Link,
+  DateTime,
   IconButton,
+  Badge,
+  Separator,
+  Button,
   For,
+  Wrap,
 } from "@mutuals/ui";
 import BlogPostImage from "@/features/Blog/PostImage";
+import BlogList from "@/features/Blog/List";
 import CmsProse from "@/components/CmsProse";
-import BlogPostMetaStack from "@/features/Blog/PostMeta";
 import { getImageProps } from "next/image";
 import {
   IoArrowBackSharp,
-  IoLogoFacebook,
   IoLogoLinkedin,
+  IoLogoFacebook,
   IoLogoTwitter,
 } from "react-icons/io5";
 
 export default function BlogPost(data: Partial<Post>) {
-  const { content, excerpt, image, title, authors, category } = data;
+  const { content, excerpt, image, title, authors, category, relatedPosts } =
+    data;
 
   return (
     <Box pt={"20"}>
-      <Container maxW={"4xl"} my={{ base: "6", lg: "12" }}>
+      <Container maxW={"4xl"} my={"16"}>
         <Stack direction={"column"} gap={"6"}>
-          <Stack direction={"row"} align={"center"}>
-            <Link
-              asChild={true}
-              href={`/blog/${typeof category == "object" ? category.slug : ""}`}
-            >
-              <IconButton size={"xs"} variant={"ghost"}>
-                <IoArrowBackSharp />
-              </IconButton>
-            </Link>
+          <Stack
+            direction={"row"}
+            align={"center"}
+            w={"full"}
+            justify={"space-between"}
+          >
+            <Stack direction={"row"} align={"center"}>
+              <Link
+                asChild={true}
+                href={`/blog/${typeof category == "object" ? category.slug : ""}`}
+              >
+                <IconButton variant={"ghost"}>
+                  <IoArrowBackSharp />
+                </IconButton>
+              </Link>
+            </Stack>
 
-            <Breadcrumbs
-              overwrite={{ home: false, post: false, slug: false }}
-            />
+            <Text asChild={true} textStyle={"sm"} color="fg.muted">
+              <DateTime timestamp={data?.publishedOn} />
+            </Text>
           </Stack>
 
-          <Heading textStyle={{ base: "4xl", md: "6xl" }} as="h1" mb={"6"}>
+          <Box textAlign={"center"}>
+            {data?.category && typeof data.category == "object" && (
+              <Link asChild={true} href={`/blog/${data.category.slug}/`}>
+                <Badge
+                  size={"lg"}
+                  textStyle={"xs"}
+                  colorPalette={"brand"}
+                  variant={"gradient"}
+                >
+                  {data.category.name}
+                </Badge>
+              </Link>
+            )}
+          </Box>
+
+          <Heading
+            textStyle={{ base: "4xl", md: "6xl" }}
+            as="h1"
+            mb={"6"}
+            textAlign={"center"}
+          >
             {title}
           </Heading>
 
-          <BlogPostMetaStack data={data} size={"lg"} />
-
           <Stack direction={"column"} gap={"6"}>
-            <Bleed inline={{ lg: "48" }}>
-              <Stack
-                direction={{ base: "column", lg: "row" }}
-                gap={"6"}
-                alignItems={"stretch"}
-              >
-                <BlogPostImage w={"full"} maxW={"4xl"} image={image} />
-                <Stack gap="6">
-                  <Box>
-                    <Text fontWeight={"medium"} textStyle={"sm"} mb={"2"}>
-                      Author
-                    </Text>
-                    <Stack>
-                      {authors
-                        ?.filter((a) => typeof a == "object")
-                        .map((author) => (
-                          <CMSUserAvatar key={author.id} user={author} />
-                        ))}
-                    </Stack>
-                  </Box>
+            <Stack
+              direction={{ base: "column", lg: "row" }}
+              gap={"6"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <BlogPostImage w={"full"} maxW={"4xl"} image={image} />
+            </Stack>
 
-                  <Box mt={{ lg: "auto" }}>
-                    <Text fontWeight={"medium"} textStyle={"sm"} mb={"2"}>
-                      Share
-                    </Text>
-                    <Stack direction={{ base: "row", lg: "column" }}>
-                      <For
-                        each={[
-                          {
-                            key: "linkedin",
-                            children: (
-                              <>
-                                <IoLogoLinkedin />
-                                <Box hideBelow={"lg"}>Share on LinkedIn</Box>
-                              </>
-                            ),
-                          },
-                          {
-                            key: "x",
-                            children: (
-                              <>
-                                <IoLogoTwitter />
-                                <Box hideBelow={"lg"}> Share on X</Box>
-                              </>
-                            ),
-                          },
-                          {
-                            key: "facebook",
-                            children: (
-                              <>
-                                <IoLogoFacebook />
-                                <Box hideBelow={"lg"}>Share on Facebook</Box>
-                              </>
-                            ),
-                          },
-                        ]}
-                      >
-                        {({ key, children }) => (
-                          <Button
-                            key={key}
-                            size={"sm"}
-                            variant={"subtle"}
-                            textAlign={{ lg: "left" }}
-                            justifyContent={{ lg: "flex-start" }}
-                          >
-                            {children}
-                          </Button>
-                        )}
-                      </For>
-                    </Stack>
-                  </Box>
-                </Stack>
-              </Stack>
-            </Bleed>
             <Box w={"full"}>
               <Box>
-                <CmsProse data={excerpt} size={{ base: "xl", lg: "3xl" }} />
+                <CmsProse data={excerpt} size={{ base: "lg", lg: "lg" }} />
               </Box>
 
               {content?.map((data) => (
@@ -142,13 +105,79 @@ export default function BlogPost(data: Partial<Post>) {
                   {data.blockType == "blogContent" && (
                     <CmsProse
                       data={data.blogContentFields.richText}
-                      size={{ base: "md", lg: "lg" }}
+                      size={{ base: "md", lg: "md" }}
                     />
                   )}
                 </Box>
               ))}
             </Box>
           </Stack>
+        </Stack>
+
+        <Stack direction={"column"} gap={"16"} my={"16"}>
+          <Stack gap="6" alignItems={"center"}>
+            <Box>
+              <Stack>
+                {authors
+                  ?.filter((a) => typeof a == "object")
+                  .map((author) => (
+                    <CMSUserAvatar key={author.id} user={author} />
+                  ))}
+              </Stack>
+            </Box>
+
+            <Box>
+              <Wrap gap={"2"} justify={"center"}>
+                <For
+                  each={[
+                    {
+                      key: "linkedin",
+                      children: (
+                        <>
+                          <IoLogoLinkedin />
+                          <Box>Share on LinkedIn</Box>
+                        </>
+                      ),
+                    },
+                    {
+                      key: "x",
+                      children: (
+                        <>
+                          <IoLogoTwitter />
+                          <Box> Share on X</Box>
+                        </>
+                      ),
+                    },
+                    {
+                      key: "facebook",
+                      children: (
+                        <>
+                          <IoLogoFacebook />
+                          <Box>Share on Facebook</Box>
+                        </>
+                      ),
+                    },
+                  ]}
+                >
+                  {({ key, children }) => (
+                    <Button key={key} variant={"subtle"}>
+                      {children}
+                    </Button>
+                  )}
+                </For>
+              </Wrap>
+            </Box>
+          </Stack>
+
+          {relatedPosts && relatedPosts.length > 0 && (
+            <>
+              <Separator />
+
+              <BlogList.Root>
+                <BlogList.Carousel data={relatedPosts as Post[]} />
+              </BlogList.Root>
+            </>
+          )}
         </Stack>
       </Container>
     </Box>

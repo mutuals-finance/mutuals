@@ -1,0 +1,12 @@
+{
+  "title": "Concepts",
+  "icon": "Pi",
+  "root": true,
+  "pages": [
+    "overview",
+    "flow-of-funds",
+    "modules",
+    "terminology"
+  ]
+}
+
