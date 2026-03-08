@@ -18,6 +18,7 @@ export default function BlogListCarousel({
       autoSize={data.length > 0}
       slidesPerPage={data.length > 0 ? undefined : 1}
       gap="4"
+      spacing="0"
       {...props}
     >
       <HStack justify="space-between">
@@ -35,19 +36,27 @@ export default function BlogListCarousel({
           </Carousel.NextTrigger>
         </HStack>
       </HStack>
-      <Bleed inline={"6"} px={"6"}>
+      <Bleed inline={"6"}>
         <Carousel.ItemGroup>
           <For
             each={data}
             fallback={
-              <Carousel.Item index={0} width="auto">
-                <BlogListEmptyCard w={"full"} />
-              </Carousel.Item>
+              <>
+                <Carousel.Item index={0} width="auto" px={"6"}>
+                  <BlogListEmptyCard w={"full"} />
+                </Carousel.Item>
+              </>
             }
           >
             {(post, index) => (
-              <Carousel.Item key={post.id} index={index} width="auto">
-                <BlogPostCard data={post} w={{ base: "72", md: "96" }} />
+              <Carousel.Item
+                key={post.id}
+                index={index}
+                width="auto"
+                pl={index <= 0 ? "6" : "3"}
+                pr={index >= data.length - 1 ? "6" : "3"}
+              >
+                <BlogPostCard data={post} w={{ base: "80", md: "96" }} />
               </Carousel.Item>
             )}
           </For>
