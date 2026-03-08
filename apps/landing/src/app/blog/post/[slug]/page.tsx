@@ -55,8 +55,6 @@ export async function generateMetadata({
       post.image?.url
     ) {
       ogImage = post.image.url;
-    } else if (post.featuredMedia === "videoUrl" && post.videoUrl) {
-      ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/api/og?type=blog&title=${post.title}`;
     }
   }
 
