@@ -1,4 +1,3 @@
-import { Box } from "@mutuals/ui";
 import ShellPageHeader from "@/features/Shell/PageHeader";
 import BlogFeaturedPost from "@/features/Blog/FeaturedPost";
 import BlogTabs from "@/features/Blog/Tabs";
@@ -52,9 +51,9 @@ export default async function BlogLayoutContent({
       </ShellPageHeader>
       <BlogFeaturedPost data={featuredPost} />
       <BlogTabs tabs={tabs}>
-        <Box my={"6"}>
-          <BlogList data={posts} />
-        </Box>
+        <BlogList.Root my={"6"}>
+          <BlogList.Grid data={posts} />
+        </BlogList.Root>
       </BlogTabs>
     </>
   );

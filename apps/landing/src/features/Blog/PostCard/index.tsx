@@ -96,8 +96,8 @@ export default function BlogPostCard({
         <Box position={"relative"}>
           <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
 
-          <Box p="2" position={"absolute"} bottom={"0"} right={"0"}>
-            <IconBox size={"xs"} bg={"blackAlpha.700"} color={"gray.300"}>
+          <Box p="4" position={"absolute"} top={"0"} right={"0"}>
+            <IconBox size={"sm"} bg={"blackAlpha.700"} color={"gray.300"}>
               <Icon asChild={true}>
                 <LuArrowUpRight />
               </Icon>
