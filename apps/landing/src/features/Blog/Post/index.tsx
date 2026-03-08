@@ -171,9 +171,9 @@ export default function BlogPost(data: Partial<Post>) {
             </Box>
           </Stack>
 
-          {relatedPosts?.length > 0 && (
+          {relatedPosts && relatedPosts.length > 0 && (
             <BlogList.Root>
-              <BlogList.Carousel data={relatedPosts} />
+              <BlogList.Carousel data={relatedPosts as Post[]} />
             </BlogList.Root>
           )}
         </Stack>

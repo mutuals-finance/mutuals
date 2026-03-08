@@ -39,7 +39,7 @@ export default function BlogListCarousel({
         <For
           each={data}
           fallback={
-            <Carousel.Item>
+            <Carousel.Item index={0}>
               <BlogListEmptyCard w={"full"} />
             </Carousel.Item>
           }
