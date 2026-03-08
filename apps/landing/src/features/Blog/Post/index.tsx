@@ -114,9 +114,7 @@ export default function BlogPost(data: Partial<Post>) {
           </Stack>
         </Stack>
 
-        <Separator my={"16"} />
-
-        <Stack direction={"column"} gap={"12"}>
+        <Stack direction={"column"} gap={"16"} my={"16"}>
           <Stack gap="6" alignItems={"center"}>
             <Box>
               <Stack>
@@ -172,9 +170,13 @@ export default function BlogPost(data: Partial<Post>) {
           </Stack>
 
           {relatedPosts && relatedPosts.length > 0 && (
-            <BlogList.Root>
-              <BlogList.Carousel data={relatedPosts as Post[]} />
-            </BlogList.Root>
+            <>
+              <Separator />
+
+              <BlogList.Root>
+                <BlogList.Carousel data={relatedPosts as Post[]} />
+              </BlogList.Root>
+            </>
           )}
         </Stack>
       </Container>
