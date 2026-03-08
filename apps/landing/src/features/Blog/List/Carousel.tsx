@@ -39,13 +39,13 @@ export default function BlogListCarousel({
         <For
           each={data}
           fallback={
-            <Carousel.Item index={0}>
+            <Carousel.Item index={0} width="auto">
               <BlogListEmptyCard w={"full"} />
             </Carousel.Item>
           }
         >
           {(post, index) => (
-            <Carousel.Item key={post.id} index={index}>
+            <Carousel.Item key={post.id} index={index} width="auto">
               <BlogPostCard data={post} w={{ base: "72", md: "96" }} />
             </Carousel.Item>
           )}

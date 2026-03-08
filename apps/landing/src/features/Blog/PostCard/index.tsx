@@ -8,6 +8,7 @@ import {
   Stack,
   BoxProps,
   Icon,
+  LinkBoxProps,
 } from "@mutuals/ui";
 import { Post } from "@mutuals/payload/payload-types";
 import CmsProse from "@/components/CmsProse";
@@ -16,7 +17,7 @@ import BlogPostMetaStack from "@/features/Blog/PostMeta";
 import IconBox from "@/components/IconBox";
 import { LuArrowUpRight } from "react-icons/lu";
 
-export type BlogPostCardProps = Omit<Card.RootProps, "children"> & {
+export type BlogPostCardProps = Omit<LinkBoxProps, "children"> & {
   featured?: boolean;
   data?: Partial<Post>;
 };
@@ -31,11 +32,10 @@ export default function BlogPostCard({
 
   if (featured) {
     return (
-      <LinkBox className="group">
+      <LinkBox className="group" {...props}>
         <Card.Root
           border={"none"}
           _groupHover={{ bg: "bg.muted", transition: "all 0.1s ease-in-out" }}
-          {...props}
         >
           <Stack
             direction={{ base: "column", lg: "row" }}
@@ -87,11 +87,10 @@ export default function BlogPostCard({
   }
 
   return (
-    <LinkBox className="group">
+    <LinkBox className="group" {...props}>
       <Card.Root
         w={"full"}
         _groupHover={{ bg: "bg.muted", transition: "all 0.1s ease-in-out" }}
-        {...props}
       >
         <Box position={"relative"}>
           <BlogPostImage image={data.image} bg={"bg.muted"} w={"full"} />
