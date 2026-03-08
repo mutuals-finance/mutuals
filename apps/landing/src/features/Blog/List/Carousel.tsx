@@ -1,4 +1,4 @@
-import { Carousel, HStack, IconButton, Heading, For } from "@mutuals/ui";
+import { Carousel, HStack, IconButton, Heading, For, Bleed } from "@mutuals/ui";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { Post } from "@mutuals/payload/payload-types";
 import BlogPostCard from "@/features/Blog/PostCard";
@@ -35,22 +35,24 @@ export default function BlogListCarousel({
           </Carousel.NextTrigger>
         </HStack>
       </HStack>
-      <Carousel.ItemGroup>
-        <For
-          each={data}
-          fallback={
-            <Carousel.Item index={0} width="auto">
-              <BlogListEmptyCard w={"full"} />
-            </Carousel.Item>
-          }
-        >
-          {(post, index) => (
-            <Carousel.Item key={post.id} index={index} width="auto">
-              <BlogPostCard data={post} w={{ base: "72", md: "96" }} />
-            </Carousel.Item>
-          )}
-        </For>
-      </Carousel.ItemGroup>
+      <Bleed inline={"6"} px={"6"}>
+        <Carousel.ItemGroup>
+          <For
+            each={data}
+            fallback={
+              <Carousel.Item index={0} width="auto">
+                <BlogListEmptyCard w={"full"} />
+              </Carousel.Item>
+            }
+          >
+            {(post, index) => (
+              <Carousel.Item key={post.id} index={index} width="auto">
+                <BlogPostCard data={post} w={{ base: "72", md: "96" }} />
+              </Carousel.Item>
+            )}
+          </For>
+        </Carousel.ItemGroup>
+      </Bleed>
     </Carousel.Root>
   );
 }
