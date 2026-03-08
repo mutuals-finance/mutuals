@@ -169,7 +169,7 @@ export default function BlogPost(data: Partial<Post>) {
             </Box>
           </Stack>
 
-          {relatedPosts && relatedPosts.length >= 0 && (
+          {relatedPosts && relatedPosts.length > 0 && (
             <>
               <Separator />
 
