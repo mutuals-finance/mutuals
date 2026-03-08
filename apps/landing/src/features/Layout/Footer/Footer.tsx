@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Group,
   Container,
@@ -10,6 +8,7 @@ import {
   Link,
 } from "@mutuals/ui";
 import { socialLinks } from "@/features/Layout/links";
+import { CurrentYear } from "./CurrentYear";
 
 export default function FooterFooter() {
   return (
@@ -30,8 +29,7 @@ export default function FooterFooter() {
           color="fg.muted"
           order={{ base: "3", lg: "0" }}
         >
-          &copy; {new Date().getFullYear()} Mutuals Finance, All rights
-          reserved.
+          &copy; <CurrentYear /> Mutuals, All rights reserved.
         </Text>
         <Stack direction="row" gap={6} justify={"space-between"}>
           <Group>
