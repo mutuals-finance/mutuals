@@ -43,7 +43,21 @@ export * from "./ui/radio";
 export * from "./ui/radio-card";
 export * from "./ui/rating";
 export * from "./ui/segmented-control";
-export * from "./ui/select";
+export {
+  type SelectTriggerProps,
+  SelectTrigger,
+  SelectClearTrigger,
+  //type SelectContentProps,
+  SelectContent,
+  SelectItem,
+  type SelectValueTextProps,
+  SelectValueText,
+  SelectRoot,
+  type SelectItemGroupProps,
+  SelectItemGroup,
+  SelectLabel,
+  SelectItemText,
+} from "./ui/select";
 export * from "./ui/skeleton";
 export * from "./ui/slider";
 export * from "./ui/stat";

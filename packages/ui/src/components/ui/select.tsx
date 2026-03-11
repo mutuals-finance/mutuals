@@ -37,7 +37,7 @@ export const SelectTrigger = React.forwardRef<
   );
 });
 
-const SelectClearTrigger = React.forwardRef<
+export const SelectClearTrigger = React.forwardRef<
   HTMLButtonElement,
   ChakraSelect.ClearTriggerProps
 >(function SelectClearTrigger(props, ref) {
@@ -136,7 +136,7 @@ export const SelectRoot = React.forwardRef<
   );
 }) as ChakraSelect.RootComponent;
 
-interface SelectItemGroupProps extends ChakraSelect.ItemGroupProps {
+export interface SelectItemGroupProps extends ChakraSelect.ItemGroupProps {
   label: React.ReactNode;
 }
 
