@@ -12,9 +12,9 @@
     "@ankr.com/ankr.js": "^0.6.1",
     "@moralisweb3/common-evm-utils": "^2.27.2",
     "@mutuals/analytics-nextjs": "workspace:*",
-    "@mutuals/modules": "workspace:*",
     "@mutuals/graphql-client-nextjs": "workspace:*",
     "@mutuals/metadata-nextjs": "workspace:*",
+    "@mutuals/modules": "workspace:*",
     "@mutuals/sdk-react": "workspace:*",
     "@mutuals/ui": "workspace:*",
     "@privy-io/node": "^0.10.1",
@@ -52,5 +52,10 @@
     "eslint": "^10.0.2",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

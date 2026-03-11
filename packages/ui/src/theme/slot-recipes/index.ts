@@ -8,12 +8,14 @@ import { default as menu } from "./menu";
 import { default as stat } from "./stat";
 import { default as breadcrumb } from "./breadcrumb";
 import { default as table } from "./table";
+import { default as emptyState } from "./empty-state";
 
 const slotRecipes = {
   avatar,
   card,
   tabs,
   // form,
+  emptyState,
   alert,
   drawer,
   menu,

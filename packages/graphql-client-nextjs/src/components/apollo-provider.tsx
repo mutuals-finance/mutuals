@@ -2,19 +2,19 @@
 
 import { PropsWithChildren } from "react";
 import { ApolloNextAppProvider } from "@apollo/client-integration-nextjs";
-import { MakeClientOpts, makeClient } from "../client";
+import { makeClient, type MakeClientOpts } from "../client";
+import { MockProvider } from "./mock-provider";
 
-export type ApolloProviderProps = {
+export type ApolloProviderProps = PropsWithChildren<{
   clientOpts?: MakeClientOpts;
-};
+}>;
 
-export function ApolloProvider({
-  children,
-  clientOpts,
-}: PropsWithChildren<ApolloProviderProps>) {
+export function ApolloProvider({ children, clientOpts }: ApolloProviderProps) {
   return (
-    <ApolloNextAppProvider makeClient={makeClient(clientOpts)}>
-      {children}
-    </ApolloNextAppProvider>
+    <MockProvider>
+      <ApolloNextAppProvider makeClient={makeClient(clientOpts)}>
+        {children}
+      </ApolloNextAppProvider>
+    </MockProvider>
   );
 }

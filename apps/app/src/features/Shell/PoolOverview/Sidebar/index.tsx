@@ -38,13 +38,6 @@ export default function ShellPoolOverviewSidebar({
 
   const wrapperProps: DrawerRootProps = {
     open: index >= 0,
-    onOpenChange: ({ open }) => {
-      if (!open) {
-        router.push(`/pool/${decodeURIComponent(params.id)}`, {
-          scroll: false,
-        });
-      }
-    },
     placement: { base: "bottom", lg: "end" },
     skipAnimationOnMount: true,
     children: <RouterTabs tabs={tabs}>{children}</RouterTabs>,
@@ -54,7 +47,16 @@ export default function ShellPoolOverviewSidebar({
   return (
     <>
       {!isLargerLg ? (
-        <ShellPoolOverviewSidebarMobile {...wrapperProps} />
+        <ShellPoolOverviewSidebarMobile
+          {...wrapperProps}
+          onOpenChange={({ open }) => {
+            if (!open) {
+              router.push(`/pool/${decodeURIComponent(params.id)}`, {
+                scroll: false,
+              });
+            }
+          }}
+        />
       ) : (
         <ShellPoolOverviewSidebarDesktop {...wrapperProps} />
       )}

@@ -11,15 +11,19 @@ import config from "../config";
 import { ErrorLink } from "@apollo/client/link/error";
 import { headers } from "next/headers";
 import { NetworkErrorLink } from "./networkErrorLink";
+import { initServerMocks } from "../mocks/init-server";
 
 const makeClient = async () => {
+  await initServerMocks();
+
   const cookie = await headers().then((h) => h.get("cookie") ?? "");
+
   const networkErrorIgnoreLink = new NetworkErrorLink((response) => {
     console.log(`[Network error]: ${response.networkError}`);
     return { data: null, error: [{ message: "Network error ignored" }] };
   });
 
-  const errorLink = new ErrorLink(({ error, result }) => {
+  const errorLink = new ErrorLink(({ error }) => {
     if (CombinedGraphQLErrors.is(error)) {
       error.errors.forEach(({ message }) =>
         console.log(`GraphQL error: ${message}`),

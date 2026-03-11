@@ -45,6 +45,7 @@ export default async function PoolOverviewLayout({
   return (
     <ShellPoolOverview
       sidebarProps={{ tabs }}
+      contentProps={{ queryOptions }}
       content={
         <Stack gap={"4"}>
           <PoolOverviewDescription queryOptions={queryOptions} />

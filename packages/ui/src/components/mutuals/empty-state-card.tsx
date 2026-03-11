@@ -1,4 +1,4 @@
-import { Card, Group } from "@chakra-ui/react";
+import { Card, Wrap } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import { EmptyState, EmptyStateProps } from "../ui/empty-state";
 
@@ -30,7 +30,9 @@ export function EmptyStateCard({
           colorPalette={colorPalette}
           {...emptyStateProps}
         >
-          <Group>{children}</Group>
+          <Wrap gap={"2"} justify={"center"}>
+            {children}
+          </Wrap>
         </EmptyState>
       </Card.Body>
     </Card.Root>
