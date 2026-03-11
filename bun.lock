@@ -20,9 +20,9 @@
         "@ankr.com/ankr.js": "^0.6.1",
         "@moralisweb3/common-evm-utils": "^2.27.2",
         "@mutuals/analytics-nextjs": "workspace:*",
-        "@mutuals/extensions": "workspace:*",
         "@mutuals/graphql-client-nextjs": "workspace:*",
         "@mutuals/metadata-nextjs": "workspace:*",
+        "@mutuals/modules": "workspace:*",
         "@mutuals/sdk-react": "workspace:*",
         "@mutuals/ui": "workspace:*",
         "@privy-io/node": "^0.10.1",
@@ -237,30 +237,6 @@
         "typescript": "^5.9.3",
       },
     },
-    "packages/extensions": {
-      "name": "@mutuals/extensions",
-      "version": "0.0.0",
-      "dependencies": {
-        "@mutuals/graphql-client-nextjs": "workspace:*",
-        "@mutuals/sdk-react": "workspace:*",
-        "react-hook-form": "^7.71.2",
-      },
-      "devDependencies": {
-        "@mutuals/eslint-config": "workspace:*",
-        "@mutuals/typescript-config": "workspace:*",
-        "@types/react": "^19.2.14",
-        "eslint": "^10.0.2",
-        "typescript": "^5.9.3",
-      },
-      "peerDependencies": {
-        "@mutuals/ui": "workspace:*",
-        "react": ">=19.2.4",
-        "viem": ">=2.0.0",
-      },
-      "optionalPeers": [
-        "viem",
-      ],
-    },
     "packages/graphql-client-nextjs": {
       "name": "@mutuals/graphql-client-nextjs",
       "version": "0.0.0",
@@ -301,6 +277,31 @@
       "peerDependencies": {
         "next": "16.1.6",
       },
+    },
+    "packages/modules": {
+      "name": "@mutuals/modules",
+      "version": "0.0.0",
+      "dependencies": {
+        "@mutuals/graphql-client-nextjs": "workspace:*",
+        "@mutuals/sdk-react": "workspace:*",
+        "react-hook-form": "^7.71.2",
+        "react-icons": "^5.6.0",
+      },
+      "devDependencies": {
+        "@mutuals/eslint-config": "workspace:*",
+        "@mutuals/typescript-config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "eslint": "^10.0.2",
+        "typescript": "^5.9.3",
+      },
+      "peerDependencies": {
+        "@mutuals/ui": "workspace:*",
+        "react": ">=19.2.4",
+        "viem": ">=2.0.0",
+      },
+      "optionalPeers": [
+        "viem",
+      ],
     },
     "packages/payload": {
       "name": "@mutuals/payload",
@@ -1257,13 +1258,13 @@
 
     "@mutuals/eslint-config": ["@mutuals/eslint-config@workspace:packages/eslint-config"],
 
-    "@mutuals/extensions": ["@mutuals/extensions@workspace:packages/extensions"],
-
     "@mutuals/graphql-client-nextjs": ["@mutuals/graphql-client-nextjs@workspace:packages/graphql-client-nextjs"],
 
     "@mutuals/landing": ["@mutuals/landing@workspace:apps/landing"],
 
     "@mutuals/metadata-nextjs": ["@mutuals/metadata-nextjs@workspace:packages/metadata-nextjs"],
+
+    "@mutuals/modules": ["@mutuals/modules@workspace:packages/modules"],
 
     "@mutuals/payload": ["@mutuals/payload@workspace:packages/payload"],
 

@@ -29,7 +29,7 @@ import {
  * Hardhat v2 environment extension
  */
 extendEnvironment((hre) => {
-  // Cast to custom HRE type to add our extensions
+  // Cast to custom HRE type to add our modules
   const customHre = hre as unknown as CustomHardHatRuntimeEnvironment;
 
   // Add custom utilities to HRE

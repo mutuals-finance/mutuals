@@ -5,23 +5,33 @@ import { Select as ChakraSelect, Portal } from "@chakra-ui/react";
 import { CloseButton } from "./close-button";
 import * as React from "react";
 
-interface SelectTriggerProps extends ChakraSelect.ControlProps {
+export interface SelectTriggerProps extends ChakraSelect.ControlProps {
   clearable?: boolean;
+  triggerProps?: ChakraSelect.TriggerProps;
+  indicatorGroupProps?: ChakraSelect.IndicatorGroupProps;
+  indicatorProps?: ChakraSelect.IndicatorProps;
 }
 
 export const SelectTrigger = React.forwardRef<
   HTMLButtonElement,
   SelectTriggerProps
 >(function SelectTrigger(props, ref) {
-  const { children, clearable, ...rest } = props;
+  const {
+    children,
+    clearable,
+    triggerProps,
+    indicatorGroupProps,
+    indicatorProps,
+    ...rest
+  } = props;
   return (
     <ChakraSelect.Control {...rest}>
-      <ChakraSelect.Trigger ref={ref} bg={"transparent"}>
+      <ChakraSelect.Trigger ref={ref} {...triggerProps}>
         {children}
       </ChakraSelect.Trigger>
-      <ChakraSelect.IndicatorGroup>
+      <ChakraSelect.IndicatorGroup {...indicatorGroupProps}>
         {clearable && <SelectClearTrigger />}
-        <ChakraSelect.Indicator />
+        <ChakraSelect.Indicator {...indicatorProps} />
       </ChakraSelect.IndicatorGroup>
     </ChakraSelect.Control>
   );
@@ -44,7 +54,7 @@ const SelectClearTrigger = React.forwardRef<
   );
 });
 
-interface SelectContentProps extends ChakraSelect.ContentProps {
+export interface SelectContentProps extends ChakraSelect.ContentProps {
   portalled?: boolean;
   portalRef?: React.RefObject<HTMLElement>;
 }
@@ -76,8 +86,10 @@ export const SelectItem = React.forwardRef<
   );
 });
 
-interface SelectValueTextProps
-  extends Omit<ChakraSelect.ValueTextProps, "children"> {
+export interface SelectValueTextProps extends Omit<
+  ChakraSelect.ValueTextProps,
+  "children"
+> {
   children?(items: CollectionItem[]): React.ReactNode;
 }
 

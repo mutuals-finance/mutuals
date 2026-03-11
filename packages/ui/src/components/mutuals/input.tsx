@@ -9,6 +9,7 @@ import {
   NumberInputInputProps as ChakraNumberInputInputProps,
   SelectRoot as ChakraSelectRoot,
   SelectRootProps as ChakraSelectRootProps,
+  SelectContentProps as ChakraSelectContentProps,
   SelectValueTextProps as ChakraSelectValueTextProps,
   SelectValueChangeDetails,
   NumberInputValueChangeDetails,
@@ -28,6 +29,7 @@ import {
   SelectValueText as ChakraSelectValueText,
   SelectItem as ChakraSelectItem,
   SelectItemGroup as ChakraSelectItemGroup,
+  SelectTriggerProps,
 } from "../../components/ui/select";
 import {
   PasswordInput as ChakraPasswordInput,
@@ -107,7 +109,8 @@ export interface BaseInputProps<TFieldValue, TEvent> {
 }
 
 export interface InputProps
-  extends BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
+  extends
+    BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
     Omit<ChakraInputProps, "transform" | "onChange" | "value"> {}
 
 export function Input({
@@ -141,7 +144,8 @@ export function Input({
 }
 
 export interface TextareaProps
-  extends BaseInputProps<string, ChangeEvent<HTMLTextAreaElement>>,
+  extends
+    BaseInputProps<string, ChangeEvent<HTMLTextAreaElement>>,
     Omit<ChakraTextareaProps, "transform" | "onChange" | "value"> {}
 
 export function Textarea({
@@ -174,7 +178,8 @@ export function Textarea({
 }
 
 export interface NumberInputProps<TFieldValue>
-  extends BaseInputProps<TFieldValue, NumberInputValueChangeDetails>,
+  extends
+    BaseInputProps<TFieldValue, NumberInputValueChangeDetails>,
     Omit<ChakraNumberInputRootProps, "transform" | "onValueChange" | "value"> {
   inputProps?: ChakraNumberInputInputProps;
 }
@@ -216,7 +221,8 @@ export function NumberInput<TFieldValue = number | string>({
 }
 
 export interface PasswordInputProps
-  extends BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
+  extends
+    BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
     Omit<ChakraPasswordInputProps, "transform" | "onChange" | "value"> {}
 
 export function PasswordInput({
@@ -264,7 +270,8 @@ export type SelectCollectionItemProps = {
 };
 
 export interface SelectProps<TFieldValue = ChakraSelectRootProps["value"]>
-  extends BaseInputProps<
+  extends
+    BaseInputProps<
       TFieldValue,
       SelectValueChangeDetails<SelectCollectionItemProps>
     >,
@@ -275,6 +282,11 @@ export interface SelectProps<TFieldValue = ChakraSelectRootProps["value"]>
   placeholder?: ChakraSelectValueTextProps["placeholder"];
   valueTextProps?: Omit<ChakraSelectValueTextProps, "placeholder">;
   children?: ReactNodeOrFn;
+  triggerProps?: SelectTriggerProps;
+  contentProps?: Omit<
+    SelectContentProps<TFieldValue>,
+    "collection" | "children"
+  >;
 }
 
 type SelectCollectionItemRenderProps = {
@@ -307,14 +319,19 @@ function SelectCollectionItemContent({
   return `unknown ${index}`;
 }
 
-type SelectContentProps<TFieldValue> = SelectProps<TFieldValue>;
+export type SelectContentProps<TFieldValue> = Omit<
+  ChakraSelectContentProps,
+  "children"
+> &
+  Pick<SelectProps<TFieldValue>, "children" | "collection">;
 
 function SelectContent<TFieldValue>({
   children,
   collection,
+  ...props
 }: SelectContentProps<TFieldValue>) {
   if (!collection?.items) {
-    return <ChakraSelectContent />;
+    return <ChakraSelectContent {...props} />;
   }
 
   const hasGrouping = collection.items.some((item) => item.group !== undefined);
@@ -325,7 +342,7 @@ function SelectContent<TFieldValue>({
     );
 
     return (
-      <ChakraSelectContent>
+      <ChakraSelectContent {...props}>
         {groupedItems.map(([groupLabel, items]) => (
           <ChakraSelectItemGroup key={groupLabel} label={groupLabel}>
             {items.map((item, i) => (
@@ -345,7 +362,7 @@ function SelectContent<TFieldValue>({
   }
 
   return (
-    <ChakraSelectContent>
+    <ChakraSelectContent {...props}>
       {collection.items.map((item, i) => (
         <ChakraSelectItem key={i} item={item}>
           <SelectCollectionItemContent
@@ -371,6 +388,8 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
     placeholder,
     valueTextProps,
     onInteractOutside,
+    triggerProps,
+    contentProps,
     ...rootProps
   } = props;
 
@@ -398,7 +417,7 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
           }}
           {...field}
         >
-          <ChakraSelectTrigger>
+          <ChakraSelectTrigger {...triggerProps}>
             <ChakraSelectValueText
               placeholder={placeholder}
               {...valueTextProps}
@@ -414,7 +433,12 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
             </ChakraSelectValueText>
           </ChakraSelectTrigger>
 
-          <SelectContent<TFieldValue> {...props} />
+          <SelectContent<TFieldValue>
+            collection={rootProps.collection}
+            {...contentProps}
+          >
+            {children}
+          </SelectContent>
         </ChakraSelectRoot>
       )}
       {...controllerProps}
@@ -423,7 +447,8 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
 }
 
 export interface SwitchInputProps
-  extends BaseInputProps<
+  extends
+    BaseInputProps<
       boolean,
       {
         checked: boolean;

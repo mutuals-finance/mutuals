@@ -5,7 +5,6 @@ import {
   IconButton,
   TreeView,
   useTreeViewNodeContext,
-  Input,
   Menu,
   Select,
   Group,
@@ -16,7 +15,7 @@ import {
   IoEllipsisHorizontalSharp,
 } from "react-icons/io5";
 import { PoolCreateInput } from "@mutuals/sdk-react";
-import { StateExtensions, StrategyExtensions } from "@mutuals/extensions";
+import { ValidationModules, DistributionModules } from "@mutuals/modules";
 import { useWatch } from "react-hook-form";
 import { RiFolderReceivedLine, RiUserReceivedLine } from "react-icons/ri";
 import { createClaimCollection } from "@/features/Claim/utils";
@@ -30,10 +29,10 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
     name: [`${id}.stateId`, `${id}.strategyId`],
   });
 
-  const selectedState = StateExtensions.map[stateId];
-  const selectedStrategy = StrategyExtensions.map[strategyId];
+  const selectedValidation = ValidationModules.map[stateId];
+  const selectedDistribution = DistributionModules.map[strategyId];
 
-  const renderProps = useMemo(() => ({ id }), [id]);
+  const renderProps = useMemo(() => ({ id, isBranch }), [id, isBranch]);
 
   return (
     <>
@@ -42,11 +41,10 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
       </Icon>
 
       <Select<string>
-        placeholder={"State"}
+        placeholder={"Validation"}
         id={`${id}.stateId`}
-        size={"md"}
-        w={"28"}
-        collection={createClaimCollection(StateExtensions.map, "state")}
+        w={"44"}
+        collection={createClaimCollection(ValidationModules.map, "Validation")}
         positioning={{ sameWidth: false }}
         onClick={(e) => {
           e.stopPropagation();
@@ -55,13 +53,16 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
           input: (value) => (!value ? undefined : [value]),
           output: (e) => (!e.value ? undefined : e.value[0]),
         }}
+        contentProps={{ minW: "60" }}
       />
 
       <Select<string>
-        placeholder={"Strategy"}
+        placeholder={"Distribution"}
         id={`${id}.strategyId`}
-        collection={createClaimCollection(StrategyExtensions.map, "strategy")}
-        size={"md"}
+        collection={createClaimCollection(
+          DistributionModules.map,
+          "Distribution",
+        )}
         w={"44"}
         positioning={{ sameWidth: false }}
         onClick={(e) => {
@@ -71,24 +72,12 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
           input: (value) => (!value ? undefined : [value]),
           output: (e) => (!e.value ? undefined : e.value[0]),
         }}
+        contentProps={{ minW: "52" }}
       />
 
-      {!isBranch && (
-        <Input
-          placeholder={"Recipient address"}
-          id={`${id}.recipientAddress`}
-          size={"md"}
-          w={"64"}
-          flex={"1 0 auto"}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        />
-      )}
+      {selectedValidation?.render?.(renderProps)}
 
-      {selectedState?.render?.(renderProps)}
-
-      {selectedStrategy?.render?.(renderProps)}
+      {selectedDistribution?.render?.(renderProps)}
 
       <Group
         position={"sticky"}
@@ -106,7 +95,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
                   "[role=treeitem]:hover &": { opacity: 1 },
                 },
               }}
-              shadow={"xs"}
+              shadow={"sm"}
               variant="subtle"
               aria-label="Toggle children"
               onClick={(e) => {
@@ -123,7 +112,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
 
         <Menu.Trigger asChild>
           <IconButton
-            shadow={"xs"}
+            shadow={"sm"}
             variant="subtle"
             aria-label="Toggle menu"
             onClick={(e) => {

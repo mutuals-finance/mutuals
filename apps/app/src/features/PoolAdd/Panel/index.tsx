@@ -39,9 +39,9 @@ export default function PoolAddPanel({ value, setStep }: PoolAddPanelProps) {
         <SelectContent portalled={false} maxW={"full"} minW={"64"}>
           {poolAddSteps.collection.items.map((step) => (
             <SelectItem item={step} key={step.value}>
-              <Stack>
-                <SelectItemText>{step.label}</SelectItemText>
-                <Span color="fg.muted" textStyle="sm">
+              <Stack gap={"0"}>
+                <SelectItemText textStyle="sm">{step.label}</SelectItemText>
+                <Span color="fg.muted" textStyle="xs">
                   {step.description}
                 </Span>
               </Stack>
@@ -53,7 +53,7 @@ export default function PoolAddPanel({ value, setStep }: PoolAddPanelProps) {
       <Box position={"sticky"} top={"24"} left={"0"} hideBelow={"lg"}>
         <Card.Root>
           <Card.Body>
-            <Steps.List h={"36"}>
+            <Steps.List minH={"36"}>
               {poolAddSteps.collection.items.map((step, index) => (
                 <Steps.Item
                   key={step.value}
@@ -63,10 +63,10 @@ export default function PoolAddPanel({ value, setStep }: PoolAddPanelProps) {
                 >
                   <Steps.Indicator />
                   <Stack gap={"0"}>
-                    <Steps.Title mb="0" textStyle="lg">
+                    <Steps.Title mb="0" textStyle="sm">
                       {step.label}
                     </Steps.Title>
-                    <Steps.Description textStyle="sm">
+                    <Steps.Description textStyle="xs">
                       {step.description}
                     </Steps.Description>
                   </Stack>

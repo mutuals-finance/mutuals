@@ -3,7 +3,7 @@ import {
   deployTokenLimitDistributionModuleContract,
   finalizeDeployments,
 } from '@/utils/deploy';
-import { registerExtension } from '@/utils/extension';
+import { registerModule } from '@/utils/module';
 
 export const deploy: DeployFunction = async (environment) => {
   const hre = environment as unknown as CustomHardHatRuntimeEnvironment;
@@ -14,7 +14,7 @@ export const deploy: DeployFunction = async (environment) => {
   });
 
   await finalizeDeployments({ hre, contracts: { TokenLimitDistributionModule } });
-  await registerExtension({ hre, target: TokenLimitDistributionModule.target });
+  await registerModule({ hre, target: TokenLimitDistributionModule.target });
 };
 
 export default deploy;

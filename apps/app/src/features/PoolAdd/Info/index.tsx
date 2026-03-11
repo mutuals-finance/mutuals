@@ -36,7 +36,7 @@ export default function PoolAddInfo({ children, ...props }: PoolAddInfoProps) {
         <Input id="name" />
       </Field>
       <Field id={"description"} label={"Description"}>
-        <Textarea id="description" />
+        <Textarea id="description" minH={"4lh"} />
       </Field>
 
       {children}

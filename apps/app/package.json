@@ -12,7 +12,7 @@
     "@ankr.com/ankr.js": "^0.6.1",
     "@moralisweb3/common-evm-utils": "^2.27.2",
     "@mutuals/analytics-nextjs": "workspace:*",
-    "@mutuals/extensions": "workspace:*",
+    "@mutuals/modules": "workspace:*",
     "@mutuals/graphql-client-nextjs": "workspace:*",
     "@mutuals/metadata-nextjs": "workspace:*",
     "@mutuals/sdk-react": "workspace:*",

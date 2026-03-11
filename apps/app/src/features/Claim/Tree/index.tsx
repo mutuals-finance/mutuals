@@ -15,8 +15,8 @@ export default function ClaimTree({ id, ...props }: ClaimTreeProps) {
   return (
     <TreeView.Root collection={data} expandOnClick={false} {...props}>
       <TreeView.Label>Allocation</TreeView.Label>
-      <Bleed inline={"6"} blockEnd={"3"}>
-        <ScrollArea.Root size="xs">
+      <Bleed inline={"6"} blockEnd={"3"} display={"flex"} flex={"1"}>
+        <ScrollArea.Root size="xs" flex={"1"} h={"unset"}>
           <ScrollArea.Viewport>
             <ScrollArea.Content px="4" pb={"3"}>
               <TreeView.Tree>

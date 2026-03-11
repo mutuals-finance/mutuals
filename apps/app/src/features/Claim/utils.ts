@@ -10,8 +10,8 @@ export const createClaim = (
 ): ClaimCreateNode => ({
   label: `${Date.now()}`,
   recipientAddress: "",
-  stateId: "offchain",
-  strategyId: "default_allocation",
+  stateId: "merkle_tree_validation",
+  strategyId: "direct_distribution",
   children: [],
   data: "",
   ...props,
@@ -34,12 +34,15 @@ export const createClaimCollection = (
   config: {
     [id: string]: { id: string; name: string };
   },
-  configValue: string,
+  moduleType: "Distribution" | "Validation",
 ) =>
   createListCollection<SelectCollectionItemProps>({
     items: Object.values(config).map(({ id, name }) => ({
       value: id,
       children: name,
-      configValue,
+      group:
+        moduleType === "Distribution"
+          ? "Distribution Module"
+          : "Validation Module",
     })),
   });
