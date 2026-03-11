@@ -1,8 +1,8 @@
 import { graphql } from "../__generated__";
 
 export const USER_REGISTER = graphql(/* GraphQL */ `
-  mutation UserRegister($input: UserRegisterInput!) {
-    userRegister(input: $input) {
+  mutation UserRegister {
+    userRegister {
       ... on ErrUserAlreadyExists {
         message
       }
@@ -11,8 +11,10 @@ export const USER_REGISTER = graphql(/* GraphQL */ `
       }
       ... on ErrInvalidInput {
         message
+        parameters
+        reasons
       }
-      ... on Error {
+      ... on ErrDoesNotOwnRequiredToken {
         message
       }
       ... on UserRegisterPayload {

@@ -1,8 +1,8 @@
 import { graphql } from "../__generated__";
 
-export const VIEWER = graphql(/* GraphQL */ `
-  query Viewer {
-    viewer {
+export const GET_USER_BY_ID = graphql(/* GraphQL */ `
+  query UserById($id: ID!) {
+    userById(id: $id) {
       ... on ErrNotAuthorized {
         message
       }

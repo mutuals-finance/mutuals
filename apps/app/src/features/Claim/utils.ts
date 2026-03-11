@@ -9,20 +9,20 @@ export const createClaim = (
   props?: Partial<ClaimCreateNode>,
 ): ClaimCreateNode => ({
   label: `${Date.now()}`,
-  recipientAddress: "",
-  stateId: "merkle_tree_validation",
-  strategyId: "direct_distribution",
+  validationId: "merkle_tree_validation",
+  distributionId: "direct_distribution",
+  validationData: undefined,
+  distributionData: undefined,
   children: [],
-  data: "",
   ...props,
 });
 
 export const defaultClaims = createTreeCollection<ClaimCreateNode>({
   nodeToValue: (node) => node.label ?? "",
-  nodeToString: (node) => node.recipientAddress ?? node.label,
+  nodeToString: (node) => node.label,
   rootNode: createClaim({
-    stateId: "",
-    strategyId: "",
+    validationId: "",
+    distributionId: "",
     children: [
       createClaim({ label: `0-${Date.now()}` }),
       createClaim({ label: `1-${Date.now()}` }),

@@ -1,7 +1,7 @@
 import { graphql } from "../__generated__";
 
-export const POOL = graphql(/* GraphQL */ `
-  query Pool($id: ID, $slug: String, $contractId: ID) {
+export const GET_POOL_HOUR_BALANCES = graphql(/* GraphQL */ `
+  query PoolHourBalances($id: ID, $slug: String, $contractId: ID) {
     pool(id: $id, slug: $slug, contractId: $contractId) {
       ... on ErrPoolNotFound {
         message
@@ -12,20 +12,14 @@ export const POOL = graphql(/* GraphQL */ `
         reasons
       }
       ... on Pool {
-        ...PoolWithOwnerAndContract
+        id
+        contract {
+          id
+          hourBalance {
+            ...PoolHourBalanceFragment
+          }
+        }
       }
     }
   }
 `);
-
-/*
-owner {
-... on User {
-    dbid
-  }
-... on EVMAccount {
-    address
-    accountType
-  }
-}
-*/

@@ -28,7 +28,7 @@ export async function getPoolDetailsFromRouteParams(params: { id: string }) {
     variables: { slug: params.id },
   });
 
-  if (!data?.pool) {
+  if (!data?.pool || "message" in data?.pool) {
     notFound();
   }
 

@@ -14,7 +14,6 @@ import {
   IoChevronForwardSharp,
   IoEllipsisHorizontalSharp,
 } from "react-icons/io5";
-import { PoolCreateInput } from "@mutuals/sdk-react";
 import { ValidationModules, DistributionModules } from "@mutuals/modules";
 import { useWatch } from "react-hook-form";
 import { RiFolderReceivedLine, RiUserReceivedLine } from "react-icons/ri";
@@ -25,12 +24,12 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
   const { isBranch } = useTreeViewNodeContext();
 
   const { id } = useClaimNodeId();
-  const [stateId, strategyId] = useWatch<PoolCreateInput>({
-    name: [`${id}.stateId`, `${id}.strategyId`],
+  const [validationId, distributionId] = useWatch({
+    name: [`${id}.validationId`, `${id}.distributionId`],
   });
 
-  const selectedValidation = ValidationModules.map[stateId];
-  const selectedDistribution = DistributionModules.map[strategyId];
+  const selectedValidation = ValidationModules.map[validationId];
+  const selectedDistribution = DistributionModules.map[distributionId];
 
   const renderProps = useMemo(() => ({ id, isBranch }), [id, isBranch]);
 
@@ -42,7 +41,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
 
       <Select<string>
         placeholder={"Validation"}
-        id={`${id}.stateId`}
+        id={`${id}.validationId`}
         w={"44"}
         collection={createClaimCollection(ValidationModules.map, "Validation")}
         positioning={{ sameWidth: false }}
@@ -58,7 +57,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
 
       <Select<string>
         placeholder={"Distribution"}
-        id={`${id}.strategyId`}
+        id={`${id}.distributionId`}
         collection={createClaimCollection(
           DistributionModules.map,
           "Distribution",

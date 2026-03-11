@@ -1,12 +1,9 @@
 import { graphql } from "../__generated__";
 
-export const VIEWER = graphql(/* GraphQL */ `
-  query Viewer {
-    viewer {
+export const POOL_UPDATE = graphql(/* GraphQL */ `
+  mutation PoolUpdate($id: ID!, $input: PoolUpdateInput!) {
+    poolUpdate(id: $id, input: $input) {
       ... on ErrNotAuthorized {
-        message
-      }
-      ... on ErrUserNotFound {
         message
       }
       ... on ErrInvalidInput {
@@ -14,10 +11,11 @@ export const VIEWER = graphql(/* GraphQL */ `
         parameters
         reasons
       }
-      ... on User {
-        id
-        roles
-        pools {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on PoolUpdatePayload {
+        pool {
           ...PoolWithOwnerAndContract
         }
       }

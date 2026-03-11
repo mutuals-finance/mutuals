@@ -27,7 +27,7 @@ export type QueryResult<
 export type QueryOptions<
   TData = unknown,
   TVariables extends OperationVariables = OperationVariables,
-> = Omit<Parameters<typeof useQuery<TData, TVariables>>[1], "query">;
+> = Omit<useQuery.Options<TData, TVariables>, "query">;
 
 export type QueryDocument<
   TData = unknown,

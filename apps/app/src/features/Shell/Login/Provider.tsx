@@ -125,13 +125,7 @@ export default function AuthShellProvider({
       }
 
       if (params?.isNewUser) {
-        /*
-        await registerUser({
-          variables: {
-            input: { id: params.user?.id, redirectUrl: callbackUrl },
-          },
-        });
-*/
+        await registerUser();
       }
 
       if (callbackUrl) {

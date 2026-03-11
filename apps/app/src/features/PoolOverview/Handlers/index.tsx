@@ -34,7 +34,7 @@ export default async function PoolOverviewHandlers({
       "aria-label": "Withdraw",
       children: <IoPushOutline />,
       href: `/pool/${pool?.slug}/withdraw`,
-      variant: "surface",
+      variant: "subtle",
       linkProps: { scroll: false },
     },
     {
@@ -42,25 +42,25 @@ export default async function PoolOverviewHandlers({
       children: <IoDownloadOutline />,
       href: `/pool/${pool?.slug}/deposit`,
       linkProps: { scroll: false },
-      variant: "surface",
+      variant: "subtle",
     },
     {
       "aria-label": "Settings",
       children: <IoSettingsOutline />,
       href: `/pool/${pool?.slug}/settings`,
-      variant: "surface",
+      variant: "subtle",
     },
     {
       "aria-label": "Activity",
       children: <IoSwapHorizontalOutline />,
       href: `/pool/${pool?.slug}/activity`,
-      variant: "surface",
+      variant: "subtle",
     },
     {
       "aria-label": "Assets",
       children: <IoWalletOutline />,
       href: `/pool/${pool?.slug}/assets`,
-      variant: "surface",
+      variant: "subtle",
     },
   ];
 

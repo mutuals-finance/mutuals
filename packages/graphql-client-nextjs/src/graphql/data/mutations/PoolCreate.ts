@@ -5,11 +5,10 @@ export const POOL_CREATE = graphql(/* GraphQL */ `
     poolCreate(input: $input) {
       ... on ErrInvalidInput {
         message
+        parameters
+        reasons
       }
       ... on ErrNotAuthorized {
-        message
-      }
-      ... on Error {
         message
       }
       ... on PoolCreatePayload {
