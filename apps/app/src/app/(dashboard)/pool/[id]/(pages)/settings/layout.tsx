@@ -3,10 +3,6 @@ import ShellPage from "@/features/Shell/Page";
 import { Container, RouterTabs } from "@mutuals/ui";
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
 import { notFound } from "next/navigation";
-import {
-  getFragmentData,
-  PoolWithOwnerAndContractFragmentDoc,
-} from "@mutuals/graphql-client-nextjs";
 
 export default async function PoolSettingsLayout({
   children,
@@ -24,7 +20,7 @@ export default async function PoolSettingsLayout({
     notFound();
   }
 
-  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data?.pool);
+  const pool = data?.pool;
 
   const tabs = [
     {

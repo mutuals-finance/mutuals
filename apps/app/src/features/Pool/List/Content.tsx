@@ -7,19 +7,13 @@ import React from "react";
 import PoolCard from "@/features/Pool/Card";
 import { IoSearch } from "react-icons/io5";
 import {
-  FragmentType,
-  getFragmentData,
-  UserPoolListWithOwnerAndContractFragmentDoc,
+  UserPoolListWithOwnerAndContractFragment,
 } from "@mutuals/graphql-client-nextjs";
 
-export type PoolListContentProps = FragmentType<
-  typeof UserPoolListWithOwnerAndContractFragmentDoc
->;
+export type PoolListContentProps = UserPoolListWithOwnerAndContractFragment;
 
 export default function PoolListContent(props: PoolListContentProps) {
-  const pools =
-    getFragmentData(UserPoolListWithOwnerAndContractFragmentDoc, props).pools ??
-    [];
+  const pools = props.pools ?? [];
 
   return (
     <>
@@ -32,14 +26,14 @@ export default function PoolListContent(props: PoolListContentProps) {
       </GridItem>
 
       <For
-        each={pools as any[]}
+        each={pools.edges}
         fallback={
           <GridItem gridColumn={"1 / -1"}>
             <PoolListEmptyState />
           </GridItem>
         }
       >
-        {(pool) => <PoolCard key={pool.id} {...pool} />}
+        {(pool) => <PoolCard key={pool.node.id} {...pool.node} />}
       </For>
     </>
   );

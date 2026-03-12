@@ -7,10 +7,6 @@ import {
 } from "react-icons/io5";
 
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
-import {
-  PoolWithOwnerAndContractFragmentDoc,
-  getFragmentData,
-} from "@mutuals/graphql-client-nextjs";
 import { Bleed, IconTextButtonProps } from "@mutuals/ui";
 import { getPool, GetPoolOptions } from "@mutuals/graphql-client-nextjs/server";
 
@@ -27,7 +23,7 @@ export default async function PoolOverviewHandlers({
     return null;
   }
 
-  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data.pool);
+  const pool = data.pool;
 
   const items: IconTextButtonProps[] = [
     {

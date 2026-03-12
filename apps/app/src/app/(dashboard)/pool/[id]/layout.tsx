@@ -3,10 +3,6 @@ import { Metadata } from "next";
 import { siteName } from "@/config";
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
 import { notFound } from "next/navigation";
-import {
-  getFragmentData,
-  PoolWithOwnerAndContractFragmentDoc,
-} from "@mutuals/graphql-client-nextjs";
 
 export async function generateMetadata({
   params,
@@ -23,7 +19,7 @@ export async function generateMetadata({
     notFound();
   }
 
-  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data?.pool);
+  const pool = data?.pool;
 
   return {
     title: {

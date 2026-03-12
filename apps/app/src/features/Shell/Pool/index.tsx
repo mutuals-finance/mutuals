@@ -2,10 +2,6 @@ import React from "react";
 import ShellPage, { ShellPageProps } from "@/features/Shell/Page";
 import PoolCard from "@/features/Pool/Card";
 import { HStack } from "@mutuals/ui";
-import {
-  getFragmentData,
-  PoolWithOwnerAndContractFragmentDoc,
-} from "@mutuals/graphql-client-nextjs";
 import { getPool, GetPoolOptions } from "@mutuals/graphql-client-nextjs/server";
 import { notFound } from "next/navigation";
 
@@ -24,7 +20,7 @@ export default async function ShellPool({
     notFound();
   }
 
-  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data?.pool);
+  const pool = data?.pool;
 
   return (
     <ShellPage

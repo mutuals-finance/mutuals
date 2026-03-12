@@ -19,7 +19,7 @@ export default function PoolList() {
 
   return (
     <SimpleGrid
-      templateColumns={"repeat(auto-fill, minmax(16rem, 1fr))"}
+      templateColumns={"repeat(auto-fill, minmax(14rem, 1fr))"}
       gap={6}
     >
       <Show
@@ -42,13 +42,13 @@ export default function PoolList() {
             </GridItem>
           }
         >
-          <GridItem gridColumn={"1 / -1"}>
-            {data?.viewer && data.viewer.__typename === "User" ? (
-              <PoolListContent {...data.viewer} />
-            ) : (
+          {data?.viewer && data.viewer.__typename === "User" ? (
+            <PoolListContent {...data.viewer} />
+          ) : (
+            <GridItem gridColumn={"1 / -1"}>
               <PoolListEmptyState />
-            )}
-          </GridItem>
+            </GridItem>
+          )}
         </Show>
       </Show>
     </SimpleGrid>

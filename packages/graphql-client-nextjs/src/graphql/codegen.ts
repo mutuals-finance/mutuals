@@ -14,13 +14,13 @@ const defaultConfig = {
     numericEnums: true,
   },
   presetConfig: {
-    fragmentMasking: { unmaskFunctionName: "getFragmentData" },
+    fragmentMasking: false,
   },
 } as unknown as CodegenConfig["generates"];
 
 const config: CodegenConfig = {
   overwrite: true,
-  ignoreNoDocuments: true, // for better experience with the watcher
+  ignoreNoDocuments: true,
   generates: {
     "./src/graphql/data/__generated__/": {
       ...defaultConfig,

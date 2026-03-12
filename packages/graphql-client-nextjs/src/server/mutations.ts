@@ -1,13 +1,4 @@
 "use server";
 
-/*
-export async function addWallet(
-  options?: TMutationOptions<AddWalletMutation, AddWalletMutationVariables>,
-) {
-  const client = await getClient();
-  return client.mutate({
-    mutation: ADD_WALLET,
-    ...options,
-  });
-}
-*/
+// Server-side mutations are executed via the Apollo client directly.
+// Use the hooks from client/mutations.ts for client-side usage.

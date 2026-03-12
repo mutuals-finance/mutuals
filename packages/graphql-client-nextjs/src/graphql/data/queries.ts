@@ -1,6 +1,5 @@
 import { graphql } from "./__generated__";
 
-// Node Query
 export const GET_NODE = graphql(/* GraphQL */ `
   query Node($id: ID!) {
     node(id: $id) {
@@ -9,7 +8,7 @@ export const GET_NODE = graphql(/* GraphQL */ `
         roles
       }
       ... on Pool {
-        ...PoolWithOwnerAndContract
+        ...PoolWithBalanceFragment
       }
       ... on EVMAccount {
         ...EVMAccountFragment
@@ -42,221 +41,9 @@ export const GET_NODE = graphql(/* GraphQL */ `
   }
 `);
 
-// Pool Day Balances Query
-export const GET_POOL_DAY_BALANCES = graphql(/* GraphQL */ `
-  query PoolDayBalances($id: ID, $slug: String, $contractId: ID) {
-    pool(id: $id, slug: $slug, contractId: $contractId) {
-      ... on ErrPoolNotFound {
-        message
-      }
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on Pool {
-        id
-        contract {
-          id
-          dayBalance {
-            ...PoolDayBalanceFragment
-          }
-        }
-      }
-    }
-  }
-`);
-
-// Pool Deposits Query
-export const GET_POOL_DEPOSITS = graphql(/* GraphQL */ `
-  query PoolDeposits($id: ID, $slug: String, $contractId: ID) {
-    pool(id: $id, slug: $slug, contractId: $contractId) {
-      ... on ErrPoolNotFound {
-        message
-      }
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on Pool {
-        id
-        contract {
-          id
-          deposits {
-            ...DepositFragment
-            transaction {
-              id
-              gasUsed
-              gasPrice
-              createdAt
-              updatedAt
-            }
-          }
-        }
-      }
-    }
-  }
-`);
-
-// Pool Hour Balances Query
-export const GET_POOL_HOUR_BALANCES = graphql(/* GraphQL */ `
-  query PoolHourBalances($id: ID, $slug: String, $contractId: ID) {
-    pool(id: $id, slug: $slug, contractId: $contractId) {
-      ... on ErrPoolNotFound {
-        message
-      }
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on Pool {
-        id
-        contract {
-          id
-          hourBalance {
-            ...PoolHourBalanceFragment
-          }
-        }
-      }
-    }
-  }
-`);
-
-// Pool Transactions Query
-export const GET_POOL_TRANSACTIONS = graphql(/* GraphQL */ `
-  query PoolTransactions($id: ID, $slug: String, $contractId: ID) {
-    pool(id: $id, slug: $slug, contractId: $contractId) {
-      ... on ErrPoolNotFound {
-        message
-      }
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on Pool {
-        id
-        contract {
-          id
-          deposits {
-            ...DepositFragment
-            transaction {
-              id
-              gasUsed
-              gasPrice
-              createdAt
-              updatedAt
-            }
-          }
-          withdrawals {
-            ...WithdrawalFragment
-            transaction {
-              id
-              gasUsed
-              gasPrice
-              createdAt
-              updatedAt
-            }
-          }
-        }
-      }
-    }
-  }
-`);
-
-// Pool With Contract Details Query
-export const GET_POOL_WITH_CONTRACT_DETAILS = graphql(/* GraphQL */ `
-  query PoolWithContractDetails($id: ID, $slug: String, $contractId: ID) {
-    pool(id: $id, slug: $slug, contractId: $contractId) {
-      ... on ErrPoolNotFound {
-        message
-      }
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on Pool {
-        id
-        name
-        description
-        image
-        slug
-        status
-        donationBps
-        createdAt
-        updatedAt
-        contract {
-          ...PoolContractFragment
-          poolFactory {
-            id
-            address
-            chainId
-            poolCount
-            createdAt
-            updatedAt
-          }
-          account {
-            id
-            address
-            accountType
-            createdAt
-            updatedAt
-          }
-          owner {
-            id
-            address
-            accountType
-            createdAt
-            updatedAt
-          }
-        }
-        claims {
-          ...ClaimFragment
-        }
-      }
-    }
-  }
-`);
-
-// Pool Withdrawals Query
-export const GET_POOL_WITHDRAWALS = graphql(/* GraphQL */ `
-  query PoolWithdrawals($id: ID, $slug: String, $contractId: ID) {
-    pool(id: $id, slug: $slug, contractId: $contractId) {
-      ... on ErrPoolNotFound {
-        message
-      }
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on Pool {
-        id
-        contract {
-          id
-          withdrawals {
-            ...WithdrawalFragment
-            transaction {
-              id
-              gasUsed
-              gasPrice
-              createdAt
-              updatedAt
-            }
-          }
-        }
-      }
-    }
-  }
-`);
-
-// User By ID Query
-export const GET_USER_BY_ID = graphql(/* GraphQL */ `
-  query UserById($id: ID!) {
-    userById(id: $id) {
+export const GET_USER = graphql(/* GraphQL */ `
+  query User($id: ID, $address: Address) {
+    user(id: $id, address: $address) {
       ... on ErrNotAuthorized {
         message
       }
@@ -272,66 +59,24 @@ export const GET_USER_BY_ID = graphql(/* GraphQL */ `
         id
         roles
         pools {
-          ...PoolWithOwnerAndContract
+          edges {
+            node {
+              ...PoolWithBalanceFragment
+            }
+            cursor
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
         }
       }
     }
   }
 `);
 
-// User By Username Query
-export const GET_USER_BY_USERNAME = graphql(/* GraphQL */ `
-  query UserByUsername($username: String!) {
-    userByUsername(username: $username) {
-      ... on ErrNotAuthorized {
-        message
-      }
-      ... on ErrUserNotFound {
-        message
-      }
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on User {
-        id
-        roles
-        pools {
-          ...PoolWithOwnerAndContract
-        }
-      }
-    }
-  }
-`);
-
-// User By Wallet Address Query
-export const GET_USER_BY_WALLET_ADDRESS = graphql(/* GraphQL */ `
-  query UserByAddress($address: Address!) {
-    userByAddress(address: $address) {
-      __typename
-      ... on ErrNotAuthorized {
-        __typename
-        message
-      }
-      ... on ErrUserNotFound {
-        __typename
-        message
-      }
-      ... on ErrInvalidInput {
-        __typename
-        message
-        parameters
-        reasons
-      }
-      ... on User {
-        id
-      }
-    }
-  }
-`);
-
-// Viewer Query
 export const VIEWER = graphql(/* GraphQL */ `
   query Viewer {
     viewer {
@@ -350,16 +95,40 @@ export const VIEWER = graphql(/* GraphQL */ `
         id
         roles
         pools {
-          ...PoolWithOwnerAndContract
+          edges {
+            node {
+              ...PoolWithBalanceFragment
+            }
+            cursor
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
         }
       }
     }
   }
 `);
 
-// Pool Query
-export const POOL = graphql(/* GraphQL */ `
-  query Pool($id: ID, $slug: String, $contractId: ID) {
+export const VIEWER_POOL_LIST = graphql(/* GraphQL */ `
+  query ViewerPoolList {
+    viewer {
+      __typename
+      ... on User {
+        ...UserPoolListWithOwnerAndContract
+      }
+      ... on ErrNotAuthorized {
+        message
+      }
+    }
+  }
+`);
+
+export const GET_POOL = graphql(/* GraphQL */ `
+  query GetPool($id: ID, $slug: String, $contractId: ID) {
     pool(id: $id, slug: $slug, contractId: $contractId) {
       ... on ErrPoolNotFound {
         message
@@ -370,13 +139,355 @@ export const POOL = graphql(/* GraphQL */ `
         reasons
       }
       ... on Pool {
-        ...PoolWithOwnerAndContract
+        ...PoolBaseFragment
       }
     }
   }
 `);
 
-// Search Pools Query
+export const GET_POOL_WITH_BALANCE = graphql(/* GraphQL */ `
+  query GetPoolWithBalance($id: ID, $slug: String, $contractId: ID) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        ...PoolWithBalanceFragment
+      }
+    }
+  }
+`);
+
+export const GET_POOL_WITH_CONTRACT = graphql(/* GraphQL */ `
+  query GetPoolWithContract($id: ID, $slug: String, $contractId: ID) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        ...PoolWithContractFragment
+      }
+    }
+  }
+`);
+
+export const GET_POOL_WITH_CLAIMS = graphql(/* GraphQL */ `
+  query GetPoolWithClaims($id: ID, $slug: String, $contractId: ID) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        ...PoolWithClaimsFragment
+      }
+    }
+  }
+`);
+
+export const GET_POOL_WITH_BALANCE_AND_CONTRACT = graphql(/* GraphQL */ `
+  query GetPoolWithBalanceAndContract($id: ID, $slug: String, $contractId: ID) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        ...PoolWithBalanceAndContractFragment
+      }
+    }
+  }
+`);
+
+export const GET_POOL_WITH_BALANCE_CONTRACT_CLAIMS = graphql(/* GraphQL */ `
+  query GetPoolWithBalanceContractClaims(
+    $id: ID
+    $slug: String
+    $contractId: ID
+  ) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        ...PoolWithBalanceContractClaimsFragment
+      }
+    }
+  }
+`);
+
+export const GET_POOL_DAY_BALANCES = graphql(/* GraphQL */ `
+  query PoolDayBalances(
+    $id: ID
+    $slug: String
+    $contractId: ID
+    $first: Int
+    $after: String
+  ) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        id
+        contract {
+          id
+          dayBalances(first: $first, after: $after) {
+            edges {
+              node {
+                ...PoolDayBalanceFragment
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+export const GET_POOL_HOUR_BALANCES = graphql(/* GraphQL */ `
+  query PoolHourBalances(
+    $id: ID
+    $slug: String
+    $contractId: ID
+    $first: Int
+    $after: String
+  ) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        id
+        contract {
+          id
+          hourBalances(first: $first, after: $after) {
+            edges {
+              node {
+                ...PoolHourBalanceFragment
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+export const GET_POOL_DEPOSITS = graphql(/* GraphQL */ `
+  query PoolDeposits(
+    $id: ID
+    $slug: String
+    $contractId: ID
+    $first: Int
+    $after: String
+  ) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        id
+        contract {
+          id
+          deposits(first: $first, after: $after) {
+            edges {
+              node {
+                ...DepositFragment
+                transaction {
+                  ...TxFragment
+                }
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+export const GET_POOL_WITHDRAWALS = graphql(/* GraphQL */ `
+  query PoolWithdrawals(
+    $id: ID
+    $slug: String
+    $contractId: ID
+    $first: Int
+    $after: String
+  ) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        id
+        contract {
+          id
+          withdrawals(first: $first, after: $after) {
+            edges {
+              node {
+                ...WithdrawalFragment
+                transaction {
+                  ...TxFragment
+                }
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+export const GET_POOL_TRANSACTIONS = graphql(/* GraphQL */ `
+  query PoolTransactions(
+    $id: ID
+    $slug: String
+    $contractId: ID
+    $first: Int
+    $after: String
+  ) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        id
+        contract {
+          id
+          deposits(first: $first, after: $after) {
+            edges {
+              node {
+                ...DepositFragment
+                transaction {
+                  ...TxFragment
+                }
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+          withdrawals(first: $first, after: $after) {
+            edges {
+              node {
+                ...WithdrawalFragment
+                transaction {
+                  ...TxFragment
+                }
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+export const SEARCH_USERS = graphql(/* GraphQL */ `
+  query SearchUsers($query: String!, $limit: Int, $usernameWeight: Float) {
+    searchUsers(query: $query, limit: $limit, usernameWeight: $usernameWeight) {
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on SearchUsersPayload {
+        results {
+          id
+          roles
+        }
+      }
+    }
+  }
+`);
+
 export const SEARCH_POOLS = graphql(/* GraphQL */ `
   query SearchPools(
     $query: String!
@@ -397,47 +508,9 @@ export const SEARCH_POOLS = graphql(/* GraphQL */ `
       }
       ... on SearchPoolsPayload {
         results {
-          pool {
-            ...PoolWithOwnerAndContract
-          }
+          ...PoolWithBalanceFragment
         }
       }
     }
   }
 `);
-
-// Search Users Query
-export const SEARCH_USERS = graphql(/* GraphQL */ `
-  query SearchUsers($query: String!, $limit: Int, $usernameWeight: Float) {
-    searchUsers(query: $query, limit: $limit, usernameWeight: $usernameWeight) {
-      ... on ErrInvalidInput {
-        message
-        parameters
-        reasons
-      }
-      ... on SearchUsersPayload {
-        results {
-          user {
-            id
-          }
-        }
-      }
-    }
-  }
-`);
-
-// Viewer Pool List Query
-export const VIEWER_POOL_LIST = graphql(/* GraphQL */ `
-  query ViewerPoolList {
-    viewer {
-      __typename
-      ... on User {
-        ...UserPoolListWithOwnerAndContract
-      }
-      ... on ErrNotAuthorized {
-        message
-      }
-    }
-  }
-`);
-

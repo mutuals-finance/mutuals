@@ -7,10 +7,6 @@ import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
 import { Stack } from "@mutuals/ui";
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
 import { notFound } from "next/navigation";
-import {
-  getFragmentData,
-  PoolWithOwnerAndContractFragmentDoc,
-} from "@mutuals/graphql-client-nextjs";
 
 export default async function PoolOverviewLayout({
   children,
@@ -28,7 +24,7 @@ export default async function PoolOverviewLayout({
     notFound();
   }
 
-  const pool = getFragmentData(PoolWithOwnerAndContractFragmentDoc, data.pool);
+  const pool = data.pool;
   const tabs = [
     {
       title: "Withdraw",

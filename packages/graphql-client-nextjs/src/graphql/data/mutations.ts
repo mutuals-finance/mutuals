@@ -174,7 +174,7 @@ export const POOL_CREATE = graphql(/* GraphQL */ `
       }
       ... on PoolCreatePayload {
         pool {
-          ...PoolWithOwnerAndContract
+          ...PoolWithBalanceAndContractFragment
         }
       }
     }
@@ -222,7 +222,7 @@ export const POOL_UPDATE = graphql(/* GraphQL */ `
       }
       ... on PoolUpdatePayload {
         pool {
-          ...PoolWithOwnerAndContract
+          ...PoolWithBalanceAndContractFragment
         }
       }
     }

@@ -5,10 +5,20 @@ import {
   ViewerPoolListQueryVariables,
   ViewerQuery,
   ViewerQueryVariables,
-  PoolQuery,
-  PoolQueryVariables,
-  PoolWithContractDetailsQuery,
-  PoolWithContractDetailsQueryVariables,
+  UserQuery,
+  UserQueryVariables,
+  GetPoolQuery,
+  GetPoolQueryVariables,
+  GetPoolWithBalanceQuery,
+  GetPoolWithBalanceQueryVariables,
+  GetPoolWithContractQuery,
+  GetPoolWithContractQueryVariables,
+  GetPoolWithClaimsQuery,
+  GetPoolWithClaimsQueryVariables,
+  GetPoolWithBalanceAndContractQuery,
+  GetPoolWithBalanceAndContractQueryVariables,
+  GetPoolWithBalanceContractClaimsQuery,
+  GetPoolWithBalanceContractClaimsQueryVariables,
   PoolDayBalancesQuery,
   PoolDayBalancesQueryVariables,
   PoolHourBalancesQuery,
@@ -19,12 +29,6 @@ import {
   PoolWithdrawalsQueryVariables,
   PoolTransactionsQuery,
   PoolTransactionsQueryVariables,
-  UserByIdQuery,
-  UserByIdQueryVariables,
-  UserByUsernameQuery,
-  UserByUsernameQueryVariables,
-  UserByAddressQuery,
-  UserByAddressQueryVariables,
   SearchUsersQuery,
   SearchUsersQueryVariables,
   SearchPoolsQuery,
@@ -35,58 +39,82 @@ import {
 import {
   VIEWER_POOL_LIST,
   VIEWER,
-  POOL,
-  GET_POOL_WITH_CONTRACT_DETAILS,
+  GET_USER,
+  GET_POOL,
+  GET_POOL_WITH_BALANCE,
+  GET_POOL_WITH_CONTRACT,
+  GET_POOL_WITH_CLAIMS,
+  GET_POOL_WITH_BALANCE_AND_CONTRACT,
+  GET_POOL_WITH_BALANCE_CONTRACT_CLAIMS,
   GET_POOL_DAY_BALANCES,
   GET_POOL_HOUR_BALANCES,
   GET_POOL_DEPOSITS,
   GET_POOL_WITHDRAWALS,
   GET_POOL_TRANSACTIONS,
-  GET_USER_BY_ID,
-  GET_USER_BY_USERNAME,
-  GET_USER_BY_WALLET_ADDRESS,
   SEARCH_USERS,
   SEARCH_POOLS,
   GET_NODE,
 } from "../graphql/data";
 
-// User Queries
 export function useViewer(
   options?: QueryOptions<ViewerQuery, ViewerQueryVariables>,
 ) {
   return useQuery(VIEWER, options);
 }
 
-export function useUserById(
-  options: QueryOptions<UserByIdQuery, UserByIdQueryVariables>,
+export function useUser(options: QueryOptions<UserQuery, UserQueryVariables>) {
+  return useQuery(GET_USER, options);
+}
+
+export function usePool(
+  options?: QueryOptions<GetPoolQuery, GetPoolQueryVariables>,
 ) {
-  return useQuery(GET_USER_BY_ID, options);
+  return useQuery(GET_POOL, options);
 }
 
-export function useUserByUsername(
-  options: QueryOptions<UserByUsernameQuery, UserByUsernameQueryVariables>,
-) {
-  return useQuery(GET_USER_BY_USERNAME, options);
-}
-
-export function useUserByWalletAddress(
-  options: QueryOptions<UserByAddressQuery, UserByAddressQueryVariables>,
-) {
-  return useQuery(GET_USER_BY_WALLET_ADDRESS, options);
-}
-
-// Pool Queries
-export function usePool(options?: QueryOptions<PoolQuery, PoolQueryVariables>) {
-  return useQuery(POOL, options);
-}
-
-export function usePoolWithContractDetails(
+export function usePoolWithBalance(
   options?: QueryOptions<
-    PoolWithContractDetailsQuery,
-    PoolWithContractDetailsQueryVariables
+    GetPoolWithBalanceQuery,
+    GetPoolWithBalanceQueryVariables
   >,
 ) {
-  return useQuery(GET_POOL_WITH_CONTRACT_DETAILS, options);
+  return useQuery(GET_POOL_WITH_BALANCE, options);
+}
+
+export function usePoolWithContract(
+  options?: QueryOptions<
+    GetPoolWithContractQuery,
+    GetPoolWithContractQueryVariables
+  >,
+) {
+  return useQuery(GET_POOL_WITH_CONTRACT, options);
+}
+
+export function usePoolWithClaims(
+  options?: QueryOptions<
+    GetPoolWithClaimsQuery,
+    GetPoolWithClaimsQueryVariables
+  >,
+) {
+  return useQuery(GET_POOL_WITH_CLAIMS, options);
+}
+
+export function usePoolWithBalanceAndContract(
+  options?: QueryOptions<
+    GetPoolWithBalanceAndContractQuery,
+    GetPoolWithBalanceAndContractQueryVariables
+  >,
+) {
+  return useQuery(GET_POOL_WITH_BALANCE_AND_CONTRACT, options);
+}
+
+export function usePoolWithBalanceContractClaims(
+  options?: QueryOptions<
+    GetPoolWithBalanceContractClaimsQuery,
+    GetPoolWithBalanceContractClaimsQueryVariables
+  >,
+) {
+  return useQuery(GET_POOL_WITH_BALANCE_CONTRACT_CLAIMS, options);
 }
 
 export function useViewerPoolList(
@@ -138,7 +166,6 @@ export function useSearchPools(
   return useQuery(SEARCH_POOLS, options);
 }
 
-// Node Query
 export function useNode(options: QueryOptions<NodeQuery, NodeQueryVariables>) {
   return useQuery(GET_NODE, options);
 }
