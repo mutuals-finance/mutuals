@@ -30,7 +30,7 @@ export default async function AssetTableCard({
   ...props
 }: AssetTableCardProps) {
   const { data, error } = await getPoolWithTokens(queryOptions);
-  console.log("getPoolWithTokens data", data);
+
   if (error || !data?.pool || "message" in data.pool) {
     return null;
   }
