@@ -46,7 +46,7 @@ export default async function PoolOverviewLayout({
         <Stack gap={"4"}>
           <PoolOverviewDescription queryOptions={queryOptions} />
           <PoolOverviewHandlers queryOptions={queryOptions} />
-          <AssetTableCard />
+          <AssetTableCard queryOptions={queryOptions} />
           <ActivityTableCard />
         </Stack>
       }

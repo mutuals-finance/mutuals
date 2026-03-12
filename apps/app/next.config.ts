@@ -22,7 +22,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "picsum.photos",
+        hostname: "mutuals.finance",
+      },
+      {
+        protocol: "https",
+        hostname: "cryptologos.cc",
       },
     ],
   },

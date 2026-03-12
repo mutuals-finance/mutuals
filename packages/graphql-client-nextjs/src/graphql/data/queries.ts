@@ -181,6 +181,47 @@ export const GET_POOL_WITH_CONTRACT = graphql(/* GraphQL */ `
   }
 `);
 
+export const GET_POOL_WITH_TOKENS = graphql(/* GraphQL */ `
+  query GetPoolWithTokens(
+    $id: ID
+    $slug: String
+    $contractId: ID
+    $firstTokens: Int
+    $afterTokens: String
+  ) {
+    pool(id: $id, slug: $slug, contractId: $contractId) {
+      ... on ErrPoolNotFound {
+        message
+      }
+      ... on ErrInvalidInput {
+        message
+        parameters
+        reasons
+      }
+      ... on Pool {
+        ...PoolBaseFragment
+        balance {
+          ...PoolBalanceFragment
+          tokens(first: $firstTokens, after: $afterTokens) {
+            edges {
+              node {
+                ...TokenBalanceFragment
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
 export const GET_POOL_WITH_CLAIMS = graphql(/* GraphQL */ `
   query GetPoolWithClaims($id: ID, $slug: String, $contractId: ID) {
     pool(id: $id, slug: $slug, contractId: $contractId) {

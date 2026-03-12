@@ -14,6 +14,8 @@ import {
   GetPoolWithBalanceAndContractQueryVariables,
   UserQuery,
   UserQueryVariables,
+  GetPoolWithTokensQuery,
+  GetPoolWithTokensQueryVariables,
 } from "../graphql/data/__generated__/graphql";
 import {
   GET_POOL,
@@ -22,6 +24,7 @@ import {
   GET_POOL_WITH_CLAIMS,
   GET_POOL_WITH_BALANCE_AND_CONTRACT,
   GET_USER,
+  GET_POOL_WITH_TOKENS,
 } from "../graphql/data";
 import { ApolloClient } from "@apollo/client";
 
@@ -44,6 +47,22 @@ export type GetPoolWithBalanceOptions = Omit<
   ApolloClient.QueryOptions<
     GetPoolWithBalanceQuery,
     GetPoolWithBalanceQueryVariables
+  >,
+  "query"
+>;
+
+export async function getPoolWithTokens(options?: GetPoolWithTokensOptions) {
+  return query({
+    query: GET_POOL_WITH_TOKENS,
+    fetchPolicy: "network-only",
+    ...options,
+  });
+}
+
+export type GetPoolWithTokensOptions = Omit<
+  ApolloClient.QueryOptions<
+    GetPoolWithTokensQuery,
+    GetPoolWithTokensQueryVariables
   >,
   "query"
 >;

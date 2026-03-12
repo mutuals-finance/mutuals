@@ -6,7 +6,6 @@ import {
   Text,
   type TextProps,
 } from "@mutuals/ui";
-
 import { formatCurrencyAmount } from "@/utils";
 import { AssetTableCellProps } from "@/features/Asset/types";
 
@@ -23,11 +22,13 @@ export default function AssetTableBalanceCell({
   badgeProps,
   ...props
 }: AssetTableBalanceCellProps) {
-  const { symbol } = row.original;
+  const { symbol } = row.original.token;
+  const amount = getValue<number>();
+
   return (
     <Stack direction={"row"} alignItems={"center"} {...props}>
       <Text as={"span"} fontVariantNumeric={"tabular-nums"} {...textProps}>
-        {formatCurrencyAmount(getValue())}
+        {formatCurrencyAmount(amount)}
       </Text>
       <Badge colorPalette={"primary"} {...badgeProps}>
         {symbol}

@@ -1,40 +1,38 @@
 "use client";
 
 import { createColumnHelper } from "@tanstack/react-table";
-
 import Table from "@/components/Table";
-import { type AssetTableProps } from "@/features/Asset/types";
+import { AssetItem, type AssetTableProps } from "@/features/Asset/types";
 
 import AssetTableIconCell from "@/features/Asset/Table/IconCell";
 import AssetTableBalanceCell from "@/features/Asset/Table/BalanceCell";
 import AssetTableValueCell from "@/features/Asset/Table/ValueCell";
-import { ERC20TokenBalance } from "@/lib/moralis";
 
-const columnHelper = createColumnHelper<ERC20TokenBalance>();
+const columnHelper = createColumnHelper<AssetItem>();
 
 export default function AssetTable({
   assets: data = [],
   ...props
 }: AssetTableProps) {
   const columns = [
-    columnHelper.accessor("tokenAddress", {
+    columnHelper.accessor("token", {
       header: "Asset",
       cell: (context) => (
         <AssetTableIconCell imageProps={{ size: "sm" }} {...context} />
       ),
     }),
-    columnHelper.accessor("usdValue", {
+    columnHelper.accessor("formattedAmount", {
       header: "Balance",
       cell: (context) => <AssetTableBalanceCell {...context} />,
     }),
-    columnHelper.accessor("balance", {
+    columnHelper.accessor("quotes", {
       header: "Value",
       cell: (context) => <AssetTableValueCell {...context} />,
     }),
   ];
 
   return (
-    <Table<ERC20TokenBalance>
+    <Table<AssetItem>
       data={data}
       columns={columns}
       headerRowProps={{ cellProps: { px: "6" } }}

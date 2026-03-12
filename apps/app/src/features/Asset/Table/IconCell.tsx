@@ -1,5 +1,4 @@
 import { HStack, StackProps } from "@mutuals/ui";
-
 import AssetCard, {
   AssetCardLabelProps,
   AssetCardLogoProps,
@@ -23,7 +22,8 @@ export default function AssetTableIconCell({
   onlyLabel = false,
   ...props
 }: AssetTableIconCellProps) {
-  const { logo, name, symbol } = row.original;
+  const { logo, name, symbol } = row.original.token;
+
   return (
     <HStack
       alignItems={"center"}

@@ -1,12 +1,14 @@
 import { CellContext } from "@tanstack/react-table";
 import type { TableProps } from "@/components/Table";
-import { ERC20TokenBalance } from "@/lib/moralis";
+import { TokenBalance } from "@mutuals/graphql-client-nextjs";
+
+export type AssetItem = Omit<TokenBalance, "holder">;
 
 export type AssetTableProps = {
-  assets?: ERC20TokenBalance[];
-} & Omit<TableProps<ERC20TokenBalance>, "data" | "columns">;
+  assets?: AssetItem[];
+} & Omit<TableProps<AssetItem>, "data" | "columns">;
 
 export type AssetTableCellProps = CellContext<
-  ERC20TokenBalance,
-  bigint | string | number | null | undefined
+  AssetItem,
+  bigint | string | number | null | undefined | any
 >;

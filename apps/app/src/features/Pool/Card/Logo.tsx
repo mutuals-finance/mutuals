@@ -3,9 +3,9 @@ import {
   AvatarRootProps,
   AvatarFallback,
   AvatarImage,
-  AvatarImageProps,
 } from "@mutuals/ui";
 import { getImageProps, ImageProps } from "next/image";
+import { ComponentProps } from "react";
 
 export type PoolCardLogoProps = AvatarRootProps & {
   alt?: ImageProps["alt"];
@@ -17,45 +17,33 @@ export default function PoolCardLogo({
   alt = "",
   ...props
 }: PoolCardLogoProps) {
-  const imageProps = getImageProps({
-    src,
-    alt,
-    width: 120,
-    height: 120,
-  }) as AvatarImageProps;
+  const valid = src !== "";
+
+  const nextImage = valid
+    ? getImageProps({
+        src,
+        alt,
+        width: 240,
+        height: 240,
+        priority: true,
+      })
+    : null;
 
   return (
     <AvatarRoot {...props}>
-      <AvatarFallback name={alt} />
-      <AvatarImage {...imageProps} />
+      <AvatarFallback name={alt as string} />
+      {valid && nextImage && (
+        <AvatarImage
+          src={nextImage.props.src}
+          {...(nextImage.props as ComponentProps<"img">)}
+          style={{
+            ...nextImage.props.style,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
+      )}
     </AvatarRoot>
-    /*
-
-  <Stack
-      borderRadius={borderRadius!}
-      overflow={"hidden"}
-      borderWidth={"1px"}
-      boxSize={boxSize}
-      p={p}
-      bg={bg}
-    >
-      <>
-        {!src || src === "" ? (
-          <Icon alignSelf={"center"} justifySelf={"center"} mx={"auto"}>
-            <IoImage />
-          </Icon>
-        ) : (
-          <Box
-            flex={"1"}
-            borderRadius={borderRadius!}
-            position={"relative"}
-            {...props}
-          >
-            <NextImage src={src} alt={alt || "Unknown Pool"} fill={fill} />
-          </Box>
-        )}
-      </>
-    </Stack>
-*/
   );
 }
