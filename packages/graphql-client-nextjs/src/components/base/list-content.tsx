@@ -1,5 +1,5 @@
 import { OperationVariables } from "@apollo/client";
-import { ReactNode, Fragment } from "react";
+import { ReactNode } from "react";
 import { QueryResultWithoutData } from "../../types";
 
 export type ListContentProps<

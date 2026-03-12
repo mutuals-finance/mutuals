@@ -1,7 +1,7 @@
+/*
 import { OperationVariables } from "@apollo/client";
 import { ReactNode, PropsWithChildren } from "react";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
-import { FragmentType } from "../../graphql/data/__generated__";
 import { QueryRenderer, QueryRendererProps } from "./query-renderer";
 import { ListContent } from "./list-content";
 import { QueryResultWithoutData } from "../../types";
@@ -53,3 +53,4 @@ export function QueryListRenderer<
     content
   );
 }
+*/

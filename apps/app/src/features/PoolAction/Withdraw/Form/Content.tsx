@@ -1,18 +1,16 @@
 "use client";
 
 import { Box, Button, Stack, ScrollArea, StackProps } from "@mutuals/ui";
-import React from "react";
+import React, { useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useToggle } from "react-use";
-
 import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
 import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
-
 import { WithdrawData } from "@/features/PoolAction/types";
-import { ERC20TokenBalance } from "@/lib/moralis";
+import { AssetItem } from "@/features/Asset/types";
 
 export interface WithdrawFormContentProps extends StackProps {
-  balance?: ERC20TokenBalance[];
+  balance?: AssetItem[];
 }
 
 export default function PoolActionWithdrawFormContent({
@@ -26,24 +24,16 @@ export default function PoolActionWithdrawFormContent({
     formState: { isValid },
   } = useFormContext<WithdrawData>();
 
-  const selectedAssets = useWatch({ name: "assets", control });
+  const selectedAssets = useWatch({ name: "assets", control }) ?? {};
   const distribute = useWatch({ name: "distribute", control });
 
-  //const { ...tx } = useWithdrawSplit(pool!.contract?.address, []);
   const [isModalOpen, setIsModalOpen] = useToggle(false);
-  const data = balance;
+
+  const memoizedBalance = useMemo(() => balance, [balance]);
 
   return (
     <>
-      {/*
-      <WithdrawModal
-        {...tx}
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-*/}
-
-      <ScrollArea.Root size="xs">
+      <ScrollArea.Root size="xs" h="full">
         <ScrollArea.Viewport>
           <ScrollArea.Content
             w={"full"}
@@ -56,21 +46,18 @@ export default function PoolActionWithdrawFormContent({
           >
             <Box px={{ base: "4", lg: "0" }}>{children}</Box>
 
-            {/*<InputSwitch label={"Distribute"} id={"distribute"} />*/}
-
             <WithdrawTable
-              data={data}
+              data={memoizedBalance}
               state={{
                 rowSelection: selectedAssets,
               }}
               onRowSelectionChange={(updaterOrValue) => {
-                const isUpdaterFn = typeof updaterOrValue == "function";
-                setValue(
-                  "assets",
-                  isUpdaterFn
-                    ? updaterOrValue(selectedAssets ?? {})
-                    : updaterOrValue,
-                );
+                const isUpdaterFn = typeof updaterOrValue === "function";
+                const newValue = isUpdaterFn
+                  ? updaterOrValue(selectedAssets)
+                  : updaterOrValue;
+
+                setValue("assets", newValue, { shouldValidate: true });
               }}
             />
           </ScrollArea.Content>
@@ -89,14 +76,14 @@ export default function PoolActionWithdrawFormContent({
         borderColor={"border"}
       >
         <SummaryTable
-          data={data}
+          data={memoizedBalance}
           distribute={distribute}
           assets={selectedAssets}
         />
 
         <Button
           colorPalette="primary"
-          disabled={false && !isValid} //  || tx.isError || tx.isLoading}
+          disabled={!isValid}
           type={"button"}
           w={"full"}
           onClick={() => {

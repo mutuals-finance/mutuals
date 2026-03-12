@@ -7,12 +7,9 @@ export const metadata: Metadata = {
 
 export default async function PoolHandleWithdraw({
   params,
-}: {
-  params: Promise<{
-    id: string;
-  }>;
-}) {
-  const queryOptions = { variables: { slug: (await params).id } };
+}: PageProps<"/pool/[id]/withdraw">) {
+  const { id: slug } = await params;
+  const queryOptions = { variables: { slug } };
 
   return <PoolActionWithdraw queryOptions={queryOptions} />;
 }

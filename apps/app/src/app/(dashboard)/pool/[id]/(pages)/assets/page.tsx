@@ -2,17 +2,29 @@ import React from "react";
 import AssetTable from "@/features/Asset/Table";
 import ShellPage from "@/features/Shell/Page";
 import { Container } from "@mutuals/ui";
-import { Metadata } from "next";
-import { getTokenBalances } from "@/lib/moralis";
+import { type Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getPoolWithTokens } from "@mutuals/graphql-client-nextjs/server";
+import { type AssetItem } from "@/features/Asset/types";
 
 export const metadata: Metadata = {
   title: "Assets",
 };
 
-export default async function PoolAssetsPage() {
-  const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
+export default async function PoolAssetsPage({
+  params,
+}: PageProps<"/pool/[id]/assets">) {
+  const slug = (await params).id;
+  const queryOptions = { variables: { slug } };
 
-  const assets = await getTokenBalances(address, 1);
+  const { data, error } = await getPoolWithTokens(queryOptions);
+
+  if (error || !data?.pool || "message" in data.pool) {
+    notFound();
+  }
+
+  const assets: AssetItem[] =
+    data.pool.balance?.tokens?.edges?.map((edge) => edge.node) ?? [];
 
   return (
     <ShellPage breadcrumbsEnabled={false} title={"Assets"}>

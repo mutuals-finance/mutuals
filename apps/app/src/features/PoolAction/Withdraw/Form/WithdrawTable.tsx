@@ -1,3 +1,5 @@
+"use client";
+
 import AssetIconCell from "@/features/Asset/Table/IconCell";
 import AssetBalanceCell from "@/features/Asset/Table/BalanceCell";
 import AssetValueCell from "@/features/Asset/Table/ValueCell";
@@ -6,12 +8,17 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { WithdrawFormContentProps } from "@/features/PoolAction/Withdraw/Form/Content";
 import { Checkbox } from "@mutuals/ui";
 import { useMemo } from "react";
-import { ERC20TokenBalance } from "@/lib/moralis";
+import { AssetItem } from "@/features/Asset/types";
 
 type WithdrawTableProps = WithdrawFormContentProps &
-  Omit<TableProps<ERC20TokenBalance>, "columns">;
+  Omit<TableProps<AssetItem>, "columns">;
 
-const columnHelper = createColumnHelper<ERC20TokenBalance>();
+const columnHelper = createColumnHelper<AssetItem>();
+
+const IconImageProps = { size: "xs" as const, variant: "outline" as const };
+const IconLabelProps = { textStyle: "xs" as const };
+const BalanceTextProps = { textStyle: "xs" as const };
+const BalanceBadgeProps = { size: "xs" as const };
 
 export default function WithdrawTable({ ...props }: WithdrawTableProps) {
   const columns = useMemo(
@@ -21,48 +28,56 @@ export default function WithdrawTable({ ...props }: WithdrawTableProps) {
         maxSize: 40,
         header: ({ table }) => (
           <Checkbox
-            {...{
-              checked: table.getIsSomeRowsSelected()
-                ? "indeterminate"
-                : table.getIsAllRowsSelected(),
-              onCheckedChange: table.getToggleAllRowsSelectedHandler(),
-            }}
+            checked={
+              table.getIsAllRowsSelected()
+                ? true
+                : table.getIsSomeRowsSelected()
+                  ? "indeterminate"
+                  : false
+            }
+            onCheckedChange={(checked) =>
+              table.getToggleAllRowsSelectedHandler()({ target: { checked } })
+            }
           />
         ),
         cell: ({ row }) => (
           <Checkbox
-            {...{
-              checked: row.getIsSomeSelected()
-                ? "indeterminate"
-                : row.getIsSelected(),
-              disabled: !row.getCanSelect(),
-              onCheckedChange: row.getToggleSelectedHandler(),
-            }}
+            checked={
+              row.getIsSelected()
+                ? true
+                : row.getIsSomeSelected()
+                  ? "indeterminate"
+                  : false
+            }
+            disabled={!row.getCanSelect()}
+            onCheckedChange={(checked) =>
+              row.getToggleSelectedHandler()({ target: { checked } })
+            }
           />
         ),
       }),
-      columnHelper.accessor("tokenAddress", {
+      columnHelper.accessor("token", {
         header: "Token",
         cell: (context) => (
           <AssetIconCell
             {...context}
-            labelProps={{ textStyle: "xs" }}
-            imageProps={{ size: "xs", variant: "outline" }}
+            labelProps={IconLabelProps}
+            imageProps={IconImageProps}
           />
         ),
       }),
-      columnHelper.accessor("usdValue", {
-        header: "",
+      columnHelper.accessor("formattedAmount", {
+        header: "Balance",
         cell: (context) => (
           <AssetBalanceCell
-            badgeProps={{ size: "xs" }}
-            textProps={{ textStyle: "xs" }}
+            badgeProps={BalanceBadgeProps}
+            textProps={BalanceTextProps}
             {...context}
           />
         ),
       }),
-      columnHelper.accessor("balance", {
-        header: "",
+      columnHelper.accessor("quotes", {
+        header: "Value",
         cell: (context) => <AssetValueCell textStyle={"xs"} {...context} />,
       }),
     ],
@@ -70,7 +85,7 @@ export default function WithdrawTable({ ...props }: WithdrawTableProps) {
   );
 
   return (
-    <Table<ERC20TokenBalance>
+    <Table<AssetItem>
       tableProps={{ size: "sm" }}
       containerProps={{ w: "full" }}
       {...props}

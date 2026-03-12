@@ -13,9 +13,9 @@ import {
   Form,
 } from "@mutuals/ui";
 import { IoEllipsisHorizontal, IoOpenOutline } from "react-icons/io5";
-import { PoolQuery } from "@mutuals/graphql-client-nextjs";
+import { GetPoolQuery } from "@mutuals/graphql-client-nextjs";
 
-export type PoolActionDepositProps = PoolQuery;
+export type PoolActionDepositProps = GetPoolQuery;
 
 export default async function PoolActionDeposit() {
   const address = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045";

@@ -32,7 +32,7 @@ export default async function ShellPool({
               <PoolCard.Logo
                 src={pool?.image}
                 alt={pool?.name}
-                size="xs"
+                size="2xs"
                 variant={"outline"}
               />
               {pool?.name}

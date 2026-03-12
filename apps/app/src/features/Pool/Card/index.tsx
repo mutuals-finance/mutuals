@@ -14,13 +14,10 @@ import {
 import NextLink from "next/link";
 
 import PoolCardLogo from "@/features/Pool/Card/Logo";
-import {
-  PoolStatus,
-  PoolWithOwnerAndContractFragment,
-} from "@mutuals/graphql-client-nextjs";
+import { PoolStatus, type Pool } from "@mutuals/graphql-client-nextjs";
 import { DeepPartial } from "#/partial";
 
-export type PoolCardProps = DeepPartial<PoolWithOwnerAndContractFragment>;
+export type PoolCardProps = DeepPartial<Pool>;
 
 function PoolCard({ name, status, slug }: PoolCardProps) {
   return (

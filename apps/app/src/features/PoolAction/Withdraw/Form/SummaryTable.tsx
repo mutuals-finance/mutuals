@@ -1,35 +1,34 @@
+"use client";
+
 import { DataListItem, DataListRoot, DataListItemProps } from "@mutuals/ui";
 import React, { useMemo } from "react";
-import { formatPrice } from "src/utils";
+import { formatUSDPrice } from "@/utils";
 import { type WithdrawData } from "@/features/PoolAction/types";
-import { ERC20TokenBalance } from "@/lib/moralis";
+import { AssetItem } from "@/features/Asset/types";
 
 export interface SummaryTableProps extends WithdrawData {
-  shares?: any[];
-  data?: ERC20TokenBalance[];
+  data?: AssetItem[];
 }
 
 export default function SummaryTable({
   assets = {},
   data = [],
   distribute,
-  shares,
 }: SummaryTableProps) {
-  const share = shares ? shares[0] : null;
-
   const total = useMemo(
     () =>
       Object.keys(assets).reduce(
-        (total, index) => {
+        (acc, index) => {
           const asset = data[Number(index)];
 
-          if (!asset) {
-            return { balance: 0, assetCount: 0 };
-          }
+          if (!asset) return acc;
+
+          const assetUsdValue = asset.quotes?.[0]?.value ?? 0;
+          const assetTokenAmount = asset.formattedAmount ?? 0;
 
           return {
-            balance: total.balance + Number(asset.usdValue),
-            assetCount: total.assetCount + Number(asset.balance),
+            balance: acc.balance + assetUsdValue,
+            assetCount: acc.assetCount + assetTokenAmount,
           };
         },
         { balance: 0, assetCount: 0 },
@@ -37,29 +36,37 @@ export default function SummaryTable({
     [data, assets],
   );
 
-  const userWithdraw = Number(share?.value || "0.00") * total?.balance;
+  const userWithdrawValue = total.balance;
 
-  const rows: Record<string, { value: number; props?: DataListItemProps }> = {
-    "Total Withdrawal": {
-      value: distribute ? total?.balance : userWithdraw,
+  const rows: Record<
+    string,
+    { label: string; value: number; props?: DataListItemProps }
+  > = {
+    total: {
+      label: "Total Selection",
+      value: total.balance,
       props: { border: "none", py: 0 },
     },
-    "Mutuals Fee": { value: 0 },
+    fee: {
+      label: "Mutuals Fee",
+      value: 0,
+      props: { border: "none", py: 0 },
+    },
   };
 
   return (
-    <DataListRoot orientation="horizontal" size={"sm"} divideY="0">
-      {Object.keys(rows).map((col) => (
+    <DataListRoot orientation="horizontal" size={"sm"} gap="2">
+      {Object.values(rows).map((row) => (
         <DataListItem
-          key={col}
-          label={col}
-          value={formatPrice(rows[col]?.value.toString() ?? "")}
-          {...rows[col]?.props}
+          key={row.label}
+          label={row.label}
+          value={formatUSDPrice(row.value)}
+          {...row.props}
         />
       ))}
       <DataListItem
-        label={"Your Withdrawal"}
-        value={formatPrice(userWithdraw.toString())}
+        label={distribute ? "Distributing Total" : "Your Withdrawal"}
+        value={formatUSDPrice(userWithdrawValue)}
       />
     </DataListRoot>
   );
