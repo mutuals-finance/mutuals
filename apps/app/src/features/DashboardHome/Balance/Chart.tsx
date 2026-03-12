@@ -4,7 +4,6 @@ import { Chart, useChart, recharts } from "@mutuals/ui";
 
 const { Area, AreaChart, CartesianGrid, XAxis, YAxis } = recharts;
 
-// Generate the last 7 days as Date objects
 const generateData = () => {
   const data = [];
   const today = new Date();
@@ -26,13 +25,17 @@ const data = generateData();
 export default function DashboardBalanceChart() {
   const chart = useChart({
     data,
-    series: [{ name: "balanceUSD", color: "teal.solid" }],
+    series: [{ name: "balanceUSD", color: "brand.solid" }],
   });
 
   return (
-    <Chart.Root maxH="2xs" chart={chart}>
-      <AreaChart data={chart.data}>
-        <CartesianGrid strokeDasharray="3 3" stroke={chart.color("border")} />
+    <Chart.Root maxH="xs" chart={chart}>
+      <AreaChart data={chart.data} responsive>
+        <CartesianGrid
+          strokeDasharray="3 3"
+          stroke={chart.color("border")}
+          vertical={true}
+        />
 
         <XAxis
           axisLine={false}
@@ -45,7 +48,7 @@ export default function DashboardBalanceChart() {
           domain={[0, 100000]}
           axisLine={false}
           tickLine={false}
-          width={20}
+          width={40}
           tickFormatter={chart.formatNumber({
             style: "currency",
             currency: "USD",
@@ -57,7 +60,9 @@ export default function DashboardBalanceChart() {
           type="monotone"
           isAnimationActive={true}
           dataKey={chart.key("balanceUSD")}
-          stroke={chart.color("gray.solid")}
+          stroke={chart.color("brand.solid")}
+          fill={chart.color("brand.solid")}
+          fillOpacity={0.1}
         />
       </AreaChart>
     </Chart.Root>

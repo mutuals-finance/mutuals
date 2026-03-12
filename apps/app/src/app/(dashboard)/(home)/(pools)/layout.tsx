@@ -44,7 +44,7 @@ export default function DashboardHomePoolsLayout({
       initialFocusEl={() => null}
     >
       <DrawerBackdrop />
-      <DrawerContent roundedTop={"xl"}>
+      <DrawerContent roundedTop={{ mdDown: "l3" }}>
         <DrawerCloseTrigger />
         <DrawerContext>
           {(store) => (
