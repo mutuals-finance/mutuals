@@ -1,98 +1,29 @@
-"use client";
-
-import { Box, Button, Stack, ScrollArea, StackProps } from "@mutuals/ui";
-import React, { useMemo } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
-import { useToggle } from "react-use";
-
-import SummaryTable from "@/features/PoolAction/Withdraw/Form/SummaryTable";
-import WithdrawTable from "@/features/PoolAction/Withdraw/Form/WithdrawTable";
-
+import WithdrawFormContent from "@/features/PoolAction/Withdraw/Form/Content";
 import { WithdrawData } from "@/features/PoolAction/types";
+import { Form } from "@mutuals/ui";
 import { AssetItem } from "@/features/Asset/types";
+import { PropsWithChildren } from "react";
 
-export interface WithdrawFormContentProps extends StackProps {
-  balance?: AssetItem[];
-}
+export type WithdrawFormProps = PropsWithChildren<{ balance?: AssetItem[] }>;
 
-export default function PoolActionWithdrawFormContent({
+export default async function PoolActionWithdrawForm({
   balance = [],
-  children,
-}: WithdrawFormContentProps) {
-  const {
-    setValue,
-    control,
-    formState: { isValid },
-  } = useFormContext<WithdrawData>();
-
-  const selectedAssets = useWatch({ name: "assets", control });
-  const distribute = useWatch({ name: "distribute", control });
-
-  const [isModalOpen, setIsModalOpen] = useToggle(false);
-
-  const tableData = useMemo(() => balance, [balance]);
+}: WithdrawFormProps) {
+  const initialAssets = Object.fromEntries(
+    balance.map((_, index) => [index, true]),
+  );
 
   return (
-    <>
-      <ScrollArea.Root size="xs" h="full">
-        <ScrollArea.Viewport>
-          <ScrollArea.Content
-            w={"full"}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"stretch"}
-            flex={"1"}
-            pt="6"
-            gap="6"
-          >
-            <Box px={{ base: "4", lg: "0" }}>{children}</Box>
-
-            <WithdrawTable
-              data={tableData}
-              state={{
-                rowSelection: selectedAssets ?? {},
-              }}
-              onRowSelectionChange={(updaterOrValue) => {
-                const isUpdaterFn = typeof updaterOrValue === "function";
-                const newValue = isUpdaterFn
-                  ? updaterOrValue(selectedAssets ?? {})
-                  : updaterOrValue;
-
-                setValue("assets", newValue, { shouldValidate: true });
-              }}
-            />
-          </ScrollArea.Content>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar orientation="vertical" />
-        <ScrollArea.Corner bg="bg" />
-      </ScrollArea.Root>
-
-      <Stack
-        flexShrink={"0"}
-        pt={"4"}
-        px={{ base: "4", lg: "0" }}
-        pb={"6"}
-        gap={"4"}
-        borderTop={"1px solid"}
-        borderColor={"border"}
-        bg="bg"
-      >
-        <SummaryTable
-          data={tableData}
-          distribute={distribute}
-          assets={selectedAssets ?? {}}
-        />
-
-        <Button
-          colorPalette="primary"
-          disabled={!isValid}
-          type={"button"}
-          w={"full"}
-          onClick={() => setIsModalOpen(true)}
-        >
-          Withdraw
-        </Button>
-      </Stack>
-    </>
+    <Form<WithdrawData>
+      values={{
+        assets: initialAssets,
+        distribute: false,
+      }}
+      flex={"1"}
+      overflow={"hidden"}
+      gap={"0"}
+    >
+      <WithdrawFormContent balance={balance} />
+    </Form>
   );
 }
