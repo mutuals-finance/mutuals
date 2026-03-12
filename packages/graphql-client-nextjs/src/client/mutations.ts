@@ -28,20 +28,22 @@ import {
   PoolClaimBulkDeleteMutationVariables,
 } from "../graphql/data/__generated__/graphql";
 import { TMutationOptions } from "../types";
-import { POOL_CREATE } from "../graphql/data/mutations/PoolCreate";
-import { POOL_UPDATE } from "../graphql/data/mutations/PoolUpdate";
-import { POOL_DELETE } from "../graphql/data/mutations/PoolDelete";
-import { USER_REGISTER } from "../graphql/data/mutations/UserRegister";
-import { USER_UPDATE } from "../graphql/data/mutations/UserUpdate";
-import { USER_REQUEST_DELETION } from "../graphql/data/mutations/UserRequestDeletion";
-import { USER_DELETE } from "../graphql/data/mutations/UserDelete";
-import { ROLE_UPDATE } from "../graphql/data/mutations/RoleUpdate";
-import { POOL_CLAIM_CREATE } from "../graphql/data/mutations/PoolClaimCreate";
-import { POOL_CLAIM_UPDATE } from "../graphql/data/mutations/PoolClaimUpdate";
-import { POOL_CLAIM_DELETE } from "../graphql/data/mutations/PoolClaimDelete";
-import { POOL_CLAIM_BULK_CREATE } from "../graphql/data/mutations/PoolClaimBulkCreate";
-import { POOL_CLAIM_BULK_UPDATE } from "../graphql/data/mutations/PoolClaimBulkUpdate";
-import { POOL_CLAIM_BULK_DELETE } from "../graphql/data/mutations/PoolClaimBulkDelete";
+import {
+  POOL_CREATE,
+  POOL_UPDATE,
+  POOL_DELETE,
+  USER_REGISTER,
+  USER_UPDATE,
+  USER_REQUEST_DELETION,
+  USER_DELETE,
+  ROLE_UPDATE,
+  POOL_CLAIM_CREATE,
+  POOL_CLAIM_UPDATE,
+  POOL_CLAIM_DELETE,
+  POOL_CLAIM_BULK_CREATE,
+  POOL_CLAIM_BULK_UPDATE,
+  POOL_CLAIM_BULK_DELETE,
+} from "../graphql/data";
 
 // User Mutations
 export function useUserRegister() {

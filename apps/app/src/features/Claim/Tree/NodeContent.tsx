@@ -109,7 +109,7 @@ export default function ClaimTreeNodeContent({ children }: PropsWithChildren) {
           </TreeView.BranchTrigger>
         )}
 
-        <Menu.Trigger asChild>
+        <Menu.Trigger asChild={true}>
           <IconButton
             shadow={"sm"}
             variant="subtle"

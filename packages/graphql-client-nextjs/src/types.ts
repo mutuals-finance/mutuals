@@ -1,13 +1,12 @@
 import { DocumentNode, FragmentType, OperationVariables } from "@apollo/client";
-import { Exact } from "./graphql/data/__generated__/graphql";
 import { useMutation } from "@apollo/client/react";
 import { useQuery } from "@apollo/client/react";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
 export type TMutationOptions<
-  TMutationDocument,
-  TVariables extends { [key: string]: unknown },
-> = useMutation.Options<TMutationDocument, Exact<TVariables>>;
+  TMutationDocument = unknown,
+  TVariables extends OperationVariables = OperationVariables,
+> = useMutation.Options<TMutationDocument, TVariables>;
 
 export type TQueryOptions<
   TQueryType,

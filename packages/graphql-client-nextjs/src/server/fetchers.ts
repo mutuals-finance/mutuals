@@ -5,7 +5,7 @@ import {
   PoolQuery,
   PoolQueryVariables,
 } from "../graphql/data/__generated__/graphql";
-import { POOL } from "../graphql/data/queries/Pool";
+import { POOL } from "../graphql/data";
 import { ApolloClient } from "@apollo/client";
 
 export async function getPool(options?: GetPoolOptions) {
