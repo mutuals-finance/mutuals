@@ -67,6 +67,10 @@ export default function SummaryTable({
       <DataListItem
         label={distribute ? "Distributing Total" : "Your Withdrawal"}
         value={formatUSDPrice(userWithdrawValue)}
+        borderTop={"1px solid"}
+        borderColor={"border"}
+        pt={"2"}
+        fontWeight={"medium"}
       />
     </DataListRoot>
   );

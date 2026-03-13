@@ -282,7 +282,8 @@ function mockPool(overrides?: Record<string, unknown>) {
     __typename: "Pool",
     id: faker.string.uuid(),
     name: "Mutuals Demo Pool",
-    description: faker.lorem.paragraph(),
+    description:
+      "This pool showcases the features of Mutuals. It is not a real payment pool and should not be used with real funds.",
     image: "https://mutuals.finance/icon0.svg",
     slug: "demo",
     status: PoolStatus.Active,

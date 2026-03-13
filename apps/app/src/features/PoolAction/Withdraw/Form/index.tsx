@@ -7,6 +7,7 @@ import { PropsWithChildren } from "react";
 export type WithdrawFormProps = PropsWithChildren<{ balance?: AssetItem[] }>;
 
 export default async function PoolActionWithdrawForm({
+  children,
   balance = [],
 }: WithdrawFormProps) {
   const initialAssets = Object.fromEntries(
@@ -23,7 +24,7 @@ export default async function PoolActionWithdrawForm({
       overflow={"hidden"}
       gap={"0"}
     >
-      <WithdrawFormContent balance={balance} />
+      <WithdrawFormContent balance={balance}>{children}</WithdrawFormContent>
     </Form>
   );
 }

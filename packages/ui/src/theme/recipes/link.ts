@@ -2,7 +2,7 @@ import { defineRecipe } from "@chakra-ui/react";
 
 export default defineRecipe({
   base: {
-    fontWeight: "medium",
+    fontWeight: "normal",
     _focus: {
       outline: "none",
     },

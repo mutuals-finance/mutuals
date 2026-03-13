@@ -23,8 +23,8 @@ export default function PoolCardLogo({
     ? getImageProps({
         src,
         alt,
-        width: 240,
-        height: 240,
+        width: 20,
+        height: 20,
         priority: true,
       })
     : null;

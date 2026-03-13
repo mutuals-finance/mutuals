@@ -53,7 +53,7 @@ export default async function PoolActionDeposit() {
       <Stack
         flexShrink={"0"}
         px={{ base: "4", lg: "4" }}
-        py={{ base: "4", lg: "6" }}
+        py={{ base: "6", lg: "6" }}
       >
         <Form direction={"column"}>
           <Clipboard.Root value={address}>

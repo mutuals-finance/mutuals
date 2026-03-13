@@ -6,7 +6,10 @@ export default defineSlotRecipe({
   variants: {
     size: {
       "2xs": {
-        root: { width: "6", height: "6", fontSize: "2xs" },
+        root: { width: "4", height: "4" },
+        fallback: {
+          fontSize: "0.4rem",
+        },
       },
     },
   },

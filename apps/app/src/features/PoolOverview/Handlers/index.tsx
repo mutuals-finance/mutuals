@@ -1,14 +1,8 @@
-import {
-  IoDownloadOutline,
-  IoPushOutline,
-  IoSettingsOutline,
-  IoSwapHorizontalOutline,
-  IoWalletOutline,
-} from "react-icons/io5";
-
 import ShellIconButtonList from "@/features/Shell/IconButtonList";
 import { Bleed, IconTextButtonProps } from "@mutuals/ui";
 import { getPool, GetPoolOptions } from "@mutuals/graphql-client-nextjs/server";
+import { BiArrowToBottom, BiArrowToTop } from "react-icons/bi";
+import { LuFileClock, LuSettings, LuWallet } from "react-icons/lu";
 
 export type PoolHandlersProps = {
   queryOptions?: GetPoolOptions;
@@ -28,40 +22,35 @@ export default async function PoolOverviewHandlers({
   const items: IconTextButtonProps[] = [
     {
       "aria-label": "Withdraw",
-      children: <IoPushOutline />,
+      children: <BiArrowToTop />,
       href: `/pool/${pool?.slug}/withdraw`,
-      variant: "subtle",
       linkProps: { scroll: false },
     },
     {
       "aria-label": "Deposit",
-      children: <IoDownloadOutline />,
+      children: <BiArrowToBottom />,
       href: `/pool/${pool?.slug}/deposit`,
       linkProps: { scroll: false },
-      variant: "subtle",
     },
     {
       "aria-label": "Settings",
-      children: <IoSettingsOutline />,
+      children: <LuSettings />,
       href: `/pool/${pool?.slug}/settings`,
-      variant: "subtle",
     },
     {
       "aria-label": "Activity",
-      children: <IoSwapHorizontalOutline />,
+      children: <LuFileClock />,
       href: `/pool/${pool?.slug}/activity`,
-      variant: "subtle",
     },
     {
       "aria-label": "Assets",
-      children: <IoWalletOutline />,
+      children: <LuWallet />,
       href: `/pool/${pool?.slug}/assets`,
-      variant: "subtle",
     },
-  ];
+  ].map((buttonProps) => ({ variant: "subtle", size: "lg", ...buttonProps }));
 
   return (
-    <Bleed inline={{ base: "6", lg: "10" }} my={"12"}>
+    <Bleed inline={{ base: "6", lg: "10" }} my={"6"}>
       <ShellIconButtonList items={items} as={"article"} />
     </Bleed>
   );

@@ -33,7 +33,7 @@ export default function PoolActionWithdrawFormContent({
 
   return (
     <>
-      <ScrollArea.Root size="xs" h="full">
+      <ScrollArea.Root size="xs" flex={"1"}>
         <ScrollArea.Viewport>
           <ScrollArea.Content
             w={"full"}
@@ -41,10 +41,9 @@ export default function PoolActionWithdrawFormContent({
             flexDirection={"column"}
             alignItems={"stretch"}
             flex={"1"}
-            pt="6"
             gap="6"
           >
-            <Box px={{ base: "4", lg: "0" }}>{children}</Box>
+            <Box px={{ mdDown: "6" }}>{children}</Box>
 
             <WithdrawTable
               data={memoizedBalance}
@@ -68,12 +67,10 @@ export default function PoolActionWithdrawFormContent({
 
       <Stack
         flexShrink={"0"}
-        pt={"4"}
-        px={{ base: "4", lg: "0" }}
-        pb={"6"}
-        gap={"4"}
-        borderTop={"1px solid"}
-        borderColor={"border"}
+        mt={"auto"}
+        px={{ mdDown: "4" }}
+        py={"6"}
+        gap={"6"}
       >
         <SummaryTable
           data={memoizedBalance}

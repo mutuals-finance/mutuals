@@ -23,8 +23,8 @@ export default function AssetCardLogo({
     ? getImageProps({
         src,
         alt,
-        width: 260,
-        height: 260,
+        width: 20,
+        height: 20,
         priority: true,
       })
     : null;

@@ -1,4 +1,4 @@
-import { Text } from "@mutuals/ui";
+import { Text, Box } from "@mutuals/ui";
 import WithdrawForm from "@/features/PoolAction/Withdraw/Form";
 import {
   getPoolWithTokens,
@@ -23,11 +23,15 @@ export default async function PoolActionWithdrawPage({
     data.pool.balance?.tokens?.edges?.map((edge) => edge.node) ?? [];
 
   return (
-    <WithdrawForm balance={balance}>
-      <Text textStyle={"sm"} color={"fg.muted"}>
-        Withdraw funds from your Payment Pool. You may either withdraw for your
-        own or distribute to all other recipients.
-      </Text>
-    </WithdrawForm>
+    <>
+      <Box px={"4"} mt={"6"}>
+        <Text textStyle={"sm"} color={"fg.muted"}>
+          Withdraw funds from your Payment Pool. You may either withdraw for
+          your own or distribute to all other recipients.
+        </Text>
+      </Box>
+
+      <WithdrawForm balance={balance} />
+    </>
   );
 }

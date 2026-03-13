@@ -28,7 +28,7 @@ export default async function ShellPool({
         overwrite: {
           pool: false,
           id: (
-            <HStack>
+            <HStack gap={"1"}>
               <PoolCard.Logo
                 src={pool?.image}
                 alt={pool?.name}

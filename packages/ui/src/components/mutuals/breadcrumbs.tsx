@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, ReactNode, useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { useParams, usePathname } from "next/navigation";
 import {
   BreadcrumbCurrentLink,
@@ -8,58 +8,109 @@ import {
   BreadcrumbRoot,
   type BreadcrumbRootProps,
 } from "../ui/breadcrumb";
+import {
+  MenuRoot,
+  MenuContent,
+  MenuItem,
+  MenuTrigger,
+  MenuPositioner,
+  Portal,
+  useBreakpointValue,
+  type BreadcrumbLinkProps,
+} from "@chakra-ui/react";
 import { Link } from "./link";
-import { BreadcrumbLinkProps } from "@chakra-ui/react";
+import { LuChevronDown } from "react-icons/lu";
 
 function formatToTitleCase(value: string) {
-  return value.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
-  });
+  return value.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase(),
+  );
 }
 
-export type BreadcrumbsProps = Omit<BreadcrumbsContentProps, "items"> & {
-  overwrite?: { [key: string]: ReactNode };
+type BreadcrumbItem = { href: string; children: ReactNode };
+
+const BreadcrumbMenuTrigger = ({
+  triggerItem,
+  menuItems,
+}: {
+  triggerItem: BreadcrumbItem;
+  menuItems: BreadcrumbItem[];
+}) => (
+  <MenuRoot>
+    <MenuTrigger asChild={true}>
+      <BreadcrumbLink as="button" gap={"0.5"}>
+        {triggerItem.children}
+        <LuChevronDown />
+      </BreadcrumbLink>
+    </MenuTrigger>
+    <Portal>
+      <MenuPositioner>
+        <MenuContent>
+          {[triggerItem, ...menuItems].map((item) => (
+            <MenuItem key={item.href} value={item.href} asChild>
+              <Link href={item.href} unstyled={true} w="full">
+                {item.children}
+              </Link>
+            </MenuItem>
+          ))}
+        </MenuContent>
+      </MenuPositioner>
+    </Portal>
+  </MenuRoot>
+);
+
+type ResponsiveMaxItems =
+  | number
+  | Partial<Record<"base" | "sm" | "md" | "lg" | "xl" | "2xl", number>>;
+
+export type BreadcrumbsProps = Omit<
+  BreadcrumbsContentProps,
+  "items" | "maxItems"
+> & {
+  overwrite?: Record<string, ReactNode>;
+  maxItems?: ResponsiveMaxItems;
 };
 
-export function Breadcrumbs({ overwrite, ...props }: BreadcrumbsProps) {
-  // Gives us ability to load the current route details
+export function Breadcrumbs({
+  overwrite,
+  maxItems = { base: 3, sm: 4, md: 6, lg: 8 },
+  ...props
+}: BreadcrumbsProps) {
   const pathname = usePathname();
+  const params = useParams<Record<string, string>>();
 
-  const params = useParams<any>();
+  const resolvedMaxItems =
+    useBreakpointValue(
+      typeof maxItems === "number" ? { base: maxItems } : maxItems,
+    ) ?? 0;
 
   const formatOverwrite = useCallback(
     (path: string) => {
       const param = Object.keys(params).find(
-        (key) => decodeURIComponent(params[key]) == path,
+        (key) => decodeURIComponent(params[key] ?? "") === path,
       );
-
-      // 1. check if route param matches overwrite key
-      // 2. check if route path matches overwrite key
       return overwrite?.[param ?? path];
     },
     [overwrite, params],
   );
 
   const items = useMemo(() => {
-    const asPathWithoutQuery = pathname.split("?")[0] ?? "";
+    const segments = pathname.split("?")[0]?.split("/").filter(Boolean) ?? [];
 
-    const asPathNestedRoutes = asPathWithoutQuery
-      .split("/")
-      .filter((v) => v.length > 0);
+    const crumbs = segments
+      .map((path, idx) => ({
+        href: "/" + segments.slice(0, idx + 1).join("/"),
+        children: formatOverwrite(path) ?? formatToTitleCase(path),
+      }))
+      .filter((item) => item.children !== false);
 
-    const _items = asPathNestedRoutes
-      .map((path, idx) => {
-        const href = "/" + asPathNestedRoutes.slice(0, idx + 1).join("/");
-
-        const children = formatOverwrite(path) ?? formatToTitleCase(path);
-        return { href, children };
-      })
-      .filter((v) => v.children !== false);
-
-    return [{ href: "/", children: "Home" }, ..._items];
+    return [{ href: "/", children: "Home" }, ...crumbs];
   }, [pathname, formatOverwrite]);
 
-  return <BreadcrumbsContent items={items} {...props} />;
+  return (
+    <BreadcrumbsContent items={items} maxItems={resolvedMaxItems} {...props} />
+  );
 }
 
 export type BreadcrumbsContentItemProps = BreadcrumbLinkProps & {
@@ -72,41 +123,61 @@ export function BreadcrumbsContentItem({
   href,
   ...props
 }: BreadcrumbsContentItemProps) {
-  return !currentPage && !!href ? (
+  if (currentPage || !href) {
+    return <BreadcrumbCurrentLink {...props}>{children}</BreadcrumbCurrentLink>;
+  }
+
+  return (
     <BreadcrumbLink asChild={true} {...props}>
-      <Link href={href} unstyled={true}>
+      <Link href={href} variant={"plain"}>
         {children}
       </Link>
     </BreadcrumbLink>
-  ) : (
-    <BreadcrumbCurrentLink {...props}>{children}</BreadcrumbCurrentLink>
   );
 }
 
 export type BreadcrumbsContentProps = BreadcrumbRootProps & {
-  items: PropsWithChildren<{ href: string }>[];
+  items: BreadcrumbItem[];
+  maxItems?: number;
 };
 
 export function BreadcrumbsContent({
   items,
+  maxItems = 0,
   ...props
 }: BreadcrumbsContentProps) {
+  const needsEllipsis = maxItems > 0 && items.length > maxItems;
+  const lastItem = items[items.length - 1]!;
+
   return (
     <BreadcrumbRoot {...props}>
-      {items.map(function ({ children, href, ...innerProps }, i) {
-        const currentPage = i === items.length - 1;
-
-        return (
-          <BreadcrumbsContentItem
-            key={`${href}-${i}`}
-            currentPage={currentPage}
-            href={href}
-            {...innerProps}
-          >
-            {children}
-          </BreadcrumbsContentItem>
-        );
-      })}
+      {needsEllipsis
+        ? [
+            <BreadcrumbsContentItem key={items[0]!.href} href={items[0]!.href}>
+              {items[0]!.children}
+            </BreadcrumbsContentItem>,
+            <BreadcrumbMenuTrigger
+              key="menu-dropdown"
+              triggerItem={items[1]!}
+              menuItems={items.slice(2, -1)}
+            />,
+            <BreadcrumbsContentItem
+              key={lastItem.href}
+              href={lastItem.href}
+              currentPage
+            >
+              {lastItem.children}
+            </BreadcrumbsContentItem>,
+          ]
+        : items.map((item, i) => (
+            <BreadcrumbsContentItem
+              key={item.href}
+              href={item.href}
+              currentPage={i === items.length - 1}
+            >
+              {item.children}
+            </BreadcrumbsContentItem>
+          ))}
     </BreadcrumbRoot>
   );
 }
