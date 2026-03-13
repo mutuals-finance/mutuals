@@ -65,12 +65,12 @@ export default function HomeValue() {
 
           <VStack>
             <Link
-              href={"https://app.mutuals.finance"}
+              href={"https://app.mutuals.finance/pool/demo"}
               external={true}
               arrow={false}
               asChild={true}
             >
-              <Button size={"xl"}>Explore the platform</Button>
+              <Button size={"xl"}>Explore the Pool Demonstration</Button>
             </Link>
           </VStack>
         </Container>
