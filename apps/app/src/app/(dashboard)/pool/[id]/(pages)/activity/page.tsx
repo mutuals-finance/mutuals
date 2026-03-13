@@ -1,41 +1,59 @@
 import React from "react";
-import { getTokenTransfers } from "@/lib/ankr";
 import ShellPage from "@/features/Shell/Page";
-import { Container } from "@mutuals/ui";
-import ActivityTableCard from "@/features/Activity/TableCard";
+import { Bleed, Container } from "@mutuals/ui";
+import ActivityTable from "@/features/Activity/Table";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+// Neu: Importiere den Fetcher und die Typen
+import { getPoolTransactions } from "@mutuals/graphql-client-nextjs/server";
+import { type PoolActivityEvent } from "@/features/Activity/types";
 
 export const metadata: Metadata = {
   title: "Activity",
 };
 
-export default async function PoolActivityPage() {
-  const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
-  const activity = await getTokenTransfers({
-    address: [address],
-    blockchain: "eth",
+// Next.js 15: params ist ein Promise
+export interface PoolActivityPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function PoolActivityPage({
+  params,
+}: PoolActivityPageProps) {
+  const { id: slug } = await params;
+
+  const { data, error } = await getPoolTransactions({
+    variables: { slug },
   });
+
+  if (error || !data?.pool || "message" in data.pool) {
+    notFound();
+  }
+
+  const pool = data.pool as Extract<typeof data.pool, { contract?: any }>;
+  const contract = pool.contract;
+
+  const deposits = contract?.deposits?.edges?.map((edge) => edge.node) ?? [];
+  const withdrawals =
+    contract?.withdrawals?.edges?.map((edge) => edge.node) ?? [];
+
+  const events: PoolActivityEvent[] = [...deposits, ...withdrawals].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
   return (
     <ShellPage
       title={"Activity"}
+      breadcrumbsEnabled={false}
       description={
         "Your activity contains all withdrawals and deposits associated with your payment pool. Currently, ERC20 Token Transfers are tracked."
       }
-      breadcrumbsEnabled={false}
     >
       <Container as={"section"} maxW={"7xl"}>
-        <ActivityTableCard
-          cardProps={{
-            css: { overflow: "auto !important" },
-            bodyProps: { p: "0" },
-          }}
-          /*
-          transfers={activity?.transfers ?? []}
-*/
-          transfers={activity ?? []}
-          payee={address}
-        />
+        <Bleed inline={{ mdDown: "6" }}>
+          <ActivityTable events={events} />
+        </Bleed>
       </Container>
     </ShellPage>
   );

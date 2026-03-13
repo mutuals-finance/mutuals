@@ -1,6 +1,5 @@
 "use client";
 
-import { type TokenTransfer } from "@ankr.com/ankr.js";
 import { Stack } from "@mutuals/ui";
 import { createColumnHelper } from "@tanstack/react-table";
 
@@ -11,13 +10,15 @@ import {
   EventIconCell,
 } from "@/features/Activity/Table/cells";
 import Table from "@/components/Table";
-import { type ActivityTableProps } from "@/features/Activity/types";
+import {
+  type ActivityTableProps,
+  type PoolActivityEvent,
+} from "@/features/Activity/types";
 
-const columnHelper = createColumnHelper<TokenTransfer>();
+const columnHelper = createColumnHelper<PoolActivityEvent>();
 
 export default function ActivityTable({
-  transfers: data = [],
-  payee,
+  events = [],
   ...props
 }: ActivityTableProps) {
   const columns = [
@@ -26,24 +27,32 @@ export default function ActivityTable({
       header: "Event",
       cell: (context) => (
         <Stack direction="row" alignItems={"center"} gap={"3"}>
-          <EventIconCell {...context} address={payee} />
-          <EventDescriptionCell {...context} address={payee} />
+          <EventIconCell {...context} />
+          <EventDescriptionCell {...context} />
         </Stack>
       ),
     }),
-    columnHelper.accessor("fromAddress", {
+    columnHelper.accessor("from", {
       header: "From",
-      cell: (context) => <AddressCell {...context} address={payee} />,
+      cell: (context) => <AddressCell {...context} />,
     }),
-    columnHelper.accessor("toAddress", {
+    columnHelper.accessor("to", {
       header: "To",
-      cell: (context) => <AddressCell {...context} address={payee} />,
+      cell: (context) => <AddressCell {...context} />,
     }),
-    columnHelper.accessor("value", {
+    columnHelper.accessor("amount", {
       header: "Amount",
-      cell: (context) => <AmountCell {...context} address={payee} />,
+      cell: (context) => <AmountCell {...context} />,
     }),
   ];
 
-  return <Table<TokenTransfer> data={data} columns={columns} {...props} />;
+  return (
+    <Table<PoolActivityEvent>
+      data={events}
+      columns={columns}
+      headerRowProps={{ cellProps: { px: "6" } }}
+      bodyRowProps={{ cellProps: { px: "6" } }}
+      {...props}
+    />
+  );
 }

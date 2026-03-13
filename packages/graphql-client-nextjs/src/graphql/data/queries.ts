@@ -468,7 +468,7 @@ export const GET_POOL_TRANSACTIONS = graphql(/* GraphQL */ `
         reasons
       }
       ... on Pool {
-        id
+        ...PoolBaseFragment
         contract {
           id
           deposits(first: $first, after: $after) {

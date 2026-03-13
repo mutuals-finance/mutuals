@@ -1,15 +1,11 @@
-import { PropsWithChildren } from "react";
 import ShellPool from "@/features/Shell/Pool";
 
 export default async function PoolPagesLayout({
   children,
   params,
-}: PropsWithChildren<{
-  params: Promise<{
-    id: string;
-  }>;
-}>) {
-  const queryOptions = { variables: { slug: (await params).id } };
+}: LayoutProps<"/pool/[id]">) {
+  const { id: slug } = await params;
+  const queryOptions = { variables: { slug } };
 
   return <ShellPool queryOptions={queryOptions}>{children}</ShellPool>;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import AssetTable from "@/features/Asset/Table";
 import ShellPage from "@/features/Shell/Page";
-import { Container } from "@mutuals/ui";
+import { Container, Bleed } from "@mutuals/ui";
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPoolWithTokens } from "@mutuals/graphql-client-nextjs/server";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default async function PoolAssetsPage({
   params,
 }: PageProps<"/pool/[id]/assets">) {
-  const slug = (await params).id;
+  const { id: slug } = await params;
   const queryOptions = { variables: { slug } };
 
   const { data, error } = await getPoolWithTokens(queryOptions);
@@ -23,13 +23,21 @@ export default async function PoolAssetsPage({
     notFound();
   }
 
-  const assets: AssetItem[] =
-    data.pool.balance?.tokens?.edges?.map((edge) => edge.node) ?? [];
+  const edges = data.pool.balance?.tokens?.edges ?? [];
+  const assets: AssetItem[] = edges?.map((edge) => edge.node);
 
   return (
-    <ShellPage breadcrumbsEnabled={false} title={"Assets"}>
+    <ShellPage
+      title={"Assets"}
+      breadcrumbsEnabled={false}
+      description={
+        "Your assets contain all tokens that are currently held in your payment pool. This includes any tokens that have been deposited into the pool, but not yet transferred to your wallet."
+      }
+    >
       <Container as={"section"} maxW={"7xl"}>
-        <AssetTable assets={assets} />
+        <Bleed inline={{ mdDown: "6" }}>
+          <AssetTable assets={assets} />
+        </Bleed>
       </Container>
     </ShellPage>
   );

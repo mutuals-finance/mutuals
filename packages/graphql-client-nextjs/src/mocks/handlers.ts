@@ -187,22 +187,37 @@ function mockTx() {
 function mockDepositConnection() {
   return {
     __typename: "DepositConnection",
-    edges: Array.from({ length: 3 }).map(() => ({
-      __typename: "DepositEdge",
-      node: {
-        __typename: "Deposit",
-        id: faker.string.uuid(),
-        transaction: mockTx(),
-        from: faker.finance.ethereumAddress(),
-        to: faker.finance.ethereumAddress(),
-        origin: faker.finance.ethereumAddress(),
-        amount: faker.string.numeric(18),
-        token: mockToken(faker.helpers.arrayElement(WELL_KNOWN_TOKENS)),
-        createdAt: faker.date.recent().toISOString(),
-        updatedAt: faker.date.recent().toISOString(),
-      },
-      cursor: faker.string.alphanumeric(16),
-    })),
+    edges: Array.from({ length: 4 }).map((_, index) => {
+      const token = mockToken(faker.helpers.arrayElement(WELL_KNOWN_TOKENS));
+      // Simuliere einen Betrag (z.B. 10.5 bis 1000.0)
+      const floatAmount = faker.number.float({
+        min: 10,
+        max: 1000,
+        fractionDigits: 4,
+      });
+      // Baue das UInt256 Equivalent basierend auf den Decimals des Tokens
+      const rawAmountStr = BigInt(
+        Math.floor(floatAmount * Math.pow(10, token.decimals)),
+      ).toString();
+
+      return {
+        __typename: "DepositEdge",
+        node: {
+          __typename: "Deposit",
+          id: faker.string.uuid(),
+          transaction: mockTx(),
+          from: faker.finance.ethereumAddress(),
+          to: faker.finance.ethereumAddress(),
+          origin: faker.finance.ethereumAddress(),
+          amount: rawAmountStr,
+          logIndex: faker.number.int({ min: 0, max: 100 }),
+          token: token,
+          createdAt: faker.date.recent({ days: index + 1 }).toISOString(),
+          updatedAt: faker.date.recent().toISOString(),
+        },
+        cursor: faker.string.alphanumeric(16),
+      };
+    }),
     pageInfo: {
       hasNextPage: false,
       hasPreviousPage: false,
@@ -215,22 +230,35 @@ function mockDepositConnection() {
 function mockWithdrawalConnection() {
   return {
     __typename: "WithdrawalConnection",
-    edges: Array.from({ length: 2 }).map(() => ({
-      __typename: "WithdrawalEdge",
-      node: {
-        __typename: "Withdrawal",
-        id: faker.string.uuid(),
-        transaction: mockTx(),
-        from: faker.finance.ethereumAddress(),
-        to: faker.finance.ethereumAddress(),
-        origin: faker.finance.ethereumAddress(),
-        amount: faker.string.numeric(18),
-        token: mockToken(faker.helpers.arrayElement(WELL_KNOWN_TOKENS)),
-        createdAt: faker.date.recent().toISOString(),
-        updatedAt: faker.date.recent().toISOString(),
-      },
-      cursor: faker.string.alphanumeric(16),
-    })),
+    edges: Array.from({ length: 3 }).map((_, index) => {
+      const token = mockToken(faker.helpers.arrayElement(WELL_KNOWN_TOKENS));
+      const floatAmount = faker.number.float({
+        min: 5,
+        max: 200,
+        fractionDigits: 4,
+      });
+      const rawAmountStr = BigInt(
+        Math.floor(floatAmount * Math.pow(10, token.decimals)),
+      ).toString();
+
+      return {
+        __typename: "WithdrawalEdge",
+        node: {
+          __typename: "Withdrawal",
+          id: faker.string.uuid(),
+          transaction: mockTx(),
+          from: faker.finance.ethereumAddress(),
+          to: faker.finance.ethereumAddress(),
+          origin: faker.finance.ethereumAddress(),
+          amount: rawAmountStr,
+          logIndex: faker.number.int({ min: 0, max: 100 }),
+          token: token,
+          createdAt: faker.date.recent({ days: index + 2 }).toISOString(),
+          updatedAt: faker.date.recent().toISOString(),
+        },
+        cursor: faker.string.alphanumeric(16),
+      };
+    }),
     pageInfo: {
       hasNextPage: false,
       hasPreviousPage: false,

@@ -23,7 +23,7 @@ export interface ShellPageProps extends Omit<BoxProps, "title"> {
   breadcrumbsEnabled?: boolean;
 }
 
-export default function Page({
+export default function ShellPage({
   breadcrumbsProps,
   headerContainerProps,
   headingProps,
@@ -56,12 +56,7 @@ export default function Page({
               </Heading>
             )}
             {!!description && (
-              <Text
-                textStyle={"lg"}
-                maxW={"xl"}
-                color={"fg.subtle"}
-                {...descriptionProps}
-              >
+              <Text textStyle={"md"} color={"fg.muted"} {...descriptionProps}>
                 {description}
               </Text>
             )}

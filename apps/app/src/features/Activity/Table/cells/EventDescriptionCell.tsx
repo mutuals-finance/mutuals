@@ -1,33 +1,26 @@
-import { TokenTransfer } from "@ankr.com/ankr.js/dist/types";
-import { Stack, Tag, TagLabel, Text } from "@mutuals/ui";
+import { Stack, Text } from "@mutuals/ui";
 import { CellContext } from "@tanstack/react-table";
+import FormatDate from "@/components/Date";
 import React from "react";
 
-import useActivityEvent from "@/features/Activity/useActivityEvent";
-import Date from "@/components/Date";
+import { PoolActivityEvent } from "@/features/Activity/types";
 
-type EventDescriptionCellProps = CellContext<TokenTransfer, unknown> & {
+type EventDescriptionCellProps = CellContext<PoolActivityEvent, unknown> & {
   address?: string;
 };
 
-export function EventDescriptionCell({
-  address = "",
-  row,
-}: EventDescriptionCellProps) {
-  const { getEventType } = useActivityEvent({ address });
-  const type = getEventType(row.original);
+export function EventDescriptionCell({ row }: EventDescriptionCellProps) {
+  const eventName = row.original.__typename;
 
   return (
-    <Stack alignItems={"flex-start"} gap={"1"}>
-      <Text fontSize={"sm"}>{type}</Text>
-      <Tag size={"sm"}>
-        <TagLabel asChild fontWeight={"500"} fontSize={"2xs"}>
-          <Date
-            formatString="LLLL dd, yyyy"
-            timestamp={row.original.timestamp.toString()}
-          />
-        </TagLabel>
-      </Tag>
+    <Stack gap={"0"}>
+      <Text textStyle={"sm"}>{eventName}</Text>
+      <Text textStyle={"2xs"} color={"fg.muted"}>
+        <FormatDate
+          formatString="LLLL dd, yyyy"
+          timestamp={row.original.createdAt}
+        />
+      </Text>
     </Stack>
   );
 }

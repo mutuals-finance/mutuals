@@ -10,28 +10,49 @@ import {
   Link,
   Wrap,
 } from "@mutuals/ui";
-import { ActivityTableProps } from "@/features/Activity/types";
+import {
+  ActivityTableProps,
+  PoolActivityEvent,
+} from "@/features/Activity/types";
 import React from "react";
 import { GrTransaction } from "react-icons/gr";
-import { getTokenTransfers } from "@/lib/ankr";
+import {
+  getPoolTransactions,
+  GetPoolTransactionsOptions,
+} from "@mutuals/graphql-client-nextjs/server";
 
-export interface ActivityTableCardProps extends ActivityTableProps {
+export interface ActivityTableCardProps extends Omit<
+  ActivityTableProps,
+  "events"
+> {
   cardProps?: ContentCardProps;
   size?: ConditionalValue<"sm" | "md" | "lg" | undefined>;
+  queryOptions?: GetPoolTransactionsOptions;
 }
 
-export default function ActivityTableCard({
+export default async function ActivityTableCard({
   cardProps = { title: "Activity" },
   size = "sm",
   tableProps,
+  queryOptions,
   ...props
 }: ActivityTableCardProps) {
-  const address = "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
+  const { data, error } = await getPoolTransactions(queryOptions);
 
-  const transfers = getTokenTransfers({
-    address: [address],
-    blockchain: "eth",
-  });
+  if (error || !data?.pool || "message" in data.pool) {
+    return null;
+  }
+
+  const pool = data.pool;
+  const contract = pool.contract;
+
+  const deposits = contract?.deposits?.edges?.map((edge) => edge.node) ?? [];
+  const withdrawals =
+    contract?.withdrawals?.edges?.map((edge) => edge.node) ?? [];
+
+  const events: PoolActivityEvent[] = [...deposits, ...withdrawals].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
   return (
     <ContentCard
@@ -39,18 +60,17 @@ export default function ActivityTableCard({
       title={cardProps.title}
       bodyProps={{ p: "0", ...cardProps.bodyProps }}
     >
-      {transfers.length > 0 ? (
+      {events.length > 0 ? (
         <ActivityTable
           tableProps={{ size, ...tableProps }}
-          payee={address}
-          transfers={transfers}
+          events={events}
           {...props}
         />
       ) : (
         <EmptyState
           p={"12"}
           icon={
-            <Center bg={"bg.muted"} color={"fg"} p={"4"} rounded={"xl"}>
+            <Center bg={"bg.muted"} color={"fg"} p={"4"} rounded={"l3"}>
               <Icon size={"md"}>
                 <GrTransaction />
               </Icon>
@@ -60,13 +80,13 @@ export default function ActivityTableCard({
           description="Start by depositing assets into your payment pool"
           size={"sm"}
         >
-          <Wrap justifyContent={"center"}>
-            <Link asChild={true} href={"/pool/new"}>
+          <Wrap justify={"center"}>
+            <Link asChild={true} href={`/pool/${pool.slug}/deposit`}>
               <Button size={"sm"} variant={"solid"}>
                 Deposit to Payment Pool
               </Button>
             </Link>
-            <Link asChild={true} href={"/pool/example"}>
+            <Link asChild={true} href={`/pool/${pool.slug}/deposit`}>
               <Button size={"sm"} variant={"subtle"}>
                 View on Etherscan
               </Button>

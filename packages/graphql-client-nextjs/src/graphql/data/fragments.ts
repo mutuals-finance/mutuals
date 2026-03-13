@@ -86,6 +86,7 @@ export const ClaimFragment = graphql(`
 
 export const DepositFragment = graphql(`
   fragment DepositFragment on Deposit {
+    __typename
     id
     from
     to
@@ -102,6 +103,7 @@ export const DepositFragment = graphql(`
 
 export const WithdrawalFragment = graphql(`
   fragment WithdrawalFragment on Withdrawal {
+    __typename
     id
     from
     to

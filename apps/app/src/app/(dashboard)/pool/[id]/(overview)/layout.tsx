@@ -46,8 +46,26 @@ export default async function PoolOverviewLayout({
         <Stack gap={"4"}>
           <PoolOverviewDescription queryOptions={queryOptions} />
           <PoolOverviewHandlers queryOptions={queryOptions} />
-          <AssetTableCard queryOptions={queryOptions} />
-          <ActivityTableCard />
+          <AssetTableCard
+            queryOptions={queryOptions}
+            tableProps={{
+              css: {
+                "& tbody tr:last-of-type td": {
+                  borderBottom: "none",
+                },
+              },
+            }}
+          />
+          <ActivityTableCard
+            queryOptions={queryOptions}
+            tableProps={{
+              css: {
+                "& tbody tr:last-of-type td": {
+                  borderBottom: "none",
+                },
+              },
+            }}
+          />
         </Stack>
       }
     >

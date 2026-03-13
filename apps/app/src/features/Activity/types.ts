@@ -1,21 +1,22 @@
-import type { TableProps } from "@/components/Table";
-import type { TokenTransfer } from "@ankr.com/ankr.js";
+import { type TableProps } from "@/components/Table";
+import { PoolTransactionsQuery } from "@mutuals/graphql-client-nextjs";
 
-export enum EventType {
-  Deposit = "Deposit",
-  Withdrawal = "Withdrawal",
-}
+type PoolInQuery = NonNullable<PoolTransactionsQuery["pool"]>;
+type ContractInQuery = Extract<PoolInQuery, { contract?: any }>["contract"];
 
-export interface SplitEvent {
-  event: EventType;
-  price: string;
-  by: string;
-  to: string;
-  timestamp: string;
-}
+export type DepositNode = NonNullable<
+  NonNullable<ContractInQuery>["deposits"]
+>["edges"][number]["node"];
 
-export interface ActivityTableProps
-  extends Omit<TableProps<TokenTransfer>, "data" | "columns"> {
-  payee?: string;
-  transfers?: TokenTransfer[];
+export type WithdrawalNode = NonNullable<
+  NonNullable<ContractInQuery>["withdrawals"]
+>["edges"][number]["node"];
+
+export type PoolActivityEvent = DepositNode | WithdrawalNode;
+
+export interface ActivityTableProps extends Omit<
+  TableProps<PoolActivityEvent>,
+  "columns" | "data"
+> {
+  events: PoolActivityEvent[];
 }
