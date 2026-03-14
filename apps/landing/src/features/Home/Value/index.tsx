@@ -1,10 +1,7 @@
 import {
   Box,
-  Button,
   Container,
   MotionBox,
-  VStack,
-  Link,
   ScrollArea,
   Flex,
   Bleed,
@@ -40,20 +37,29 @@ const values = [
 export default function HomeValue() {
   return (
     <MotionBoxWrapper asChild={true}>
-      <Box>
+      <Box my={"6"}>
         <Container maxW="6xl">
           <Bleed inline="6">
-            <ScrollArea.Root w="full" mb={"6"}>
+            <ScrollArea.Root w="full">
               <ScrollArea.Viewport>
-                <ScrollArea.Content p="6">
-                  <Flex gap="6" flexWrap="nowrap">
+                <ScrollArea.Content px="6">
+                  <Flex
+                    gap="6"
+                    flexWrap="nowrap"
+                    justifyContent={"space-between"}
+                  >
                     {values.map((value, index) => (
                       <MotionBox
                         variants={itemVariants}
                         key={value.heading}
                         asChild={true}
                       >
-                        <ValueCard w={"xs"} flexShrink="0" {...value} />
+                        <ValueCard
+                          flexBasis={{ base: "xs", lg: "0" }}
+                          flexGrow={{ base: 0, lg: 1 }}
+                          flexShrink={0}
+                          {...value}
+                        />
                       </MotionBox>
                     ))}
                   </Flex>
@@ -62,17 +68,6 @@ export default function HomeValue() {
               <ScrollArea.Corner />
             </ScrollArea.Root>
           </Bleed>
-
-          <VStack>
-            <Link
-              href={"https://app.mutuals.finance/pool/demo"}
-              external={true}
-              arrow={false}
-              asChild={true}
-            >
-              <Button size={"xl"}>Explore the Pool Demonstration</Button>
-            </Link>
-          </VStack>
         </Container>
       </Box>
     </MotionBoxWrapper>
