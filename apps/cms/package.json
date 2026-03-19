@@ -5,12 +5,14 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build --webpack",
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --port 3003 --turbopack",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint . --max-warnings 0",
+    "dev": "next dev --port 3003",
+    "build": "next build --webpack",
+    "start": "next start",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "test": "NODE_ENV=test vitest run",
+    "clean": "git clean -xdf .next .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap"
   },
   "dependencies": {
     "@mutuals/payload": "workspace:*",
@@ -29,12 +31,10 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^10.0.2",
     "typescript": "^5.9.3"
   }
 }

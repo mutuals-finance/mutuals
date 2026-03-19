@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "next dev -p 3002",
     "build": "next build",
-    "dev": "next dev --port 3002",
     "start": "next start",
-    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
-    "postinstall": "fumadocs-mdx",
-    "lint": "eslint . --max-warnings 0"
+    "test": "NODE_ENV=test vitest run",
+    "clean": "git clean -xdf .next .source .turbo dist node_modules",
+    "typecheck": "fumadocs-mdx && next typegen && tsc --noEmit --emitDeclarationOnly false",
+    "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
     "@mutuals/metadata-nextjs": "workspace:^",
@@ -26,7 +27,6 @@
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
-    "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/mdx": "^2.0.13",
@@ -35,7 +35,6 @@
     "@types/react-dom": "^19.2.3",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
-    "eslint": "^10.0.2"
+    "typescript": "^5.9.3"
   }
 }

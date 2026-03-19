@@ -12,9 +12,10 @@
     "./utils/validation": "./src/utils/validation.ts"
   },
   "scripts": {
-    "build": "tsc",
-    "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc"
+    "dev": "bun typecheck",
+    "build": "bun typecheck",
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
     "viem": ">=2.0.0"
@@ -29,9 +30,7 @@
     "@openzeppelin/merkle-tree": "^1.0.8"
   },
   "devDependencies": {
-    "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
-    "eslint": "^10.0.2",
     "typescript": "^5.9.3"
   }
 }

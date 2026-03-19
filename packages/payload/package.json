@@ -15,8 +15,9 @@
     "./payload-config/*": "./src/payload.config.ts"
   },
   "scripts": {
+    "clean": "git clean -xdf src/payload-types.ts node_modules",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "test": "bun run test:int && bun run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" bun exec playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
@@ -39,7 +40,6 @@
     "dotenv": "17.3.1"
   },
   "devDependencies": {
-    "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
     "@payloadcms/db-postgres": "3.78.0",
     "@payloadcms/next": "3.78.0",
@@ -55,7 +55,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "5.1.4",
     "cross-env": "^10.1.0",
-    "eslint": "^10.0.2",
     "graphql": "^16.12.0",
     "jsdom": "28.1.0",
     "payload": "3.78.0",

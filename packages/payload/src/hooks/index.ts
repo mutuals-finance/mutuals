@@ -1,1 +1,1 @@
-export * from "./revalidateRedirects";
+export * from "./revalidate-redirects";

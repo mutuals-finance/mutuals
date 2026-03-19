@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings 0"
+    "test": "NODE_ENV=test vitest run",
+    "clean": "git clean -xdf .next .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@ankr.com/ankr.js": "^0.6.1",
@@ -28,7 +30,6 @@
     "ethers": "^6.16.0",
     "framer-motion": "^12.34.5",
     "keen-slider": "^6.8.6",
-    "moralis": "^2.27.2",
     "next": "^16.1.6",
     "nft.storage": "^7.2.0",
     "react": "^19.2.4",
@@ -43,14 +44,10 @@
   "devDependencies": {
     "@ethersproject/abi": "^5.8.0",
     "@ethersproject/providers": "^5.8.0",
-    "@mutuals/eslint-config": "workspace:*",
     "@mutuals/typescript-config": "workspace:*",
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "eslint": "^10.0.2",
-    "prettier": "^3.7.4",
     "typescript": "^5.9.3"
   },
   "msw": {

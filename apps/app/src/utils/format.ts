@@ -1,6 +1,5 @@
 // Number formatting follows the standards defined by Uniswap
 
-import type { EvmAddress } from "@moralisweb3/common-evm-utils";
 import { type FormatOptions, format, fromUnixTime } from "date-fns";
 
 const FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat("en-US", {
@@ -326,7 +325,7 @@ export function formatNumber(
 }
 
 export function formatCurrencyAmount(
-  amount: EvmAddress | bigint | string | number | null | undefined,
+  amount: bigint | string | number | null | undefined,
   type: NumberType = NumberType.TokenNonTx,
   placeholder?: string
 ) {
