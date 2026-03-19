@@ -1,8 +1,9 @@
+import type { JsonObject } from "@mutuals/ui";
 import type { Module } from "../../types";
 
-export type MerkleTreeValidationData = null;
+export type MerkleTreeValidationData = JsonObject;
 
-export const defaultValue: MerkleTreeValidationData = null;
+export const defaultValue: MerkleTreeValidationData = {};
 
 export const module: Module = {
   id: "merkle_tree_validation",

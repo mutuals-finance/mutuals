@@ -1,7 +1,7 @@
 import { Link, Text } from "@mutuals/ui";
 import type { CellContext } from "@tanstack/react-table";
 import type { PoolActivityEvent } from "@/features/activity/types";
-import useExplorerLink from "@/hooks/useExplorerLink";
+import useExplorerLink from "@/hooks/use-explorer-link";
 
 type AddressCellProps = CellContext<PoolActivityEvent, string> & {
   address?: string;

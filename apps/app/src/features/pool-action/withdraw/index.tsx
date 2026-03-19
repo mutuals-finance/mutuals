@@ -13,14 +13,15 @@ export interface PoolActionWithdrawPageProps {
 export default async function PoolActionWithdrawPage({
   queryOptions,
 }: PoolActionWithdrawPageProps) {
-  const { data, error } = await getPoolWithTokens(queryOptions);
+  const { data: pool, error } = await getPoolWithTokens(queryOptions);
 
-  if (error || !data?.pool || "message" in data.pool) {
+  if (error || !pool) {
     return null;
   }
 
-  const balance: AssetItem[] =
-    data.pool.balance?.tokens?.edges?.map((edge) => edge.node) ?? [];
+  const assets: AssetItem[] = pool.balance.tokens.edges.map(
+    (edge) => edge.node
+  );
 
   return (
     <>
@@ -31,7 +32,7 @@ export default async function PoolActionWithdrawPage({
         </Text>
       </Box>
 
-      <WithdrawForm balance={balance} />
+      <WithdrawForm balance={assets} />
     </>
   );
 }

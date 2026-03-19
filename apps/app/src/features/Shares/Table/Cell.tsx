@@ -2,7 +2,7 @@ import { HStack, Link, Text } from "@mutuals/ui";
 import type { CellContext } from "@tanstack/react-table";
 import UserAvatar from "src/features/wallet/avatar";
 import type { ActiveShare } from "@/features/shares/types";
-import useExplorerLink from "@/hooks/useExplorerLink";
+import useExplorerLink from "@/hooks/use-explorer-link";
 
 export default function SharesTableCell({
   getValue,

@@ -1,8 +1,9 @@
+import type { JsonObject } from "@mutuals/ui";
 import type { Module } from "../../types";
 
-export type OnChainMappingValidationData = null;
+export type OnChainMappingValidationData = JsonObject;
 
-export const defaultValue: OnChainMappingValidationData = null;
+export const defaultValue: OnChainMappingValidationData = {};
 
 export const module: Module = {
   id: "onchain_mapping_validation",

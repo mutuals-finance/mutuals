@@ -55,7 +55,7 @@ export const backgroundField: Field = {
   ],
 };
 
-export const blockFields = ({ name, fields, overrides }: Args): Field =>
+export const blockFields = ({ name, fields, overrides = {} }: Args): Field =>
   deepMerge(
     {
       name,

@@ -6,20 +6,16 @@ import { siteName } from "@/config";
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{
-    id: string;
-  }>;
-}): Promise<Metadata> {
-  const { data, error } = await getPool({
-    variables: { slug: (await params).id },
+}: LayoutProps<"/pool/[id]">): Promise<Metadata> {
+  const { id: slug } = await params;
+
+  const { data: pool, error } = await getPool({
+    variables: { slug },
   });
 
-  if (error || !data?.pool || (data?.pool && "message" in data.pool)) {
+  if (error || !pool) {
     notFound();
   }
-
-  const pool = data?.pool;
 
   return {
     title: {

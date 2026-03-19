@@ -19,15 +19,6 @@ export {
   strategyIds,
 } from "@mutuals/sdk";
 export { ChainId } from "@mutuals/sdk/constants";
-export {
-  buildMerkleTree,
-  calculationTypeName,
-  getAllocationDefaults,
-  getAllocationRecipientOptions,
-  getGroupAllocationOption,
-  getRecipientAllocationOption,
-  recipientTypeName,
-} from "@mutuals/sdk/utils";
 export { MutualsProvider } from "./context";
 export {
   useCreatePool,

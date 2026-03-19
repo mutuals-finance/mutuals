@@ -4,7 +4,7 @@ export class Collection<T> {
 
   constructor(
     data: T[] | Record<string, T>,
-    idFn: (item: T) => string = (item: T & { id: string }) => item.id
+    idFn: (item: T) => string = (item) => (item as T & { id: string }).id
   ) {
     if (Array.isArray(data)) {
       this.map = Object.fromEntries(data.map((item) => [idFn(item), item]));
@@ -15,10 +15,7 @@ export class Collection<T> {
     }
   }
 
-  static fromList<T>(
-    list: T[],
-    idFn: (item: T) => string = (item: T & { id: string }) => item.id
-  ): Collection<T> {
+  static fromList<T>(list: T[], idFn?: (item: T) => string): Collection<T> {
     return new Collection(list, idFn);
   }
 

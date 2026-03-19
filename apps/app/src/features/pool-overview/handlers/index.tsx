@@ -14,19 +14,17 @@ export interface PoolHandlersProps {
 export default async function PoolOverviewHandlers({
   queryOptions,
 }: PoolHandlersProps) {
-  const { data, error } = await getPool(queryOptions);
+  const { data: pool, error } = await getPool(queryOptions);
 
-  if (error || !data?.pool || "message" in data.pool) {
+  if (error || !pool) {
     return null;
   }
-
-  const pool = data.pool;
 
   const items: IconTextButtonProps[] = [
     {
       "aria-label": "Withdraw",
       children: <BiArrowToTop />,
-      href: `/pool/${pool?.slug}/withdraw`,
+      href: `/pool/${pool.slug}/withdraw`,
       linkProps: { scroll: false },
     },
     {
@@ -38,17 +36,17 @@ export default async function PoolOverviewHandlers({
     {
       "aria-label": "Settings",
       children: <LuSettings />,
-      href: `/pool/${pool?.slug}/settings`,
+      href: `/pool/${pool.slug}/settings`,
     },
     {
       "aria-label": "Activity",
       children: <LuFileClock />,
-      href: `/pool/${pool?.slug}/activity`,
+      href: `/pool/${pool.slug}/activity`,
     },
     {
       "aria-label": "Assets",
       children: <LuWallet />,
-      href: `/pool/${pool?.slug}/assets`,
+      href: `/pool/${pool.slug}/assets`,
     },
   ].map((buttonProps) => ({ variant: "subtle", size: "lg", ...buttonProps }));
 

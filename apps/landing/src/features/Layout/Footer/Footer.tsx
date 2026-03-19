@@ -7,10 +7,10 @@ import {
   Stack,
   Text,
 } from "@mutuals/ui";
+import { CurrentYear } from "@/features/layout/footer/current-year";
 import { socialLinks } from "@/features/layout/links";
-import { CurrentYear } from "./current-year";
 
-export default function FooterFooter() {
+export default function LayoutFooterFooter() {
   return (
     <Container maxW="7xl">
       <Stack

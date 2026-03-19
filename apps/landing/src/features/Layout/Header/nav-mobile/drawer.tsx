@@ -58,7 +58,7 @@ export default function NavMobileDrawer({
               asChild
               fontWeight={"normal"}
               href={href}
-              key={href}
+              key={href.toString()}
               px={"6"}
               py={"4"}
               textStyle={"lg"}

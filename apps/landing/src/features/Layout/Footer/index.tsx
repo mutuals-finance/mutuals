@@ -6,7 +6,7 @@ import {
   MutualsLogo,
   Theme,
 } from "@mutuals/ui";
-import Footer from "@/features/layout/Footer/footer";
+import LayoutFooterFooter from "@/features/layout/footer/footer";
 import LayoutFooterNewsletterForm from "@/features/layout/footer/newsletter-form";
 
 export default function LayoutFooter() {
@@ -108,7 +108,7 @@ export default function LayoutFooter() {
           </Grid>
         </Container>
 
-        <Footer />
+        <LayoutFooterFooter />
       </Box>
     </Theme>
   );

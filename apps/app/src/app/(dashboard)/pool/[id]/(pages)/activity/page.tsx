@@ -21,22 +21,21 @@ export default async function PoolActivityPage({
 }: PoolActivityPageProps) {
   const { id: slug } = await params;
 
-  const { data, error } = await getPoolTransactions({
+  const { data: pool, error } = await getPoolTransactions({
     variables: { slug },
   });
 
-  if (error || !data?.pool || "message" in data.pool) {
+  if (error || !pool) {
     notFound();
   }
 
-  const pool = data.pool as Extract<typeof data.pool, { contract?: unknown }>;
-  const contract = pool.contract;
+  const deposits = pool.contract?.deposits.edges.map((edge) => edge.node);
+  const withdrawals = pool.contract?.withdrawals.edges.map((edge) => edge.node);
 
-  const deposits = contract?.deposits?.edges?.map((edge) => edge.node) ?? [];
-  const withdrawals =
-    contract?.withdrawals?.edges?.map((edge) => edge.node) ?? [];
-
-  const events: PoolActivityEvent[] = [...deposits, ...withdrawals].sort(
+  const events: PoolActivityEvent[] = [
+    ...(deposits ?? []),
+    ...(withdrawals ?? []),
+  ].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 

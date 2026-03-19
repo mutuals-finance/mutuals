@@ -1,5 +1,5 @@
 import { Theme, type ThemeProps } from "@mutuals/ui";
-import HeaderObserverChange from "@/providers/HeaderObserver/Change";
+import HeaderObserverChange from "@/providers/HeaderObserver/change";
 
 type ThemeWrapperProps = ThemeProps;
 

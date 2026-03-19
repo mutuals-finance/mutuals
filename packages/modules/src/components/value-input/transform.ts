@@ -2,13 +2,14 @@
 
 import {
   createJsonTransform,
+  type JsonObject,
   type NumberInputValueChangeDetails,
   type SelectCollectionItemProps,
   type SelectValueChangeDetails,
 } from "@mutuals/ui";
 import type { AllocationType } from "./Select";
 
-export interface ValueInputData {
+export interface ValueInputData extends JsonObject {
   allocationType: AllocationType;
   value: number;
 }

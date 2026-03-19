@@ -1,7 +1,6 @@
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
 import { Stack } from "@mutuals/ui";
 import { notFound } from "next/navigation";
-import type { PropsWithChildren } from "react";
 import ActivityTableCard from "@/features/activity/table-card";
 import AssetTableCard from "@/features/asset/table-card";
 import PoolOverviewDescription from "@/features/pool-overview/description";
@@ -11,20 +10,16 @@ import ShellPoolOverview from "@/features/shell/pool-overview";
 export default async function PoolOverviewLayout({
   children,
   params,
-}: PropsWithChildren<{
-  params: Promise<{
-    id: string;
-  }>;
-}>) {
-  const queryOptions = { variables: { slug: (await params).id } };
+}: LayoutProps<"/pool/[id]">) {
+  const { id: slug } = await params;
+  const queryOptions = { variables: { slug } };
 
-  const { data } = await getPool(queryOptions);
+  const { error, data: pool } = await getPool(queryOptions);
 
-  if (!data?.pool || "message" in data.pool) {
+  if (!pool || error) {
     notFound();
   }
 
-  const pool = data.pool;
   const tabs = [
     {
       title: "Withdraw",

@@ -16,14 +16,15 @@ export default async function PoolAssetsPage({
   const { id: slug } = await params;
   const queryOptions = { variables: { slug } };
 
-  const { data, error } = await getPoolWithTokens(queryOptions);
+  const { data: pool, error } = await getPoolWithTokens(queryOptions);
 
-  if (error || !data?.pool || "message" in data.pool) {
+  if (error || !pool) {
     notFound();
   }
 
-  const edges = data.pool.balance?.tokens?.edges ?? [];
-  const assets: AssetItem[] = edges?.map((edge) => edge.node);
+  const assets: AssetItem[] = pool.balance.tokens.edges.map(
+    (edge) => edge.node
+  );
 
   return (
     <ShellPage

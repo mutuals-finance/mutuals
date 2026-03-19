@@ -1,42 +1,37 @@
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
 import { Container, RouterTabs } from "@mutuals/ui";
 import { notFound } from "next/navigation";
-import type { PropsWithChildren } from "react";
 import ShellPage from "@/features/shell/page";
 
 export default async function PoolSettingsLayout({
   children,
   params,
-}: PropsWithChildren<{
-  params: Promise<{
-    id: string;
-  }>;
-}>) {
-  const { data, error } = await getPool({
-    variables: { slug: (await params).id },
+}: LayoutProps<"/pool/[id]/settings">) {
+  const { id: slug } = await params;
+
+  const { data: pool, error } = await getPool({
+    variables: { slug },
   });
 
-  if (error || !data?.pool || (data?.pool && "message" in data.pool)) {
+  if (error || !pool) {
     notFound();
   }
-
-  const pool = data?.pool;
 
   const tabs = [
     {
       title: "General",
       value: "general",
-      href: `/pool/${pool?.slug}/settings`,
+      href: `/pool/${pool.slug}/settings`,
     },
     {
       title: "Security",
       value: "security",
-      href: `/pool/${pool?.slug}/settings/security`,
+      href: `/pool/${pool.slug}/settings/security`,
     },
     {
       title: "Notifications",
       value: "notifications",
-      href: `/pool/${pool?.slug}/settings/notifications`,
+      href: `/pool/${pool.slug}/settings/notifications`,
     },
   ];
 

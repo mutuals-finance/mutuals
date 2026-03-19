@@ -16,13 +16,11 @@ export default async function ShellPool({
   children,
   ...props
 }: ShellPoolProps) {
-  const { data, error } = await getPool(queryOptions);
+  const { data: pool, error } = await getPool(queryOptions);
 
-  if (error || !data?.pool || (data?.pool && "message" in data.pool)) {
+  if (!pool || error) {
     notFound();
   }
-
-  const pool = data?.pool;
 
   return (
     <ShellPage
@@ -32,12 +30,12 @@ export default async function ShellPool({
           id: (
             <HStack gap={"1"}>
               <PoolCard.Logo
-                alt={pool?.name}
+                alt={pool.name}
                 size="2xs"
-                src={pool?.image}
+                src={pool.image}
                 variant={"outline"}
               />
-              {pool?.name}
+              {pool.name}
             </HStack>
           ),
         },

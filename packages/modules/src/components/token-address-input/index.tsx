@@ -1,8 +1,8 @@
-import { createJsonTransform, Input } from "@mutuals/ui";
+import { createJsonTransform, Input, type JsonObject } from "@mutuals/ui";
 import type { ChangeEvent } from "react";
 import type { ModuleRenderProps } from "../../types";
 
-export interface TokenAddressInputData {
+export interface TokenAddressInputData extends JsonObject {
   tokenAddress: string;
 }
 

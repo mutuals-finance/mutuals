@@ -8,7 +8,6 @@ import {
   type Hex,
   type Log,
   type PublicClient,
-  type TransactionType,
   type Transport,
   type WalletClient,
 } from "viem";
@@ -80,7 +79,7 @@ class BaseClient {
 }
 
 export class BaseTransactions extends BaseClient {
-  protected readonly _transactionType: TransactionType;
+  protected readonly _transactionType: MutualsTransactionType;
   protected readonly _shouldRequireWalletClient: boolean;
 
   constructor({
@@ -102,10 +101,12 @@ export class BaseTransactions extends BaseClient {
     });
 
     this._transactionType = transactionType;
-    this._shouldRequireWalletClient = [
-      MutualsTransactionType.GasEstimate,
-      MutualsTransactionType.Transaction,
-    ].includes(transactionType as MutualsTransactionType);
+    this._shouldRequireWalletClient = (
+      [
+        MutualsTransactionType.GasEstimate,
+        MutualsTransactionType.Transaction,
+      ] as MutualsTransactionType[]
+    ).includes(transactionType);
   }
 
   protected async _executeContractFunction({

@@ -1,28 +1,19 @@
-import PoolCard from "@/features/pool/card";
+import PoolCard, { type PoolCardProps } from "@/features/pool/card";
 
-interface ReviewStepProps {
-  data: unknown;
+export type PoolReviewCardProps = PoolCardProps;
+
+function PoolReviewCard(props: PoolReviewCardProps) {
+  return <PoolCard {...props} />;
 }
 
-function PoolReviewCard({ image, name, description }: unknown) {
-  return (
-    <PoolCard
-      {...{
-        id: "id",
-        name,
-        image: image?.preview.toString(),
-        description,
-      }}
-    />
-  );
-}
+export type ReviewStepProps = PoolReviewCardProps;
 
-export function ReviewStep({ data }: ReviewStepProps) {
+export function ReviewStep(props: ReviewStepProps) {
   return (
     <div className={"flex w-full flex-col space-y-6"}>
       <p>You are about to create the following payment pool:</p>
 
-      <PoolReviewCard {...data} />
+      <PoolReviewCard {...props} />
     </div>
   );
 }

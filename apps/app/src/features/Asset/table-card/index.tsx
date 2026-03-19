@@ -29,14 +29,14 @@ export default async function AssetTableCard({
   queryOptions,
   ...props
 }: AssetTableCardProps) {
-  const { data, error } = await getPoolWithTokens(queryOptions);
+  const { data: pool, error } = await getPoolWithTokens(queryOptions);
 
-  if (error || !data?.pool || "message" in data.pool) {
+  if (error || !pool) {
     return null;
   }
 
   const assets: AssetItem[] =
-    data.pool.balance.tokens.edges.map((edge) => edge.node) ?? [];
+    pool.balance.tokens.edges.map((edge) => edge.node) ?? [];
 
   return (
     <ContentCard
@@ -65,12 +65,12 @@ export default async function AssetTableCard({
           title="No assets found"
         >
           <Wrap justifyContent={"center"}>
-            <Link asChild={true} href={`/pool/${data.pool.slug}/deposit`}>
+            <Link asChild={true} href={`/pool/${pool.slug}/deposit`}>
               <Button size={"sm"} variant={"solid"}>
                 Deposit to Payment Pool
               </Button>
             </Link>
-            <Link asChild={true} href={`/pool/${data.pool.slug}/deposit`}>
+            <Link asChild={true} href={`/pool/${pool.slug}/deposit`}>
               <Button size={"sm"} variant={"subtle"}>
                 Deposit
               </Button>

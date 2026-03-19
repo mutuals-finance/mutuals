@@ -22,17 +22,15 @@ export interface PoolOverviewDescriptionProps {
 export default async function PoolOverviewDescription({
   queryOptions,
 }: PoolOverviewDescriptionProps) {
-  const { data, error } = await getPoolWithBalance(queryOptions);
+  const { data: pool, error } = await getPoolWithBalance(queryOptions);
 
-  if (error || !data?.pool || "message" in data.pool) {
+  if (error || !pool) {
     return null;
   }
 
-  const pool = data.pool;
-
-  const incomeUsd = pool.balance?.totalIncome?.[0]?.value ?? 0;
-  const balanceUsd = pool.balance?.balance?.[0]?.value ?? 0;
-  const withdrawalUsd = pool.balance?.withdrawals?.[0]?.value ?? 0;
+  const incomeUsd = pool.balance.totalIncome[0]?.value ?? 0;
+  const balanceUsd = pool.balance.balance[0]?.value ?? 0;
+  const withdrawalUsd = pool.balance.withdrawals[0]?.value ?? 0;
 
   return (
     <Stack as={"article"} gap={"12"}>

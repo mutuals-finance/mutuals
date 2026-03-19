@@ -8,24 +8,19 @@ export const metadata: Metadata = {
 
 export default async function PoolSettingsPage({
   params,
-}: {
-  params: Promise<{
-    id: string;
-  }>;
-}) {
+}: PageProps<"/pool/[id]/settings">) {
   const defaultValues = {
     name: "",
     description: "",
     image: undefined,
   };
 
-  const { data } = await getPool({
-    variables: { slug: (await params).id },
+  const { id: slug } = await params;
+  const { data: pool, error } = await getPool({
+    variables: { slug },
   });
 
-  if (data?.pool && !("message" in data.pool)) {
-    const pool = data.pool;
-
+  if (!error && !!pool) {
     defaultValues.name = pool.name;
     defaultValues.description = pool.description;
   }

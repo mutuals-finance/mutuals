@@ -70,7 +70,7 @@ export const useCreatePool = (): {
         return events;
       } catch (e) {
         setStatus("error");
-        setError(e);
+        setError(e as RequestError);
       }
     },
     [poolClient]
@@ -106,10 +106,10 @@ export const useSetPoolAllocation = (): {
         const { event } = await poolClient.setPoolAllocation(argsDict);
         const hash = event.transactionHash;
         setStatus("txInProgress");
-        setTxHash(hash as string);
+        setTxHash(hash as `0x${string}`);
 
         const events = await poolClient.getTransactionEvents({
-          txHash: hash as string,
+          txHash: hash as `0x${string}`,
           eventTopics: poolClient.eventTopics.allocationUpdated,
         });
 
@@ -118,7 +118,7 @@ export const useSetPoolAllocation = (): {
         return events;
       } catch (e) {
         setStatus("error");
-        setError(e);
+        setError(e as RequestError);
       }
     },
     [poolClient]
@@ -167,7 +167,7 @@ export const useWithdraw = (): {
         return events;
       } catch (e) {
         setStatus("error");
-        setError(e);
+        setError(e as RequestError);
       }
     },
     [poolClient]
@@ -218,7 +218,7 @@ export const useTransferOwnership = (): {
         return events;
       } catch (e) {
         setStatus("error");
-        setError(e);
+        setError(e as RequestError);
       }
     },
     [poolClient]
@@ -267,7 +267,7 @@ export const useSetPause = (): {
         return events;
       } catch (e) {
         setStatus("error");
-        setError(e);
+        setError(e as RequestError);
       }
     },
     [poolClient]

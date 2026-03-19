@@ -70,7 +70,7 @@ export default function PoolAdd({ user }: PoolAddProps) {
               root: {
                 upsertPool: {
                   type: "upsertPool",
-                  message: error.cause?.message ?? "",
+                  message: error.message,
                 },
               },
             }

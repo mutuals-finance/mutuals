@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { type UseSignMessageReturnType, useSignMessage } from "wagmi";
 
-import useAbortController, { type AbortFn } from "@/hooks/useAbortController";
+import useAbortController, { type AbortFn } from "@/hooks/use-abort-controller";
 
 export type SignMessageResult = Promise<void>;
 

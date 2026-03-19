@@ -64,7 +64,7 @@ export interface Transform<TFieldValue, TEvent> {
   output: (event: TEvent, prevValue?: TFieldValue) => undefined | TFieldValue;
 }
 
-type JsonObject = Record<string, unknown>;
+export type JsonObject = Record<string, unknown>;
 
 export function createJsonTransform<
   TEvent,

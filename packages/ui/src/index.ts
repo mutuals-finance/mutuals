@@ -154,6 +154,7 @@ export {
   InputGroup,
   type InputGroupProps,
   type InputProps,
+  type JsonObject,
   Link,
   LinkButton,
   type LinkButtonProps,

@@ -1,8 +1,13 @@
-import { createJsonTransform, Input, Presence } from "@mutuals/ui";
+import {
+  createJsonTransform,
+  Input,
+  type JsonObject,
+  Presence,
+} from "@mutuals/ui";
 import type { ChangeEvent } from "react";
 import type { ModuleRenderProps } from "../../types";
 
-export interface RecipientInputData {
+export interface RecipientInputData extends JsonObject {
   recipient: string;
 }
 

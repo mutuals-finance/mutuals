@@ -6,11 +6,11 @@ import type {
   Hash,
   Hex,
   PublicClient,
-  TransactionType,
   Transport,
   ValueOf,
   WalletClient,
 } from "viem";
+import type { TransactionType } from "./constants";
 
 export type KeyedValue<
   T extends Record<string, string> = Record<string, string>,

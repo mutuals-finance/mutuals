@@ -1,5 +1,5 @@
 import { Text } from "@mutuals/ui";
-import { createColumnHelper } from "@tanstack/react-table";
+import { type CellContext, createColumnHelper } from "@tanstack/react-table";
 import Table, { type TableProps } from "@/components/table";
 import SharesTableCell from "@/features/shares/table/cell";
 import { formatPercentage } from "@/utils";
@@ -13,7 +13,9 @@ export default function SharesTable({
 
   const columns = [
     columnHelper.accessor("payee", {
-      cell: (context) => <SharesTableCell {...context} />,
+      cell: (context: CellContext<ActiveShare, string>) => (
+        <SharesTableCell {...context} />
+      ),
     }),
     columnHelper.accessor("value", {
       cell: ({ getValue }) => (

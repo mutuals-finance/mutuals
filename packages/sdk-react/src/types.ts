@@ -36,5 +36,4 @@ export type ContractExecutionStatus =
 
 export type DataLoadStatus = "success" | "error" | "loading";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type RequestError = unknown;
+export type RequestError = Error | null | undefined;

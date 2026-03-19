@@ -1,7 +1,9 @@
 import { Box, Container, Grid, LinkListBox, MutualsLogo } from "@mutuals/ui";
-import ShellDashboardFooterFooter from "@/features/shell/dashboard/Footer/footer";
+import ShellDashboardFooterFooter from "@/features/shell/dashboard/footer/footer";
 
 export default function ShellDashboardFooter() {
+  const baseExternalLinkProps = { external: true, arrow: false };
+
   return (
     <Box as="footer" mt={{ base: "24", lg: "32" }} role="contentinfo">
       <Container maxW="7xl" py={{ base: "6", lg: "12" }}>
@@ -13,13 +15,13 @@ export default function ShellDashboardFooter() {
             links={[
               {
                 children: "Contact",
-                target: "_blank",
                 href: "https://mutuals.finance/contact",
+                ...baseExternalLinkProps,
               },
               {
                 children: "Blog",
-                target: "_blank",
                 href: "https://mutuals.finance/blog/categories",
+                ...baseExternalLinkProps,
               },
             ]}
             title={"Company"}
@@ -28,23 +30,23 @@ export default function ShellDashboardFooter() {
             links={[
               {
                 children: "Pricing",
-                target: "_blank",
                 href: "https://mutuals.finance/pricing",
+                ...baseExternalLinkProps,
               },
               {
                 children: "Help Center",
-                target: "_blank",
                 href: "https://docs.mutuals.finance/",
+                ...baseExternalLinkProps,
               },
               {
                 children: "Safety Center",
-                target: "_blank",
                 href: "https://docs.mutuals.finance/",
+                ...baseExternalLinkProps,
               },
               {
                 children: "Community Guidelines",
-                target: "_blank",
                 href: "https://docs.mutuals.finance/",
+                ...baseExternalLinkProps,
               },
             ]}
             title={"Support"}
@@ -54,23 +56,23 @@ export default function ShellDashboardFooter() {
             links={[
               {
                 children: "Cookies Policy",
-                target: "_blank",
                 href: "https://mutuals.finance/cookies-policy",
+                ...baseExternalLinkProps,
               },
               {
                 children: "Privacy Policy",
-                target: "_blank",
                 href: "https://mutuals.finance/privacy-policy",
+                ...baseExternalLinkProps,
               },
               {
                 children: "Terms of Service",
-                target: "_blank",
                 href: "https://mutuals.finance/terms-of-service",
+                ...baseExternalLinkProps,
               },
               {
                 children: "Law Enforcement",
-                target: "_blank",
                 href: "https://mutuals.finance/law-enforcement",
+                ...baseExternalLinkProps,
               },
             ]}
             title={"Legal"}
@@ -78,7 +80,11 @@ export default function ShellDashboardFooter() {
 
           <LinkListBox alignItems={"flex-end"} justifyContent={"flex-start"}>
             <Box>
-              <MutualsLogo href={"/"} maxW={{ base: "32", lg: "48" }} />
+              <MutualsLogo
+                href={"https://mutuals.finance"}
+                linkProps={baseExternalLinkProps}
+                maxW={{ base: "32", lg: "48" }}
+              />
             </Box>
           </LinkListBox>
         </Grid>

@@ -5,7 +5,9 @@ export const formatPagePath = (
 ): string => {
   const { slug, breadcrumbs } = doc;
 
-  const nestedSlug = breadcrumbs?.slice(-1)?.[0]?.url;
+  const nestedSlug = (
+    breadcrumbs as (unknown & { url: unknown })[] | undefined
+  )?.slice(-1)?.[0]?.url;
 
   let prefix = "";
   const slugPath = nestedSlug ?? `/${slug}`;
