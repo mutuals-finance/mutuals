@@ -1,10 +1,10 @@
-import { NextConfig } from "next";
-import path from "path";
+import path from "node:path";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   turbopack: {
-    root: path.join(__dirname, "../.."),
+    root: path.join(import.meta.dirname, "../.."),
   },
   serverExternalPackages: ["pino", "pino-pretty", "thread-stream"],
   experimental: {

@@ -1,7 +1,7 @@
-import UserSettingsGeneral from "@/features/UserSettings/General";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import AuthSignInCard from "@/features/auth/sign-in-card";
+import UserSettingsGeneral from "@/features/user-settings/general";
 import { me } from "@/lib/privy";
-import AuthSignInCard from "@/features/Auth/SignInCard";
 
 export const metadata: Metadata = {
   title: "General Settings",
@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 export default async function UserSettingsGeneralPage() {
   const user = await me();
 
-  return !user ? (
+  return user ? (
+    <UserSettingsGeneral user={user} />
+  ) : (
     <AuthSignInCard
       description={
         "To view and manage your general settings you must sign in to your account."
       }
     />
-  ) : (
-    <UserSettingsGeneral user={user} />
   );
 }

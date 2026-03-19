@@ -2,28 +2,84 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
   BigNumberish,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../../common";
 
 export interface SplitReceiverInterface extends Interface {
+  decodeFunctionResult(
+    functionFragment:
+      | "withdrawn(address,address)"
+      | (
+          | "withdrawn(address)"
+          | (
+              | "totalWithdrawn()"
+              | (
+                  | "totalWithdrawn(address)"
+                  | (
+                      | "totalShares"
+                      | (
+                          | "shares"
+                          | (
+                              | "payeeCount"
+                              | (
+                                  | "payee"
+                                  | (
+                                      | "getPending(address)"
+                                      | "getPending(address,address)"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+    data: BytesLike
+  ): Result;
+  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "totalWithdrawn()" | ("totalShares" | "payeeCount"),
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment:
+      | "withdrawn(address)"
+      | ("totalWithdrawn(address)" | ("shares" | "getPending(address)")),
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment:
+      | "withdrawn(address,address)"
+      | "getPending(address,address)",
+    values: [AddressLike, AddressLike]
+  ): string;
+
+  getEvent(
+    nameOrSignatureOrTopic:
+      | "Deposit"
+      | "ERC20Withdrawal"
+      | "Initialized"
+      | "PayeeAdded"
+      | "Withdrawal"
+  ): EventFragment;
   getFunction(
     nameOrSignature:
       | "getPending(address,address)"
@@ -37,90 +93,14 @@ export interface SplitReceiverInterface extends Interface {
       | "withdrawn(address)"
       | "withdrawn(address,address)"
   ): FunctionFragment;
-
-  getEvent(
-    nameOrSignatureOrTopic:
-      | "Deposit"
-      | "ERC20Withdrawal"
-      | "Initialized"
-      | "PayeeAdded"
-      | "Withdrawal"
-  ): EventFragment;
-
-  encodeFunctionData(
-    functionFragment: "getPending(address,address)",
-    values: [AddressLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPending(address)",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "payeeCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "shares", values: [AddressLike]): string;
-  encodeFunctionData(
-    functionFragment: "totalShares",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalWithdrawn(address)",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalWithdrawn()",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawn(address)",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawn(address,address)",
-    values: [AddressLike, AddressLike]
-  ): string;
-
-  decodeFunctionResult(
-    functionFragment: "getPending(address,address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPending(address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "payeeCount", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalShares",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalWithdrawn(address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalWithdrawn()",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawn(address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawn(address,address)",
-    data: BytesLike
-  ): Result;
 }
 
 export namespace DepositEvent {
   export type InputTuple = [from: AddressLike, amount: BigNumberish];
   export type OutputTuple = [from: string, amount: bigint];
   export interface OutputObject {
-    from: string;
     amount: bigint;
+    from: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -132,13 +112,13 @@ export namespace ERC20WithdrawalEvent {
   export type InputTuple = [
     token: AddressLike,
     to: AddressLike,
-    amount: BigNumberish
+    amount: BigNumberish,
   ];
   export type OutputTuple = [token: string, to: string, amount: bigint];
   export interface OutputObject {
-    token: string;
-    to: string;
     amount: bigint;
+    to: string;
+    token: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -175,8 +155,8 @@ export namespace WithdrawalEvent {
   export type InputTuple = [to: AddressLike, amount: BigNumberish];
   export type OutputTuple = [to: string, amount: bigint];
   export interface OutputObject {
-    to: string;
     amount: bigint;
+    to: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -186,165 +166,6 @@ export namespace WithdrawalEvent {
 
 export interface SplitReceiver extends BaseContract {
   connect(runner?: ContractRunner | null): SplitReceiver;
-  waitForDeployment(): Promise<this>;
-
-  interface: SplitReceiverInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  "getPending(address,address)": TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  "getPending(address)": TypedContractMethod<
-    [account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
-
-  payeeCount: TypedContractMethod<[], [bigint], "view">;
-
-  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
-
-  totalShares: TypedContractMethod<[], [bigint], "view">;
-
-  "totalWithdrawn(address)": TypedContractMethod<
-    [token: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  "totalWithdrawn()": TypedContractMethod<[], [bigint], "view">;
-
-  "withdrawn(address)": TypedContractMethod<
-    [account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  "withdrawn(address,address)": TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "getPending(address,address)"
-  ): TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "getPending(address)"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "payee"
-  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
-  getFunction(
-    nameOrSignature: "payeeCount"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "shares"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "totalShares"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "totalWithdrawn(address)"
-  ): TypedContractMethod<[token: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "totalWithdrawn()"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "withdrawn(address)"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "withdrawn(address,address)"
-  ): TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  getEvent(
-    key: "Deposit"
-  ): TypedContractEvent<
-    DepositEvent.InputTuple,
-    DepositEvent.OutputTuple,
-    DepositEvent.OutputObject
-  >;
-  getEvent(
-    key: "ERC20Withdrawal"
-  ): TypedContractEvent<
-    ERC20WithdrawalEvent.InputTuple,
-    ERC20WithdrawalEvent.OutputTuple,
-    ERC20WithdrawalEvent.OutputObject
-  >;
-  getEvent(
-    key: "Initialized"
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
-  getEvent(
-    key: "PayeeAdded"
-  ): TypedContractEvent<
-    PayeeAddedEvent.InputTuple,
-    PayeeAddedEvent.OutputTuple,
-    PayeeAddedEvent.OutputObject
-  >;
-  getEvent(
-    key: "Withdrawal"
-  ): TypedContractEvent<
-    WithdrawalEvent.InputTuple,
-    WithdrawalEvent.OutputTuple,
-    WithdrawalEvent.OutputObject
-  >;
 
   filters: {
     "Deposit(address,uint256)": TypedContractEvent<
@@ -402,4 +223,128 @@ export interface SplitReceiver extends BaseContract {
       WithdrawalEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "Deposit"
+  ): TypedContractEvent<
+    DepositEvent.InputTuple,
+    DepositEvent.OutputTuple,
+    DepositEvent.OutputObject
+  >;
+  getEvent(
+    key: "ERC20Withdrawal"
+  ): TypedContractEvent<
+    ERC20WithdrawalEvent.InputTuple,
+    ERC20WithdrawalEvent.OutputTuple,
+    ERC20WithdrawalEvent.OutputObject
+  >;
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+  getEvent(
+    key: "PayeeAdded"
+  ): TypedContractEvent<
+    PayeeAddedEvent.InputTuple,
+    PayeeAddedEvent.OutputTuple,
+    PayeeAddedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Withdrawal"
+  ): TypedContractEvent<
+    WithdrawalEvent.InputTuple,
+    WithdrawalEvent.OutputTuple,
+    WithdrawalEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+  getFunction(
+    nameOrSignature: "payee"
+  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "totalWithdrawn()" | ("totalShares" | "payeeCount")
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature:
+      | "withdrawn(address)"
+      | ("totalWithdrawn(address)" | ("shares" | "getPending(address)"))
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature:
+      | "withdrawn(address,address)"
+      | "getPending(address,address)"
+  ): TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  "getPending(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  "getPending(address)": TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  interface: SplitReceiverInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+
+  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
+
+  payeeCount: TypedContractMethod<[], [bigint], "view">;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
+
+  totalShares: TypedContractMethod<[], [bigint], "view">;
+
+  "totalWithdrawn()": TypedContractMethod<[], [bigint], "view">;
+
+  "totalWithdrawn(address)": TypedContractMethod<
+    [token: AddressLike],
+    [bigint],
+    "view"
+  >;
+  waitForDeployment(): Promise<this>;
+
+  "withdrawn(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  "withdrawn(address)": TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
 }

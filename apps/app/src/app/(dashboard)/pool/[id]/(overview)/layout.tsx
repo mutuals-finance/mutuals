@@ -1,12 +1,12 @@
-import React, { PropsWithChildren } from "react";
-import ActivityTableCard from "@/features/Activity/TableCard";
-import AssetTableCard from "@/features/Asset/TableCard";
-import PoolOverviewDescription from "@/features/PoolOverview/Description";
-import ShellPoolOverview from "@/features/Shell/PoolOverview";
-import PoolOverviewHandlers from "@/features/PoolOverview/Handlers";
-import { Stack } from "@mutuals/ui";
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
+import { Stack } from "@mutuals/ui";
 import { notFound } from "next/navigation";
+import type { PropsWithChildren } from "react";
+import ActivityTableCard from "@/features/activity/table-card";
+import AssetTableCard from "@/features/asset/table-card";
+import PoolOverviewDescription from "@/features/pool-overview/description";
+import PoolOverviewHandlers from "@/features/pool-overview/handlers";
+import ShellPoolOverview from "@/features/shell/pool-overview";
 
 export default async function PoolOverviewLayout({
   children,
@@ -40,8 +40,6 @@ export default async function PoolOverviewLayout({
 
   return (
     <ShellPoolOverview
-      sidebarProps={{ tabs }}
-      contentProps={{ queryOptions }}
       content={
         <Stack gap={"4"}>
           <PoolOverviewDescription queryOptions={queryOptions} />
@@ -68,6 +66,8 @@ export default async function PoolOverviewLayout({
           />
         </Stack>
       }
+      contentProps={{ queryOptions }}
+      sidebarProps={{ tabs }}
     >
       {children}
     </ShellPoolOverview>

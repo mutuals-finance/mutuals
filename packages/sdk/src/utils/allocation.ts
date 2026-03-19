@@ -1,8 +1,9 @@
-import { Allocation, CalculationType, RawAllocation } from "../types";
-import { encodePacked, Hex, hexToBytes, keccak256, toHex } from "viem";
-import { InvalidAllocationIndicesLengthError } from "../errors";
-import { StrategyExtensions, StateExtensions, ZERO } from "../constants";
+/*
 import { SimpleMerkleTree } from "@openzeppelin/merkle-tree";
+import { encodePacked, type Hex, hexToBytes, keccak256, toHex } from "viem";
+import { StateExtensions, StrategyExtensions, ZERO } from "../constants";
+import { InvalidAllocationIndicesLengthError } from "../errors";
+import type { Allocation, CalculationType, RawAllocation } from "../types";
 
 export const allocation = {
   getConfig: (poolAllocations: Allocation[], indices: number[]) => {
@@ -11,7 +12,7 @@ export const allocation = {
     }
 
     const allocations = indices.map(
-      (index) => poolAllocations[index],
+      (index) => poolAllocations[index]
     ) as Allocation[];
 
     const tree = allocation.getTree(poolAllocations);
@@ -30,11 +31,11 @@ export const allocation = {
           keccak256(
             encodePacked(
               new Array(8).fill("uint256"),
-              Object.values(allocation.toRaw(a)),
-            ),
-          ),
-        ),
-      ),
+              Object.values(allocation.toRaw(a))
+            )
+          )
+        )
+      )
     );
   },
 
@@ -51,17 +52,17 @@ export const allocation = {
     };
   },
 
-  isItem: (a?: Allocation) => a?.recipientType?.[0] == 0,
+  isItem: (a?: Allocation) => a?.recipientType?.[0] === 0,
 
   isGroup: (a?: Allocation) => !allocation.isItem(a),
 
-  isFixed: (a?: Allocation) => a?.calculationType?.[0] == 5,
+  isFixed: (a?: Allocation) => a?.calculationType?.[0] === 5,
 
-  isPercentage: (a?: Allocation) => a?.calculationType?.[0] == 4,
+  isPercentage: (a?: Allocation) => a?.calculationType?.[0] === 4,
 
-  isPrioritized: (a?: Allocation) => a?.recipientType?.[0] == 3,
+  isPrioritized: (a?: Allocation) => a?.recipientType?.[0] === 3,
 
-  isTimed: (a?: Allocation) => a?.recipientType?.[0] == 2,
+  isTimed: (a?: Allocation) => a?.recipientType?.[0] === 2,
 };
 
 export const getRecipientAllocationOption = (a?: Partial<Allocation>) =>
@@ -89,7 +90,7 @@ export const getGroupAllocationOption = (a?: Partial<Allocation>) => {
 
 export const getAllocationRecipientOptions = (
   current: CalculationType[],
-  cached?: CalculationType[],
+  cached?: CalculationType[]
 ) => {
   const sharedProps = {
     calculationType: current,
@@ -105,16 +106,16 @@ export const getAllocationRecipientOptions = (
   };
 
   return {
-    [0]: getRecipientAllocationOption(sharedProps),
-    [1]: getGroupAllocationOption({
+    0: getRecipientAllocationOption(sharedProps),
+    1: getGroupAllocationOption({
       ...sharedGroupProps,
       recipientType: [1],
     }),
-    [2]: getGroupAllocationOption({
+    2: getGroupAllocationOption({
       ...sharedGroupProps,
       recipientType: [2],
     }),
-    [3]: getGroupAllocationOption({
+    3: getGroupAllocationOption({
       ...sharedGroupProps,
       recipientType: [3],
     }),
@@ -122,22 +123,22 @@ export const getAllocationRecipientOptions = (
 };
 
 export const getAllocationDefaults = (cached?: Allocation) => ({
-  [5]: getAllocationRecipientOptions([5], cached?.calculationType),
-  [4]: getAllocationRecipientOptions([4], cached?.calculationType),
+  5: getAllocationRecipientOptions([5], cached?.calculationType),
+  4: getAllocationRecipientOptions([4], cached?.calculationType),
 });
 
 export const recipientTypeName = (
-  recipientType: keyof typeof StateExtensions,
+  recipientType: keyof typeof StateExtensions
 ) => StateExtensions[recipientType]?.name;
 export const calculationTypeName = (
-  calculationType: keyof typeof StrategyExtensions,
+  calculationType: keyof typeof StrategyExtensions
 ) => StrategyExtensions[calculationType]?.name;
 
 // Utility to compute a hash using viem's keccak256
 function computeHash(
   data: Omit<Allocation, "children"> & {
     children: Hex;
-  },
+  }
 ): string {
   console.log({ data });
   // Encode all fields to match Solidity's abi.encodePacked
@@ -150,7 +151,7 @@ function computeHash(
       data.recipientAddress || "",
       BigInt("0"),
       data.children,
-    ],
+    ]
   );
 
   // Compute keccak256 hash of the encoded bytes
@@ -173,7 +174,7 @@ export function buildMerkleTree(allocations: Allocation[]): SimpleMerkleTree {
     // If the node has children, compute their hashes and Merkle root
     if (!!node && node.children && node.children.length > 0) {
       const childHashes = node.children.map(
-        (child: any) => traverseNode(child).hash,
+        (child) => traverseNode(child).hash
       );
       // Use SimpleMerkleTree.of to compute the Merkle root for the children
       const merkleTree = SimpleMerkleTree.of(childHashes);
@@ -202,3 +203,4 @@ export function buildMerkleTree(allocations: Allocation[]): SimpleMerkleTree {
 
   return SimpleMerkleTree.of(stack.map((n) => n.hash));
 }
+*/

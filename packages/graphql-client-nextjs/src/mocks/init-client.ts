@@ -8,7 +8,7 @@ if (isBrowser) {
       async ({ worker }) => {
         await worker.start({ onUnhandledRequest: "bypass" });
         return true;
-      },
+      }
     );
   }
   initClientMocksPromise = window.__MSW_CLIENT_PROMISE__;

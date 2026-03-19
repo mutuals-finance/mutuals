@@ -13,53 +13,53 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones =
-  | 'Pacific/Midway'
-  | 'Pacific/Niue'
-  | 'Pacific/Honolulu'
-  | 'Pacific/Rarotonga'
-  | 'America/Anchorage'
-  | 'Pacific/Gambier'
-  | 'America/Los_Angeles'
-  | 'America/Tijuana'
-  | 'America/Denver'
-  | 'America/Phoenix'
-  | 'America/Chicago'
-  | 'America/Guatemala'
-  | 'America/New_York'
-  | 'America/Bogota'
-  | 'America/Caracas'
-  | 'America/Santiago'
-  | 'America/Buenos_Aires'
-  | 'America/Sao_Paulo'
-  | 'Atlantic/South_Georgia'
-  | 'Atlantic/Azores'
-  | 'Atlantic/Cape_Verde'
-  | 'Europe/London'
-  | 'Europe/Berlin'
-  | 'Africa/Lagos'
-  | 'Europe/Athens'
-  | 'Africa/Cairo'
-  | 'Europe/Moscow'
-  | 'Asia/Riyadh'
-  | 'Asia/Dubai'
-  | 'Asia/Baku'
-  | 'Asia/Karachi'
-  | 'Asia/Tashkent'
-  | 'Asia/Calcutta'
-  | 'Asia/Dhaka'
-  | 'Asia/Almaty'
-  | 'Asia/Jakarta'
-  | 'Asia/Bangkok'
-  | 'Asia/Shanghai'
-  | 'Asia/Singapore'
-  | 'Asia/Tokyo'
-  | 'Asia/Seoul'
-  | 'Australia/Brisbane'
-  | 'Australia/Sydney'
-  | 'Pacific/Guam'
-  | 'Pacific/Noumea'
-  | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | "Pacific/Midway"
+  | "Pacific/Niue"
+  | "Pacific/Honolulu"
+  | "Pacific/Rarotonga"
+  | "America/Anchorage"
+  | "Pacific/Gambier"
+  | "America/Los_Angeles"
+  | "America/Tijuana"
+  | "America/Denver"
+  | "America/Phoenix"
+  | "America/Chicago"
+  | "America/Guatemala"
+  | "America/New_York"
+  | "America/Bogota"
+  | "America/Caracas"
+  | "America/Santiago"
+  | "America/Buenos_Aires"
+  | "America/Sao_Paulo"
+  | "Atlantic/South_Georgia"
+  | "Atlantic/Azores"
+  | "Atlantic/Cape_Verde"
+  | "Europe/London"
+  | "Europe/Berlin"
+  | "Africa/Lagos"
+  | "Europe/Athens"
+  | "Africa/Cairo"
+  | "Europe/Moscow"
+  | "Asia/Riyadh"
+  | "Asia/Dubai"
+  | "Asia/Baku"
+  | "Asia/Karachi"
+  | "Asia/Tashkent"
+  | "Asia/Calcutta"
+  | "Asia/Dhaka"
+  | "Asia/Almaty"
+  | "Asia/Jakarta"
+  | "Asia/Bangkok"
+  | "Asia/Shanghai"
+  | "Asia/Singapore"
+  | "Asia/Tokyo"
+  | "Asia/Seoul"
+  | "Australia/Brisbane"
+  | "Australia/Sydney"
+  | "Pacific/Guam"
+  | "Pacific/Noumea"
+  | "Pacific/Auckland"
+  | "Pacific/Fiji";
 
 export interface Config {
   auth: {
@@ -76,14 +76,14 @@ export interface Config {
     categories: Category;
     users: User;
     redirects: Redirect;
-    'payload-kv': PayloadKv;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
+    "payload-kv": PayloadKv;
+    "payload-locked-documents": PayloadLockedDocument;
+    "payload-preferences": PayloadPreference;
+    "payload-migrations": PayloadMigration;
   };
   collectionsJoins: {
     categories: {
-      posts: 'posts';
+      posts: "posts";
     };
   };
   collectionsSelect: {
@@ -92,10 +92,16 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
+    "payload-locked-documents":
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>;
+    "payload-preferences":
+      | PayloadPreferencesSelect<false>
+      | PayloadPreferencesSelect<true>;
+    "payload-migrations":
+      | PayloadMigrationsSelect<false>
+      | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: number;
@@ -103,13 +109,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {};
   globalsSelect: {};
-  locale: null;
-  user: User & {
-    collection: 'users';
-  };
   jobs: {
     tasks: unknown;
     workflows: unknown;
+  };
+  locale: null;
+  user: User & {
+    collection: "users";
   };
 }
 export interface UserAuthOperations {
@@ -135,6 +141,8 @@ export interface UserAuthOperations {
  * via the `definition` "blogContent".
  */
 export interface BlogContent {
+  blockName?: string | null;
+  blockType: "blogContent";
   blogContentFields: {
     richText: {
       root: {
@@ -144,8 +152,8 @@ export interface BlogContent {
           version: number;
           [k: string]: unknown;
         }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        direction: ("ltr" | "rtl") | null;
+        format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
         indent: number;
         version: number;
       };
@@ -153,28 +161,28 @@ export interface BlogContent {
     };
   };
   id?: string | null;
-  blockName?: string | null;
-  blockType: 'blogContent';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "blogMarkdown".
  */
 export interface BlogMarkdown {
+  blockName?: string | null;
+  blockType: "blogMarkdown";
   blogMarkdownFields: {
     markdown: string;
   };
   id?: string | null;
-  blockName?: string | null;
-  blockType: 'blogMarkdown';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "code".
  */
 export interface Code {
+  blockName?: string | null;
+  blockType: "code";
   codeFields: {
-    language?: ('none' | 'js' | 'ts') | null;
+    language?: ("none" | "js" | "ts") | null;
     code: string;
     codeBlips?:
       | {
@@ -188,8 +196,15 @@ export interface Code {
                 version: number;
                 [k: string]: unknown;
               }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              direction: ("ltr" | "rtl") | null;
+              format:
+                | "left"
+                | "start"
+                | "center"
+                | "right"
+                | "end"
+                | "justify"
+                | "";
               indent: number;
               version: number;
             };
@@ -197,10 +212,10 @@ export interface Code {
           };
           enableLink?: boolean | null;
           link?: {
-            type?: ('reference' | 'custom') | null;
+            type?: ("reference" | "custom") | null;
             newTab?: boolean | null;
             reference?: {
-              relationTo: 'posts';
+              relationTo: "posts";
               value: number | Post;
             } | null;
             url?: string | null;
@@ -212,23 +227,19 @@ export interface Code {
       | null;
   };
   id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
-  id: number;
-  title: string;
-  featuredMedia?: ('upload' | 'videoUrl') | null;
-  image?: (number | null) | Media;
-  videoUrl?: string | null;
-  dynamicThumbnail?: boolean | null;
-  thumbnail?: (number | null) | Media;
+  _status?: ("draft" | "published") | null;
+  authors?: (number | User)[] | null;
+  authorType?: ("guest" | "team") | null;
   category: number | Category;
-  tags?: string[] | null;
+  content: (BlogContent | Code)[];
+  createdAt: string;
+  dynamicThumbnail?: boolean | null;
   excerpt: {
     root: {
       type: string;
@@ -237,18 +248,14 @@ export interface Post {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
       indent: number;
       version: number;
     };
     [k: string]: unknown;
   };
-  content: (BlogContent | Code)[];
-  relatedPosts?: (number | Post)[] | null;
-  slug?: string | null;
-  authorType?: ('guest' | 'team') | null;
-  authors?: (number | User)[] | null;
+  featuredMedia?: ("upload" | "videoUrl") | null;
   guestAuthor?: string | null;
   guestSocials?: {
     youtube?: string | null;
@@ -256,7 +263,8 @@ export interface Post {
     linkedin?: string | null;
     website?: string | null;
   };
-  publishedOn: string;
+  id: number;
+  image?: (number | null) | Media;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -265,74 +273,75 @@ export interface Post {
      */
     image?: (number | null) | Media;
   };
+  publishedOn: string;
+  relatedPosts?: (number | Post)[] | null;
+  slug?: string | null;
+  tags?: string[] | null;
+  thumbnail?: (number | null) | Media;
+  title: string;
   updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+  videoUrl?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
   alt: string;
+  createdAt: string;
   /**
    * Choose an upload to render if the visitor is using dark mode.
    */
   darkModeFallback?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
   filename?: string | null;
-  mimeType?: string | null;
   filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  height?: number | null;
+  id: number;
+  mimeType?: string | null;
+  thumbnailURL?: string | null;
+  updatedAt: string;
+  url?: string | null;
+  width?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
 export interface Category {
+  createdAt: string;
+  description: string;
+  headline: string;
   id: number;
   name: string;
-  slug: string;
-  headline: string;
-  description: string;
   posts?: {
     docs?: (number | Post)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  slug: string;
   updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  /**
-   * Example: `payloadcms`
-   */
-  twitter?: string | null;
-  photo?: (number | null) | Media;
-  roles: ('admin' | 'public')[];
-  updatedAt: string;
   createdAt: string;
   email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
+  firstName: string;
   hash?: string | null;
-  loginAttempts?: number | null;
+  id: number;
+  lastName: string;
   lockUntil?: string | null;
+  loginAttempts?: number | null;
+  password?: string | null;
+  photo?: (number | null) | Media;
+  resetPasswordExpiration?: string | null;
+  resetPasswordToken?: string | null;
+  roles: ("admin" | "public")[];
+  salt?: string | null;
   sessions?:
     | {
         id: string;
@@ -340,33 +349,35 @@ export interface User {
         expiresAt: string;
       }[]
     | null;
-  password?: string | null;
+  /**
+   * Example: `payloadcms`
+   */
+  twitter?: string | null;
+  updatedAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
-  id: number;
+  createdAt: string;
   from: string;
+  id: number;
   to?: {
-    type?: ('reference' | 'custom') | null;
+    type?: ("reference" | "custom") | null;
     reference?: {
-      relationTo: 'posts';
+      relationTo: "posts";
       value: number | Post;
     } | null;
     url?: string | null;
   };
   updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number;
-  key: string;
   data:
     | {
         [k: string]: unknown;
@@ -376,53 +387,57 @@ export interface PayloadKv {
     | number
     | boolean
     | null;
+  id: number;
+  key: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  createdAt: string;
   document?:
     | ({
-        relationTo: 'media';
+        relationTo: "media";
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'posts';
+        relationTo: "posts";
         value: number | Post;
       } | null)
     | ({
-        relationTo: 'categories';
+        relationTo: "categories";
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'users';
+        relationTo: "users";
         value: number | User;
       } | null)
     | ({
-        relationTo: 'redirects';
+        relationTo: "redirects";
         value: number | Redirect;
       } | null);
   globalSlug?: string | null;
+  id: number;
+  updatedAt: string;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: number | User;
   };
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
+  createdAt: string;
   id: number;
+  key?: string | null;
+  updatedAt: string;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: number | User;
   };
-  key?: string | null;
   value?:
     | {
         [k: string]: unknown;
@@ -432,19 +447,17 @@ export interface PayloadPreference {
     | number
     | boolean
     | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
+  batch?: number | null;
+  createdAt: string;
   id: number;
   name?: string | null;
-  batch?: number | null;
   updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -452,38 +465,33 @@ export interface PayloadMigration {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  darkModeFallback?: T;
-  updatedAt?: T;
   createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
+  darkModeFallback?: T;
   filename?: T;
-  mimeType?: T;
   filesize?: T;
-  width?: T;
-  height?: T;
   focalX?: T;
   focalY?: T;
+  height?: T;
+  mimeType?: T;
+  thumbnailURL?: T;
+  updatedAt?: T;
+  url?: T;
+  width?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  featuredMedia?: T;
-  image?: T;
-  videoUrl?: T;
-  dynamicThumbnail?: T;
-  thumbnail?: T;
-  category?: T;
-  tags?: T;
-  excerpt?: T;
-  content?: T | {};
-  relatedPosts?: T;
-  slug?: T;
-  authorType?: T;
+  _status?: T;
   authors?: T;
+  authorType?: T;
+  category?: T;
+  content?: T | {};
+  createdAt?: T;
+  dynamicThumbnail?: T;
+  excerpt?: T;
+  featuredMedia?: T;
   guestAuthor?: T;
   guestSocials?:
     | T
@@ -493,7 +501,7 @@ export interface PostsSelect<T extends boolean = true> {
         linkedin?: T;
         website?: T;
       };
-  publishedOn?: T;
+  image?: T;
   meta?:
     | T
     | {
@@ -501,42 +509,45 @@ export interface PostsSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
+  publishedOn?: T;
+  relatedPosts?: T;
+  slug?: T;
+  tags?: T;
+  thumbnail?: T;
+  title?: T;
   updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
+  videoUrl?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  headline?: T;
-  description?: T;
-  posts?: T;
-  updatedAt?: T;
   createdAt?: T;
+  description?: T;
+  headline?: T;
+  name?: T;
+  posts?: T;
+  slug?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  firstName?: T;
-  lastName?: T;
-  twitter?: T;
-  photo?: T;
-  roles?: T;
-  updatedAt?: T;
   createdAt?: T;
   email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
+  firstName?: T;
   hash?: T;
-  loginAttempts?: T;
+  lastName?: T;
   lockUntil?: T;
+  loginAttempts?: T;
+  photo?: T;
+  resetPasswordExpiration?: T;
+  resetPasswordToken?: T;
+  roles?: T;
+  salt?: T;
   sessions?:
     | T
     | {
@@ -544,12 +555,15 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+  twitter?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
+  createdAt?: T;
   from?: T;
   to?:
     | T
@@ -559,47 +573,46 @@ export interface RedirectsSelect<T extends boolean = true> {
         url?: T;
       };
   updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T;
   data?: T;
+  key?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
+  createdAt?: T;
   document?: T;
   globalSlug?: T;
-  user?: T;
   updatedAt?: T;
-  createdAt?: T;
+  user?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T;
-  key?: T;
-  value?: T;
-  updatedAt?: T;
   createdAt?: T;
+  key?: T;
+  updatedAt?: T;
+  user?: T;
+  value?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T;
   batch?: T;
-  updatedAt?: T;
   createdAt?: T;
+  name?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -609,7 +622,6 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-
-declare module 'payload' {
+declare module "payload" {
   export interface GeneratedTypes extends Config {}
 }

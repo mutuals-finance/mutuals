@@ -1,24 +1,26 @@
 "use client";
 
+import { useTheme } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
 import {
   createContext,
-  PropsWithChildren,
+  type PropsWithChildren,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { useTheme } from "@mutuals/ui";
 
-type ContextT = {
-  initialized: boolean;
+interface ContextT {
   headerTheme: string;
+  initialized: boolean;
   setHeaderTheme: (theme: string) => void;
-};
+}
 const Context = createContext<ContextT>({
   initialized: false,
   headerTheme: "dark",
-  setHeaderTheme: () => {},
+  setHeaderTheme: () => {
+    /* intentional */
+  },
 });
 
 export const useHeaderObserver = (): ContextT => useContext(Context);
@@ -31,14 +33,14 @@ export default function HeaderObserverProvider({
   const { theme = "system" } = useTheme();
   const [initialized, setInitialized] = useState(false);
   const [headerTheme, setHeaderTheme] = useState(theme);
-  const pathname = usePathname();
+  const _pathname = usePathname();
 
   useEffect(() => {
     if (!initialized) {
       setInitialized(true);
     }
     setHeaderTheme(theme);
-  }, [initialized, pathname, theme]);
+  }, [initialized, theme]);
 
   return (
     <Context.Provider

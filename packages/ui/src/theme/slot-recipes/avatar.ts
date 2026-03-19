@@ -1,5 +1,5 @@
-import { avatarAnatomy } from "@chakra-ui/react/anatomy";
 import { defineSlotRecipe } from "@chakra-ui/react";
+import { avatarAnatomy } from "@chakra-ui/react/anatomy";
 
 export default defineSlotRecipe({
   slots: avatarAnatomy.keys(),

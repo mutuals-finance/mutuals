@@ -1,11 +1,11 @@
 import {
-  AvatarRoot,
-  AvatarRootProps,
   AvatarFallback,
   AvatarImage,
+  AvatarRoot,
+  type AvatarRootProps,
 } from "@mutuals/ui";
-import { getImageProps, ImageProps } from "next/image";
-import { ComponentProps } from "react";
+import { getImageProps, type ImageProps } from "next/image";
+import type { ComponentProps } from "react";
 
 export type AssetCardLogoProps = AvatarRootProps & {
   alt?: ImageProps["alt"];

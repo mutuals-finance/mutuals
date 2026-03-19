@@ -160,12 +160,8 @@
           "name": "media_dark_mode_fallback_id_media_id_fk",
           "tableFrom": "media",
           "tableTo": "media",
-          "columnsFrom": [
-            "dark_mode_fallback_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["dark_mode_fallback_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -269,12 +265,8 @@
           "name": "posts_blocks_blog_content_parent_id_fk",
           "tableFrom": "posts_blocks_blog_content",
           "tableTo": "posts",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -401,12 +393,8 @@
           "name": "posts_blocks_code_code_fields_code_blips_parent_id_fk",
           "tableFrom": "posts_blocks_code_code_fields_code_blips",
           "tableTo": "posts_blocks_code",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -518,12 +506,8 @@
           "name": "posts_blocks_code_parent_id_fk",
           "tableFrom": "posts_blocks_code",
           "tableTo": "posts",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -813,12 +797,8 @@
           "name": "posts_image_id_media_id_fk",
           "tableFrom": "posts",
           "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["image_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -826,12 +806,8 @@
           "name": "posts_thumbnail_id_media_id_fk",
           "tableFrom": "posts",
           "tableTo": "media",
-          "columnsFrom": [
-            "thumbnail_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["thumbnail_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -839,12 +815,8 @@
           "name": "posts_category_id_categories_id_fk",
           "tableFrom": "posts",
           "tableTo": "categories",
-          "columnsFrom": [
-            "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["category_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -852,12 +824,8 @@
           "name": "posts_meta_image_id_media_id_fk",
           "tableFrom": "posts",
           "tableTo": "media",
-          "columnsFrom": [
-            "meta_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["meta_image_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -931,12 +899,8 @@
           "name": "posts_texts_parent_fk",
           "tableFrom": "posts_texts",
           "tableTo": "posts",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1070,12 +1034,8 @@
           "name": "posts_rels_parent_fk",
           "tableFrom": "posts_rels",
           "tableTo": "posts",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1083,12 +1043,8 @@
           "name": "posts_rels_posts_fk",
           "tableFrom": "posts_rels",
           "tableTo": "posts",
-          "columnsFrom": [
-            "posts_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["posts_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1096,12 +1052,8 @@
           "name": "posts_rels_users_fk",
           "tableFrom": "posts_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1211,12 +1163,8 @@
           "name": "_posts_v_blocks_blog_content_parent_id_fk",
           "tableFrom": "_posts_v_blocks_blog_content",
           "tableTo": "_posts_v",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1349,12 +1297,8 @@
           "name": "_posts_v_blocks_code_code_fields_code_blips_parent_id_fk",
           "tableFrom": "_posts_v_blocks_code_code_fields_code_blips",
           "tableTo": "_posts_v_blocks_code",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1472,12 +1416,8 @@
           "name": "_posts_v_blocks_code_parent_id_fk",
           "tableFrom": "_posts_v_blocks_code",
           "tableTo": "_posts_v",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1851,12 +1791,8 @@
           "name": "_posts_v_parent_id_posts_id_fk",
           "tableFrom": "_posts_v",
           "tableTo": "posts",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1864,12 +1800,8 @@
           "name": "_posts_v_version_image_id_media_id_fk",
           "tableFrom": "_posts_v",
           "tableTo": "media",
-          "columnsFrom": [
-            "version_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_image_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1877,12 +1809,8 @@
           "name": "_posts_v_version_thumbnail_id_media_id_fk",
           "tableFrom": "_posts_v",
           "tableTo": "media",
-          "columnsFrom": [
-            "version_thumbnail_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_thumbnail_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1890,12 +1818,8 @@
           "name": "_posts_v_version_category_id_categories_id_fk",
           "tableFrom": "_posts_v",
           "tableTo": "categories",
-          "columnsFrom": [
-            "version_category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_category_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1903,12 +1827,8 @@
           "name": "_posts_v_version_meta_image_id_media_id_fk",
           "tableFrom": "_posts_v",
           "tableTo": "media",
-          "columnsFrom": [
-            "version_meta_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_meta_image_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1982,12 +1902,8 @@
           "name": "_posts_v_texts_parent_fk",
           "tableFrom": "_posts_v_texts",
           "tableTo": "_posts_v",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2121,12 +2037,8 @@
           "name": "_posts_v_rels_parent_fk",
           "tableFrom": "_posts_v_rels",
           "tableTo": "_posts_v",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2134,12 +2046,8 @@
           "name": "_posts_v_rels_posts_fk",
           "tableFrom": "_posts_v_rels",
           "tableTo": "posts",
-          "columnsFrom": [
-            "posts_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["posts_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2147,12 +2055,8 @@
           "name": "_posts_v_rels_users_fk",
           "tableFrom": "_posts_v_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2318,12 +2222,8 @@
           "name": "users_roles_parent_fk",
           "tableFrom": "users_roles",
           "tableTo": "users",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2406,12 +2306,8 @@
           "name": "users_sessions_parent_id_fk",
           "tableFrom": "users_sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2581,12 +2477,8 @@
           "name": "users_photo_id_media_id_fk",
           "tableFrom": "users",
           "tableTo": "media",
-          "columnsFrom": [
-            "photo_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["photo_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2798,12 +2690,8 @@
           "name": "redirects_rels_parent_fk",
           "tableFrom": "redirects_rels",
           "tableTo": "redirects",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2811,12 +2699,8 @@
           "name": "redirects_rels_posts_fk",
           "tableFrom": "redirects_rels",
           "tableTo": "posts",
-          "columnsFrom": [
-            "posts_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["posts_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3145,12 +3029,8 @@
           "name": "payload_locked_documents_rels_parent_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "payload_locked_documents",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3158,12 +3038,8 @@
           "name": "payload_locked_documents_rels_media_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "media",
-          "columnsFrom": [
-            "media_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["media_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3171,12 +3047,8 @@
           "name": "payload_locked_documents_rels_posts_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "posts",
-          "columnsFrom": [
-            "posts_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["posts_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3184,12 +3056,8 @@
           "name": "payload_locked_documents_rels_categories_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "categories",
-          "columnsFrom": [
-            "categories_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["categories_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3197,12 +3065,8 @@
           "name": "payload_locked_documents_rels_users_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3210,12 +3074,8 @@
           "name": "payload_locked_documents_rels_redirects_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "redirects",
-          "columnsFrom": [
-            "redirects_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["redirects_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3419,12 +3279,8 @@
           "name": "payload_preferences_rels_parent_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "payload_preferences",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -3432,12 +3288,8 @@
           "name": "payload_preferences_rels_users_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3529,100 +3381,62 @@
     "public.enum_posts_blocks_code_code_fields_code_blips_link_type": {
       "name": "enum_posts_blocks_code_code_fields_code_blips_link_type",
       "schema": "public",
-      "values": [
-        "reference",
-        "custom"
-      ]
+      "values": ["reference", "custom"]
     },
     "public.enum_posts_blocks_code_code_fields_language": {
       "name": "enum_posts_blocks_code_code_fields_language",
       "schema": "public",
-      "values": [
-        "none",
-        "js",
-        "ts"
-      ]
+      "values": ["none", "js", "ts"]
     },
     "public.enum_posts_featured_media": {
       "name": "enum_posts_featured_media",
       "schema": "public",
-      "values": [
-        "upload",
-        "videoUrl"
-      ]
+      "values": ["upload", "videoUrl"]
     },
     "public.enum_posts_author_type": {
       "name": "enum_posts_author_type",
       "schema": "public",
-      "values": [
-        "guest",
-        "team"
-      ]
+      "values": ["guest", "team"]
     },
     "public.enum_posts_status": {
       "name": "enum_posts_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
+      "values": ["draft", "published"]
     },
     "public.enum__posts_v_blocks_code_code_fields_code_blips_link_type": {
       "name": "enum__posts_v_blocks_code_code_fields_code_blips_link_type",
       "schema": "public",
-      "values": [
-        "reference",
-        "custom"
-      ]
+      "values": ["reference", "custom"]
     },
     "public.enum__posts_v_blocks_code_code_fields_language": {
       "name": "enum__posts_v_blocks_code_code_fields_language",
       "schema": "public",
-      "values": [
-        "none",
-        "js",
-        "ts"
-      ]
+      "values": ["none", "js", "ts"]
     },
     "public.enum__posts_v_version_featured_media": {
       "name": "enum__posts_v_version_featured_media",
       "schema": "public",
-      "values": [
-        "upload",
-        "videoUrl"
-      ]
+      "values": ["upload", "videoUrl"]
     },
     "public.enum__posts_v_version_author_type": {
       "name": "enum__posts_v_version_author_type",
       "schema": "public",
-      "values": [
-        "guest",
-        "team"
-      ]
+      "values": ["guest", "team"]
     },
     "public.enum__posts_v_version_status": {
       "name": "enum__posts_v_version_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
+      "values": ["draft", "published"]
     },
     "public.enum_users_roles": {
       "name": "enum_users_roles",
       "schema": "public",
-      "values": [
-        "admin",
-        "public"
-      ]
+      "values": ["admin", "public"]
     },
     "public.enum_redirects_to_type": {
       "name": "enum_redirects_to_type",
       "schema": "public",
-      "values": [
-        "reference",
-        "custom"
-      ]
+      "values": ["reference", "custom"]
     }
   },
   "schemas": {},

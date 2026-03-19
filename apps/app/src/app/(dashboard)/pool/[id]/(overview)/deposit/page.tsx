@@ -1,5 +1,5 @@
-import PoolActionDeposit from "@/features/PoolAction/Deposit";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import PoolActionDeposit from "@/features/pool-action/deposit";
 
 export const metadata: Metadata = {
   title: "Deposit",

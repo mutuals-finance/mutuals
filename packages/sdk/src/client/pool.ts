@@ -1,21 +1,21 @@
 import {
-  Address,
-  Chain,
-  GetContractReturnType,
-  Hash,
-  Hex,
-  Log,
-  PublicClient,
-  Transport,
+  type Address,
+  type Chain,
   decodeEventLog,
   encodeEventTopics,
+  type GetContractReturnType,
   getContract,
+  type Hash,
+  type Hex,
+  type Log,
+  type PublicClient,
+  type Transport,
   zeroAddress,
 } from "viem";
 import {
+  getPoolFactoryAddress,
   SUPPORTED_CHAIN_IDS,
   TransactionType,
-  getPoolFactoryAddress,
   ZERO,
 } from "../constants";
 import { poolAbi, poolFactoryAbi } from "../constants/abi";
@@ -24,20 +24,19 @@ import {
   TransactionFailedError,
   UnsupportedChainIdError,
 } from "../errors";
-import {
+import type {
   CreatePoolConfig,
-  WithdrawConfig,
-  TransactionConfig,
-  TransactionFormat,
   MutualsClientConfig,
-  TransferOwnershipConfig,
   SetPausedConfig,
   SetPoolAllocationConfig,
+  TransactionConfig,
+  TransactionFormat,
+  TransferOwnershipConfig,
+  WithdrawConfig,
 } from "../types";
-import { allocation as allocationUtils, buildMerkleTree } from "../utils";
+import { validateAddress } from "../utils/validation";
 import { BaseClientMixin, BaseTransactions } from "./base";
 import { applyMixins } from "./mixin";
-import { validateAddress } from "../utils/validation";
 
 type PoolFactoryABI = typeof poolFactoryAbi;
 type PoolABI = typeof poolAbi;
@@ -63,20 +62,20 @@ class PoolTransactions extends BaseTransactions {
     });
   }
 
-  protected async _createPool({
-    allocations,
+  protected _createPool({
     ownerAddress = zeroAddress,
     salt,
     transactionOverrides = {},
   }: CreatePoolConfig): Promise<TransactionFormat> {
     validateAddress(ownerAddress);
 
-    const allocationTree = buildMerkleTree(allocations);
     this._requirePublicClient();
-    if (this._shouldRequireWalletClient) this._requireWalletClient();
+    if (this._shouldRequireWalletClient) {
+      this._requireWalletClient();
+    }
 
     const functionName = "createPool";
-    const functionArgs = [ownerAddress, allocationTree.root, salt];
+    const functionArgs = [ownerAddress, "", salt];
 
     return this._executeContractFunction({
       contractAddress: getPoolFactoryAddress(this._chainId),
@@ -96,7 +95,9 @@ class PoolTransactions extends BaseTransactions {
     validateAddress(newController);
 
     this._requirePublicClient();
-    if (this._shouldRequireWalletClient) this._requireWalletClient();
+    if (this._shouldRequireWalletClient) {
+      this._requireWalletClient();
+    }
     await this._requireOwner(poolAddress);
 
     return this._executeContractFunction({
@@ -116,7 +117,9 @@ class PoolTransactions extends BaseTransactions {
     validateAddress(poolAddress);
 
     this._requirePublicClient();
-    if (this._shouldRequireWalletClient) this._requireWalletClient();
+    if (this._shouldRequireWalletClient) {
+      this._requireWalletClient();
+    }
     await this._requireOwner(poolAddress);
 
     return this._executeContractFunction({
@@ -130,15 +133,16 @@ class PoolTransactions extends BaseTransactions {
 
   protected async _setPoolAllocation({
     poolAddress,
-    poolAllocation,
     transactionOverrides = {},
   }: SetPoolAllocationConfig): Promise<TransactionFormat> {
-    const newAllocationRoot = allocationUtils.getTree(poolAllocation);
+    const newAllocationRoot = "";
 
     validateAddress(poolAddress);
 
     this._requirePublicClient();
-    if (this._shouldRequireWalletClient) this._requireWalletClient();
+    if (this._shouldRequireWalletClient) {
+      this._requireWalletClient();
+    }
     await this._requireOwner(poolAddress);
 
     return this._executeContractFunction({
@@ -150,12 +154,10 @@ class PoolTransactions extends BaseTransactions {
     });
   }
 
-  protected async _withdraw({
+  protected _withdraw({
     poolAddress,
     recipientAddress = this._walletClient?.account.address as Address,
     tokenAddress,
-    poolAllocations,
-    indices,
     amounts,
     transactionOverrides = {},
   }: WithdrawConfig): Promise<TransactionFormat> {
@@ -164,12 +166,9 @@ class PoolTransactions extends BaseTransactions {
     validateAddress(tokenAddress);
 
     this._requirePublicClient();
-    if (this._shouldRequireWalletClient) this._requireWalletClient();
-
-    const { allocations, proof } = allocationUtils.getConfig(
-      poolAllocations,
-      indices,
-    );
+    if (this._shouldRequireWalletClient) {
+      this._requireWalletClient();
+    }
 
     return this._executeContractFunction({
       contractAddress: poolAddress,
@@ -179,9 +178,9 @@ class PoolTransactions extends BaseTransactions {
         recipientAddress,
         tokenAddress,
         {
-          allocations,
+          allocations: [],
           amounts,
-          proof,
+          proof: "",
         },
       ],
       transactionOverrides,
@@ -191,22 +190,25 @@ class PoolTransactions extends BaseTransactions {
 
   async _paused(poolAddress: Address) {
     this._requirePublicClient();
-    return (await this._getPoolContract(poolAddress).read.paused!()) as boolean;
+    return (await this._getPoolContract(
+      poolAddress
+    ).read.paused?.()) as boolean;
   }
 
   async _owner(poolAddress: Address) {
     this._requirePublicClient();
-    return (await this._getPoolContract(poolAddress).read.owner!()) as Address;
+    return (await this._getPoolContract(poolAddress).read.owner?.()) as Address;
   }
 
   protected _getPoolContract(
-    poolAddress: Address,
+    poolAddress: Address
   ): GetContractReturnType<PoolABI, PublicClient<Transport, Chain>> {
     validateAddress(poolAddress);
 
     return getContract({
       address: poolAddress,
       abi: poolAbi,
+      // biome-ignore lint/style/noNonNullAssertion: clients are guaranteed non-null after _requirePublicClient/_requireWalletClient
       client: { public: this._publicClient!, wallet: this._walletClient! },
     });
   }
@@ -218,6 +220,7 @@ class PoolTransactions extends BaseTransactions {
     return getContract({
       address: getPoolFactoryAddress(this._chainId),
       abi: poolFactoryAbi,
+      // biome-ignore lint/style/noNonNullAssertion: clients are guaranteed non-null after _requirePublicClient/_requireWalletClient
       client: { public: this._publicClient!, wallet: this._walletClient! },
     });
   }
@@ -225,16 +228,18 @@ class PoolTransactions extends BaseTransactions {
   protected async _requireOwner(poolAddress: Address) {
     const ownerAddress = await this._owner(poolAddress);
 
-    const walletAddress = this._walletClient!.account.address;
+    const walletAddress = this._walletClient?.account.address;
 
-    if (ownerAddress.toLowerCase() !== walletAddress.toLowerCase())
+    if (ownerAddress.toLowerCase() !== walletAddress?.toLowerCase()) {
       throw new InvalidAuthError(
-        `Action only available to the pool controller. Pool id: ${poolAddress}, pool controller: ${ownerAddress}, wallet address: ${walletAddress}`,
+        `Action only available to the pool controller. Pool id: ${poolAddress}, pool controller: ${ownerAddress}, wallet address: ${walletAddress}`
       );
+    }
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: intentional mixin pattern
 export class PoolClient extends PoolTransactions {
   readonly eventTopics: { [key: string]: Hex[] };
   readonly callData: PoolCallData;
@@ -258,8 +263,9 @@ export class PoolClient extends PoolTransactions {
       includeEnsNames,
     });
 
-    if (!SUPPORTED_CHAIN_IDS.includes(chainId))
+    if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
       throw new UnsupportedChainIdError(chainId, SUPPORTED_CHAIN_IDS);
+    }
 
     this.eventTopics = {
       poolCreated: [
@@ -316,8 +322,9 @@ export class PoolClient extends PoolTransactions {
     txHash: Hash;
   }> {
     const txHash = await this._createPool(createPoolArgs);
-    if (!this._isContractTransaction(txHash))
+    if (!this._isContractTransaction(txHash)) {
       throw new Error("Invalid response");
+    }
 
     return { txHash };
   }
@@ -351,24 +358,25 @@ export class PoolClient extends PoolTransactions {
   }
 
   async submitTransferOwnershipTransaction(
-    transferOwnershipArgs: TransferOwnershipConfig,
+    transferOwnershipArgs: TransferOwnershipConfig
   ): Promise<{
     txHash: Hash;
   }> {
     const txHash = await this._transferOwnership(transferOwnershipArgs);
-    if (!this._isContractTransaction(txHash))
+    if (!this._isContractTransaction(txHash)) {
       throw new Error("Invalid response");
+    }
 
     return { txHash };
   }
 
   async transferOwnership(
-    transferOwnershipArgs: TransferOwnershipConfig,
+    transferOwnershipArgs: TransferOwnershipConfig
   ): Promise<{
     event: Log;
   }> {
     const { txHash } = await this.submitTransferOwnershipTransaction(
-      transferOwnershipArgs,
+      transferOwnershipArgs
     );
 
     const events = await this.getTransactionEvents({
@@ -389,8 +397,9 @@ export class PoolClient extends PoolTransactions {
     txHash: Hash;
   }> {
     const txHash = await this._setPaused(setPausedArgs);
-    if (!this._isContractTransaction(txHash))
+    if (!this._isContractTransaction(txHash)) {
       throw new Error("Invalid response");
+    }
 
     return { txHash };
   }
@@ -418,8 +427,9 @@ export class PoolClient extends PoolTransactions {
     txHash: Hash;
   }> {
     const txHash = await this._withdraw(withdrawArgs);
-    if (!this._isContractTransaction(txHash))
+    if (!this._isContractTransaction(txHash)) {
       throw new Error("Invalid response");
+    }
 
     return { txHash };
   }
@@ -444,24 +454,25 @@ export class PoolClient extends PoolTransactions {
   }
 
   async submitSetPoolAllocationTransaction(
-    setPoolAllocationArgs: SetPoolAllocationConfig,
+    setPoolAllocationArgs: SetPoolAllocationConfig
   ): Promise<{
     txHash: Hash;
   }> {
     const txHash = await this._setPoolAllocation(setPoolAllocationArgs);
-    if (!this._isContractTransaction(txHash))
+    if (!this._isContractTransaction(txHash)) {
       throw new Error("Invalid response");
+    }
 
     return { txHash };
   }
 
   async setPoolAllocation(
-    setPoolAllocationArgs: SetPoolAllocationConfig,
+    setPoolAllocationArgs: SetPoolAllocationConfig
   ): Promise<{
     event: Log;
   }> {
     const { txHash } = await this.submitSetPoolAllocationTransaction(
-      setPoolAllocationArgs,
+      setPoolAllocationArgs
     );
 
     const events = await this.getTransactionEvents({
@@ -471,6 +482,7 @@ export class PoolClient extends PoolTransactions {
 
     if (events.length > 0) {
       return {
+        // biome-ignore lint/style/noNonNullAssertion: length is checked above
         event: events[0]!,
       };
     }
@@ -481,10 +493,12 @@ export class PoolClient extends PoolTransactions {
   async getAddress(createPoolArgs: CreatePoolConfig): Promise<{
     poolAddress: Address;
   }> {
-    if (!createPoolArgs.ownerAddress) createPoolArgs.ownerAddress = zeroAddress;
-    if (!createPoolArgs.allocations) createPoolArgs.allocations = [];
-
-    const allocationTree = allocationUtils.getTree(createPoolArgs.allocations);
+    if (!createPoolArgs.ownerAddress) {
+      createPoolArgs.ownerAddress = zeroAddress;
+    }
+    if (!createPoolArgs.allocations) {
+      createPoolArgs.allocations = [];
+    }
 
     validateAddress(createPoolArgs.ownerAddress);
 
@@ -492,8 +506,8 @@ export class PoolClient extends PoolTransactions {
 
     const factory = this._getPoolFactoryContract();
 
-    const poolAddress = (await factory.read.getAddress!([
-      allocationTree.root,
+    const poolAddress = (await factory.read.getAddress?.([
+      "",
       createPoolArgs.ownerAddress,
       createPoolArgs.salt,
     ])) as Address;
@@ -518,11 +532,9 @@ export class PoolClient extends PoolTransactions {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface PoolClient extends BaseClientMixin {}
 applyMixins(PoolClient, [BaseClientMixin]);
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class PoolGasEstimates extends PoolTransactions {
   constructor({
     chainId,
@@ -545,39 +557,49 @@ class PoolGasEstimates extends PoolTransactions {
 
   async createPool(createPoolArgs: CreatePoolConfig): Promise<bigint> {
     const gasEstimate = await this._createPool(createPoolArgs);
-    if (!this._isBigInt(gasEstimate)) throw new Error("Invalid response");
+    if (!this._isBigInt(gasEstimate)) {
+      throw new Error("Invalid response");
+    }
 
     return gasEstimate;
   }
 
   async transferOwnership(
-    transferOwnershipArgs: TransferOwnershipConfig,
+    transferOwnershipArgs: TransferOwnershipConfig
   ): Promise<bigint> {
     const gasEstimate = await this._transferOwnership(transferOwnershipArgs);
-    if (!this._isBigInt(gasEstimate)) throw new Error("Invalid response");
+    if (!this._isBigInt(gasEstimate)) {
+      throw new Error("Invalid response");
+    }
 
     return gasEstimate;
   }
 
   async setPaused(setPausedArgs: SetPausedConfig): Promise<bigint> {
     const gasEstimate = await this._setPaused(setPausedArgs);
-    if (!this._isBigInt(gasEstimate)) throw new Error("Invalid response");
+    if (!this._isBigInt(gasEstimate)) {
+      throw new Error("Invalid response");
+    }
 
     return gasEstimate;
   }
 
   async withdraw(withdrawArgs: WithdrawConfig): Promise<bigint> {
     const gasEstimate = await this._withdraw(withdrawArgs);
-    if (!this._isBigInt(gasEstimate)) throw new Error("Invalid response");
+    if (!this._isBigInt(gasEstimate)) {
+      throw new Error("Invalid response");
+    }
 
     return gasEstimate;
   }
 
   async setPoolAllocation(
-    setPoolAllocationArgs: SetPoolAllocationConfig,
+    setPoolAllocationArgs: SetPoolAllocationConfig
   ): Promise<bigint> {
     const gasEstimate = await this._setPoolAllocation(setPoolAllocationArgs);
-    if (!this._isBigInt(gasEstimate)) throw new Error("Invalid response");
+    if (!this._isBigInt(gasEstimate)) {
+      throw new Error("Invalid response");
+    }
 
     return gasEstimate;
   }
@@ -604,42 +626,52 @@ class PoolCallData extends PoolTransactions {
   }
 
   async createPool(
-    createPoolArgs: CreatePoolConfig,
+    createPoolArgs: CreatePoolConfig
   ): Promise<TransactionFormat> {
     const callData = await this._createPool(createPoolArgs);
-    if (!this._isCallData(callData)) throw new Error("Invalid response");
+    if (!this._isCallData(callData)) {
+      throw new Error("Invalid response");
+    }
 
     return callData;
   }
 
   async transferOwnership(
-    transferOwnershipArgs: TransferOwnershipConfig,
+    transferOwnershipArgs: TransferOwnershipConfig
   ): Promise<TransactionFormat> {
     const callData = await this._transferOwnership(transferOwnershipArgs);
-    if (!this._isCallData(callData)) throw new Error("Invalid response");
+    if (!this._isCallData(callData)) {
+      throw new Error("Invalid response");
+    }
 
     return callData;
   }
 
   async setPaused(setPausedArgs: SetPausedConfig): Promise<TransactionFormat> {
     const callData = await this._setPaused(setPausedArgs);
-    if (!this._isCallData(callData)) throw new Error("Invalid response");
+    if (!this._isCallData(callData)) {
+      throw new Error("Invalid response");
+    }
 
     return callData;
   }
 
   async withdraw(withdrawArgs: WithdrawConfig): Promise<TransactionFormat> {
     const callData = await this._withdraw(withdrawArgs);
-    if (!this._isCallData(callData)) throw new Error("Invalid response");
+    if (!this._isCallData(callData)) {
+      throw new Error("Invalid response");
+    }
 
     return callData;
   }
 
   async setPoolAllocation(
-    setPoolAllocationArgs: SetPoolAllocationConfig,
+    setPoolAllocationArgs: SetPoolAllocationConfig
   ): Promise<TransactionFormat> {
     const callData = await this._setPoolAllocation(setPoolAllocationArgs);
-    if (!this._isCallData(callData)) throw new Error("Invalid response");
+    if (!this._isCallData(callData)) {
+      throw new Error("Invalid response");
+    }
 
     return callData;
   }

@@ -1,7 +1,10 @@
-import { DocumentNode, FragmentType, OperationVariables } from "@apollo/client";
-import { useMutation } from "@apollo/client/react";
-import { useQuery } from "@apollo/client/react";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import type {
+  DocumentNode,
+  FragmentType,
+  OperationVariables,
+} from "@apollo/client";
+import type { useMutation, useQuery } from "@apollo/client/react";
+import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
 export type TMutationOptions<
   TMutationDocument = unknown,
@@ -33,10 +36,10 @@ export type QueryDocument<
   TVariables extends OperationVariables = OperationVariables,
 > = DocumentNode | TypedDocumentNode<TData, TVariables>;
 
-export type FragmentConfig<
+export interface FragmentConfig<
   TData,
-  TFragment extends TypedDocumentNode<any, any>,
-> = {
+  TFragment extends TypedDocumentNode<object, object>,
+> {
   doc: TFragment;
   select: (data: TData) => FragmentType<TFragment> | null | undefined;
-};
+}

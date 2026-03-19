@@ -1,10 +1,10 @@
 import {
-  Stack,
-  type StackProps,
   GridItem,
   type GridItemProps,
   Heading,
   type HeadingProps,
+  Stack,
+  type StackProps,
 } from "@chakra-ui/react";
 import { Link, type LinkProps } from "./link";
 
@@ -29,9 +29,9 @@ export function LinkListBox({
         {!!title && (
           <Heading
             as={"h4"}
-            variant={"subtag"}
-            textStyle={"xs"}
             mb="2"
+            textStyle={"xs"}
+            variant={"subtag"}
             {...titleProps}
           >
             {title}
@@ -39,7 +39,8 @@ export function LinkListBox({
         )}
         {links.length > 0 &&
           links.map((props, index) => (
-            <Link textStyle={"sm"} variant="plain" key={index} {...props} />
+            // biome-ignore lint/suspicious/noArrayIndexKey: static link lists have no stable unique id
+            <Link key={index} textStyle={"sm"} variant="plain" {...props} />
           ))}
         {children}
       </Stack>

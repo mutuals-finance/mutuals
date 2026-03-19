@@ -1,25 +1,25 @@
 import {
-  VStack,
-  StackSeparator,
-  Button,
-  Form,
-  Fieldset,
-  SimpleGrid,
-  GridItem,
   Box,
+  Button,
+  Fieldset,
+  Form,
+  GridItem,
+  SimpleGrid,
+  StackSeparator,
+  VStack,
 } from "@mutuals/ui";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Security Settings",
 };
 
-export default async function PoolSettingsSecurityPage() {
+export default function PoolSettingsSecurityPage() {
   return (
     <Form>
       <SimpleGrid columns={{ base: 1, lg: 11 }} gap={"6"}>
         <GridItem colSpan={{ base: 1, lg: 8 }}>
-          <VStack separator={<StackSeparator />} gap={"6"}>
+          <VStack gap={"6"} separator={<StackSeparator />}>
             <Fieldset.Root>
               <Fieldset.Legend textStyle={"xl"}>
                 Disable Payment Pool

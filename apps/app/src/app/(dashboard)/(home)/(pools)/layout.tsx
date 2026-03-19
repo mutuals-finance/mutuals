@@ -1,21 +1,21 @@
 "use client";
 
-import { PropsWithChildren } from "react";
 import {
+  Box,
   Button,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
   DrawerContent,
-  DrawerFooter,
-  DrawerRoot,
-  Box,
   DrawerContext,
+  DrawerFooter,
   DrawerHeader,
+  DrawerRoot,
   DrawerTitle,
   RouterTabs,
 } from "@mutuals/ui";
 import { useRouter } from "next/navigation";
+import type { PropsWithChildren } from "react";
 
 const tabs = [
   {
@@ -38,10 +38,10 @@ export default function DashboardHomePoolsLayout({
   return (
     <DrawerRoot
       defaultOpen={true}
+      initialFocusEl={() => null}
+      onExitComplete={() => router.push("/", { scroll: false })}
       placement={{ base: "bottom", md: "end" }}
       size={{ base: "md", md: "md" }}
-      onExitComplete={() => router.push(`/`, { scroll: false })}
-      initialFocusEl={() => null}
     >
       <DrawerBackdrop />
       <DrawerContent roundedTop={{ mdDown: "l3" }}>
@@ -52,13 +52,13 @@ export default function DashboardHomePoolsLayout({
               <DrawerHeader>
                 <DrawerTitle>Manage Funds</DrawerTitle>
               </DrawerHeader>
-              <DrawerBody p={"0"} flex={"1"}>
+              <DrawerBody flex={"1"} p={"0"}>
                 <RouterTabs fitted={true} tabs={tabs}>
                   <Box p={"6"}>{children}</Box>
                 </RouterTabs>
               </DrawerBody>
               <DrawerFooter>
-                <Button variant="outline" onClick={() => store.setOpen(false)}>
+                <Button onClick={() => store.setOpen(false)} variant="outline">
                   Cancel
                 </Button>
                 <Button disabled={true}>Submit</Button>

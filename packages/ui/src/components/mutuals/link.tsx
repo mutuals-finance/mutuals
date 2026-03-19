@@ -5,18 +5,19 @@ import {
   type LinkProps as ChakraLinkProps,
 } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
-import { IconType } from "react-icons";
-import { forwardRef } from "react";
 import { usePathname } from "next/navigation";
+import { forwardRef } from "react";
+import type { IconType } from "react-icons";
 import { LuArrowUpRight } from "react-icons/lu";
 
 export interface LinkProps
-  extends Omit<ChakraLinkProps, "href">, Partial<Pick<NextLinkProps, "href">> {
-  linkProps?: Omit<NextLinkProps, "href" | "children">;
-  exact?: boolean;
-  indicator?: boolean;
-  external?: boolean;
+  extends Omit<ChakraLinkProps, "href">,
+    Partial<Pick<NextLinkProps, "href">> {
   arrow?: boolean;
+  exact?: boolean;
+  external?: boolean;
+  indicator?: boolean;
+  linkProps?: Omit<NextLinkProps, "href" | "children">;
 }
 
 export type NavLinkProps = LinkProps & {
@@ -40,7 +41,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       arrow = true,
       ...props
     },
-    ref,
+    ref
   ) => {
     const pathname = usePathname();
 
@@ -55,26 +56,26 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
 
     return (
       <ChakraLink
+        aria-current={current ? "page" : undefined}
         asChild={asChild}
         href={asChild ? undefined : href.toString()}
         ref={ref}
-        target={!target && external ? "_blank" : target}
         rel={!rel && external ? "noopener noreferrer" : rel}
-        aria-current={current ? "page" : undefined}
+        target={!target && external ? "_blank" : target}
         {...props}
       >
-        {!asChild ? (
-          <>
-            {children} {arrow && external && <LuArrowUpRight />}
-          </>
-        ) : (
+        {asChild ? (
           <NextLink href={href} {...linkProps}>
             {children} {arrow && external && <LuArrowUpRight />}
           </NextLink>
+        ) : (
+          <>
+            {children} {arrow && external && <LuArrowUpRight />}
+          </>
         )}
       </ChakraLink>
     );
-  },
+  }
 );
 
 Link.displayName = "Link";

@@ -5,13 +5,13 @@ export const checkInNetworkList = (list: string[]): boolean => {
 };
 
 export const isNetworkStaging = (): boolean => {
-  return checkInNetworkList(['polygonAmoy', 'goerli']);
+  return checkInNetworkList(["polygonAmoy", "goerli"]);
 };
 
 export const isNetworkLocal = (): boolean => {
-  return checkInNetworkList(['localhost', 'hardhat']);
+  return checkInNetworkList(["localhost", "hardhat"]);
 };
 
 export const isNetworkProduction = (): boolean => {
-  return checkInNetworkList(['mainnet', 'polygon']);
+  return checkInNetworkList(["mainnet", "polygon"]);
 };

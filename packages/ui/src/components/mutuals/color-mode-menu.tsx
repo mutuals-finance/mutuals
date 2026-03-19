@@ -1,6 +1,11 @@
 "use client";
 
-import { Button, ButtonProps, ClientOnly, Skeleton } from "@chakra-ui/react";
+import {
+  Button,
+  type ButtonProps,
+  ClientOnly,
+  Skeleton,
+} from "@chakra-ui/react";
 import {
   ColorModeIcon,
   MenuContent,
@@ -25,8 +30,8 @@ export function ColorModeMenu(props: ColorModeMenuProps) {
         </MenuTrigger>
         <MenuContent>
           <MenuRadioItemGroup
-            value={colorMode}
             onValueChange={(e) => setColorMode(e.value as "dark" | "light")}
+            value={colorMode}
           >
             <MenuRadioItem value="dark">Dark</MenuRadioItem>
             <MenuRadioItem value="light">Light</MenuRadioItem>

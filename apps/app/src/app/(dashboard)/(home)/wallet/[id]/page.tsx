@@ -1,8 +1,7 @@
-import WalletUpdate from "@/features/Wallet/Update";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import AuthSignInCard from "@/features/auth/sign-in-card";
+import WalletUpdate from "@/features/wallet/update";
 import { me } from "@/lib/privy";
-import AuthSignInCard from "@/features/Auth/SignInCard";
-import React from "react";
 
 export const metadata: Metadata = {
   title: "Manage Wallet",
@@ -16,5 +15,5 @@ export default async function WalletUpdatePage({
   const { id } = await params;
   const user = await me();
 
-  return !user ? <AuthSignInCard /> : <WalletUpdate address={id} user={user} />;
+  return user ? <WalletUpdate address={id} user={user} /> : <AuthSignInCard />;
 }

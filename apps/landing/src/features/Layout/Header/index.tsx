@@ -1,10 +1,10 @@
 "use client";
 
-import { Box, BoxProps } from "@mutuals/ui";
-import NavMobile from "@/features/Layout/Header/NavMobile";
-import NavDesktop from "@/features/Layout/Header/NavDesktop";
-import links from "@/features/Layout/links";
-import { useLayout } from "@/features/Layout/Provider";
+import { Box, type BoxProps } from "@mutuals/ui";
+import NavDesktop from "@/features/layout/header/nav-desktop";
+import NavMobile from "@/features/layout/header/nav-mobile";
+import links from "@/features/layout/links";
+import { useLayout } from "@/features/layout/provider";
 
 export type HeaderProps = Omit<BoxProps, "children">;
 
@@ -17,12 +17,12 @@ export default function Header(props: HeaderProps) {
 
       <NavMobile.Root open={mobileMenuOpen}>
         <NavMobile.Navbar
-          hideFrom="lg"
           buttonProps={{ onClick: () => setMobileMenuOpen(true) }}
+          hideFrom="lg"
         />
         <NavMobile.Drawer
-          links={links}
           closeButtonProps={{ onClick: () => setMobileMenuOpen(false) }}
+          links={links}
         />
       </NavMobile.Root>
     </Box>

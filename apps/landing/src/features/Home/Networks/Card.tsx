@@ -1,8 +1,8 @@
-import { Box, Icon, Link, LinkProps, Stack } from "@mutuals/ui";
-import IconBox from "@/components/IconBox";
+import { Box, Icon, Link, type LinkProps, Stack } from "@mutuals/ui";
 import NextImage from "next/image";
-import { Network } from "@/features/Home/Networks/types";
 import { LuArrowUpRight } from "react-icons/lu";
+import IconBox from "@/components/icon-box";
+import type { Network } from "@/features/home/networks/types";
 
 export type HomeNetworksCardProps = Omit<LinkProps, "href" | "base"> & Network;
 
@@ -15,21 +15,21 @@ export default function HomeNetworksCard({
 }: HomeNetworksCardProps) {
   return (
     <Link
-      href={href}
-      external={true}
-      arrow={false}
-      w={"32"}
-      h={"32"}
-      position={"relative"}
-      bg={"bg.muted"}
       _hover={{ bg: "bg.emphasized" }}
-      transition={"background-color 0.2s ease-in-out"}
-      rounded={"l3"}
+      arrow={false}
+      bg={"bg.muted"}
+      external={true}
+      h={"32"}
+      href={href}
       p={"4"}
+      position={"relative"}
+      rounded={"l3"}
+      transition={"background-color 0.2s ease-in-out"}
+      w={"32"}
       {...props}
     >
-      <Box p="1" position={"absolute"} top={"0"} right={"0"}>
-        <IconBox size={"xs"} bg={"transparent"} color={"fg.subtle"}>
+      <Box p="1" position={"absolute"} right={"0"} top={"0"}>
+        <IconBox bg={"transparent"} color={"fg.subtle"} size={"xs"}>
           <Icon asChild={true}>
             <LuArrowUpRight />
           </Icon>
@@ -37,30 +37,30 @@ export default function HomeNetworksCard({
       </Box>
 
       <Stack
-        position={"relative"}
         alignSelf={"stretch"}
-        w={"full"}
-        p={"0"}
         display={{ _dark: "none" }}
+        p={"0"}
+        position={"relative"}
+        w={"full"}
       >
         <NextImage
-          src={base}
           alt={name}
           fill={true}
+          src={base}
           style={{ objectFit: "contain" }}
         />
       </Stack>
       <Stack
-        position={"relative"}
         alignSelf={"stretch"}
-        w={"full"}
-        p={"0"}
         display={{ base: "none", _dark: "flex" }}
+        p={"0"}
+        position={"relative"}
+        w={"full"}
       >
         <NextImage
-          src={dark}
           alt={`${name} dark mode`}
           fill={true}
+          src={dark}
           style={{ objectFit: "contain" }}
         />
       </Stack>

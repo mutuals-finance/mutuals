@@ -1,26 +1,26 @@
-import React, { ReactNode } from "react";
 import {
   Box,
-  BoxProps,
-  Container,
-  ContainerProps,
-  Heading,
-  HeadingProps,
-  Text,
-  TextProps,
-  VStack,
+  type BoxProps,
   Breadcrumbs,
   type BreadcrumbsProps,
+  Container,
+  type ContainerProps,
+  Heading,
+  type HeadingProps,
+  Text,
+  type TextProps,
+  VStack,
 } from "@mutuals/ui";
+import type { ReactNode } from "react";
 
 export interface ShellPageProps extends Omit<BoxProps, "title"> {
+  breadcrumbsEnabled?: boolean;
   breadcrumbsProps?: BreadcrumbsProps;
-  headingProps?: HeadingProps;
+  description?: string | ReactNode;
   descriptionProps?: TextProps;
   headerContainerProps?: ContainerProps;
+  headingProps?: HeadingProps;
   title?: string | ReactNode;
-  description?: string | ReactNode;
-  breadcrumbsEnabled?: boolean;
 }
 
 export default function ShellPage({
@@ -39,11 +39,11 @@ export default function ShellPage({
       {(breadcrumbsEnabled || !!title || !!description) && (
         <Container
           as={"header"}
-          my={"12"}
           maxW={"7xl"}
+          my={"12"}
           {...headerContainerProps}
         >
-          <VStack gap={"6"} mb={"6"} alignItems={"flex-start"}>
+          <VStack alignItems={"flex-start"} gap={"6"} mb={"6"}>
             {breadcrumbsEnabled && <Breadcrumbs {...breadcrumbsProps} />}
 
             {!!title && (
@@ -56,7 +56,7 @@ export default function ShellPage({
               </Heading>
             )}
             {!!description && (
-              <Text textStyle={"md"} color={"fg.muted"} {...descriptionProps}>
+              <Text color={"fg.muted"} textStyle={"md"} {...descriptionProps}>
                 {description}
               </Text>
             )}

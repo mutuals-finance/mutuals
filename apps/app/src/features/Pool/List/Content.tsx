@@ -1,14 +1,10 @@
 "use client";
 
-import PoolListEmptyState from "@/features/Pool/List/EmptyState";
-import { For, GridItem, Input, InputGroup, Form } from "@mutuals/ui";
-import React from "react";
-
-import PoolCard from "@/features/Pool/Card";
+import type { UserPoolListWithOwnerAndContractFragment } from "@mutuals/graphql-client-nextjs";
+import { For, Form, GridItem, Input, InputGroup } from "@mutuals/ui";
 import { IoSearch } from "react-icons/io5";
-import {
-  UserPoolListWithOwnerAndContractFragment,
-} from "@mutuals/graphql-client-nextjs";
+import PoolCard from "@/features/pool/card";
+import PoolListEmptyState from "@/features/pool/list/empty-state";
 
 export type PoolListContentProps = UserPoolListWithOwnerAndContractFragment;
 

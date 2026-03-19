@@ -1,15 +1,15 @@
-import path from "path";
-import { fileURLToPath } from "url";
-import { buildConfig, type Config } from "payload";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { postgresAdapter } from "@payloadcms/db-postgres";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { seoPlugin } from "@payloadcms/plugin-seo";
-import { Users, Media, Posts, Categories } from "./collections";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
+import { buildConfig, type Config } from "payload";
+import { BlogContent, BlogMarkdown, Code } from "./blocks";
+import { Categories, Media, Posts, Users } from "./collections";
 import { revalidateRedirects } from "./hooks/revalidate-redirects";
 import { deepMerge } from "./utils";
-import { Code, BlogMarkdown, BlogContent } from "./blocks";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

@@ -1,10 +1,10 @@
-import { NextConfig } from "next";
-import path from "path";
+import path from "node:path";
 import { withPayload } from "@payloadcms/next/withPayload";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   turbopack: {
-    root: path.join(__dirname, "../.."),
+    root: path.join(import.meta.dirname, "../.."),
   },
   reactStrictMode: true,
   cacheComponents: true,

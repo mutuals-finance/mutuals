@@ -1,5 +1,5 @@
-import { cookieStorage, createStorage } from "wagmi";
 import { createConfig } from "@privy-io/wagmi";
+import { cookieStorage, createStorage } from "wagmi";
 
 import { chains, transports } from "./config";
 
@@ -12,4 +12,4 @@ export const config = createConfig({
   }),
 });
 
-export { chains, transports };
+export { chains, transports } from "./config";

@@ -8,7 +8,7 @@ import {
 
 export default function PoolCardSkeleton() {
   return (
-    <Card.Root variant={"outline"} size={"sm"}>
+    <Card.Root size={"sm"} variant={"outline"}>
       <Card.Header>
         <Stack alignItems={"flex-start"} gap={"6"}>
           <SkeletonCircle size="16" />

@@ -3,12 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "#/*": [
-        "./types/*"
-      ]
+      "@/*": ["./src/*"],
+      "#/*": ["./types/*"]
     }
   },
   // filenames are resolved relative to the directory containing the tsconfig.json file.

@@ -1,4 +1,4 @@
-import { Chain, http } from "viem";
+import { type Chain, http } from "viem";
 import { CHAINS_MAP } from "@/constants";
 
 const prodChains = [
@@ -28,12 +28,8 @@ const chains = ({
   ...Chain[],
 ];
 
-const transports = chains.reduce(
-  (all, chain) => ({
-    ...all,
-    [chain.id]: http(), // `https://${chain.name}.infura.io/v3/${INFURA_KEY}`
-  }),
-  {},
+const transports = Object.fromEntries(
+  chains.map((chain) => [chain.id, http()])
 );
 
 export { chains, transports };

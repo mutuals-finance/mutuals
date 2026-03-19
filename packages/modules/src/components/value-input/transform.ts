@@ -2,16 +2,16 @@
 
 import {
   createJsonTransform,
-  NumberInputValueChangeDetails,
-  SelectCollectionItemProps,
-  SelectValueChangeDetails,
+  type NumberInputValueChangeDetails,
+  type SelectCollectionItemProps,
+  type SelectValueChangeDetails,
 } from "@mutuals/ui";
-import { AllocationType } from "./Select";
+import type { AllocationType } from "./Select";
 
-export type ValueInputData = {
+export interface ValueInputData {
   allocationType: AllocationType;
   value: number;
-};
+}
 
 export const defaultValue: ValueInputData = {
   allocationType: "percentage",
@@ -25,7 +25,7 @@ const allocationType = createJsonTransform<
   "allocationType",
   defaultValue,
   (value) => (value.allocationType ? [value.allocationType] : undefined),
-  (e) => (e.value ? (e.value[0] as AllocationType) : undefined),
+  (e) => (e.value ? (e.value[0] as AllocationType) : undefined)
 );
 
 const value = createJsonTransform<
@@ -35,7 +35,7 @@ const value = createJsonTransform<
   "value",
   defaultValue,
   (data) => data.value?.toString(),
-  ({ valueAsNumber }) => valueAsNumber,
+  ({ valueAsNumber }) => valueAsNumber
 );
 
 export const transform = {

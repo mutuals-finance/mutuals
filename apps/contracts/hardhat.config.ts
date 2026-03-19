@@ -1,15 +1,15 @@
-import 'tsconfig-paths/register';
-import '@/config/environment';
-import '@/plugins';
+import "tsconfig-paths/register";
+import "@/config/environment";
+import "@/plugins";
 
-import { etherscan } from '@/config/etherscan';
-import { networks } from '@/config/networks';
-import { namedAccountIndices } from '@/config/accounts';
-import { defender } from '@/config/defender';
-import { solidity } from '@/config/solidity';
-import { tracer } from '@/config/tracer';
-import { typechain } from '@/config/typechain';
-import { HardhatUserConfig } from 'hardhat/config';
+import type { HardhatUserConfig } from "hardhat/config";
+import { namedAccountIndices } from "@/config/accounts";
+import { defender } from "@/config/defender";
+import { etherscan } from "@/config/etherscan";
+import { networks } from "@/config/networks";
+import { solidity } from "@/config/solidity";
+import { tracer } from "@/config/tracer";
+import { typechain } from "@/config/typechain";
 
 export const getConfig = (
   _: NodeJS.ProcessEnv = process.env
@@ -21,8 +21,8 @@ export const getConfig = (
     defender,
     solidity,
     paths: {
-      deploy: './src/deploy',
-      sources: './contracts',
+      deploy: "./src/deploy",
+      sources: "./contracts",
     },
     tracer,
     typechain,

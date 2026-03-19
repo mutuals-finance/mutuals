@@ -1,6 +1,6 @@
-import ShellDashboardSidebarDesktop from "@/features/Shell/Dashboard/Sidebar/Desktop";
-import ShellDashboardSidebarMobile from "@/features/Shell/Dashboard/Sidebar/Mobile";
 import { Box } from "@mutuals/ui";
+import ShellDashboardSidebarDesktop from "@/features/shell/dashboard/sidebar/desktop";
+import ShellDashboardSidebarMobile from "@/features/shell/dashboard/sidebar/mobile";
 
 export default function ShellDashboardSidebar() {
   return (

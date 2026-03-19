@@ -1,18 +1,18 @@
-import { ModuleRenderProps } from "../../types";
 import {
   createJsonTransform,
   InputGroup,
   NumberInput,
-  NumberInputValueChangeDetails,
+  type NumberInputValueChangeDetails,
 } from "@mutuals/ui";
-import { defaultValue, PriorityDistributionData } from "./index";
-import { RecipientInput } from "../../components/recipient-input";
 import { LuArrowUp01 } from "react-icons/lu";
+import { RecipientInput } from "../../components/recipient-input";
+import type { ModuleRenderProps } from "../../types";
+import { defaultValue, type PriorityDistributionData } from "./index";
 
 export type PriorityDistributionInputProps = ModuleRenderProps;
 
 export function PriorityDistributionInput(
-  props: PriorityDistributionInputProps,
+  props: PriorityDistributionInputProps
 ) {
   const { id } = props;
 
@@ -23,7 +23,7 @@ export function PriorityDistributionInput(
     "priority",
     defaultValue,
     (data) => data.priority?.toString(),
-    ({ valueAsNumber }) => valueAsNumber,
+    ({ valueAsNumber }) => valueAsNumber
   );
 
   return (
@@ -35,11 +35,11 @@ export function PriorityDistributionInput(
         startElement={<LuArrowUp01 />}
       >
         <NumberInput
-          id={`${id}.data.priority`}
-          name={`${id}.data`}
           allowMouseWheel={true}
-          step={1}
+          id={`${id}.data.priority`}
           inputProps={{ placeholder: "Order", ps: "10" }}
+          name={`${id}.data`}
+          step={1}
           transform={transform}
         />
       </InputGroup>

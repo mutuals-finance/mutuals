@@ -1,9 +1,9 @@
-import { RemainderDistributionInput } from "./input";
-import { Module } from "../../types";
 import {
+  type RecipientInputData,
   defaultValue as recipientDefaultValue,
-  RecipientInputData,
 } from "../../components/recipient-input";
+import type { Module } from "../../types";
+import { RemainderDistributionInput } from "./input";
 
 export type RemainderDistributionData = RecipientInputData;
 

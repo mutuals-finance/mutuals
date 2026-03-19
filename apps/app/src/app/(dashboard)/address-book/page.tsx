@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import ShellPage from "@/features/Shell/Page";
 import { Container } from "@mutuals/ui";
-import AddressBookList from "@/features/AddressBook/List";
-import AuthSignInCard from "@/features/Auth/SignInCard";
+import type { Metadata } from "next";
+import AddressBookList from "@/features/address-book/list";
+import AuthSignInCard from "@/features/auth/sign-in-card";
+import ShellPage from "@/features/shell/page";
 import { me } from "@/lib/privy";
 
 export const metadata: Metadata = {
@@ -15,14 +15,14 @@ export default async function AddressBookPage() {
   return (
     <ShellPage title={"Address Book"}>
       <Container maxW={"7xl"}>
-        {!user ? (
+        {user ? (
+          <AddressBookList user={user} />
+        ) : (
           <AuthSignInCard
             description={
               "To view and manage your address book you must sign in to your account."
             }
           />
-        ) : (
-          <AddressBookList user={user} />
         )}
       </Container>
     </ShellPage>

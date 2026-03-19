@@ -1,4 +1,4 @@
 module.exports = {
   root: true,
-  extends: ['@mutuals/eslint-config/hh-sol.js'],
+  extends: ["@mutuals/eslint-config/hh-sol.js"],
 };

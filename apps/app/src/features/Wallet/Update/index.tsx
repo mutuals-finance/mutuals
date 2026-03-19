@@ -1,13 +1,19 @@
-import WalletForm from "@/features/Wallet/Form";
-import { User } from "@privy-io/node";
+import type { User } from "@privy-io/node";
+import WalletForm from "@/features/wallet/form";
 
-export type WalletUpdateProps = { address: string; user?: User };
+export interface WalletUpdateProps {
+  address: string;
+  user?: User;
+}
 
-export default function WalletUpdate({ user, address }: WalletUpdateProps) {
+export default function WalletUpdate({
+  user: _user,
+  address,
+}: WalletUpdateProps) {
   return (
     <WalletForm.Drawer
-      title={"Manage Wallet"}
       defaultValues={{ name: "Company Multisig", address }}
+      title={"Manage Wallet"}
     >
       <WalletForm.Content />
     </WalletForm.Drawer>

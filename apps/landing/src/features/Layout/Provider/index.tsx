@@ -2,25 +2,26 @@
 
 import { usePathname } from "next/navigation";
 import {
-  useRef,
+  createContext,
+  type Dispatch,
+  type PropsWithChildren,
+  type RefObject,
+  type SetStateAction,
+  useContext,
   useEffect,
   useState,
-  createContext,
-  useContext,
-  RefObject,
 } from "react";
-import { Dispatch, SetStateAction, type PropsWithChildren } from "react";
 
 type MaybeAnchorRef = RefObject<HTMLAnchorElement | null> | null;
 
 interface LayoutContextType {
   activeRef: MaybeAnchorRef;
-  setActiveRef: Dispatch<SetStateAction<MaybeAnchorRef>>;
-  hoveredRef: MaybeAnchorRef;
-  setHoveredRef: Dispatch<SetStateAction<MaybeAnchorRef>>;
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
   currentPath: string;
+  hoveredRef: MaybeAnchorRef;
+  mobileMenuOpen: boolean;
+  setActiveRef: Dispatch<SetStateAction<MaybeAnchorRef>>;
+  setHoveredRef: Dispatch<SetStateAction<MaybeAnchorRef>>;
+  setMobileMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
@@ -42,7 +43,7 @@ export function LayoutProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     setMobileMenuOpen(false);
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
     if (pathname !== currentPath) {

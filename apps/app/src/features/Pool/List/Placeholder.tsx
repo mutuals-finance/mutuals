@@ -1,21 +1,20 @@
 import { Button, Heading } from "@mutuals/ui";
-import React from "react";
 
-import ContentCard from "@/components/ContentCard";
+import ContentCard from "@/components/content-card";
 
 export function PoolListPlaceholder() {
   return (
     <ContentCard
-      size={"lg"}
-      textAlign={"center"}
       maxW={"container.sm"}
       mx={"auto"}
+      size={"lg"}
+      textAlign={"center"}
     >
-      <Heading as={"h2"} size={"md"} fontWeight={"400"}>
+      <Heading as={"h2"} fontWeight={"400"} size={"md"}>
         Please Connect your Wallet
       </Heading>
 
-      <Button size={"lg"} mt={"6"}>
+      <Button mt={"6"} size={"lg"}>
         Connect Wallet
       </Button>
     </ContentCard>

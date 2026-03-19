@@ -2,28 +2,173 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
   BigNumberish,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../common";
 
 export interface SplitInterface extends Interface {
+  decodeFunctionResult(
+    functionFragment:
+      | "withdrawn(address,address)"
+      | (
+          | "withdrawn(address)"
+          | (
+              | "withdraw(address,address)"
+              | (
+                  | "withdraw(address)"
+                  | (
+                      | "totalWithdrawn()"
+                      | (
+                          | "totalWithdrawn(address)"
+                          | (
+                              | "totalShares"
+                              | (
+                                  | "supportsInterface"
+                                  | (
+                                      | "shares"
+                                      | (
+                                          | "setContractURI"
+                                          | (
+                                              | "revokeRole"
+                                              | (
+                                                  | "renounceRole"
+                                                  | (
+                                                      | "payeeCount"
+                                                      | (
+                                                          | "payee"
+                                                          | (
+                                                              | "initialize"
+                                                              | (
+                                                                  | "hasRole"
+                                                                  | (
+                                                                      | "grantRole"
+                                                                      | (
+                                                                          | "getRoleAdmin"
+                                                                          | (
+                                                                              | "getPending(address)"
+                                                                              | (
+                                                                                  | "getPending(address,address)"
+                                                                                  | (
+                                                                                      | "contractURI"
+                                                                                      | (
+                                                                                          | "batchWithdraw(bool,address[],address)"
+                                                                                          | (
+                                                                                              | "batchWithdraw(bool,address[])"
+                                                                                              | (
+                                                                                                  | "DEFAULT_ADMIN_ROLE"
+                                                                                                  | "CONTRACT_METADATA_AUTHOR_ROLE"
+                                                                                                )
+                                                                                            )
+                                                                                        )
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+    data: BytesLike
+  ): Result;
+  encodeFunctionData(
+    functionFragment: "batchWithdraw(bool,address[])",
+    values: [boolean, AddressLike[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "batchWithdraw(bool,address[],address)",
+    values: [boolean, AddressLike[], AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [AddressLike[], BigNumberish[], string, boolean]
+  ): string;
+  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment:
+      | "revokeRole"
+      | ("renounceRole" | ("hasRole" | "grantRole")),
+    values: [BytesLike, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setContractURI",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface" | "getRoleAdmin",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment:
+      | "totalWithdrawn()"
+      | (
+          | "totalShares"
+          | (
+              | "payeeCount"
+              | (
+                  | "contractURI"
+                  | ("DEFAULT_ADMIN_ROLE" | "CONTRACT_METADATA_AUTHOR_ROLE")
+                )
+            )
+        ),
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment:
+      | "withdrawn(address)"
+      | (
+          | "withdraw(address)"
+          | ("totalWithdrawn(address)" | ("shares" | "getPending(address)"))
+        ),
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment:
+      | "withdrawn(address,address)"
+      | ("withdraw(address,address)" | "getPending(address,address)"),
+    values: [AddressLike, AddressLike]
+  ): string;
+
+  getEvent(
+    nameOrSignatureOrTopic:
+      | "ContractURIUpdated"
+      | "Deposit"
+      | "ERC20Withdrawal"
+      | "Initialized"
+      | "PayeeAdded"
+      | "RoleAdminChanged"
+      | "RoleGranted"
+      | "RoleRevoked"
+      | "Withdrawal"
+  ): EventFragment;
   getFunction(
     nameOrSignature:
       | "CONTRACT_METADATA_AUTHOR_ROLE"
@@ -52,202 +197,14 @@ export interface SplitInterface extends Interface {
       | "withdrawn(address)"
       | "withdrawn(address,address)"
   ): FunctionFragment;
-
-  getEvent(
-    nameOrSignatureOrTopic:
-      | "ContractURIUpdated"
-      | "Deposit"
-      | "ERC20Withdrawal"
-      | "Initialized"
-      | "PayeeAdded"
-      | "RoleAdminChanged"
-      | "RoleGranted"
-      | "RoleRevoked"
-      | "Withdrawal"
-  ): EventFragment;
-
-  encodeFunctionData(
-    functionFragment: "CONTRACT_METADATA_AUTHOR_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "batchWithdraw(bool,address[])",
-    values: [boolean, AddressLike[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "batchWithdraw(bool,address[],address)",
-    values: [boolean, AddressLike[], AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "contractURI",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPending(address,address)",
-    values: [AddressLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPending(address)",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRoleAdmin",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "grantRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [AddressLike[], BigNumberish[], string, boolean]
-  ): string;
-  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "payeeCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "revokeRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setContractURI",
-    values: [string]
-  ): string;
-  encodeFunctionData(functionFragment: "shares", values: [AddressLike]): string;
-  encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalShares",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalWithdrawn(address)",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalWithdrawn()",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw(address)",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw(address,address)",
-    values: [AddressLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawn(address)",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawn(address,address)",
-    values: [AddressLike, AddressLike]
-  ): string;
-
-  decodeFunctionResult(
-    functionFragment: "CONTRACT_METADATA_AUTHOR_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "batchWithdraw(bool,address[])",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "batchWithdraw(bool,address[],address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "contractURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPending(address,address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPending(address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "payeeCount", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceRole",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setContractURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalShares",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalWithdrawn(address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalWithdrawn()",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdraw(address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdraw(address,address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawn(address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawn(address,address)",
-    data: BytesLike
-  ): Result;
 }
 
 export namespace ContractURIUpdatedEvent {
   export type InputTuple = [prevURI: string, newURI: string];
   export type OutputTuple = [prevURI: string, newURI: string];
   export interface OutputObject {
-    prevURI: string;
     newURI: string;
+    prevURI: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -259,8 +216,8 @@ export namespace DepositEvent {
   export type InputTuple = [from: AddressLike, amount: BigNumberish];
   export type OutputTuple = [from: string, amount: bigint];
   export interface OutputObject {
-    from: string;
     amount: bigint;
+    from: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -272,13 +229,13 @@ export namespace ERC20WithdrawalEvent {
   export type InputTuple = [
     token: AddressLike,
     to: AddressLike,
-    amount: BigNumberish
+    amount: BigNumberish,
   ];
   export type OutputTuple = [token: string, to: string, amount: bigint];
   export interface OutputObject {
-    token: string;
-    to: string;
     amount: bigint;
+    to: string;
+    token: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -315,17 +272,17 @@ export namespace RoleAdminChangedEvent {
   export type InputTuple = [
     role: BytesLike,
     previousAdminRole: BytesLike,
-    newAdminRole: BytesLike
+    newAdminRole: BytesLike,
   ];
   export type OutputTuple = [
     role: string,
     previousAdminRole: string,
-    newAdminRole: string
+    newAdminRole: string,
   ];
   export interface OutputObject {
-    role: string;
-    previousAdminRole: string;
     newAdminRole: string;
+    previousAdminRole: string;
+    role: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -337,12 +294,12 @@ export namespace RoleGrantedEvent {
   export type InputTuple = [
     role: BytesLike,
     account: AddressLike,
-    sender: AddressLike
+    sender: AddressLike,
   ];
   export type OutputTuple = [role: string, account: string, sender: string];
   export interface OutputObject {
-    role: string;
     account: string;
+    role: string;
     sender: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
@@ -355,12 +312,12 @@ export namespace RoleRevokedEvent {
   export type InputTuple = [
     role: BytesLike,
     account: AddressLike,
-    sender: AddressLike
+    sender: AddressLike,
   ];
   export type OutputTuple = [role: string, account: string, sender: string];
   export interface OutputObject {
-    role: string;
     account: string;
+    role: string;
     sender: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
@@ -373,8 +330,8 @@ export namespace WithdrawalEvent {
   export type InputTuple = [to: AddressLike, amount: BigNumberish];
   export type OutputTuple = [to: string, amount: bigint];
   export interface OutputObject {
-    to: string;
     amount: bigint;
+    to: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -383,351 +340,24 @@ export namespace WithdrawalEvent {
 }
 
 export interface Split extends BaseContract {
-  connect(runner?: ContractRunner | null): Split;
-  waitForDeployment(): Promise<this>;
-
-  interface: SplitInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  CONTRACT_METADATA_AUTHOR_ROLE: TypedContractMethod<[], [string], "view">;
-
-  DEFAULT_ADMIN_ROLE: TypedContractMethod<[], [string], "view">;
+  "batchWithdraw(bool,address[],address)": TypedContractMethod<
+    [withdrawETH: boolean, tokens: AddressLike[], account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
 
   "batchWithdraw(bool,address[])": TypedContractMethod<
     [withdrawETH: boolean, tokens: AddressLike[]],
-    [void],
+    [undefined],
     "nonpayable"
   >;
 
-  "batchWithdraw(bool,address[],address)": TypedContractMethod<
-    [withdrawETH: boolean, tokens: AddressLike[], account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
+  CONTRACT_METADATA_AUTHOR_ROLE: TypedContractMethod<[], [string], "view">;
+  connect(runner?: ContractRunner | null): Split;
 
   contractURI: TypedContractMethod<[], [string], "view">;
 
-  "getPending(address,address)": TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  "getPending(address)": TypedContractMethod<
-    [account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  getRoleAdmin: TypedContractMethod<[role: BytesLike], [string], "view">;
-
-  grantRole: TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  hasRole: TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [boolean],
-    "view"
-  >;
-
-  initialize: TypedContractMethod<
-    [
-      payees: AddressLike[],
-      shares_: BigNumberish[],
-      uri: string,
-      metadataLocked: boolean
-    ],
-    [void],
-    "nonpayable"
-  >;
-
-  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
-
-  payeeCount: TypedContractMethod<[], [bigint], "view">;
-
-  renounceRole: TypedContractMethod<
-    [role: BytesLike, callerConfirmation: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  revokeRole: TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  setContractURI: TypedContractMethod<[_uri: string], [void], "nonpayable">;
-
-  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
-
-  supportsInterface: TypedContractMethod<
-    [interfaceId: BytesLike],
-    [boolean],
-    "view"
-  >;
-
-  totalShares: TypedContractMethod<[], [bigint], "view">;
-
-  "totalWithdrawn(address)": TypedContractMethod<
-    [token: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  "totalWithdrawn()": TypedContractMethod<[], [bigint], "view">;
-
-  "withdraw(address)": TypedContractMethod<
-    [account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  "withdraw(address,address)": TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  "withdrawn(address)": TypedContractMethod<
-    [account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  "withdrawn(address,address)": TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "CONTRACT_METADATA_AUTHOR_ROLE"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "DEFAULT_ADMIN_ROLE"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "batchWithdraw(bool,address[])"
-  ): TypedContractMethod<
-    [withdrawETH: boolean, tokens: AddressLike[]],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "batchWithdraw(bool,address[],address)"
-  ): TypedContractMethod<
-    [withdrawETH: boolean, tokens: AddressLike[], account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "contractURI"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "getPending(address,address)"
-  ): TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "getPending(address)"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "getRoleAdmin"
-  ): TypedContractMethod<[role: BytesLike], [string], "view">;
-  getFunction(
-    nameOrSignature: "grantRole"
-  ): TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "hasRole"
-  ): TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [boolean],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "initialize"
-  ): TypedContractMethod<
-    [
-      payees: AddressLike[],
-      shares_: BigNumberish[],
-      uri: string,
-      metadataLocked: boolean
-    ],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "payee"
-  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
-  getFunction(
-    nameOrSignature: "payeeCount"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "renounceRole"
-  ): TypedContractMethod<
-    [role: BytesLike, callerConfirmation: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "revokeRole"
-  ): TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "setContractURI"
-  ): TypedContractMethod<[_uri: string], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "shares"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "supportsInterface"
-  ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
-  getFunction(
-    nameOrSignature: "totalShares"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "totalWithdrawn(address)"
-  ): TypedContractMethod<[token: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "totalWithdrawn()"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "withdraw(address)"
-  ): TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "withdraw(address,address)"
-  ): TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "withdrawn(address)"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "withdrawn(address,address)"
-  ): TypedContractMethod<
-    [token: AddressLike, account: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  getEvent(
-    key: "ContractURIUpdated"
-  ): TypedContractEvent<
-    ContractURIUpdatedEvent.InputTuple,
-    ContractURIUpdatedEvent.OutputTuple,
-    ContractURIUpdatedEvent.OutputObject
-  >;
-  getEvent(
-    key: "Deposit"
-  ): TypedContractEvent<
-    DepositEvent.InputTuple,
-    DepositEvent.OutputTuple,
-    DepositEvent.OutputObject
-  >;
-  getEvent(
-    key: "ERC20Withdrawal"
-  ): TypedContractEvent<
-    ERC20WithdrawalEvent.InputTuple,
-    ERC20WithdrawalEvent.OutputTuple,
-    ERC20WithdrawalEvent.OutputObject
-  >;
-  getEvent(
-    key: "Initialized"
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
-  getEvent(
-    key: "PayeeAdded"
-  ): TypedContractEvent<
-    PayeeAddedEvent.InputTuple,
-    PayeeAddedEvent.OutputTuple,
-    PayeeAddedEvent.OutputObject
-  >;
-  getEvent(
-    key: "RoleAdminChanged"
-  ): TypedContractEvent<
-    RoleAdminChangedEvent.InputTuple,
-    RoleAdminChangedEvent.OutputTuple,
-    RoleAdminChangedEvent.OutputObject
-  >;
-  getEvent(
-    key: "RoleGranted"
-  ): TypedContractEvent<
-    RoleGrantedEvent.InputTuple,
-    RoleGrantedEvent.OutputTuple,
-    RoleGrantedEvent.OutputObject
-  >;
-  getEvent(
-    key: "RoleRevoked"
-  ): TypedContractEvent<
-    RoleRevokedEvent.InputTuple,
-    RoleRevokedEvent.OutputTuple,
-    RoleRevokedEvent.OutputObject
-  >;
-  getEvent(
-    key: "Withdrawal"
-  ): TypedContractEvent<
-    WithdrawalEvent.InputTuple,
-    WithdrawalEvent.OutputTuple,
-    WithdrawalEvent.OutputObject
-  >;
+  DEFAULT_ADMIN_ROLE: TypedContractMethod<[], [string], "view">;
 
   filters: {
     "ContractURIUpdated(string,string)": TypedContractEvent<
@@ -829,4 +459,281 @@ export interface Split extends BaseContract {
       WithdrawalEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "ContractURIUpdated"
+  ): TypedContractEvent<
+    ContractURIUpdatedEvent.InputTuple,
+    ContractURIUpdatedEvent.OutputTuple,
+    ContractURIUpdatedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Deposit"
+  ): TypedContractEvent<
+    DepositEvent.InputTuple,
+    DepositEvent.OutputTuple,
+    DepositEvent.OutputObject
+  >;
+  getEvent(
+    key: "ERC20Withdrawal"
+  ): TypedContractEvent<
+    ERC20WithdrawalEvent.InputTuple,
+    ERC20WithdrawalEvent.OutputTuple,
+    ERC20WithdrawalEvent.OutputObject
+  >;
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+  getEvent(
+    key: "PayeeAdded"
+  ): TypedContractEvent<
+    PayeeAddedEvent.InputTuple,
+    PayeeAddedEvent.OutputTuple,
+    PayeeAddedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleAdminChanged"
+  ): TypedContractEvent<
+    RoleAdminChangedEvent.InputTuple,
+    RoleAdminChangedEvent.OutputTuple,
+    RoleAdminChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleGranted"
+  ): TypedContractEvent<
+    RoleGrantedEvent.InputTuple,
+    RoleGrantedEvent.OutputTuple,
+    RoleGrantedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleRevoked"
+  ): TypedContractEvent<
+    RoleRevokedEvent.InputTuple,
+    RoleRevokedEvent.OutputTuple,
+    RoleRevokedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Withdrawal"
+  ): TypedContractEvent<
+    WithdrawalEvent.InputTuple,
+    WithdrawalEvent.OutputTuple,
+    WithdrawalEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+  getFunction(
+    nameOrSignature: "batchWithdraw(bool,address[])"
+  ): TypedContractMethod<
+    [withdrawETH: boolean, tokens: AddressLike[]],
+    [undefined],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "batchWithdraw(bool,address[],address)"
+  ): TypedContractMethod<
+    [withdrawETH: boolean, tokens: AddressLike[], account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature:
+      | "contractURI"
+      | ("DEFAULT_ADMIN_ROLE" | "CONTRACT_METADATA_AUTHOR_ROLE")
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "getRoleAdmin"
+  ): TypedContractMethod<[role: BytesLike], [string], "view">;
+  getFunction(
+    nameOrSignature: "hasRole"
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "initialize"
+  ): TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares_: BigNumberish[],
+      uri: string,
+      metadataLocked: boolean,
+    ],
+    [undefined],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "payee"
+  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "revokeRole" | ("renounceRole" | "grantRole")
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "setContractURI"
+  ): TypedContractMethod<[_uri: string], [undefined], "nonpayable">;
+  getFunction(
+    nameOrSignature: "supportsInterface"
+  ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "totalWithdrawn()" | ("totalShares" | "payeeCount")
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "withdraw(address)"
+  ): TypedContractMethod<[account: AddressLike], [undefined], "nonpayable">;
+  getFunction(
+    nameOrSignature: "withdraw(address,address)"
+  ): TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature:
+      | "withdrawn(address)"
+      | ("totalWithdrawn(address)" | ("shares" | "getPending(address)"))
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature:
+      | "withdrawn(address,address)"
+      | "getPending(address,address)"
+  ): TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  "getPending(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  "getPending(address)": TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  getRoleAdmin: TypedContractMethod<[role: BytesLike], [string], "view">;
+
+  grantRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  hasRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+
+  initialize: TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares_: BigNumberish[],
+      uri: string,
+      metadataLocked: boolean,
+    ],
+    [undefined],
+    "nonpayable"
+  >;
+
+  interface: SplitInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+
+  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
+
+  payeeCount: TypedContractMethod<[], [bigint], "view">;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  renounceRole: TypedContractMethod<
+    [role: BytesLike, callerConfirmation: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  revokeRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  setContractURI: TypedContractMethod<
+    [_uri: string],
+    [undefined],
+    "nonpayable"
+  >;
+
+  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
+
+  supportsInterface: TypedContractMethod<
+    [interfaceId: BytesLike],
+    [boolean],
+    "view"
+  >;
+
+  totalShares: TypedContractMethod<[], [bigint], "view">;
+
+  "totalWithdrawn()": TypedContractMethod<[], [bigint], "view">;
+
+  "totalWithdrawn(address)": TypedContractMethod<
+    [token: AddressLike],
+    [bigint],
+    "view"
+  >;
+  waitForDeployment(): Promise<this>;
+
+  "withdraw(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  "withdraw(address)": TypedContractMethod<
+    [account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  "withdrawn(address,address)": TypedContractMethod<
+    [token: AddressLike, account: AddressLike],
+    [bigint],
+    "view"
+  >;
+
+  "withdrawn(address)": TypedContractMethod<
+    [account: AddressLike],
+    [bigint],
+    "view"
+  >;
 }

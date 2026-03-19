@@ -1,10 +1,10 @@
 "use client";
 
+import { useFormContext } from "react-hook-form";
 import {
   Field as ChakraField,
-  FieldProps as ChakraFieldProps,
+  type FieldProps as ChakraFieldProps,
 } from "../../components/ui/field";
-import { useFormContext } from "react-hook-form";
 
 export interface FieldProps extends ChakraFieldProps {}
 
@@ -13,9 +13,9 @@ export function Field({ id = "", ...props }: FieldProps) {
   const { invalid, error } = getFieldState(id);
   return (
     <ChakraField
+      errorText={error?.message}
       id={id}
       invalid={invalid}
-      errorText={error?.message}
       {...props}
     />
   );

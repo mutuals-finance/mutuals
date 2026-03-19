@@ -1,4 +1,4 @@
-import { isAddress, getAddress } from "viem";
+import { getAddress, isAddress } from "viem";
 
 export function shortenAddress(address = "", chars = 4) {
   const parsed = isAddress(address);
@@ -23,10 +23,10 @@ export const isChecksummedAddress = (address: string): boolean => {
   }
 };
 
-export type PrefixedAddress = {
-  prefix?: string;
+export interface PrefixedAddress {
   address: string;
-};
+  prefix?: string;
+}
 
 /**
  * Decodes and parses a string that may/may not contain an address and returns only the decoded checksummed `address`
@@ -58,16 +58,16 @@ export const parsePrefixedAddress = (value: string): PrefixedAddress => {
 
 export const formatPrefixedAddress = (
   address: string,
-  prefix?: string,
+  prefix?: string
 ): string => {
   return prefix ? `${prefix}:${address}` : address;
 };
 
 export const sameAddress = (
   firstAddress: string | undefined,
-  secondAddress: string | undefined,
+  secondAddress: string | undefined
 ): boolean => {
-  if (!firstAddress || !secondAddress) {
+  if (!(firstAddress && secondAddress)) {
     return false;
   }
 

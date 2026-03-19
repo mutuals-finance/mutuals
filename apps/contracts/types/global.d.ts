@@ -4,31 +4,31 @@ import type {
   Network,
   RunSuperFunction,
   TaskArguments,
-} from 'hardhat/types/runtime';
+} from "hardhat/types/runtime";
 import type {
   BaseContract,
   Contract,
   ContractFactory,
   ethers as defaultEthers,
   Signer,
-} from 'ethers';
-import type { DeployProxyOptions } from '@openzeppelin/hardhat-upgrades/src/utils';
-import type { HardhatUpgrades } from '@openzeppelin/hardhat-upgrades';
+} from "ethers";
+import type { DeployProxyOptions } from "@openzeppelin/hardhat-upgrades/src/utils";
+import type { HardhatUpgrades } from "@openzeppelin/hardhat-upgrades";
 import type {
   ContractAddressOrInstance,
   DeployBeaconOptions,
   UpgradeProxyOptions,
-} from '@openzeppelin/hardhat-upgrades/dist/utils';
+} from "@openzeppelin/hardhat-upgrades/dist/utils";
 import type {
   DeploymentsExtension as OriginalDeploymentsExtension,
   DeployFunction as HardhatDeployFunction,
-} from 'hardhat-deploy/dist/types';
-import type { HardhatUserConfig } from 'hardhat/types/config';
-import type { Deployment } from 'hardhat-deploy/types';
+} from "hardhat-deploy/dist/types";
+import type { HardhatUserConfig } from "hardhat/types/config";
+import type { Deployment } from "hardhat-deploy/types";
 
-import type { TASKS } from '@/tasks';
-import type { networks } from '@/config/networks';
-import type { NamedAccounts } from '@/config/accounts';
+import type { TASKS } from "@/tasks";
+import type { networks } from "@/config/networks";
+import type { NamedAccounts } from "@/config/accounts";
 import type {
   Pool,
   PoolFactory,
@@ -40,19 +40,19 @@ import type {
   PriorityDistributionModule,
   OnchainMappingValidationModule,
   MerkleTreeValidationModule,
-} from '#/types/typechain';
+} from "#/types/typechain";
 import type {
   FactoryOptions,
   HardhatEthersHelpers,
-} from '@nomicfoundation/hardhat-ethers/types';
-import type { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+} from "@nomicfoundation/hardhat-ethers/types";
+import type { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 import {
   DefenderDeployOptions,
   DeployFactoryOpts,
   StandaloneOptions,
-} from '@openzeppelin/hardhat-upgrades/src/utils/options';
+} from "@openzeppelin/hardhat-upgrades/src/utils/options";
 
-declare module 'hardhat/config' {
+declare module "hardhat/config" {
   type EnvironmentExtender = (
     environment: CustomHardHatRuntimeEnvironment
   ) => void;
@@ -86,16 +86,16 @@ declare module 'hardhat/config' {
   };
 }
 
-declare module 'hardhat/types/runtime' {
+declare module "hardhat/types/runtime" {
   interface DeploymentsExtension
-    extends Omit<OriginalDeploymentsExtension, 'createFixture'> {
+    extends Omit<OriginalDeploymentsExtension, "createFixture"> {
+    all<TContracts extends Contracts = Contracts>(): Promise<{
+      [Property in keyof TContracts]: Deployment;
+    }>;
     createFixture<T, O>(
       function_: FixtureFunction<T, O>,
       id?: string
     ): (options?: O) => Promise<T>;
-    all<TContracts extends Contracts = Contracts>(): Promise<{
-      [Property in keyof TContracts]: Deployment;
-    }>;
   }
   type FixtureFunction<T, O> = (
     environment: CustomHardHatRuntimeEnvironment,
@@ -134,25 +134,23 @@ type GenericUpgradeFunction = <
   options?: UpgradeProxyOptions
 ) => Promise<InstanceOfContract<TC>>;
 
-interface BaseDeployFunction {
-  <
-    TC extends BaseContract = Contract,
-    TContract extends ContractFactory = ContractFactory,
-  >(
-    ImplFactory: TContract,
-    args: unknown[],
-    options: DeployProxyOptions,
-    signer: Signer
-  ): Promise<InstanceOfContract<TC>>;
+type BaseDeployFunction = <
+  TC extends BaseContract = Contract,
+  TContract extends ContractFactory = ContractFactory,
+>(
+  ImplFactory: TContract,
+  args: unknown[],
+  options: DeployProxyOptions,
+  signer: Signer
+) => Promise<InstanceOfContract<TC>>;
+
+interface DeployFunctionArgs {
+  args?: unknown[];
+  contractName: keyof Contracts;
+  options?: StandaloneOptions & DeployFactoryOpts & DefenderDeployOptions;
 }
 
-type DeployFunctionArgs = {
-  contractName: keyof Contracts;
-  args?: unknown[];
-  options?: StandaloneOptions & DeployFactoryOpts & DefenderDeployOptions;
-};
-
-type DeployOrUpgradeProxyFunctionArgs = Omit<DeployFunctionArgs, 'options'> & {
+type DeployOrUpgradeProxyFunctionArgs = Omit<DeployFunctionArgs, "options"> & {
   options?: DeployProxyOptions;
 };
 
@@ -160,11 +158,11 @@ type DeployOrUpgradeProxyFunction = <TContract extends BaseContract>(
   args: DeployOrUpgradeProxyFunctionArgs
 ) => Promise<InstanceOfContract<TContract>>;
 
-type DeployOrUpgradeBeaconFunctionArgs = {
-  contractName: keyof Contracts;
+interface DeployOrUpgradeBeaconFunctionArgs {
   args?: unknown[];
+  contractName: keyof Contracts;
   options?: DeployBeaconOptions;
-};
+}
 
 type DeployOrUpgradeBeaconFunction = <TContract extends BaseContract>(
   args: DeployOrUpgradeBeaconFunctionArgs
@@ -181,10 +179,10 @@ type DeployNonUpgradeableFunction = <TContract extends BaseContract>({
 }) => Promise<InstanceOfContract<TContract>>;
 
 interface CustomHardhatUpgrades extends HardhatUpgrades {
-  deployProxy: GenericDeployFunction; // overridden because of a mismatch in ethers types
-  upgradeProxy: GenericUpgradeFunction; // overridden because of a mismatch in ethers types
   deployBeacon: GenericDeployFunction; // overridden because of a mismatch in ethers types
+  deployProxy: GenericDeployFunction; // overridden because of a mismatch in ethers types
   upgradeBeacon: GenericUpgradeFunction; // overridden because of a mismatch in ethers types
+  upgradeProxy: GenericUpgradeFunction; // overridden because of a mismatch in ethers types
 }
 
 declare global {
@@ -209,7 +207,7 @@ declare global {
 
   type RequiredKeys<T, K extends keyof T> = Required<Pick<T, K>> & Omit<T, K>;
   type InstanceOfContract<TContract extends BaseContract> = ReturnType<
-    TContract['attach']
+    TContract["attach"]
   >;
   type TypeChainBaseContract = Contract & { contractName: string };
   type NamedSigners = {
@@ -221,30 +219,30 @@ declare global {
   let hre: CustomHardHatRuntimeEnvironment; // todo remove from global types to prevent usage
 
   export interface Contracts {
-    ModuleRegistry?: InstanceOfContract<ModuleRegistry>;
-    PoolFactory?: InstanceOfContract<PoolFactory>;
-    Pool?: InstanceOfContract<Pool>;
     DirectDistributionModule?: InstanceOfContract<DirectDistributionModule>;
-    VestingDistributionModule?: InstanceOfContract<VestingDistributionModule>;
-    TokenLimitDistributionModule?: InstanceOfContract<TokenLimitDistributionModule>;
-    PriorityDistributionModule?: InstanceOfContract<PriorityDistributionModule>;
-    OnchainMappingValidationModule?: InstanceOfContract<OnchainMappingValidationModule>;
     MerkleTreeValidationModule?: InstanceOfContract<MerkleTreeValidationModule>;
+    ModuleRegistry?: InstanceOfContract<ModuleRegistry>;
+    OnchainMappingValidationModule?: InstanceOfContract<OnchainMappingValidationModule>;
+    Pool?: InstanceOfContract<Pool>;
+    PoolFactory?: InstanceOfContract<PoolFactory>;
+    PriorityDistributionModule?: InstanceOfContract<PriorityDistributionModule>;
+    TokenLimitDistributionModule?: InstanceOfContract<TokenLimitDistributionModule>;
     UpgradeableBeacon?: InstanceOfContract<UpgradeableBeacon>;
+    VestingDistributionModule?: InstanceOfContract<VestingDistributionModule>;
   }
 
   type CustomHardHatRuntimeEnvironment = Omit<
     HardhatRuntimeEnvironment,
-    'run' | 'upgrades' | 'ethers'
+    "run" | "upgrades" | "ethers"
   > & {
     config: HardhatUserConfig;
     run: (
       name: keyof typeof TASKS,
-      taskArguments?: Parameters<(typeof TASKS)[typeof name]['run']>[0]
-    ) => Promise<ReturnType<(typeof TASKS)[typeof name]['run']>>;
+      taskArguments?: Parameters<(typeof TASKS)[typeof name]["run"]>[0]
+    ) => Promise<ReturnType<(typeof TASKS)[typeof name]["run"]>>;
     upgrades: CustomHardhatUpgrades;
     defender: CustomHardhatUpgrades;
-    network: Omit<Network, 'name'> & { name: keyof typeof networks };
+    network: Omit<Network, "name"> & { name: keyof typeof networks };
     ethers: defaultEthers & HardhatEthersHelpers;
     getSigners: () => Promise<SignerWithAddress[]>;
     deployOrUpgradeProxy: DeployOrUpgradeProxyFunction;
@@ -253,8 +251,8 @@ declare global {
     isNetworkStaging: () => boolean;
     isNetworkLocal: () => boolean;
     isNetworkProduction: () => boolean;
-    log: Console['log'];
-    trace: Console['log'];
+    log: Console["log"];
+    trace: Console["log"];
   };
 
   interface CustomHardhatDeployFunction extends HardhatDeployFunction {

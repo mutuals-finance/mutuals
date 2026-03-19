@@ -1,21 +1,20 @@
+import { type Pool, PoolStatus } from "@mutuals/graphql-client-nextjs";
 import {
   Box,
   Button,
   Card,
   Heading,
+  HStack,
   LinkBox,
   LinkOverlay,
-  StatRoot,
   StatLabel,
-  HStack,
+  StatRoot,
   StatValueText,
   Tag,
 } from "@mutuals/ui";
 import NextLink from "next/link";
-
-import PoolCardLogo from "@/features/Pool/Card/Logo";
-import { PoolStatus, type Pool } from "@mutuals/graphql-client-nextjs";
-import { DeepPartial } from "#/partial";
+import type { DeepPartial } from "#/partial";
+import PoolCardLogo from "@/features/pool/card/logo";
 
 export type PoolCardProps = DeepPartial<Pool>;
 
@@ -31,8 +30,8 @@ function PoolCard({ name, status, slug }: PoolCardProps) {
 */}
 
               <Box>
-                <Heading size="md" as={"h3"}>
-                  {!name || name == "" ? "Unknown Pool" : name}
+                <Heading as={"h3"} size="md">
+                  {!name || name === "" ? "Unknown Pool" : name}
                 </Heading>
 
                 {/*
@@ -45,7 +44,7 @@ function PoolCard({ name, status, slug }: PoolCardProps) {
               </Box>
             </HStack>
 
-            {(status == PoolStatus.Draft || !status) && (
+            {(status === PoolStatus.Draft || !status) && (
               <Tag colorPalette={"orange"} flexShrink={"0"}>
                 {PoolStatus.Draft}
               </Tag>
@@ -56,11 +55,11 @@ function PoolCard({ name, status, slug }: PoolCardProps) {
           <StatRoot flex={"1"} size={"sm"}>
             <StatLabel>Your balance</StatLabel>
             <StatValueText
-              value={0.0}
               formatOptions={{
                 currency: "USD",
                 style: "currency",
               }}
+              value={0.0}
             />
           </StatRoot>
         </Card.Body>

@@ -2,11 +2,14 @@ export function isObject(item: unknown): boolean {
   return Boolean(item && typeof item === "object" && !Array.isArray(item));
 }
 
-export function deepMerge(obj1: any, obj2: any) {
+export function deepMerge(
+  obj1: Record<string, unknown>,
+  obj2: Record<string, unknown>
+) {
   const output = { ...obj1 };
 
   for (const key in obj2) {
-    if (Object.prototype.hasOwnProperty.call(obj2, key)) {
+    if (Object.hasOwn(obj2, key)) {
       if (
         typeof obj2[key as keyof typeof obj2] === "object" &&
         !Array.isArray(obj2[key as keyof typeof obj2]) &&

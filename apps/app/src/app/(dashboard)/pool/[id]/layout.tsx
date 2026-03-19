@@ -1,8 +1,8 @@
-import { PropsWithChildren } from "react";
-import { Metadata } from "next";
-import { siteName } from "@/config";
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import type { PropsWithChildren } from "react";
+import { siteName } from "@/config";
 
 export async function generateMetadata({
   params,
@@ -15,7 +15,7 @@ export async function generateMetadata({
     variables: { slug: (await params).id },
   });
 
-  if (error || !data?.pool || "message" in data?.pool) {
+  if (error || !data?.pool || (data?.pool && "message" in data.pool)) {
     notFound();
   }
 
@@ -30,8 +30,6 @@ export async function generateMetadata({
   };
 }
 
-export default async function PoolDetailsLayout({
-  children,
-}: PropsWithChildren) {
+export default function PoolDetailsLayout({ children }: PropsWithChildren) {
   return <>{children}</>;
 }

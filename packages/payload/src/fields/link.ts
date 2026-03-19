@@ -99,7 +99,19 @@ export const link: LinkType = ({
     },
   ];
 
-  if (!disableLabel) {
+  if (disableLabel) {
+    linkResult.fields = [
+      ...linkResult.fields,
+      ...linkTypes,
+      {
+        name: "customId",
+        type: "text",
+        admin: {
+          width: "25%",
+        },
+      },
+    ];
+  } else {
     linkResult.fields.push({
       type: "row",
       fields: [
@@ -122,18 +134,6 @@ export const link: LinkType = ({
         },
       ],
     });
-  } else {
-    linkResult.fields = [
-      ...linkResult.fields,
-      ...linkTypes,
-      {
-        name: "customId",
-        type: "text",
-        admin: {
-          width: "25%",
-        },
-      },
-    ];
   }
 
   if (appearances !== false) {
@@ -145,7 +145,7 @@ export const link: LinkType = ({
 
     if (appearances) {
       appearanceOptionsToUse = appearances.map(
-        (appearance) => appearanceOptions[appearance],
+        (appearance) => appearanceOptions[appearance]
       );
     }
 

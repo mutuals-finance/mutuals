@@ -1,15 +1,15 @@
 import {
   AspectRatio,
-  AspectRatioProps,
+  type AspectRatioProps,
   Box,
   Stack,
-  StackProps,
+  type StackProps,
 } from "@mutuals/ui";
-import NextImage, { ImageProps } from "next/image";
-import mobilePaymentsIcon from "@/assets/hero/hero-mobile.svg";
-import mobilePaymentsDarkIcon from "@/assets/hero/hero-mobile-dark.svg";
+import NextImage, { type ImageProps } from "next/image";
 import desktopPaymentsIcon from "@/assets/hero/hero-desktop.svg";
 import desktopPaymentsDarkIcon from "@/assets/hero/hero-desktop-dark.svg";
+import mobilePaymentsIcon from "@/assets/hero/hero-mobile.svg";
+import mobilePaymentsDarkIcon from "@/assets/hero/hero-mobile-dark.svg";
 
 export default function HomeHeroImage(props: StackProps) {
   return (
@@ -17,15 +17,15 @@ export default function HomeHeroImage(props: StackProps) {
       <Box hideFrom={"md"}>
         <Box display={{ _dark: "none" }} w={"full"}>
           <NextImage
-            src={mobilePaymentsIcon}
             alt={"Mutuals payment mobile options image"}
+            src={mobilePaymentsIcon}
             width={800}
           />
         </Box>
         <Box display={{ base: "none", _dark: "block" }} w={"full"}>
           <NextImage
-            src={mobilePaymentsDarkIcon}
             alt={"Dark Mutuals payment mobile options image"}
+            src={mobilePaymentsDarkIcon}
             width={800}
           />
         </Box>
@@ -33,15 +33,15 @@ export default function HomeHeroImage(props: StackProps) {
       <Box hideBelow={"md"}>
         <Box display={{ _dark: "none" }} w={"full"}>
           <NextImage
-            src={desktopPaymentsIcon}
             alt={"Mutuals payment desktop options image"}
+            src={desktopPaymentsIcon}
             width={2000}
           />
         </Box>
         <Box display={{ base: "none", _dark: "block" }} w={"full"}>
           <NextImage
-            src={desktopPaymentsDarkIcon}
             alt={"Mutuals payment desktop options image"}
+            src={desktopPaymentsDarkIcon}
             width={2000}
           />
         </Box>
@@ -54,20 +54,20 @@ type HomeHeroRatioImageProps = AspectRatioProps & {
   src: ImageProps["src"];
   alt: ImageProps["alt"];
 };
-function HomeHeroRatioImage({ src, alt, ...props }: HomeHeroRatioImageProps) {
+function _HomeHeroRatioImage({ src, alt, ...props }: HomeHeroRatioImageProps) {
   return (
     <AspectRatio
       position={"relative"}
-      w={"full"}
       ratio={4893 / 1964}
       rounded={"2xl"}
+      w={"full"}
       {...props}
     >
-      <Box position={"relative"} flex={"1"}>
+      <Box flex={"1"} position={"relative"}>
         <NextImage
-          src={src}
           alt={alt}
           fill={true}
+          src={src}
           style={{
             objectFit: "contain",
             objectPosition: "center",

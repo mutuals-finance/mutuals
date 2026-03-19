@@ -13,7 +13,7 @@ const defaultOpenGraph: Metadata["openGraph"] = {
 };
 
 export const createOpenGraph = (
-  og?: Metadata["openGraph"],
+  og?: Metadata["openGraph"]
 ): Metadata["openGraph"] => {
   return {
     ...defaultOpenGraph,

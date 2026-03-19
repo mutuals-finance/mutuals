@@ -1,8 +1,10 @@
-import * as ETH_TOKEN from "@/assets/svg/eth-token.svg";
-import * as AGOR_TOKEN from "@/assets/svg/eth-token.svg";
-import * as MATIC_TOKEN from "@/assets/svg/matic-token.svg";
+import { AGOR_TOKEN, ETH_TOKEN, MATIC_TOKEN } from ".";
 
-export { ETH_TOKEN, MATIC_TOKEN };
+export {
+  default as AGOR_TOKEN,
+  default as ETH_TOKEN,
+} from "@/assets/svg/eth-token.svg";
+export { default as MATIC_TOKEN } from "@/assets/svg/matic-token.svg";
 
 export const NATIVE_TOKEN_LOGO_URI = {
   1: ETH_TOKEN, // mainnet

@@ -1,38 +1,38 @@
 "use server";
 
-import { query } from "./client";
+import type { ApolloClient } from "@apollo/client";
 import {
+  GET_POOL,
+  GET_POOL_TRANSACTIONS,
+  GET_POOL_WITH_BALANCE,
+  GET_POOL_WITH_BALANCE_AND_CONTRACT,
+  GET_POOL_WITH_CLAIMS,
+  GET_POOL_WITH_CONTRACT,
+  GET_POOL_WITH_TOKENS,
+  GET_USER,
+} from "../graphql/data";
+import type {
   GetPoolQuery,
   GetPoolQueryVariables,
-  GetPoolWithBalanceQuery,
-  GetPoolWithBalanceQueryVariables,
-  GetPoolWithContractQuery,
-  GetPoolWithContractQueryVariables,
-  GetPoolWithClaimsQuery,
-  GetPoolWithClaimsQueryVariables,
   GetPoolWithBalanceAndContractQuery,
   GetPoolWithBalanceAndContractQueryVariables,
-  UserQuery,
-  UserQueryVariables,
+  GetPoolWithBalanceQuery,
+  GetPoolWithBalanceQueryVariables,
+  GetPoolWithClaimsQuery,
+  GetPoolWithClaimsQueryVariables,
+  GetPoolWithContractQuery,
+  GetPoolWithContractQueryVariables,
   GetPoolWithTokensQuery,
   GetPoolWithTokensQueryVariables,
   PoolTransactionsQuery,
   PoolTransactionsQueryVariables,
+  UserQuery,
+  UserQueryVariables,
 } from "../graphql/data/__generated__/graphql";
-import {
-  GET_POOL,
-  GET_POOL_WITH_BALANCE,
-  GET_POOL_WITH_CONTRACT,
-  GET_POOL_WITH_CLAIMS,
-  GET_POOL_WITH_BALANCE_AND_CONTRACT,
-  GET_USER,
-  GET_POOL_WITH_TOKENS,
-  GET_POOL_TRANSACTIONS,
-} from "../graphql/data";
-import { ApolloClient } from "@apollo/client";
+import { query } from "./client";
 
 export async function getPool(options?: GetPoolOptions) {
-  return query({ query: GET_POOL, ...options });
+  return await query({ query: GET_POOL, ...options });
 }
 export type GetPoolOptions = Omit<
   ApolloClient.QueryOptions<GetPoolQuery, GetPoolQueryVariables>,
@@ -40,7 +40,7 @@ export type GetPoolOptions = Omit<
 >;
 
 export async function getPoolWithBalance(options?: GetPoolWithBalanceOptions) {
-  return query({
+  return await query({
     query: GET_POOL_WITH_BALANCE,
     fetchPolicy: "network-only",
     ...options,
@@ -55,7 +55,7 @@ export type GetPoolWithBalanceOptions = Omit<
 >;
 
 export async function getPoolWithTokens(options?: GetPoolWithTokensOptions) {
-  return query({
+  return await query({
     query: GET_POOL_WITH_TOKENS,
     fetchPolicy: "network-only",
     ...options,
@@ -71,9 +71,9 @@ export type GetPoolWithTokensOptions = Omit<
 >;
 
 export async function getPoolWithContract(
-  options?: GetPoolWithContractOptions,
+  options?: GetPoolWithContractOptions
 ) {
-  return query({ query: GET_POOL_WITH_CONTRACT, ...options });
+  return await query({ query: GET_POOL_WITH_CONTRACT, ...options });
 }
 export type GetPoolWithContractOptions = Omit<
   ApolloClient.QueryOptions<
@@ -84,7 +84,7 @@ export type GetPoolWithContractOptions = Omit<
 >;
 
 export async function getPoolWithClaims(options?: GetPoolWithClaimsOptions) {
-  return query({ query: GET_POOL_WITH_CLAIMS, ...options });
+  return await query({ query: GET_POOL_WITH_CLAIMS, ...options });
 }
 export type GetPoolWithClaimsOptions = Omit<
   ApolloClient.QueryOptions<
@@ -95,9 +95,9 @@ export type GetPoolWithClaimsOptions = Omit<
 >;
 
 export async function getPoolWithBalanceAndContract(
-  options?: GetPoolWithBalanceAndContractOptions,
+  options?: GetPoolWithBalanceAndContractOptions
 ) {
-  return query({ query: GET_POOL_WITH_BALANCE_AND_CONTRACT, ...options });
+  return await query({ query: GET_POOL_WITH_BALANCE_AND_CONTRACT, ...options });
 }
 
 export type GetPoolWithBalanceAndContractOptions = Omit<
@@ -112,7 +112,7 @@ export type GetPoolWithBalanceAndContractOptions = Omit<
 export async function getPoolWithBalanceContractClaims(
   options?: GetPoolWithBalanceContractClaimsOptions,
 ) {
-  return query({
+  return await query({
     query: GET_POOL_WITH_BALANCE_CONTRACT_CLAIMS,
     ...(options ?? {}),
   });
@@ -128,9 +128,9 @@ export type GetPoolWithBalanceContractClaimsOptions = Omit<
 */
 
 export async function getPoolTransactions(
-  options?: GetPoolTransactionsOptions,
+  options?: GetPoolTransactionsOptions
 ) {
-  return query({
+  return await query({
     query: GET_POOL_TRANSACTIONS,
     fetchPolicy: "network-only",
     ...options,
@@ -146,7 +146,7 @@ export type GetPoolTransactionsOptions = Omit<
 >;
 
 export async function getUser(options: GetUserOptions) {
-  return query({ query: GET_USER, ...options });
+  return await query({ query: GET_USER, ...options });
 }
 
 export type GetUserOptions = Omit<

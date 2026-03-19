@@ -1,35 +1,35 @@
-import { Post, User } from "@mutuals/payload/payload-types";
+import type { Post, User } from "@mutuals/payload/payload-types";
 import {
-  AvatarRoot,
-  Box,
-  Container,
-  Heading,
-  Stack,
-  Text,
   AvatarFallback,
-  HStack,
   AvatarImage,
-  AvatarImageProps,
-  StackProps,
-  Link,
-  DateTime,
-  IconButton,
+  type AvatarImageProps,
+  AvatarRoot,
   Badge,
-  Separator,
+  Box,
   Button,
+  Container,
+  DateTime,
   For,
+  Heading,
+  HStack,
+  IconButton,
+  Link,
+  Separator,
+  Stack,
+  type StackProps,
+  Text,
   Wrap,
 } from "@mutuals/ui";
-import BlogPostImage from "@/features/Blog/PostImage";
-import BlogList from "@/features/Blog/List";
-import CmsProse from "@/components/CmsProse";
 import { getImageProps } from "next/image";
 import {
   IoArrowBackSharp,
-  IoLogoLinkedin,
   IoLogoFacebook,
+  IoLogoLinkedin,
   IoLogoTwitter,
 } from "react-icons/io5";
+import CmsProse from "@/components/cms-prose";
+import BlogList from "@/features/blog/list";
+import BlogPostImage from "@/features/blog/post-image";
 
 export default function BlogPost(data: Partial<Post>) {
   const { content, excerpt, image, title, authors, category, relatedPosts } =
@@ -40,15 +40,15 @@ export default function BlogPost(data: Partial<Post>) {
       <Container maxW={"4xl"} my={"16"}>
         <Stack direction={"column"} gap={"6"}>
           <Stack
-            direction={"row"}
             align={"center"}
-            w={"full"}
+            direction={"row"}
             justify={"space-between"}
+            w={"full"}
           >
-            <Stack direction={"row"} align={"center"}>
+            <Stack align={"center"} direction={"row"}>
               <Link
                 asChild={true}
-                href={`/blog/${typeof category == "object" ? category.slug : ""}`}
+                href={`/blog/${typeof category === "object" ? category.slug : ""}`}
               >
                 <IconButton variant={"ghost"}>
                   <IoArrowBackSharp />
@@ -56,18 +56,18 @@ export default function BlogPost(data: Partial<Post>) {
               </Link>
             </Stack>
 
-            <Text asChild={true} textStyle={"sm"} color="fg.muted">
+            <Text asChild={true} color="fg.muted" textStyle={"sm"}>
               <DateTime timestamp={data?.publishedOn} />
             </Text>
           </Stack>
 
           <Box textAlign={"center"}>
-            {data?.category && typeof data.category == "object" && (
+            {data?.category && typeof data.category === "object" && (
               <Link asChild={true} href={`/blog/${data.category.slug}/`}>
                 <Badge
+                  colorPalette={"brand"}
                   size={"lg"}
                   textStyle={"xs"}
-                  colorPalette={"brand"}
                   variant={"gradient"}
                 >
                   {data.category.name}
@@ -77,22 +77,22 @@ export default function BlogPost(data: Partial<Post>) {
           </Box>
 
           <Heading
-            textStyle={{ base: "4xl", md: "6xl" }}
             as="h1"
             mb={"6"}
             textAlign={"center"}
+            textStyle={{ base: "4xl", md: "6xl" }}
           >
             {title}
           </Heading>
 
           <Stack direction={"column"} gap={"6"}>
             <Stack
+              alignItems={"center"}
               direction={{ base: "column", lg: "row" }}
               gap={"6"}
-              alignItems={"center"}
               justifyContent={"center"}
             >
-              <BlogPostImage w={"full"} maxW={"4xl"} image={image} />
+              <BlogPostImage image={image} maxW={"4xl"} w={"full"} />
             </Stack>
 
             <Box w={"full"}>
@@ -102,7 +102,7 @@ export default function BlogPost(data: Partial<Post>) {
 
               {content?.map((data) => (
                 <Box key={data.id}>
-                  {data.blockType == "blogContent" && (
+                  {data.blockType === "blogContent" && (
                     <CmsProse
                       data={data.blogContentFields.richText}
                       size={{ base: "md", lg: "md" }}
@@ -115,11 +115,11 @@ export default function BlogPost(data: Partial<Post>) {
         </Stack>
 
         <Stack direction={"column"} gap={"16"} my={"16"}>
-          <Stack gap="6" alignItems={"center"}>
+          <Stack alignItems={"center"} gap="6">
             <Box>
               <Stack>
                 {authors
-                  ?.filter((a) => typeof a == "object")
+                  ?.filter((a) => typeof a === "object")
                   .map((author) => (
                     <CMSUserAvatar key={author.id} user={author} />
                   ))}
@@ -189,7 +189,7 @@ type CMSUserAvatarProps = StackProps & { user: User };
 function CMSUserAvatar({ user, ...props }: CMSUserAvatarProps) {
   let imageProps: AvatarImageProps = {};
 
-  if (typeof user.photo == "object" && user.photo) {
+  if (typeof user.photo === "object" && user.photo) {
     const { fill: _, ...nextImageProps } = getImageProps({
       src: user.photo.url ?? "",
       alt: user.photo.alt,
@@ -204,7 +204,7 @@ function CMSUserAvatar({ user, ...props }: CMSUserAvatarProps) {
     <HStack gap="2" {...props}>
       <AvatarRoot overflow={"hidden"}>
         <AvatarFallback name={`${user.firstName} ${user.lastName}`} />
-        <AvatarImage w={"4"} h={"4"} {...imageProps} />
+        <AvatarImage h={"4"} w={"4"} {...imageProps} />
       </AvatarRoot>
       <Stack gap="0">
         <Text fontWeight="medium">

@@ -1,6 +1,6 @@
-import { type NextRequest } from "next/server";
 import { permanentRedirect } from "next/navigation";
+import type { NextRequest } from "next/server";
 
-export async function GET(_: NextRequest) {
+export function GET(_: NextRequest) {
   permanentRedirect("/admin");
 }

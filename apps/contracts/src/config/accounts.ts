@@ -1,5 +1,5 @@
-import type { HardhatNetworkAccountUserConfig } from 'hardhat/types';
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
+import type { HardhatNetworkAccountUserConfig } from "hardhat/types";
 
 const MNEMONIC = process.env.MNEMONIC;
 
@@ -24,7 +24,7 @@ export const namedAccountIndices = {
 const getWallet = (mnemonic: string, index: number) =>
   ethers.HDNodeWallet.fromPhrase(
     mnemonic,
-    '',
+    "",
     ethers.getIndexedAccountPath(index)
   );
 
@@ -32,7 +32,7 @@ export const namedAccounts: NamedAccounts = Object.fromEntries(
   Array.from({ length: 10 }).map((_, index) => {
     return [
       Object.keys(namedAccountIndices)[index],
-      typeof MNEMONIC === 'string' ? getWallet(MNEMONIC, index) : undefined,
+      typeof MNEMONIC === "string" ? getWallet(MNEMONIC, index) : undefined,
     ];
   })
 ) as NamedAccounts;
@@ -43,6 +43,6 @@ export const accounts: HardhatNetworkAccountUserConfig[] | undefined =
     : Array.from({ length: 10 }).map((_, index) => {
         return {
           privateKey: getWallet(MNEMONIC, index).privateKey.toString(),
-          balance: ethers.parseEther('1000000.0').toString(),
+          balance: ethers.parseEther("1000000.0").toString(),
         };
       });

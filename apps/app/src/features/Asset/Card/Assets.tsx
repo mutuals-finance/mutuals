@@ -1,6 +1,5 @@
-import { Balance } from "@ankr.com/ankr.js/dist/types";
-import { Box, BoxProps, Text } from "@mutuals/ui";
-import React from "react";
+import type { Balance } from "@ankr.com/ankr.js/dist/types";
+import { Box, type BoxProps, Text } from "@mutuals/ui";
 
 import { formatCurrencyAmount, formatUSDPrice } from "@/utils";
 
@@ -17,13 +16,13 @@ export default function AssetCardBalance({
   return (
     <Box fontSize={"sm"} {...props}>
       <Box>
-        <Text fontVariantNumeric={"slashed-zero"} as={"span"}>
+        <Text as={"span"} fontVariantNumeric={"slashed-zero"}>
           {formatCurrencyAmount(balance)}
         </Text>{" "}
         {tokenSymbol}
       </Box>
 
-      <Text fontVariantNumeric={"slashed-zero"} as={"span"} display={"block"}>
+      <Text as={"span"} display={"block"} fontVariantNumeric={"slashed-zero"}>
         {formatUSDPrice(balanceUsd)}
       </Text>
     </Box>

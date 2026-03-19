@@ -1,10 +1,10 @@
-import React, { ChangeEvent } from "react";
 import { createJsonTransform, Input, Presence } from "@mutuals/ui";
-import { ModuleRenderProps } from "../../types";
+import type { ChangeEvent } from "react";
+import type { ModuleRenderProps } from "../../types";
 
-export type RecipientInputData = {
+export interface RecipientInputData {
   recipient: string;
-};
+}
 
 export const defaultValue: RecipientInputData = {
   recipient: "",
@@ -16,11 +16,10 @@ export function RecipientInput({ id, isBranch }: RecipientInputProps) {
   return (
     <Presence present={!isBranch}>
       <Input
-        placeholder={"Recipient"}
+        flex={"1 0 auto"}
         id={`${id}.data.recipient`}
         name={`${id}.data`}
-        w={"64"}
-        flex={"1 0 auto"}
+        placeholder={"Recipient"}
         transform={createJsonTransform<
           ChangeEvent<HTMLInputElement>,
           RecipientInputData
@@ -28,8 +27,9 @@ export function RecipientInput({ id, isBranch }: RecipientInputProps) {
           "recipient",
           defaultValue,
           (data) => data.recipient,
-          (e) => e.target.value,
+          (e) => e.target.value
         )}
+        w={"64"}
       />
     </Presence>
   );

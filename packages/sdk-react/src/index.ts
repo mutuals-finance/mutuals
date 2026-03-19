@@ -1,53 +1,46 @@
+export type {
+  Allocation,
+  CalculationType,
+  CallData,
+  CreatePoolConfig,
+  DataClientConfig,
+  MutualsClientConfig,
+  RecipientType,
+  SetPausedConfig,
+  SetPoolAllocationConfig,
+  TransferOwnershipConfig,
+  WithdrawConfig,
+} from "@mutuals/sdk";
 export {
-  MutualsClient,
   AllocationType,
   allocationIds,
+  MutualsClient,
   stateIds,
   strategyIds,
 } from "@mutuals/sdk";
-
+export { ChainId } from "@mutuals/sdk/constants";
 export {
+  buildMerkleTree,
+  calculationTypeName,
   getAllocationDefaults,
   getAllocationRecipientOptions,
-  getRecipientAllocationOption,
   getGroupAllocationOption,
+  getRecipientAllocationOption,
   recipientTypeName,
-  calculationTypeName,
-  buildMerkleTree,
 } from "@mutuals/sdk/utils";
-
-export type {
-  MutualsClientConfig,
-  DataClientConfig,
-  CallData,
-  CreatePoolConfig,
-  SetPoolAllocationConfig,
-  WithdrawConfig,
-  TransferOwnershipConfig,
-  SetPausedConfig,
-  RecipientType,
-  CalculationType,
-  Allocation,
-} from "@mutuals/sdk";
-export { ChainId } from "@mutuals/sdk/constants";
-
+export { MutualsProvider } from "./context";
+export {
+  useCreatePool,
+  useMutualsClient,
+  useSetPause,
+  useSetPoolAllocation,
+  useTransferOwnership,
+  useWithdraw,
+} from "./hooks";
 export type {
   ClaimCreateNode,
   ClaimCreateTree,
-  PoolCreateInput,
   ExtensionRenderInputProps,
   ExtensionType,
+  PoolCreateInput,
 } from "./types";
-
-export { MutualsProvider } from "./context";
-export {
-  useMutualsClient,
-  useCreatePool,
-  useWithdraw,
-  useSetPause,
-  useTransferOwnership,
-  useSetPoolAllocation,
-  useAllocationUtils,
-  useAllocationDefaults,
-  type UseAllocationDefaults,
-} from "./hooks";

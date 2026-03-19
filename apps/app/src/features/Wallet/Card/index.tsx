@@ -1,25 +1,23 @@
 import {
+  Box,
+  Button,
   Card,
+  Group,
   IconButton,
+  Link,
   MenuContent,
   MenuItem,
+  MenuItemGroup,
   MenuRoot,
   MenuTrigger,
   Stack,
   Text,
-  Group,
-  Link,
-  Button,
-  Box,
-  MenuItemGroup,
 } from "@mutuals/ui";
-import React from "react";
-import { shortenAddress } from "@/utils";
-
-import UserAvatar from "src/features/Wallet/Avatar";
+import type { WalletWithMetadata } from "@privy-io/react-auth";
 import { IoEllipsisHorizontal, IoEyeOffSharp } from "react-icons/io5";
-import { WalletWithMetadata } from "@privy-io/react-auth";
 import { RiExternalLinkFill } from "react-icons/ri";
+import UserAvatar from "src/features/wallet/avatar";
+import { shortenAddress } from "@/utils";
 
 export type WalletCardAccountType = WalletWithMetadata;
 
@@ -31,14 +29,14 @@ export default function WalletCard({ data, ...props }: WalletCardProps) {
   return (
     <Card.Root as="article" size={"lg"} {...props}>
       <Card.Header
-        pb={"4"}
-        gap={"4"}
         alignItems={"center"}
+        gap={"4"}
+        pb={"4"}
         textAlign={"center"}
       >
         <UserAvatar address={data?.address} shape="full" size={"lg"} />
-        <Stack gap={"2"} alignItems={"center"}>
-          <Text textStyle="md" fontVariantNumeric={"tabular-nums"}>
+        <Stack alignItems={"center"} gap={"2"}>
+          <Text fontVariantNumeric={"tabular-nums"} textStyle="md">
             {shortenAddress(data?.address)}
           </Text>
         </Stack>
@@ -46,22 +44,22 @@ export default function WalletCard({ data, ...props }: WalletCardProps) {
 
       <Card.Footer>
         <MenuRoot>
-          <Group w={"full"} attached={true}>
+          <Group attached={true} w={"full"}>
             <Link
-              href={`/wallet/${data?.address}`}
-              flex="1"
-              linkProps={{ scroll: false }}
               asChild={true}
+              flex="1"
+              href={`/wallet/${data?.address}`}
+              linkProps={{ scroll: false }}
             >
-              <Button size={"sm"} w="full" roundedRight={0} variant={"subtle"}>
+              <Button roundedRight={0} size={"sm"} variant={"subtle"} w="full">
                 Manage
               </Button>
             </Link>
             <MenuTrigger asChild>
               <IconButton
+                aria-label="Wallet Options"
                 size={"sm"}
                 variant={"subtle"}
-                aria-label="Wallet Options"
               >
                 <IoEllipsisHorizontal />
               </IconButton>
@@ -72,8 +70,8 @@ export default function WalletCard({ data, ...props }: WalletCardProps) {
               <Link
                 asChild={true}
                 href={`https://etherscan.io/address/${data?.address}`}
-                target={"_blank"}
                 rel={"noreferrer noopener"}
+                target={"_blank"}
                 w={"full"}
               >
                 <MenuItem value="etherscan">
@@ -82,7 +80,7 @@ export default function WalletCard({ data, ...props }: WalletCardProps) {
                 </MenuItem>
               </Link>
 
-              <MenuItem value="hide" disabled={true}>
+              <MenuItem disabled={true} value="hide">
                 <Box flex={"1"}>Hide</Box>
                 <IoEyeOffSharp />
               </MenuItem>

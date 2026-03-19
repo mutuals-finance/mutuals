@@ -1,13 +1,11 @@
-import React from "react";
-import ShellPage from "@/features/Shell/Page";
-import { Bleed, Container } from "@mutuals/ui";
-import ActivityTable from "@/features/Activity/Table";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-
 // Neu: Importiere den Fetcher und die Typen
 import { getPoolTransactions } from "@mutuals/graphql-client-nextjs/server";
-import { type PoolActivityEvent } from "@/features/Activity/types";
+import { Bleed, Container } from "@mutuals/ui";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import ActivityTable from "@/features/activity/table";
+import type { PoolActivityEvent } from "@/features/activity/types";
+import ShellPage from "@/features/shell/page";
 
 export const metadata: Metadata = {
   title: "Activity",
@@ -31,7 +29,7 @@ export default async function PoolActivityPage({
     notFound();
   }
 
-  const pool = data.pool as Extract<typeof data.pool, { contract?: any }>;
+  const pool = data.pool as Extract<typeof data.pool, { contract?: unknown }>;
   const contract = pool.contract;
 
   const deposits = contract?.deposits?.edges?.map((edge) => edge.node) ?? [];
@@ -39,16 +37,16 @@ export default async function PoolActivityPage({
     contract?.withdrawals?.edges?.map((edge) => edge.node) ?? [];
 
   const events: PoolActivityEvent[] = [...deposits, ...withdrawals].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
   return (
     <ShellPage
-      title={"Activity"}
       breadcrumbsEnabled={false}
       description={
         "Your activity contains all withdrawals and deposits associated with your payment pool. Currently, ERC20 Token Transfers are tracked."
       }
+      title={"Activity"}
     >
       <Container as={"section"} maxW={"7xl"}>
         <Bleed inline={{ mdDown: "6" }}>

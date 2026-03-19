@@ -1,12 +1,11 @@
 "use client";
 
 import { Box, Container, Stack } from "@mutuals/ui";
-
-import ActorCard from "@/features/Home/Actors/Card";
-import SectionHeader from "src/features/Shell/SectionHeader";
 import { useState } from "react";
+import SectionHeader from "src/features/shell/section-header";
 import ownersImage from "@/assets/owners-product-slider.png";
 import partnersImage from "@/assets/partners-product-slider.png";
+import ActorCard from "@/features/home/actors/card";
 
 export default function HomeActors() {
   const [active, setActive] = useState<"owners" | "partners">("owners");
@@ -17,26 +16,26 @@ export default function HomeActors() {
         <SectionHeader label={"Tailored to your needs"}>
           Built for Depth with Intuitive Use
         </SectionHeader>
-        <Stack gap={"6"} direction="row" wrap={{ base: "wrap", lg: "nowrap" }}>
+        <Stack direction="row" gap={"6"} wrap={{ base: "wrap", lg: "nowrap" }}>
           <ActorCard
             animate={active === "owners" ? "grow" : "shrink"}
-            description="Architects and Builders"
-            title="Full Control over Programmable Payments"
-            image={partnersImage}
             benefit={
               "Automate global payroll, integrate DeFi protocols, and much more, leveraging full composability with the on-chain ecosystem with technical sovereignty."
             }
+            description="Architects and Builders"
+            image={partnersImage}
             onHoverStart={() => setActive("owners")}
+            title="Full Control over Programmable Payments"
           />
           <ActorCard
             animate={active === "partners" ? "grow" : "shrink"}
-            description="Global Recipients"
-            title="Frictionless Access with Zero Configuration"
             benefit={
               "Programmable money without the hurdles of web3. Receive payments directly to an email, phone number, social handle, or passkey."
             }
+            description="Global Recipients"
             image={ownersImage}
             onHoverStart={() => setActive("partners")}
+            title="Frictionless Access with Zero Configuration"
           />
         </Stack>
       </Container>

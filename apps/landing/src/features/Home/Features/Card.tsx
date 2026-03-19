@@ -1,18 +1,18 @@
 import {
-  Stack,
-  Card,
-  Heading,
-  Text,
-  GridItemProps,
-  Icon,
   Box,
-  MotionBox,
-  LinkProps,
+  Card,
+  type GridItemProps,
+  Heading,
+  Icon,
   Link,
+  type LinkProps,
+  MotionBox,
+  Stack,
+  Text,
 } from "@mutuals/ui";
 import { IoArrowUp } from "react-icons/io5";
-import IconBox from "@/components/IconBox";
-import { itemVariants } from "@/components/MotionBoxWrapper";
+import IconBox from "@/components/icon-box";
+import { itemVariants } from "@/components/motion-box-wrapper";
 
 export type HomeFeaturesCardProps = GridItemProps & {
   heading: string;
@@ -35,19 +35,19 @@ export default function HomeFeaturesCard({
 
   const element = (
     <Card.Root
-      variant={"outline"}
-      w={"full"}
       _hover={{ bg: "bg.muted" }}
       transition={"all 0.1s ease-in-out"}
+      variant={"outline"}
+      w={"full"}
       {...props}
     >
       <Stack direction={"row"}>
         <Card.Body
+          alignItems={"flex-start"}
           as={Stack}
           direction={"column"}
-          justifyContent={"space-between"}
-          alignItems={"flex-start"}
           gap={"2"}
+          justifyContent={"space-between"}
         >
           {children}
           <Heading as={"h3"} size={"xl"}>
@@ -59,9 +59,9 @@ export default function HomeFeaturesCard({
 
         <Box p={"4"}>
           <IconBox
-            size={"xs"}
             bg={"colorPalette.subtle"}
             color={"colorPalette.fg"}
+            size={"xs"}
             transition={"all 0.1s ease-in-out"}
           >
             <Icon asChild transform={"rotate(45deg)"}>
@@ -74,9 +74,9 @@ export default function HomeFeaturesCard({
   );
 
   return (
-    <MotionBox variants={itemVariants} asChild={true}>
+    <MotionBox asChild={true} variants={itemVariants}>
       {asLink ? (
-        <Link href={href} {...linkProps} className={`group`} asChild={true}>
+        <Link href={href} {...linkProps} asChild={true} className={"group"}>
           {element}
         </Link>
       ) : (

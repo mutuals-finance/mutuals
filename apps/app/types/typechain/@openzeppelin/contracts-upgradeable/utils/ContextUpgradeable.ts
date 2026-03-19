@@ -4,19 +4,19 @@
 import type {
   BaseContract,
   BigNumberish,
+  ContractMethod,
+  ContractRunner,
+  EventFragment,
   FunctionFragment,
   Interface,
-  EventFragment,
-  ContractRunner,
-  ContractMethod,
   Listener,
 } from "ethers";
 import type {
   TypedContractEvent,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
+  TypedLogDescription,
 } from "../../../common";
 
 export interface ContextUpgradeableInterface extends Interface {
@@ -37,58 +37,6 @@ export namespace InitializedEvent {
 
 export interface ContextUpgradeable extends BaseContract {
   connect(runner?: ContractRunner | null): ContextUpgradeable;
-  waitForDeployment(): Promise<this>;
-
-  interface: ContextUpgradeableInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getEvent(
-    key: "Initialized"
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
 
   filters: {
     "Initialized(uint64)": TypedContractEvent<
@@ -102,4 +50,40 @@ export interface ContextUpgradeable extends BaseContract {
       InitializedEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  interface: ContextUpgradeableInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+  waitForDeployment(): Promise<this>;
 }

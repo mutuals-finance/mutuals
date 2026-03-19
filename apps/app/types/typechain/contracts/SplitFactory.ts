@@ -2,28 +2,53 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
   BigNumberish,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../common";
 
 export interface SplitFactoryInterface extends Interface {
+  decodeFunctionResult(
+    functionFragment:
+      | "transferOwnership"
+      | (
+          | "renounceOwnership"
+          | ("owner" | ("getAddress" | ("createSplit" | "beacon")))
+        ),
+    data: BytesLike
+  ): Result;
+  encodeFunctionData(
+    functionFragment: "getAddress" | "createSplit",
+    values: [AddressLike[], BigNumberish[], string, boolean, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership" | ("owner" | "beacon"),
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [AddressLike]
+  ): string;
+
+  getEvent(
+    nameOrSignatureOrTopic: "CreateSplitProxy" | "OwnershipTransferred"
+  ): EventFragment;
   getFunction(
     nameOrSignature:
       | "beacon"
@@ -33,45 +58,6 @@ export interface SplitFactoryInterface extends Interface {
       | "renounceOwnership"
       | "transferOwnership"
   ): FunctionFragment;
-
-  getEvent(
-    nameOrSignatureOrTopic: "CreateSplitProxy" | "OwnershipTransferred"
-  ): EventFragment;
-
-  encodeFunctionData(functionFragment: "beacon", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "createSplit",
-    values: [AddressLike[], BigNumberish[], string, boolean, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAddress",
-    values: [AddressLike[], BigNumberish[], string, boolean, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [AddressLike]
-  ): string;
-
-  decodeFunctionResult(functionFragment: "beacon", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "createSplit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
 }
 
 export namespace CreateSplitProxyEvent {
@@ -90,8 +76,8 @@ export namespace OwnershipTransferredEvent {
   export type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
   export type OutputTuple = [previousOwner: string, newOwner: string];
   export interface OutputObject {
-    previousOwner: string;
     newOwner: string;
+    previousOwner: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -100,49 +86,8 @@ export namespace OwnershipTransferredEvent {
 }
 
 export interface SplitFactory extends BaseContract {
-  connect(runner?: ContractRunner | null): SplitFactory;
-  waitForDeployment(): Promise<this>;
-
-  interface: SplitFactoryInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
   beacon: TypedContractMethod<[], [string], "view">;
+  connect(runner?: ContractRunner | null): SplitFactory;
 
   createSplit: TypedContractMethod<
     [
@@ -150,90 +95,10 @@ export interface SplitFactory extends BaseContract {
       shares: BigNumberish[],
       uri: string,
       metadataEditable: boolean,
-      salt: BigNumberish
+      salt: BigNumberish,
     ],
-    [void],
+    [undefined],
     "nonpayable"
-  >;
-
-  getAddress: TypedContractMethod<
-    [
-      payees: AddressLike[],
-      shares: BigNumberish[],
-      uri: string,
-      metadataEditable: boolean,
-      _salt: BigNumberish
-    ],
-    [string],
-    "view"
-  >;
-
-  owner: TypedContractMethod<[], [string], "view">;
-
-  renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-
-  transferOwnership: TypedContractMethod<
-    [newOwner: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "beacon"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "createSplit"
-  ): TypedContractMethod<
-    [
-      payees: AddressLike[],
-      shares: BigNumberish[],
-      uri: string,
-      metadataEditable: boolean,
-      salt: BigNumberish
-    ],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "getAddress"
-  ): TypedContractMethod<
-    [
-      payees: AddressLike[],
-      shares: BigNumberish[],
-      uri: string,
-      metadataEditable: boolean,
-      _salt: BigNumberish
-    ],
-    [string],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "owner"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "renounceOwnership"
-  ): TypedContractMethod<[], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "transferOwnership"
-  ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
-
-  getEvent(
-    key: "CreateSplitProxy"
-  ): TypedContractEvent<
-    CreateSplitProxyEvent.InputTuple,
-    CreateSplitProxyEvent.OutputTuple,
-    CreateSplitProxyEvent.OutputObject
-  >;
-  getEvent(
-    key: "OwnershipTransferred"
-  ): TypedContractEvent<
-    OwnershipTransferredEvent.InputTuple,
-    OwnershipTransferredEvent.OutputTuple,
-    OwnershipTransferredEvent.OutputObject
   >;
 
   filters: {
@@ -259,4 +124,104 @@ export interface SplitFactory extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
   };
+
+  getAddress: TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares: BigNumberish[],
+      uri: string,
+      metadataEditable: boolean,
+      _salt: BigNumberish,
+    ],
+    [string],
+    "view"
+  >;
+
+  getEvent(
+    key: "CreateSplitProxy"
+  ): TypedContractEvent<
+    CreateSplitProxyEvent.InputTuple,
+    CreateSplitProxyEvent.OutputTuple,
+    CreateSplitProxyEvent.OutputObject
+  >;
+  getEvent(
+    key: "OwnershipTransferred"
+  ): TypedContractEvent<
+    OwnershipTransferredEvent.InputTuple,
+    OwnershipTransferredEvent.OutputTuple,
+    OwnershipTransferredEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+  getFunction(
+    nameOrSignature: "createSplit"
+  ): TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares: BigNumberish[],
+      uri: string,
+      metadataEditable: boolean,
+      salt: BigNumberish,
+    ],
+    [undefined],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "getAddress"
+  ): TypedContractMethod<
+    [
+      payees: AddressLike[],
+      shares: BigNumberish[],
+      uri: string,
+      metadataEditable: boolean,
+      _salt: BigNumberish,
+    ],
+    [string],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "owner" | "beacon"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "renounceOwnership"
+  ): TypedContractMethod<[], [undefined], "nonpayable">;
+  getFunction(
+    nameOrSignature: "transferOwnership"
+  ): TypedContractMethod<[newOwner: AddressLike], [undefined], "nonpayable">;
+
+  interface: SplitFactoryInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+
+  owner: TypedContractMethod<[], [string], "view">;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  renounceOwnership: TypedContractMethod<[], [undefined], "nonpayable">;
+
+  transferOwnership: TypedContractMethod<
+    [newOwner: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+  waitForDeployment(): Promise<this>;
 }

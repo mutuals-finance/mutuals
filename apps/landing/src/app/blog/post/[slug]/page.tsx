@@ -1,8 +1,8 @@
-import { fetchAllPosts, fetchPost } from "@/lib/cms";
-import BlogPost from "@/features/Blog/Post";
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
 import { createOpenGraph } from "@mutuals/metadata-nextjs";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import BlogPost from "@/features/blog/post";
+import { fetchAllPosts, fetchPost } from "@/lib/cms";
 
 export type BlogPostPageProps = PageProps<"/blog/post/[slug]">;
 
@@ -42,16 +42,16 @@ export async function generateMetadata({
 
   if (post) {
     if (
-      typeof post.meta == "object" &&
+      typeof post.meta === "object" &&
       post.meta.image &&
-      typeof post.meta.image == "object" &&
+      typeof post.meta.image === "object" &&
       post.meta.image.url
     ) {
       ogImage = post.meta.image.url;
     } else if (
       post.featuredMedia === "upload" &&
       post.image &&
-      typeof post.image == "object" &&
+      typeof post.image === "object" &&
       post.image?.url
     ) {
       ogImage = post.image.url;

@@ -1,7 +1,7 @@
-import { Metadata } from "next";
-import ShellPage from "@/features/Shell/Page";
 import { Container } from "@mutuals/ui";
-import PoolList from "@/features/Pool/List";
+import type { Metadata } from "next";
+import PoolList from "@/features/pool/list";
+import ShellPage from "@/features/shell/page";
 
 export const metadata: Metadata = {
   title: "Payment Pools",

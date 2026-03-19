@@ -1,4 +1,4 @@
-import { AccordionItemProps, List, Text } from "@mutuals/ui";
+import { type AccordionItemProps, List, Text } from "@mutuals/ui";
 
 const items = [
   {

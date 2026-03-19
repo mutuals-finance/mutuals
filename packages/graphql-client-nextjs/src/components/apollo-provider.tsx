@@ -1,8 +1,8 @@
 "use client";
 
-import { PropsWithChildren } from "react";
 import { ApolloNextAppProvider } from "@apollo/client-integration-nextjs";
-import { makeClient, type MakeClientOpts } from "../client";
+import type { PropsWithChildren } from "react";
+import { type MakeClientOpts, makeClient } from "../client";
 import { MockProvider } from "./mock-provider";
 
 export type ApolloProviderProps = PropsWithChildren<{

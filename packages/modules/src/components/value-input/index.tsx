@@ -1,15 +1,15 @@
 "use client";
 
+import type { PoolCreateInput } from "@mutuals/sdk-react";
 import { InputGroup, NumberInput } from "@mutuals/ui";
 import { useWatch } from "react-hook-form";
-import { PoolCreateInput } from "@mutuals/sdk-react";
-import { defaultValue, transform, type ValueInputData } from "./transform";
-import ValueInputSelect, { AllocationType } from "./Select";
-import { ModuleRenderProps } from "../../types";
+import type { ModuleRenderProps } from "../../types";
+import ValueInputSelect, { type AllocationType } from "./Select";
+import { defaultValue, transform } from "./transform";
+
+export { defaultValue, transform, type ValueInputData } from "./transform";
 
 export type ValueInputProps = ModuleRenderProps;
-
-export { defaultValue, type ValueInputData };
 
 export function ValueInput(props: ValueInputProps) {
   const id = props.id as `addClaims.rootNode`;
@@ -33,21 +33,21 @@ export function ValueInput(props: ValueInputProps) {
     <InputGroup
       flexBasis={"28"}
       flexShrink={"0"}
-      startElementProps={{ paddingInline: "1" }}
-      startElement={<ValueInputSelect {...props} />}
       gap={"0"}
+      startElement={<ValueInputSelect {...props} />}
+      startElementProps={{ paddingInline: "1" }}
     >
       <NumberInput
-        id={`${id}.data.value`}
-        name={`${id}.data`}
-        defaultValue={"0"}
         allowMouseWheel={true}
-        step={!fixed ? 0.1 : 1}
-        max={!fixed ? 100 : 99999}
-        min={0}
+        defaultValue={"0"}
+        id={`${id}.data.value`}
         inputProps={{
           ps: "10",
         }}
+        max={fixed ? 99_999 : 100}
+        min={0}
+        name={`${id}.data`}
+        step={fixed ? 1 : 0.1}
         transform={transform.value}
       />
     </InputGroup>

@@ -1,11 +1,11 @@
-import { PropsWithChildren } from "react";
 import { Box, Stack } from "@mutuals/ui";
+import type { PropsWithChildren } from "react";
 
-import ShellDashboardBody from "@/features/Shell/Dashboard/Body";
-import ShellDashboardHeader from "@/features/Shell/Dashboard/Header";
-import ShellDashboardSidebar from "@/features/Shell/Dashboard/Sidebar";
-import ShellDashboardRoot from "@/features/Shell/Dashboard/Root";
-import ShellDashboardFooter from "@/features/Shell/Dashboard/Footer";
+import ShellDashboardBody from "@/features/shell/dashboard/body";
+import ShellDashboardFooter from "@/features/shell/dashboard/footer";
+import ShellDashboardHeader from "@/features/shell/dashboard/header";
+import ShellDashboardRoot from "@/features/shell/dashboard/root";
+import ShellDashboardSidebar from "@/features/shell/dashboard/sidebar";
 
 export type ShellDashboardProps = PropsWithChildren;
 
@@ -14,7 +14,7 @@ export default function ShellDashboard({ children }: ShellDashboardProps) {
     <ShellDashboardRoot>
       <ShellDashboardHeader />
 
-      <Stack gap="0" direction={"row"}>
+      <Stack direction={"row"} gap="0">
         <ShellDashboardSidebar />
 
         <Box flex={"1 1 auto"} minW={"0"}>

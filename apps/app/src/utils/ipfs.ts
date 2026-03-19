@@ -1,7 +1,9 @@
-import { ImageProps } from "@mutuals/ui";
+import type { ImageProps } from "@mutuals/ui";
+
+const IPFS_URL_RE = /https?:\/\/|ipfs?:\/\//i;
 
 export function ipfsResolveData(
-  data: ImageProps["src"] = "bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu",
+  data: ImageProps["src"] = "bafkreidflp6nlbvvad7w5v3cxue4bvuvcc37wggdklay3wmvj56le2sqsu"
 ) {
   switch (typeof data) {
     case "string":
@@ -14,6 +16,6 @@ export function ipfsResolveData(
 }
 
 export function ipfsUrlFromUri(uri: string) {
-  const cid = uri.replace(/https?:\/\/|ipfs?:\/\//i, "").split(".")[0] ?? "";
+  const cid = uri.replace(IPFS_URL_RE, "").split(".")[0] ?? "";
   return `https://${cid}.ipfs.w3s.link`;
 }

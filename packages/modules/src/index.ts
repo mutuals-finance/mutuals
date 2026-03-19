@@ -1,10 +1,10 @@
-import ValidationModulesList from "./validation";
 import DistributionModulesList from "./distribution";
+import type { Module } from "./types";
 import { Collection } from "./utils";
-import { Module } from "./types";
+import ValidationModulesList from "./validation";
 
 const DistributionModules = Collection.fromList<Module>(
-  DistributionModulesList,
+  DistributionModulesList
 );
 
 const ValidationModules = Collection.fromList<Module>(ValidationModulesList);

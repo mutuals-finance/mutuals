@@ -3,7 +3,7 @@ export class UnsupportedChainIdError extends Error {
 
   constructor(invalidChainId: number, supportedChains: number[]) {
     super(
-      `Unsupported chain: ${invalidChainId}. Supported chains are: ${supportedChains}`,
+      `Unsupported chain: ${invalidChainId}. Supported chains are: ${supportedChains}`
     );
     Object.setPrototypeOf(this, UnsupportedChainIdError.prototype);
   }

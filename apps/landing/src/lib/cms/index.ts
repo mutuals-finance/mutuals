@@ -1,6 +1,6 @@
-import { getPayload as _getPayload } from "payload";
 import config from "@mutuals/payload/payload-config/payload.config";
-import { Category, Post } from "@mutuals/payload/payload-types";
+import type { Category, Post } from "@mutuals/payload/payload-types";
+import { getPayload as _getPayload } from "payload";
 
 const onlyPublished = (draft?: boolean) =>
   draft
@@ -50,7 +50,7 @@ export const fetchAllPosts = async (): Promise<Partial<Post>[]> => {
 };
 
 export const fetchPostsByCategory = async (
-  category: string,
+  category: string
 ): Promise<Partial<Post>[] | undefined> => {
   const draft = true;
   const currentDate = new Date();
@@ -101,7 +101,7 @@ export const fetchPostsByCategory = async (
 };
 
 export const fetchPost = async (
-  slug: string,
+  slug: string
 ): Promise<Partial<Post> | undefined> => {
   //const { isEnabled: draft } = await draftMode()
   const draft = true;
@@ -197,7 +197,7 @@ export const fetchCategories = async (): Promise<Partial<Category>[]> => {
 };
 
 export const fetchCategory = async (
-  slug: string,
+  slug: string
 ): Promise<Partial<Category> | undefined> => {
   //const { isEnabled: draft } = await draftMode()
   const draft = true;

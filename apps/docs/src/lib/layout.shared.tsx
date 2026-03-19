@@ -1,6 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import {
-  BookIcon,
   CableIcon,
   CodeXmlIcon,
   HomeIcon,
@@ -21,7 +20,7 @@ export function baseOptions(): BaseLayoutProps {
           </div>
           <span
             className={
-              "font-medium mb-1 text-fd-muted-foreground font-heading text-[0.6rem]"
+              "mb-1 font-heading font-medium text-[0.6rem] text-fd-muted-foreground"
             }
           >
             docs

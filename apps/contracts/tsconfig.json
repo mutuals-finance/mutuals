@@ -1,23 +1,23 @@
 {
-	"extends": "@mutuals/typescript-config/hh-sol.json",
-	"compilerOptions": {
-		"outDir": "dist",
-		"baseUrl": ".",
-		"moduleResolution": "node",
-		"paths": {
-			"#/artifacts/*": ["./artifacts/contracts/*"],
-			"@/*": ["./src/*"],
-			"#/*": ["./*"]
-		},
-	},
-	// filenames are resolved relative to the directory containing the tsconfig.json file.
-	// https://www.typescriptlang.org/tsconfig/#include
-	"include": [
-		"**/*.ts",
-		"types/**/*.d.ts",
-		".eslintrc.js",
-		"src/contracts.json",
-		"artifacts/contracts/**/*.json"
-	],
-	"exclude": ["node_modules"]
+  "extends": "@mutuals/typescript-config/hh-sol.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "paths": {
+      "#/artifacts/*": ["./artifacts/contracts/*"],
+      "@/*": ["./src/*"],
+      "#/*": ["./*"]
+    }
+  },
+  // filenames are resolved relative to the directory containing the tsconfig.json file.
+  // https://www.typescriptlang.org/tsconfig/#include
+  "include": [
+    "**/*.ts",
+    "types/**/*.d.ts",
+    ".eslintrc.js",
+    "src/contracts.json",
+    "artifacts/contracts/**/*.json"
+  ],
+  "exclude": ["node_modules"]
 }

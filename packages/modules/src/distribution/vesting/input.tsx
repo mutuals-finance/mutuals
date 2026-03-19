@@ -1,13 +1,13 @@
-import { ModuleRenderProps } from "../../types";
-import { ValueInput } from "../../components/value-input";
 import {
   createJsonTransform,
   InputGroup,
   NumberInput,
-  NumberInputValueChangeDetails,
+  type NumberInputValueChangeDetails,
 } from "@mutuals/ui";
-import { type VestingDistributionData, defaultValue } from "./index";
 import { RecipientInput } from "../../components/recipient-input";
+import { ValueInput } from "../../components/value-input";
+import type { ModuleRenderProps } from "../../types";
+import { defaultValue, type VestingDistributionData } from "./index";
 
 export type VestingDistributionInputProps = ModuleRenderProps;
 
@@ -19,15 +19,15 @@ export function VestingDistributionInput(props: VestingDistributionInputProps) {
       <RecipientInput {...props} />
       <InputGroup flexBasis={"32"} flexShrink={"0"} startElement={"day(s)"}>
         <NumberInput<string>
+          allowMouseWheel={true}
+          defaultValue={"0"}
+          id={`${id}.data.period`}
           inputProps={{
             ps: "4.2em",
           }}
-          id={`${id}.data.period`}
-          name={`${id}.data`}
-          allowMouseWheel={true}
-          step={1}
           min={0}
-          defaultValue={"0"}
+          name={`${id}.data`}
+          step={1}
           transform={createJsonTransform<
             NumberInputValueChangeDetails,
             VestingDistributionData
@@ -35,7 +35,7 @@ export function VestingDistributionInput(props: VestingDistributionInputProps) {
             "period",
             defaultValue,
             (data) => data.period.toString(),
-            (e) => (e.value ? e.valueAsNumber : undefined),
+            (e) => (e.value ? e.valueAsNumber : undefined)
           )}
         />
       </InputGroup>

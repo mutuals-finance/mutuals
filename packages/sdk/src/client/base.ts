@@ -1,18 +1,18 @@
 import {
-  PublicClient,
-  WalletClient,
-  Address,
-  Abi,
-  Hash,
+  type Abi,
+  type Account,
+  type Address,
+  type Chain,
   encodeFunctionData,
-  Log,
-  Hex,
-  Transport,
-  Chain,
-  Account,
-  TransactionType,
+  type Hash,
+  type Hex,
+  type Log,
+  type PublicClient,
+  type TransactionType,
+  type Transport,
+  type WalletClient,
 } from "viem";
-
+import { TransactionType as MutualsTransactionType } from "../constants";
 import {
   InvalidConfigError,
   MissingPublicClientError,
@@ -26,7 +26,6 @@ import type {
   TransactionFormat,
   TransactionOverrides,
 } from "../types";
-import { TransactionType as MutualsTransactionType } from "../constants";
 
 class BaseClient {
   readonly _chainId: number;
@@ -44,10 +43,11 @@ class BaseClient {
     apiConfig,
     includeEnsNames = false,
   }: MutualsClientConfig) {
-    if (includeEnsNames && !publicClient && !ensPublicClient)
+    if (includeEnsNames && !publicClient && !ensPublicClient) {
       throw new InvalidConfigError(
-        "Must include a mainnet public client if includeEnsNames is set to true",
+        "Must include a mainnet public client if includeEnsNames is set to true"
       );
+    }
     this._ensPublicClient = ensPublicClient ?? publicClient;
     this._publicClient = publicClient;
     this._chainId = chainId;
@@ -57,22 +57,25 @@ class BaseClient {
   }
 
   protected _requirePublicClient() {
-    if (!this._publicClient)
+    if (!this._publicClient) {
       throw new MissingPublicClientError(
-        "Public client required to perform this action, please update your call to the constructor",
+        "Public client required to perform this action, please update your call to the constructor"
       );
+    }
   }
 
   protected _requireWalletClient() {
     this._requirePublicClient();
-    if (!this._walletClient)
+    if (!this._walletClient) {
       throw new MissingWalletClientError(
-        "Wallet client required to perform this action, please update your call to the constructor",
+        "Wallet client required to perform this action, please update your call to the constructor"
       );
-    if (!this._walletClient.account)
+    }
+    if (!this._walletClient.account) {
       throw new MissingWalletClientError(
-        "Wallet client must have an account attached to it to perform this action, please update your wallet client passed into the constructor",
+        "Wallet client must have an account attached to it to perform this action, please update your wallet client passed into the constructor"
       );
+    }
   }
 }
 
@@ -121,7 +124,9 @@ export class BaseTransactions extends BaseClient {
     value?: bigint;
   }) {
     this._requirePublicClient();
-    if (!this._publicClient) throw new Error();
+    if (!this._publicClient) {
+      throw new Error("Public client is required but not initialized");
+    }
     if (this._shouldRequireWalletClient) {
       this._requireWalletClient();
     }
@@ -138,8 +143,13 @@ export class BaseTransactions extends BaseClient {
         data: calldata,
         value,
       };
-    } else if (this._transactionType === MutualsTransactionType.Transaction) {
-      if (!this._walletClient?.account) throw new Error();
+    }
+    if (this._transactionType === MutualsTransactionType.Transaction) {
+      if (!this._walletClient?.account) {
+        throw new Error(
+          "Wallet client with account is required for transactions"
+        );
+      }
       const { request } = await this._publicClient.simulateContract({
         address: contractAddress,
         abi: contractAbi,
@@ -151,8 +161,8 @@ export class BaseTransactions extends BaseClient {
       });
       const txHash = await this._walletClient.writeContract(request);
       return txHash;
-    } else
-      throw new Error(`Unknown transaction type: ${this._transactionType}`);
+    }
+    throw new Error(`Unknown transaction type: ${this._transactionType}`);
   }
 
   protected _isContractTransaction(txHash: TransactionFormat): txHash is Hash {
@@ -164,8 +174,12 @@ export class BaseTransactions extends BaseClient {
   }
 
   protected _isCallData(callData: TransactionFormat): callData is CallData {
-    if (callData instanceof BigInt) return false;
-    if (typeof callData === "string") return false;
+    if (callData instanceof BigInt) {
+      return false;
+    }
+    if (typeof callData === "string") {
+      return false;
+    }
 
     return true;
   }
@@ -181,16 +195,21 @@ export class BaseClientMixin extends BaseTransactions {
     eventTopics: Hex[] | undefined;
     includeAll?: boolean;
   }): Promise<Log[]> {
-    if (!this._publicClient)
+    if (!this._publicClient) {
       throw new Error("Public client required to get transaction events");
+    }
 
     const transaction = await this._publicClient.waitForTransactionReceipt({
       hash: txHash,
     });
     if (transaction.status === "success") {
       const events = transaction.logs?.filter((log) => {
-        if (includeAll) return true;
-        if (log.topics[0]) return eventTopics?.includes(log.topics[0]);
+        if (includeAll) {
+          return true;
+        }
+        if (log.topics[0]) {
+          return eventTopics?.includes(log.topics[0]);
+        }
 
         return false;
       });

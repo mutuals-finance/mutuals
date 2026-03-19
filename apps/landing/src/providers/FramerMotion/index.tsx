@@ -1,7 +1,7 @@
 "use client";
 
-import { PropsWithChildren } from "react";
 import { MotionConfig } from "framer-motion";
+import type { PropsWithChildren } from "react";
 
 export default function FramerMotionProvider({ children }: PropsWithChildren) {
   return (

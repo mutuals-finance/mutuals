@@ -1,7 +1,7 @@
-import FAQ from "@/features/Pricing/FAQ";
-import Options from "@/features/Pricing/Options";
-import ShellPageHeader from "@/features/Shell/PageHeader";
-import MotionBoxWrapper from "@/components/MotionBoxWrapper";
+import MotionBoxWrapper from "@/components/motion-box-wrapper";
+import FAQ from "@/features/pricing/faq";
+import Options from "@/features/pricing/options";
+import ShellPageHeader from "@/features/shell/page-header";
 
 export default function PricingPage() {
   return (

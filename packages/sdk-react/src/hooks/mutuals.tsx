@@ -1,9 +1,9 @@
+import type { MutualsClient, MutualsClientConfig } from "@mutuals/sdk";
 import { useContext, useEffect, useMemo } from "react";
-import { MutualsClient, MutualsClientConfig } from "@mutuals/sdk";
 import { MutualsContext } from "../context";
 
 export const useMutualsClient = (
-  config?: MutualsClientConfig,
+  config?: MutualsClientConfig
 ): MutualsClient => {
   const context = useContext(MutualsContext);
   if (context === undefined) {
@@ -13,14 +13,16 @@ export const useMutualsClient = (
   // Since apiConfig is an object, if it gets set directly it'll be considered "new" on each render
   const apiKey =
     config && "apiConfig" in config
-      ? config.apiConfig!.apiKey
+      ? config.apiConfig?.apiKey
       : context.mutualsClient._apiConfig?.apiKey;
   const serverURL =
     config && "apiConfig" in config
-      ? config.apiConfig!.serverURL
+      ? config.apiConfig?.serverURL
       : context.mutualsClient._apiConfig?.serverURL;
   const apiConfig = useMemo(() => {
-    if (!apiKey) return;
+    if (!apiKey) {
+      return;
+    }
 
     return {
       apiKey,
@@ -64,6 +66,7 @@ export const useMutualsClient = (
     apiConfig,
     includeEnsNames,
     ensPublicClient,
+    context.initClient,
   ]);
 
   return context.mutualsClient as MutualsClient;

@@ -1,3 +1,6 @@
+import type { NavLinkProps } from "@mutuals/ui";
+import type { IconType } from "react-icons";
+import { BiLogoTelegram } from "react-icons/bi";
 import {
   IoDocumentTextSharp,
   IoGlobeSharp,
@@ -11,16 +14,13 @@ import {
   IoSpeedometerSharp,
 } from "react-icons/io5";
 import { RiApps2Fill, RiTwitterXLine } from "react-icons/ri";
-import { IconType } from "react-icons";
-import { NavLinkProps } from "@mutuals/ui";
-import { BiLogoTelegram } from "react-icons/bi";
 
-export type NavItem = {
-  label: string;
+export interface NavItem {
   href: string;
-  value: string;
   icon: IconType;
-};
+  label: string;
+  value: string;
+}
 
 export const header: NavLinkProps[] = [
   {

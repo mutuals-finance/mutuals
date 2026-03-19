@@ -1,11 +1,10 @@
+import { revalidatePath } from "next/cache";
 import type { CollectionConfig } from "payload";
 
-import { revalidatePath } from "next/cache";
-
 import { isAdmin, publishedOnly } from "../access";
-import { slugField, richText } from "../fields";
-import { formatPreviewURL } from "../utils";
+import { richText, slugField } from "../fields";
 import { revalidatePage } from "../hooks/revalidate-page";
+import { formatPreviewURL } from "../utils";
 
 export const Posts: CollectionConfig = {
   slug: "posts",
@@ -24,7 +23,7 @@ export const Posts: CollectionConfig = {
       return formatPreviewURL(
         "posts",
         doc,
-        (doc?.category as { slug: string })?.slug,
+        (doc?.category as { slug: string })?.slug
       );
     },
     useAsTitle: "title",
@@ -125,13 +124,13 @@ export const Posts: CollectionConfig = {
                       slug: true,
                     },
                   });
-                  if (!category) {
-                    throw new Error("Category not found");
-                  } else {
-                    revalidatePath(`/blog`);
-                    console.log(`Revalidated: /blog`);
+                  if (category) {
+                    revalidatePath("/blog");
+                    console.log("Revalidated: /blog");
                     revalidatePath(`/blog/${category.slug}`);
                     console.log(`Revalidated: /blog/${category.slug}`);
+                  } else {
+                    throw new Error("Category not found");
                   }
 
                   if (value !== previousValue) {
@@ -142,13 +141,13 @@ export const Posts: CollectionConfig = {
                         slug: true,
                       },
                     });
-                    if (!previousCategory) {
-                      throw new Error("Previous category not found");
-                    } else {
+                    if (previousCategory) {
                       revalidatePath(`/blog/${previousCategory.slug}`);
                       console.log(
-                        `Revalidated: /blog/${previousCategory.slug}`,
+                        `Revalidated: /blog/${previousCategory.slug}`
                       );
+                    } else {
+                      throw new Error("Previous category not found");
                     }
                   }
                 } catch (error) {
@@ -288,13 +287,13 @@ export const Posts: CollectionConfig = {
             },
           });
 
-          if (!category) {
-            throw new Error("Category not found");
-          } else {
-            revalidatePath(`/blog`);
-            console.log(`Revalidated: /blog`);
+          if (category) {
+            revalidatePath("/blog");
+            console.log("Revalidated: /blog");
             revalidatePath(`/blog/${category.slug}`);
             console.log(`Revalidated: /blog/${category.slug}`);
+          } else {
+            throw new Error("Category not found");
           }
         } catch (error) {
           console.error(error);

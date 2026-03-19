@@ -12,13 +12,13 @@ export default function ShellDashboardHeaderAlert() {
     <Collapsible.Root defaultOpen={true}>
       <Collapsible.Content>
         <AlertRoot
-          status="warning"
-          w={"full"}
-          rounded={"0"}
           alignItems={"center"}
           justifyContent={"center"}
-          textAlign={"center"}
           py={"2"}
+          rounded={"0"}
+          status="warning"
+          textAlign={"center"}
+          w={"full"}
         >
           <AlertIndicator>
             <IoFlaskSharp />

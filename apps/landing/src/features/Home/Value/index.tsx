@@ -1,18 +1,20 @@
 import {
+  Bleed,
   Box,
   Container,
+  Flex,
   MotionBox,
   ScrollArea,
-  Flex,
-  Bleed,
 } from "@mutuals/ui";
-import ValueCard from "./ValueCard";
-import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
 import {
   LuChartNoAxesCombined,
   LuFileCode2,
   LuShieldCheck,
 } from "react-icons/lu";
+import MotionBoxWrapper, {
+  itemVariants,
+} from "@/components/motion-box-wrapper";
+import ValueCard from "./value-card";
 
 const values = [
   {
@@ -44,15 +46,15 @@ export default function HomeValue() {
               <ScrollArea.Viewport>
                 <ScrollArea.Content px="6">
                   <Flex
-                    gap="6"
                     flexWrap="nowrap"
+                    gap="6"
                     justifyContent={"space-between"}
                   >
-                    {values.map((value, index) => (
+                    {values.map((value, _index) => (
                       <MotionBox
-                        variants={itemVariants}
-                        key={value.heading}
                         asChild={true}
+                        key={value.heading}
+                        variants={itemVariants}
                       >
                         <ValueCard
                           flexBasis={{ base: "xs", lg: "0" }}

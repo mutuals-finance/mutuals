@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import { Flex, For, ScrollArea, Show } from "@mutuals/ui";
 
 import { usePrivy } from "@privy-io/react-auth";
-import { Flex, For, ScrollArea, Show } from "@mutuals/ui";
-import WalletCardSkeleton from "@/features/Wallet/Card/Skeleton";
-import WalletListContent from "@/features/Wallet/List/Content";
+import WalletCardSkeleton from "@/features/wallet/card/skeleton";
+import WalletListContent from "@/features/wallet/list/content";
 
 //type WalletListProps = ApolloQueryResult<MeQuery>;
 
@@ -13,17 +12,17 @@ export default function WalletList() {
   const { ready } = usePrivy();
 
   return (
-    <ScrollArea.Root w="full" size="xs">
+    <ScrollArea.Root size="xs" w="full">
       <ScrollArea.Viewport>
         <ScrollArea.Content pb="6">
-          <Flex gap="6" flexWrap="nowrap">
+          <Flex flexWrap="nowrap" gap="6">
             <Show
-              when={ready}
               fallback={
-                <For each={[...Array(4).keys()]}>
-                  {(i) => <WalletCardSkeleton key={i} w="64" flexShrink="0" />}
+                <For each={[...new Array(4).keys()]}>
+                  {(i) => <WalletCardSkeleton flexShrink="0" key={i} w="64" />}
                 </For>
               }
+              when={ready}
             >
               <WalletListContent />
             </Show>

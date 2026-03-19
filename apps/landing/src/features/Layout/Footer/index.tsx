@@ -2,31 +2,30 @@ import {
   Box,
   Container,
   Grid,
-  MutualsLogo,
   LinkListBox,
+  MutualsLogo,
   Theme,
 } from "@mutuals/ui";
-import Footer from "@/features/Layout/Footer/Footer";
-import LayoutFooterNewsletterForm from "@/features/Layout/Footer/NewsletterForm";
+import Footer from "@/features/layout/Footer/footer";
+import LayoutFooterNewsletterForm from "@/features/layout/footer/newsletter-form";
 
 export default function LayoutFooter() {
   return (
     <Theme appearance="dark">
       <Box
         as="footer"
-        role="contentinfo"
-        maxW="100%"
-        w="100%"
-        pt="12"
         bg={"bg.subtle"}
+        maxW="100%"
+        pt="12"
+        role="contentinfo"
+        w="100%"
       >
         <Container maxW="7xl" py={{ base: "6", lg: "12" }}>
           <Grid
-            templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
             gap={{ base: "12", lg: "12" }}
+            templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
           >
             <LinkListBox
-              title={"Company"}
               links={[
                 {
                   children: "Contact",
@@ -37,9 +36,9 @@ export default function LayoutFooter() {
                   href: "/blog",
                 },
               ]}
+              title={"Company"}
             />
             <LinkListBox
-              title={"Support"}
               links={[
                 {
                   children: "Pricing",
@@ -64,10 +63,10 @@ export default function LayoutFooter() {
                   rel: "noopener noreferrer",
                 },
               ]}
+              title={"Support"}
             />
 
             <LinkListBox
-              title={"Legal"}
               links={[
                 {
                   children: "Cookies Policy",
@@ -86,12 +85,13 @@ export default function LayoutFooter() {
                   href: "/law-enforcement",
                 },
               ]}
+              title={"Legal"}
             />
 
             <LinkListBox
               alignItems={"flex-end"}
-              justifyContent={"flex-start"}
               colSpan={{ base: 2, lg: 1 }}
+              justifyContent={"flex-start"}
             >
               <Box>
                 <MutualsLogo href={"/"} maxW={{ base: "32", lg: "48" }} />
@@ -99,9 +99,9 @@ export default function LayoutFooter() {
             </LinkListBox>
 
             <LinkListBox
-              title={"Stay Up To Date"}
               colSpan={{ base: 2, lg: 2 }}
               maxW={{ lg: "96" }}
+              title={"Stay Up To Date"}
             >
               <LayoutFooterNewsletterForm />
             </LinkListBox>

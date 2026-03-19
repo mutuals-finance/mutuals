@@ -1,17 +1,17 @@
-import { TokenLimitDistributionInput } from "./input";
 import {
-  defaultValue as valueInputDefaultValue,
-  type ValueInputData,
-} from "../../components/value-input";
-import {
-  defaultValue as tokenAddressInputDefaultValue,
-  type TokenAddressInputData,
-} from "../../components/token-address-input";
-import { Module } from "../../types";
-import {
-  defaultValue as recipientDefaultValue,
   type RecipientInputData,
+  defaultValue as recipientDefaultValue,
 } from "../../components/recipient-input";
+import {
+  type TokenAddressInputData,
+  defaultValue as tokenAddressInputDefaultValue,
+} from "../../components/token-address-input";
+import {
+  type ValueInputData,
+  defaultValue as valueInputDefaultValue,
+} from "../../components/value-input";
+import type { Module } from "../../types";
+import { TokenLimitDistributionInput } from "./input";
 
 export type TokenLimitDistributionData = RecipientInputData &
   TokenAddressInputData &

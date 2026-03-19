@@ -1,4 +1,4 @@
-import { KeyedValue } from "../types";
+import type { KeyedValue } from "../types";
 
 export const stateIds = {
   Offchain: "offchain",

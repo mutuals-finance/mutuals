@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, PropsWithChildren, useContext } from "react";
+import { createContext, type PropsWithChildren, useContext } from "react";
 
 type AuthContextType = object;
 

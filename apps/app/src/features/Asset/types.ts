@@ -1,6 +1,6 @@
-import { CellContext } from "@tanstack/react-table";
-import type { TableProps } from "@/components/Table";
-import { TokenBalance } from "@mutuals/graphql-client-nextjs";
+import type { TokenBalance } from "@mutuals/graphql-client-nextjs";
+import type { CellContext } from "@tanstack/react-table";
+import type { TableProps } from "@/components/table";
 
 export type AssetItem = Omit<TokenBalance, "holder">;
 
@@ -10,5 +10,5 @@ export type AssetTableProps = {
 
 export type AssetTableCellProps = CellContext<
   AssetItem,
-  bigint | string | number | null | undefined | any
+  bigint | string | number | null | undefined | unknown
 >;

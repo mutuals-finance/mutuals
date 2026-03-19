@@ -1,8 +1,8 @@
-import { PropsWithChildren } from "react";
-import ShellPage from "@/features/Shell/Page";
-import { Container, RouterTabs } from "@mutuals/ui";
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
+import { Container, RouterTabs } from "@mutuals/ui";
 import { notFound } from "next/navigation";
+import type { PropsWithChildren } from "react";
+import ShellPage from "@/features/shell/page";
 
 export default async function PoolSettingsLayout({
   children,
@@ -16,7 +16,7 @@ export default async function PoolSettingsLayout({
     variables: { slug: (await params).id },
   });
 
-  if (error || !data?.pool || "message" in data?.pool) {
+  if (error || !data?.pool || (data?.pool && "message" in data.pool)) {
     notFound();
   }
 
@@ -43,7 +43,7 @@ export default async function PoolSettingsLayout({
   return (
     <ShellPage breadcrumbsEnabled={false} title={"Payment Pool Settings"}>
       <Container maxW={"7xl"}>
-        <RouterTabs tabs={tabs} mb={"6"}>
+        <RouterTabs mb={"6"} tabs={tabs}>
           {children}
         </RouterTabs>
       </Container>

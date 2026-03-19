@@ -1,5 +1,5 @@
-import { Box, BoxProps } from "@chakra-ui/react";
-import { format, FormatOptions, fromUnixTime } from "date-fns";
+import { Box, type BoxProps } from "@chakra-ui/react";
+import { type FormatOptions, format, fromUnixTime } from "date-fns";
 
 export type DateTimeProps = BoxProps & {
   timestamp?: string;
@@ -13,7 +13,7 @@ export function DateTime({
   options,
   ...props
 }: DateTimeProps) {
-  const date = fromUnixTime(Number(timestamp));
+  const _date = fromUnixTime(Number(timestamp));
   return (
     <Box as="time" date-time={timestamp} {...props}>
       {format(timestamp, formatString, options)}

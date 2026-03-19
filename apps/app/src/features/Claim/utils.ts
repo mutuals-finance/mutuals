@@ -1,12 +1,12 @@
-import { ClaimCreateNode } from "@mutuals/sdk-react";
+import type { ClaimCreateNode } from "@mutuals/sdk-react";
 import {
   createListCollection,
   createTreeCollection,
-  SelectCollectionItemProps,
+  type SelectCollectionItemProps,
 } from "@mutuals/ui";
 
 export const createClaim = (
-  props?: Partial<ClaimCreateNode>,
+  props?: Partial<ClaimCreateNode>
 ): ClaimCreateNode => ({
   label: `${Date.now()}`,
   validationId: "merkle_tree_validation",
@@ -34,7 +34,7 @@ export const createClaimCollection = (
   config: {
     [id: string]: { id: string; name: string };
   },
-  moduleType: "Distribution" | "Validation",
+  moduleType: "Distribution" | "Validation"
 ) =>
   createListCollection<SelectCollectionItemProps>({
     items: Object.values(config).map(({ id, name }) => ({

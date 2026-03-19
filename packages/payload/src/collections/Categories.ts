@@ -1,7 +1,6 @@
-import type { CollectionConfig } from "payload";
-
-import { isAdmin } from "../access";
 import { revalidateTag } from "next/cache";
+import type { CollectionConfig } from "payload";
+import { isAdmin } from "../access";
 import { revalidatePage } from "../hooks/revalidate-page";
 
 export const Categories: CollectionConfig = {
@@ -68,12 +67,12 @@ export const Categories: CollectionConfig = {
   hooks: {
     afterChange: [
       revalidatePage,
-      async () => {
+      () => {
         revalidateTag("archives", {});
       },
     ],
     afterDelete: [
-      async ({ doc }) => {
+      () => {
         revalidateTag("archives", {});
       },
     ],

@@ -1,6 +1,5 @@
-import React from "react";
-import WalletAdd from "@/features/Wallet/Add";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import WalletAdd from "@/features/wallet/add";
 import { me } from "@/lib/privy";
 
 export const metadata: Metadata = {

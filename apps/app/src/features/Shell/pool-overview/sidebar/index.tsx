@@ -1,0 +1,65 @@
+"use client";
+
+import {
+  type DrawerRootProps,
+  type RouterTabProps,
+  RouterTabs,
+  useBreakpointValue,
+} from "@mutuals/ui";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import ShellPoolOverviewSidebarDesktop from "@/features/shell/pool-overview/sidebar/desktop";
+import ShellPoolOverviewSidebarMobile from "@/features/shell/pool-overview/sidebar/mobile";
+
+export interface ShellPoolOverviewSidebarProps extends DrawerRootProps {
+  defaultOpen?: boolean;
+  tabs: RouterTabProps[];
+}
+
+export default function ShellPoolOverviewSidebar({
+  children,
+  tabs,
+  ...props
+}: ShellPoolOverviewSidebarProps) {
+  const isLargerLg = useBreakpointValue(
+    {
+      base: false,
+      lg: true,
+    },
+    {
+      fallback: "false",
+    }
+  );
+
+  const pathname = usePathname();
+  const params = useParams<{ id: string }>();
+  const router = useRouter();
+
+  const index = tabs.findIndex((t) => pathname === t.href?.toString());
+
+  const wrapperProps: DrawerRootProps = {
+    open: index >= 0,
+    placement: { base: "bottom", lg: "end" },
+    skipAnimationOnMount: true,
+    children: <RouterTabs tabs={tabs}>{children}</RouterTabs>,
+    ...props,
+  };
+
+  return (
+    <>
+      {isLargerLg ? (
+        <ShellPoolOverviewSidebarDesktop {...wrapperProps} />
+      ) : (
+        <ShellPoolOverviewSidebarMobile
+          {...wrapperProps}
+          onOpenChange={({ open }) => {
+            if (!open) {
+              router.push(`/pool/${decodeURIComponent(params.id)}`, {
+                scroll: false,
+              });
+            }
+          }}
+        />
+      )}
+    </>
+  );
+}

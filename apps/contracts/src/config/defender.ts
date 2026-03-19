@@ -1,8 +1,8 @@
-import type { HardhatUserConfig } from 'hardhat/config';
+import type { HardhatUserConfig } from "hardhat/config";
 
 const { DEFENDER_API_KEY, DEFENDER_API_SECRET } = process.env;
 
-export const defender: HardhatUserConfig['defender'] =
+export const defender: HardhatUserConfig["defender"] =
   DEFENDER_API_KEY && DEFENDER_API_SECRET
     ? {
         apiKey: DEFENDER_API_KEY,

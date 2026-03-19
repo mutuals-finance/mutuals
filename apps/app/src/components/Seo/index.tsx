@@ -28,7 +28,7 @@ export default function Seo(props: SeoProps) {
     ...defaultMeta,
     ...props,
   };
-  meta["title"] = props.templateTitle
+  meta.title = props.templateTitle
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
 
@@ -45,33 +45,33 @@ export default function Seo(props: SeoProps) {
   return (
     <Head>
       <title>{meta.title}</title>
-      <meta name="robots" content={meta.robots} />
+      <meta content={meta.robots} name="robots" />
       <meta content={meta.description} name="description" />
-      <meta property="og:url" content={`${meta.url}${router.asPath}`} />
-      <link rel="canonical" href={`${meta.url}${router.asPath}`} />
+      <meta content={`${meta.url}${router.asPath}`} property="og:url" />
+      <link href={`${meta.url}${router.asPath}`} rel="canonical" />
       {/* Open Graph */}
-      <meta property="og:type" content={meta.type} />
-      <meta property="og:site_name" content={meta.siteName} />
-      <meta property="og:description" content={meta.description} />
-      <meta property="og:title" content={meta.title} />
-      <meta name="image" property="og:image" content={meta.image} />
+      <meta content={meta.type} property="og:type" />
+      <meta content={meta.siteName} property="og:site_name" />
+      <meta content={meta.description} property="og:description" />
+      <meta content={meta.title} property="og:title" />
+      <meta content={meta.image} name="image" property="og:image" />
       {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta content="summary_large_image" name="twitter:card" />
       {/* // !STARTERCONF Remove or change to your handle */}
       {/* <meta name='twitter:site' content='@mutuals.eth' /> */}
-      <meta name="twitter:title" content={meta.title} />
-      <meta name="twitter:description" content={meta.description} />
-      <meta name="twitter:image" content={meta.image} />
+      <meta content={meta.title} name="twitter:title" />
+      <meta content={meta.description} name="twitter:description" />
+      <meta content={meta.image} name="twitter:image" />
       {meta.date && (
         <>
-          <meta property="article:published_time" content={meta.date} />
+          <meta content={meta.date} property="article:published_time" />
           <meta
+            content={meta.date}
             name="publish_date"
             property="og:publish_date"
-            content={meta.date}
           />
           {/* // !STARTERCONF Remove or change to your name */}
-          <meta name="author" property="article:author" content="SplitFi" />
+          <meta content="SplitFi" name="author" property="article:author" />
         </>
       )}
 
@@ -79,15 +79,15 @@ export default function Seo(props: SeoProps) {
       {favicons.map((linkProps) => (
         <link key={linkProps.href} {...linkProps} />
       ))}
-      <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta name="msapplication-config" content="/browserconfig.xml" />
-      <meta name="theme-color" content="#ffffff" />
+      <meta content="#ffffff" name="msapplication-TileColor" />
+      <meta content="/browserconfig.xml" name="msapplication-config" />
+      <meta content="#ffffff" name="theme-color" />
     </Head>
   );
 }
 
 // ! then replace the whole /public folder and favicon.ico
-const favicons: Array<React.ComponentPropsWithoutRef<"link">> = [
+const favicons: React.ComponentPropsWithoutRef<"link">[] = [
   {
     rel: "apple-touch-icon",
     sizes: "180x180",

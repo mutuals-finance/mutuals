@@ -1,6 +1,6 @@
-import { fetchAllPosts } from "@/lib/cms";
 import { notFound } from "next/navigation";
-import BlogLayoutContent from "@/features/Blog/LayoutContent";
+import BlogLayoutContent from "@/features/blog/layout-content";
+import { fetchAllPosts } from "@/lib/cms";
 
 async function getAllPosts() {
   "use cache";

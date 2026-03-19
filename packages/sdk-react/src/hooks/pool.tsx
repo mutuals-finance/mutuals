@@ -1,16 +1,16 @@
-import { Address, Log, decodeEventLog } from "viem";
-import { useCallback, useContext, useState } from "react";
-import {
+import type {
   CreatePoolConfig,
-  TransferOwnershipConfig,
   SetPausedConfig,
-  WithdrawConfig,
   SetPoolAllocationConfig,
+  TransferOwnershipConfig,
+  WithdrawConfig,
 } from "@mutuals/sdk";
 import { poolFactoryAbi } from "@mutuals/sdk/constants/abi";
+import { useCallback, useContext, useState } from "react";
+import { type Address, decodeEventLog, type Log } from "viem";
 
 import { MutualsContext } from "../context";
-import { ContractExecutionStatus, RequestError } from "../types";
+import type { ContractExecutionStatus, RequestError } from "../types";
 import { getMutualsClient } from "../utils";
 
 export const useCreatePool = (): {
@@ -30,7 +30,9 @@ export const useCreatePool = (): {
 
   const createPool = useCallback(
     async (argsDict: CreatePoolConfig) => {
-      if (!poolClient) throw new Error("Invalid chain id for payment pool");
+      if (!poolClient) {
+        throw new Error("Invalid chain id for payment pool");
+      }
 
       try {
         setStatus("pendingApproval");
@@ -71,7 +73,7 @@ export const useCreatePool = (): {
         setError(e);
       }
     },
-    [poolClient],
+    [poolClient]
   );
 
   return { createPool, poolAddress, status, txHash, error };
@@ -92,7 +94,9 @@ export const useSetPoolAllocation = (): {
 
   const updatePool = useCallback(
     async (argsDict: SetPoolAllocationConfig) => {
-      if (!poolClient) throw new Error("Invalid chain id for payment pool");
+      if (!poolClient) {
+        throw new Error("Invalid chain id for payment pool");
+      }
 
       try {
         setStatus("pendingApproval");
@@ -105,7 +109,7 @@ export const useSetPoolAllocation = (): {
         setTxHash(hash as string);
 
         const events = await poolClient.getTransactionEvents({
-          txHash: hash!,
+          txHash: hash as string,
           eventTopics: poolClient.eventTopics.allocationUpdated,
         });
 
@@ -117,7 +121,7 @@ export const useSetPoolAllocation = (): {
         setError(e);
       }
     },
-    [poolClient],
+    [poolClient]
   );
 
   return { updatePool, status, txHash, error };
@@ -138,7 +142,9 @@ export const useWithdraw = (): {
 
   const withdraw = useCallback(
     async (argsDict: WithdrawConfig) => {
-      if (!poolClient) throw new Error("Invalid chain id for payment pool");
+      if (!poolClient) {
+        throw new Error("Invalid chain id for payment pool");
+      }
 
       try {
         setStatus("pendingApproval");
@@ -164,7 +170,7 @@ export const useWithdraw = (): {
         setError(e);
       }
     },
-    [poolClient],
+    [poolClient]
   );
 
   return { withdraw, status, txHash, error };
@@ -172,7 +178,7 @@ export const useWithdraw = (): {
 
 export const useTransferOwnership = (): {
   transferOwnership: (
-    arg0: TransferOwnershipConfig,
+    arg0: TransferOwnershipConfig
   ) => Promise<Log[] | undefined>;
   status?: ContractExecutionStatus;
   txHash?: string;
@@ -187,7 +193,9 @@ export const useTransferOwnership = (): {
 
   const transferOwnership = useCallback(
     async (argsDict: TransferOwnershipConfig) => {
-      if (!poolClient) throw new Error("Invalid chain id for payment pool");
+      if (!poolClient) {
+        throw new Error("Invalid chain id for payment pool");
+      }
 
       try {
         setStatus("pendingApproval");
@@ -213,7 +221,7 @@ export const useTransferOwnership = (): {
         setError(e);
       }
     },
-    [poolClient],
+    [poolClient]
   );
 
   return { transferOwnership, status, txHash, error };
@@ -234,7 +242,9 @@ export const useSetPause = (): {
 
   const setPause = useCallback(
     async (argsDict: SetPausedConfig) => {
-      if (!poolClient) throw new Error("Invalid chain id for payment pool");
+      if (!poolClient) {
+        throw new Error("Invalid chain id for payment pool");
+      }
 
       try {
         setStatus("pendingApproval");
@@ -260,7 +270,7 @@ export const useSetPause = (): {
         setError(e);
       }
     },
-    [poolClient],
+    [poolClient]
   );
 
   return { setPause, status, txHash, error };

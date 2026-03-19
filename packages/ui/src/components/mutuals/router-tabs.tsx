@@ -1,8 +1,8 @@
 "use client";
 
-import { Text, TextProps, Tabs } from "@chakra-ui/react";
+import { Tabs, Text, type TextProps } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
-import { Link, LinkProps } from "./link";
+import { Link, type LinkProps } from "./link";
 
 export type RouterTabProps = {
   title: string;
@@ -17,17 +17,17 @@ export interface RouterTabsProps extends Tabs.RootProps {
 
 export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
   const pathname = usePathname();
-  const current = tabs?.find((t) => pathname == t.href);
+  const current = tabs?.find((t) => pathname === t.href);
 
   return (
     <>
       <Tabs.Root
-        value={current?.value}
         css={{
           "--tabs-indicator-bg": "transparent",
           "--tabs-indicator-shadow": "none",
           ...css,
         }}
+        value={current?.value}
         {...props}
       >
         <Tabs.List>
@@ -72,10 +72,10 @@ export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
 
               return (
                 <Tabs.Trigger
-                  key={"trigger" + "-" + value}
-                  value={value}
+                  key={`trigger-${value}`}
                   p={"0"}
                   unstyled={true}
+                  value={value}
                   {...tabProps}
                 >
                   {tabProps?.disabled ? (
@@ -95,7 +95,7 @@ export function RouterTabs({ tabs, children, css, ...props }: RouterTabsProps) {
                   )}
                 </Tabs.Trigger>
               );
-            },
+            }
           )}
         </Tabs.List>
       </Tabs.Root>

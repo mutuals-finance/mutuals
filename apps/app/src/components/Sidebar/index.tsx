@@ -1,19 +1,16 @@
-import React from "react";
+import { SidebarContent } from "./sidebar-content";
+import { SidebarFooter } from "./sidebar-footer";
+import { SidebarHeader } from "./sidebar-header";
+import { SidebarWrapper, type SidebarWrapperProps } from "./sidebar-wrapper";
 
-import { SidebarHeader } from "@/components/Sidebar/SidebarHeader";
-import {
-  SidebarWrapper,
-  SidebarWrapperProps,
-} from "@/components/Sidebar/SidebarWrapper";
-
-import { SidebarContent } from "./SidebarContent";
-import { SidebarFooter } from "./SidebarFooter";
-
-export { SidebarContent, SidebarFooter, SidebarHeader, SidebarWrapper };
+export { SidebarContent } from "./sidebar-content";
+export { SidebarFooter } from "./sidebar-footer";
+export { SidebarHeader } from "./sidebar-header";
+export { SidebarWrapper, type SidebarWrapperProps } from "./sidebar-wrapper";
 
 export interface SidebarProps extends SidebarWrapperProps {
-  header?: React.ReactNode;
   footer?: React.ReactNode;
+  header?: React.ReactNode;
 }
 
 export default function Sidebar({

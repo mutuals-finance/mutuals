@@ -1,13 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
-import Table from "@/components/Table";
-import { AssetItem, type AssetTableProps } from "@/features/Asset/types";
+import { useMemo } from "react";
+import Table from "@/components/table";
+import AssetTableBalanceCell from "@/features/asset/table/balance-cell";
 
-import AssetTableIconCell from "@/features/Asset/Table/IconCell";
-import AssetTableBalanceCell from "@/features/Asset/Table/BalanceCell";
-import AssetTableValueCell from "@/features/Asset/Table/ValueCell";
+import AssetTableIconCell from "@/features/asset/table/icon-cell";
+import AssetTableValueCell from "@/features/asset/table/value-cell";
+import type { AssetItem, AssetTableProps } from "@/features/asset/types";
 
 const columnHelper = createColumnHelper<AssetItem>();
 
@@ -33,15 +33,15 @@ export default function AssetTable({ assets = [], ...props }: AssetTableProps) {
         cell: (context) => <AssetTableValueCell {...context} />,
       }),
     ],
-    [],
+    []
   );
 
   return (
     <Table<AssetItem>
-      data={memoizedData}
-      columns={columns}
-      headerRowProps={{ cellProps: { px: "6" } }}
       bodyRowProps={{ cellProps: { px: "6" } }}
+      columns={columns}
+      data={memoizedData}
+      headerRowProps={{ cellProps: { px: "6" } }}
       {...props}
     />
   );

@@ -5,18 +5,22 @@ import {
   mergeConfigs,
 } from "@chakra-ui/react";
 
+export {
+  createSystem,
+  defaultConfig,
+  defineConfig,
+  mergeConfigs,
+} from "@chakra-ui/react";
+
+import animationStyles from "./foundations/animation-styles";
+import colors from "./foundations/colors";
+import keyframes from "./foundations/keyframes";
+import layerStyles from "./foundations/layer-styles";
+import semanticTokens from "./foundations/semantic-tokens";
+import textStyles from "./foundations/text-styles";
+import tokens from "./foundations/tokens";
 import recipes from "./recipes";
 import slotRecipes from "./slot-recipes";
-import tokens from "./foundations/tokens";
-import semanticTokens from "./foundations/semantic-tokens";
-
-import keyframes from "./foundations/keyframes";
-import textStyles from "./foundations/text-styles";
-import layerStyles from "./foundations/layer-styles";
-import colors from "./foundations/colors";
-import animationStyles from "./foundations/animation-styles";
-
-export { createSystem, defaultConfig, defineConfig, mergeConfigs };
 
 export const customConfig = defineConfig({
   theme: {

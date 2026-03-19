@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, type ContractRunner } from "ethers";
+import { Contract, type ContractRunner, Interface } from "ethers";
 import type {
   IERC165,
   IERC165Interface,

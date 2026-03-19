@@ -1,2 +1,2 @@
-export * from "./mixpanel";
 export * from "./events";
+export * from "./mixpanel";

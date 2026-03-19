@@ -1,6 +1,6 @@
-import PoolMetadataForm from "@/app/(dashboard)/pool/[id]/(pages)/settings/MetadataForm";
-import { Metadata } from "next";
 import { getPool } from "@mutuals/graphql-client-nextjs/server";
+import type { Metadata } from "next";
+import PoolMetadataForm from "@/app/(dashboard)/pool/[id]/(pages)/settings/metadata-form";
 
 export const metadata: Metadata = {
   title: "General Settings",

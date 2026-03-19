@@ -1,24 +1,22 @@
 "use client";
 
 import {
+  Badge,
+  Box,
   Button,
   Container,
   Heading,
-  Text,
-  Box,
   Link,
-  BoxProps,
-  Stack,
   MotionBox,
-  Badge,
+  Stack,
+  Text,
 } from "@mutuals/ui";
-import { ImageProps as NextImageProps } from "next/image";
-import HomeHeroImage from "@/features/Home/Hero/Image";
-import MotionBoxWrapper, { itemVariants } from "@/components/MotionBoxWrapper";
-import HomeHeroVideo from "@/features/Home/Hero/Video";
 import { LuArrowUpRight } from "react-icons/lu";
-
-type HomeHeroProps = BoxProps & { imageProps: NextImageProps };
+import MotionBoxWrapper, {
+  itemVariants,
+} from "@/components/motion-box-wrapper";
+import HomeHeroImage from "@/features/home/hero/image";
+import HomeHeroVideo from "@/features/home/hero/video";
 
 export default function HomeHero() {
   return (
@@ -29,59 +27,59 @@ export default function HomeHero() {
 
           <Container maxW={{ base: "xl", lg: "4xl" }} my={"16"}>
             <Stack
-              gap={"6"}
               alignItems={{ lg: "center" }}
+              gap={"6"}
               textAlign={{ lg: "center" }}
             >
-              <MotionBox variants={itemVariants} asChild={true}>
+              <MotionBox asChild={true} variants={itemVariants}>
                 <Link
-                  asChild={true}
-                  href={"https://docs.mutuals.finance/smart-contracts/overview"}
-                  external={true}
                   arrow={false}
+                  asChild={true}
+                  external={true}
+                  href={"https://docs.mutuals.finance/smart-contracts/overview"}
                 >
                   <Badge
-                    size={"lg"}
-                    textStyle={"xs"}
-                    colorPalette={"brand"}
-                    variant={"outline"}
                     bg={"bg/25"}
+                    colorPalette={"brand"}
                     css={{
                       backdropFilter: "blur(12px)",
                     }}
+                    size={"lg"}
+                    textStyle={"xs"}
+                    variant={"outline"}
                   >
                     New: Explore the Mutuals Protocol
                     <LuArrowUpRight />
                   </Badge>
                 </Link>
               </MotionBox>
-              <MotionBox variants={itemVariants} asChild={true}>
+              <MotionBox asChild={true} variants={itemVariants}>
                 <Heading
                   as="h1"
+                  fontWeight={"medium"}
                   size={{
                     base: "5xl",
                     lg: "7xl",
                   }}
-                  fontWeight={"medium"}
                 >
                   Reimagine Programmable Money
                 </Heading>
               </MotionBox>
-              <MotionBox variants={itemVariants} asChild={true}>
-                <Box w={"full"} maxW={"3xl"}>
-                  <Text textStyle={{ base: "md", lg: "lg" }} color={"fg.muted"}>
+              <MotionBox asChild={true} variants={itemVariants}>
+                <Box maxW={"3xl"} w={"full"}>
+                  <Text color={"fg.muted"} textStyle={{ base: "md", lg: "lg" }}>
                     Use Mutuals’ unopinionated infrastructure to create any
                     payment strategy you can imagine. Low-cost, global, and
                     built for both crypto-natives and mainstream users.
                   </Text>
                 </Box>
               </MotionBox>
-              <MotionBox variants={itemVariants} asChild={true}>
+              <MotionBox asChild={true} variants={itemVariants}>
                 <Box>
                   <Link
+                    asChild={true}
                     href={"https://app.mutuals.finance"}
                     target="_blank"
-                    asChild={true}
                   >
                     <Button size={"xl"}>Launch app</Button>
                   </Link>
@@ -90,9 +88,9 @@ export default function HomeHero() {
             </Stack>
           </Container>
 
-          <Box position={"relative"} my={"16"}>
+          <Box my={"16"} position={"relative"}>
             <Container maxW={"5xl"} position={"relative"}>
-              <MotionBox variants={itemVariants} asChild={true}>
+              <MotionBox asChild={true} variants={itemVariants}>
                 <HomeHeroImage />
               </MotionBox>
             </Container>

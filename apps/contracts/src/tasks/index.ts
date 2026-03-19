@@ -1,9 +1,8 @@
-import type { NewTaskActionFunction } from 'hardhat/types/tasks';
+import type { NewTaskActionFunction } from "hardhat/types/tasks";
+import { TASK as ACCOUNTS_TASK } from "./accounts";
+import { TASK as UPGRADE_TASK } from "./upgrade";
 
-import { TASK as UPGRADE_TASK } from './upgrade';
-import { TASK as ACCOUNTS_TASK } from './accounts';
-
-const TASK_VERIFY_VERIFY = 'verify:verify';
+const TASK_VERIFY_VERIFY = "verify:verify";
 
 export const TASKS = {
   [TASK_VERIFY_VERIFY]: {} as {

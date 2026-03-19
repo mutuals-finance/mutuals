@@ -1,6 +1,6 @@
-import type { NetworksUserConfig, NetworkUserConfig } from 'hardhat/types';
+import type { NetworksUserConfig, NetworkUserConfig } from "hardhat/types";
 
-import { accounts } from './accounts';
+import { accounts } from "./accounts";
 
 const {
   ETHEREUM_RPC_URL,
@@ -12,7 +12,7 @@ const {
   LOG_HARDHAT_NETWORK,
 } = process.env;
 
-const hardhat: NetworksUserConfig['hardhat'] = {
+const hardhat: NetworksUserConfig["hardhat"] = {
   blockGasLimit: 30_000_000,
   initialBaseFeePerGas: 1,
   gasPrice: 3,
@@ -20,7 +20,7 @@ const hardhat: NetworksUserConfig['hardhat'] = {
   accounts,
   loggingEnabled: LOG_HARDHAT_NETWORK,
   allowUnlimitedContractSize: true,
-  tags: ['test'],
+  tags: ["test"],
   saveDeployments: true,
 };
 
@@ -29,41 +29,41 @@ const localhost: NetworkUserConfig = {
   initialBaseFeePerGas: 1,
   gasPrice: 3,
   chainId: 9001,
-  ...(typeof MNEMONIC === 'string' && {
+  ...(typeof MNEMONIC === "string" && {
     accounts: { mnemonic: MNEMONIC },
   }),
   allowUnlimitedContractSize: true,
   loggingEnabled: LOG_HARDHAT_NETWORK,
-  url: 'http://127.0.0.1:8545',
-  tags: ['test'],
+  url: "http://127.0.0.1:8545",
+  tags: ["test"],
   saveDeployments: true,
 };
 
 const sepolia: NetworkUserConfig = {
   url: SEPOLIA_RPC_URL,
-  tags: ['mainnet', 'staging'],
-  ...(typeof MNEMONIC === 'string' && {
+  tags: ["mainnet", "staging"],
+  ...(typeof MNEMONIC === "string" && {
     accounts: { mnemonic: MNEMONIC },
   }),
 };
 
 const holesky: NetworkUserConfig = {
   url: HOLESKY_RPC_URL,
-  tags: ['mainnet', 'staging'],
-  ...(typeof MNEMONIC === 'string' && {
+  tags: ["mainnet", "staging"],
+  ...(typeof MNEMONIC === "string" && {
     accounts: { mnemonic: MNEMONIC },
   }),
 };
 
 const polygonAmoy: NetworkUserConfig = {
   url: AMOY_RPC_URL,
-  tags: ['polygon', 'staging'],
-  ...(typeof MNEMONIC === 'string' && {
+  tags: ["polygon", "staging"],
+  ...(typeof MNEMONIC === "string" && {
     accounts: { mnemonic: MNEMONIC },
   }),
   verify: {
     etherscan: {
-      apiUrl: 'https://api-amoy.polygonscan.com/api',
+      apiUrl: "https://api-amoy.polygonscan.com/api",
       apiKey: process.env.POLYGONSCAN_API_KEY,
     },
   },
@@ -71,12 +71,12 @@ const polygonAmoy: NetworkUserConfig = {
 
 const polygon: NetworkUserConfig = {
   url: POLYGON_RPC_URL,
-  tags: ['polygon', 'prod'],
+  tags: ["polygon", "prod"],
 };
 
 const mainnet: NetworkUserConfig = {
   url: ETHEREUM_RPC_URL,
-  tags: ['mainnet', 'prod'],
+  tags: ["mainnet", "prod"],
 };
 
 export const networks = {

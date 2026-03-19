@@ -2,10 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 import type * as common from "./common";
+
 export type { common };
+
 import type * as contractMetadata from "./contract-metadata";
+
 export type { contractMetadata };
+
 import type * as split from "./splitContract";
-export type { split };
+
 export type { Split } from "./Split";
 export type { SplitFactory } from "./SplitFactory";
+export type { split };

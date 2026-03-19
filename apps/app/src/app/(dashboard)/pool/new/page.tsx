@@ -1,11 +1,11 @@
 import { Container } from "@mutuals/ui";
-import ShellPage from "@/features/Shell/Page";
-import PoolAddForm from "@/features/PoolAdd/Form";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import PoolAddForm from "@/features/pool-add/form";
+import ShellPage from "@/features/shell/page";
 import { me } from "@/lib/privy";
 
 export const metadata: Metadata = {
-  title: "New payment pool",
+  title: "New Payment Pool",
 };
 
 export default async function PoolAddPage() {
@@ -14,10 +14,10 @@ export default async function PoolAddPage() {
   return (
     <ShellPage
       breadcrumbsProps={{
-        overwrite: { pool: false, ["new"]: "New Payment Pool" },
+        overwrite: { pool: false, "new": "New Payment Pool" },
       }}
-      title={"New Payment Pool"}
       headerContainerProps={{ mb: "0" }}
+      title={"New Payment Pool"}
     >
       <Container maxW={"7xl"}>
         <PoolAddForm user={user} />

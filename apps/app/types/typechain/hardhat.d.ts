@@ -13,6 +13,372 @@ import * as Contracts from ".";
 
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
+    deployContract(
+      name: "AccessControlUpgradeable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.AccessControlUpgradeable>;
+    deployContract(
+      name: "Initializable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Initializable>;
+    deployContract(
+      name: "ContextUpgradeable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ContextUpgradeable>;
+    deployContract(
+      name: "ERC165Upgradeable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC165Upgradeable>;
+    deployContract(
+      name: "IAccessControl",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IAccessControl>;
+    deployContract(
+      name: "Ownable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "BeaconProxy",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BeaconProxy>;
+    deployContract(
+      name: "IBeacon",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IBeacon>;
+    deployContract(
+      name: "ERC1967Utils",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC1967Utils>;
+    deployContract(
+      name: "Proxy",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Proxy>;
+    deployContract(
+      name: "IERC20Permit",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20Permit>;
+    deployContract(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
+    deployContract(
+      name: "SafeERC20",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SafeERC20>;
+    deployContract(
+      name: "Address",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Address>;
+    deployContract(
+      name: "IERC165",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC165>;
+    deployContract(
+      name: "PayeeManager",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.PayeeManager>;
+    deployContract(
+      name: "WithdrawManager",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.WithdrawManager>;
+    deployContract(
+      name: "ContractMetadata",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ContractMetadata>;
+    deployContract(
+      name: "ContractMetadataEditable",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ContractMetadataEditable>;
+    deployContract(
+      name: "IContractMetadata",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IContractMetadata>;
+    deployContract(
+      name: "Split",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Split>;
+    deployContract(
+      name: "SplitBase",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitBase>;
+    deployContract(
+      name: "SplitReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitReceiver>;
+    deployContract(
+      name: "SplitSender",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitSender>;
+    deployContract(
+      name: "SplitFactory",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitFactory>;
+
+    deployContract(
+      name: "AccessControlUpgradeable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.AccessControlUpgradeable>;
+    deployContract(
+      name: "Initializable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Initializable>;
+    deployContract(
+      name: "ContextUpgradeable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ContextUpgradeable>;
+    deployContract(
+      name: "ERC165Upgradeable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC165Upgradeable>;
+    deployContract(
+      name: "IAccessControl",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IAccessControl>;
+    deployContract(
+      name: "Ownable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Ownable>;
+    deployContract(
+      name: "BeaconProxy",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BeaconProxy>;
+    deployContract(
+      name: "IBeacon",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IBeacon>;
+    deployContract(
+      name: "ERC1967Utils",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC1967Utils>;
+    deployContract(
+      name: "Proxy",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Proxy>;
+    deployContract(
+      name: "IERC20Permit",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20Permit>;
+    deployContract(
+      name: "IERC20",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
+    deployContract(
+      name: "SafeERC20",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SafeERC20>;
+    deployContract(
+      name: "Address",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Address>;
+    deployContract(
+      name: "IERC165",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC165>;
+    deployContract(
+      name: "PayeeManager",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.PayeeManager>;
+    deployContract(
+      name: "WithdrawManager",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.WithdrawManager>;
+    deployContract(
+      name: "ContractMetadata",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ContractMetadata>;
+    deployContract(
+      name: "ContractMetadataEditable",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ContractMetadataEditable>;
+    deployContract(
+      name: "IContractMetadata",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IContractMetadata>;
+    deployContract(
+      name: "Split",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Split>;
+    deployContract(
+      name: "SplitBase",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitBase>;
+    deployContract(
+      name: "SplitReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitReceiver>;
+    deployContract(
+      name: "SplitSender",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitSender>;
+    deployContract(
+      name: "SplitFactory",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SplitFactory>;
+    deployContract(
+      name: string,
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<ethers.Contract>;
+    deployContract(
+      name: string,
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<ethers.Contract>;
+
+    getContractAt(
+      name: "AccessControlUpgradeable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AccessControlUpgradeable>;
+    getContractAt(
+      name: "Initializable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Initializable>;
+    getContractAt(
+      name: "ContextUpgradeable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ContextUpgradeable>;
+    getContractAt(
+      name: "ERC165Upgradeable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC165Upgradeable>;
+    getContractAt(
+      name: "IAccessControl",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IAccessControl>;
+    getContractAt(
+      name: "Ownable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: "BeaconProxy",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BeaconProxy>;
+    getContractAt(
+      name: "IBeacon",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IBeacon>;
+    getContractAt(
+      name: "ERC1967Utils",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1967Utils>;
+    getContractAt(
+      name: "Proxy",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Proxy>;
+    getContractAt(
+      name: "IERC20Permit",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Permit>;
+    getContractAt(
+      name: "IERC20",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "SafeERC20",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SafeERC20>;
+    getContractAt(
+      name: "Address",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Address>;
+    getContractAt(
+      name: "IERC165",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "PayeeManager",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PayeeManager>;
+    getContractAt(
+      name: "WithdrawManager",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.WithdrawManager>;
+    getContractAt(
+      name: "ContractMetadata",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ContractMetadata>;
+    getContractAt(
+      name: "ContractMetadataEditable",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ContractMetadataEditable>;
+    getContractAt(
+      name: "IContractMetadata",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IContractMetadata>;
+    getContractAt(
+      name: "Split",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Split>;
+    getContractAt(
+      name: "SplitBase",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SplitBase>;
+    getContractAt(
+      name: "SplitReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SplitReceiver>;
+    getContractAt(
+      name: "SplitSender",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SplitSender>;
+    getContractAt(
+      name: "SplitFactory",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SplitFactory>;
+    getContractAt(
+      nameOrAbi: string | any[],
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<ethers.Contract>;
     getContractFactory(
       name: "AccessControlUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -114,359 +480,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SplitFactory__factory>;
 
-    getContractAt(
-      name: "AccessControlUpgradeable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.AccessControlUpgradeable>;
-    getContractAt(
-      name: "Initializable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Initializable>;
-    getContractAt(
-      name: "ContextUpgradeable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ContextUpgradeable>;
-    getContractAt(
-      name: "ERC165Upgradeable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC165Upgradeable>;
-    getContractAt(
-      name: "IAccessControl",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IAccessControl>;
-    getContractAt(
-      name: "Ownable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Ownable>;
-    getContractAt(
-      name: "BeaconProxy",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.BeaconProxy>;
-    getContractAt(
-      name: "IBeacon",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IBeacon>;
-    getContractAt(
-      name: "ERC1967Utils",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC1967Utils>;
-    getContractAt(
-      name: "Proxy",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Proxy>;
-    getContractAt(
-      name: "IERC20Permit",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC20Permit>;
-    getContractAt(
-      name: "IERC20",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC20>;
-    getContractAt(
-      name: "SafeERC20",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SafeERC20>;
-    getContractAt(
-      name: "Address",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Address>;
-    getContractAt(
-      name: "IERC165",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC165>;
-    getContractAt(
-      name: "PayeeManager",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.PayeeManager>;
-    getContractAt(
-      name: "WithdrawManager",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.WithdrawManager>;
-    getContractAt(
-      name: "ContractMetadata",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ContractMetadata>;
-    getContractAt(
-      name: "ContractMetadataEditable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ContractMetadataEditable>;
-    getContractAt(
-      name: "IContractMetadata",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IContractMetadata>;
-    getContractAt(
-      name: "Split",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Split>;
-    getContractAt(
-      name: "SplitBase",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SplitBase>;
-    getContractAt(
-      name: "SplitReceiver",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SplitReceiver>;
-    getContractAt(
-      name: "SplitSender",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SplitSender>;
-    getContractAt(
-      name: "SplitFactory",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SplitFactory>;
-
-    deployContract(
-      name: "AccessControlUpgradeable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.AccessControlUpgradeable>;
-    deployContract(
-      name: "Initializable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Initializable>;
-    deployContract(
-      name: "ContextUpgradeable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ContextUpgradeable>;
-    deployContract(
-      name: "ERC165Upgradeable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC165Upgradeable>;
-    deployContract(
-      name: "IAccessControl",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IAccessControl>;
-    deployContract(
-      name: "Ownable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Ownable>;
-    deployContract(
-      name: "BeaconProxy",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.BeaconProxy>;
-    deployContract(
-      name: "IBeacon",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IBeacon>;
-    deployContract(
-      name: "ERC1967Utils",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC1967Utils>;
-    deployContract(
-      name: "Proxy",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Proxy>;
-    deployContract(
-      name: "IERC20Permit",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20Permit>;
-    deployContract(
-      name: "IERC20",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20>;
-    deployContract(
-      name: "SafeERC20",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SafeERC20>;
-    deployContract(
-      name: "Address",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Address>;
-    deployContract(
-      name: "IERC165",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC165>;
-    deployContract(
-      name: "PayeeManager",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PayeeManager>;
-    deployContract(
-      name: "WithdrawManager",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.WithdrawManager>;
-    deployContract(
-      name: "ContractMetadata",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ContractMetadata>;
-    deployContract(
-      name: "ContractMetadataEditable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ContractMetadataEditable>;
-    deployContract(
-      name: "IContractMetadata",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IContractMetadata>;
-    deployContract(
-      name: "Split",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Split>;
-    deployContract(
-      name: "SplitBase",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitBase>;
-    deployContract(
-      name: "SplitReceiver",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitReceiver>;
-    deployContract(
-      name: "SplitSender",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitSender>;
-    deployContract(
-      name: "SplitFactory",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitFactory>;
-
-    deployContract(
-      name: "AccessControlUpgradeable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.AccessControlUpgradeable>;
-    deployContract(
-      name: "Initializable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Initializable>;
-    deployContract(
-      name: "ContextUpgradeable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ContextUpgradeable>;
-    deployContract(
-      name: "ERC165Upgradeable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC165Upgradeable>;
-    deployContract(
-      name: "IAccessControl",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IAccessControl>;
-    deployContract(
-      name: "Ownable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Ownable>;
-    deployContract(
-      name: "BeaconProxy",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.BeaconProxy>;
-    deployContract(
-      name: "IBeacon",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IBeacon>;
-    deployContract(
-      name: "ERC1967Utils",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC1967Utils>;
-    deployContract(
-      name: "Proxy",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Proxy>;
-    deployContract(
-      name: "IERC20Permit",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20Permit>;
-    deployContract(
-      name: "IERC20",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20>;
-    deployContract(
-      name: "SafeERC20",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SafeERC20>;
-    deployContract(
-      name: "Address",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Address>;
-    deployContract(
-      name: "IERC165",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC165>;
-    deployContract(
-      name: "PayeeManager",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PayeeManager>;
-    deployContract(
-      name: "WithdrawManager",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.WithdrawManager>;
-    deployContract(
-      name: "ContractMetadata",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ContractMetadata>;
-    deployContract(
-      name: "ContractMetadataEditable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ContractMetadataEditable>;
-    deployContract(
-      name: "IContractMetadata",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IContractMetadata>;
-    deployContract(
-      name: "Split",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Split>;
-    deployContract(
-      name: "SplitBase",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitBase>;
-    deployContract(
-      name: "SplitReceiver",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitReceiver>;
-    deployContract(
-      name: "SplitSender",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitSender>;
-    deployContract(
-      name: "SplitFactory",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.SplitFactory>;
-
     // default types
     getContractFactory(
       name: string,
@@ -477,19 +490,5 @@ declare module "hardhat/types/runtime" {
       bytecode: ethers.BytesLike,
       signer?: ethers.Signer
     ): Promise<ethers.ContractFactory>;
-    getContractAt(
-      nameOrAbi: string | any[],
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<ethers.Contract>;
-    deployContract(
-      name: string,
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<ethers.Contract>;
-    deployContract(
-      name: string,
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<ethers.Contract>;
   }
 }

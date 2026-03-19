@@ -5,37 +5,36 @@ import type {
   BaseContract,
   BigNumberish,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../../../../common";
 
 export interface ERC165UpgradeableInterface extends Interface {
-  getFunction(nameOrSignature: "supportsInterface"): FunctionFragment;
-
-  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
 
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getFunction(nameOrSignature: "supportsInterface"): FunctionFragment;
 }
 
 export namespace InitializedEvent {
@@ -52,68 +51,6 @@ export namespace InitializedEvent {
 
 export interface ERC165Upgradeable extends BaseContract {
   connect(runner?: ContractRunner | null): ERC165Upgradeable;
-  waitForDeployment(): Promise<this>;
-
-  interface: ERC165UpgradeableInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  supportsInterface: TypedContractMethod<
-    [interfaceId: BytesLike],
-    [boolean],
-    "view"
-  >;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "supportsInterface"
-  ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
-
-  getEvent(
-    key: "Initialized"
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
 
   filters: {
     "Initialized(uint64)": TypedContractEvent<
@@ -127,4 +64,50 @@ export interface ERC165Upgradeable extends BaseContract {
       InitializedEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  getFunction(
+    nameOrSignature: "supportsInterface"
+  ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
+
+  interface: ERC165UpgradeableInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  supportsInterface: TypedContractMethod<
+    [interfaceId: BytesLike],
+    [boolean],
+    "view"
+  >;
+  waitForDeployment(): Promise<this>;
 }

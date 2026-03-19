@@ -1,9 +1,9 @@
-import { DeployFunction } from 'hardhat-deploy/types';
-import { deployRegistryContract, finalizeDeployments } from '@/utils/deploy';
+import type { DeployFunction } from "hardhat-deploy/types";
+import { deployRegistryContract, finalizeDeployments } from "@/utils/deploy";
 
 export const deploy: DeployFunction = async (environment) => {
   const hre = environment as unknown as CustomHardHatRuntimeEnvironment;
-  hre.trace(`deploy-module-registry`);
+  hre.trace("deploy-module-registry");
 
   const ModuleRegistry = await deployRegistryContract({
     hre,
@@ -13,5 +13,5 @@ export const deploy: DeployFunction = async (environment) => {
 };
 
 export default deploy;
-deploy.dependencies = ['preconditions'];
-deploy.tags = ['all', 'registry', 'module-registry'];
+deploy.dependencies = ["preconditions"];
+deploy.tags = ["all", "registry", "module-registry"];

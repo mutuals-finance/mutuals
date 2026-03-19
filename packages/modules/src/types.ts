@@ -1,19 +1,19 @@
-import { ClaimCreateInput as MutualsClaimCreateInput } from "@mutuals/graphql-client-nextjs";
-import { ReactNode } from "react";
+import type { ClaimCreateInput as MutualsClaimCreateInput } from "@mutuals/graphql-client-nextjs";
+import type { ReactNode } from "react";
 
 export type ClaimCreateNode<TData = unknown> = MutualsClaimCreateInput & {
   id: string;
   data?: TData;
 };
 
-export type ModuleRenderProps = {
+export interface ModuleRenderProps {
   id: string;
   isBranch: boolean;
-};
+}
 
-export type Module = {
+export interface Module {
   id: string;
-  name: string;
   moduleType: "Validation" | "Distribution";
+  name: string;
   render: ((props: ModuleRenderProps) => ReactNode) | null;
-};
+}

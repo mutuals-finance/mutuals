@@ -1,4 +1,4 @@
-import { PricingOptionsCardProps } from "@/features/Pricing/Options/Card";
+import type { PricingOptionsCardProps } from "@/features/pricing/options/card";
 
 const items = [
   {
@@ -35,6 +35,6 @@ const items = [
     "No Fees or hidden costs",
     ...(i.features ?? []),
   ],
-})) as Array<PricingOptionsCardProps>;
+})) as PricingOptionsCardProps[];
 
 export default items;

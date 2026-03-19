@@ -32,7 +32,7 @@ export const Users: CollectionConfig = {
           ? true
           : undefined,
     },
-    tokenExpiration: 28800, // 8 hours
+    tokenExpiration: 28_800, // 8 hours
   },
   fields: [
     {

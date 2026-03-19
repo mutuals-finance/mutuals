@@ -1,12 +1,12 @@
 "use client";
 
+import type { PinInputValueChangeDetails as ChakraPinInputValueChangeDetails } from "@chakra-ui/react";
 import { Controller, useFormContext } from "react-hook-form";
-import { BaseInputProps } from "../input";
 import {
   PinInput as ChakraPinInput,
-  PinInputProps as ChakraPinInputProps,
+  type PinInputProps as ChakraPinInputProps,
 } from "../../ui/pin-input";
-import { PinInputValueChangeDetails as ChakraPinInputValueChangeDetails } from "@chakra-ui/react";
+import type { BaseInputProps } from "../input";
 
 export interface PinInputProps
   extends BaseInputProps<string, ChakraPinInputValueChangeDetails>,
@@ -26,18 +26,18 @@ export function PinInput({
     <Controller
       control={control}
       name={name}
-      rules={rules}
       render={({ field: { value, onChange, ...field } }) => (
         <ChakraPinInput
           id={id}
           {...props}
-          value={transform ? transform.input(value) : value}
+          inputProps={{ ...inputProps, ...field }}
           onValueChange={(e) =>
             onChange(transform ? transform.output(e, value) : e.value)
           }
-          inputProps={{ ...inputProps, ...field }}
+          value={transform ? transform.input(value) : value}
         />
       )}
+      rules={rules}
       {...controllerProps}
     />
   );

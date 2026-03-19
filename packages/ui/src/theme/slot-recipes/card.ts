@@ -1,5 +1,5 @@
-import { cardAnatomy } from "@chakra-ui/react/anatomy";
 import { defineSlotRecipe } from "@chakra-ui/react";
+import { cardAnatomy } from "@chakra-ui/react/anatomy";
 
 /*
 const baseStyle = definePartsStyle({

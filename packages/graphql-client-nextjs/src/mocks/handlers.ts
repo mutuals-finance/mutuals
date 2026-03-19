@@ -1,12 +1,12 @@
-import { graphql, HttpResponse, passthrough } from "msw";
 import { faker } from "@faker-js/faker";
+import { graphql, HttpResponse, passthrough } from "msw";
 import {
   PoolStatus,
   Role,
   TokenType,
 } from "../graphql/data/__generated__/graphql";
 
-const MOCK_START_TIME = Date.now() - 1000000;
+const MOCK_START_TIME = Date.now() - 1_000_000;
 
 function mockQuotes(value?: number) {
   return [
@@ -14,7 +14,8 @@ function mockQuotes(value?: number) {
       __typename: "Quote",
       currency: "USD",
       value:
-        value ?? faker.number.float({ min: 0, max: 100000, fractionDigits: 2 }),
+        value ??
+        faker.number.float({ min: 0, max: 100_000, fractionDigits: 2 }),
       lastUpdatedAt: new Date().toISOString(),
     },
   ];
@@ -23,17 +24,17 @@ function mockQuotes(value?: number) {
 function mockBalance() {
   const elapsedSeconds = Math.floor((Date.now() - MOCK_START_TIME) / 1000);
 
-  const baseIncome = 50000;
-  const baseWithdrawals = 15000;
+  const baseIncome = 50_000;
+  const baseWithdrawals = 15_000;
 
-  const totalIncomeValue = parseFloat(
-    (baseIncome + elapsedSeconds * 1.5).toFixed(2),
+  const totalIncomeValue = Number.parseFloat(
+    (baseIncome + elapsedSeconds * 1.5).toFixed(2)
   );
-  const withdrawalsValue = parseFloat(
-    (baseWithdrawals + elapsedSeconds * 0.5).toFixed(2),
+  const withdrawalsValue = Number.parseFloat(
+    (baseWithdrawals + elapsedSeconds * 0.5).toFixed(2)
   );
-  const balanceValue = parseFloat(
-    (totalIncomeValue - withdrawalsValue).toFixed(2),
+  const balanceValue = Number.parseFloat(
+    (totalIncomeValue - withdrawalsValue).toFixed(2)
   );
 
   return {
@@ -92,14 +93,14 @@ const WELL_KNOWN_TOKENS = [
     symbol: "WBTC",
     name: "Wrapped Bitcoin",
     decimals: 8,
-    price: 65000,
+    price: 65_000,
     logo: "https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png",
   },
 ];
 
 function mockToken(
   template: (typeof WELL_KNOWN_TOKENS)[0],
-  overrides?: Record<string, unknown>,
+  overrides?: Record<string, unknown>
 ) {
   return {
     __typename: "Token",
@@ -128,19 +129,19 @@ function mockTokenBalanceConnection(totalPoolBalanceUsd: number) {
     let usdValueForToken = 0;
 
     if (index === WELL_KNOWN_TOKENS.length - 1) {
-      usdValueForToken = parseFloat(
-        (totalPoolBalanceUsd - allocatedUsd).toFixed(2),
+      usdValueForToken = Number.parseFloat(
+        (totalPoolBalanceUsd - allocatedUsd).toFixed(2)
       );
     } else {
       const fraction = faker.number.float({ min: 0.1, max: 0.2 });
-      usdValueForToken = parseFloat(
-        (totalPoolBalanceUsd * fraction).toFixed(2),
+      usdValueForToken = Number.parseFloat(
+        (totalPoolBalanceUsd * fraction).toFixed(2)
       );
       allocatedUsd += usdValueForToken;
     }
 
-    const tokenAmount = parseFloat(
-      (usdValueForToken / template.price).toFixed(4),
+    const tokenAmount = Number.parseFloat(
+      (usdValueForToken / template.price).toFixed(4)
     );
 
     return {
@@ -162,7 +163,7 @@ function mockTokenBalanceConnection(totalPoolBalanceUsd: number) {
 
   return {
     __typename: "TokenBalanceConnection",
-    edges: edges,
+    edges,
     pageInfo: {
       __typename: "PageInfo",
       hasNextPage: false,
@@ -197,7 +198,7 @@ function mockDepositConnection() {
       });
       // Baue das UInt256 Equivalent basierend auf den Decimals des Tokens
       const rawAmountStr = BigInt(
-        Math.floor(floatAmount * Math.pow(10, token.decimals)),
+        Math.floor(floatAmount * 10 ** token.decimals)
       ).toString();
 
       return {
@@ -211,7 +212,7 @@ function mockDepositConnection() {
           origin: faker.finance.ethereumAddress(),
           amount: rawAmountStr,
           logIndex: faker.number.int({ min: 0, max: 100 }),
-          token: token,
+          token,
           createdAt: faker.date.recent({ days: index + 1 }).toISOString(),
           updatedAt: faker.date.recent().toISOString(),
         },
@@ -238,7 +239,7 @@ function mockWithdrawalConnection() {
         fractionDigits: 4,
       });
       const rawAmountStr = BigInt(
-        Math.floor(floatAmount * Math.pow(10, token.decimals)),
+        Math.floor(floatAmount * 10 ** token.decimals)
       ).toString();
 
       return {
@@ -252,7 +253,7 @@ function mockWithdrawalConnection() {
           origin: faker.finance.ethereumAddress(),
           amount: rawAmountStr,
           logIndex: faker.number.int({ min: 0, max: 100 }),
-          token: token,
+          token,
           createdAt: faker.date.recent({ days: index + 2 }).toISOString(),
           updatedAt: faker.date.recent().toISOString(),
         },
@@ -355,86 +356,114 @@ function resolvePool(variables: {
   contractId?: string;
 }) {
   const { id, slug } = variables;
-  if (slug !== "demo" && slug !== undefined) return null;
+  if (slug !== "demo" && slug !== undefined) {
+    return null;
+  }
   return mockPool({ id: id || faker.string.uuid() });
 }
 
 export const handlers = [
   graphql.query("GetPool", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("GetPoolWithBalance", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("GetPoolWithTokens", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("GetPoolWithContract", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("GetPoolWithClaims", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("GetPoolWithBalanceAndContract", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("GetPoolWithBalanceContractClaims", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("PoolDeposits", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("PoolWithdrawals", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("PoolTransactions", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("PoolDayBalances", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("PoolHourBalances", ({ variables }) => {
     const pool = resolvePool(variables);
-    if (!pool) return passthrough();
+    if (!pool) {
+      return passthrough();
+    }
     return HttpResponse.json({ data: { pool } });
   }),
 
   graphql.query("User", ({ variables }) => {
     const { id, address } = variables;
-    if (!id && !address) return passthrough();
+    if (!(id || address)) {
+      return passthrough();
+    }
     faker.seed(0);
     return HttpResponse.json({ data: { user: mockUser(id) } });
   }),
@@ -467,7 +496,9 @@ export const handlers = [
 
   graphql.query("SearchPools", ({ variables }) => {
     const { query } = variables;
-    if (!query) return passthrough();
+    if (!query) {
+      return passthrough();
+    }
     faker.seed(0);
     return HttpResponse.json({
       data: {
@@ -484,7 +515,9 @@ export const handlers = [
 
   graphql.query("SearchUsers", ({ variables }) => {
     const { query } = variables;
-    if (!query) return passthrough();
+    if (!query) {
+      return passthrough();
+    }
     faker.seed(0);
     return HttpResponse.json({
       data: {

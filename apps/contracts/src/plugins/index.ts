@@ -1,29 +1,29 @@
-import 'tsconfig-paths/register';
-import '@openzeppelin/hardhat-upgrades';
-import '@nomicfoundation/hardhat-chai-matchers';
-import '@nomicfoundation/hardhat-ethers';
-import '@nomicfoundation/hardhat-verify';
-import 'hardhat-deploy';
-import 'hardhat-deploy-ethers';
-import '@typechain/hardhat';
-import 'hardhat-tracer';
-import 'hardhat-contract-sizer';
-import 'hardhat-ignore-warnings';
-import '@/config/environment';
-import '@/tasks';
-import { extendEnvironment } from 'hardhat/config';
-import { namedAccounts } from '@/config/accounts';
-import { trace, log } from '@/utils/log';
+import "tsconfig-paths/register";
+import "@openzeppelin/hardhat-upgrades";
+import "@nomicfoundation/hardhat-chai-matchers";
+import "@nomicfoundation/hardhat-ethers";
+import "@nomicfoundation/hardhat-verify";
+import "hardhat-deploy";
+import "hardhat-deploy-ethers";
+import "@typechain/hardhat";
+import "hardhat-tracer";
+import "hardhat-contract-sizer";
+import "hardhat-ignore-warnings";
+import "@/config/environment";
+import "@/tasks";
+import { extendEnvironment } from "hardhat/config";
+import { namedAccounts } from "@/config/accounts";
 import {
   deployNonUpgradeable,
   deployOrUpgradeBeacon,
   deployOrUpgradeProxy,
-} from '@/plugins/deploy';
+} from "@/plugins/deploy";
 import {
   isNetworkLocal,
   isNetworkProduction,
   isNetworkStaging,
-} from '@/plugins/network';
+} from "@/plugins/network";
+import { log, trace } from "@/utils/log";
 
 /**
  * Hardhat v2 environment extension
@@ -37,10 +37,10 @@ extendEnvironment((hre) => {
   customHre.trace = trace;
 
   if (customHre.network.live) {
-    customHre.log('Using alchemy + hd wallet signer');
+    customHre.log("Using alchemy + hd wallet signer");
   } else {
     customHre.namedAccounts = namedAccounts;
-    customHre.log('Using hardhat signer');
+    customHre.log("Using hardhat signer");
   }
 
   customHre.getSigners = () => customHre.ethers.getSigners();

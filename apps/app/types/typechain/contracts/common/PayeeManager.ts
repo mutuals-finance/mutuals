@@ -2,52 +2,44 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
   BigNumberish,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../../common";
 
 export interface PayeeManagerInterface extends Interface {
+  decodeFunctionResult(
+    functionFragment: "totalShares" | ("shares" | ("payeeCount" | "payee")),
+    data: BytesLike
+  ): Result;
+
+  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "shares", values: [AddressLike]): string;
+  encodeFunctionData(
+    functionFragment: "totalShares" | "payeeCount",
+    values?: undefined
+  ): string;
+
+  getEvent(nameOrSignatureOrTopic: "Initialized" | "PayeeAdded"): EventFragment;
   getFunction(
     nameOrSignature: "payee" | "payeeCount" | "shares" | "totalShares"
   ): FunctionFragment;
-
-  getEvent(nameOrSignatureOrTopic: "Initialized" | "PayeeAdded"): EventFragment;
-
-  encodeFunctionData(functionFragment: "payee", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "payeeCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "shares", values: [AddressLike]): string;
-  encodeFunctionData(
-    functionFragment: "totalShares",
-    values?: undefined
-  ): string;
-
-  decodeFunctionResult(functionFragment: "payee", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "payeeCount", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "shares", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalShares",
-    data: BytesLike
-  ): Result;
 }
 
 export namespace InitializedEvent {
@@ -77,86 +69,6 @@ export namespace PayeeAddedEvent {
 
 export interface PayeeManager extends BaseContract {
   connect(runner?: ContractRunner | null): PayeeManager;
-  waitForDeployment(): Promise<this>;
-
-  interface: PayeeManagerInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
-
-  payeeCount: TypedContractMethod<[], [bigint], "view">;
-
-  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
-
-  totalShares: TypedContractMethod<[], [bigint], "view">;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "payee"
-  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
-  getFunction(
-    nameOrSignature: "payeeCount"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "shares"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "totalShares"
-  ): TypedContractMethod<[], [bigint], "view">;
-
-  getEvent(
-    key: "Initialized"
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
-  getEvent(
-    key: "PayeeAdded"
-  ): TypedContractEvent<
-    PayeeAddedEvent.InputTuple,
-    PayeeAddedEvent.OutputTuple,
-    PayeeAddedEvent.OutputObject
-  >;
 
   filters: {
     "Initialized(uint64)": TypedContractEvent<
@@ -181,4 +93,65 @@ export interface PayeeManager extends BaseContract {
       PayeeAddedEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+  getEvent(
+    key: "PayeeAdded"
+  ): TypedContractEvent<
+    PayeeAddedEvent.InputTuple,
+    PayeeAddedEvent.OutputTuple,
+    PayeeAddedEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  getFunction(
+    nameOrSignature: "payee"
+  ): TypedContractMethod<[index: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "shares"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalShares" | "payeeCount"
+  ): TypedContractMethod<[], [bigint], "view">;
+
+  interface: PayeeManagerInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+
+  payee: TypedContractMethod<[index: BigNumberish], [string], "view">;
+
+  payeeCount: TypedContractMethod<[], [bigint], "view">;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  shares: TypedContractMethod<[account: AddressLike], [bigint], "view">;
+
+  totalShares: TypedContractMethod<[], [bigint], "view">;
+  waitForDeployment(): Promise<this>;
 }

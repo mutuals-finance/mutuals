@@ -1,5 +1,5 @@
-import { tabsAnatomy } from "@chakra-ui/react/anatomy";
 import { defineSlotRecipe } from "@chakra-ui/react";
+import { tabsAnatomy } from "@chakra-ui/react/anatomy";
 
 /*
 const baseStyle = definePartsStyle({

@@ -1,32 +1,29 @@
+import { Card, Cards } from "fumadocs-ui/components/card";
+import { HomeLayout } from "fumadocs-ui/layouts/home";
 import {
   CableIcon,
   CodeXmlIcon,
   GithubIcon,
   HammerIcon,
   HandshakeIcon,
-  HomeIcon,
   LifeBuoyIcon,
   PiIcon,
   ReceiptTextIcon,
   RssIcon,
-  ScrollTextIcon,
   SquarePlayIcon,
 } from "lucide-react";
-import { HomeLayout } from "fumadocs-ui/layouts/home";
-import { Card, Cards } from "fumadocs-ui/components/card";
 import { baseOptions } from "@/lib/layout.shared";
-import Link from "next/link";
 
 export default function HomePage() {
   return (
     <HomeLayout {...baseOptions()}>
       <div className="w-full pb-16 lg:pb-32">
         <div className="relative bg-dots-gradient-blue py-16 lg:py-32">
-          <div className="text-center mx-auto max-w-2xl px-4 sm:px-6">
-            <h1 className="text-4xl font-medium my-6 px-2 sm:px-0">
+          <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
+            <h1 className="my-6 px-2 font-medium text-4xl sm:px-0">
               Mutuals Documentation
             </h1>
-            <p className="text-base sm:text-lg text-fd-muted-foreground px-2 sm:px-0">
+            <p className="px-2 text-base text-fd-muted-foreground sm:px-0 sm:text-lg">
               Build custom payment rails using Mutuals' unopinionated and
               powerful developer tooling, deep dive into the protocol, use the
               API, or get support.
@@ -35,26 +32,26 @@ export default function HomePage() {
         </div>
 
         {/* Content Section */}
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col gap-12 sm:gap-16">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-12 sm:gap-16 sm:px-6">
           <div className="">
-            <h2 className="text-base sm:text-xl font-medium mb-2">
+            <h2 className="mb-2 font-medium text-base sm:text-xl">
               Get Familiar with Mutuals
             </h2>
 
-            <Cards className="grid-cols-1 lg:grid-cols-3 w-full">
+            <Cards className="w-full grid-cols-1 lg:grid-cols-3">
               <Card
-                icon={<PiIcon />}
-                href="/concepts/overview"
-                title="Concepts"
                 className={"lg:col-span-3"}
+                href="/concepts/overview"
+                icon={<PiIcon />}
+                title="Concepts"
               >
                 Learn the fundamental concepts and principles behind Mutuals.
                 This is the best place to start if you're new or want to
                 understand the core ideas that drive the protocol.
               </Card>
               <Card
-                icon={<ReceiptTextIcon />}
                 href="/smart-contracts/overview"
+                icon={<ReceiptTextIcon />}
                 title="Smart Contracts"
               >
                 Get detailed information about the smart contracts that power
@@ -62,8 +59,8 @@ export default function HomePage() {
                 deployment details.
               </Card>
               <Card
-                icon={<CodeXmlIcon />}
                 href="/sdk-reference/overview"
+                icon={<CodeXmlIcon />}
                 title="SDK Reference"
               >
                 Explore our SDKs to see how you can integrate Mutuals into your
@@ -71,10 +68,10 @@ export default function HomePage() {
                 get started quickly.
               </Card>
               <Card
-                icon={<CableIcon />}
-                href="/api-reference/overview"
-                title="API Reference"
                 className="sm:col-span-2 lg:col-span-1"
+                href="/api-reference/overview"
+                icon={<CableIcon />}
+                title="API Reference"
               >
                 Explore the endpoints, request/response formats, and
                 authentication methods you need to know to integrate Mutuals
@@ -85,16 +82,16 @@ export default function HomePage() {
 
           <div>
             <h2
+              className="mb-2 font-medium text-base sm:text-xl"
               id="open-source-tools"
-              className="text-base sm:text-xl font-medium mb-2"
             >
               Resources
             </h2>
 
             <Cards>
               <Card
-                icon={<GithubIcon />}
                 href="https://github.com/mutuals-finance"
+                icon={<GithubIcon />}
                 title="Source Code"
               >
                 Our GitHub repository is the central hub for all development
@@ -102,8 +99,8 @@ export default function HomePage() {
                 issues, or contribute to the project.
               </Card>
               <Card
-                icon={<RssIcon />}
                 href="https://mutuals.finance/blog"
+                icon={<RssIcon />}
                 title="Blog"
               >
                 Read the latest updates, announcements, and insights from the
@@ -111,8 +108,8 @@ export default function HomePage() {
                 and industry news related to Mutuals.
               </Card>
               <Card
-                icon={<SquarePlayIcon />}
                 href="https://app.mutuals.finance"
+                icon={<SquarePlayIcon />}
                 title="App"
               >
                 Start using the Mutuals app. Create and manage your payment
@@ -120,8 +117,8 @@ export default function HomePage() {
                 building on top of the protocol.
               </Card>
               <Card
-                icon={<HandshakeIcon />}
                 href="mailto:hello@mutuals.finance"
+                icon={<HandshakeIcon />}
                 title="Request Sales"
               >
                 Click here to schedule a demo or reach out at
@@ -132,18 +129,18 @@ export default function HomePage() {
 
           <div>
             <div className="mb-4 sm:mb-6">
-              <h2 className="text-base sm:text-xl font-medium mb-2">
+              <h2 className="mb-2 font-medium text-base sm:text-xl">
                 Community &amp; Support
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Connect with the community for technical discussions and support
               </p>
             </div>
 
             <Cards>
               <Card
-                icon={<LifeBuoyIcon />}
                 href="/support/overview"
+                icon={<LifeBuoyIcon />}
                 title="Support"
               >
                 Need help? Visit our support page to find FAQs, contact
@@ -151,8 +148,8 @@ export default function HomePage() {
                 issues you may have while using Mutuals.
               </Card>
               <Card
-                icon={<HammerIcon />}
                 href="https://github.com/mutuals-finance"
+                icon={<HammerIcon />}
                 title="Contribute"
               >
                 Check out our GitHub repository to find open issues, contribute

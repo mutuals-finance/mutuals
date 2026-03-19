@@ -1,8 +1,8 @@
 "use client";
 
 import {
+  type ConditionalValue,
   chakra,
-  ConditionalValue,
   IconButton,
   type IconButtonProps,
   type StackProps,
@@ -95,15 +95,15 @@ const IconTextButton = forwardRef<HTMLDivElement, IconTextButtonProps>(
     };
 
     return (
-      <StyledContainer ref={ref} size={size} className="group" {...rootProps}>
+      <StyledContainer className="group" ref={ref} size={size} {...rootProps}>
         {href ? (
           <Link
+            asChild
+            external={external}
             href={href}
             linkProps={linkProps}
-            external={external}
-            target={target}
             rel={rel}
-            asChild
+            target={target}
           >
             <IconButton {...sharedButtonProps} />
           </Link>
@@ -116,7 +116,7 @@ const IconTextButton = forwardRef<HTMLDivElement, IconTextButtonProps>(
         </Text>
       </StyledContainer>
     );
-  },
+  }
 );
 
 IconTextButton.displayName = "IconTextButton";

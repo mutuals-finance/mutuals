@@ -1,13 +1,11 @@
-import { deployments } from 'hardhat';
+import { deployments } from "hardhat";
 
 export function withSnapshot<T, O>(
   tags: string | string[] = [],
   func: (
     env: CustomHardHatRuntimeEnvironment,
     options?: O
-  ) => Promise<T> = async () => {
-    return <T>{};
-  }
+  ) => Promise<T> = () => Promise.resolve(<T>{})
 ): (options?: O) => Promise<T> {
   return deployments.createFixture(
     async (env: CustomHardHatRuntimeEnvironment, options?: O) => {

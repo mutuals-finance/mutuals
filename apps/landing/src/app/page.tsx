@@ -1,9 +1,9 @@
-import Actors from "@/features/Home/Actors";
-import Features from "@/features/Home/Features";
-import Hero from "@/features/Home/Hero";
-import Value from "@/features/Home/Value";
-import Networks from "@/features/Home/Networks";
-import DemoCTA from "@/features/Home/DemoCTA";
+import Actors from "@/features/home/actors";
+import DemoCTA from "@/features/home/demo-cta";
+import Features from "@/features/home/features";
+import Hero from "@/features/home/hero";
+import Networks from "@/features/home/networks";
+import Value from "@/features/home/value";
 
 export default function HomePage() {
   return (

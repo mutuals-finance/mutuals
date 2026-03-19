@@ -1,5 +1,5 @@
-import { numberInputAnatomy } from "@chakra-ui/react/anatomy";
 import { defineSlotRecipe } from "@chakra-ui/react";
+import { numberInputAnatomy } from "@chakra-ui/react/anatomy";
 
 export default defineSlotRecipe({
   slots: numberInputAnatomy.keys(),

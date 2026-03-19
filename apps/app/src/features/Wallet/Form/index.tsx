@@ -1,5 +1,5 @@
-import { WalletFormDrawer as Drawer } from "./Drawer";
-import { WalletDrawerContent as Content } from "./Content";
+import { WalletDrawerContent as Content } from "./content";
+import { WalletFormDrawer as Drawer } from "./drawer";
 
 const WalletForm = { Drawer, Content };
 

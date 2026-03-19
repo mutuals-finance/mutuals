@@ -22,7 +22,7 @@ export const getLogger = ({
   success: typeof log;
   table: typeof table;
 } => {
-  const maybePrefix = typeof prefix === 'string' ? [prefix] : [];
+  const maybePrefix = typeof prefix === "string" ? [prefix] : [];
   return {
     info: (...args: unknown[]) => hre.log(...maybePrefix, ...args),
     error: (...args: unknown[]) => hre.log(...maybePrefix, ...args),

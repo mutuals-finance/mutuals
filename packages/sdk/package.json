@@ -12,9 +12,9 @@
     "./utils/validation": "./src/utils/validation.ts"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc"
   },
   "peerDependencies": {
     "viem": ">=2.0.0"

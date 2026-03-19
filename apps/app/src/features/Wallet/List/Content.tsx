@@ -1,22 +1,19 @@
 "use client";
 
-import { Show, For } from "@mutuals/ui";
+import { For, Show } from "@mutuals/ui";
 import { usePrivy } from "@privy-io/react-auth";
-
-import WalletCard from "@/features/Wallet/Card";
-import AuthSiginInCard from "@/features/Auth/SignInCard";
-import React from "react";
+import AuthSiginInCard from "@/features/auth/sign-in-card";
+import WalletCard from "@/features/wallet/card";
 
 export default function WalletListContent() {
   const { authenticated, user } = usePrivy();
 
   const wallets = user?.linkedAccounts.filter(
-    (account) => account.type == "wallet",
+    (account) => account.type === "wallet"
   );
 
   return (
     <Show
-      when={authenticated}
       fallback={
         <AuthSiginInCard
           description={
@@ -24,10 +21,11 @@ export default function WalletListContent() {
           }
         />
       }
+      when={authenticated}
     >
       <For each={wallets}>
         {(data) => (
-          <WalletCard key={data.address} data={data} w="64" flexShrink="0" />
+          <WalletCard data={data} flexShrink="0" key={data.address} w="64" />
         )}
       </For>
     </Show>

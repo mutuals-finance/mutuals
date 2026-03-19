@@ -1,7 +1,7 @@
-import { IoLogoDiscord, IoLogoGithub } from "react-icons/io5";
 import { BiLogoTelegram } from "react-icons/bi";
-import { NavLinkProps } from "@/features/Layout/Header/NavLink";
+import { IoLogoDiscord, IoLogoGithub } from "react-icons/io5";
 import { RiTwitterXLine } from "react-icons/ri";
+import type { NavLinkProps } from "@/features/layout/header/nav-link";
 
 const links: NavLinkProps[] = [
   {

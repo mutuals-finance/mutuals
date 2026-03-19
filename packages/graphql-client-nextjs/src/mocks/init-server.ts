@@ -17,5 +17,7 @@ export async function initServerMocks() {
 }
 
 declare global {
-  var __MSW_SERVER__: any;
+  var __MSW_SERVER__:
+    | { close(): void; listen(opts?: { onUnhandledRequest?: string }): void }
+    | undefined;
 }

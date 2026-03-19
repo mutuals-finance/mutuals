@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from "react";
-import ShellAuth from "@/features/Shell/Login";
+import type { PropsWithChildren } from "react";
+import ShellAuth from "@/features/shell/login";
 
 export default function AuthLayout({ children }: PropsWithChildren) {
   return <ShellAuth>{children}</ShellAuth>;

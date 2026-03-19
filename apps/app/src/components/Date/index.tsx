@@ -1,10 +1,10 @@
-import { Text, TextProps } from "@mutuals/ui";
-import { format, FormatOptions, fromUnixTime, parseISO } from "date-fns";
+import { Text, type TextProps } from "@mutuals/ui";
+import { type FormatOptions, format, fromUnixTime, parseISO } from "date-fns";
 
 interface DateProps extends TextProps {
-  timestamp: string | number | Date;
   formatString?: string;
   options?: FormatOptions;
+  timestamp: string | number | Date;
 }
 
 export default function FormatDate({
@@ -21,10 +21,10 @@ export default function FormatDate({
     date = parseISO(timestamp);
   } else {
     const num = Number(timestamp);
-    date = num > 9999999999 ? new Date(num) : fromUnixTime(num);
+    date = num > 9_999_999_999 ? new Date(num) : fromUnixTime(num);
   }
 
-  if (isNaN(date.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return <Text {...props}>Invalid Date</Text>;
   }
 

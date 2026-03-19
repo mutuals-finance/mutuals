@@ -1,26 +1,23 @@
 import { Table as ChakraTable } from "@mutuals/ui";
 import {
   getCoreRowModel,
+  type RowData,
+  type TableOptions,
   useReactTable,
-  RowData,
-  TableOptions,
 } from "@tanstack/react-table";
-import React from "react";
 
-import BodyRow, { type BodyRowProps } from "@/components/Table/BodyRow";
-import HeaderRow, { type HeaderRowProps } from "@/components/Table/HeaderRow";
+import BodyRow, { type BodyRowProps } from "@/components/table/body-row";
+import HeaderRow, { type HeaderRowProps } from "@/components/table/header-row";
 
-export interface TableProps<TData extends RowData> extends Omit<
-  TableOptions<TData>,
-  "getCoreRowModel"
-> {
-  containerProps?: ChakraTable.ScrollAreaProps;
-  headerProps?: ChakraTable.HeaderProps;
+export interface TableProps<TData extends RowData>
+  extends Omit<TableOptions<TData>, "getCoreRowModel"> {
   bodyProps?: ChakraTable.BodyProps;
   bodyRowProps?: Pick<BodyRowProps<TData>, "cellProps">;
+  containerProps?: ChakraTable.ScrollAreaProps;
+  headerHidden?: boolean;
+  headerProps?: ChakraTable.HeaderProps;
   headerRowProps?: Pick<HeaderRowProps<TData>, "cellProps">;
   tableProps?: ChakraTable.RootProps & { showRowBorder?: boolean };
-  headerHidden?: boolean;
 }
 
 export default function Table<TData extends RowData>({

@@ -1,9 +1,9 @@
-import React, { type PropsWithChildren } from "react";
-import Providers from "@/providers";
-import Layout from "@/features/Layout";
-import fonts from "@mutuals/ui/font";
 import { createMetadata, createViewport } from "@mutuals/metadata-nextjs";
-import { Metadata, Viewport } from "next";
+import fonts from "@mutuals/ui/font";
+import type { Metadata, Viewport } from "next";
+import type { PropsWithChildren } from "react";
+import Layout from "@/features/layout";
+import Providers from "@/providers";
 
 export const metadata: Metadata = createMetadata();
 export const viewport: Viewport = createViewport();
@@ -14,6 +14,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       className={Object.values(fonts)
         .map((f) => f.variable)
         .join(" ")}
+      lang="en"
       suppressHydrationWarning={true}
     >
       <body suppressHydrationWarning={true}>

@@ -8,10 +8,10 @@ export interface NewsletterSubscribeRequest {
 }
 
 export interface NewsletterSubscribeResponse {
-  success: boolean;
-  message: string;
-  error?: string;
   details?: string;
+  error?: string;
+  message: string;
+  success: boolean;
 }
 
 /**
@@ -22,7 +22,7 @@ export interface NewsletterSubscribeResponse {
  */
 export async function subscribeToNewsletter(
   email: string,
-  mixpanelUserId?: string,
+  mixpanelUserId?: string
 ): Promise<NewsletterSubscribeResponse> {
   try {
     const response = await fetch("/api/newsletter/subscribe", {

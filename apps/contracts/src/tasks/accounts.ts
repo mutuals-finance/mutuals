@@ -1,20 +1,20 @@
-import { task } from 'hardhat/config';
-import { formatEther } from 'ethers';
+import { formatEther } from "ethers";
+import { task } from "hardhat/config";
 
-import { accounts, namedAccounts } from '@/config/accounts';
+import { accounts, namedAccounts } from "@/config/accounts";
 
 export const TASK = {
-  name: 'accounts',
-  description: 'Prints the list of accounts',
-  run: async (
-    _taskArguments: void,
+  name: "accounts",
+  description: "Prints the list of accounts",
+  run: (
+    _taskArguments: undefined,
     hre: CustomHardHatRuntimeEnvironment
   ): Promise<void> => {
-    console.log('run', hre);
+    console.log("run", hre);
     const accountTable = Object.fromEntries(
       Object.entries(namedAccounts).map(([name, address], index) => {
         if (accounts === undefined) {
-          throw new Error('accounts is undefined');
+          throw new Error("accounts is undefined");
         }
         const account = accounts[index];
         return [
@@ -22,7 +22,7 @@ export const TASK = {
           {
             address,
             privateKey: account?.privateKey,
-            balance: formatEther(account?.balance ?? '0').toString(),
+            balance: formatEther(account?.balance ?? "0").toString(),
           },
         ];
       })

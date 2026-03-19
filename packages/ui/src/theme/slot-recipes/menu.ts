@@ -1,5 +1,5 @@
-import { menuAnatomy } from "@chakra-ui/react/anatomy";
 import { defineSlotRecipe } from "@chakra-ui/react";
+import { menuAnatomy } from "@chakra-ui/react/anatomy";
 
 /*
 const baseStyle = {

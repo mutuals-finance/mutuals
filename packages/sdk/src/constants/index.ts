@@ -1,4 +1,4 @@
-import { Address } from "viem";
+import type { Address } from "viem";
 
 export * from "./allocation";
 
@@ -14,37 +14,47 @@ const POOL_FACTORY_ADDRESS_SEPOLIA =
   "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE";
 
 export const getPoolFactoryAddress = (chainId: number): Address => {
-  if (chainId === ChainId.BSC) return POOL_FACTORY_ADDRESS_BSC;
-  if (chainId === ChainId.HOLESKY) return POOL_FACTORY_ADDRESS_HOLESKY;
-  if (chainId === ChainId.SEPOLIA) return POOL_FACTORY_ADDRESS_SEPOLIA;
-  if (chainId === ChainId.POLYGON_AMOY)
+  if (chainId === ChainId.BSC) {
+    return POOL_FACTORY_ADDRESS_BSC;
+  }
+  if (chainId === ChainId.HOLESKY) {
+    return POOL_FACTORY_ADDRESS_HOLESKY;
+  }
+  if (chainId === ChainId.SEPOLIA) {
+    return POOL_FACTORY_ADDRESS_SEPOLIA;
+  }
+  if (chainId === ChainId.POLYGON_AMOY) {
     return POOL_FACTORY_ADDRESS_POLYGON_AMOY;
+  }
   return POOL_FACTORY_ADDRESS;
 };
 
 export const getPoolFactoryStartBlock = (chainId: number): bigint => {
-  if (!CHAIN_INFO[chainId]?.startBlock) throw new Error("Chain not supported");
+  if (!CHAIN_INFO[chainId]?.startBlock) {
+    throw new Error("Chain not supported");
+  }
   return BigInt(CHAIN_INFO[chainId].startBlock as number);
 };
 
-export enum ChainId {
-  MAINNET = 1,
-  SEPOLIA = 11155111,
-  HOLESKY = 17000,
-  POLYGON = 137,
-  POLYGON_AMOY = 80002,
-  OPTIMISM = 10,
-  OPTIMISM_SEPOLIA = 11155420,
-  ARBITRUM = 42161,
-  GNOSIS = 100,
-  BSC = 56,
-  ZORA = 7777777,
-  ZORA_SEPOLIA = 999999999,
-  BASE = 8453,
-  BASE_SEPOLIA = 84532,
-  FOUNDRY = 31337,
-  BLAST = 81457,
-}
+export const ChainId = {
+  MAINNET: 1,
+  SEPOLIA: 11_155_111,
+  HOLESKY: 17_000,
+  POLYGON: 137,
+  POLYGON_AMOY: 80_002,
+  OPTIMISM: 10,
+  OPTIMISM_SEPOLIA: 11_155_420,
+  ARBITRUM: 42_161,
+  GNOSIS: 100,
+  BSC: 56,
+  ZORA: 7_777_777,
+  ZORA_SEPOLIA: 999_999_999,
+  BASE: 8453,
+  BASE_SEPOLIA: 84_532,
+  FOUNDRY: 31_337,
+  BLAST: 81_457,
+} as const;
+export type ChainId = (typeof ChainId)[keyof typeof ChainId];
 
 export const ETHEREUM_CHAIN_IDS = [ChainId.MAINNET];
 export const ETHEREUM_TEST_CHAIN_IDS = [ChainId.SEPOLIA, ChainId.HOLESKY];
@@ -82,95 +92,97 @@ export const CHAIN_INFO: {
   };
 } = {
   [ChainId.MAINNET]: {
-    startBlock: 14206768,
+    startBlock: 14_206_768,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.SEPOLIA]: {
-    startBlock: 4836125,
+    startBlock: 4_836_125,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.HOLESKY]: {
-    startBlock: 148241,
+    startBlock: 148_241,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.POLYGON]: {
-    startBlock: 25303316,
+    startBlock: 25_303_316,
     nativeCurrency: {
       symbol: "MATIC",
     },
   },
   [ChainId.POLYGON_AMOY]: {
-    startBlock: 25303316,
+    startBlock: 25_303_316,
     nativeCurrency: {
       symbol: "MATIC",
     },
   },
   [ChainId.OPTIMISM]: {
-    startBlock: 24704537,
+    startBlock: 24_704_537,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.ARBITRUM]: {
-    startBlock: 26082503,
+    startBlock: 26_082_503,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.GNOSIS]: {
-    startBlock: 26014830,
+    startBlock: 26_014_830,
     nativeCurrency: {
       symbol: "xDai",
     },
   },
   [ChainId.BSC]: {
-    startBlock: 24962607,
+    startBlock: 24_962_607,
     nativeCurrency: {
       symbol: "BNB",
     },
   },
   [ChainId.ZORA]: {
-    startBlock: 1860322,
+    startBlock: 1_860_322,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.ZORA_SEPOLIA]: {
-    startBlock: 2296044,
+    startBlock: 2_296_044,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.BASE]: {
-    startBlock: 2293907,
+    startBlock: 2_293_907,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.BASE_SEPOLIA]: {
-    startBlock: 3324413,
+    startBlock: 3_324_413,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
   [ChainId.BLAST]: {
-    startBlock: 220516,
+    startBlock: 220_516,
     nativeCurrency: {
       symbol: "ETH",
     },
   },
 };
 
-export enum TransactionType {
-  Transaction = "Transaction",
-  CallData = "CallData",
-  GasEstimate = "GasEstimate",
-}
+export const TransactionType = {
+  Transaction: "Transaction",
+  CallData: "CallData",
+  GasEstimate: "GasEstimate",
+} as const;
+export type TransactionType =
+  (typeof TransactionType)[keyof typeof TransactionType];
 
 export const ZERO = BigInt(0);

@@ -1,23 +1,26 @@
 import {
+  arbitrum,
   arbitrumGoerli,
-  sepolia,
-  mainnet,
-  optimismGoerli,
-  polygon,
-  polygonMumbai,
-  polygonAmoy,
   hardhat,
   localhost,
-  arbitrum,
+  mainnet,
   optimism,
+  optimismGoerli,
+  polygon,
+  polygonAmoy,
+  polygonMumbai,
+  sepolia,
 } from "wagmi/chains";
+import type { Chain, ChainExt } from "#/chain";
+import ARBITRUM_LOGO from "@/assets/svg/arbitrum-logo.svg";
+import ETH_LOGO from "@/assets/svg/ethereum-logo.svg";
+import OPTIMISM_LOGO from "@/assets/svg/optimism-logo.svg";
+import MATIC_LOGO from "@/assets/svg/polygonMatic-logo.svg";
 
-import * as ARBITRUM_LOGO from "@/assets/svg/arbitrum-logo.svg";
-import * as ETH_LOGO from "@/assets/svg/ethereum-logo.svg";
-import * as OPTIMISM_LOGO from "@/assets/svg/optimism-logo.svg";
-import * as MATIC_LOGO from "@/assets/svg/polygonMatic-logo.svg";
-
-import { ChainExt, Chain } from "#/chain";
+export * as ARBITRUM_LOGO from "@/assets/svg/arbitrum-logo.svg";
+export * as ETH_LOGO from "@/assets/svg/ethereum-logo.svg";
+export * as OPTIMISM_LOGO from "@/assets/svg/optimism-logo.svg";
+export * as MATIC_LOGO from "@/assets/svg/polygonMatic-logo.svg";
 
 const _chains = {
   arbitrumGoerli,
@@ -32,8 +35,6 @@ const _chains = {
   arbitrum,
   optimism,
 };
-
-export { ARBITRUM_LOGO, ETH_LOGO, MATIC_LOGO };
 
 export const CHAIN_LOGO_URI_MAP: Record<number, typeof import("*.svg")> = {
   [mainnet.id]: ETH_LOGO, // mainnet
@@ -72,7 +73,6 @@ export const CHAINS: Chain[] = Object.entries(_chains).map(([key, chain]) => ({
   } as ChainExt),
 }));
 
-export const CHAINS_MAP: Record<string, ChainExt> = CHAINS.reduce(
-  (all, chain) => ({ ...all, [chain.key]: chain }),
-  {},
+export const CHAINS_MAP: Record<string, ChainExt> = Object.fromEntries(
+  CHAINS.map((chain) => [chain.key, chain])
 );

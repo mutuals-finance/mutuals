@@ -1,6 +1,6 @@
-import { CalculationType, RecipientType } from "../types";
+import type { CalculationType, RecipientType } from "../types";
 
-class Allocation {
+export class Allocation {
   calculationType: CalculationType[];
   recipientType: RecipientType[];
   value: string;

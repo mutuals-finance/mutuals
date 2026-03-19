@@ -19,19 +19,19 @@ export function MixpanelProvider({
 }: MixpanelProviderProps) {
   const name = useMemo(
     () => _name ?? "@mutuals/analytics-nextjs/mixpanel",
-    [_name],
+    [_name]
   );
 
   const config = useMemo(
     () => ({
       ..._config,
     }),
-    [_config],
+    [_config]
   );
 
   const value = useMemo(
     () => (token ? mixpanel.init(token, config, name) : undefined),
-    [config, name, token],
+    [config, name, token]
   );
 
   return (

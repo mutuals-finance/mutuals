@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID ?? "";
 const appSecret = process.env.PRIVY_APP_SECRET ?? "";
 
-if (appId == "" || appSecret == "") {
+if (appId === "" || appSecret === "") {
   console.warn("Privy environment variables are missing");
 }
 

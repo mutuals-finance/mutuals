@@ -1,10 +1,12 @@
 "use client";
 
+import type { ClaimCreateNode } from "@mutuals/sdk-react";
 import { Bleed, ScrollArea, TreeView } from "@mutuals/ui";
-import { ClaimCreateNode } from "@mutuals/sdk-react";
-import ClaimTreeNodeRoot from "@/features/Claim/Tree/NodeRoot";
-import useClaimTree, { UseClaimTreeProps } from "@/features/Claim/useClaimTree";
-import ClaimTreeNodeContent from "@/features/Claim/Tree/NodeContent";
+import ClaimTreeNodeContent from "@/features/claim/tree/node-content";
+import ClaimTreeNodeRoot from "@/features/claim/tree/node-root";
+import useClaimTree, {
+  type UseClaimTreeProps,
+} from "@/features/claim/use-claim-tree";
 
 export type ClaimTreeProps = Omit<TreeView.RootProps, "collection"> &
   UseClaimTreeProps;
@@ -15,18 +17,18 @@ export default function ClaimTree({ id, ...props }: ClaimTreeProps) {
   return (
     <TreeView.Root collection={data} expandOnClick={false} {...props}>
       <TreeView.Label>Allocation</TreeView.Label>
-      <Bleed inline={"6"} blockEnd={"3"} display={"flex"} flex={"1"}>
-        <ScrollArea.Root size="xs" flex={"1"} h={"unset"}>
+      <Bleed blockEnd={"3"} display={"flex"} flex={"1"} inline={"6"}>
+        <ScrollArea.Root flex={"1"} h={"unset"} size="xs">
           <ScrollArea.Viewport>
-            <ScrollArea.Content px="4" pb={"3"}>
+            <ScrollArea.Content pb={"3"} px="4">
               <TreeView.Tree>
                 <TreeView.Node<ClaimCreateNode>
                   indentGuide={<TreeView.BranchIndentGuide />}
                   render={(nodeProps) => (
                     <ClaimTreeNodeRoot
-                      onAddNested={addNested}
                       onAddAfter={addAfter}
                       onAddBefore={addBefore}
+                      onAddNested={addNested}
                       onRemove={remove}
                       {...nodeProps}
                     >

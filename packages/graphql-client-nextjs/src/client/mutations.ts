@@ -1,49 +1,49 @@
 import { useMutation } from "@apollo/client/react";
 import {
-  PoolCreateMutation,
-  PoolCreateMutationVariables,
-  PoolUpdateMutation,
-  PoolUpdateMutationVariables,
-  PoolDeleteMutation,
-  PoolDeleteMutationVariables,
-  UserUpdateMutation,
-  UserUpdateMutationVariables,
-  UserRequestDeletionMutation,
-  UserRequestDeletionMutationVariables,
-  UserDeleteMutation,
-  UserDeleteMutationVariables,
-  RoleUpdateMutation,
-  RoleUpdateMutationVariables,
-  PoolClaimCreateMutation,
-  PoolClaimCreateMutationVariables,
-  PoolClaimUpdateMutation,
-  PoolClaimUpdateMutationVariables,
-  PoolClaimDeleteMutation,
-  PoolClaimDeleteMutationVariables,
+  POOL_CLAIM_BULK_CREATE,
+  POOL_CLAIM_BULK_DELETE,
+  POOL_CLAIM_BULK_UPDATE,
+  POOL_CLAIM_CREATE,
+  POOL_CLAIM_DELETE,
+  POOL_CLAIM_UPDATE,
+  POOL_CREATE,
+  POOL_DELETE,
+  POOL_UPDATE,
+  ROLE_UPDATE,
+  USER_DELETE,
+  USER_REGISTER,
+  USER_REQUEST_DELETION,
+  USER_UPDATE,
+} from "../graphql/data";
+import type {
   PoolClaimBulkCreateMutation,
   PoolClaimBulkCreateMutationVariables,
-  PoolClaimBulkUpdateMutation,
-  PoolClaimBulkUpdateMutationVariables,
   PoolClaimBulkDeleteMutation,
   PoolClaimBulkDeleteMutationVariables,
+  PoolClaimBulkUpdateMutation,
+  PoolClaimBulkUpdateMutationVariables,
+  PoolClaimCreateMutation,
+  PoolClaimCreateMutationVariables,
+  PoolClaimDeleteMutation,
+  PoolClaimDeleteMutationVariables,
+  PoolClaimUpdateMutation,
+  PoolClaimUpdateMutationVariables,
+  PoolCreateMutation,
+  PoolCreateMutationVariables,
+  PoolDeleteMutation,
+  PoolDeleteMutationVariables,
+  PoolUpdateMutation,
+  PoolUpdateMutationVariables,
+  RoleUpdateMutation,
+  RoleUpdateMutationVariables,
+  UserDeleteMutation,
+  UserDeleteMutationVariables,
+  UserRequestDeletionMutation,
+  UserRequestDeletionMutationVariables,
+  UserUpdateMutation,
+  UserUpdateMutationVariables,
 } from "../graphql/data/__generated__/graphql";
-import { TMutationOptions } from "../types";
-import {
-  POOL_CREATE,
-  POOL_UPDATE,
-  POOL_DELETE,
-  USER_REGISTER,
-  USER_UPDATE,
-  USER_REQUEST_DELETION,
-  USER_DELETE,
-  ROLE_UPDATE,
-  POOL_CLAIM_CREATE,
-  POOL_CLAIM_UPDATE,
-  POOL_CLAIM_DELETE,
-  POOL_CLAIM_BULK_CREATE,
-  POOL_CLAIM_BULK_UPDATE,
-  POOL_CLAIM_BULK_DELETE,
-} from "../graphql/data";
+import type { TMutationOptions } from "../types";
 
 // User Mutations
 export function useUserRegister() {
@@ -51,7 +51,7 @@ export function useUserRegister() {
 }
 
 export function useUserUpdate(
-  options?: TMutationOptions<UserUpdateMutation, UserUpdateMutationVariables>,
+  options?: TMutationOptions<UserUpdateMutation, UserUpdateMutationVariables>
 ) {
   return useMutation(USER_UPDATE, options);
 }
@@ -60,32 +60,32 @@ export function useUserRequestDeletion(
   options?: TMutationOptions<
     UserRequestDeletionMutation,
     UserRequestDeletionMutationVariables
-  >,
+  >
 ) {
   return useMutation(USER_REQUEST_DELETION, options);
 }
 
 export function useUserDelete(
-  options?: TMutationOptions<UserDeleteMutation, UserDeleteMutationVariables>,
+  options?: TMutationOptions<UserDeleteMutation, UserDeleteMutationVariables>
 ) {
   return useMutation(USER_DELETE, options);
 }
 
 // Pool Mutations
 export function usePoolCreate(
-  options?: TMutationOptions<PoolCreateMutation, PoolCreateMutationVariables>,
+  options?: TMutationOptions<PoolCreateMutation, PoolCreateMutationVariables>
 ) {
   return useMutation(POOL_CREATE, options);
 }
 
 export function usePoolUpdate(
-  options?: TMutationOptions<PoolUpdateMutation, PoolUpdateMutationVariables>,
+  options?: TMutationOptions<PoolUpdateMutation, PoolUpdateMutationVariables>
 ) {
   return useMutation(POOL_UPDATE, options);
 }
 
 export function usePoolDelete(
-  options?: TMutationOptions<PoolDeleteMutation, PoolDeleteMutationVariables>,
+  options?: TMutationOptions<PoolDeleteMutation, PoolDeleteMutationVariables>
 ) {
   return useMutation(POOL_DELETE, options);
 }
@@ -95,7 +95,7 @@ export function usePoolClaimCreate(
   options?: TMutationOptions<
     PoolClaimCreateMutation,
     PoolClaimCreateMutationVariables
-  >,
+  >
 ) {
   return useMutation(POOL_CLAIM_CREATE, options);
 }
@@ -104,7 +104,7 @@ export function usePoolClaimUpdate(
   options?: TMutationOptions<
     PoolClaimUpdateMutation,
     PoolClaimUpdateMutationVariables
-  >,
+  >
 ) {
   return useMutation(POOL_CLAIM_UPDATE, options);
 }
@@ -113,7 +113,7 @@ export function usePoolClaimDelete(
   options?: TMutationOptions<
     PoolClaimDeleteMutation,
     PoolClaimDeleteMutationVariables
-  >,
+  >
 ) {
   return useMutation(POOL_CLAIM_DELETE, options);
 }
@@ -122,7 +122,7 @@ export function usePoolClaimBulkCreate(
   options?: TMutationOptions<
     PoolClaimBulkCreateMutation,
     PoolClaimBulkCreateMutationVariables
-  >,
+  >
 ) {
   return useMutation(POOL_CLAIM_BULK_CREATE, options);
 }
@@ -131,7 +131,7 @@ export function usePoolClaimBulkUpdate(
   options?: TMutationOptions<
     PoolClaimBulkUpdateMutation,
     PoolClaimBulkUpdateMutationVariables
-  >,
+  >
 ) {
   return useMutation(POOL_CLAIM_BULK_UPDATE, options);
 }
@@ -140,13 +140,13 @@ export function usePoolClaimBulkDelete(
   options?: TMutationOptions<
     PoolClaimBulkDeleteMutation,
     PoolClaimBulkDeleteMutationVariables
-  >,
+  >
 ) {
   return useMutation(POOL_CLAIM_BULK_DELETE, options);
 }
 
 export function useRoleUpdate(
-  options?: TMutationOptions<RoleUpdateMutation, RoleUpdateMutationVariables>,
+  options?: TMutationOptions<RoleUpdateMutation, RoleUpdateMutationVariables>
 ) {
   return useMutation(ROLE_UPDATE, options);
 }

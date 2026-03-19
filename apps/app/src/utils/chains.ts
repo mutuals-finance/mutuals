@@ -1,7 +1,7 @@
 import {
-  CHAINS,
   CHAIN_LOGO_URI_MAP,
   CHAIN_SHORT_NAME_MAP,
+  CHAINS,
   ETH_LOGO,
 } from "src/constants";
 

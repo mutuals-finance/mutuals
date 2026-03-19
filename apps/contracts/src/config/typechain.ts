@@ -1,5 +1,5 @@
-import type { HardhatUserConfig } from 'hardhat/types/config';
+import type { HardhatUserConfig } from "hardhat/types/config";
 
-export const typechain: HardhatUserConfig['typechain'] = {
-  outDir: 'types/typechain',
+export const typechain: HardhatUserConfig["typechain"] = {
+  outDir: "types/typechain",
 };

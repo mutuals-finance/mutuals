@@ -2,36 +2,33 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../../../common";
 
 export interface OwnableInterface extends Interface {
-  getFunction(
-    nameOrSignature: "owner" | "renounceOwnership" | "transferOwnership"
-  ): FunctionFragment;
-
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership" | ("renounceOwnership" | "owner"),
+    data: BytesLike
+  ): Result;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
+    functionFragment: "renounceOwnership" | "owner",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -39,23 +36,18 @@ export interface OwnableInterface extends Interface {
     values: [AddressLike]
   ): string;
 
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getFunction(
+    nameOrSignature: "owner" | "renounceOwnership" | "transferOwnership"
+  ): FunctionFragment;
 }
 
 export namespace OwnershipTransferredEvent {
   export type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
   export type OutputTuple = [previousOwner: string, newOwner: string];
   export interface OutputObject {
-    previousOwner: string;
     newOwner: string;
+    previousOwner: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -65,78 +57,6 @@ export namespace OwnershipTransferredEvent {
 
 export interface Ownable extends BaseContract {
   connect(runner?: ContractRunner | null): Ownable;
-  waitForDeployment(): Promise<this>;
-
-  interface: OwnableInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  owner: TypedContractMethod<[], [string], "view">;
-
-  renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-
-  transferOwnership: TypedContractMethod<
-    [newOwner: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "owner"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "renounceOwnership"
-  ): TypedContractMethod<[], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "transferOwnership"
-  ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
-
-  getEvent(
-    key: "OwnershipTransferred"
-  ): TypedContractEvent<
-    OwnershipTransferredEvent.InputTuple,
-    OwnershipTransferredEvent.OutputTuple,
-    OwnershipTransferredEvent.OutputObject
-  >;
 
   filters: {
     "OwnershipTransferred(address,address)": TypedContractEvent<
@@ -150,4 +70,60 @@ export interface Ownable extends BaseContract {
       OwnershipTransferredEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "OwnershipTransferred"
+  ): TypedContractEvent<
+    OwnershipTransferredEvent.InputTuple,
+    OwnershipTransferredEvent.OutputTuple,
+    OwnershipTransferredEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  getFunction(
+    nameOrSignature: "owner"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "renounceOwnership"
+  ): TypedContractMethod<[], [undefined], "nonpayable">;
+  getFunction(
+    nameOrSignature: "transferOwnership"
+  ): TypedContractMethod<[newOwner: AddressLike], [undefined], "nonpayable">;
+
+  interface: OwnableInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+
+  owner: TypedContractMethod<[], [string], "view">;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  renounceOwnership: TypedContractMethod<[], [undefined], "nonpayable">;
+
+  transferOwnership: TypedContractMethod<
+    [newOwner: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+  waitForDeployment(): Promise<this>;
 }

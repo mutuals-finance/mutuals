@@ -1,12 +1,12 @@
 import { DocsLayout as FumaDocsLayout } from "fumadocs-ui/layouts/docs";
-import { source } from "@/lib/source";
 import { baseOptions } from "@/lib/layout.shared";
+import { source } from "@/lib/source";
 
 export default function DocsLayout({ children }: LayoutProps<"/">) {
   return (
     <FumaDocsLayout
-      tree={source.getPageTree()}
       sidebar={{ tabs: false }}
+      tree={source.getPageTree()}
       {...baseOptions()}
     >
       {children}

@@ -1,7 +1,7 @@
 // Number formatting follows the standards defined by Uniswap
 
-import { format, FormatOptions, fromUnixTime } from "date-fns";
-import { EvmAddress } from "@moralisweb3/common-evm-utils";
+import type { EvmAddress } from "@moralisweb3/common-evm-utils";
+import { type FormatOptions, format, fromUnixTime } from "date-fns";
 
 const FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat("en-US", {
   notation: "standard",
@@ -21,7 +21,7 @@ const FIVE_DECIMALS_MAX_TWO_DECIMALS_MIN_NO_COMMAS = new Intl.NumberFormat(
     maximumFractionDigits: 5,
     minimumFractionDigits: 2,
     useGrouping: false,
-  },
+  }
 );
 
 const THREE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat("en-US", {
@@ -74,7 +74,7 @@ const SHORTHAND_TWO_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat(
   {
     notation: "compact",
     maximumFractionDigits: 2,
-  },
+  }
 );
 
 const SHORTHAND_FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat(
@@ -82,7 +82,7 @@ const SHORTHAND_FIVE_DECIMALS_NO_TRAILING_ZEROS = new Intl.NumberFormat(
   {
     notation: "compact",
     maximumFractionDigits: 5,
-  },
+  }
 );
 
 const SHORTHAND_USD_TWO_DECIMALS = new Intl.NumberFormat("en-US", {
@@ -150,41 +150,47 @@ const tokenNonTxFormatter: FormatterRule[] = [
   { upperBound: 1, formatter: THREE_DECIMALS },
   { upperBound: 1e6, formatter: TWO_DECIMALS },
   { upperBound: 1e15, formatter: SHORTHAND_TWO_DECIMALS },
-  { upperBound: Infinity, formatter: ">999T" },
+  { upperBound: Number.POSITIVE_INFINITY, formatter: ">999T" },
 ];
 
 const tokenTxFormatter: FormatterRule[] = [
   { exact: 0, formatter: "0" },
-  { upperBound: 0.00001, formatter: "<0.00001" },
+  { upperBound: 0.000_01, formatter: "<0.00001" },
   { upperBound: 1, formatter: FIVE_DECIMALS_MAX_TWO_DECIMALS_MIN },
-  { upperBound: 10000, formatter: SIX_SIG_FIGS_TWO_DECIMALS },
-  { upperBound: Infinity, formatter: TWO_DECIMALS },
+  { upperBound: 10_000, formatter: SIX_SIG_FIGS_TWO_DECIMALS },
+  { upperBound: Number.POSITIVE_INFINITY, formatter: TWO_DECIMALS },
 ];
 
 const swapTradeAmountFormatter: FormatterRule[] = [
   { exact: 0, formatter: "0" },
   { upperBound: 0.1, formatter: SIX_SIG_FIGS_NO_COMMAS },
   { upperBound: 1, formatter: FIVE_DECIMALS_MAX_TWO_DECIMALS_MIN_NO_COMMAS },
-  { upperBound: Infinity, formatter: SIX_SIG_FIGS_TWO_DECIMALS_NO_COMMAS },
+  {
+    upperBound: Number.POSITIVE_INFINITY,
+    formatter: SIX_SIG_FIGS_TWO_DECIMALS_NO_COMMAS,
+  },
 ];
 
 const fiatTokenDetailsFormatter: FormatterRule[] = [
   { exact: 0, formatter: "$0.00" },
-  { upperBound: 0.00000001, formatter: "<$0.00000001" },
+  { upperBound: 0.000_000_01, formatter: "<$0.00000001" },
   { upperBound: 0.1, formatter: THREE_SIG_FIGS_USD },
   { upperBound: 1.05, formatter: THREE_DECIMALS_USD },
   { upperBound: 1e6, formatter: TWO_DECIMALS_USD },
-  { upperBound: Infinity, formatter: SHORTHAND_USD_TWO_DECIMALS },
+  {
+    upperBound: Number.POSITIVE_INFINITY,
+    formatter: SHORTHAND_USD_TWO_DECIMALS,
+  },
 ];
 
 const fiatTokenPricesFormatter: FormatterRule[] = [
   { exact: 0, formatter: "$0.00" },
-  { upperBound: 0.00000001, formatter: "<$0.00000001" },
+  { upperBound: 0.000_000_01, formatter: "<$0.00000001" },
   { upperBound: 0.1, formatter: THREE_SIG_FIGS_USD }, // Round to 3 significant figures, show significant trailing zeros
   { upperBound: 1.05, formatter: THREE_DECIMALS_USD }, // Round to 3 decimal places, show significant trailing zeros
   { upperBound: 1_000_000, formatter: TWO_DECIMALS_USD }, // Round to 2 decimal places
   { upperBound: 1_000_000_000_000_000, formatter: SHORTHAND_USD_TWO_DECIMALS }, // Use M/B/T abbreviations
-  { upperBound: Infinity, formatter: ">$999T" }, // Use M/B/T abbreviations
+  { upperBound: Number.POSITIVE_INFINITY, formatter: ">$999T" }, // Use M/B/T abbreviations
 ];
 
 const fiatTokenStatsFormatter: FormatterRule[] = [
@@ -192,13 +198,19 @@ const fiatTokenStatsFormatter: FormatterRule[] = [
   { exact: 0, formatter: "-" },
   { upperBound: 0.01, formatter: "<$0.01" },
   { upperBound: 1000, formatter: TWO_DECIMALS_USD },
-  { upperBound: Infinity, formatter: SHORTHAND_USD_ONE_DECIMAL },
+  {
+    upperBound: Number.POSITIVE_INFINITY,
+    formatter: SHORTHAND_USD_ONE_DECIMAL,
+  },
 ];
 
 const fiatGasPriceFormatter: FormatterRule[] = [
   { upperBound: 0.01, formatter: "<$0.01" },
   { upperBound: 1e6, formatter: TWO_DECIMALS_USD },
-  { upperBound: Infinity, formatter: SHORTHAND_USD_TWO_DECIMALS },
+  {
+    upperBound: Number.POSITIVE_INFINITY,
+    formatter: SHORTHAND_USD_TWO_DECIMALS,
+  },
 ];
 
 const fiatTokenQuantityFormatter = [
@@ -208,7 +220,7 @@ const fiatTokenQuantityFormatter = [
 
 const portfolioBalanceFormatter: FormatterRule[] = [
   { exact: 0, formatter: "$0.00" },
-  { upperBound: Infinity, formatter: TWO_DECIMALS_USD },
+  { upperBound: Number.POSITIVE_INFINITY, formatter: TWO_DECIMALS_USD },
 ];
 
 const ntfTokenFloorPriceFormatterTrailingZeros: FormatterRule[] = [
@@ -217,7 +229,7 @@ const ntfTokenFloorPriceFormatterTrailingZeros: FormatterRule[] = [
   { upperBound: 1, formatter: THREE_DECIMALS },
   { upperBound: 1000, formatter: TWO_DECIMALS },
   { upperBound: 1e15, formatter: SHORTHAND_TWO_DECIMALS },
-  { upperBound: Infinity, formatter: ">999T" },
+  { upperBound: Number.POSITIVE_INFINITY, formatter: ">999T" },
 ];
 
 const ntfTokenFloorPriceFormatter: FormatterRule[] = [
@@ -226,56 +238,46 @@ const ntfTokenFloorPriceFormatter: FormatterRule[] = [
   { upperBound: 1, formatter: THREE_DECIMALS_NO_TRAILING_ZEROS },
   { upperBound: 1000, formatter: TWO_DECIMALS_NO_TRAILING_ZEROS },
   { upperBound: 1e15, formatter: SHORTHAND_TWO_DECIMALS_NO_TRAILING_ZEROS },
-  { upperBound: Infinity, formatter: ">999T" },
+  { upperBound: Number.POSITIVE_INFINITY, formatter: ">999T" },
 ];
 
 const ntfCollectionStatsFormatter: FormatterRule[] = [
   { exact: 0, formatter: "0" },
-  { upperBound: 0.00001, formatter: "<0.00001" },
+  { upperBound: 0.000_01, formatter: "<0.00001" },
   { upperBound: 1, formatter: FIVE_DECIMALS_NO_TRAILING_ZEROS },
   { upperBound: 1e6, formatter: SIX_SIG_FIGS_NO_COMMAS },
   { upperBound: 1e15, formatter: SHORTHAND_FIVE_DECIMALS_NO_TRAILING_ZEROS },
-  { upperBound: Infinity, formatter: ">999T" },
+  { upperBound: Number.POSITIVE_INFINITY, formatter: ">999T" },
 ];
 
-export enum NumberType {
+export const NumberType = {
   // used for token quantities in non-transaction contexts (e.g. portfolio balances)
-  TokenNonTx = "token-non-tx",
-
-  // used for token quantities in transaction contexts (e.g. swap, send)
-  TokenTx = "token-tx",
-
+  TokenNonTx: "token-non-tx",
+  // used for token quantities in transaction contexts (e.g. send)
+  TokenTx: "token-tx",
   // this formatter is only used for displaying the swap trade output amount
   // in the text input boxes. Output amounts on review screen should use the above TokenTx formatter
-  SwapTradeAmount = "swap-trade-amount",
-
+  SwapTradeAmount: "swap-trade-amount",
   // fiat prices in any component that belongs in the Token Details flow (except for token stats)
-  FiatTokenDetails = "fiat-token-details",
-
+  FiatTokenDetails: "fiat-token-details",
   // fiat prices everywhere except Token Details flow
-  FiatTokenPrice = "fiat-token-price",
-
-  // fiat values for market cap, TVL, volume in the Token Details screen
-  FiatTokenStats = "fiat-token-stats",
-
+  FiatTokenPrice: "fiat-token-price",
+  // fiat price of TVL, volume in the Token Details screen
+  FiatTokenStats: "fiat-token-stats",
   // fiat price of token balances
-  FiatTokenQuantity = "fiat-token-quantity",
-
+  FiatTokenQuantity: "fiat-token-quantity",
   // fiat gas prices
-  FiatGasPrice = "fiat-gas-price",
-
+  FiatGasPrice: "fiat-gas-price",
   // portfolio balance
-  PortfolioBalance = "portfolio-balance",
-
-  // nft floor price denominated in a token (e.g, ETH)
-  NFTTokenFloorPrice = "nft-token-floor-price",
-
-  // nft collection stats like number of items, holder, and sales
-  NFTCollectionStats = "nft-collection-stats",
-
+  PortfolioBalance: "portfolio-balance",
+  // nft token floor price
+  NFTTokenFloorPrice: "nft-token-floor-price",
+  // nft token floor price for holder counts and sales
+  NFTCollectionStats: "nft-collection-stats",
   // nft floor price with trailing zeros
-  NFTTokenFloorPriceTrailingZeros = "nft-token-floor-price-trailing-zeros",
-}
+  NFTTokenFloorPriceTrailingZeros: "nft-token-floor-price-trailing-zeros",
+} as const;
+export type NumberType = (typeof NumberType)[keyof typeof NumberType];
 
 const TYPE_TO_FORMATTER_RULES = {
   [NumberType.TokenNonTx]: tokenNonTxFormatter,
@@ -295,8 +297,7 @@ const TYPE_TO_FORMATTER_RULES = {
 
 function getFormatterRule(input: bigint | number, type: NumberType) {
   const rules = TYPE_TO_FORMATTER_RULES[type];
-  for (let i = 0; i < rules.length; i++) {
-    const rule = rules[i];
+  for (const rule of rules) {
     if (
       (rule?.exact !== undefined && input === rule.exact) ||
       (rule?.upperBound !== undefined && input < rule.upperBound)
@@ -311,38 +312,40 @@ function getFormatterRule(input: bigint | number, type: NumberType) {
 export function formatNumber(
   input: bigint | number,
   type: NumberType = NumberType.TokenNonTx,
-  placeholder = "-",
+  placeholder = "-"
 ) {
   if (input === null || input === undefined) {
     return placeholder;
   }
 
   const formatter = getFormatterRule(input, type);
-  if (typeof formatter === "string") return formatter;
+  if (typeof formatter === "string") {
+    return formatter;
+  }
   return formatter.format(input);
 }
 
 export function formatCurrencyAmount(
   amount: EvmAddress | bigint | string | number | null | undefined,
   type: NumberType = NumberType.TokenNonTx,
-  placeholder?: string,
+  placeholder?: string
 ) {
   return formatNumber(
-    amount ? parseFloat(String(amount)) : 0.0,
+    amount ? Number.parseFloat(String(amount)) : 0.0,
     type,
-    placeholder,
+    placeholder
   );
 }
 
 export function formatPrice(
   price: string,
-  type: NumberType = NumberType.FiatTokenPrice,
+  type: NumberType = NumberType.FiatTokenPrice
 ) {
   if (price === null || price === undefined) {
     return "-";
   }
 
-  return formatNumber(parseFloat(price), type);
+  return formatNumber(Number.parseFloat(price), type);
 }
 
 /**
@@ -351,30 +354,36 @@ export function formatPrice(
 export function formatTimestamp(
   timestamp: string | number,
   formatString = "LLLL d, yyyy",
-  options?: FormatOptions,
+  options?: FormatOptions
 ) {
   return format(fromUnixTime(Number(timestamp)), formatString, options);
 }
 
 export function formatNumberOrString(
   price: bigint | number | string,
-  type: NumberType,
+  type: NumberType
 ) {
-  if (price === null || price === undefined) return "-";
-  if (typeof price === "string") return formatNumber(parseFloat(price), type);
+  if (price === null || price === undefined) {
+    return "-";
+  }
+  if (typeof price === "string") {
+    return formatNumber(Number.parseFloat(price), type);
+  }
   return formatNumber(price, type);
 }
 
 export function formatUSDPrice(
   price: bigint | number | string,
-  type: NumberType = NumberType.FiatTokenPrice,
+  type: NumberType = NumberType.FiatTokenPrice
 ) {
   return formatNumberOrString(price, type);
 }
 
 export function formatBytes(bytes: string | number, decimals = 2) {
   const bytesNum = Number(bytes);
-  if (!bytesNum) return "0 Bytes";
+  if (!bytesNum) {
+    return "0 Bytes";
+  }
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
@@ -392,7 +401,7 @@ export function formatBytes(bytes: string | number, decimals = 2) {
 
   const i = Math.floor(Math.log(bytesNum) / Math.log(k));
 
-  return `${parseFloat((bytesNum / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+  return `${Number.parseFloat((bytesNum / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
 
 export function formatStringItems(accepted: string[]) {
@@ -412,24 +421,26 @@ export function formatRoundNumber(
   } = {
     round: Math.round,
     decimal: 2,
-  },
+  }
 ) {
-  const pow = Math.pow(10, decimal);
+  const pow = 10 ** decimal;
   return round((x + Number.EPSILON) * pow) / pow;
 }
 
 export function formatPercentage(
   value: string | undefined,
   type: NumberType = NumberType.TokenNonTx,
-  placeholder?: string,
+  placeholder?: string
 ) {
   return (
-    formatNumber(value ? parseFloat(value) : 0.0, type, placeholder) + " %"
+    formatNumber(value ? Number.parseFloat(value) : 0.0, type, placeholder) +
+    " %"
   );
 }
 
 export function formatToTitleCase(value: string) {
-  return value.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
-  });
+  return value.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+  );
 }

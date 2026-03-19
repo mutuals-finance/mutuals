@@ -1,5 +1,5 @@
-import PoolActionWithdraw from "@/features/PoolAction/Withdraw";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import PoolActionWithdraw from "@/features/pool-action/withdraw";
 
 export const metadata: Metadata = {
   title: "Withdraw",

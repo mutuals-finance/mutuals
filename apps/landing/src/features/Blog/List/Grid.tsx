@@ -1,7 +1,7 @@
+import type { Post } from "@mutuals/payload/payload-types";
 import { For, GridItem, SimpleGrid, type SimpleGridProps } from "@mutuals/ui";
-import { Post } from "@mutuals/payload/payload-types";
-import BlogPostCard from "@/features/Blog/PostCard";
-import BlogListEmptyCard from "@/features/Blog/List/EmptyCard";
+import BlogListEmptyCard from "@/features/blog/list/empty-card";
+import BlogPostCard from "@/features/blog/post-card";
 
 export type BlogListGridProps = SimpleGridProps & { data: Partial<Post>[] };
 

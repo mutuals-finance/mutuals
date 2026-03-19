@@ -1,6 +1,14 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import {
+  type MigrateDownArgs,
+  type MigrateUpArgs,
+  sql,
+} from "@payloadcms/db-postgres";
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({
+  db,
+  payload: _payload,
+  req: _req,
+}: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_posts_blocks_code_code_fields_code_blips_link_type" AS ENUM('reference', 'custom');
   CREATE TYPE "public"."enum_posts_blocks_code_code_fields_language" AS ENUM('none', 'js', 'ts');
@@ -30,7 +38,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"focal_x" numeric,
   	"focal_y" numeric
   );
-  
+
   CREATE TABLE "posts_blocks_blog_content" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -39,7 +47,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"blog_content_fields_rich_text" jsonb,
   	"block_name" varchar
   );
-  
+
   CREATE TABLE "posts_blocks_code_code_fields_code_blips" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -54,7 +62,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"link_custom_id" varchar
   );
-  
+
   CREATE TABLE "posts_blocks_code" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -64,7 +72,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"code_fields_code" varchar,
   	"block_name" varchar
   );
-  
+
   CREATE TABLE "posts" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar,
@@ -90,7 +98,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"_status" "enum_posts_status" DEFAULT 'draft'
   );
-  
+
   CREATE TABLE "posts_texts" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer NOT NULL,
@@ -98,7 +106,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"path" varchar NOT NULL,
   	"text" varchar
   );
-  
+
   CREATE TABLE "posts_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
@@ -107,7 +115,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"posts_id" integer,
   	"users_id" integer
   );
-  
+
   CREATE TABLE "_posts_v_blocks_blog_content" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -117,7 +125,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_uuid" varchar,
   	"block_name" varchar
   );
-  
+
   CREATE TABLE "_posts_v_blocks_code_code_fields_code_blips" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -133,7 +141,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_custom_id" varchar,
   	"_uuid" varchar
   );
-  
+
   CREATE TABLE "_posts_v_blocks_code" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -144,7 +152,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_uuid" varchar,
   	"block_name" varchar
   );
-  
+
   CREATE TABLE "_posts_v" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"parent_id" integer,
@@ -174,7 +182,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"latest" boolean
   );
-  
+
   CREATE TABLE "_posts_v_texts" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer NOT NULL,
@@ -182,7 +190,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"path" varchar NOT NULL,
   	"text" varchar
   );
-  
+
   CREATE TABLE "_posts_v_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
@@ -191,7 +199,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"posts_id" integer,
   	"users_id" integer
   );
-  
+
   CREATE TABLE "categories" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
@@ -201,14 +209,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
+
   CREATE TABLE "users_roles" (
   	"order" integer NOT NULL,
   	"parent_id" integer NOT NULL,
   	"value" "enum_users_roles",
   	"id" serial PRIMARY KEY NOT NULL
   );
-  
+
   CREATE TABLE "users_sessions" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -216,7 +224,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone,
   	"expires_at" timestamp(3) with time zone NOT NULL
   );
-  
+
   CREATE TABLE "users" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"first_name" varchar NOT NULL,
@@ -233,7 +241,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"login_attempts" numeric DEFAULT 0,
   	"lock_until" timestamp(3) with time zone
   );
-  
+
   CREATE TABLE "redirects" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"from" varchar NOT NULL,
@@ -242,7 +250,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
+
   CREATE TABLE "redirects_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
@@ -250,20 +258,20 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"path" varchar NOT NULL,
   	"posts_id" integer
   );
-  
+
   CREATE TABLE "payload_kv" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"key" varchar NOT NULL,
   	"data" jsonb NOT NULL
   );
-  
+
   CREATE TABLE "payload_locked_documents" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"global_slug" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
+
   CREATE TABLE "payload_locked_documents_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
@@ -275,7 +283,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"users_id" integer,
   	"redirects_id" integer
   );
-  
+
   CREATE TABLE "payload_preferences" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"key" varchar,
@@ -283,7 +291,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
+
   CREATE TABLE "payload_preferences_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
@@ -291,7 +299,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"path" varchar NOT NULL,
   	"users_id" integer
   );
-  
+
   CREATE TABLE "payload_migrations" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar,
@@ -299,7 +307,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
+
   ALTER TABLE "media" ADD CONSTRAINT "media_dark_mode_fallback_id_media_id_fk" FOREIGN KEY ("dark_mode_fallback_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "posts_blocks_blog_content" ADD CONSTRAINT "posts_blocks_blog_content_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "posts_blocks_code_code_fields_code_blips" ADD CONSTRAINT "posts_blocks_code_code_fields_code_blips_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."posts_blocks_code"("id") ON DELETE cascade ON UPDATE no action;
@@ -426,10 +434,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
   CREATE INDEX "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
   CREATE INDEX "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
-  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`)
+  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`);
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({
+  db,
+  payload: _payload,
+  req: _req,
+}: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    DROP TABLE "media" CASCADE;
   DROP TABLE "posts_blocks_blog_content" CASCADE;
@@ -467,5 +479,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__posts_v_version_author_type";
   DROP TYPE "public"."enum__posts_v_version_status";
   DROP TYPE "public"."enum_users_roles";
-  DROP TYPE "public"."enum_redirects_to_type";`)
+  DROP TYPE "public"."enum_redirects_to_type";`);
 }

@@ -1,22 +1,22 @@
 import {
+  Box,
   Button,
   Container,
+  type ContainerProps,
   Link,
   SimpleGrid,
   Stack,
   Text,
-  Box,
-  ContainerProps,
 } from "@mutuals/ui";
 import { IoChatbubblesOutline, IoPaperPlaneOutline } from "react-icons/io5";
-import ContactOptionsCard from "@/features/Contact/Options/Card";
+import ContactOptionsCard from "@/features/contact/options/card";
 
 export type ContactOptionsProps = ContainerProps;
 
 export default function ContactOptions(props: ContactOptionsProps) {
   return (
-    <Container mt={{ base: "6", lg: "12" }} mb="16" maxW="5xl" {...props}>
-      <Stack textAlign={"center"} alignItems={"center"}>
+    <Container maxW="5xl" mb="16" mt={{ base: "6", lg: "12" }} {...props}>
+      <Stack alignItems={"center"} textAlign={"center"}>
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: "2", lg: "6" }}>
           <ContactOptionsCard
             heading={"Contact Us"}
@@ -40,9 +40,9 @@ export default function ContactOptions(props: ContactOptionsProps) {
             <Text color={"fg.muted"} textStyle={"md"}>
               Found a bug?{" "}
               <Link
-                href={"https://github.com/mutuals-finance/mutuals/issues/new"}
-                external={true}
                 arrow={false}
+                external={true}
+                href={"https://github.com/mutuals-finance/mutuals/issues/new"}
                 variant={"underline"}
               >
                 File a GitHub issue

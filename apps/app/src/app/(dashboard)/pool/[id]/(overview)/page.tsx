@@ -1,3 +1,3 @@
-export default async function PoolOverviewPage() {
-  return <></>;
+export default function PoolOverviewPage() {
+  return null;
 }

@@ -3,10 +3,10 @@ import { createOpenGraph } from "./opengraph";
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://mutuals.finance",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://mutuals.finance"
   ),
   title: {
-    default: `Mutuals — Reimagine Programmable Money.`,
+    default: "Mutuals — Reimagine Programmable Money.",
     template: "%s — Mutuals",
   },
   description: "Reimagine Programmable Money.",

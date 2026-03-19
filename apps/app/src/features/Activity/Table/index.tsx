@@ -2,18 +2,17 @@
 
 import { Stack } from "@mutuals/ui";
 import { createColumnHelper } from "@tanstack/react-table";
-
+import Table from "@/components/table";
 import {
   AddressCell,
   AmountCell,
   EventDescriptionCell,
   EventIconCell,
-} from "@/features/Activity/Table/cells";
-import Table from "@/components/Table";
-import {
-  type ActivityTableProps,
-  type PoolActivityEvent,
-} from "@/features/Activity/types";
+} from "@/features/activity/table/cells";
+import type {
+  ActivityTableProps,
+  PoolActivityEvent,
+} from "@/features/activity/types";
 
 const columnHelper = createColumnHelper<PoolActivityEvent>();
 
@@ -26,7 +25,7 @@ export default function ActivityTable({
       id: "eventIcon",
       header: "Event",
       cell: (context) => (
-        <Stack direction="row" alignItems={"center"} gap={"3"}>
+        <Stack alignItems={"center"} direction="row" gap={"3"}>
           <EventIconCell {...context} />
           <EventDescriptionCell {...context} />
         </Stack>
@@ -48,10 +47,10 @@ export default function ActivityTable({
 
   return (
     <Table<PoolActivityEvent>
-      data={events}
-      columns={columns}
-      headerRowProps={{ cellProps: { px: "6" } }}
       bodyRowProps={{ cellProps: { px: "6" } }}
+      columns={columns}
+      data={events}
+      headerRowProps={{ cellProps: { px: "6" } }}
       {...props}
     />
   );

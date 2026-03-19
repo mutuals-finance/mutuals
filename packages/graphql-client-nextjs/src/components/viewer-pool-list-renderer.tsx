@@ -1,20 +1,21 @@
-import { UserPoolListWithOwnerAndContractFragmentDoc } from "../graphql/data/__generated__/graphql";
-import { QueryRendererProps } from "./base";
-import { type ViewerPoolListQuery } from "../graphql/data/__generated__/graphql";
+import type {
+  UserPoolListWithOwnerAndContractFragmentDoc,
+  ViewerPoolListQuery,
+} from "../graphql/data/__generated__/graphql";
+import type { QueryRendererProps } from "./base";
 
 export type ViewerPoolListRendererProps = Omit<
   QueryRendererProps<
     ViewerPoolListQuery,
-    {},
+    Record<string, never>,
     typeof UserPoolListWithOwnerAndContractFragmentDoc
   >,
   "query" | "fragment"
 >;
 
-export function ViewerPoolListRenderer(props: ViewerPoolListRendererProps) {
-  return (
-    <></>
-    /*
+export function ViewerPoolListRenderer(_props: ViewerPoolListRendererProps) {
+  return null;
+  /*
     <QueryRenderer
       query={VIEWER_POOL_LIST}
       fragment={{
@@ -24,6 +25,5 @@ export function ViewerPoolListRenderer(props: ViewerPoolListRendererProps) {
       }}
       {...props}
     />
-*/
-  );
+  */
 }

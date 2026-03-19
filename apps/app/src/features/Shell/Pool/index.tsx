@@ -1,9 +1,11 @@
-import React from "react";
-import ShellPage, { ShellPageProps } from "@/features/Shell/Page";
-import PoolCard from "@/features/Pool/Card";
+import {
+  type GetPoolOptions,
+  getPool,
+} from "@mutuals/graphql-client-nextjs/server";
 import { HStack } from "@mutuals/ui";
-import { getPool, GetPoolOptions } from "@mutuals/graphql-client-nextjs/server";
 import { notFound } from "next/navigation";
+import PoolCard from "@/features/pool/card";
+import ShellPage, { type ShellPageProps } from "@/features/shell/page";
 
 export interface ShellPoolProps extends ShellPageProps {
   queryOptions?: GetPoolOptions;
@@ -16,7 +18,7 @@ export default async function ShellPool({
 }: ShellPoolProps) {
   const { data, error } = await getPool(queryOptions);
 
-  if (error || !data?.pool || "message" in data?.pool) {
+  if (error || !data?.pool || (data?.pool && "message" in data.pool)) {
     notFound();
   }
 
@@ -30,9 +32,9 @@ export default async function ShellPool({
           id: (
             <HStack gap={"1"}>
               <PoolCard.Logo
-                src={pool?.image}
                 alt={pool?.name}
                 size="2xs"
+                src={pool?.image}
                 variant={"outline"}
               />
               {pool?.name}

@@ -1,10 +1,10 @@
 import { Box } from "@mutuals/ui";
 import type { PropsWithChildren } from "react";
-import CTA from "@/features/Layout/CTA";
-import Header from "@/features/Layout/Header";
-import Footer from "@/features/Layout/Footer";
-import Main from "@/features/Layout/Main";
-import { LayoutProvider } from "@/features/Layout/Provider";
+import CTA from "@/features/layout/cta";
+import Footer from "@/features/layout/footer";
+import Header from "@/features/layout/header";
+import Main from "@/features/layout/main";
+import { LayoutProvider } from "@/features/layout/provider";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (

@@ -1,12 +1,9 @@
 import { Text } from "@mutuals/ui";
 import { createColumnHelper } from "@tanstack/react-table";
-
+import Table, { type TableProps } from "@/components/table";
+import SharesTableCell from "@/features/shares/table/cell";
 import { formatPercentage } from "@/utils";
-
-import Table, { type TableProps } from "@/components/Table";
-
-import SharesTableCell from "@/features/Shares/Table/Cell";
-import { type ActiveShare, type ShareTableProps } from "../types";
+import type { ActiveShare, ShareTableProps } from "../types";
 
 export default function SharesTable({
   shares: data = [],
@@ -29,8 +26,8 @@ export default function SharesTable({
 
   return (
     <Table<ActiveShare>
-      data={data}
       columns={columns}
+      data={data}
       tableProps={{ fontSize: "sm" }}
       {...props}
     />

@@ -1,14 +1,14 @@
-import { HStack, Separator, StackProps, Text } from "@mutuals/ui";
+import { HStack, Separator, type StackProps, Text } from "@mutuals/ui";
 
 export default function AuthLoginSeparator(props: StackProps) {
   return (
     <HStack {...props}>
       <Separator flex="1" />
       <Text
-        flexShrink="0"
         color={"fg.muted"}
-        textTransform="uppercase"
+        flexShrink="0"
         textStyle={"sm"}
+        textTransform="uppercase"
       >
         Or
       </Text>

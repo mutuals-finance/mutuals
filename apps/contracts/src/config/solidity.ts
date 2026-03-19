@@ -1,7 +1,7 @@
-import type { HardhatUserConfig, SolcUserConfig } from 'hardhat/types/config';
+import type { HardhatUserConfig, SolcUserConfig } from "hardhat/types/config";
 
 const DEFAULT_SOLC_CONFIG: SolcUserConfig = {
-  version: '0.8.29',
+  version: "0.8.29",
   settings: {
     viaIR: process.env.VIA_IR,
     optimizer: {
@@ -39,6 +39,6 @@ const SOLC_PROFILES: Record<typeof process.env.SOLC_PROFILE, SolcUserConfig> = {
   test: TEST_SOLC_CONFIG,
 };
 
-export const solidity: HardhatUserConfig['solidity'] = {
+export const solidity: HardhatUserConfig["solidity"] = {
   compilers: [SOLC_PROFILES[process.env.SOLC_PROFILE]],
 };

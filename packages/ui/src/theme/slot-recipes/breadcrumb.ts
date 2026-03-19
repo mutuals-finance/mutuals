@@ -1,5 +1,5 @@
-import { breadcrumbAnatomy } from "@chakra-ui/react/anatomy";
 import { defineSlotRecipe } from "@chakra-ui/react";
+import { breadcrumbAnatomy } from "@chakra-ui/react/anatomy";
 
 export default defineSlotRecipe({
   slots: breadcrumbAnatomy.keys(),

@@ -1,16 +1,15 @@
 import { Box, Container, Grid, LinkListBox, MutualsLogo } from "@mutuals/ui";
-import ShellDashboardFooterFooter from "@/features/Shell/Dashboard/Footer/Footer";
+import ShellDashboardFooterFooter from "@/features/shell/dashboard/Footer/footer";
 
 export default function ShellDashboardFooter() {
   return (
-    <Box as="footer" role="contentinfo" mt={{ base: "24", lg: "32" }}>
+    <Box as="footer" mt={{ base: "24", lg: "32" }} role="contentinfo">
       <Container maxW="7xl" py={{ base: "6", lg: "12" }}>
         <Grid
-          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
           gap={{ base: "12", lg: "12" }}
+          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
         >
           <LinkListBox
-            title={"Company"}
             links={[
               {
                 children: "Contact",
@@ -23,9 +22,9 @@ export default function ShellDashboardFooter() {
                 href: "https://mutuals.finance/blog/categories",
               },
             ]}
+            title={"Company"}
           />
           <LinkListBox
-            title={"Support"}
             links={[
               {
                 children: "Pricing",
@@ -48,10 +47,10 @@ export default function ShellDashboardFooter() {
                 href: "https://docs.mutuals.finance/",
               },
             ]}
+            title={"Support"}
           />
 
           <LinkListBox
-            title={"Legal"}
             links={[
               {
                 children: "Cookies Policy",
@@ -74,6 +73,7 @@ export default function ShellDashboardFooter() {
                 href: "https://mutuals.finance/law-enforcement",
               },
             ]}
+            title={"Legal"}
           />
 
           <LinkListBox alignItems={"flex-end"} justifyContent={"flex-start"}>

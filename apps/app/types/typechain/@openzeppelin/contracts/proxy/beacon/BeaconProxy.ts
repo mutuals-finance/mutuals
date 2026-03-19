@@ -2,21 +2,21 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
+  ContractMethod,
+  ContractRunner,
+  EventFragment,
   FunctionFragment,
   Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
-  ContractMethod,
   Listener,
 } from "ethers";
 import type {
   TypedContractEvent,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
+  TypedLogDescription,
 } from "../../../../common";
 
 export interface BeaconProxyInterface extends Interface {
@@ -37,58 +37,6 @@ export namespace BeaconUpgradedEvent {
 
 export interface BeaconProxy extends BaseContract {
   connect(runner?: ContractRunner | null): BeaconProxy;
-  waitForDeployment(): Promise<this>;
-
-  interface: BeaconProxyInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getEvent(
-    key: "BeaconUpgraded"
-  ): TypedContractEvent<
-    BeaconUpgradedEvent.InputTuple,
-    BeaconUpgradedEvent.OutputTuple,
-    BeaconUpgradedEvent.OutputObject
-  >;
 
   filters: {
     "BeaconUpgraded(address)": TypedContractEvent<
@@ -102,4 +50,40 @@ export interface BeaconProxy extends BaseContract {
       BeaconUpgradedEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "BeaconUpgraded"
+  ): TypedContractEvent<
+    BeaconUpgradedEvent.InputTuple,
+    BeaconUpgradedEvent.OutputTuple,
+    BeaconUpgradedEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  interface: BeaconProxyInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+  waitForDeployment(): Promise<this>;
 }

@@ -1,6 +1,6 @@
-import { ModuleRenderProps } from "../../types";
-import { ValueInput } from "../../components/value-input";
 import { RecipientInput } from "../../components/recipient-input";
+import { ValueInput } from "../../components/value-input";
+import type { ModuleRenderProps } from "../../types";
 
 export type DirectDistributionInputProps = ModuleRenderProps;
 

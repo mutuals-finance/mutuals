@@ -1,9 +1,11 @@
 "use client";
 
-import React, { PropsWithChildren } from "react";
-import FeatureUpcoming from "@/features/User/FeatureUpcoming";
+import type { PropsWithChildren } from "react";
+import FeatureUpcoming from "@/features/user/feature-upcoming";
 
-export function WalletDrawerContent({ children }: PropsWithChildren) {
+export function WalletDrawerContent({
+  children: _children,
+}: PropsWithChildren) {
   return (
     <>
       <FeatureUpcoming />

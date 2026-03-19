@@ -1,24 +1,23 @@
 "use client";
 
-import { transform } from "./transform";
 import {
   Box,
   Center,
   createListCollection,
   Select,
-  SelectCollectionItemProps,
+  type SelectCollectionItemProps,
   Stack,
 } from "@mutuals/ui";
-import React from "react";
-import { ModuleRenderProps } from "../../types";
+import type { ModuleRenderProps } from "../../types";
+import { transform } from "./transform";
 
 export type AllocationType = "fixed" | "percentage";
 
-export type AllocationConfig = {
+export interface AllocationConfig {
+  icon: string;
   id: AllocationType;
   name: string;
-  icon: string;
-};
+}
 
 const allocationType: Record<AllocationType, AllocationConfig> = {
   percentage: {
@@ -47,13 +46,14 @@ type ValueInputSelectProps = ModuleRenderProps;
 export default function ValueInputSelect({ id }: ValueInputSelectProps) {
   return (
     <Select<string>
-      pointerEvents={"auto"}
+      collection={allocationTypeCollection}
+      contentProps={{ minW: "44" }}
+      css={{ "--select-trigger-padding-x": "0" }}
+      defaultValue={["percentage"]}
       id={`${id}.data.allocationType`}
       name={`${id}.data`}
-      defaultValue={["percentage"]}
+      pointerEvents={"auto"}
       positioning={{ sameWidth: false }}
-      variant={"subtle"}
-      collection={allocationTypeCollection}
       transform={transform.allocationType}
       triggerProps={{
         indicatorProps: {
@@ -61,15 +61,14 @@ export default function ValueInputSelect({ id }: ValueInputSelectProps) {
         },
         triggerProps: { bg: "transparent" },
       }}
-      css={{ "--select-trigger-padding-x": "0" }}
-      contentProps={{ minW: "44" }}
+      variant={"subtle"}
     >
       {({ trigger, item }) => {
         const selected = allocationType[item?.value as AllocationType];
 
         if (!trigger) {
           return (
-            <Stack gap={"2"} w={"full"} direction={"row"}>
+            <Stack direction={"row"} gap={"2"} w={"full"}>
               <Center color="fg.muted" w={"3"}>
                 {selected?.icon}
               </Center>
@@ -79,7 +78,7 @@ export default function ValueInputSelect({ id }: ValueInputSelectProps) {
         }
 
         return (
-          <Center w={"7"} pe={"2"}>
+          <Center pe={"2"} w={"7"}>
             {selected?.icon}
           </Center>
         );

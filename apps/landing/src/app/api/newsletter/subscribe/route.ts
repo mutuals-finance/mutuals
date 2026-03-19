@@ -1,5 +1,5 @@
 import { BeehiivClient } from "@beehiiv/sdk";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const BEEHIIV_TOKEN = process.env.BEEHIIV_API_KEY;
 const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
@@ -9,14 +9,14 @@ export async function POST(request: NextRequest) {
     if (!BEEHIIV_TOKEN) {
       return NextResponse.json(
         { error: "API key not configured" },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
     if (!BEEHIIV_PUBLICATION_ID) {
       return NextResponse.json(
         { error: "Publication ID not configured" },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     if (!email || typeof email !== "string") {
       return NextResponse.json(
         { error: "Valid email address is required" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
         success: true,
         message: "Successfully subscribed to newsletter",
       },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Newsletter subscription error:", error);
@@ -66,13 +66,13 @@ export async function POST(request: NextRequest) {
           error: "Failed to subscribe to newsletter",
           details: error.message,
         },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
     return NextResponse.json(
       { error: "An unexpected error occurred" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

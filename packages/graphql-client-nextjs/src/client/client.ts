@@ -1,15 +1,14 @@
-import { CombinedGraphQLErrors, HttpLink } from "@apollo/client";
+import { CombinedGraphQLErrors, HttpLink, ServerError } from "@apollo/client";
+import { ApolloLink } from "@apollo/client/core";
+import { ErrorLink } from "@apollo/client/link/error";
 import {
   ApolloClient,
   InMemoryCache,
   SSRMultipartLink,
 } from "@apollo/client-integration-nextjs";
 import config from "../config";
-import { ErrorLink } from "@apollo/client/link/error";
-import { ServerError } from "@apollo/client";
-import { ApolloLink } from "@apollo/client/core";
 
-const isLocalEnv = process.env.NODE_ENV !== "production";
+const _isLocalEnv = process.env.NODE_ENV !== "production";
 
 export interface MakeClientOpts {
   authHeaders?: Record<string, string>;
@@ -19,11 +18,11 @@ export const makeClient =
   (opts: MakeClientOpts = {}) =>
   () => {
     const isSSr = typeof window === "undefined";
-    const errorLink = new ErrorLink(({ error, result }) => {
+    const errorLink = new ErrorLink(({ error }) => {
       if (CombinedGraphQLErrors.is(error)) {
-        error.errors.forEach(({ message }) =>
-          console.log(`GraphQL error: ${message}`),
-        );
+        for (const { message } of error.errors) {
+          console.log(`GraphQL error: ${message}`);
+        }
       } else if (ServerError.is(error)) {
         console.log(`Server error: ${error.message}`);
       } else if (error) {

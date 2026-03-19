@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export function createManifest(
-  props?: MetadataRoute.Manifest,
+  props?: MetadataRoute.Manifest
 ): MetadataRoute.Manifest {
   return {
     name: "Mutuals",

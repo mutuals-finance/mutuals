@@ -1,8 +1,10 @@
-import * as METAMASK_LOGO from "@/assets/svg/connectors/metaMask.svg";
-import * as WALLET_CONNECT_LOGO from "@/assets/svg/connectors/walletConnect.svg";
-import * as COINBASE_WALLET_LOGO from "@/assets/svg/connectors/coinbaseWallet.svg";
+import COINBASE_WALLET_LOGO from "@/assets/svg/connectors/coinbaseWallet.svg";
+import METAMASK_LOGO from "@/assets/svg/connectors/metaMask.svg";
+import WALLET_CONNECT_LOGO from "@/assets/svg/connectors/walletConnect.svg";
 
-export { METAMASK_LOGO, WALLET_CONNECT_LOGO, COINBASE_WALLET_LOGO };
+export * as COINBASE_WALLET_LOGO from "@/assets/svg/connectors/coinbaseWallet.svg";
+export * as METAMASK_LOGO from "@/assets/svg/connectors/metaMask.svg";
+export * as WALLET_CONNECT_LOGO from "@/assets/svg/connectors/walletConnect.svg";
 
 export const CONNECTOR_LOGO_MAP: Record<string, typeof import("*.svg")> = {
   1: METAMASK_LOGO, // mainnet

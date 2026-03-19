@@ -1,4 +1,4 @@
-import { CalculationType, RecipientType } from "../types";
+import type { CalculationType, RecipientType } from "../types";
 
 export class Allocation {
   value: string;
@@ -26,7 +26,7 @@ export class Allocation {
   }
 
   get isItem() {
-    return this.recipientType[0] == "DefaultItem";
+    return this.recipientType[0] === "DefaultItem";
   }
 
   get isGroup() {
@@ -34,18 +34,18 @@ export class Allocation {
   }
 
   get isFixed() {
-    return this.calculationType[0] == "Fixed";
+    return this.calculationType[0] === "Fixed";
   }
 
   get isPercentage() {
-    return this.calculationType[0] == "Percentage";
+    return this.calculationType[0] === "Percentage";
   }
 
   get isPrioritized() {
-    return this.recipientType[0] == "PrioritizedGroup";
+    return this.recipientType[0] === "PrioritizedGroup";
   }
 
   get isTimed() {
-    return this.recipientType[0] == "TimedGroup";
+    return this.recipientType[0] === "TimedGroup";
   }
 }

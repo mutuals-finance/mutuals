@@ -1,4 +1,4 @@
-import {
+import type {
   AccessList,
   Account,
   Address,
@@ -8,8 +8,8 @@ import {
   PublicClient,
   TransactionType,
   Transport,
-  WalletClient,
   ValueOf,
+  WalletClient,
 } from "viem";
 
 export type KeyedValue<
@@ -21,55 +21,55 @@ export type KeyedValue<
   };
 };
 
-type TransactionOverrides = {
+interface TransactionOverrides {
   accessList?: AccessList;
   gas?: bigint;
   maxFeePerGas?: bigint;
   maxPriorityFeePerGas?: bigint;
   nonce?: number;
   value?: bigint;
-};
+}
 
 interface TransactionOverridesDict {
   transactionOverrides?: TransactionOverrides;
 }
 
-type ApiConfig = {
+interface ApiConfig {
   apiKey: string;
   serverURL?: string;
-};
+}
 
-type DataClientConfig = {
-  publicClient?: PublicClient<Transport, Chain>;
+interface DataClientConfig {
   apiConfig: ApiConfig;
-  includeEnsNames?: boolean;
   ensPublicClient?: PublicClient<Transport, Chain>;
-};
+  includeEnsNames?: boolean;
+  publicClient?: PublicClient<Transport, Chain>;
+}
 
-type MutualsClientConfig = {
+interface MutualsClientConfig {
+  apiConfig?: ApiConfig;
   chainId: number;
+  ensPublicClient?: PublicClient<Transport, Chain>;
+  includeEnsNames?: boolean;
   publicClient?: PublicClient<Transport, Chain>;
   walletClient?: WalletClient<Transport, Chain, Account>;
-  apiConfig?: ApiConfig;
-  includeEnsNames?: boolean;
-  ensPublicClient?: PublicClient<Transport, Chain>;
-};
+}
 
-type TransactionConfig = {
+interface TransactionConfig {
   transactionType: TransactionType;
-};
+}
 
-type RawAllocation = {
+interface RawAllocation {
+  allocationType: bigint;
+  amountOrShare: bigint;
   id: bigint;
+  position: bigint;
   recipient: bigint;
   target: bigint;
-  amountOrShare: bigint;
-  allocationType: bigint;
-  position: bigint;
   timespan: bigint;
-};
+}
 
-type Allocation = any; // PoolAllocationInput;
+type Allocation = unknown; // PoolAllocationInput;
 
 type CreatePoolConfig = {
   allocations: Allocation[];
@@ -102,38 +102,38 @@ type SetPausedConfig = {
 } & TransactionOverridesDict;
 
 // TODO remove when not needed
-type CalculationType = any;
-type RecipientType = any;
+type CalculationType = unknown;
+type RecipientType = unknown;
 // new types
 
 type CreateDefaultAllocationFn = (
   calculationType: CalculationType,
-  recipientType: RecipientType,
+  recipientType: RecipientType
 ) => Allocation;
 
-type CallData = {
+interface CallData {
   address: string;
   data: Hex;
-};
+}
 
 type TransactionFormat = Hash | bigint | CallData;
 
-export type { CalculationType, RecipientType };
-
 export type {
-  TransactionOverrides,
+  Allocation,
   ApiConfig,
+  CalculationType,
+  CallData,
+  CreateDefaultAllocationFn,
+  CreatePoolConfig,
   DataClientConfig,
   MutualsClientConfig,
-  TransactionConfig,
   RawAllocation,
-  Allocation,
-  CreatePoolConfig,
-  SetPoolAllocationConfig,
-  WithdrawConfig,
-  TransferOwnershipConfig,
+  RecipientType,
   SetPausedConfig,
-  CreateDefaultAllocationFn,
-  CallData,
+  SetPoolAllocationConfig,
+  TransactionConfig,
   TransactionFormat,
+  TransactionOverrides,
+  TransferOwnershipConfig,
+  WithdrawConfig,
 };

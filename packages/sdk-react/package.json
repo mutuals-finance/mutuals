@@ -6,9 +6,9 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc"
   },
   "peerDependencies": {
     "react": ">=19.2.4",

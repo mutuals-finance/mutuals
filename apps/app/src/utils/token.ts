@@ -1,16 +1,15 @@
-import { Address, formatUnits, isAddress } from "viem";
-
 import {
   ETH_TOKEN,
   NATIVE_TOKEN_ADDRESS,
   NATIVE_TOKEN_LOGO_URI,
 } from "src/constants";
+import { type Address, formatUnits, isAddress } from "viem";
 
 export function formatAmount(
   amount: string | bigint | number,
-  decimals: number,
+  decimals: number
 ) {
-  return parseFloat(formatUnits(BigInt(amount), decimals));
+  return Number.parseFloat(formatUnits(BigInt(amount), decimals));
 }
 
 export function getDefaultTokenLogoURI(chainId = 1) {
@@ -22,14 +21,14 @@ export function getDefaultTokenLogoURI(chainId = 1) {
 
 export function isNativeTokenAddress(address: string): address is Address {
   if (!isAddress(address)) {
-    throw Error(`Invalid 'address' parameter '${address}'.`);
+    throw new Error(`Invalid 'address' parameter '${address}'.`);
   }
 
   return address.toLowerCase() === NATIVE_TOKEN_ADDRESS.toLowerCase();
 }
 
 export function formatBalance(balance: string | number | bigint) {
-  const formatCurrency = new Intl.NumberFormat(undefined!, {
+  const formatCurrency = new Intl.NumberFormat(undefined, {
     maximumFractionDigits: 2,
   });
 
@@ -37,7 +36,7 @@ export function formatBalance(balance: string | number | bigint) {
 }
 
 export function formatCurrency(value: string | number | bigint) {
-  const formatCurrency = new Intl.NumberFormat(undefined!, {
+  const formatCurrency = new Intl.NumberFormat(undefined, {
     style: "currency",
     currency: "USD",
   });

@@ -1,18 +1,18 @@
-import { Pool, PoolFactory } from '#/types/typechain';
+import type { Pool, PoolFactory } from "#/types/typechain";
 
-type FromPartial<T extends (...args: any) => any> = (
+type FromPartial<T extends (...args: unknown[]) => unknown> = (
   ...args: Partial<Parameters<T>>
 ) => Parameters<T>;
 
-type GeneratePoolArgs = {
-  init: FromPartial<Pool['initialize']>;
-  create: FromPartial<PoolFactory['createPool']>;
-};
+interface GeneratePoolArgs {
+  create: FromPartial<PoolFactory["createPool"]>;
+  init: FromPartial<Pool["initialize"]>;
+}
 
 export const generatePoolArgs: GeneratePoolArgs = {
   init: (...args) => [
-    args[0] ?? '', // _registry
-    args[1] ?? '', // initialOwner
+    args[0] ?? "", // _registry
+    args[1] ?? "", // initialOwner
     args[2] ?? [], // initialModules
     args[3] ?? [], // initialModuleData
     args[4] ?? [], // _trustedAttesters
@@ -21,8 +21,8 @@ export const generatePoolArgs: GeneratePoolArgs = {
   create: (...args) =>
     [
       ...generatePoolArgs.init(
-        ...(args.slice(0, 5) as Parameters<GeneratePoolArgs['init']>)
+        ...(args.slice(0, 5) as Parameters<GeneratePoolArgs["init"]>)
       ),
       args[5] ?? hre.ethers.toBigInt(hre.ethers.randomBytes(16)),
-    ] as ReturnType<GeneratePoolArgs['create']>,
+    ] as ReturnType<GeneratePoolArgs["create"]>,
 };

@@ -1,5 +1,5 @@
-import { Addressable } from 'ethers';
-import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+import type { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
+import type { Addressable } from "ethers";
 
 export const registerModule = async ({
   hre,
@@ -8,23 +8,22 @@ export const registerModule = async ({
   hre: CustomHardHatRuntimeEnvironment;
   target: string | Addressable;
 }) => {
-  hre.log('registerModule:', target);
+  hre.log("registerModule:", target);
 
   const from = await hre.ethers
-    .getNamedSigner('mutualsStagingDeployer')
+    .getNamedSigner("mutualsStagingDeployer")
     .then((s: SignerWithAddress) => s.address);
 
-
   const receipt = await hre.deployments.execute(
-    'ModuleRegistry',
+    "ModuleRegistry",
     {
       from,
     },
-    'registerModule',
+    "registerModule",
     target
   );
 
-  hre.log('Registered module', target, 'in registry', receipt.to);
+  hre.log("Registered module", target, "in registry", receipt.to);
 
   return receipt;
 };

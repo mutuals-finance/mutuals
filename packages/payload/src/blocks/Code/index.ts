@@ -1,6 +1,6 @@
 import type { Block } from "payload";
 
-import { codeBlips, blockFields } from "../../fields";
+import { blockFields, codeBlips } from "../../fields";
 
 export const Code: Block = {
   slug: "code",

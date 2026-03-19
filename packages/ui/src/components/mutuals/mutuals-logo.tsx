@@ -1,5 +1,5 @@
-import { Icon, IconProps } from "@chakra-ui/react";
-import { Link, LinkProps } from "./link";
+import { Icon, type IconProps } from "@chakra-ui/react";
+import { Link, type LinkProps } from "./link";
 
 export type MutualsLogoProps = MutualsLogoIconProps &
   Partial<Pick<LinkProps, "href">> & { linkProps?: Omit<LinkProps, "href"> };
@@ -7,12 +7,12 @@ export type MutualsLogoProps = MutualsLogoIconProps &
 export function MutualsLogo({ href, linkProps, ...props }: MutualsLogoProps) {
   return (
     <>
-      {!href ? (
-        <MutualsLogoIcon {...props} />
-      ) : (
+      {href ? (
         <Link color={"currentColor"} href={href} {...linkProps}>
           <MutualsLogoIcon {...props} />
         </Link>
+      ) : (
+        <MutualsLogoIcon {...props} />
       )}
     </>
   );
@@ -23,10 +23,10 @@ export type MutualsLogoIconProps = MutualsLogoIconBaseProps & {
 };
 
 function MutualsLogoIcon({ wordmark = true, ...props }: MutualsLogoIconProps) {
-  return !wordmark ? (
-    <MutualsLogoIconOnly {...props} />
-  ) : (
+  return wordmark ? (
     <MutualsLogoIconWordmark {...props} />
+  ) : (
+    <MutualsLogoIconOnly {...props} />
   );
 }
 
@@ -37,12 +37,13 @@ function MutualsLogoIconWordmark({
   ...props
 }: MutualsLogoIconBaseProps) {
   return (
-    <Icon width="100%" height="100%" {...props}>
+    <Icon height="100%" width="100%" {...props}>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
         fill="currentColor"
+        preserveAspectRatio="xMidYMid meet"
         viewBox={viewBox}
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M 420.40804,105.0219 C 388.60657,73.14522 320.14917,71.35642 275.36118,105.73953 213.96456,162.41849 153.40079,224.2951 97.63076,278.35293 64.55801,278.14952 33.0715,278.59258 0,278.60944 65.20538,200.55735 179.64625,97.0475 245.06346,34.63538 c 55.94592,-48.378047 150.70118,-42.6234247 199.29616,-4.05369 90.58878,75.50433 189.89913,167.67523 253.25775,248.42266 -32.29244,0.0579 -78.61721,-0.48687 -99.38143,-0.54797 C 539.73296,222.13451 474.30182,157.72912 420.40804,105.0219 Z" />
         <path d="M 420.40804,344.0309 C 388.60657,312.1542 320.14917,310.3654 275.36118,344.7485 213.96456,401.4275 153.40079,463.3041 97.63076,517.3619 64.55801,517.1585 33.0715,517.6016 0,517.6184 65.20538,439.5663 179.64625,336.0565 245.06346,273.6444 c 55.94592,-48.37807 150.70118,-42.62345 199.29616,-4.0537 90.58878,75.5043 189.89913,167.6752 253.25775,248.4226 -32.29244,0.058 -78.61721,-0.4868 -99.38143,-0.5479 C 539.73296,461.1435 474.30182,396.7381 420.40804,344.0309 Z" />
@@ -66,12 +67,13 @@ function MutualsLogoIconOnly({
   ...props
 }: MutualsLogoIconBaseProps) {
   return (
-    <Icon width="100%" height="100%" {...props}>
+    <Icon height="100%" width="100%" {...props}>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
         fill="currentColor"
+        preserveAspectRatio="xMidYMid meet"
         viewBox={viewBox}
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M 420.40804,194.8659 C 388.60657,162.98922 320.14917,161.20042 275.36118,195.58353 213.96456,252.26249 153.40079,314.1391 97.63076,368.19693 64.55801,367.99352 33.0715,368.43658 0,368.45344 65.20538,290.40135 179.64625,186.8915 245.06346,124.47938 c 55.94592,-48.378047 150.70118,-42.623425 199.29616,-4.05369 90.58878,75.50433 189.89913,167.67523 253.25775,248.42266 -32.29244,0.0579 -78.61721,-0.48687 -99.38143,-0.54797 C 539.73296,311.97851 474.30182,247.57312 420.40804,194.8659 Z" />
         <path d="M 420.40804,433.8749 C 388.60657,401.9982 320.14917,400.2094 275.36118,434.5925 213.96456,491.2715 153.40079,553.1481 97.63076,607.2059 64.55801,607.0025 33.0715,607.4456 0,607.4624 65.20538,529.4103 179.64625,425.9005 245.06346,363.4884 c 55.94592,-48.37807 150.70118,-42.62345 199.29616,-4.0537 90.58878,75.5043 189.89913,167.6752 253.25775,248.4226 -32.29244,0.058 -78.61721,-0.4868 -99.38143,-0.5479 C 539.73296,550.9875 474.30182,486.5821 420.40804,433.8749 Z" />

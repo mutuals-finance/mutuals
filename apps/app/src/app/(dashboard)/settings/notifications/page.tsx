@@ -1,6 +1,6 @@
-import UserSettingsNotifications from "@/features/UserSettings/Notifications";
-import { Metadata } from "next";
-import AuthSignInCard from "@/features/Auth/SignInCard";
+import type { Metadata } from "next";
+import AuthSignInCard from "@/features/auth/sign-in-card";
+import UserSettingsNotifications from "@/features/user-settings/notifications";
 import { me } from "@/lib/privy";
 
 export const metadata: Metadata = {
@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 export default async function UserSettingsNotificationPage() {
   const user = await me();
 
-  return !user ? (
+  return user ? (
+    <UserSettingsNotifications user={user} />
+  ) : (
     <AuthSignInCard
       description={
         "To view and manage your notification settings you must sign in to your account."
       }
     />
-  ) : (
-    <UserSettingsNotifications user={user} />
   );
 }

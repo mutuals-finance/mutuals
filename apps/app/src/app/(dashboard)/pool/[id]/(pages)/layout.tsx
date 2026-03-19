@@ -1,4 +1,4 @@
-import ShellPool from "@/features/Shell/Pool";
+import ShellPool from "@/features/shell/pool";
 
 export default async function PoolPagesLayout({
   children,

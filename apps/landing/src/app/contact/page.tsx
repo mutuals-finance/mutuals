@@ -1,14 +1,12 @@
-import ShellPageHeader from "src/features/Shell/PageHeader";
-import ContactOptions from "@/features/Contact/Options";
-import MotionBoxWrapper from "@/components/MotionBoxWrapper";
+import ShellPageHeader from "src/features/shell/page-header";
+import MotionBoxWrapper from "@/components/motion-box-wrapper";
+import ContactOptions from "@/features/contact/options";
 
 export default function ContactPage() {
   return (
-    <>
-      <MotionBoxWrapper>
-        <ShellPageHeader tag={"Contact"}>Reach Out</ShellPageHeader>
-        <ContactOptions />
-      </MotionBoxWrapper>
-    </>
+    <MotionBoxWrapper>
+      <ShellPageHeader tag={"Contact"}>Reach Out</ShellPageHeader>
+      <ContactOptions />
+    </MotionBoxWrapper>
   );
 }

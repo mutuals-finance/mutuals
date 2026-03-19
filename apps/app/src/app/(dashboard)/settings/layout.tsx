@@ -1,32 +1,30 @@
-import { PropsWithChildren } from "react";
-import ShellPage from "@/features/Shell/Page";
 import { Container, RouterTabs } from "@mutuals/ui";
+import type { PropsWithChildren } from "react";
+import ShellPage from "@/features/shell/page";
 
-export default async function UserSettingsLayout({
-  children,
-}: PropsWithChildren) {
+export default function UserSettingsLayout({ children }: PropsWithChildren) {
   const tabs = [
     {
       title: "General",
       value: "general",
-      href: `/settings`,
+      href: "/settings",
     },
     {
       title: "Security",
       value: "security",
-      href: `/settings/security`,
+      href: "/settings/security",
     },
     {
       title: "Notifications",
       value: "notifications",
-      href: `/settings/notifications`,
+      href: "/settings/notifications",
     },
   ];
 
   return (
     <ShellPage title={"Profile Settings"}>
       <Container maxW={"7xl"}>
-        <RouterTabs tabs={tabs} mb={"6"}>
+        <RouterTabs mb={"6"} tabs={tabs}>
           {children}
         </RouterTabs>
       </Container>

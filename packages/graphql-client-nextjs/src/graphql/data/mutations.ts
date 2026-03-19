@@ -344,4 +344,3 @@ export const USER_UPDATE = graphql(/* GraphQL */ `
     }
   }
 `);
-

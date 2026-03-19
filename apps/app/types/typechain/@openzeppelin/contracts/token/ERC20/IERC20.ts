@@ -2,47 +2,41 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
   BigNumberish,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../../../../common";
 
 export interface IERC20Interface extends Interface {
-  getFunction(
-    nameOrSignature:
-      | "allowance"
-      | "approve"
-      | "balanceOf"
-      | "totalSupply"
-      | "transfer"
+  decodeFunctionResult(
+    functionFragment:
       | "transferFrom"
-  ): FunctionFragment;
-
-  getEvent(nameOrSignatureOrTopic: "Approval" | "Transfer"): EventFragment;
+      | (
+          | "transfer"
+          | ("totalSupply" | ("balanceOf" | ("approve" | "allowance")))
+        ),
+    data: BytesLike
+  ): Result;
 
   encodeFunctionData(
     functionFragment: "allowance",
     values: [AddressLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approve",
-    values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
@@ -53,7 +47,7 @@ export interface IERC20Interface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "transfer",
+    functionFragment: "transfer" | "approve",
     values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
@@ -61,25 +55,23 @@ export interface IERC20Interface extends Interface {
     values: [AddressLike, AddressLike, BigNumberish]
   ): string;
 
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
+  getEvent(nameOrSignatureOrTopic: "Approval" | "Transfer"): EventFragment;
+  getFunction(
+    nameOrSignature:
+      | "allowance"
+      | "approve"
+      | "balanceOf"
+      | "totalSupply"
+      | "transfer"
+      | "transferFrom"
+  ): FunctionFragment;
 }
 
 export namespace ApprovalEvent {
   export type InputTuple = [
     owner: AddressLike,
     spender: AddressLike,
-    value: BigNumberish
+    value: BigNumberish,
   ];
   export type OutputTuple = [owner: string, spender: string, value: bigint];
   export interface OutputObject {
@@ -97,7 +89,7 @@ export namespace TransferEvent {
   export type InputTuple = [
     from: AddressLike,
     to: AddressLike,
-    value: BigNumberish
+    value: BigNumberish,
   ];
   export type OutputTuple = [from: string, to: string, value: bigint];
   export interface OutputObject {
@@ -112,48 +104,6 @@ export namespace TransferEvent {
 }
 
 export interface IERC20 extends BaseContract {
-  connect(runner?: ContractRunner | null): IERC20;
-  waitForDeployment(): Promise<this>;
-
-  interface: IERC20Interface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
   allowance: TypedContractMethod<
     [owner: AddressLike, spender: AddressLike],
     [bigint],
@@ -167,74 +117,7 @@ export interface IERC20 extends BaseContract {
   >;
 
   balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
-
-  totalSupply: TypedContractMethod<[], [bigint], "view">;
-
-  transfer: TypedContractMethod<
-    [to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
-  transferFrom: TypedContractMethod<
-    [from: AddressLike, to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "allowance"
-  ): TypedContractMethod<
-    [owner: AddressLike, spender: AddressLike],
-    [bigint],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "approve"
-  ): TypedContractMethod<
-    [spender: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "balanceOf"
-  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "totalSupply"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "transfer"
-  ): TypedContractMethod<
-    [to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "transferFrom"
-  ): TypedContractMethod<
-    [from: AddressLike, to: AddressLike, value: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
-  getEvent(
-    key: "Approval"
-  ): TypedContractEvent<
-    ApprovalEvent.InputTuple,
-    ApprovalEvent.OutputTuple,
-    ApprovalEvent.OutputObject
-  >;
-  getEvent(
-    key: "Transfer"
-  ): TypedContractEvent<
-    TransferEvent.InputTuple,
-    TransferEvent.OutputTuple,
-    TransferEvent.OutputObject
-  >;
+  connect(runner?: ContractRunner | null): IERC20;
 
   filters: {
     "Approval(address,address,uint256)": TypedContractEvent<
@@ -259,4 +142,89 @@ export interface IERC20 extends BaseContract {
       TransferEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "Approval"
+  ): TypedContractEvent<
+    ApprovalEvent.InputTuple,
+    ApprovalEvent.OutputTuple,
+    ApprovalEvent.OutputObject
+  >;
+  getEvent(
+    key: "Transfer"
+  ): TypedContractEvent<
+    TransferEvent.InputTuple,
+    TransferEvent.OutputTuple,
+    TransferEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  getFunction(
+    nameOrSignature: "allowance"
+  ): TypedContractMethod<
+    [owner: AddressLike, spender: AddressLike],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "balanceOf"
+  ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalSupply"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "transfer" | "approve"
+  ): TypedContractMethod<
+    [to: AddressLike, value: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "transferFrom"
+  ): TypedContractMethod<
+    [from: AddressLike, to: AddressLike, value: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
+
+  interface: IERC20Interface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  totalSupply: TypedContractMethod<[], [bigint], "view">;
+
+  transfer: TypedContractMethod<
+    [to: AddressLike, value: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
+
+  transferFrom: TypedContractMethod<
+    [from: AddressLike, to: AddressLike, value: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
+  waitForDeployment(): Promise<this>;
 }

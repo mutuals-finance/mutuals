@@ -1,10 +1,11 @@
 import { SUPPORTED_CHAIN_IDS, TransactionType } from "../constants";
-import { MutualsClientConfig } from "../types";
+import type { MutualsClientConfig } from "../types";
 import { BaseClientMixin, BaseTransactions } from "./base";
 import { applyMixins } from "./mixin";
 import { PoolClient } from "./pool";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: intentional mixin pattern
 export class MutualsClient extends BaseTransactions {
   readonly pool: PoolClient | undefined;
   readonly estimateGas: MutualsClientGasEstimates;

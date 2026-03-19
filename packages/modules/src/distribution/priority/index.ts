@@ -1,9 +1,9 @@
-import { PriorityDistributionInput } from "./input";
-import { Module } from "../../types";
 import {
-  defaultValue as recipientDefaultValue,
   type RecipientInputData,
+  defaultValue as recipientDefaultValue,
 } from "../../components/recipient-input";
+import type { Module } from "../../types";
+import { PriorityDistributionInput } from "./input";
 
 export type PriorityDistributionData = RecipientInputData & {
   priority: number;

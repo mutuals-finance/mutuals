@@ -6,9 +6,9 @@ import {
   MotionBox,
   Stack,
 } from "@mutuals/ui";
-import { itemVariants } from "@/components/MotionBoxWrapper";
-import IconBox from "@/components/IconBox";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+import IconBox from "@/components/icon-box";
+import { itemVariants } from "@/components/motion-box-wrapper";
 
 export type ContactOptionsCardProps = Card.RootProps &
   PropsWithChildren<{
@@ -23,18 +23,18 @@ export default function ContactOptionsCard({
   ...props
 }: ContactOptionsCardProps) {
   return (
-    <MotionBox variants={itemVariants} asChild={true}>
+    <MotionBox asChild={true} variants={itemVariants}>
       <Card.Root {...props}>
         <Card.Header>
-          <Stack direction={"row"} alignItems={"flex-start"}>
+          <Stack alignItems={"flex-start"} direction={"row"}>
             <Heading textStyle={{ base: "2xl", lg: "3xl" }}>{heading}</Heading>
 
             {!!icon && (
               <IconBox
-                size={"xs"}
-                color={"colorPalette.fg"}
                 bg="colorPalette.muted"
+                color={"colorPalette.fg"}
                 ml={"auto"}
+                size={"xs"}
               >
                 <Icon asChild={true}>{icon}</Icon>
               </IconBox>

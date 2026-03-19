@@ -1,20 +1,20 @@
-import { Link, Stack, Text, StackProps } from "@mutuals/ui";
+import { Link, Stack, type StackProps, Text } from "@mutuals/ui";
 
 export type ShellDashboardSidebarFooterProps = StackProps;
 
 export default function ShellDashboardSidebarFooter(
-  props: ShellDashboardSidebarFooterProps,
+  props: ShellDashboardSidebarFooterProps
 ) {
   return (
     <Stack gap={"2"} {...props}>
       <Stack gap={"1"}>
         <Text truncate>&copy; {new Date().getFullYear()} Mutuals Finance</Text>
         <Text truncate>
-          <Link href={"/"} fontWeight={"normal"}>
+          <Link fontWeight={"normal"} href={"/"}>
             Privacy Policy
           </Link>{" "}
           /{" "}
-          <Link href={"/"} fontWeight={"normal"}>
+          <Link fontWeight={"normal"} href={"/"}>
             Terms of Service
           </Link>
         </Text>

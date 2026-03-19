@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from "react";
-import WalletList from "@/features/Wallet/List";
-import PoolList from "@/features/Pool/List";
-import DashboardHomeBalance from "src/features/DashboardHome/Balance";
-import DashboardHomeHandlers from "@/features/DashboardHome/Handlers";
 import { Box, Container, Heading, Stack } from "@mutuals/ui";
+import type { PropsWithChildren } from "react";
+import DashboardHomeBalance from "src/features/dashboard-home/balance";
+import DashboardHomeHandlers from "@/features/dashboard-home/handlers";
+import PoolList from "@/features/pool/list";
+import WalletList from "@/features/wallet/list";
 
 export default function DashboardHomeLayout({ children }: PropsWithChildren) {
   return (
@@ -11,7 +11,7 @@ export default function DashboardHomeLayout({ children }: PropsWithChildren) {
       <Container maxW={"7xl"} mt={"6"}>
         <Stack gap={"6"}>
           <Box>
-            <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+            <Heading as={"h2"} mb={"4"} textStyle={"3xl"}>
               Your Balance
             </Heading>
             <DashboardHomeBalance />
@@ -20,14 +20,14 @@ export default function DashboardHomeLayout({ children }: PropsWithChildren) {
           <DashboardHomeHandlers />
 
           <Box>
-            <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+            <Heading as={"h2"} mb={"4"} textStyle={"3xl"}>
               Wallets
             </Heading>
             <WalletList />
           </Box>
 
           <Box>
-            <Heading as={"h2"} textStyle={"3xl"} mb={"4"}>
+            <Heading as={"h2"} mb={"4"} textStyle={"3xl"}>
               Payment Pools
             </Heading>
             <PoolList />

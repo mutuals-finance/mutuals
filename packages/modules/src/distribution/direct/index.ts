@@ -1,13 +1,13 @@
-import { DirectDistributionInput } from "./input";
 import {
-  defaultValue as valueDefaultValue,
-  ValueInputData,
-} from "../../components/value-input";
-import { Module } from "../../types";
-import {
+  type RecipientInputData,
   defaultValue as recipientDefaultValue,
-  RecipientInputData,
 } from "../../components/recipient-input";
+import {
+  type ValueInputData,
+  defaultValue as valueDefaultValue,
+} from "../../components/value-input";
+import type { Module } from "../../types";
+import { DirectDistributionInput } from "./input";
 
 export type DirectDistributionData = ValueInputData & RecipientInputData;
 

@@ -1,21 +1,23 @@
-import { getPageImage, source } from "@/lib/source";
+import type { DocCollectionEntry } from "fumadocs-mdx/runtime/server";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
 } from "fumadocs-ui/layouts/docs/page";
-import { notFound } from "next/navigation";
-import { getMDXComponents } from "@/mdx-components";
-import type { Metadata } from "next";
 import { createRelativeLink } from "fumadocs-ui/mdx";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { LLMCopyButton, ViewOptions } from "@/components/ai/page-actions";
-import { DocCollectionEntry } from "fumadocs-mdx/runtime/server";
+import { getPageImage, source } from "@/lib/source";
+import { getMDXComponents } from "@/mdx-components";
 
 export default async function Page(props: PageProps<"/[...slug]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
-  if (!page) notFound();
+  if (!page) {
+    notFound();
+  }
   const pageData = page.data as DocCollectionEntry<"docs"> & {
     full?: boolean;
   };
@@ -30,20 +32,20 @@ export default async function Page(props: PageProps<"/[...slug]">) {
 
   return (
     <DocsPage
-      toc={pageData.toc}
-      full={pageData.full}
       className={"pb-16 lg:pb-16"}
+      full={pageData.full}
+      toc={pageData.toc}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}
       </DocsDescription>
-      <div className="flex flex-row gap-2 items-center border-b pb-6">
+      <div className="flex flex-row items-center gap-2 border-b pb-6">
         <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
         <ViewOptions
-          markdownUrl={`${page.url}.mdx`}
           // update it to match your repo
           githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/docs/content/docs/${page.path}`}
+          markdownUrl={`${page.url}.mdx`}
         />
       </div>
       <DocsBody>
@@ -58,16 +60,18 @@ export default async function Page(props: PageProps<"/[...slug]">) {
   );
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return source.generateParams();
 }
 
 export async function generateMetadata(
-  props: PageProps<"/[...slug]">,
+  props: PageProps<"/[...slug]">
 ): Promise<Metadata> {
   const params = await props.params;
   const page = source.getPage(params.slug);
-  if (!page) notFound();
+  if (!page) {
+    notFound();
+  }
 
   return {
     title: page.data.title,

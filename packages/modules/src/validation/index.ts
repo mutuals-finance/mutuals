@@ -1,4 +1,4 @@
-import * as OnChainMappingValidation from "./onchain-mapping";
-import * as MerkleTreeValidation from "./merkle-tree";
+import { module as MerkleTreeValidation } from "./merkle-tree";
+import { module as OnChainMappingValidation } from "./onchain-mapping";
 
-export default [OnChainMappingValidation.module, MerkleTreeValidation.module];
+export default [OnChainMappingValidation, MerkleTreeValidation];

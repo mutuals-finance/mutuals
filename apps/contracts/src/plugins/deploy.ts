@@ -1,5 +1,6 @@
-import { BaseContract, ContractFactory, Signer } from 'ethers';
-import {
+import type { DeployProxyOptions } from "@openzeppelin/hardhat-upgrades/src/utils";
+import type { BaseContract, ContractFactory, Signer } from "ethers";
+import type {
   BaseDeployFunction,
   DeployFunctionArgs,
   DeployOrUpgradeBeaconFunction,
@@ -8,32 +9,29 @@ import {
   DeployOrUpgradeProxyFunctionArgs,
   GenericDeployFunction,
   GenericUpgradeFunction,
-} from '#/types/global';
-import type { DeployProxyOptions } from '@openzeppelin/hardhat-upgrades/src/utils';
+} from "#/types/global";
 
 const parseOptions = (options?: DeployProxyOptions): DeployProxyOptions => {
-  if (options === undefined) {
-    options = {};
+  const opts: DeployProxyOptions = options ?? {};
+
+  if (opts.timeout === undefined) {
+    opts.timeout = 600e3;
   }
 
-  if (options.timeout === undefined) {
-    options.timeout = 600e3;
+  if (opts.useDefenderDeploy === undefined) {
+    opts.useDefenderDeploy = false;
   }
 
-  if (options.useDefenderDeploy === undefined) {
-    options.useDefenderDeploy = false;
-  }
-
-  return options;
+  return opts;
 };
 
 const getDeployer = async (): Promise<Signer> => {
   const deployer: Signer = await hre.ethers.getNamedSigner(
-    'mutualsStagingDeployer'
+    "mutualsStagingDeployer"
   );
 
   if (!deployer) {
-    throw new Error(`Deployer could not be found`);
+    throw new Error("Deployer could not be found");
   }
 
   return deployer;
@@ -64,7 +62,7 @@ const deployBase = async <TContract extends BaseContract>({
     signer
   );
 
-  hre.trace('...awaiting deployment transaction', contractName);
+  hre.trace("...awaiting deployment transaction", contractName);
   const deployTx = contract.deploymentTransaction();
   if (deployTx) {
     // On live networks, wait for multiple confirmations.
@@ -74,7 +72,7 @@ const deployBase = async <TContract extends BaseContract>({
   }
   await contract.waitForDeployment();
 
-  hre.trace('...successful deployment transaction', contractName);
+  hre.trace("...successful deployment transaction", contractName);
   return contract;
 };
 
@@ -91,19 +89,19 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
 }): Promise<InstanceOfContract<TContract>> => {
   const deployment = await hre.deployments.getOrNull(contractName);
   const maybeDeployedAddress = deployment?.address;
-  let contractCode = '0x';
-  if (typeof maybeDeployedAddress === 'string') {
+  let contractCode = "0x";
+  if (typeof maybeDeployedAddress === "string") {
     try {
       contractCode = await hre.ethers.provider.getCode(maybeDeployedAddress);
     } catch {
-      hre.trace('No existing code found');
+      hre.trace("No existing code found");
     }
   }
 
   const shouldDeployProxy =
-    contractCode === '0x' ||
+    contractCode === "0x" ||
     process.env.FORCE_PROXY_DEPLOYMENT ||
-    typeof maybeDeployedAddress !== 'string';
+    typeof maybeDeployedAddress !== "string";
 
   const deployFn: BaseDeployFunction = async (
     contractFactory,
@@ -114,23 +112,23 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
     let contract: InstanceOfContract<TContract>;
 
     if (shouldDeployProxy) {
-      hre.trace('Deploying proxy and instance', contractName);
+      hre.trace("Deploying proxy and instance", contractName);
       contract = await deployUpgradeableFn(contractFactory, args, options);
     } else {
       try {
         hre.trace(
-          'Found existing deployment at:',
+          "Found existing deployment at:",
           maybeDeployedAddress,
-          'attempting to upgrade instance',
+          "attempting to upgrade instance",
           contractName
         );
         const existingImplAddress =
           await getImplementationAddressFn(maybeDeployedAddress);
-        hre.trace('Existing implementation at:', existingImplAddress);
+        hre.trace("Existing implementation at:", existingImplAddress);
         const artifact = await hre.deployments.getArtifact(contractName);
         if (deployment?.bytecode === artifact.bytecode) {
           hre.trace(
-            'Implementation appears unchanged, skipped upgrade attempt.'
+            "Implementation appears unchanged, skipped upgrade attempt."
           );
           contract = await hre.ethers.getContract(contractName, signer);
         } else {
@@ -144,9 +142,9 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
               maybeDeployedAddress
             );
           if (existingImplAddress === newImplAddress) {
-            hre.trace('Implementation unchanged');
+            hre.trace("Implementation unchanged");
           } else {
-            hre.log('New implementation at:', newImplAddress);
+            hre.log("New implementation at:", newImplAddress);
           }
         }
       } catch (error) {
@@ -162,33 +160,33 @@ const deployOrUpgradeBase = async <TContract extends BaseContract>({
   return deployBase({ contractName, deployFn, ...argsAndOptions });
 };
 
-export const deployOrUpgradeProxy: DeployOrUpgradeProxyFunction =
-  async function <TContract extends BaseContract>(
-    args: DeployOrUpgradeProxyFunctionArgs
-  ) {
-    return deployOrUpgradeBase<TContract>({
-      ...args,
-      deployFn: hre.upgrades.deployProxy,
-      upgradeFn: hre.upgrades.upgradeProxy,
-      getImplementationAddressFn: hre.upgrades.erc1967.getImplementationAddress,
-    });
-  };
-
-export const deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction =
-  async function <TContract extends BaseContract>(
-    args: DeployOrUpgradeBeaconFunctionArgs
-  ) {
-    return deployOrUpgradeBase<TContract>({
-      ...args,
-      upgradeFn: hre.upgrades.upgradeBeacon,
-      deployFn: hre.upgrades.deployBeacon,
-      getImplementationAddressFn: hre.upgrades.beacon.getImplementationAddress,
-    });
-  };
-
-export const deployNonUpgradeable = async <
+export const deployOrUpgradeProxy: DeployOrUpgradeProxyFunction = async <
   TContract extends BaseContract,
-  TFactory extends ContractFactory,
+>(
+  args: DeployOrUpgradeProxyFunctionArgs
+) =>
+  deployOrUpgradeBase<TContract>({
+    ...args,
+    deployFn: hre.upgrades.deployProxy,
+    upgradeFn: hre.upgrades.upgradeProxy,
+    getImplementationAddressFn: hre.upgrades.erc1967.getImplementationAddress,
+  });
+
+export const deployOrUpgradeBeacon: DeployOrUpgradeBeaconFunction = async <
+  TContract extends BaseContract,
+>(
+  args: DeployOrUpgradeBeaconFunctionArgs
+) =>
+  deployOrUpgradeBase<TContract>({
+    ...args,
+    upgradeFn: hre.upgrades.upgradeBeacon,
+    deployFn: hre.upgrades.deployBeacon,
+    getImplementationAddressFn: hre.upgrades.beacon.getImplementationAddress,
+  });
+
+export const deployNonUpgradeable = <
+  TContract extends BaseContract,
+  _TFactory extends ContractFactory,
 >(options: {
   contractName: keyof Contracts;
   args?: unknown[];

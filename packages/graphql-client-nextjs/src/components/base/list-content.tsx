@@ -1,25 +1,25 @@
-import { OperationVariables } from "@apollo/client";
-import { ReactNode } from "react";
-import { QueryResultWithoutData } from "../../types";
+import type { OperationVariables } from "@apollo/client";
+import type { ReactNode } from "react";
+import type { QueryResultWithoutData } from "../../types";
 
-export type ListContentProps<
+export interface ListContentProps<
   TData = unknown,
   TVariables extends OperationVariables = OperationVariables,
   TItem = unknown,
-> = {
-  items?: TItem[];
-  data: NonNullable<TData>;
-  result: QueryResultWithoutData<TData, TVariables>;
+> {
   children: (
     item: TItem,
     index: number,
-    result: QueryResultWithoutData<TData, TVariables>,
+    result: QueryResultWithoutData<TData, TVariables>
   ) => ReactNode;
+  data: NonNullable<TData>;
   fallback?: (
     data: NonNullable<TData>,
-    result: QueryResultWithoutData<TData, TVariables>,
+    result: QueryResultWithoutData<TData, TVariables>
   ) => ReactNode;
-};
+  items?: TItem[];
+  result: QueryResultWithoutData<TData, TVariables>;
+}
 
 export function ListContent<
   TData = unknown,

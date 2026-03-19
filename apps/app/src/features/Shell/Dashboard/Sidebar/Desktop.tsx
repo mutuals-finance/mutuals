@@ -15,41 +15,41 @@ import {
 import {
   sidebar as sidebarItems,
   social as socialLinks,
-} from "@/features/Shell/Dashboard/links";
+} from "@/features/shell/dashboard/links";
 
-import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
-import ShellDashboardSidebarFooter from "@/features/Shell/Dashboard/Sidebar/Footer";
+import { useDashboardRoot } from "@/features/shell/dashboard/root";
+import ShellDashboardSidebarFooter from "@/features/shell/dashboard/sidebar/footer";
 
 export default function ShellDashboardSidebarDesktop() {
   const { desktop } = useDashboardRoot();
 
   return (
     <Stack
-      flex={"0 0 auto"}
       data-state={desktop.open ? "open" : "closed"}
-      position={"sticky"}
-      top="4rem"
+      flex={"0 0 auto"}
+      gap={"4"}
       h={"calc(100vh - 4rem)"}
       left="0"
+      minW={"5rem"}
+      overflow={"hidden"}
+      position={"sticky"}
+      px={"4"}
+      py={"6"}
+      separator={<StackSeparator />}
+      top="4rem"
+      transition="all 0.2s ease"
       w={{
         base: { _open: "60", _closed: "0" },
         "2xl": { _open: "80", _closed: "0" },
       }}
-      minW={"5rem"}
-      overflow={"hidden"}
-      gap={"4"}
-      px={"4"}
-      py={"6"}
-      transition="all 0.2s ease"
-      separator={<StackSeparator />}
     >
       <Stack flex={"1"}>
         <Stack gap={"6"} mb={"auto"}>
           {Object.keys(sidebarItems).map((section) => (
             <ShellDashboardSidebarDesktopSection
               key={section}
-              title={section}
               links={sidebarItems[section]}
+              title={section}
             />
           ))}
         </Stack>
@@ -60,8 +60,8 @@ export default function ShellDashboardSidebarDesktop() {
           visibility={desktop.open ? "inherit" : "hidden"}
         >
           {socialLinks.map(({ href, label, icon: LinkIcon, ...props }) => (
-            <Link key={label} href={href} {...props} asChild={true}>
-              <IconButton size={"xs"} variant="ghost" aria-label={label}>
+            <Link href={href} key={label} {...props} asChild={true}>
+              <IconButton aria-label={label} size={"xs"} variant="ghost">
                 <LinkIcon />
               </IconButton>
             </Link>
@@ -90,22 +90,22 @@ function ShellDashboardSidebarDesktopSection({
 }: ShellDashboardSidebarDesktopSectionProps) {
   return (
     <Stack gap={"2"} {...props}>
-      <Text textStyle="sm" fontWeight={"medium"} truncate>
+      <Text fontWeight={"medium"} textStyle="sm" truncate>
         {title}
       </Text>
       <Stack gap={2} w={"full"}>
         {links?.map(({ value, href, label, icon: LinkIcon, ...props }) => (
-          <Link key={value} href={href} {...props} asChild={true}>
+          <Link href={href} key={value} {...props} asChild={true}>
             <Button
+              fontSize={"sm"}
+              gap={"4"}
+              justifyContent={"flex-start"}
+              overflow={"hidden"}
+              px={"0.95rem"}
+              size={"xl"}
+              textAlign={"left"}
               variant={"outline"}
               w={"full"}
-              justifyContent={"flex-start"}
-              px={"0.95rem"}
-              gap={"4"}
-              size={"xl"}
-              fontSize={"sm"}
-              textAlign={"left"}
-              overflow={"hidden"}
             >
               <Icon boxSize={"4"}>
                 <LinkIcon />

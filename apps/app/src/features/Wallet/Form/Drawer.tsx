@@ -2,6 +2,7 @@
 
 import {
   Button,
+  DrawerActionTrigger,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
@@ -9,24 +10,22 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerRoot,
-  DrawerRootProps,
-  DrawerActionTrigger,
-  VStack,
+  type DrawerRootProps,
   DrawerTitle,
   Form,
+  VStack,
 } from "@mutuals/ui";
 import { useRouter } from "next/navigation";
-import React, { PropsWithChildren, useCallback, useState } from "react";
-import { useSignMessage } from "@/features/Wallet/SignProvider";
+import { type PropsWithChildren, useCallback, useState } from "react";
 
-type WalletData = {
-  name: string;
+interface WalletData {
   address: string;
-};
+  name: string;
+}
 
 interface WalletFormDrawerProps extends Omit<DrawerRootProps, "children"> {
-  title?: string;
   defaultValues?: WalletData;
+  title?: string;
 }
 export function WalletFormDrawer({
   title,
@@ -38,54 +37,18 @@ export function WalletFormDrawer({
   const [open, setOpen] = useState(initialOpen);
 
   const router = useRouter();
-  const { signMessage } = useSignMessage();
 
-  const onSubmit = useCallback(
-    async (data: WalletData) => {
-      const chainAddress = {
-        address: data.address,
-        chain: 1,
-      };
-
-      try {
-        /*
-        const { signature, message, nonce } = await signMessage({
-          modalProps: {
-            prompt:
-              "Please sign the message in your wallet in order to add it to your profile.",
-          },
-        });
-
-          const res = await addWallet({
-            variables: {
-              chainAddress,
-              authMechanism: {
-                eoa: {
-                  chainPubKey: {
-                    chain: chainAddress.chain,
-                    pubKey: chainAddress.address,
-                  },
-                  signature,
-                  message,
-                  nonce,
-                },
-              },
-            },
-          });*/
-      } catch (error) {
-        console.log("error", error);
-      }
-    },
-    [signMessage],
-  );
+  const onSubmit = useCallback((_data: WalletData) => {
+    // TODO: implement wallet add with signMessage
+  }, []);
 
   return (
     <DrawerRoot
+      onExitComplete={() => router.push("/", { scroll: false })}
+      onOpenChange={(e) => setOpen(e.open)}
+      open={open}
       placement={{ base: "bottom", lg: "end" }}
       size={{ base: "sm", lg: "sm" }}
-      open={open}
-      onOpenChange={(e) => setOpen(e.open)}
-      onExitComplete={() => router.push(`/`, { scroll: false })}
       {...props}
     >
       <DrawerBackdrop />
@@ -96,11 +59,11 @@ export function WalletFormDrawer({
           <DrawerTitle>{title}</DrawerTitle>
         </DrawerHeader>
         <Form<WalletData>
+          defaultValues={defaultValues}
           flex={"1"}
           onSubmit={(data) => onSubmit(data)}
-          defaultValues={defaultValues}
         >
-          <DrawerBody as={VStack} alignItems={"stretch"}>
+          <DrawerBody alignItems={"stretch"} as={VStack}>
             {children}
           </DrawerBody>
 
@@ -111,7 +74,7 @@ export function WalletFormDrawer({
               </Button>
             </DrawerActionTrigger>
 
-            <Button loading={false} type={"submit"} disabled={true}>
+            <Button disabled={true} loading={false} type={"submit"}>
               Submit
             </Button>
           </DrawerFooter>

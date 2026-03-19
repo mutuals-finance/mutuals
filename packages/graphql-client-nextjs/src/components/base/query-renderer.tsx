@@ -1,8 +1,8 @@
-import { OperationVariables } from "@apollo/client";
+import type { OperationVariables } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import { ReactNode } from "react";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
-import {
+import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import type { ReactNode } from "react";
+import type {
   FragmentConfig,
   QueryDocument,
   QueryOptions,
@@ -10,45 +10,54 @@ import {
   QueryResultWithoutData,
 } from "../../types";
 
-export type QueryRendererProps<
+export interface QueryRendererProps<
   TData,
   TVariables extends OperationVariables,
-  TFragment extends TypedDocumentNode<any, any> | undefined = undefined,
-> = {
-  query: QueryDocument<TData, TVariables>;
-  options?: QueryOptions<TData, TVariables>;
-  fragment?: TFragment extends TypedDocumentNode<any, any>
-    ? FragmentConfig<TData, TFragment>
-    : undefined;
+  TFragment extends TypedDocumentNode<object, object> | undefined = undefined,
+> {
   children: (
     data: TData,
-    result: QueryResultWithoutData<TData, TVariables>,
-  ) => ReactNode;
-  loading?: (result: QueryResult<TData, TVariables>) => ReactNode;
-  error?: (
-    error: NonNullable<QueryResult<TData, TVariables>["error"]>,
-    result: QueryResult<TData, TVariables>,
+    result: QueryResultWithoutData<TData, TVariables>
   ) => ReactNode;
   empty?: (result: QueryResult<TData, TVariables>) => ReactNode;
-};
+  error?: (
+    error: NonNullable<QueryResult<TData, TVariables>["error"]>,
+    result: QueryResult<TData, TVariables>
+  ) => ReactNode;
+  fragment?: TFragment extends TypedDocumentNode<object, object>
+    ? FragmentConfig<TData, TFragment>
+    : undefined;
+  loading?: (result: QueryResult<TData, TVariables>) => ReactNode;
+  options?: QueryOptions<TData, TVariables>;
+  query: QueryDocument<TData, TVariables>;
+}
 
 export function QueryRenderer<
   TData,
   TVariables extends OperationVariables,
-  TFragment extends TypedDocumentNode<any, any> | undefined = undefined,
+  TFragment extends TypedDocumentNode<object, object> | undefined = undefined,
 >({
   query,
   options,
   children,
   loading: Loading,
-  error: Error,
+  error: ErrorRenderer,
   empty: Empty,
 }: QueryRendererProps<TData, TVariables, TFragment>) {
+  // biome-ignore lint/suspicious/noExplicitAny: options may be undefined and we need a fallback
   const result = useQuery<TData, TVariables>(query, options ?? ({} as any));
   const { data, ...rest } = result;
-  if (result.error && Error) return <>{Error(result.error, result)}</>;
-  if (result.loading && Loading) return <>{Loading(result)}</>;
-  if (!data && Empty) return <>{Empty(result)}</>;
-  if (!data) return null;
+  if (result.error && ErrorRenderer) {
+    return <>{ErrorRenderer(result.error, result)}</>;
+  }
+  if (result.loading && Loading) {
+    return <>{Loading(result)}</>;
+  }
+  if (!data && Empty) {
+    return <>{Empty(result)}</>;
+  }
+  if (!data) {
+    return null;
+  }
   return <>{children(data as TData, rest)}</>;
 }

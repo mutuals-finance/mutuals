@@ -1,21 +1,21 @@
 import { ApolloLink, Observable } from "@apollo/client/core";
 
 export interface INetworkResponse {
-  networkError: any;
-  operation: ApolloLink.Operation;
   forward?: ApolloLink.ForwardFunction;
+  networkError: Error | string | unknown;
+  operation: ApolloLink.Operation;
 }
 
-export type ResultData = {
-  [key: string]: any;
-};
+export interface ResultData {
+  [key: string]: unknown;
+}
 
 export type NetworkErrorHandler = (
-  error: INetworkResponse,
+  error: INetworkResponse
 ) => ResultData | Promise<ResultData>;
 
 export class NetworkErrorLink extends ApolloLink {
-  private handler: NetworkErrorHandler;
+  private readonly handler: NetworkErrorHandler;
   constructor(errorHandler: NetworkErrorHandler) {
     super();
     this.handler = errorHandler;
@@ -23,7 +23,7 @@ export class NetworkErrorLink extends ApolloLink {
 
   request(
     operation: ApolloLink.Operation,
-    forward: ApolloLink.ForwardFunction,
+    forward: ApolloLink.ForwardFunction
   ): Observable<ApolloLink.Result> {
     return new Observable((observer) => {
       const subscription = forward(operation).subscribe({
@@ -47,7 +47,9 @@ export class NetworkErrorLink extends ApolloLink {
       });
 
       return () => {
-        if (subscription) subscription.unsubscribe();
+        if (subscription) {
+          subscription.unsubscribe();
+        }
       };
     });
   }

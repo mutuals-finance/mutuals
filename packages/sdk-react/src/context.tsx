@@ -1,37 +1,38 @@
-import React, {
+import { MutualsClient, type MutualsClientConfig } from "@mutuals/sdk";
+import {
   createContext,
-  useState,
+  type PropsWithChildren,
+  useCallback,
   useMemo,
-  PropsWithChildren,
+  useState,
 } from "react";
-import { MutualsClient, MutualsClientConfig } from "@mutuals/sdk";
 
-export type MutualsReactSdkContext = {
-  mutualsClient: MutualsClient;
+export interface MutualsReactSdkContext {
   initClient: (config: MutualsClientConfig) => void;
-};
+  mutualsClient: MutualsClient;
+}
 
 export const MutualsContext = createContext<MutualsReactSdkContext | undefined>(
-  undefined,
+  undefined
 );
 
 export const MutualsProvider = ({
-  config = { chainId: 80002 },
+  config = { chainId: 80_002 },
   children,
 }: PropsWithChildren<{
   config?: MutualsClientConfig;
 }>) => {
   const [mutualsClient, setMutualsClient] = useState<MutualsClient>(
-    () => new MutualsClient(config),
+    () => new MutualsClient(config)
   );
 
-  const initClient = (config: MutualsClientConfig) => {
+  const initClient = useCallback((config: MutualsClientConfig) => {
     setMutualsClient(new MutualsClient(config));
-  };
+  }, []);
 
   const contextValue = useMemo(
     () => ({ mutualsClient, initClient }),
-    [mutualsClient],
+    [mutualsClient, initClient]
   );
 
   return (

@@ -1,9 +1,8 @@
 "use client";
 
-import { useHeaderObserver } from "@/providers/HeaderObserver";
 import { Box, MotionBox } from "@mutuals/ui";
-
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+import { useHeaderObserver } from "@/providers/HeaderObserver";
 
 interface ThemeHeaderProps extends PropsWithChildren {
   theme: "light" | "dark";
@@ -30,11 +29,11 @@ export default function HeaderObserverChange({
       {children}
 
       <MotionBox
+        inset={"0"}
         onViewportEnter={onViewportEnter}
         onViewportLeave={onViewportLeave}
-        position={"absolute"}
-        inset={"0"}
         pointerEvents={"none"}
+        position={"absolute"}
         viewport={{ margin: "-40px 0px -100% 0px" }}
       />
     </Box>

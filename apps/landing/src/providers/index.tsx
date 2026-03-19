@@ -1,10 +1,10 @@
-import { PropsWithChildren } from "react";
 import { UIProvider } from "@mutuals/ui";
+import type { PropsWithChildren } from "react";
 
 import "keen-slider/keen-slider.min.css";
-import HeaderObserverProvider from "./HeaderObserver";
-import FramerMotionProvider from "./FramerMotion";
 import AnalyticsProvider from "@/providers/Analytics";
+import FramerMotionProvider from "./FramerMotion";
+import HeaderObserverProvider from "./HeaderObserver";
 
 export default function Providers({ children }: PropsWithChildren) {
   return (

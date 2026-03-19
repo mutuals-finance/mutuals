@@ -1,13 +1,12 @@
 "use client";
 
-import PoolListContent from "@/features/Pool/List/Content";
-import { usePrivy } from "@privy-io/react-auth";
-import { For, GridItem, Show, SimpleGrid } from "@mutuals/ui";
-import React from "react";
-import PoolCardSkeleton from "@/features/Pool/Card/Skeleton";
-import AuthSiginInCard from "@/features/Auth/SignInCard";
 import { useViewerPoolList } from "@mutuals/graphql-client-nextjs/client";
-import PoolListEmptyState from "@/features/Pool/List/EmptyState";
+import { For, GridItem, Show, SimpleGrid } from "@mutuals/ui";
+import { usePrivy } from "@privy-io/react-auth";
+import AuthSiginInCard from "@/features/auth/sign-in-card";
+import PoolCardSkeleton from "@/features/pool/card/skeleton";
+import PoolListContent from "@/features/pool/list/content";
+import PoolListEmptyState from "@/features/pool/list/empty-state";
 
 export default function PoolList() {
   const { authenticated, ready } = usePrivy();
@@ -19,19 +18,18 @@ export default function PoolList() {
 
   return (
     <SimpleGrid
-      templateColumns={"repeat(auto-fill, minmax(14rem, 1fr))"}
       gap={6}
+      templateColumns={"repeat(auto-fill, minmax(14rem, 1fr))"}
     >
       <Show
-        when={!loading}
         fallback={
-          <For each={[...Array(3).keys()]}>
+          <For each={[...new Array(3).keys()]}>
             {(i) => <PoolCardSkeleton key={i} />}
           </For>
         }
+        when={!loading}
       >
         <Show
-          when={authenticated}
           fallback={
             <GridItem gridColumn={"1 / -1"}>
               <AuthSiginInCard
@@ -41,6 +39,7 @@ export default function PoolList() {
               />
             </GridItem>
           }
+          when={authenticated}
         >
           {data?.viewer && data.viewer.__typename === "User" ? (
             <PoolListContent {...data.viewer} />

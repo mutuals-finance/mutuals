@@ -5,31 +5,28 @@ import type {
   BaseContract,
   BigNumberish,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../../common";
 
 export interface ContractMetadataInterface extends Interface {
-  getFunction(
-    nameOrSignature: "contractURI" | "setContractURI"
-  ): FunctionFragment;
-
-  getEvent(
-    nameOrSignatureOrTopic: "ContractURIUpdated" | "Initialized"
-  ): EventFragment;
+  decodeFunctionResult(
+    functionFragment: "setContractURI" | "contractURI",
+    data: BytesLike
+  ): Result;
 
   encodeFunctionData(
     functionFragment: "contractURI",
@@ -40,22 +37,20 @@ export interface ContractMetadataInterface extends Interface {
     values: [string]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "contractURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setContractURI",
-    data: BytesLike
-  ): Result;
+  getEvent(
+    nameOrSignatureOrTopic: "ContractURIUpdated" | "Initialized"
+  ): EventFragment;
+  getFunction(
+    nameOrSignature: "contractURI" | "setContractURI"
+  ): FunctionFragment;
 }
 
 export namespace ContractURIUpdatedEvent {
   export type InputTuple = [prevURI: string, newURI: string];
   export type OutputTuple = [prevURI: string, newURI: string];
   export interface OutputObject {
-    prevURI: string;
     newURI: string;
+    prevURI: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -77,76 +72,8 @@ export namespace InitializedEvent {
 
 export interface ContractMetadata extends BaseContract {
   connect(runner?: ContractRunner | null): ContractMetadata;
-  waitForDeployment(): Promise<this>;
-
-  interface: ContractMetadataInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
 
   contractURI: TypedContractMethod<[], [string], "view">;
-
-  setContractURI: TypedContractMethod<[_uri: string], [void], "nonpayable">;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "contractURI"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "setContractURI"
-  ): TypedContractMethod<[_uri: string], [void], "nonpayable">;
-
-  getEvent(
-    key: "ContractURIUpdated"
-  ): TypedContractEvent<
-    ContractURIUpdatedEvent.InputTuple,
-    ContractURIUpdatedEvent.OutputTuple,
-    ContractURIUpdatedEvent.OutputObject
-  >;
-  getEvent(
-    key: "Initialized"
-  ): TypedContractEvent<
-    InitializedEvent.InputTuple,
-    InitializedEvent.OutputTuple,
-    InitializedEvent.OutputObject
-  >;
 
   filters: {
     "ContractURIUpdated(string,string)": TypedContractEvent<
@@ -171,4 +98,60 @@ export interface ContractMetadata extends BaseContract {
       InitializedEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "ContractURIUpdated"
+  ): TypedContractEvent<
+    ContractURIUpdatedEvent.InputTuple,
+    ContractURIUpdatedEvent.OutputTuple,
+    ContractURIUpdatedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  getFunction(
+    nameOrSignature: "contractURI"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "setContractURI"
+  ): TypedContractMethod<[_uri: string], [undefined], "nonpayable">;
+
+  interface: ContractMetadataInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  setContractURI: TypedContractMethod<
+    [_uri: string],
+    [undefined],
+    "nonpayable"
+  >;
+  waitForDeployment(): Promise<this>;
 }

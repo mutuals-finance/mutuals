@@ -1,11 +1,11 @@
 import { Container, SimpleGrid } from "@mutuals/ui";
-import options from "@/features/Pricing/Options/items";
-import PricingOptionsCard from "@/features/Pricing/Options/Card";
+import PricingOptionsCard from "@/features/pricing/options/card";
+import options from "@/features/pricing/options/items";
 
 export default function PricingOptions() {
   return (
-    <Container maxW="7xl" mt={{ base: "6", lg: "12" }} mb={"16"}>
-      <SimpleGrid gap={{ base: "2", lg: "6" }} columns={{ base: 1, md: 3 }}>
+    <Container maxW="7xl" mb={"16"} mt={{ base: "6", lg: "12" }}>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: "2", lg: "6" }}>
         {options.map((option) => (
           <PricingOptionsCard key={option.heading} {...option} />
         ))}

@@ -1,6 +1,6 @@
-import AuthLogin from "@/features/Auth/Login";
-import { Metadata } from "next";
-import { AuthShellQueryParams } from "@/features/Shell/Login/Provider";
+import type { Metadata } from "next";
+import AuthLogin from "@/features/auth/login";
+import type { AuthShellQueryParams } from "@/features/shell/login/provider";
 
 export const metadata: Metadata = {
   title: "Sign in",

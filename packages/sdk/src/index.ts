@@ -1,30 +1,26 @@
-import { PoolClient } from "./client/pool";
-import { MutualsClient } from "./client";
-
-export { PoolClient, MutualsClient };
-
-export * from "./errors";
-
+export { MutualsClient } from "./client";
+export { PoolClient } from "./client/pool";
 export {
-  SUPPORTED_CHAIN_IDS,
-  StateExtensions,
-  StrategyExtensions,
   AllocationType,
   allocationIds,
+  StateExtensions,
+  StrategyExtensions,
+  SUPPORTED_CHAIN_IDS,
   stateIds,
   strategyIds,
 } from "./constants";
+export * from "./errors";
 export type {
-  KeyedValue,
-  MutualsClientConfig,
-  DataClientConfig,
-  CallData,
-  CreatePoolConfig,
-  SetPoolAllocationConfig,
-  WithdrawConfig,
-  TransferOwnershipConfig,
-  SetPausedConfig,
   Allocation,
   CalculationType,
+  CallData,
+  CreatePoolConfig,
+  DataClientConfig,
+  KeyedValue,
+  MutualsClientConfig,
   RecipientType,
+  SetPausedConfig,
+  SetPoolAllocationConfig,
+  TransferOwnershipConfig,
+  WithdrawConfig,
 } from "./types";

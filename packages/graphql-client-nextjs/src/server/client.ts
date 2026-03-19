@@ -1,17 +1,17 @@
 import {
   ApolloClient,
+  ApolloLink,
+  CombinedGraphQLErrors,
   HttpLink,
   InMemoryCache,
-  CombinedGraphQLErrors,
   ServerError,
-  ApolloLink,
 } from "@apollo/client";
-import { registerApolloClient } from "@apollo/client-integration-nextjs";
-import config from "../config";
 import { ErrorLink } from "@apollo/client/link/error";
+import { registerApolloClient } from "@apollo/client-integration-nextjs";
 import { headers } from "next/headers";
-import { NetworkErrorLink } from "./networkErrorLink";
+import config from "../config";
 import { initServerMocks } from "../mocks/init-server";
+import { NetworkErrorLink } from "./networkErrorLink";
 
 const makeClient = async () => {
   await initServerMocks();
@@ -25,9 +25,9 @@ const makeClient = async () => {
 
   const errorLink = new ErrorLink(({ error }) => {
     if (CombinedGraphQLErrors.is(error)) {
-      error.errors.forEach(({ message }) =>
-        console.log(`GraphQL error: ${message}`),
-      );
+      for (const { message } of error.errors) {
+        console.log(`GraphQL error: ${message}`);
+      }
     } else if (ServerError.is(error)) {
       console.log(`Server error: ${error.message}`);
     } else if (error) {

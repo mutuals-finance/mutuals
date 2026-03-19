@@ -1,13 +1,13 @@
-import { VestingDistributionInput } from "./input";
 import {
-  defaultValue as valueDefaultValue,
-  type ValueInputData,
-} from "../../components/value-input";
-import {
-  defaultValue as recipientDefaultValue,
   type RecipientInputData,
+  defaultValue as recipientDefaultValue,
 } from "../../components/recipient-input";
-import { Module } from "../../types";
+import {
+  type ValueInputData,
+  defaultValue as valueDefaultValue,
+} from "../../components/value-input";
+import type { Module } from "../../types";
+import { VestingDistributionInput } from "./input";
 
 export type VestingDistributionData = RecipientInputData &
   ValueInputData & {

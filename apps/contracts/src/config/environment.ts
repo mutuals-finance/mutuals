@@ -1,5 +1,5 @@
-import dotenvDefaults from 'dotenv-defaults';
-import dotenvParseVariables from 'dotenv-parse-variables';
+import dotenvDefaults from "dotenv-defaults";
+import dotenvParseVariables from "dotenv-parse-variables";
 
 const loadEnvironment = (): void => {
   const defaults = dotenvDefaults.config();
@@ -13,7 +13,7 @@ const loadEnvironment = (): void => {
         ...defaults.parsed,
         ...process.env,
       } as dotenvParseVariables.Parsed)
-    ).map(([k, v]) => [k, (v as string)?.toLowerCase?.() === 'null' ? null : v])
+    ).map(([k, v]) => [k, (v as string)?.toLowerCase?.() === "null" ? null : v])
   ) as typeof global.process.env;
 };
 

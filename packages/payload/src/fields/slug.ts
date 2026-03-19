@@ -1,6 +1,6 @@
 import type { Field } from "payload";
 
-import { formatSlug, deepMerge } from "../utils";
+import { deepMerge, formatSlug } from "../utils";
 
 type Slug = (fieldToUse?: string, overrides?: Partial<Field>) => Field;
 
@@ -18,5 +18,5 @@ export const slugField: Slug = (fieldToUse = "title", overrides = {}) =>
       index: true,
       label: "Slug",
     },
-    overrides,
+    overrides
   );

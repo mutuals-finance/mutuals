@@ -1,8 +1,8 @@
 import {
   Container,
-  ContainerProps,
+  type ContainerProps,
   RouterTabs,
-  RouterTabsProps,
+  type RouterTabsProps,
 } from "@mutuals/ui";
 
 export type BlogTabsProps = ContainerProps & {
@@ -18,7 +18,7 @@ export default function BlogTabs({
 }: BlogTabsProps) {
   return (
     <Container maxW={"7xl"} {...props}>
-      <RouterTabs tabs={tabs} size={"lg"} {...tabsProps}>
+      <RouterTabs size={"lg"} tabs={tabs} {...tabsProps}>
         {children}
       </RouterTabs>
     </Container>

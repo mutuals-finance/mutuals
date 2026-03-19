@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
-import { FieldValues, FieldName, FieldErrors } from "react-hook-form";
-import { Alert, AlertProps } from "../ui/alert";
 import { List } from "@chakra-ui/react";
 import {
   ErrorMessage,
-  FieldValuesFromFieldErrors,
+  type FieldValuesFromFieldErrors,
 } from "@hookform/error-message";
+import type { FieldErrors, FieldName, FieldValues } from "react-hook-form";
+import { Alert, type AlertProps } from "../ui/alert";
 
 export interface FormErrorAlertProps<
   TFieldValues extends FieldValues = FieldValues,

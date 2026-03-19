@@ -4,79 +4,38 @@
 import type {
   BaseContract,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
-  TypedContractMethod,
 } from "../../../../common";
 
 export interface IBeaconInterface extends Interface {
-  getFunction(nameOrSignature: "implementation"): FunctionFragment;
+  decodeFunctionResult(
+    functionFragment: "implementation",
+    data: BytesLike
+  ): Result;
 
   encodeFunctionData(
     functionFragment: "implementation",
     values?: undefined
   ): string;
-
-  decodeFunctionResult(
-    functionFragment: "implementation",
-    data: BytesLike
-  ): Result;
+  getFunction(nameOrSignature: "implementation"): FunctionFragment;
 }
 
 export interface IBeacon extends BaseContract {
   connect(runner?: ContractRunner | null): IBeacon;
-  waitForDeployment(): Promise<this>;
 
-  interface: IBeaconInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  implementation: TypedContractMethod<[], [string], "view">;
+  filters: {};
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
@@ -86,5 +45,29 @@ export interface IBeacon extends BaseContract {
     nameOrSignature: "implementation"
   ): TypedContractMethod<[], [string], "view">;
 
-  filters: {};
+  implementation: TypedContractMethod<[], [string], "view">;
+
+  interface: IBeaconInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+  waitForDeployment(): Promise<this>;
 }

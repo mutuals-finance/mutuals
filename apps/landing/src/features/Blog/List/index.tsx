@@ -1,6 +1,6 @@
-import BlogListGrid from "@/features/Blog/List/Grid";
-import BlogListCarousel from "@/features/Blog/List/Carousel";
-import BlogListRoot from "@/features/Blog/List/Root";
+import BlogListCarousel from "@/features/blog/list/carousel";
+import BlogListGrid from "@/features/blog/list/grid";
+import BlogListRoot from "@/features/blog/list/root";
 
 const BlogList = {
   Root: BlogListRoot,

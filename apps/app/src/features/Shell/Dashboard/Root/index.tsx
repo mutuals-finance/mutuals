@@ -1,20 +1,33 @@
 "use client";
 
-import { createContext, PropsWithChildren, useContext, useEffect } from "react";
-import { useDisclosure, type UseDisclosureReturn } from "@mutuals/ui";
+import { type UseDisclosureReturn, useDisclosure } from "@mutuals/ui";
 import { usePathname } from "next/navigation";
+import {
+  createContext,
+  type PropsWithChildren,
+  useContext,
+  useEffect,
+} from "react";
 
-export type UseDashboardRootReturn = {
-  mobile: UseDisclosureReturn;
+export interface UseDashboardRootReturn {
   desktop: UseDisclosureReturn;
-};
+  mobile: UseDisclosureReturn;
+}
 
 const defaultDisclosureState = {
   open: false,
-  onOpen: () => {},
-  onClose: () => {},
-  onToggle: () => {},
-  setOpen: () => {},
+  onOpen: () => {
+    /* intentional */
+  },
+  onClose: () => {
+    /* intentional */
+  },
+  onToggle: () => {
+    /* intentional */
+  },
+  setOpen: () => {
+    /* intentional */
+  },
 };
 
 const DashboardRootContext = createContext<UseDashboardRootReturn>({
@@ -31,11 +44,11 @@ export default function ShellDashboardRoot({ children }: PropsWithChildren) {
   const desktop = useDisclosure({ defaultOpen: true });
 
   const { setOpen: setMobileOpen } = mobile;
-  const pathname = usePathname();
+  const _pathname = usePathname();
 
   useEffect(() => {
     setMobileOpen(false);
-  }, [pathname, setMobileOpen]);
+  }, [setMobileOpen]);
 
   const value = {
     mobile,

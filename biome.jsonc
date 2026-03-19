@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
+  "javascript": {
+    "globals": ["Liveblocks", "hre", "Contracts", "InstanceOfContract"]
+  },
+  "linter": {
+    "rules": {
+      "performance": {
+        "noBarrelFile": "off"
+      }
+    }
+  },
+  "files": {
+    "includes": [
+      "!apps/app/public/mockServiceWorker.js",
+      "!apps/app/types/typechain/**/*",
+      "!apps/docs/src/app/global.css",
+      "!packages/graphql-client-nextjs/src/graphql/data/__generated__/**/*",
+      "!packages/payload/src/payload-types.ts",
+      "!packages/sdk/src/constants/abi/**/*",
+      "!packages/ui/src/components/ui/**/*"
+    ]
+  },
+  "overrides": [
+    {
+      "includes": [
+        "apps/cms/src/app/**/importMap.js",
+        "apps/cms/src/migrations/**",
+        "apps/contracts/src/deploy/**",
+        "packages/payload/src/migrations/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/payload/src/access/isAdmin.ts",
+        "packages/payload/src/access/isAdminOrSelf.ts",
+        "packages/payload/src/access/publishedOnly.ts",
+        "packages/payload/src/collections/Categories.ts",
+        "packages/payload/src/collections/Media.ts",
+        "packages/payload/src/collections/Posts.ts",
+        "packages/payload/src/collections/Users.ts",
+        "packages/payload/src/configurePayload.ts",
+        "packages/payload/src/fields/blockFields.ts",
+        "packages/payload/src/fields/codeBlips.ts",
+        "packages/payload/src/fields/richText.ts",
+        "packages/payload/src/utils/deepMerge.ts",
+        "packages/payload/src/utils/formatPagePath.ts",
+        "packages/payload/src/utils/formatPreviewURL.ts",
+        "packages/payload/src/utils/formatSlug.ts",
+        "packages/analytics-nextjs/src/mixpanel/useMixpanel.ts",
+        "packages/graphql-client-nextjs/src/server/networkErrorLink.ts",
+        "packages/modules/src/components/value-input/Select.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    }
+  ]
+}

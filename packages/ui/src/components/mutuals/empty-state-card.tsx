@@ -1,6 +1,6 @@
 import { Card, Wrap } from "@chakra-ui/react";
-import { PropsWithChildren } from "react";
-import { EmptyState, EmptyStateProps } from "../ui/empty-state";
+import type { PropsWithChildren } from "react";
+import { EmptyState, type EmptyStateProps } from "../ui/empty-state";
 
 export type EmptyStateCardProps = Omit<Card.RootProps, "children"> &
   PropsWithChildren<{
@@ -20,14 +20,14 @@ export function EmptyStateCard({
   ...props
 }: EmptyStateCardProps) {
   return (
-    <Card.Root size={"sm"} bg={"bg"} colorPalette={colorPalette} {...props}>
+    <Card.Root bg={"bg"} colorPalette={colorPalette} size={"sm"} {...props}>
       <Card.Body>
         <EmptyState
-          icon={icon}
-          title={title}
-          description={description}
-          size={"sm"}
           colorPalette={colorPalette}
+          description={description}
+          icon={icon}
+          size={"sm"}
+          title={title}
           {...emptyStateProps}
         >
           <Wrap gap={"2"} justify={"center"}>

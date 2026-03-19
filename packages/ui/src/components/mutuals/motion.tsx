@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, MotionProps } from "framer-motion";
-import { BoxProps, chakra } from "@chakra-ui/react";
+import { type BoxProps, chakra } from "@chakra-ui/react";
+import { type MotionProps, motion } from "framer-motion";
 import { forwardRef } from "react";
 
 export type MotionBoxProps = MotionProps & Omit<BoxProps, "transition">;
@@ -9,7 +9,7 @@ export type MotionBoxProps = MotionProps & Omit<BoxProps, "transition">;
 const ChakraMotionBox = forwardRef<"div", MotionBoxProps>(
   ({ transition: _, ...props }, ref) => {
     return <chakra.div ref={ref} {...props} />;
-  },
+  }
 );
 
 ChakraMotionBox.displayName = "MotionBox";

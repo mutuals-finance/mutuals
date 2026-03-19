@@ -1,28 +1,29 @@
 "use client";
 
-import React, { PropsWithChildren } from "react";
+import type { User } from "@privy-io/node";
+import type { PropsWithChildren } from "react";
 import { useAccount } from "wagmi";
-import WalletForm from "@/features/Wallet/Form";
-import AuthSignInCard from "@/features/Auth/SignInCard";
-import { User } from "@privy-io/node";
+import AuthSignInCard from "@/features/auth/sign-in-card";
+import WalletForm from "@/features/wallet/form";
 
 interface WalletAddProps extends PropsWithChildren {
   user?: User;
 }
 
-export default function WalletAdd({ children, user }: WalletAddProps) {
+export default function WalletAdd({
+  children: _children,
+  user,
+}: WalletAddProps) {
   const account = useAccount();
   //const walletMap = walletMapFromViewerQuery(data);
   const address = account.address ?? "";
 
   return (
     <WalletForm.Drawer
-      title={"Add Wallet"}
       defaultValues={{ name: "", address }}
+      title={"Add Wallet"}
     >
-      {!user ? (
-        <AuthSignInCard />
-      ) : (
+      {user ? (
         <WalletForm.Content>
           {/*
           <Alert status={"info"} fontSize={"xs"}>
@@ -33,6 +34,8 @@ export default function WalletAdd({ children, user }: WalletAddProps) {
           </Alert>
 */}
         </WalletForm.Content>
+      ) : (
+        <AuthSignInCard />
       )}
       {/* {!walletMap[address] ? (
         ) : (

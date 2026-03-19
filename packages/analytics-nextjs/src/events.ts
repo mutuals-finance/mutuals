@@ -45,17 +45,17 @@ export type AnalyticsEvent =
  */
 
 export interface SignUpProperties {
-  user_id: string;
-  email?: string;
-  wallet_address?: string;
   account_type?: string;
+  email?: string;
+  user_id: string;
+  wallet_address?: string;
 }
 
 export interface SignInProperties {
-  user_id: string;
-  email?: string;
-  wallet_address?: string;
   account_type?: string;
+  email?: string;
+  user_id: string;
+  wallet_address?: string;
 }
 
 export interface WalletConnectedProperties {
@@ -65,20 +65,20 @@ export interface WalletConnectedProperties {
 
 export interface NewsletterSubscribedProperties {
   email: string;
-  source: string;
   mixpanel_user_id?: string;
+  source: string;
 }
 
 export interface NewsletterSubscriptionFailedProperties {
   email: string;
-  source: string;
   error: string;
+  source: string;
 }
 
 export interface PoolCreatedProperties {
+  member_count: number;
   pool_id: string;
   pool_name: string;
-  member_count: number;
 }
 
 export interface PoolViewedProperties {
@@ -87,8 +87,8 @@ export interface PoolViewedProperties {
 }
 
 export interface TransactionProperties {
-  pool_id: string;
   amount: string;
+  pool_id: string;
   token_address?: string;
   transaction_hash?: string;
 }
@@ -100,20 +100,20 @@ export interface PageViewedProperties {
 }
 
 export interface LinkClickedProperties {
+  link_target?: string;
   link_text: string;
   link_url: string;
-  link_target?: string;
 }
 
 export interface FormSubmittedProperties {
-  form_name: string;
   form_location: string;
+  form_name: string;
 }
 
 export interface FormErrorProperties {
-  form_name: string;
   error_message: string;
   field_name?: string;
+  form_name: string;
 }
 
 export const ANALYTICS_SUPER_PROPERTIES = {

@@ -1,10 +1,9 @@
-import { Balance } from "@ankr.com/ankr.js/dist/types";
+import type { Balance } from "@ankr.com/ankr.js/dist/types";
 import { HStack } from "@mutuals/ui";
-import React from "react";
 
-import AssetCardBalance from "@/features/Asset/Card/Assets";
-import AssetCardLogo from "@/features/Asset/Card/Image";
-import AssetCardLabel from "@/features/Asset/Card/Label";
+import AssetCardBalance from "@/features/asset/card/assets";
+import AssetCardLogo from "@/features/asset/card/image";
+import AssetCardLabel from "@/features/asset/card/label";
 
 export type AssetCardProps = Balance & { selected?: boolean; active?: boolean };
 
@@ -17,13 +16,13 @@ function AssetCard({
 }: AssetCardProps) {
   return (
     <HStack
-      gap={"3"}
       alignItems={"center"}
+      fontSize={"sm"}
+      gap={"3"}
       justifyContent={"space-between"}
       w={"100%"}
-      fontSize={"sm"}
     >
-      <AssetCardLogo src={thumbnail} alt={tokenName} flexShrink={"0"} />
+      <AssetCardLogo alt={tokenName} flexShrink={"0"} src={thumbnail} />
 
       <AssetCardLabel
         flex={"1"}
@@ -32,11 +31,11 @@ function AssetCard({
       />
 
       <AssetCardBalance
-        textAlign={"right"}
-        flexShrink={"0"}
         balance={balance}
-        tokenSymbol={tokenSymbol}
         balanceUsd={balanceUsd}
+        flexShrink={"0"}
+        textAlign={"right"}
+        tokenSymbol={tokenSymbol}
       />
     </HStack>
   );
@@ -46,7 +45,7 @@ AssetCard.Balance = AssetCardBalance;
 AssetCard.Logo = AssetCardLogo;
 AssetCard.Label = AssetCardLabel;
 
-export { type AssetCardLabelProps } from "@/features/Asset/Card/Label";
-export { type AssetCardLogoProps } from "@/features/Asset/Card/Image";
-export { type AssetCardBalanceProps } from "@/features/Asset/Card/Assets";
+export type { AssetCardBalanceProps } from "@/features/asset/card/assets";
+export type { AssetCardLogoProps } from "@/features/asset/card/image";
+export type { AssetCardLabelProps } from "@/features/asset/card/label";
 export default AssetCard;

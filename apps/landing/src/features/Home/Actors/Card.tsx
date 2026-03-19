@@ -2,36 +2,36 @@
 
 import {
   Button,
-  useBreakpointValue,
+  type ButtonProps,
   Card,
+  Flex,
+  type FlexProps,
+  Heading,
+  Icon,
+  type IconProps,
+  Link,
+  type List,
+  MotionBox,
   Stack,
   Text,
-  ButtonProps,
-  IconProps,
-  Flex,
-  Icon,
-  MotionBox,
-  List,
-  Heading,
-  FlexProps,
-  Link,
+  useBreakpointValue,
 } from "@mutuals/ui";
-import NextImage, { ImageProps } from "next/image";
-import { AnimatePresence, EventInfo, MotionConfig } from "framer-motion";
+import { AnimatePresence, type EventInfo, MotionConfig } from "framer-motion";
+import NextImage, { type ImageProps } from "next/image";
 import { LuArrowUpRight } from "react-icons/lu";
 
 export interface ActorCardProps extends Card.RootProps {
-  title: string;
-  description: string;
-  benefit?: string;
-  image?: ImageProps["src"];
-  iconProps?: IconProps;
-  iconBoxProps?: FlexProps;
-  buttonProps?: ButtonProps;
-  benefitsProps?: List.RootProps;
   animate?: "grow" | "shrink";
-  onHoverStart?: (event: MouseEvent, info: EventInfo) => void;
+  benefit?: string;
+  benefitsProps?: List.RootProps;
+  buttonProps?: ButtonProps;
+  description: string;
+  iconBoxProps?: FlexProps;
+  iconProps?: IconProps;
+  image?: ImageProps["src"];
   onHoverEnd?: (event: MouseEvent, info: EventInfo) => void;
+  onHoverStart?: (event: MouseEvent, info: EventInfo) => void;
+  title: string;
 }
 
 export default function ActorCard({
@@ -54,11 +54,12 @@ export default function ActorCard({
   return (
     <MotionBox
       alignItems={"stretch"}
-      justifyContent={"stretch"}
       animate={animate}
-      flex={"1 auto"}
-      w={"full"}
       asChild={true}
+      flex={"1 auto"}
+      justifyContent={"stretch"}
+      onHoverEnd={onHoverEnd}
+      onHoverStart={onHoverStart}
       variants={useBreakpointValue({
         lg: {
           shrink: {
@@ -71,23 +72,22 @@ export default function ActorCard({
           },
         },
       })}
-      onHoverStart={onHoverStart}
-      onHoverEnd={onHoverEnd}
+      w={"full"}
     >
       <Card.Root
-        size={"md"}
-        w={"full"}
         direction={{ base: "column", sm: "row" }}
         gap={"0"}
         minH={{ lg: "32rem" }}
+        size={"md"}
         variant={"outline"}
+        w={"full"}
         {...props}
       >
         <MotionConfig transition={{ type: "tween", duration: 0.2 }}>
           <Stack flex={"1"} gap={"0"} maxW={{ sm: "26rem" }}>
             <MotionBox
-              fontSize={"3xl"}
               animate={animate}
+              fontSize={"3xl"}
               variants={useBreakpointValue({
                 lg: {
                   shrink: {
@@ -102,14 +102,14 @@ export default function ActorCard({
               <Card.Header pt={{ mdDown: "0" }}>
                 <Stack direction={"column"} gap={"3"}>
                   <Flex
-                    hideBelow="md"
-                    w={"1.6em"}
-                    h={"1.6em"}
                     alignItems={"center"}
-                    justifyContent={"center"}
                     bg={"bg.inverted"}
                     color={"fg.inverted"}
+                    h={"1.6em"}
+                    hideBelow="md"
+                    justifyContent={"center"}
                     rounded={"0.28em"}
+                    w={"1.6em"}
                     {...iconBoxProps}
                   >
                     <Icon fontSize={"0.7em"} {...iconProps}>
@@ -118,8 +118,8 @@ export default function ActorCard({
                   </Flex>
 
                   <Heading
-                    textStyle="xs"
                     mt="6"
+                    textStyle="xs"
                     {...{
                       color: "fg.subtle",
                       fontFamily: "heading",
@@ -133,9 +133,9 @@ export default function ActorCard({
                   </Heading>
 
                   <Heading
-                    maxW={"12em"}
                     fontSize={"inherit"}
                     lineHeight={"1.12"}
+                    maxW={"12em"}
                   >
                     {title}
                   </Heading>
@@ -149,10 +149,10 @@ export default function ActorCard({
                   <AnimatePresence>
                     {isGrown && (
                       <MotionBox
-                        maxW={{ sm: "sm" }}
-                        initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }}
+                        maxW={{ sm: "sm" }}
                       >
                         <Text color={"fg.muted"}>{benefit}</Text>
                       </MotionBox>
@@ -164,10 +164,10 @@ export default function ActorCard({
 
             <Card.Footer>
               <Link
-                href={"https://docs.mutuals.finance/"}
-                external={true}
                 arrow={false}
                 asChild={true}
+                external={true}
+                href={"https://docs.mutuals.finance/"}
                 w={{ base: "full", lg: "auto" }}
               >
                 <Button
@@ -185,25 +185,25 @@ export default function ActorCard({
             <AnimatePresence>
               {isGrown && (
                 <MotionBox
-                  position={{ base: "relative", lg: "absolute" }}
-                  w={"full"}
-                  order={"-1"}
-                  maxW={{ base: "full", sm: "2xs", lg: "xs" }}
-                  right={{ lg: "6" }}
-                  top={{ lg: "6" }}
-                  bottom={{ lg: "6" }}
-                  h={{ base: "xs", lg: "unset" }}
-                  rounded={"l3"}
-                  overflow={"hidden"}
-                  initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  bottom={{ lg: "6" }}
                   exit={{ opacity: 0 }}
+                  h={{ base: "xs", lg: "unset" }}
+                  initial={{ opacity: 0 }}
+                  maxW={{ base: "full", sm: "2xs", lg: "xs" }}
+                  order={"-1"}
+                  overflow={"hidden"}
+                  position={{ base: "relative", lg: "absolute" }}
+                  right={{ lg: "6" }}
+                  rounded={"l3"}
+                  top={{ lg: "6" }}
+                  w={"full"}
                 >
                   <NextImage
-                    src={image}
-                    alt={"Mutuals for " + title}
+                    alt={`Mutuals for ${title}`}
                     fill={true}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    src={image}
                     style={{
                       objectFit: "cover",
                       objectPosition: "center top",

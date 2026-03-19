@@ -1,33 +1,33 @@
 "use client";
 
 import {
-  Drawer,
-  Portal,
-  Stack,
-  Text,
-  Link,
   Button,
   CloseButton,
-  StackProps,
   ColorModeButton,
-  NavLinkProps,
+  Drawer,
+  Link,
+  type NavLinkProps,
+  Portal,
+  Stack,
+  type StackProps,
+  Text,
 } from "@mutuals/ui";
-import ShellDashboardSidebarFooter from "@/features/Shell/Dashboard/Sidebar/Footer";
 import {
-  sidebar as sidebarLinks,
   header as headerLinks,
-} from "@/features/Shell/Dashboard/links";
-import { useDashboardRoot } from "@/features/Shell/Dashboard/Root";
+  sidebar as sidebarLinks,
+} from "@/features/shell/dashboard/links";
+import { useDashboardRoot } from "@/features/shell/dashboard/root";
+import ShellDashboardSidebarFooter from "@/features/shell/dashboard/sidebar/footer";
 
 export default function ShellDashboardSidebarMobile() {
   const { mobile } = useDashboardRoot();
 
   return (
     <Drawer.Root
-      placement={"bottom"}
-      open={mobile.open}
       initialFocusEl={() => null}
       onOpenChange={(e) => mobile.setOpen(e.open)}
+      open={mobile.open}
+      placement={"bottom"}
       size={"lg"}
     >
       <Portal>
@@ -39,13 +39,13 @@ export default function ShellDashboardSidebarMobile() {
                 {Object.keys(sidebarLinks).map((section) => (
                   <ShellDashboardSidebarMobileSection
                     key={section}
-                    title={section}
                     links={sidebarLinks[section as keyof typeof sidebarLinks]}
+                    title={section}
                   />
                 ))}
                 <ShellDashboardSidebarMobileSection
-                  title={"Navigate"}
                   links={headerLinks}
+                  title={"Navigate"}
                 />
               </Stack>
             </Drawer.Body>
@@ -55,12 +55,12 @@ export default function ShellDashboardSidebarMobile() {
             </Drawer.CloseTrigger>
 
             <Drawer.Footer
-              justifyContent={"space-between"}
               alignItems={"flex-end"}
+              justifyContent={"space-between"}
             >
               <ShellDashboardSidebarFooter textStyle={"2xs"} />
 
-              <ColorModeButton variant="outline" size="sm" />
+              <ColorModeButton size="sm" variant="outline" />
             </Drawer.Footer>
           </Drawer.Content>
         </Drawer.Positioner>
@@ -87,12 +87,12 @@ function ShellDashboardSidebarMobileSection({
       <Stack gap={0.5} w={"full"}>
         {links?.map((link) => (
           <Button
-            key={link.label}
             asChild
-            variant={"ghost"}
-            size={"sm"}
             justifyContent={"flex-start"}
+            key={link.label}
+            size={"sm"}
             textAlign={"left"}
+            variant={"ghost"}
           >
             <Link href={link.href}>
               <link.icon />

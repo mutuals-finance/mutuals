@@ -1,14 +1,14 @@
 "use client";
 
 import { Controller, useFormContext } from "react-hook-form";
+import type { BaseInputProps } from "../../components/mutuals/input";
 import {
   FileUploadDropzone,
+  type FileUploadDropzoneProps,
   FileUploadList,
   FileUploadRoot,
-  FileUploadRootProps,
-  FileUploadDropzoneProps,
+  type FileUploadRootProps,
 } from "../../components/ui/file-upload";
-import { BaseInputProps } from "../../components/mutuals/input";
 
 export interface FileUploadProps
   extends Omit<BaseInputProps<unknown, unknown>, "transform">,
@@ -26,20 +26,20 @@ export function FileUpload({
 
   return (
     <Controller
-      control={control!}
+      control={control}
       name={id}
-      rules={rules}
       render={({ field }) => (
         <FileUploadRoot {...props} {...field}>
           <FileUploadDropzone
-            w={"full"}
-            label={dropzoneProps?.label ?? "unknown"}
             borderWidth={"1px"}
+            label={dropzoneProps?.label ?? "unknown"}
+            w={"full"}
             {...dropzoneProps}
           />
           <FileUploadList />
         </FileUploadRoot>
       )}
+      rules={rules}
     />
   );
 }

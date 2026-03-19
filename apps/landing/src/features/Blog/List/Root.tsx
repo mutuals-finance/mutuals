@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mutuals/ui";
+import { Box, type BoxProps } from "@mutuals/ui";
 
 export type BlogListRootProps = BoxProps;
 

@@ -95,5 +95,5 @@ export const blockFields = ({ name, fields, overrides }: Args): Field =>
       ],
       label: false,
     },
-    overrides,
+    overrides
   );

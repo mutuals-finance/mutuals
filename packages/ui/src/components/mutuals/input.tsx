@@ -2,44 +2,49 @@
 
 import {
   Input as ChakraInput,
-  InputProps as ChakraInputProps,
-  Textarea as ChakraTextarea,
-  TextareaProps as ChakraTextareaProps,
-  NumberInputRootProps as ChakraNumberInputRootProps,
-  NumberInputInputProps as ChakraNumberInputInputProps,
+  type InputProps as ChakraInputProps,
+  type NumberInputInputProps as ChakraNumberInputInputProps,
+  type NumberInputRootProps as ChakraNumberInputRootProps,
+  type SelectContentProps as ChakraSelectContentProps,
   SelectRoot as ChakraSelectRoot,
-  SelectRootProps as ChakraSelectRootProps,
-  SelectContentProps as ChakraSelectContentProps,
-  SelectValueTextProps as ChakraSelectValueTextProps,
-  SelectValueChangeDetails,
-  NumberInputValueChangeDetails,
+  type SelectRootProps as ChakraSelectRootProps,
+  type SelectValueTextProps as ChakraSelectValueTextProps,
+  Textarea as ChakraTextarea,
+  type TextareaProps as ChakraTextareaProps,
+  type NumberInputValueChangeDetails,
+  type SelectValueChangeDetails,
 } from "@chakra-ui/react";
-import { Controller, useFormContext, ControllerProps } from "react-hook-form";
+import type React from "react";
+import type { ChangeEvent, ReactNode } from "react";
+import {
+  Controller,
+  type ControllerProps,
+  useFormContext,
+} from "react-hook-form";
 import {
   NumberInputField as ChakraNumberInputField,
   NumberInputRoot as ChakraNumberInputRoot,
 } from "../../components/ui/number-input";
 import {
-  Switch as ChakraSwitch,
-  SwitchProps as ChakraSwitchProps,
-} from "../../components/ui/switch";
+  PasswordInput as ChakraPasswordInput,
+  type PasswordInputProps as ChakraPasswordInputProps,
+} from "../../components/ui/password-input";
 import {
-  SelectTrigger as ChakraSelectTrigger,
   SelectContent as ChakraSelectContent,
-  SelectValueText as ChakraSelectValueText,
   SelectItem as ChakraSelectItem,
   SelectItemGroup as ChakraSelectItemGroup,
-  SelectTriggerProps,
+  SelectTrigger as ChakraSelectTrigger,
+  SelectValueText as ChakraSelectValueText,
+  type SelectTriggerProps,
 } from "../../components/ui/select";
 import {
-  PasswordInput as ChakraPasswordInput,
-  PasswordInputProps as ChakraPasswordInputProps,
-} from "../../components/ui/password-input";
-import React, { ChangeEvent, ReactNode } from "react";
+  Switch as ChakraSwitch,
+  type SwitchProps as ChakraSwitchProps,
+} from "../../components/ui/switch";
 
 function groupBy<T>(
   array: T[],
-  keyFn: (item: T) => string,
+  keyFn: (item: T) => string
 ): Record<string, T[]> {
   return array.reduce(
     (groups, item) => {
@@ -50,7 +55,7 @@ function groupBy<T>(
       groups[key].push(item);
       return groups;
     },
-    {} as Record<string, T[]>,
+    {} as Record<string, T[]>
   );
 }
 
@@ -59,7 +64,7 @@ export interface Transform<TFieldValue, TEvent> {
   output: (event: TEvent, prevValue?: TFieldValue) => undefined | TFieldValue;
 }
 
-type JsonObject = Record<string, any>;
+type JsonObject = Record<string, unknown>;
 
 export function createJsonTransform<
   TEvent,
@@ -68,11 +73,13 @@ export function createJsonTransform<
   key: keyof TObject,
   defaultValue: TObject,
   mapInput: (decoded: TObject) => string | number | string[] | undefined,
-  mapOutput: (event: TEvent) => TObject[typeof key] | undefined,
+  mapOutput: (event: TEvent) => TObject[typeof key] | undefined
 ): Transform<string, TEvent> {
   return {
     input: (value) => {
-      if (!value) return undefined;
+      if (!value) {
+        return undefined;
+      }
       try {
         const decoded = JSON.parse(value) as TObject;
         return mapInput(decoded);
@@ -86,7 +93,9 @@ export function createJsonTransform<
         : ({} as TObject);
 
       const newFieldValue = mapOutput(e);
-      if (newFieldValue === undefined) return undefined;
+      if (newFieldValue === undefined) {
+        return undefined;
+      }
 
       const merged: TObject = {
         ...defaultValue,
@@ -109,8 +118,7 @@ export interface BaseInputProps<TFieldValue, TEvent> {
 }
 
 export interface InputProps
-  extends
-    BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
+  extends BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
     Omit<ChakraInputProps, "transform" | "onChange" | "value"> {}
 
 export function Input({
@@ -126,26 +134,25 @@ export function Input({
     <Controller
       control={control}
       name={name}
-      rules={rules}
       render={({ field: { value, onChange, ...field } }) => (
         <ChakraInput
           id={id}
           {...props}
-          value={transform ? transform.input(value) : value}
           onChange={(e) =>
             onChange(transform ? transform.output(e, value) : e.target.value)
           }
+          value={transform ? transform.input(value) : value}
           {...field}
         />
       )}
+      rules={rules}
       {...controllerProps}
     />
   );
 }
 
 export interface TextareaProps
-  extends
-    BaseInputProps<string, ChangeEvent<HTMLTextAreaElement>>,
+  extends BaseInputProps<string, ChangeEvent<HTMLTextAreaElement>>,
     Omit<ChakraTextareaProps, "transform" | "onChange" | "value"> {}
 
 export function Textarea({
@@ -160,26 +167,25 @@ export function Textarea({
     <Controller
       control={control}
       name={id}
-      rules={rules}
       render={({ field: { onChange, value, ...field } }) => (
         <ChakraTextarea
           id={id}
           {...props}
-          value={transform ? transform.input(value) : value}
           onChange={(e) =>
             onChange(transform ? transform.output(e, value) : e.target.value)
           }
+          value={transform ? transform.input(value) : value}
           {...field}
         />
       )}
+      rules={rules}
       {...controllerProps}
     />
   );
 }
 
 export interface NumberInputProps<TFieldValue>
-  extends
-    BaseInputProps<TFieldValue, NumberInputValueChangeDetails>,
+  extends BaseInputProps<TFieldValue, NumberInputValueChangeDetails>,
     Omit<ChakraNumberInputRootProps, "transform" | "onValueChange" | "value"> {
   inputProps?: ChakraNumberInputInputProps;
 }
@@ -199,30 +205,29 @@ export function NumberInput<TFieldValue = number | string>({
     <Controller
       control={control}
       name={name}
-      rules={rules}
       render={({ field: { onChange, value, ...field } }) => (
         <ChakraNumberInputRoot
           id={id}
-          value={transform ? transform.input(value) : value}
           onValueChange={(details) =>
             transform
               ? onChange(transform.output(details, value))
               : onChange(details.value)
           }
+          value={transform ? transform.input(value) : value}
           {...field}
           {...props}
         >
           <ChakraNumberInputField {...inputProps} />
         </ChakraNumberInputRoot>
       )}
+      rules={rules}
       {...controllerProps}
     />
   );
 }
 
 export interface PasswordInputProps
-  extends
-    BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
+  extends BaseInputProps<string, ChangeEvent<HTMLInputElement>>,
     Omit<ChakraPasswordInputProps, "transform" | "onChange" | "value"> {}
 
 export function PasswordInput({
@@ -238,18 +243,18 @@ export function PasswordInput({
     <Controller
       control={control}
       name={name}
-      rules={rules}
       render={({ field: { value, onChange, ...field } }) => (
         <ChakraPasswordInput
           id={id}
           {...props}
-          value={transform ? transform.input(value) : value}
           onChange={(e) =>
             onChange(transform ? transform.output(e, value) : e.target.value)
           }
+          value={transform ? transform.input(value) : value}
           {...field}
         />
       )}
+      rules={rules}
       {...controllerProps}
     />
   );
@@ -260,18 +265,18 @@ type ReactNodeOrFn =
   | ReactNode
   | ((
       current: { item?: SelectCollectionItemProps; trigger: boolean },
-      index?: number,
+      index?: number
     ) => React.ReactNode);
 
-export type SelectCollectionItemProps = {
-  value: any;
+export interface SelectCollectionItemProps {
   children: ReactNodeOrFn;
   group?: string;
-};
+  // biome-ignore lint/suspicious/noExplicitAny: select value can be any renderable type
+  value: any;
+}
 
 export interface SelectProps<TFieldValue = ChakraSelectRootProps["value"]>
-  extends
-    BaseInputProps<
+  extends BaseInputProps<
       TFieldValue,
       SelectValueChangeDetails<SelectCollectionItemProps>
     >,
@@ -279,21 +284,21 @@ export interface SelectProps<TFieldValue = ChakraSelectRootProps["value"]>
       ChakraSelectRootProps<SelectCollectionItemProps>,
       "children" | "transform" | "onValueChange" | "value"
     > {
-  placeholder?: ChakraSelectValueTextProps["placeholder"];
-  valueTextProps?: Omit<ChakraSelectValueTextProps, "placeholder">;
   children?: ReactNodeOrFn;
-  triggerProps?: SelectTriggerProps;
   contentProps?: Omit<
     SelectContentProps<TFieldValue>,
     "collection" | "children"
   >;
+  placeholder?: ChakraSelectValueTextProps["placeholder"];
+  triggerProps?: SelectTriggerProps;
+  valueTextProps?: Omit<ChakraSelectValueTextProps, "placeholder">;
 }
 
-type SelectCollectionItemRenderProps = {
+interface SelectCollectionItemRenderProps {
   children?: ReactNodeOrFn;
   current: { item?: SelectCollectionItemProps; trigger: boolean };
   index: number;
-};
+}
 
 function SelectCollectionItemContent({
   current,
@@ -303,11 +308,11 @@ function SelectCollectionItemContent({
   const item = current.item;
 
   if (children) {
-    return typeof children == "function" ? children(current, index) : children;
+    return typeof children === "function" ? children(current, index) : children;
   }
 
   if (item?.children) {
-    return typeof item.children == "function"
+    return typeof item.children === "function"
       ? item.children(current, index)
       : item.children;
   }
@@ -338,7 +343,7 @@ function SelectContent<TFieldValue>({
 
   if (hasGrouping) {
     const groupedItems = Object.entries(
-      groupBy(collection.items, (item) => item.group ?? ""),
+      groupBy(collection.items, (item) => item.group ?? "")
     );
 
     return (
@@ -346,7 +351,8 @@ function SelectContent<TFieldValue>({
         {groupedItems.map(([groupLabel, items]) => (
           <ChakraSelectItemGroup key={groupLabel} label={groupLabel}>
             {items.map((item, i) => (
-              <ChakraSelectItem key={`${groupLabel}-${i}`} item={item}>
+              // biome-ignore lint/suspicious/noArrayIndexKey: grouped select items may not have unique string keys
+              <ChakraSelectItem item={item} key={`${groupLabel}-${i}`}>
                 <SelectCollectionItemContent
                   current={{ item, trigger: false }}
                   index={i}
@@ -364,7 +370,8 @@ function SelectContent<TFieldValue>({
   return (
     <ChakraSelectContent {...props}>
       {collection.items.map((item, i) => (
-        <ChakraSelectItem key={i} item={item}>
+        // biome-ignore lint/suspicious/noArrayIndexKey: select items may not have unique string keys
+        <ChakraSelectItem item={item} key={i}>
           <SelectCollectionItemContent
             current={{ item, trigger: false }}
             index={i}
@@ -378,7 +385,7 @@ function SelectContent<TFieldValue>({
 }
 
 export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
-  props: SelectProps<TFieldValue>,
+  props: SelectProps<TFieldValue>
 ) {
   const {
     transform,
@@ -401,20 +408,19 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
     <Controller
       control={control}
       name={name}
-      rules={rules}
       render={({ field: { onChange, value, ...field } }) => (
         <ChakraSelectRoot
           {...rootProps}
-          value={transform ? transform.input(value) : value}
+          onInteractOutside={(event) => {
+            field.onBlur();
+            onInteractOutside?.(event);
+          }}
           onValueChange={(details) =>
             transform
               ? onChange(transform.output(details, value))
               : onChange(details.value)
           }
-          onInteractOutside={(event) => {
-            field.onBlur();
-            onInteractOutside?.(event);
-          }}
+          value={transform ? transform.input(value) : value}
           {...field}
         >
           <ChakraSelectTrigger {...triggerProps}>
@@ -441,14 +447,14 @@ export function Select<TFieldValue = ChakraSelectRootProps["value"]>(
           </SelectContent>
         </ChakraSelectRoot>
       )}
+      rules={rules}
       {...controllerProps}
     />
   );
 }
 
 export interface SwitchInputProps
-  extends
-    BaseInputProps<
+  extends BaseInputProps<
       boolean,
       {
         checked: boolean;
@@ -470,18 +476,18 @@ export function SwitchInput({
     <Controller
       control={control}
       name={name}
-      rules={rules}
       render={({ field: { value, onChange, ...field } }) => (
         <ChakraSwitch
           id={id}
           {...props}
           checked={transform ? transform.input(value) : value}
+          inputProps={{ ...field, ...inputProps }}
           onCheckedChange={(e) =>
             onChange(transform ? transform.output(e, value) : e.checked)
           }
-          inputProps={{ ...field, ...inputProps }}
         />
       )}
+      rules={rules}
       {...controllerProps}
     />
   );

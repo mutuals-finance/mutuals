@@ -4,9 +4,9 @@ import {
   sameAddress,
 } from "./address";
 
-export const validateAddress = (address: string) => {
-  const ADDRESS_RE = /^0x[0-9a-f]{40}$/i;
+const ADDRESS_RE = /^0x[0-9a-f]{40}$/i;
 
+export const validateAddress = (address: string) => {
   if (!ADDRESS_RE.test(address)) {
     return "Invalid address format";
   }
@@ -26,10 +26,8 @@ export const validatePrefixedAddress =
   (value: string): string | null => {
     const { prefix, address } = parsePrefixedAddress(value);
 
-    if (prefix) {
-      if (prefix !== chainShortName) {
-        return `"${prefix}" doesn't match the current chain`;
-      }
+    if (prefix && prefix !== chainShortName) {
+      return `"${prefix}" doesn't match the current chain`;
     }
 
     return validateAddress(address);
@@ -40,7 +38,7 @@ export const uniqueAddress =
   (address: string): string | undefined => {
     const ADDRESS_REPEATED_ERROR = "Address already added";
     const addressExists = addresses.some((addressFromList) =>
-      sameAddress(addressFromList, address),
+      sameAddress(addressFromList, address)
     );
     return addressExists ? ADDRESS_REPEATED_ERROR : undefined;
   };

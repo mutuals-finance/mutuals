@@ -2,27 +2,48 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {
+  AddressLike,
   BaseContract,
   BytesLike,
-  FunctionFragment,
-  Result,
-  Interface,
-  EventFragment,
-  AddressLike,
-  ContractRunner,
   ContractMethod,
+  ContractRunner,
+  EventFragment,
+  FunctionFragment,
+  Interface,
   Listener,
+  Result,
 } from "ethers";
 import type {
   TypedContractEvent,
+  TypedContractMethod,
   TypedDeferredTopicFilter,
   TypedEventLog,
-  TypedLogDescription,
   TypedListener,
-  TypedContractMethod,
+  TypedLogDescription,
 } from "../../../common";
 
 export interface IAccessControlInterface extends Interface {
+  decodeFunctionResult(
+    functionFragment:
+      | "revokeRole"
+      | ("renounceRole" | ("hasRole" | ("grantRole" | "getRoleAdmin"))),
+    data: BytesLike
+  ): Result;
+
+  encodeFunctionData(
+    functionFragment: "getRoleAdmin",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment:
+      | "revokeRole"
+      | ("renounceRole" | ("hasRole" | "grantRole")),
+    values: [BytesLike, AddressLike]
+  ): string;
+
+  getEvent(
+    nameOrSignatureOrTopic: "RoleAdminChanged" | "RoleGranted" | "RoleRevoked"
+  ): EventFragment;
   getFunction(
     nameOrSignature:
       | "getRoleAdmin"
@@ -31,60 +52,23 @@ export interface IAccessControlInterface extends Interface {
       | "renounceRole"
       | "revokeRole"
   ): FunctionFragment;
-
-  getEvent(
-    nameOrSignatureOrTopic: "RoleAdminChanged" | "RoleGranted" | "RoleRevoked"
-  ): EventFragment;
-
-  encodeFunctionData(
-    functionFragment: "getRoleAdmin",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "grantRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "revokeRole",
-    values: [BytesLike, AddressLike]
-  ): string;
-
-  decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceRole",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
 }
 
 export namespace RoleAdminChangedEvent {
   export type InputTuple = [
     role: BytesLike,
     previousAdminRole: BytesLike,
-    newAdminRole: BytesLike
+    newAdminRole: BytesLike,
   ];
   export type OutputTuple = [
     role: string,
     previousAdminRole: string,
-    newAdminRole: string
+    newAdminRole: string,
   ];
   export interface OutputObject {
-    role: string;
-    previousAdminRole: string;
     newAdminRole: string;
+    previousAdminRole: string;
+    role: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -96,12 +80,12 @@ export namespace RoleGrantedEvent {
   export type InputTuple = [
     role: BytesLike,
     account: AddressLike,
-    sender: AddressLike
+    sender: AddressLike,
   ];
   export type OutputTuple = [role: string, account: string, sender: string];
   export interface OutputObject {
-    role: string;
     account: string;
+    role: string;
     sender: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
@@ -114,12 +98,12 @@ export namespace RoleRevokedEvent {
   export type InputTuple = [
     role: BytesLike,
     account: AddressLike,
-    sender: AddressLike
+    sender: AddressLike,
   ];
   export type OutputTuple = [role: string, account: string, sender: string];
   export interface OutputObject {
-    role: string;
     account: string;
+    role: string;
     sender: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
@@ -130,130 +114,6 @@ export namespace RoleRevokedEvent {
 
 export interface IAccessControl extends BaseContract {
   connect(runner?: ContractRunner | null): IAccessControl;
-  waitForDeployment(): Promise<this>;
-
-  interface: IAccessControlInterface;
-
-  queryFilter<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-  queryFilter<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
-  ): Promise<Array<TypedEventLog<TCEvent>>>;
-
-  on<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  on<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  once<TCEvent extends TypedContractEvent>(
-    event: TCEvent,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-  once<TCEvent extends TypedContractEvent>(
-    filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
-  ): Promise<this>;
-
-  listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
-  ): Promise<Array<TypedListener<TCEvent>>>;
-  listeners(eventName?: string): Promise<Array<Listener>>;
-  removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
-  ): Promise<this>;
-
-  getRoleAdmin: TypedContractMethod<[role: BytesLike], [string], "view">;
-
-  grantRole: TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  hasRole: TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [boolean],
-    "view"
-  >;
-
-  renounceRole: TypedContractMethod<
-    [role: BytesLike, callerConfirmation: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  revokeRole: TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
-  ): T;
-
-  getFunction(
-    nameOrSignature: "getRoleAdmin"
-  ): TypedContractMethod<[role: BytesLike], [string], "view">;
-  getFunction(
-    nameOrSignature: "grantRole"
-  ): TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "hasRole"
-  ): TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [boolean],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "renounceRole"
-  ): TypedContractMethod<
-    [role: BytesLike, callerConfirmation: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "revokeRole"
-  ): TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
-  getEvent(
-    key: "RoleAdminChanged"
-  ): TypedContractEvent<
-    RoleAdminChangedEvent.InputTuple,
-    RoleAdminChangedEvent.OutputTuple,
-    RoleAdminChangedEvent.OutputObject
-  >;
-  getEvent(
-    key: "RoleGranted"
-  ): TypedContractEvent<
-    RoleGrantedEvent.InputTuple,
-    RoleGrantedEvent.OutputTuple,
-    RoleGrantedEvent.OutputObject
-  >;
-  getEvent(
-    key: "RoleRevoked"
-  ): TypedContractEvent<
-    RoleRevokedEvent.InputTuple,
-    RoleRevokedEvent.OutputTuple,
-    RoleRevokedEvent.OutputObject
-  >;
 
   filters: {
     "RoleAdminChanged(bytes32,bytes32,bytes32)": TypedContractEvent<
@@ -289,4 +149,98 @@ export interface IAccessControl extends BaseContract {
       RoleRevokedEvent.OutputObject
     >;
   };
+
+  getEvent(
+    key: "RoleAdminChanged"
+  ): TypedContractEvent<
+    RoleAdminChangedEvent.InputTuple,
+    RoleAdminChangedEvent.OutputTuple,
+    RoleAdminChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleGranted"
+  ): TypedContractEvent<
+    RoleGrantedEvent.InputTuple,
+    RoleGrantedEvent.OutputTuple,
+    RoleGrantedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleRevoked"
+  ): TypedContractEvent<
+    RoleRevokedEvent.InputTuple,
+    RoleRevokedEvent.OutputTuple,
+    RoleRevokedEvent.OutputObject
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  getFunction(
+    nameOrSignature: "getRoleAdmin"
+  ): TypedContractMethod<[role: BytesLike], [string], "view">;
+  getFunction(
+    nameOrSignature: "hasRole"
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "revokeRole" | ("renounceRole" | "grantRole")
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  getRoleAdmin: TypedContractMethod<[role: BytesLike], [string], "view">;
+
+  grantRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  hasRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+
+  interface: IAccessControlInterface;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<TypedListener<TCEvent>[]>;
+  listeners(eventName?: string): Promise<Listener[]>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent> | TCEvent,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<TypedEventLog<TCEvent>[]>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  renounceRole: TypedContractMethod<
+    [role: BytesLike, callerConfirmation: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+
+  revokeRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [undefined],
+    "nonpayable"
+  >;
+  waitForDeployment(): Promise<this>;
 }

@@ -1,5 +1,5 @@
 import { TextareaField } from "@payloadcms/ui";
-import React from "react";
+import type React from "react";
 
 // import './index.scss'
 
