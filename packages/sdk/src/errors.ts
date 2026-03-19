@@ -9,15 +9,6 @@ export class UnsupportedChainIdError extends Error {
   }
 }
 
-export class InvalidAllocationIndicesLengthError extends Error {
-  name = "InvalidAllocationIndicesLengthError";
-
-  constructor(m?: string) {
-    super(m);
-    Object.setPrototypeOf(this, InvalidAllocationIndicesLengthError.prototype);
-  }
-}
-
 export class InvalidArgumentError extends Error {
   name = "InvalidArgumentError";
 
