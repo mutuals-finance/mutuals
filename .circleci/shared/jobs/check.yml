@@ -1,0 +1,6 @@
+executor: node-large
+
+steps:
+  - checkout
+  - setup-bun
+  - run: bun run check

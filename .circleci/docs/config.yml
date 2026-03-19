@@ -23,8 +23,8 @@ parameters:
 workflows:
   run-docs:
     jobs:
-      - lint:
-          name:  "[docs] lint"
+      - check:
+          name:  "[docs] check"
       - test:
           name:  "[docs] test"
       - deploy: &base
@@ -33,7 +33,7 @@ workflows:
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
           requires:
-            - "[docs] lint"
+            - "[docs] check"
             - "[docs] test"
           vercel-environment: preview
           filters:

@@ -1,4 +1,0 @@
-docker:
-  - image: cimg/base:stable
-steps:
-  - run: echo "Running linting"

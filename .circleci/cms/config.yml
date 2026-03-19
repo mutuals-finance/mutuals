@@ -51,8 +51,8 @@ jobs:
 workflows:
   run-cms:
     jobs:
-      - lint:
-          name: "[cms] lint"
+      - check:
+          name: "[cms] check"
       - test:
           name: "[cms] test"
       - deploy-cms: &base
@@ -61,7 +61,7 @@ workflows:
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
           requires:
-            - "[cms] lint"
+            - "[cms] check"
             - "[cms] test"
           vercel-environment: preview
           filters:

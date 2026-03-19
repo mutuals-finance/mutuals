@@ -23,8 +23,8 @@ parameters:
 workflows:
   run-landing:
     jobs:
-      - lint:
-          name: "[landing] lint"
+      - check:
+          name: "[landing] check"
       - test:
           name: "[landing] test"
       - deploy: &base
@@ -33,7 +33,7 @@ workflows:
           vercel-org-id: $VERCEL_ORG_ID
           vercel-token: $VERCEL_TOKEN
           requires:
-            - "[landing] lint"
+            - "[landing] check"
             - "[landing] test"
           vercel-environment: preview
           filters:
