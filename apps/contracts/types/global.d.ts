@@ -1,10 +1,20 @@
+import type { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 import type {
-  ConfigurableTaskDefinition as OriginalConfigurableTaskDefinition,
-  HardhatRuntimeEnvironment,
-  Network,
-  RunSuperFunction,
-  TaskArguments,
-} from "hardhat/types/runtime";
+  FactoryOptions,
+  HardhatEthersHelpers,
+} from "@nomicfoundation/hardhat-ethers/types";
+import type { HardhatUpgrades } from "@openzeppelin/hardhat-upgrades";
+import type {
+  ContractAddressOrInstance,
+  DeployBeaconOptions,
+  UpgradeProxyOptions,
+} from "@openzeppelin/hardhat-upgrades/dist/utils";
+import type { DeployProxyOptions } from "@openzeppelin/hardhat-upgrades/src/utils";
+import type {
+  DefenderDeployOptions,
+  DeployFactoryOpts,
+  StandaloneOptions,
+} from "@openzeppelin/hardhat-upgrades/src/utils/options";
 import type {
   BaseContract,
   Contract,
@@ -12,45 +22,34 @@ import type {
   ethers as defaultEthers,
   Signer,
 } from "ethers";
-import type { DeployProxyOptions } from "@openzeppelin/hardhat-upgrades/src/utils";
-import type { HardhatUpgrades } from "@openzeppelin/hardhat-upgrades";
-import type {
-  ContractAddressOrInstance,
-  DeployBeaconOptions,
-  UpgradeProxyOptions,
-} from "@openzeppelin/hardhat-upgrades/dist/utils";
-import type {
-  DeploymentsExtension as OriginalDeploymentsExtension,
-  DeployFunction as HardhatDeployFunction,
-} from "hardhat-deploy/dist/types";
 import type { HardhatUserConfig } from "hardhat/types/config";
-import type { Deployment } from "hardhat-deploy/types";
-
-import type { TASKS } from "@/tasks";
-import type { networks } from "@/config/networks";
-import type { NamedAccounts } from "@/config/accounts";
 import type {
+  HardhatRuntimeEnvironment,
+  Network,
+  ConfigurableTaskDefinition as OriginalConfigurableTaskDefinition,
+  RunSuperFunction,
+  TaskArguments,
+} from "hardhat/types/runtime";
+import type {
+  DeployFunction as HardhatDeployFunction,
+  DeploymentsExtension as OriginalDeploymentsExtension,
+} from "hardhat-deploy/dist/types";
+import type { Deployment } from "hardhat-deploy/types";
+import type {
+  DirectDistributionModule,
+  MerkleTreeValidationModule,
+  ModuleRegistry,
+  OnchainMappingValidationModule,
   Pool,
   PoolFactory,
-  UpgradeableBeacon,
-  ModuleRegistry,
-  DirectDistributionModule,
-  VestingDistributionModule,
-  TokenLimitDistributionModule,
   PriorityDistributionModule,
-  OnchainMappingValidationModule,
-  MerkleTreeValidationModule,
+  TokenLimitDistributionModule,
+  UpgradeableBeacon,
+  VestingDistributionModule,
 } from "#/types/typechain";
-import type {
-  FactoryOptions,
-  HardhatEthersHelpers,
-} from "@nomicfoundation/hardhat-ethers/types";
-import type { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
-import {
-  DefenderDeployOptions,
-  DeployFactoryOpts,
-  StandaloneOptions,
-} from "@openzeppelin/hardhat-upgrades/src/utils/options";
+import type { NamedAccounts } from "@/config/accounts";
+import type { networks } from "@/config/networks";
+import type { TASKS } from "@/tasks";
 
 declare module "hardhat/config" {
   type EnvironmentExtender = (

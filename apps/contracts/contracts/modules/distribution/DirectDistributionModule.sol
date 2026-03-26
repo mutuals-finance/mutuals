@@ -6,8 +6,9 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 
 import {IPool} from "../../interfaces/IPool.sol";
+import {IModule} from "../../interfaces/IModule.sol";
 import {IDistributionModule} from "../../interfaces/IDistributionModule.sol";
-import {Claim, TransferInstruction, TokenType, Token} from "../../types/Token.sol";
+import {Claim, TransferInstruction, TokenType, Token, TokenLibrary} from "../../types/Token.sol";
 import {PreHookResult} from "../../types/PreHookResult.sol";
 import {BaseModule} from "../BaseModule.sol";
 
@@ -16,26 +17,39 @@ import {BaseModule} from "../BaseModule.sol";
  * @notice Allows recipients to claim a fixed amount or a proportional share of the total pool inflow.
  */
 contract DirectDistributionModule is IDistributionModule, BaseModule {
-
   /* -------------------------------------------------------------------------- */
   /* STATE VARIABLES & STRUCTS                                                  */
   /* -------------------------------------------------------------------------- */
 
-  mapping(address => mapping(uint256 => uint256)) public alreadyClaimed;
+  mapping(address => mapping(uint256 => mapping(Token => uint256))) public claimed;
 
-  struct Config {
-    TokenType tokenType;
-    Token token;
+  struct Context {
+    Token[] tokens;
+    uint256[] amounts;
+  }
+
+  struct Data {
     address recipient;
-    uint256 tokenId;
-    uint256 value;
-    uint256 denominator;
-    bool isPercentage;
+    Token[] tokens;
+    TokenType[] tokenTypes;
+    uint256[] tokenIds;
+    uint256[] values;
+    uint256[] denominators;
+    bool[] percentages;
+  }
+
+  struct Args {
+    Token[] tokens;
+    TokenType[] tokenTypes;
+    uint256[] tokenIds;
+    uint256[] values;
+    uint256[] indices;
   }
 
   error InsufficientAllocation();
   error PercentageNotSupportedForNFTs();
   error InvalidDenominator();
+  error TokenNotAllowed(Token token);
 
   /* -------------------------------------------------------------------------- */
   /* MODULE INTERFACE FUNCTIONS                                                 */
@@ -62,26 +76,58 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
   /* -------------------------------------------------------------------------- */
 
   /// @inheritdoc IDistributionModule
-  function aggregationParameters(Claim calldata claim) external pure override returns (uint256, uint256, bool) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
-    if (config.isPercentage) {
-      if (config.denominator == 0) revert InvalidDenominator();
-      uint256 bps = Math.mulDiv(config.value, 10000, config.denominator);
+  function aggregationParameters(Claim calldata claim, Token token, uint256 index) external pure override returns (uint256, uint256, bool) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
+
+    if (data.tokens.length > 0) {
+      if (index >= data.tokens.length || !(data.tokens[index].equals(token))){
+        return (0, 0, false);
+      }
+    } else {
+      index = 0;
+    }
+
+    if (data.values.length == 0 || index >= data.values.length) {
+      return (0, 0, false);
+    }
+
+    if (data.percentages[index]) {
+      if (data.denominators[index] == 0) {
+        revert InvalidDenominator();
+      }
+      uint256 bps = Math.mulDiv(data.values[index], 10000, data.denominators[index]);
       return (0, bps, false);
     } else {
-      return (config.value, 0, false);
+      return (data.values[index], 0, false);
     }
   }
 
   /// @inheritdoc IDistributionModule
-  function totalAllocated(Claim calldata claim, uint256 totalPoolInflow) external pure override returns (uint256) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
-    if (config.isPercentage) {
-      if (config.tokenType == TokenType.ERC721) revert PercentageNotSupportedForNFTs();
-      if (config.denominator == 0) revert InvalidDenominator();
-      return Math.mulDiv(totalPoolInflow, config.value, config.denominator);
+  function totalAllocated(Claim calldata claim, Token token, uint256 index, uint256 totalReceived) external pure override returns (uint256) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
+
+    if (data.tokens.length > 0) {
+      if (index >= data.tokens.length || !(data.tokens[index].equals(token))) {
+        return 0;
+      }
+    } else {
+      index = 0;
     }
-    return config.value;
+
+    if (data.values.length == 0 || index >= data.values.length) {
+      return 0;
+    }
+
+    if (data.percentages[index]) {
+      if (data.tokenTypes[index] == TokenType.ERC721) {
+        revert PercentageNotSupportedForNFTs();
+      }
+      if (data.denominators[index] == 0) {
+        revert InvalidDenominator();
+      }
+      return Math.mulDiv(totalReceived, data.values[index], data.denominators[index]);
+    }
+    return data.values[index];
   }
 
   /* -------------------------------------------------------------------------- */
@@ -89,76 +135,96 @@ contract DirectDistributionModule is IDistributionModule, BaseModule {
   /* -------------------------------------------------------------------------- */
 
   /// @inheritdoc IDistributionModule
-  function releasable(Claim calldata claim, bytes calldata distributionArgs) external view override returns (TransferInstruction memory) {
-    return _releasable(claim, distributionArgs);
+  function releasable(Claim calldata claim, bytes calldata dArgs) external view override returns (TransferInstruction[] memory) {
+    return _releasable(claim, dArgs);
   }
 
   /// @inheritdoc IDistributionModule
-  function preDistributionHook(Claim calldata claim, bytes calldata distributionArgs) external override returns (PreHookResult memory) {
-    TransferInstruction memory inst = _releasable(claim, distributionArgs);
+  function preDistributionHook(Claim calldata claim, bytes calldata dArgs) external override returns (PreHookResult memory) {
+    TransferInstruction[] memory instructions = _releasable(claim, dArgs);
 
-    if (inst.amount == 0 && inst.tokenId == 0 && inst.tokenType != TokenType.ERC721) {
-      revert InsufficientAllocation();
+    Context memory context;
+    context.tokens = new Token[](instructions.length);
+    context.amounts = new uint256[](instructions.length);
+
+    for (uint i = 0; i < instructions.length; i++) {
+      if (instructions[i].amount == 0 && instructions[i].tokenId == 0 && instructions[i].tokenType != TokenType.ERC721) {
+        revert InsufficientAllocation();
+      }
+      context.tokens[i] = instructions[i].token;
+      context.amounts[i] = instructions[i].amount;
     }
 
     return PreHookResult({
-      instruction: inst,
-      postHookContext: abi.encode(inst.amount),
+      instructions: instructions,
+      postHookContext: abi.encode(context),
       requiresPostHook: true
     });
   }
 
   /// @inheritdoc IDistributionModule
-  function postDistributionHook(Claim calldata claim, bytes calldata distributionContext) external override {
-    uint256 claimedNow = abi.decode(distributionContext, (uint256));
-    alreadyClaimed[msg.sender][claim.id] += claimedNow;
+  function postDistributionHook(Claim calldata claim, bytes calldata dContext) external override {
+    (Token[] memory tokens, uint256[] memory amounts) = abi.decode(dContext, (Token[], uint256[]));
+    for (uint i = 0; i < tokens.length; i++) {
+      claimed[msg.sender][claim.id][tokens[i]] += amounts[i];
+    }
   }
 
-  /* -------------------------------------------------------------------------- */
-  /* INTERNAL LOGIC                                                             */
-  /* -------------------------------------------------------------------------- */
+  /**
+  * Calculates allocations based on either a fixed absolute amount or a percentage of the pool's total historical inflow.
+  * Deducts previously claimed amounts and respects optional user-defined request caps.
+  * @dev Iterates over the requested tokens and applies an index-based allowlist verification.
+  * @param claim The static claim struct containing the encoded `Data`.
+  * @param dArgs The dynamically encoded `Args`.
+  * @return instructions An array of `TransferInstruction` structs detailing the tokens, recipient, and exact amounts to transfer.
+  */
+  function _releasable(Claim calldata claim, bytes calldata dArgs) internal view returns (TransferInstruction[] memory) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
+    Args memory args = abi.decode(dArgs, (Args));
 
-  function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
+    uint256 len = args.tokens.length;
+    TransferInstruction[] memory instructions = new TransferInstruction[](len);
 
-    uint256 maxAllocation;
+    for (uint i = 0; i < len; i++) {
+      Token currentToken = args.tokens[i];
+      uint256 index = args.indices[i];
 
-    if (config.isPercentage) {
-      uint256 currentBalance = _poolBalance(msg.sender, config.token, config.tokenType);
-      uint256 historicalReleased = IPool(msg.sender).totalReleased(Token.unwrap(config.token));
-      uint256 totalReceived = currentBalance + historicalReleased;
-
-      maxAllocation = Math.mulDiv(totalReceived, config.value, config.denominator);
-    } else {
-      maxAllocation = config.value;
-    }
-
-    uint256 claimed = alreadyClaimed[msg.sender][claim.id];
-    uint256 available = maxAllocation > claimed ? maxAllocation - claimed : 0;
-
-    if (distributionArgs.length > 0 && available > 0) {
-      uint256 requestedAmount = abi.decode(distributionArgs, (uint256));
-      if (requestedAmount > 0 && requestedAmount < available) {
-        available = requestedAmount;
+      if (data.tokens.length > 0) {
+        if (index >= data.tokens.length || !(data.tokens[index].equals(currentToken))) {
+          revert TokenNotAllowed(currentToken);
+        }
+      } else {
+        index = 0;
       }
+
+      uint256 available;
+      {
+        uint256 maxAllocation;
+        if (data.percentages[index]) {
+          uint256 totalReceived = currentToken.balanceOf(args.tokenTypes[i], msg.sender) + IPool(msg.sender).totalReleased(Token.unwrap(currentToken), args.tokenIds[i]);
+          maxAllocation = Math.mulDiv(totalReceived, data.values[index], data.denominators[index]);
+        } else {
+          maxAllocation = data.values[index];
+        }
+
+        uint256 cClaimed = claimed[msg.sender][claim.id][currentToken];
+        available = maxAllocation > cClaimed ? maxAllocation - cClaimed : 0;
+      }
+
+      if (args.values[i] > 0 && args.values[i] < available) {
+        available = args.values[i];
+      }
+
+      instructions[i] = TransferInstruction({
+        tokenType: args.tokenTypes[i],
+        token: currentToken,
+        recipient: data.recipient,
+        tokenId: args.tokenIds[i],
+        amount: available,
+        data: ""
+      });
     }
 
-    return TransferInstruction({
-      tokenType: config.tokenType,
-      token: config.token,
-      recipient: config.recipient,
-      tokenId: config.tokenId,
-      amount: available,
-      data: ""
-    });
-  }
-
-  function _poolBalance(address pool, Token token, TokenType tokenType) internal view returns (uint256) {
-    if (tokenType == TokenType.NATIVE) {
-      return pool.balance;
-    } else if (tokenType == TokenType.ERC20) {
-      return IERC20(Token.unwrap(token)).balanceOf(pool);
-    }
-    return 0;
+    return instructions;
   }
 }

@@ -7,7 +7,13 @@ import type { ModuleRenderProps } from "../../types";
 import ValueInputSelect, { type AllocationType } from "./Select";
 import { defaultValue, transform } from "./transform";
 
-export { defaultValue, transform, type ValueInputData } from "./transform";
+export {
+  defaultArgs,
+  defaultValue,
+  transform,
+  type ValueInputArgs,
+  type ValueInputData,
+} from "./transform";
 
 export type ValueInputProps = ModuleRenderProps;
 

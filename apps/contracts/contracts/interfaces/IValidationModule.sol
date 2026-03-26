@@ -13,15 +13,15 @@ interface IValidationModule is IModule {
    * @notice Validates a single claim during runtime execution.
    * @dev To indicate the entire call should revert, the function MUST revert.
    * @param claim The static claim data.
-   * @param validationArgs Dynamic arguments (e.g., Merkle proof, signature) for validation.
+   * @param vArgs Dynamic arguments (e.g., Merkle proof, signature) for validation.
    */
-  function validateRuntime(Claim calldata claim, bytes calldata validationArgs) external view;
+  function validateRuntime(Claim calldata claim, bytes calldata vArgs) external view;
 
   /**
    * @notice Validates a batch of claims during runtime execution.
    * @dev To indicate the entire call should revert, the function MUST revert.
    * @param claims An array of static claim data.
-   * @param validationArgs An array of dynamic arguments corresponding to the claims.
+   * @param vArgs An array of dynamic arguments corresponding to the claims.
    */
-  function validateRuntimeBatch(Claim[] calldata claims, bytes[] calldata validationArgs) external view;
+  function validateRuntimeBatch(Claim[] calldata claims, bytes[] calldata vArgs) external view;
 }

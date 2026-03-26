@@ -19,6 +19,14 @@ export const defaultValue: ValueInputData = {
   value: 0,
 };
 
+export interface ValueInputArgs extends JsonObject {
+  requestValue: number;
+}
+
+export const defaultArgs: ValueInputArgs = {
+  requestValue: 0,
+};
+
 const allocationType = createJsonTransform<
   SelectValueChangeDetails<SelectCollectionItemProps>,
   ValueInputData

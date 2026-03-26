@@ -1,19 +1,43 @@
-import type { ClaimCreateInput as MutualsClaimCreateInput } from "@mutuals/graphql-client-nextjs";
+import type { TreeView } from "@mutuals/ui";
 import type { ReactNode } from "react";
 
-export type ClaimCreateNode<TData = unknown> = MutualsClaimCreateInput & {
-  id: string;
-  data?: TData;
-};
+export type HexString = `0x${string}`;
 
-export interface ModuleRenderProps {
-  id: string;
-  isBranch: boolean;
-}
+export const ModuleType = {
+  Validation: "Validation",
+  Distribution: "Distribution",
+} as const;
 
-export interface Module {
+export type ModuleType = (typeof ModuleType)[keyof typeof ModuleType];
+
+export type ModuleRenderProps = TreeView.NodeState;
+export type ModuleRenderFn = ((props: ModuleRenderProps) => ReactNode) | null;
+
+export type ModuleEncodeDataFn<TData = unknown> = (data: TData) => HexString;
+export type ModuleBatchEncodeDataFn<TData = unknown> = (
+  data: TData[]
+) => HexString;
+
+export type ModuleEncodeArgsFn<TArgs = unknown, TData = unknown> = (
+  args: TArgs,
+  data: TData
+) => HexString;
+
+export type ModuleBatchEncodeArgsFn<TArgs = unknown, TData = unknown> = (
+  args: TArgs[],
+  data: TData[]
+) => HexString;
+
+export interface Module<TData = unknown, TArgs = unknown> {
+  batchEncodeArgs?: ModuleBatchEncodeArgsFn<TArgs, TData>;
+  batchEncodeData?: ModuleBatchEncodeDataFn<TData>;
+  defaultArgs?: TArgs;
+  defaultData?: TData;
+  description?: string;
+  encodeArgs: ModuleEncodeArgsFn<TArgs, TData>;
+  encodeData: ModuleEncodeDataFn<TData>;
   id: string;
-  moduleType: "Validation" | "Distribution";
+  moduleType: ModuleType;
   name: string;
-  render: ((props: ModuleRenderProps) => ReactNode) | null;
+  render: ModuleRenderFn;
 }

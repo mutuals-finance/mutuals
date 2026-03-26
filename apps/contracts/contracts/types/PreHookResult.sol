@@ -4,7 +4,7 @@ pragma solidity ^0.8.29;
 import { TransferInstruction } from "./Token.sol";
 
 struct PreHookResult {
-  TransferInstruction instruction;
+  TransferInstruction[] instructions;
   bytes postHookContext;
   bool requiresPostHook;
 }

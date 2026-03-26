@@ -1,5 +1,3 @@
-import hre from "hardhat";
-
 export const checkInNetworkList = (list: string[]): boolean => {
   return list.includes(hre.network.name);
 };

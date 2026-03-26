@@ -9,9 +9,9 @@ interface IModuleRegistry {
   /* -------------------------------------------------------------------------- */
 
   struct AttestationRecord {
-    uint48 time;           // Timestamp when the attestation was made
-    uint48 expirationTime; // Timestamp when it expires (0 = never)
-    uint48 revocationTime; // Timestamp when it was revoked (0 = not revoked)
+    uint48 time;
+    uint48 expirationTime;
+    uint48 revocationTime;
   }
 
   /* -------------------------------------------------------------------------- */

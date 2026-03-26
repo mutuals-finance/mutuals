@@ -2,6 +2,7 @@
 pragma solidity ^0.8.29;
 
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import {IModule} from "../../interfaces/IModule.sol";
 import {IDistributionModule} from "../../interfaces/IDistributionModule.sol";
 import {Claim, TransferInstruction, TokenType, Token} from "../../types/Token.sol";
 import {PreHookResult} from "../../types/PreHookResult.sol";
@@ -17,19 +18,33 @@ contract PriorityDistributionModule is IDistributionModule, BaseModule {
   /* STATE VARIABLES & STRUCTS                                                  */
   /* -------------------------------------------------------------------------- */
 
-  mapping(address => mapping(uint256 => uint256)) public alreadyClaimed;
+  mapping(address => mapping(uint256 => mapping(Token => uint256))) public claimed;
 
-  struct Config {
-    TokenType tokenType;
-    Token token;
-    address recipient;
-    uint256 tokenId;
-    uint256 maxAllocation;
-    Claim previousClaim;
-    uint256 threshold;
+  struct Context {
+    Token[] tokens;
+    uint256[] amounts;
   }
 
-  error PriorityConditionNotMet();
+  struct Data {
+    address recipient;
+    Token[] tokens;
+    TokenType[] tokenTypes;
+    uint256[] tokenIds;
+    uint256[] maxAllocations;
+    Claim previousClaim;
+    uint256[] thresholds;
+  }
+
+  struct Args {
+    Token[] tokens;
+    TokenType[] tokenTypes;
+    uint256[] tokenIds;
+    uint256[] values;
+    uint256[] indices;
+  }
+
+  error PriorityConditionNotMet(Token token);
+  error TokenNotAllowed(Token token);
 
   /* -------------------------------------------------------------------------- */
   /* MODULE INTERFACE FUNCTIONS                                                 */
@@ -56,15 +71,35 @@ contract PriorityDistributionModule is IDistributionModule, BaseModule {
   /* -------------------------------------------------------------------------- */
 
   /// @inheritdoc IDistributionModule
-  function aggregationParameters(Claim calldata claim) external pure override returns (uint256, uint256, bool) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
-    return (config.maxAllocation, 0, false);
+  function aggregationParameters(Claim calldata claim, Token token, uint256 index) external pure override returns (uint256, uint256, bool) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
+    if (data.tokens.length > 0) {
+      if (index >= data.tokens.length || !(data.tokens[index].equals(token))) {
+        return (0, 0, false);
+      }
+    } else {
+      index = 0;
+    }
+    if (data.maxAllocations.length == 0 || index >= data.maxAllocations.length) {
+      return (0, 0, false);
+    }
+    return (data.maxAllocations[index], 0, false);
   }
 
   /// @inheritdoc IDistributionModule
-  function totalAllocated(Claim calldata claim, uint256 /* totalPoolInflow */) external pure override returns (uint256) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
-    return config.maxAllocation;
+  function totalAllocated(Claim calldata claim, Token token, uint256 index, uint256 /* totalReceived */) external pure override returns (uint256) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
+    if (data.tokens.length > 0) {
+      if (index >= data.tokens.length || !(data.tokens[index].equals(token))) {
+        return 0;
+      }
+    } else {
+      index = 0;
+    }
+    if (data.maxAllocations.length == 0 || index >= data.maxAllocations.length) {
+      return 0;
+    }
+    return data.maxAllocations[index];
   }
 
   /* -------------------------------------------------------------------------- */
@@ -72,67 +107,104 @@ contract PriorityDistributionModule is IDistributionModule, BaseModule {
   /* -------------------------------------------------------------------------- */
 
   /// @inheritdoc IDistributionModule
-  function releasable(Claim calldata claim, bytes calldata distributionArgs) external view override returns (TransferInstruction memory) {
-    return _releasable(claim, distributionArgs);
+  function releasable(Claim calldata claim, bytes calldata dArgs) external view override returns (TransferInstruction[] memory) {
+    return _releasable(claim, dArgs);
   }
 
   /// @inheritdoc IDistributionModule
-  function preDistributionHook(Claim calldata claim, bytes calldata distributionArgs) external override returns (PreHookResult memory) {
-    TransferInstruction memory inst = _releasable(claim, distributionArgs);
+  function preDistributionHook(Claim calldata claim, bytes calldata dArgs) external override returns (PreHookResult memory) {
+    TransferInstruction[] memory instructions = _releasable(claim, dArgs);
 
-    if (inst.amount == 0 && inst.tokenId == 0) revert PriorityConditionNotMet();
+    Context memory context;
+    context.tokens = new Token[](instructions.length);
+    context.amounts = new uint256[](instructions.length);
+
+    for (uint i = 0; i < instructions.length; i++) {
+      if (instructions[i].amount == 0 && instructions[i].tokenId == 0 && instructions[i].tokenType != TokenType.ERC721) {
+        revert PriorityConditionNotMet(instructions[i].token);
+      }
+      context.tokens[i] = instructions[i].token;
+      context.amounts[i] = instructions[i].amount;
+    }
 
     return PreHookResult({
-      instruction: inst,
-      postHookContext: abi.encode(inst.amount),
+      instructions: instructions,
+      postHookContext: abi.encode(context),
       requiresPostHook: true
     });
   }
 
   /// @inheritdoc IDistributionModule
-  function postDistributionHook(Claim calldata claim, bytes calldata distributionContext) external override {
-    uint256 claimedNow = abi.decode(distributionContext, (uint256));
-    alreadyClaimed[msg.sender][claim.id] += claimedNow;
+  function postDistributionHook(Claim calldata claim, bytes calldata dContext) external override {
+    Context memory context = abi.decode(dContext, (Context));
+    for (uint i = 0; i < context.tokens.length; i++) {
+      claimed[msg.sender][claim.id][context.tokens[i]] += context.amounts[i];
+    }
   }
 
   /* -------------------------------------------------------------------------- */
   /* INTERNAL LOGIC                                                             */
   /* -------------------------------------------------------------------------- */
 
-  function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
+  function _releasable(Claim calldata claim, bytes calldata dArgs) internal view returns (TransferInstruction[] memory) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
+    Args memory args = abi.decode(dArgs, (Args));
 
-    TransferInstruction memory previousInst = IDistributionModule(config.previousClaim.distributorModule)
-      .releasable(config.previousClaim, "");
+    TransferInstruction[] memory prevInstructions = IDistributionModule(data.previousClaim.distributionModule)
+      .releasable(data.previousClaim, "");
 
-    if (previousInst.amount <= config.threshold) {
-      return TransferInstruction({
-        tokenType: config.tokenType,
-        token: config.token,
-        recipient: config.recipient,
-        tokenId: config.tokenId,
-        amount: 0,
+    TransferInstruction[] memory instructions = new TransferInstruction[](args.tokens.length);
+
+    for (uint i = 0; i < args.tokens.length; i++) {
+      uint256 index = args.indices[i];
+
+      if (data.tokens.length > 0) {
+        if (index >= data.tokens.length || (!data.tokens[index].equals(args.tokens[i]))){
+          revert TokenNotAllowed(args.tokens[i]);
+        }
+      } else {
+        index = 0;
+      }
+
+      uint256 prevAmountForToken = 0;
+      for (uint j = 0; j < prevInstructions.length; j++) {
+        if (Token.unwrap(prevInstructions[j].token) == Token.unwrap(args.tokens[i])) {
+          prevAmountForToken += prevInstructions[j].amount;
+        }
+      }
+
+      if (prevAmountForToken <= data.thresholds[index]) {
+        instructions[i] = TransferInstruction({
+          tokenType: args.tokenTypes[i],
+          token: args.tokens[i],
+          recipient: data.recipient,
+          tokenId: args.tokenIds[i],
+          amount: 0,
+          data: ""
+        });
+        continue;
+      }
+
+      uint256 available;
+      {
+        uint256 cClaimed = claimed[msg.sender][claim.id][args.tokens[i]];
+        available = data.maxAllocations[index] > cClaimed ? data.maxAllocations[index] - cClaimed : 0;
+      }
+
+      if (args.values[i] > 0 && args.values[i] < available) {
+        available = args.values[i];
+      }
+
+      instructions[i] = TransferInstruction({
+        tokenType: args.tokenTypes[i],
+        token: args.tokens[i],
+        recipient: data.recipient,
+        tokenId: args.tokenIds[i],
+        amount: available,
         data: ""
       });
     }
 
-    uint256 claimed = alreadyClaimed[msg.sender][claim.id];
-    uint256 available = config.maxAllocation > claimed ? config.maxAllocation - claimed : 0;
-
-    if (distributionArgs.length > 0 && available > 0) {
-      uint256 requestedAmount = abi.decode(distributionArgs, (uint256));
-      if (requestedAmount > 0 && requestedAmount < available) {
-        available = requestedAmount;
-      }
-    }
-
-    return TransferInstruction({
-      tokenType: config.tokenType,
-      token: config.token,
-      recipient: config.recipient,
-      tokenId: config.tokenId,
-      amount: available,
-      data: ""
-    });
+    return instructions;
   }
 }

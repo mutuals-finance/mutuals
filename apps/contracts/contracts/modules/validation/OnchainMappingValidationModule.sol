@@ -10,11 +10,11 @@ import {BaseModule} from "../BaseModule.sol";
 /**
  * @title Onchain Mapping Validation Module
  * @notice Validates claims using a simple on-chain allowlist.
- * @dev Dynamic `validationArgs` are ignored because the truth is stored entirely in state.
+ * @dev Dynamic `vArgs` are ignored because the truth is stored entirely in state.
  */
 contract OnchainMappingValidationModule is IValidationModule, BaseModule {
-  // Maps Pool Address => Claim ID => Is Allowed
-  mapping(address => mapping(uint256 => bool)) public allowedClaims;
+  // Pool => Claim ID => Is Allowed
+  mapping(address => mapping(uint256 => bool)) public exists;
 
   error ClaimNotAllowed(uint256 claimId);
 
@@ -32,15 +32,13 @@ contract OnchainMappingValidationModule is IValidationModule, BaseModule {
     if (data.length > 0) {
       uint256[] memory initialClaims = abi.decode(data, (uint256[]));
       for(uint256 i = 0; i < initialClaims.length; i++) {
-        allowedClaims[msg.sender][initialClaims[i]] = true;
+        exists[msg.sender][initialClaims[i]] = true;
       }
     }
   }
 
   /// @inheritdoc IModule
-  function onUninstall(bytes calldata /* data */) external override {
-    // Nested mappings cannot be easily deleted, omitted for gas savings.
-  }
+  function onUninstall(bytes calldata /* data */) external override {}
 
   function supportsInterface(bytes4 interfaceId) public view virtual override(BaseModule, IERC165) returns (bool) {
     return interfaceId == type(IValidationModule).interfaceId || super.supportsInterface(interfaceId);
@@ -54,7 +52,7 @@ contract OnchainMappingValidationModule is IValidationModule, BaseModule {
    * @notice Toggles the validity of a specific claim.
    */
   function setClaimStatus(uint256 claimId, bool status) external {
-    allowedClaims[msg.sender][claimId] = status;
+    exists[msg.sender][claimId] = status;
   }
 
   /**
@@ -63,21 +61,21 @@ contract OnchainMappingValidationModule is IValidationModule, BaseModule {
   function setClaimStatusBatch(uint256[] calldata claimIds, bool[] calldata statuses) external {
     require(claimIds.length == statuses.length, "ArrayLengthMismatch");
     for(uint256 i = 0; i < claimIds.length; i++) {
-      allowedClaims[msg.sender][claimIds[i]] = statuses[i];
+      exists[msg.sender][claimIds[i]] = statuses[i];
     }
   }
 
   /// @inheritdoc IValidationModule
-  function validateRuntime(Claim calldata claim, bytes calldata /* validationArgs */) external view override {
-    if (!allowedClaims[msg.sender][claim.id]) {
+  function validateRuntime(Claim calldata claim, bytes calldata /* vArgs */) external view override {
+    if (!exists[msg.sender][claim.id]) {
       revert ClaimNotAllowed(claim.id);
     }
   }
 
   /// @inheritdoc IValidationModule
-  function validateRuntimeBatch(Claim[] calldata claims, bytes[] calldata /* validationArgs */) external view override {
+  function validateRuntimeBatch(Claim[] calldata claims, bytes[] calldata /* vArgs */) external view override {
     for (uint256 i = 0; i < claims.length; i++) {
-      if (!allowedClaims[msg.sender][claims[i].id]) {
+      if (!exists[msg.sender][claims[i].id]) {
         revert ClaimNotAllowed(claims[i].id);
       }
     }

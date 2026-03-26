@@ -15,6 +15,10 @@ export const defaultValue: RecipientInputData = {
   recipient: "",
 };
 
+export interface RecipientInputArgs extends JsonObject {}
+
+export const defaultArgs: RecipientInputArgs = {};
+
 export type RecipientInputProps = ModuleRenderProps;
 
 export function RecipientInput({ id, isBranch }: RecipientInputProps) {

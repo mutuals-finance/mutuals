@@ -3,6 +3,7 @@ import type { HardhatUserConfig, SolcUserConfig } from "hardhat/types/config";
 const DEFAULT_SOLC_CONFIG: SolcUserConfig = {
   version: "0.8.29",
   settings: {
+    evmVersion: "cancun",
     viaIR: process.env.VIA_IR,
     optimizer: {
       enabled: process.env.OPTIMIZER,
@@ -14,6 +15,7 @@ const DEFAULT_SOLC_CONFIG: SolcUserConfig = {
 const TEST_SOLC_CONFIG: SolcUserConfig = {
   ...DEFAULT_SOLC_CONFIG,
   settings: {
+    evmVersion: "cancun",
     viaIR: false,
     optimizer: {
       enabled: false,
@@ -25,6 +27,7 @@ const TEST_SOLC_CONFIG: SolcUserConfig = {
 const PRODUCTION_SOLC_CONFIG: SolcUserConfig = {
   ...DEFAULT_SOLC_CONFIG,
   settings: {
+    evmVersion: "cancun",
     viaIR: true,
     optimizer: {
       enabled: true,

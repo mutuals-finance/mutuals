@@ -30,9 +30,9 @@ struct PoolStorage {
   // FINANCIAL STATE
   // --------------------------------------------------------------------------
 
-  /// @notice Stores the historical total released amount per token.
-  /// @dev Essential for accurately calculating percentage-based distributions over time.
-  mapping(address => uint256) totalReleased;
+  /// @notice Stores the historical total released amount per token and token id.
+  /// For ERC20 and Native tokens, the ID defaults to 0. For ERC1155, it tracks specific sub-tokens.
+  mapping(address => mapping(uint256 => uint256)) totalReleased;
 
   // --------------------------------------------------------------------------
   // INTROSPECTION (ERC-165)

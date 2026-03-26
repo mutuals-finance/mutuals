@@ -6,6 +6,6 @@ struct Claim {
   uint256 parentId;
   address validationModule;
   bytes validationData;
-  address distributorModule;
-  bytes distributorData;
+  address distributionModule;
+  bytes distributionData;
 }

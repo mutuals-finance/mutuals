@@ -11,7 +11,8 @@ import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/I
 import { UUPSUpgradeable } from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
-import { ReentrancyGuardUpgradeable } from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
+import { ReentrancyGuardTransient } from "@openzeppelin/contracts/utils/ReentrancyGuardTransient.sol";
+
 
 import { PoolStorage, getPoolStorage } from "./PoolStorage.sol";
 import { TokenLibrary, Token, TokenType, Claim, TransferInstruction } from "../types/Token.sol";
@@ -27,7 +28,7 @@ contract Pool is
   UUPSUpgradeable,
   OwnableUpgradeable,
   PausableUpgradeable,
-  ReentrancyGuardUpgradeable
+  ReentrancyGuardTransient
 {
   using TokenLibrary for Token;
 
@@ -68,9 +69,7 @@ contract Pool is
     if (_registry == address(0)) revert InvalidModuleAddress();
 
     __Ownable_init(initialOwner);
-    __UUPSUpgradeable_init();
     __Pausable_init();
-    __ReentrancyGuard_init();
 
     uint256 len = initialModules.length;
     if (len != initialModuleData.length) revert ArrayLengthMismatch();
@@ -140,16 +139,16 @@ contract Pool is
   /// @inheritdoc IPool
   function releaseSingle(
     Claim calldata claim,
-    bytes calldata validationArgs,
-    bytes calldata distributionArgs
+    bytes calldata vArgs,
+    bytes calldata dArgs
   ) external override whenNotPaused nonReentrant {
     if (!getPoolStorage().installedModules[claim.validationModule]) revert ModuleNotInstalled(claim.validationModule);
 
     // 1. Validate Integrity
-    IValidationModule(claim.validationModule).validateRuntime(claim, validationArgs);
+    IValidationModule(claim.validationModule).validateRuntime(claim, vArgs);
 
     // 2. Distribute & Transfer
-    _processDistribution(claim, distributionArgs);
+    _processDistribution(claim, dArgs);
 
     emit ReleaseSingle(claim);
   }
@@ -157,18 +156,20 @@ contract Pool is
   /// @inheritdoc IPool
   function release(
     Claim[] calldata claims,
-    bytes[] calldata validationArgs,
-    bytes[] calldata distributionArgs
+    bytes[] calldata vArgs,
+    bytes[] calldata dArgs
   ) external override whenNotPaused nonReentrant {
     uint256 len = claims.length;
     if (len == 0) revert EmptyClaims();
-    if (len != validationArgs.length || len != distributionArgs.length) revert ArrayLengthMismatch();
+    if (len != vArgs.length || len != dArgs.length) revert ArrayLengthMismatch();
 
-    // 1. Validate Integrity (Batched)
-    _processBatchedValidation(claims, validationArgs);
+    // 1. Validate Integrity
+    _processBatchedValidation(claims, vArgs);
 
     uint256 totalAmount = 0;
     TransferInstruction memory aggInst;
+    bool aggInitialized = false;
+
     bytes[] memory distributionContexts = new bytes[](len);
     bool[] memory requiresPostHook = new bool[](len);
 
@@ -176,36 +177,44 @@ contract Pool is
     for (uint256 i = 0; i < len; i++) {
       Claim calldata claim = claims[i];
 
-      if (!getPoolStorage().installedModules[claim.distributorModule]) revert ModuleNotInstalled(claim.distributorModule);
+      if (!getPoolStorage().installedModules[claim.distributionModule]) revert ModuleNotInstalled(claim.distributionModule);
 
       PreHookResult memory res;
-      try IDistributionModule(claim.distributorModule).preDistributionHook(claim, distributionArgs[i]) returns (PreHookResult memory _res) {
+      try IDistributionModule(claim.distributionModule).preDistributionHook(claim, dArgs[i]) returns (PreHookResult memory _res) {
         res = _res;
       } catch (bytes memory reason) {
-        revert ExecutionReverted(claim.distributorModule, reason);
+        revert ExecutionReverted(claim.distributionModule, reason);
       }
 
-      if (i == 0) {
-        aggInst = res.instruction;
-        totalAmount = res.instruction.amount;
-        if (aggInst.tokenType == TokenType.ERC721) revert CannotAggregateERC721();
-      } else {
-        if (
-          res.instruction.tokenType != aggInst.tokenType ||
-          !res.instruction.token.equals(aggInst.token) ||
-          res.instruction.recipient != aggInst.recipient ||
-          (aggInst.tokenType == TokenType.ERC1155 && res.instruction.tokenId != aggInst.tokenId)
-        ) {
-          revert AggregationMismatch();
+      for (uint256 j = 0; j < res.instructions.length; j++) {
+        TransferInstruction memory inst = res.instructions[j];
+
+        if (!aggInitialized) {
+          aggInst = inst;
+          totalAmount = inst.amount;
+          aggInitialized = true;
+          if (aggInst.tokenType == TokenType.ERC721) {
+            revert CannotAggregateERC721();
+          }
+        } else {
+          if (
+            inst.tokenType == aggInst.tokenType &&
+            inst.token.equals(aggInst.token) &&
+            inst.recipient == aggInst.recipient &&
+            (inst.tokenType != TokenType.ERC1155 || inst.tokenId == aggInst.tokenId)
+          ) {
+            totalAmount += inst.amount;
+          } else {
+            _executeTransfer(inst);
+          }
         }
-        totalAmount += res.instruction.amount;
       }
 
       distributionContexts[i] = res.postHookContext;
       requiresPostHook[i] = res.requiresPostHook;
     }
 
-    // 3. Settlement (Aggregated Transfer)
+    // 3. Settlement
     if (totalAmount > 0) {
       aggInst.amount = totalAmount;
       _executeTransfer(aggInst);
@@ -214,8 +223,8 @@ contract Pool is
     // 4. State Update (Post Hooks)
     for (uint256 i = 0; i < len; i++) {
       if (requiresPostHook[i]) {
-        try IDistributionModule(claims[i].distributorModule).postDistributionHook(claims[i], distributionContexts[i]) {}
-        catch (bytes memory reason) { revert ExecutionReverted(claims[i].distributorModule, reason); }
+        try IDistributionModule(claims[i].distributionModule).postDistributionHook(claims[i], distributionContexts[i]) {}
+        catch (bytes memory reason) { revert ExecutionReverted(claims[i].distributionModule, reason); }
       }
     }
 
@@ -225,19 +234,19 @@ contract Pool is
   /// @inheritdoc IPool
   function releaseSeparate(
     Claim[] calldata claims,
-    bytes[] calldata validationArgs,
-    bytes[] calldata distributionArgs
+    bytes[] calldata vArgs,
+    bytes[] calldata dArgs
   ) external override whenNotPaused nonReentrant {
     uint256 len = claims.length;
     if (len == 0) revert EmptyClaims();
-    if (len != validationArgs.length || len != distributionArgs.length) revert ArrayLengthMismatch();
+    if (len != vArgs.length || len != dArgs.length) revert ArrayLengthMismatch();
 
-    // 1. Validate Integrity (Batched)
-    _processBatchedValidation(claims, validationArgs);
+    // 1. Validate Integrity
+    _processBatchedValidation(claims, vArgs);
 
-    // 2. Distribute & Transfer (Separately)
+    // 2. Distribute & Transfer
     for (uint256 i = 0; i < len; i++) {
-      _processDistribution(claims[i], distributionArgs[i]);
+      _processDistribution(claims[i], dArgs[i]);
     }
 
     emit Release(claims);
@@ -248,15 +257,15 @@ contract Pool is
   /* -------------------------------------------------------------------------- */
 
   /// @inheritdoc IPool
-  function totalReleased(address token) external view override returns (uint256) {
-    return getPoolStorage().totalReleased[token];
+  function totalReleased(address token, uint256 tokenId) external view override returns (uint256) {
+    return getPoolStorage().totalReleased[token][tokenId];
   }
 
   /**
    * @notice Validates all claims individually - more gas efficient than batching with array copies
    * @dev Claims are validated one by one. Module lookup is cached when the same validator is used consecutively.
    */
-  function _processBatchedValidation(Claim[] calldata claims, bytes[] calldata validationArgs) internal view {
+  function _processBatchedValidation(Claim[] calldata claims, bytes[] calldata vArgs) internal view {
     uint256 len = claims.length;
     address cachedValidator = address(0);
     bool isCachedValidatorInstalled = false;
@@ -271,29 +280,30 @@ contract Pool is
         if (!isCachedValidatorInstalled) revert ModuleNotInstalled(validator);
       }
 
-      // Validate each claim individually - no array copying needed
-      IValidationModule(validator).validateRuntime(claims[i], validationArgs[i]);
+      IValidationModule(validator).validateRuntime(claims[i], vArgs[i]);
     }
   }
 
-  function _processDistribution(Claim calldata claim, bytes calldata distributionArgs) internal {
-    if (!getPoolStorage().installedModules[claim.distributorModule]) revert ModuleNotInstalled(claim.distributorModule);
+  function _processDistribution(Claim calldata claim, bytes calldata dArgs) internal {
+    if (!getPoolStorage().installedModules[claim.distributionModule]) revert ModuleNotInstalled(claim.distributionModule);
 
     // 1. Compute Flow
     PreHookResult memory res;
-    try IDistributionModule(claim.distributorModule).preDistributionHook(claim, distributionArgs) returns (PreHookResult memory _res) {
+    try IDistributionModule(claim.distributionModule).preDistributionHook(claim, dArgs) returns (PreHookResult memory _res) {
       res = _res;
     } catch (bytes memory reason) {
-      revert ExecutionReverted(claim.distributorModule, reason);
+      revert ExecutionReverted(claim.distributionModule, reason);
     }
 
     // 2. Settlement
-    _executeTransfer(res.instruction);
+    for (uint256 i = 0; i < res.instructions.length; i++) {
+      _executeTransfer(res.instructions[i]);
+    }
 
     // 3. State Update
     if (res.requiresPostHook) {
-      try IDistributionModule(claim.distributorModule).postDistributionHook(claim, res.postHookContext) {}
-      catch (bytes memory reason) { revert ExecutionReverted(claim.distributorModule, reason); }
+      try IDistributionModule(claim.distributionModule).postDistributionHook(claim, res.postHookContext) {}
+      catch (bytes memory reason) { revert ExecutionReverted(claim.distributionModule, reason); }
     }
   }
 
@@ -309,7 +319,7 @@ contract Pool is
     );
 
     if (inst.tokenType != TokenType.ERC721) {
-      getPoolStorage().totalReleased[Token.unwrap(inst.token)] += inst.amount;
+      getPoolStorage().totalReleased[Token.unwrap(inst.token)][inst.tokenId] += inst.amount;
     }
   }
 

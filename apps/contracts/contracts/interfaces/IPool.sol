@@ -82,7 +82,8 @@ interface IPool {
   /**
    * @notice Exposes the total released amount for a specific token.
    * @param token The address of the token (use address(0) for native ETH).
+   * @param tokenId The token id for ERC721 or ERC1155 (use 0 for native or ERC20).
    * @return The total historically released amount.
    */
-  function totalReleased(address token) external view returns (uint256);
+  function totalReleased(address token, uint256 tokenId) external view returns (uint256);
 }

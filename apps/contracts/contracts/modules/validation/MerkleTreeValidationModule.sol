@@ -59,13 +59,13 @@ contract MerkleTreeValidationModule is IValidationModule, BaseModule {
   }
 
   /// @inheritdoc IValidationModule
-  function validateRuntime(Claim calldata claim, bytes calldata validationArgs) external view override {
+  function validateRuntime(Claim calldata claim, bytes calldata vArgs) external view override {
     bytes32 root = poolRoots[msg.sender];
     if (root == bytes32(0)) revert RootNotSet();
 
     // The leaf is the hash of the entire static Claim struct
     bytes32 leaf = keccak256(abi.encode(claim));
-    bytes32[] memory proof = abi.decode(validationArgs, (bytes32[]));
+    bytes32[] memory proof = abi.decode(vArgs, (bytes32[]));
 
     if (!MerkleProof.verify(proof, root, leaf)) {
       revert InvalidProof();
@@ -73,13 +73,13 @@ contract MerkleTreeValidationModule is IValidationModule, BaseModule {
   }
 
   /// @inheritdoc IValidationModule
-  function validateRuntimeBatch(Claim[] calldata claims, bytes[] calldata validationArgs) external view override {
+  function validateRuntimeBatch(Claim[] calldata claims, bytes[] calldata vArgs) external view override {
     bytes32 root = poolRoots[msg.sender];
     if (root == bytes32(0)) revert RootNotSet();
 
     for (uint256 i = 0; i < claims.length; i++) {
       bytes32 leaf = keccak256(abi.encode(claims[i]));
-      bytes32[] memory proof = abi.decode(validationArgs[i], (bytes32[]));
+      bytes32[] memory proof = abi.decode(vArgs[i], (bytes32[]));
 
       if (!MerkleProof.verify(proof, root, leaf)) {
         revert InvalidProof();

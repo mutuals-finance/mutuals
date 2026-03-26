@@ -31,7 +31,6 @@ contract ModuleRegistry is IModuleRegistry, Initializable, OwnableUpgradeable, U
   }
 
   function initialize(address _owner) external initializer {
-    __UUPSUpgradeable_init();
     __Ownable_init(_owner);
   }
 

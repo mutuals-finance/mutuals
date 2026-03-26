@@ -6,6 +6,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 
 import {IPool} from "../../interfaces/IPool.sol";
+import {IModule} from "../../interfaces/IModule.sol";
 import {IDistributionModule} from "../../interfaces/IDistributionModule.sol";
 import {Claim, TransferInstruction, TokenType, Token} from "../../types/Token.sol";
 import {PreHookResult} from "../../types/PreHookResult.sol";
@@ -22,19 +23,36 @@ contract RemainderDistributionModule is IDistributionModule, BaseModule {
   /* STATE VARIABLES & STRUCTS                                                  */
   /* -------------------------------------------------------------------------- */
 
-  mapping(address => mapping(uint256 => uint256)) public alreadyClaimed;
+  // Pool -> Claim -> Token -> Amount
+  mapping(address => mapping(uint256 => mapping(Token => uint256))) public claimed;
 
-  struct Config {
-    TokenType tokenType;
-    Token token;
+  struct Context {
+    Token[] tokens;
+    uint256[] amounts;
+  }
+
+  struct Data {
     address recipient;
-    uint256 tokenId;
-    uint256 fixedDeductions;    // Sum of all static absolute token amounts from siblings
-    uint256 bpsDeductions;      // Sum of all static relative basis points from siblings (10000 = 100%)
-    Claim[] dynamicSiblings;    // Array containing ONLY the siblings that require on-chain execution
+    Token[] tokens;
+    TokenType[] tokenTypes;
+    uint256[] tokenIds;
+    uint256[] fixedDeductions;
+    uint256[] bpsDeductions;
+    Claim[] dynamicSiblings;
+  }
+
+  struct Args {
+    Token[] tokens;
+    TokenType[] tokenTypes;
+    uint256[] tokenIds;
+    uint256[] values;
+    uint256[] indices;
+    uint256[][] siblingIndices;
   }
 
   error AllocationExceedsPool();
+  error TokenNotAllowed(Token token);
+  error ArrayLengthMismatch();
 
   /* -------------------------------------------------------------------------- */
   /* MODULE INTERFACE FUNCTIONS                                                 */
@@ -61,28 +79,37 @@ contract RemainderDistributionModule is IDistributionModule, BaseModule {
   /* -------------------------------------------------------------------------- */
 
   /// @inheritdoc IDistributionModule
-  function aggregationParameters(Claim calldata /* claim */) external pure override returns (uint256, uint256, bool) {
+  function aggregationParameters(Claim calldata /* claim */, Token /* token */, uint256 /* index */) external pure override returns (uint256, uint256, bool) {
     // A remainder is inherently dynamic, as it depends on total pool inflow and other dynamic modules
     return (0, 0, true);
   }
 
   /// @inheritdoc IDistributionModule
-  function totalAllocated(Claim calldata claim, uint256 totalPoolInflow) external view override returns (uint256) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
+  function totalAllocated(Claim calldata claim, Token token, uint256 index, uint256 totalReceived) external view override returns (uint256) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
 
-    // Process off-chain aggregated sums in O(1) time
-    uint256 allocatedToSiblings = config.fixedDeductions;
-    if (config.bpsDeductions > 0) {
-      allocatedToSiblings += Math.mulDiv(totalPoolInflow, config.bpsDeductions, 10000);
+    if (data.tokens.length > 0) {
+      if (index >= data.tokens.length || !(data.tokens[index].equals(token))) {
+        return 0;
+      }
+    } else {
+      index = 0;
     }
 
-    // Process only complex modules on-chain in O(N) time
-    if (config.dynamicSiblings.length > 0) {
-      allocatedToSiblings += _sumDynamicSiblings(config.dynamicSiblings, totalPoolInflow);
+    if (data.fixedDeductions.length == 0 || index >= data.fixedDeductions.length) {
+      return totalReceived;
     }
 
-    if (allocatedToSiblings > totalPoolInflow) return 0;
-    return totalPoolInflow - allocatedToSiblings;
+    uint256 allocatedToSiblings = data.fixedDeductions[index];
+    if (data.bpsDeductions[index] > 0) {
+      allocatedToSiblings += Math.mulDiv(totalReceived, data.bpsDeductions[index], 10000);
+    }
+
+    if (allocatedToSiblings > totalReceived) {
+      return 0;
+    }
+
+    return totalReceived - allocatedToSiblings;
   }
 
   /* -------------------------------------------------------------------------- */
@@ -90,93 +117,122 @@ contract RemainderDistributionModule is IDistributionModule, BaseModule {
   /* -------------------------------------------------------------------------- */
 
   /// @inheritdoc IDistributionModule
-  function releasable(Claim calldata claim, bytes calldata distributionArgs) external view override returns (TransferInstruction memory) {
-    return _releasable(claim, distributionArgs);
+  function releasable(Claim calldata claim, bytes calldata dArgs) external view override returns (TransferInstruction[] memory) {
+    return _releasable(claim, dArgs);
   }
 
   /// @inheritdoc IDistributionModule
-  function preDistributionHook(Claim calldata claim, bytes calldata distributionArgs) external override returns (PreHookResult memory) {
-    TransferInstruction memory inst = _releasable(claim, distributionArgs);
+  function preDistributionHook(Claim calldata claim, bytes calldata dArgs) external override returns (PreHookResult memory) {
+    TransferInstruction[] memory instructions = _releasable(claim, dArgs);
 
-    if (inst.amount == 0 && inst.tokenId == 0 && inst.tokenType != TokenType.ERC721) {
-      revert AllocationExceedsPool();
+    Context memory context;
+    context.tokens = new Token[](instructions.length);
+    context.amounts = new uint256[](instructions.length);
+
+    for (uint i = 0; i < instructions.length; i++) {
+      if (instructions[i].amount == 0 && instructions[i].tokenId == 0 && instructions[i].tokenType != TokenType.ERC721) {
+        revert AllocationExceedsPool();
+      }
+      context.tokens[i] = instructions[i].token;
+      context.amounts[i] = instructions[i].amount;
     }
 
     return PreHookResult({
-      instruction: inst,
-      postHookContext: abi.encode(inst.amount),
+      instructions: instructions,
+      postHookContext: abi.encode(context),
       requiresPostHook: true
     });
   }
 
   /// @inheritdoc IDistributionModule
-  function postDistributionHook(Claim calldata claim, bytes calldata distributionContext) external override {
-    uint256 claimedNow = abi.decode(distributionContext, (uint256));
-    alreadyClaimed[msg.sender][claim.id] += claimedNow;
+  function postDistributionHook(Claim calldata claim, bytes calldata dContext) external override {
+    Context memory context = abi.decode(dContext, (Context));
+
+    for (uint i = 0; i < context.tokens.length; i++) {
+      claimed[msg.sender][claim.id][context.tokens[i]] += context.amounts[i];
+    }
   }
 
   /* -------------------------------------------------------------------------- */
   /* INTERNAL LOGIC                                                             */
   /* -------------------------------------------------------------------------- */
 
-  function _releasable(Claim calldata claim, bytes calldata distributionArgs) internal view returns (TransferInstruction memory) {
-    Config memory config = abi.decode(claim.distributorData, (Config));
+  function _releasable(Claim calldata claim, bytes calldata dArgs) internal view returns (TransferInstruction[] memory) {
+    Data memory data = abi.decode(claim.distributionData, (Data));
+    Args memory args = abi.decode(dArgs, (Args));
 
-    uint256 currentBalance = _poolBalance(msg.sender, config.token, config.tokenType);
-    uint256 historicalReleased = IPool(msg.sender).totalReleased(Token.unwrap(config.token));
-    uint256 totalPoolInflow = currentBalance + historicalReleased;
+    TransferInstruction[] memory instructions = new TransferInstruction[](args.tokens.length);
 
-    // Evaluate exact math: R = Inflow - Absolute - (Inflow * Relative) - sum(Dynamic)
-    uint256 allocatedToSiblings = config.fixedDeductions;
-    if (config.bpsDeductions > 0) {
-      allocatedToSiblings += Math.mulDiv(totalPoolInflow, config.bpsDeductions, 10000);
-    }
-    if (config.dynamicSiblings.length > 0) {
-      allocatedToSiblings += _sumDynamicSiblings(config.dynamicSiblings, totalPoolInflow);
-    }
+    for (uint i = 0; i < args.tokens.length; i++) {
+      uint256 idx = args.indices[i];
 
-    uint256 totalRemainder = 0;
-    if (totalPoolInflow > allocatedToSiblings) {
-      totalRemainder = totalPoolInflow - allocatedToSiblings;
-    }
-
-    uint256 claimed = alreadyClaimed[msg.sender][claim.id];
-    uint256 available = totalRemainder > claimed ? totalRemainder - claimed : 0;
-
-    if (distributionArgs.length > 0 && available > 0) {
-      uint256 requestedAmount = abi.decode(distributionArgs, (uint256));
-      if (requestedAmount > 0 && requestedAmount < available) {
-        available = requestedAmount;
+      if (data.tokens.length > 0) {
+        if (idx >= data.tokens.length || !(data.tokens[idx].equals(args.tokens[i]))) {
+          revert TokenNotAllowed(args.tokens[i]);
+        }
+      } else {
+        idx = 0;
       }
+
+      uint256 totalRemainder;
+      {
+        uint256 totalReceived = args.tokens[i].balanceOf(args.tokenTypes[i], msg.sender)
+          + IPool(msg.sender).totalReleased(Token.unwrap(args.tokens[i]), args.tokenIds[i]);
+
+        uint256 allocatedToSiblings = data.fixedDeductions[idx];
+        if (data.bpsDeductions[idx] > 0) {
+          allocatedToSiblings += Math.mulDiv(totalReceived, data.bpsDeductions[idx], 10000);
+        }
+
+        if (data.dynamicSiblings.length > 0) {
+          allocatedToSiblings += _sumDynamicSiblings(data.dynamicSiblings, args.tokens[i], args.siblingIndices[i], totalReceived);
+        }
+
+        if (totalReceived > allocatedToSiblings) {
+          totalRemainder = totalReceived - allocatedToSiblings;
+        } else {
+          totalRemainder = 0;
+        }
+      }
+
+      uint256 available;
+      {
+        uint256 currentClaimed = claimed[msg.sender][claim.id][args.tokens[i]];
+        available = totalRemainder > currentClaimed ? totalRemainder - currentClaimed : 0;
+      }
+
+      if (args.values[i] > 0 && args.values[i] < available) {
+        available = args.values[i];
+      }
+
+      instructions[i] = TransferInstruction({
+        tokenType: args.tokenTypes[i],
+        token: args.tokens[i],
+        recipient: data.recipient,
+        tokenId: args.tokenIds[i],
+        amount: available,
+        data: ""
+      });
     }
 
-    return TransferInstruction({
-      tokenType: config.tokenType,
-      token: config.token,
-      recipient: config.recipient,
-      tokenId: config.tokenId,
-      amount: available,
-      data: ""
-    });
+    return instructions;
   }
 
-  function _sumDynamicSiblings(Claim[] memory dynamicSiblings, uint256 totalPoolInflow) internal view returns (uint256) {
+  function _sumDynamicSiblings(
+    Claim[] memory dynamicSiblings,
+    Token token,
+    uint256[] memory siblingIndices,
+    uint256 totalReceived
+  ) internal view returns (uint256) {
     uint256 totalAllocatedSiblings = 0;
-    for (uint256 i = 0; i < dynamicSiblings.length; i++) {
-      totalAllocatedSiblings += IDistributionModule(dynamicSiblings[i].distributorModule).totalAllocated(
-        dynamicSiblings[i],
-        totalPoolInflow
+    for (uint256 j = 0; j < dynamicSiblings.length; j++) {
+      totalAllocatedSiblings += IDistributionModule(dynamicSiblings[j].distributionModule).totalAllocated(
+        dynamicSiblings[j],
+        token,
+        siblingIndices[j],
+        totalReceived
       );
     }
     return totalAllocatedSiblings;
-  }
-
-  function _poolBalance(address pool, Token token, TokenType tokenType) internal view returns (uint256) {
-    if (tokenType == TokenType.NATIVE) {
-      return pool.balance;
-    } else if (tokenType == TokenType.ERC20) {
-      return IERC20(Token.unwrap(token)).balanceOf(pool);
-    }
-    return 0;
   }
 }

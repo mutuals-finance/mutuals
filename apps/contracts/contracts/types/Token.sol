@@ -84,6 +84,32 @@ library TokenLibrary {
     }
   }
 
+  function balanceOf(
+    Token self,
+    TokenType tokenType,
+    address account
+  ) internal view returns (uint256) {
+    return balanceOf(self, tokenType, account, 0);
+  }
+
+  function balanceOf(
+    Token self,
+    TokenType tokenType,
+    address account,
+    uint256 id
+  ) internal view returns (uint256) {
+    if (tokenType == TokenType.NATIVE || self.isAddressZero()) {
+      return account.balance;
+    } else if (tokenType == TokenType.ERC20) {
+      return IERC20(Token.unwrap(self)).balanceOf(account);
+    } else if (tokenType == TokenType.ERC721) {
+      return IERC721(Token.unwrap(self)).balanceOf(account);
+    } else if (tokenType == TokenType.ERC1155) {
+      return IERC1155(Token.unwrap(self)).balanceOf(account, id);
+    }
+    revert Token_InvalidTokenType();
+  }
+
   function isAddressZero(Token self) internal pure returns (bool) {
     return Token.unwrap(self) == Token.unwrap(ADDRESS_ZERO);
   }
