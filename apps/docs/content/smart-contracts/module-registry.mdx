@@ -1,0 +1,148 @@
+---
+title: ModuleRegistry
+description: Permissionless module registry with an attester-based security model.
+---
+
+## Overview
+
+`ModuleRegistry` is a protocol-level singleton that tracks which contracts are valid modules and which have been audited by trusted third parties. Pools query it during module installation to enforce a trust requirement — a module must carry a valid, non-revoked attestation from at least one of the pool's trusted attesters before it can be installed.
+
+The registry itself is permissionless for registration (any conforming contract can self-register) and attestation (any address can attest to any registered module). Trust is enforced at the pool level by restricting which attesters it recognizes.
+
+```solidity
+import { ModuleRegistry } from "src/core/ModuleRegistry.sol";
+```
+
+**Inherits:** `Initializable`, `OwnableUpgradeable`, `UUPSUpgradeable`
+
+---
+
+## Initialization
+
+The constructor disables initializers to prevent direct implementation usage.
+
+```solidity
+function initialize(address _owner) external initializer
+```
+
+Sets the contract owner. Called once after proxy deployment.
+
+---
+
+## Registration
+
+```solidity
+function registerModule(address module) external
+```
+
+Registers a module contract in the registry. Permissionless — any caller can register any address that correctly implements `IModule`.
+
+Validation steps:
+1. Reverts with `Registry_AlreadyRegistered` if the module is already registered.
+2. Calls `module.supportsInterface(type(IModule).interfaceId)`. Reverts with `Registry_InvalidModuleInterface` if it returns `false` or reverts.
+3. Reads `IModule(module).moduleId()` for the emitted event (not stored on-chain).
+4. Sets `isRegistered[module] = true` and emits `ModuleRegistered`.
+
+---
+
+## Attestation
+
+### `attest`
+
+```solidity
+function attest(address module, uint48 expirationTime) external
+```
+
+Records that `msg.sender` attests to the security of `module`. Each address can hold at most one active attestation per module.
+
+- Reverts with `Registry_NotRegistered` if the module is not registered.
+- Reverts with `Registry_AlreadyAttested` if an active (non-revoked) attestation exists.
+- `expirationTime` is a Unix timestamp. Pass `0` for a non-expiring attestation.
+
+### `revoke`
+
+```solidity
+function revoke(address module) external
+```
+
+Revokes `msg.sender`'s existing attestation on `module`. Sets `revocationTime` to `block.timestamp` on the stored record.
+
+- Reverts with `Registry_AttestationNotFound` if no attestation record exists.
+- Reverts with `Registry_AlreadyRevoked` if already revoked.
+
+---
+
+## Verification
+
+### `isValidAttestation`
+
+```solidity
+function isValidAttestation(address module, address attester) public view returns (bool)
+```
+
+Returns `true` if all of the following hold:
+- The module is registered.
+- An attestation record exists for `(module, attester)`.
+- The attestation has not been revoked.
+- The attestation's `expirationTime` is either `0` or in the future.
+
+### `isAttestedByAny`
+
+```solidity
+function isAttestedByAny(address module, address[] calldata trustedAttesters) external view returns (bool)
+```
+
+Iterates `trustedAttesters` and returns `true` as soon as one valid attestation is found. This is the function called by `Pool._installModule`.
+
+---
+
+## State
+
+```solidity
+mapping(address => bool) public isRegistered;
+
+mapping(address => mapping(address => AttestationRecord)) public attestations;
+```
+
+```solidity
+struct AttestationRecord {
+    uint48 time;
+    uint48 expirationTime;
+    uint48 revocationTime;
+}
+```
+
+`time` is set at attestation. `revocationTime` defaults to `0` and is set only on revocation. `expirationTime` of `0` means the attestation never expires.
+
+---
+
+## Upgrade
+
+```solidity
+function _authorizeUpgrade(address newImplementation) internal override onlyOwner
+```
+
+UUPS upgrade authorization is restricted to the registry owner.
+
+---
+
+## Events
+
+| Event | Description |
+|---|---|
+| `ModuleRegistered(address module, string id, address registrar)` | Emitted on successful registration. |
+| `Attested(address module, address attester, uint48 expirationTime)` | Emitted when an attestation is created. |
+| `Revoked(address module, address attester)` | Emitted when an attestation is revoked. |
+
+---
+
+## Errors
+
+| Error | Condition |
+|---|---|
+| `Registry_AlreadyRegistered` | Module address already registered. |
+| `Registry_InvalidModuleInterface` | Contract does not implement `IModule`. |
+| `Registry_NotRegistered` | Module not registered; cannot attest. |
+| `Registry_AlreadyAttested` | Active attestation already exists for this `(module, attester)` pair. |
+| `Registry_AttestationNotFound` | No attestation record found for revocation. |
+| `Registry_AlreadyRevoked` | Attestation already revoked. |

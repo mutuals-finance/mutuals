@@ -1,0 +1,215 @@
+---
+title: Pool
+description: The modular execution engine for validating and distributing token claims.
+---
+
+## Overview
+
+`Pool` is the central contract of the protocol.
+It is an upgradeable (UUPS) proxy that separates two concerns: **validation** (is this claim authorized?) and **distribution** (how should funds be released?).
+Both are delegated entirely to pluggable modules, keeping the pool's own logic stateless with respect to claim logic.
+
+Each pool instance is deployed via [`PoolFactory`](/docs/contracts/pool-factory) using CREATE2 and initialized with a specific set of modules, trusted attesters, and an owner.
+
+```solidity
+import { Pool } from "src/core/Pool.sol";
+```
+
+**Inherits:** `Initializable`, `UUPSUpgradeable`, `OwnableUpgradeable`, `PausableUpgradeable`, `ReentrancyGuardTransient`
+
+---
+
+## Storage
+
+Pool state is isolated in an ERC-7201 namespaced slot via `PoolStorage`. It is accessed through the `getPoolStorage()` helper rather than contract-level variables, ensuring storage layout compatibility across proxy upgrades.
+
+See [`PoolStorage`](/smart-contracts/pool-storage) for the full layout.
+
+The single state-accessing view exposed directly on `Pool` is:
+
+```solidity
+function registry() public view returns (IModuleRegistry)
+```
+
+Returns the protocol-level `ModuleRegistry` used for module attestation checks.
+
+---
+
+## Initialization
+
+The constructor calls `_disableInitializers()` to prevent the implementation contract from being initialized directly.
+
+```solidity
+function initialize(
+    address _registry,
+    address initialOwner,
+    address[] calldata initialModules,
+    bytes[] calldata initialModuleData,
+    address[] calldata _trustedAttesters
+) public initializer
+```
+
+Called once by `PoolFactory` on the freshly deployed proxy. Sets the registry, owner, trusted attesters, and installs any initial modules by calling `_installModule` for each entry.
+
+Reverts with `InvalidModuleAddress` if `_registry` is zero, or `ArrayLengthMismatch` if `initialModules` and `initialModuleData` lengths differ.
+
+---
+
+## Admin Functions
+
+All admin functions are gated by `onlyOwner`.
+
+```solidity
+function pause() external onlyOwner
+function unpause() external onlyOwner
+```
+
+Pauses or unpauses all execution entry points (`releaseSingle`, `release`, `releaseSeparate`). The `whenNotPaused` modifier is applied to each.
+
+```solidity
+function updateTrustedAttesters(address[] calldata newAttesters) external onlyOwner
+```
+
+Replaces the pool's trusted attester list. Emits `TrustedAttestersUpdated`. Note that this does not affect already-installed modules — attestation is only checked at install time.
+
+```solidity
+function installModule(address module, bytes calldata data) external onlyOwner
+function installModuleBatch(address[] calldata modules, bytes[] calldata data) external onlyOwner
+```
+
+Installs one or multiple modules. Delegates to `_installModule` internally.
+
+### `_installModule`
+
+```solidity
+function _installModule(address module, bytes calldata data) internal
+```
+
+1. Rejects zero address.
+2. Checks that the module has a valid, non-expired, non-revoked attestation from at least one trusted attester via `registry().isAttestedByAny(module, trustedAttesters)`. Reverts with `UntrustedModule(module)` on failure.
+3. Marks the module as installed in `installedModules`.
+4. Calls `IModule(module).onInstall(data)` to let the module set up its own per-pool state.
+5. Emits `ModuleInstalled`.
+
+---
+
+## Execution Functions
+
+All execution functions require `whenNotPaused` and `nonReentrant` (transient storage variant).
+
+### `releaseSingle`
+
+```solidity
+function releaseSingle(
+    Claim calldata claim,
+    bytes calldata vArgs,
+    bytes calldata dArgs
+) external whenNotPaused nonReentrant
+```
+
+Processes a single claim. Validates using the claim's `validationModule`, then calls `_processDistribution`.
+
+### `release`
+
+```solidity
+function release(
+    Claim[] calldata claims,
+    bytes[] calldata vArgs,
+    bytes[] calldata dArgs
+) external whenNotPaused nonReentrant
+```
+
+Batched execution with **aggregated settlement**. The pool attempts to merge transfer instructions across claims that share the same token, recipient, and token ID into a single transfer, reducing ERC-20 transfer overhead. ERC-721 tokens cannot be aggregated and revert with `CannotAggregateERC721` if encountered mid-batch.
+
+Execution order:
+
+1. **Validate** — calls `_processBatchedValidation` for all claims.
+2. **Pre-hooks** — iterates claims, calls `preDistributionHook` on each distribution module, accumulates `TransferInstruction` results, and aggregates compatible instructions.
+3. **Settlement** — executes the aggregated transfer plus any non-aggregable transfers via `_executeTransfer`.
+4. **Post-hooks** — calls `postDistributionHook` on modules that set `requiresPostHook = true`, passing through the context bytes returned by the pre-hook.
+
+### `releaseSeparate`
+
+```solidity
+function releaseSeparate(
+    Claim[] calldata claims,
+    bytes[] calldata vArgs,
+    bytes[] calldata dArgs
+) external whenNotPaused nonReentrant
+```
+
+Batched execution **without** aggregation. Each claim is validated and distributed independently via `_processDistribution`. Simpler and more predictable than `release`, at the cost of additional transfer calls.
+
+---
+
+## Internal Functions
+
+### `_processBatchedValidation`
+
+```solidity
+function _processBatchedValidation(
+    Claim[] calldata claims,
+    bytes[] calldata vArgs
+) internal view
+```
+
+Iterates all claims and calls `IValidationModule(validator).validateRuntime(claim, vArgs[i])` for each. Caches the installation check for consecutive claims sharing the same validator address to save gas.
+
+### `_processDistribution`
+
+```solidity
+function _processDistribution(Claim calldata claim, bytes calldata dArgs) internal
+```
+
+Runs the full pre → settle → post-hook lifecycle for a single claim against its distribution module.
+
+### `_executeTransfer`
+
+```solidity
+function _executeTransfer(TransferInstruction memory inst) internal
+```
+
+Delegates to `TokenLibrary.executeTransfer` and increments `totalReleased[token][tokenId]` for non-ERC721 tokens.
+
+### `_authorizeUpgrade`
+
+```solidity
+function _authorizeUpgrade(address newImplementation) internal override onlyOwner
+```
+
+Restricts UUPS upgrade authorization to the pool owner.
+
+---
+
+## View Functions
+
+```solidity
+function totalReleased(address token, uint256 tokenId) external view returns (uint256)
+```
+
+Returns the cumulative amount of `token` (at `tokenId` for ERC-1155) that has been released through this pool over its lifetime. Used by distribution modules to compute percentage-based allocations.
+
+---
+
+## Events
+
+| Event | Description |
+|---|---|
+| `ReleaseSingle(Claim claim)` | Emitted after a successful `releaseSingle` call. |
+| `Release(Claim[] claims)` | Emitted after a successful `release` or `releaseSeparate` call. |
+| `ModuleInstalled(address module, bytes data)` | Emitted when a module is installed. |
+| `TrustedAttestersUpdated(address[] newAttesters)` | Emitted when the attester list is replaced. |
+
+---
+
+## Errors
+
+| Error | Condition |
+|---|---|
+| `InvalidModuleAddress` | Module or registry address is `address(0)`. |
+| `UntrustedModule(address)` | Module has no valid attestation from any trusted attester. |
+| `ModuleNotInstalled(address)` | Claim references a module not installed in this pool. |
+| `ArrayLengthMismatch` | Mismatched input array lengths. |
+| `EmptyClaims` | Batch call with zero claims. |
+| `CannotAggregateERC721` | ERC-721 encountered during aggregated `release`. |
+| `ExecutionReverted(address module, bytes reason)` | A module hook reverted; propagates the revert reason. |

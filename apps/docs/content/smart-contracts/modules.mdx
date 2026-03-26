@@ -1,111 +1,372 @@
 ---
 title: Modules
-description: Modules extend the protocol's functionality through standardized interfaces. This document explains the two module types and their reference implementations.
+description: Reference for the validation and distribution modules shipped with the protocol.
 ---
-
-## Module Interfaces
-
-All modules implement the base `IModule` interface which provides lifecycle hooks and ERC-165 introspection.
-
-```solidity
-interface IModule {
-    function moduleId() external pure returns (string memory);
-    function onInstall(bytes calldata data) external;
-    function onUninstall(bytes calldata data) external;
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}
-```
-
-The `moduleId` returns a unique identifier for the module. The install and uninstall hooks allow modules to initialize and clean up state. The `supportsInterface` function enables interface detection through ERC-165.
 
 ## Validation Modules
 
-Validation modules verify whether claims are authorized. They implement a view function that checks proofs or signatures without modifying state.
+### MerkleTreeValidationModule
 
 ```solidity
-interface IValidationModule is IModule {
-    function validateRuntime(Claim calldata claim, bytes calldata validationArgs) external view;
-}
+import { MerkleTreeValidationModule } from "src/modules/validation/MerkleTreeValidationModule.sol";
 ```
 
-The function reverts if validation fails, causing the entire claim transaction to revert. This fail-fast behavior ensures invalid claims don't waste gas on distribution calculations.
+**Module ID:** `mutuals.merkle-tree-validation-module.1.0.0`
 
-### Merkle Tree Validation
+Validates claims against an off-chain generated Merkle tree. The pool maintains a Merkle root; each claim is hashed and verified against it using a caller-supplied proof.
 
-The Merkle tree validation module stores a single root hash per pool. Claims provide Merkle proofs demonstrating inclusion in the tree.
+**Leaf construction:**
 
-During validation, the module hashes the claim data to produce a leaf, then verifies the proof connects the leaf to the stored root. This approach is gas-efficient for large recipient sets since the pool stores only 32 bytes regardless of set size.
+```solidity
+bytes32 leaf = keccak256(abi.encode(claim));
+```
 
-The module provides an `updateRoot` function that pools can call to change the Merkle root, enabling dynamic recipient lists without redeployment.
+The leaf is the full ABI-encoded `Claim` struct. Any field change (id, amounts, modules, data) produces a different leaf and invalidates any existing proof for that claim.
 
-### Onchain Mapping Validation
+**State:**
 
-The onchain mapping module maintains a mapping from claim IDs to boolean values. Validation simply checks if the claim ID is marked as allowed.
+```solidity
+mapping(address => bytes32) public poolRoots;
+```
 
-This approach is simpler than Merkle trees but less gas-efficient for large sets. Each recipient requires a storage write to enable their claim. The module works well for small recipient lists or situations where claims need to be revoked individually.
+Keyed by pool address (`msg.sender` during hook calls). One root per pool.
+
+**Installation:**
+
+```solidity
+// Optionally set an initial root at install time
+bytes memory data = abi.encode(initialRoot);
+pool.installModule(address(merkleModule), data);
+```
+
+If `data` is empty, the root starts as `bytes32(0)` and must be set before any claims can be validated.
+
+**Root management:**
+
+```solidity
+function updateRoot(bytes32 newRoot) external
+```
+
+Called by the pool itself (i.e., `msg.sender` must be the pool managing its own root). Typically invoked by the pool owner via `pool.execute(...)` or a governance action. Updates take effect immediately — outstanding proofs against the old root become invalid.
+
+**Validation:**
+
+`vArgs` must be `abi.encode(bytes32[] proof)`.
+
+```solidity
+function validateRuntime(Claim calldata claim, bytes calldata vArgs) external view
+```
+
+Reverts with `RootNotSet` if no root is configured, or `InvalidProof` if `MerkleProof.verify` fails.
+
+**Errors:**
+
+| Error | Condition |
+|---|---|
+| `RootNotSet` | Pool has no Merkle root configured. |
+| `InvalidProof` | Proof does not verify against the stored root. |
+
+---
+
+### OnchainMappingValidationModule
+
+```solidity
+import { OnchainMappingValidationModule } from "src/modules/validation/OnchainMappingValidationModule.sol";
+```
+
+**Module ID:** `mutuals.onchain-mapping-validation-module.1.0.0`
+
+Simple on-chain allowlist keyed by claim ID. No dynamic `vArgs` are evaluated — validity is determined entirely from state. Appropriate when the set of valid claims is known up-front or small enough to manage on-chain.
+
+**State:**
+
+```solidity
+mapping(address => mapping(uint256 => bool)) public exists;
+// pool => claimId => allowed
+```
+
+**Installation:**
+
+```solidity
+// Pre-populate claim IDs at install time
+bytes memory data = abi.encode(uint256[](initialClaimIds));
+pool.installModule(address(mappingModule), data);
+```
+
+Pass an empty `bytes` to start with no allowed claims.
+
+**Claim management:**
+
+```solidity
+function setClaimStatus(uint256 claimId, bool status) external
+function setClaimStatusBatch(uint256[] calldata claimIds, bool[] calldata statuses) external
+```
+
+`msg.sender` is the pool — these are called from the pool via governance or owner transactions. Individual claims can be toggled without affecting others.
+
+**Validation:**
+
+`vArgs` are ignored. Reverts with `ClaimNotAllowed(claimId)` if `exists[pool][claim.id]` is `false`.
+
+**Errors:**
+
+| Error | Condition |
+|---|---|
+| `ClaimNotAllowed(uint256 claimId)` | Claim ID not in the pool's allowlist. |
+
+---
 
 ## Distribution Modules
 
-Distribution modules calculate release amounts and track claimed state. They implement three functions that work together during claim execution.
+### DirectDistributionModule
 
 ```solidity
-interface IDistributionModule is IModule {
-    function releasable(Claim calldata claim, bytes calldata distributionArgs)
-        external view returns (TransferInstruction memory);
+import { DirectDistributionModule } from "src/modules/distribution/DirectDistributionModule.sol";
+```
 
-    function preDistributionHook(Claim calldata claim, bytes calldata distributionArgs)
-        external returns (PreHookResult memory);
+**Module ID:** `mutuals.direct-distribution-module.1.0.0`
 
-    function postDistributionHook(Claim calldata claim, bytes calldata distributionContext)
-        external;
+Releases a fixed amount or a percentage of total pool inflow to a fixed recipient. The simplest distribution module — no conditions, no time locks.
+
+**Claim data (`Data` struct):**
+
+| Field | Type | Description |
+|---|---|---|
+| `recipient` | `address` | Token recipient. |
+| `tokens` | `Token[]` | Allowlisted tokens. Empty means accept any token from `args`. |
+| `tokenTypes` | `TokenType[]` | ERC-20, ERC-721, ERC-1155, or native. |
+| `tokenIds` | `uint256[]` | Token IDs (relevant for ERC-1155). |
+| `values` | `uint256[]` | Absolute amounts or numerators (for percentage mode). |
+| `denominators` | `uint256[]` | Denominators for percentage calculation. Ignored in absolute mode. |
+| `percentages` | `bool[]` | If `true`, `values[i] / denominators[i]` of total inflow is allocated. |
+
+**Runtime args (`Args` struct):**
+
+| Field | Type | Description |
+|---|---|---|
+| `tokens` | `Token[]` | Tokens to claim in this call. |
+| `tokenTypes` | `TokenType[]` | Corresponding token types. |
+| `tokenIds` | `uint256[]` | Corresponding token IDs. |
+| `values` | `uint256[]` | Optional cap on the released amount. `0` means no cap. |
+| `indices` | `uint256[]` | Position of each token in the `Data.tokens` allowlist. |
+
+**Allocation logic:**
+
+- **Absolute:** `available = values[index] - claimed[pool][claimId][token]`
+- **Percentage:** `available = (totalReceived × values[index] / denominators[index]) - claimed[pool][claimId][token]`
+
+`totalReceived` is `token.balanceOf(pool) + pool.totalReleased(token, tokenId)`.
+
+**Errors:**
+
+| Error | Condition |
+|---|---|
+| `InsufficientAllocation` | Computed available amount is zero for a non-ERC721 token. |
+| `PercentageNotSupportedForNFTs` | Percentage mode used with `TokenType.ERC721`. |
+| `InvalidDenominator` | Percentage mode with `denominator == 0`. |
+| `TokenNotAllowed(Token)` | Requested token not in allowlist or index mismatch. |
+
+---
+
+### PriorityDistributionModule
+
+```solidity
+import { PriorityDistributionModule } from "src/modules/distribution/PriorityDistributionModule.sol";
+```
+
+**Module ID:** `mutuals.priority-distribution-module.1.0.0`
+
+Waterfall/priority logic: this module only releases funds after a preceding (higher-priority) claim has been sufficiently satisfied. Implements a threshold check against a sibling claim's releasable amount.
+
+**Claim data (`Data` struct):**
+
+| Field | Type | Description |
+|---|---|---|
+| `recipient` | `address` | Token recipient. |
+| `tokens` | `Token[]` | Allowlisted tokens. |
+| `tokenTypes` | `TokenType[]` | Token types. |
+| `tokenIds` | `uint256[]` | Token IDs. |
+| `maxAllocations` | `uint256[]` | Maximum absolute amount this module can release per token. |
+| `previousClaim` | `Claim` | The higher-priority claim whose releasable amount is checked. |
+| `thresholds` | `uint256[]` | Per-token minimum releasable amount required from `previousClaim`. |
+
+**Condition check:**
+
+For each requested token, the module calls:
+
+```solidity
+IDistributionModule(data.previousClaim.distributionModule)
+    .releasable(data.previousClaim, "")
+```
+
+and sums releasable amounts for the matching token across all returned instructions. If `prevAmountForToken <= thresholds[index]`, the instruction is returned with `amount = 0` (not a revert — the pool's pre-hook then reverts with `PriorityConditionNotMet` because amount is zero).
+
+**Errors:**
+
+| Error | Condition |
+|---|---|
+| `PriorityConditionNotMet(Token)` | Priority threshold not met; zero amount returned from pre-hook. |
+| `TokenNotAllowed(Token)` | Token not in allowlist or index mismatch. |
+
+---
+
+### RemainderDistributionModule
+
+```solidity
+import { RemainderDistributionModule } from "src/modules/distribution/RemainderDistributionModule.sol";
+```
+
+**Module ID:** `mutuals.remainder-distribution-module.1.0.0`
+
+Releases whatever is left in the pool after accounting for all sibling claims. Designed for use as the last recipient in a waterfall. Uses a hybrid approach: static deductions (fixed amounts and basis points) are passed in via `Data` to avoid on-chain sibling calls; only truly dynamic siblings require on-chain `totalAllocated` queries.
+
+`aggregationParameters` always returns `dynamic = true` because the remainder is inherently unknowable statically.
+
+**Claim data (`Data` struct):**
+
+| Field | Type | Description |
+|---|---|---|
+| `recipient` | `address` | Token recipient. |
+| `tokens` | `Token[]` | Allowlisted tokens. |
+| `tokenTypes` | `TokenType[]` | Token types. |
+| `tokenIds` | `uint256[]` | Token IDs. |
+| `fixedDeductions` | `uint256[]` | Sum of all static fixed allocations from sibling claims, per token. |
+| `bpsDeductions` | `uint256[]` | Sum of all percentage allocations (in bps) from sibling claims, per token. |
+| `dynamicSiblings` | `Claim[]` | Sibling claims with `dynamic = true` that must be queried on-chain. |
+
+**Runtime args (`Args` struct):**
+
+Standard token/type/id/value/index arrays plus `siblingIndices[][]` — for each dynamic sibling, the index of the requested token in that sibling's allowlist.
+
+**Remainder calculation:**
+
+```
+totalReceived = token.balanceOf(pool) + pool.totalReleased(token, tokenId)
+allocatedToSiblings = fixedDeductions[idx]
+                    + mulDiv(totalReceived, bpsDeductions[idx], 10000)
+                    + Σ dynamicSibling.totalAllocated(...)
+totalRemainder = max(0, totalReceived - allocatedToSiblings)
+available = totalRemainder - claimed[pool][claimId][token]
+```
+
+**Errors:**
+
+| Error | Condition |
+|---|---|
+| `AllocationExceedsPool` | Siblings consume more than total pool inflow; remainder is zero. |
+| `TokenNotAllowed(Token)` | Token not in allowlist or index mismatch. |
+| `ArrayLengthMismatch` | Mismatched input arrays. |
+
+---
+
+### TokenLimitDistributionModule
+
+```solidity
+import { TokenLimitDistributionModule } from "src/modules/distribution/TokenLimitDistributionModule.sol";
+```
+
+**Module ID:** `mutuals.token-limit-distribution-module.1.0.0`
+
+Gates distribution on the recipient holding a minimum balance of a specific external token. If the threshold is not met, the instruction is returned with `amount = 0` (pre-hook then reverts with `LimitRequirementNotMet`).
+
+Supports ERC-20, ERC-721, and ERC-1155 as the limit token.
+
+**Claim data (`Data` struct):**
+
+| Field | Type | Description |
+|---|---|---|
+| `recipient` | `address` | Token recipient; also the address whose balance is checked. |
+| `tokens` | `Token[]` | Allowlisted distribution tokens. |
+| `tokenTypes` | `TokenType[]` | Distribution token types. |
+| `tokenIds` | `uint256[]` | Distribution token IDs. |
+| `maxAllocations` | `uint256[]` | Maximum releasable amount per distribution token. |
+| `limitTokenType` | `TokenType` | Type of the gating token. |
+| `limitToken` | `Token` | Address of the gating token. |
+| `limitTokenId` | `uint256` | Token ID for ERC-1155 gating tokens. |
+| `limitThreshold` | `uint256` | Minimum balance the recipient must hold to unlock the claim. |
+
+**Gate check:**
+
+```solidity
+uint256 recipientBalance = data.limitToken.balanceOf(
+    data.limitTokenType,
+    data.recipient,
+    data.limitTokenId
+);
+bool limitMet = recipientBalance >= data.limitThreshold;
+```
+
+If `limitMet` is false, all instructions return `amount = 0`.
+
+**Errors:**
+
+| Error | Condition |
+|---|---|
+| `LimitRequirementNotMet` | Recipient balance below `limitThreshold`. |
+| `TokenNotAllowed(Token)` | Token not in allowlist or index mismatch. |
+
+---
+
+### VestingDistributionModule
+
+```solidity
+import { VestingDistributionModule } from "src/modules/distribution/VestingDistributionModule.sol";
+```
+
+**Module ID:** `mutuals.vesting-distribution-module.1.0.0`
+
+Linear vesting over a fixed duration. Tokens unlock proportionally over time from the vesting start, reaching full allocation at `startTime + duration`.
+
+**State:**
+
+```solidity
+mapping(address => uint256) public vestingStart;
+// pool => vesting start timestamp
+```
+
+**Installation:**
+
+```solidity
+// Set a custom start time (Unix timestamp)
+bytes memory data = abi.encode(uint256(customStartTime));
+pool.installModule(address(vestingModule), data);
+
+// Start immediately from install block
+pool.installModule(address(vestingModule), "");
+```
+
+If `data` is empty, `vestingStart[pool] = block.timestamp` at install time.
+
+**Uninstall:** Clears `vestingStart[pool]`.
+
+**Claim data (`Data` struct):**
+
+| Field | Type | Description |
+|---|---|---|
+| `recipient` | `address` | Token recipient. |
+| `tokens` | `Token[]` | Allowlisted tokens. |
+| `tokenTypes` | `TokenType[]` | Token types. |
+| `tokenIds` | `uint256[]` | Token IDs. |
+| `totalAllocations` | `uint256[]` | Full allocation per token once fully vested. |
+| `duration` | `uint256` | Total vesting duration in seconds. |
+
+**Vested amount calculation:**
+
+```solidity
+if (block.timestamp >= startTime + data.duration) {
+    totalVested = data.totalAllocations[index];
+} else if (block.timestamp > startTime) {
+    uint256 timePassed = block.timestamp - startTime;
+    totalVested = (data.totalAllocations[index] * timePassed) / data.duration;
 }
+// available = totalVested - claimed[pool][claimId][token]
 ```
 
-The `releasable` function is view-only and calculates amounts without state changes. Applications call this to preview releases. The `preDistributionHook` performs the same calculation but returns context data for post-processing. The `postDistributionHook` updates state after successful transfers using the saved context.
+No cliff — vesting begins linearly from `startTime`.
 
-### Direct Distribution
+**Errors:**
 
-The Direct distribution module supports fixed-amount and percentage-based allocations. For fixed amounts, the module tracks claimed amounts and subtracts them from the total allocation. For percentages, it calculates allocations based on the pool's total historical inflows.
-
-The module encodes the claimed amount as context data during the pre-hook. The post-hook decodes this amount and adds it to the tracking mapping. This pattern ensures amounts are only recorded after successful transfers.
-
-### Vesting Distribution
-
-The Vesting module implements linear vesting schedules. The module stores a pool-wide start time and calculates vested amounts based on elapsed time.
-
-The calculation divides total allocation by duration to get the per-second rate, then multiplies by elapsed seconds. Already-claimed amounts are subtracted to get the currently releasable amount. This makes the releasable amount increase gradually over the vesting period.
-
-The vesting calculation follows this formula:
-
-```
-vested(t) = min((totalAllocation × elapsed) / duration, totalAllocation)
-releasable(t) = vested(t) - alreadyClaimed
-```
-
-Where elapsed is the time since the pool's start time.
-
-### Priority Distribution
-
-The Priority module creates waterfall distributions where one claim depends on another. The module checks the previous claim's releasable amount before allowing the current claim to proceed.
-
-This enables senior/junior tranche structures. The senior tranche is set up with a normal distribution module. The junior tranche uses the Priority module with the senior claim as its dependency. The junior claim only releases after the senior claim meets its threshold.
-
-### Token-Gated Distribution
-
-The Token-Gated module requires recipients to hold a minimum balance of an external token. The module queries the recipient's balance during validation and returns zero if the balance is insufficient.
-
-This enables distributions gated to governance token holders or NFT owners. The gate can use any ERC20, ERC721, or ERC1155 token as the requirement.
-
-## Developing Custom Modules
-
-Custom modules follow the same interface patterns. Validation modules implement `validateRuntime` to check authorization. Distribution modules implement the three-function pattern for calculation and state management.
-
-Modules should use pool-scoped storage by keying mappings on `msg.sender`. This prevents state collisions when the same module is installed in multiple pools. The module should also validate all inputs and use custom errors for gas efficiency.
-
-Before deployment, custom modules should undergo security audits. Malicious or buggy modules can steal funds or corrupt state. After audit, modules should be registered in the ModuleRegistry and attested by trusted parties.
-
-## Module Composition
-
-Modules can be composed to create complex behaviors. A pool might use Merkle validation for authorization and Priority distribution for waterfall payouts. Another pool might combine onchain mapping validation with vesting distribution for team token releases.
-
-The module system's flexibility allows pools to mix and match authorization and distribution strategies without modifying core contracts. New modules can be added to the ecosystem by implementing the interfaces and going through the registration and attestation process.
+| Error | Condition |
+|---|---|
+| `PoolNotInitialized` | `vestingStart[pool]` is `0`; module not installed for this pool. |
+| `TokenNotAllowed(Token)` | Token not in allowlist or index mismatch. |

@@ -1,0 +1,217 @@
+---
+title: Module Interfaces & Base
+description: Core interfaces and base contract that all modules must implement.
+---
+
+## Overview
+
+Every module installed into a Pool must conform to the `IModule` interface and, depending on its role, either `IDistributionModule` or `IValidationModule`. `BaseModule` provides the ERC-165 plumbing required for installation and is the recommended base for all module implementations.
+
+---
+
+## IModule
+
+```solidity
+import { IModule } from "src/interfaces/IModule.sol";
+```
+
+The root interface for all protocol modules. Extends `IERC165`.
+
+### Functions
+
+```solidity
+function onInstall(bytes calldata data) external
+```
+
+Called by the pool during `_installModule`. Modules use this to initialize per-pool state. `data` is forwarded as-is from the install call and may be empty. Must not revert for modules that require no initialization — in that case, simply ignore `data`.
+
+```solidity
+function onUninstall(bytes calldata data) external
+```
+
+Reserved for future uninstall support. Modules should use this to clean up per-pool state (e.g., `delete vestingStart[msg.sender]`).
+
+```solidity
+function moduleId() external view returns (string memory)
+```
+
+Returns a unique human-readable identifier for the module, conventionally in reverse-domain format with a version suffix:
+
+```
+"mutuals.merkle-tree-validation-module.1.0.0"
+```
+
+Used for off-chain discovery and event indexing. Not stored on-chain by the registry.
+
+### ERC-165
+
+Modules must return `true` for `type(IModule).interfaceId`. This is checked by `ModuleRegistry.registerModule` before allowing registration.
+
+---
+
+## IDistributionModule
+
+```solidity
+import { IDistributionModule } from "src/interfaces/IDistributionModule.sol";
+```
+
+Extends `IModule`. Implemented by modules that compute financial flows and manage per-claim state.
+
+### Allocation Functions
+
+```solidity
+function aggregationParameters(
+    Claim calldata claim,
+    Token token,
+    uint256 index
+) external view returns (uint256 absoluteAmount, uint256 bpsMultiplier, bool dynamic)
+```
+
+Returns parameters that allow off-chain scripts to aggregate static allocations across sibling distribution modules without on-chain calls. The three return values are mutually exclusive in practice:
+
+- `absoluteAmount > 0` — the module allocates a fixed token amount.
+- `bpsMultiplier > 0` — the module allocates a percentage of total inflow (basis points, 10000 = 100%).
+- `dynamic = true` — the allocation cannot be determined statically; on-chain execution is required (e.g., `RemainderDistributionModule`).
+
+`index` is the position of `token` in the module's internal token allowlist.
+
+```solidity
+function totalAllocated(
+    Claim calldata claim,
+    Token token,
+    uint256 index,
+    uint256 totalReceived
+) external view returns (uint256)
+```
+
+Returns the absolute maximum allocation for this claim over its lifetime, given the pool's total historical inflow for `token`. Must be stateless — must not factor in already-claimed amounts or time-based vesting progress.
+
+### Execution Hooks
+
+```solidity
+function releasable(
+    Claim calldata claim,
+    bytes calldata dArgs
+) external view returns (TransferInstruction[] memory)
+```
+
+View-only equivalent of the pre-hook. Returns the current claimable amount including state-dependent factors (previously claimed, time elapsed, conditions). Used for off-chain simulation without spending gas on state changes.
+
+```solidity
+function preDistributionHook(
+    Claim calldata claim,
+    bytes calldata dArgs
+) external returns (PreHookResult memory)
+```
+
+Called by the pool before executing transfers. Computes transfer instructions and returns:
+
+```solidity
+struct PreHookResult {
+    TransferInstruction[] instructions;
+    bytes postHookContext;
+    bool requiresPostHook;
+}
+```
+
+If the module needs to update state post-transfer (e.g., increment claimed amounts), it should set `requiresPostHook = true` and pack the necessary data into `postHookContext`. To abort the entire pool call, the function must revert.
+
+```solidity
+function postDistributionHook(
+    Claim calldata claim,
+    bytes calldata dContext
+) external
+```
+
+Called by the pool after transfers complete, only if `requiresPostHook` was `true`. `dContext` is the `postHookContext` bytes returned by the pre-hook. Typically used to write claimed amounts to storage.
+
+---
+
+## IValidationModule
+
+```solidity
+import { IValidationModule } from "src/interfaces/IValidationModule.sol";
+```
+
+Extends `IModule`. Implemented by modules that authorize whether a claim may be executed.
+
+### Functions
+
+```solidity
+function validateRuntime(Claim calldata claim, bytes calldata vArgs) external view
+```
+
+Validates a single claim. `vArgs` carries dynamic proof data (e.g., a Merkle proof, ECDSA signature, or empty bytes). Must revert to indicate invalid or unauthorized claims.
+
+```solidity
+function validateRuntimeBatch(Claim[] calldata claims, bytes[] calldata vArgs) external view
+```
+
+Validates a batch of claims. `vArgs[i]` corresponds to `claims[i]`. Must revert for the entire batch if any claim is invalid.
+
+---
+
+## BaseModule
+
+```solidity
+import { BaseModule } from "src/modules/BaseModule.sol";
+```
+
+Abstract base contract for all modules. Inherits `ERC165` and `IModule`.
+
+```solidity
+abstract contract BaseModule is ERC165, IModule {
+    function supportsInterface(bytes4 interfaceId)
+        public view virtual override(ERC165, IERC165) returns (bool)
+    {
+        return interfaceId == type(IModule).interfaceId
+            || super.supportsInterface(interfaceId);
+    }
+}
+```
+
+Concrete modules override `supportsInterface` to additionally register their specific interface (`IDistributionModule` or `IValidationModule`):
+
+```solidity
+function supportsInterface(bytes4 interfaceId)
+    public view virtual override(BaseModule, IERC165) returns (bool)
+{
+    return interfaceId == type(IDistributionModule).interfaceId
+        || super.supportsInterface(interfaceId);
+}
+```
+
+`BaseModule` also declares `error NotImplemented()` for optional hook implementations that subclasses choose not to support.
+
+---
+
+## Implementing a Module
+
+A minimal distribution module skeleton:
+
+```solidity
+contract MyModule is IDistributionModule, BaseModule {
+    function moduleId() external pure override returns (string memory) {
+        return "myorg.my-module.1.0.0";
+    }
+
+    function onInstall(bytes calldata data) external override {
+        // initialize per-pool state
+    }
+
+    function onUninstall(bytes calldata) external override {
+        // clean up per-pool state
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public view virtual override(BaseModule, IERC165) returns (bool)
+    {
+        return interfaceId == type(IDistributionModule).interfaceId
+            || super.supportsInterface(interfaceId);
+    }
+
+    // ... implement IDistributionModule functions
+}
+```
+
+After deployment, register the module with `ModuleRegistry.registerModule(address)` and obtain at least one attestation from a pool's trusted attester before attempting installation.

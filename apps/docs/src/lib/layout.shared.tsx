@@ -1,17 +1,17 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import {
+  BookIcon,
   CableIcon,
   CodeXmlIcon,
   HomeIcon,
   LifeBuoyIcon,
-  PiIcon,
   ReceiptTextIcon,
 } from "lucide-react";
 import { MutualsLogo } from "@/components/mutuals-logo";
 
 export function baseOptions(): BaseLayoutProps {
   return {
-    githubUrl: "https://github.com/mutuals-finane",
+    githubUrl: "https://github.com/mutuals-finance",
     nav: {
       title: (
         <div className={"flex flex-row items-center gap-1"}>
@@ -30,9 +30,9 @@ export function baseOptions(): BaseLayoutProps {
     },
     links: [
       {
-        icon: <PiIcon />,
+        icon: <BookIcon />,
         text: "Concepts",
-        url: "/concepts/overview",
+        url: "/concepts/introduction",
         active: "nested-url",
         secondary: false,
       },

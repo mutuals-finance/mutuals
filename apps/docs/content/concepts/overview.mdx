@@ -1,0 +1,31 @@
+---
+title: Overview
+description: 'An unopinionated and powerful protocol for on-chain payment processing'
+---
+
+## The Mutuals Ecosystem
+
+At the heart of the Mutuals platform lies the Mutuals Protocol: a set of smart contracts that establishes the fundamental principles for processing and distributing payments, and serves as the anchor of trust.
+Additionally, to enable and streamline interaction with the protocol, the following artifacts are provided:
+- **Mutuals App**: A user-friendly web application that allows users to create and manage payment flows, providing an intuitive interface for interacting with the Mutuals Protocol without needing to write code.
+- **Mutuals API**: A set of RESTful endpoints that allow applications to interact with the Mutuals Protocol, providing a convenient way to manage payment flows and perform various operations without needing to write code.
+- **Mutuals SDK**: A software development kit that provides a set of tools and libraries to facilitate the integration of the Mutuals Protocol into applications, enabling developers to easily create, manage, and interact with payment flows.
+
+All artifacts are available as open-source software.
+The Mutuals Protocol can be interacted with directly, without using the App, API, or SDK.
+
+## High-Level Approach
+Treasuries and their accompanying payment strategies are represented by specialized smart contracts called Payment Pools (or simply, "Pools").
+Each Pool operates as a standalone treasury designed to receive funds and initiate diverse operations based on predefined rules.
+Thanks to the CREATE2 opcode, a Pool's unique address remains identical across all supported networks.
+The rules governing a Pool, including whether and how they can be modified, are locked in at creation.
+This allows stakeholders, such as payment recipients, to independently inspect and verify the configuration before any funds are moved.
+The smart contract guarantees these rules are strictly enforced without requiring a trusted third party.
+
+To ensure flexibility, the specific operations defining how a Pool functions are powered by Modules.
+Think of Modules as interchangeable plugins that extend a Pool's capabilities.
+Anyone can create a Module, and they are fully reusable across different Pools, resulting in a highly composable ecosystem.
+
+Module operations are divided into two primary categories:
+1. **Validation modules** verify that a certain operation was specified and agreed upon, before it can occur.
+2. **Distribution modules** execute the logic of how funds are allocated and routed to recipients.

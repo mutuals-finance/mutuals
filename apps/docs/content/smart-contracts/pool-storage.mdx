@@ -1,0 +1,78 @@
+---
+title: PoolStorage
+description: ERC-7201 namespaced storage layout for the Pool contract.
+---
+
+## Overview
+
+`PoolStorage` defines the complete state layout for [`Pool`](/docs/contracts/pool). Rather than declaring storage variables directly on the contract, all state is consolidated into a single struct accessed via a dedicated namespaced slot — a pattern defined by [ERC-7201](https://eips.ethereum.org/EIPS/eip-7201).
+
+This isolates pool state from OpenZeppelin's upgradeable base contracts (which occupy their own slots), eliminating storage collision risk across UUPS upgrades.
+
+```solidity
+import { PoolStorage, getPoolStorage } from "src/core/PoolStorage.sol";
+```
+
+---
+
+## Storage Slot
+
+```solidity
+bytes32 constant _POOL_STORAGE_SLOT =
+    bytes32(uint256(keccak256("Mutuals.ModularPool.Storage")) - 1);
+```
+
+The slot is evaluated at compile time (zero runtime gas). The `-1` offset is a convention from ERC-7201 to avoid a known hash preimage attack vector.
+
+---
+
+## Struct Layout
+
+```solidity
+struct PoolStorage {
+    IModuleRegistry registry;
+    address[] trustedAttesters;
+    mapping(address => bool) installedModules;
+    mapping(address => mapping(uint256 => uint256)) totalReleased;
+    mapping(bytes4 => uint256) supportedIfaces;
+}
+```
+
+### Fields
+
+**`registry`** — `IModuleRegistry`
+
+The protocol-level module registry. Queried at module install time to verify attestations. Set once during `initialize` and not mutable afterwards.
+
+**`trustedAttesters`** — `address[]`
+
+The set of auditors or DAOs whose attestations this pool accepts when installing modules. Replaceable by the pool owner via `updateTrustedAttesters`. Attestation is only evaluated at install time — revoking an attester post-install has no effect on already-installed modules.
+
+**`installedModules`** — `mapping(address => bool)`
+
+Tracks which module addresses are currently active in the pool. Checked before every execution call to ensure claims only reference installed modules.
+
+**`totalReleased`** — `mapping(address => mapping(uint256 => uint256))`
+
+Accumulates the historical outflow per token address and token ID. For ERC-20 and native tokens, `tokenId` defaults to `0`. For ERC-1155, each sub-token ID is tracked separately. Used by percentage-based distribution modules to compute allocations relative to total lifetime inflow.
+
+**`supportedIfaces`** — `mapping(bytes4 => uint256)`
+
+Reserved mapping for dynamic ERC-165 interface registration. Not actively used by the core pool but available for future extensibility without requiring storage layout changes.
+
+---
+
+## Accessor
+
+```solidity
+function getPoolStorage() pure returns (PoolStorage storage _storage) {
+    bytes32 slot = _POOL_STORAGE_SLOT;
+    assembly ("memory-safe") {
+        _storage.slot := slot
+    }
+}
+```
+
+All pool internals access state exclusively through this function. The `memory-safe` annotation satisfies Solidity's assembly safety requirements without disabling compiler optimizations.
+
+Because this is a `pure` function returning a `storage` pointer, it incurs no SLOAD at the call site — only the actual field accesses do.

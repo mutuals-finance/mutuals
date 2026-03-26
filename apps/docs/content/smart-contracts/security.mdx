@@ -1,7 +1,11 @@
 ---
 title: Security
-description: The protocol implements security through multiple layers. Access control restricts administrative functions to the pool owner. Reentrancy protection prevents callback attacks. Module isolation ensures failures in external code don't corrupt pool state. Storage namespacing prevents collisions during upgrades.
+description: Primary security considerations for the protocol, including access control, reentrancy protection, module isolation, and upgrade safety
 ---
+
+The protocol implements security through multiple layers.
+Access control restricts administrative functions to the pool owner.
+Reentrancy protection prevents callback attacks. Module isolation ensures failures in external code don't corrupt pool state. Storage namespacing prevents collisions during upgrades.
 
 ### Access Control
 

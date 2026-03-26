@@ -1,13 +1,13 @@
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import {
+  BookIcon,
   CableIcon,
   CodeXmlIcon,
   GithubIcon,
   HammerIcon,
   HandshakeIcon,
   LifeBuoyIcon,
-  PiIcon,
   ReceiptTextIcon,
   RssIcon,
   SquarePlayIcon,
@@ -20,10 +20,10 @@ export default function HomePage() {
       <div className="w-full pb-16 lg:pb-32">
         <div className="relative bg-dots-gradient-blue py-16 lg:py-32">
           <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
-            <h1 className="my-6 px-2 font-medium text-4xl sm:px-0">
+            <h1 className="my-6 px-2 font-medium text-5xl sm:px-0 sm:text-6xl">
               Mutuals Documentation
             </h1>
-            <p className="px-2 text-base text-fd-muted-foreground sm:px-0 sm:text-lg">
+            <p className="px-2 text-base text-fd-muted-foreground text-lg sm:px-0">
               Build custom payment rails using Mutuals' unopinionated and
               powerful developer tooling, deep dive into the protocol, use the
               API, or get support.
@@ -38,11 +38,10 @@ export default function HomePage() {
               Get Familiar with Mutuals
             </h2>
 
-            <Cards className="w-full grid-cols-1 lg:grid-cols-3">
+            <Cards className="w-full grid-cols-1 lg:grid-cols-2">
               <Card
-                className={"lg:col-span-3"}
-                href="/concepts/overview"
-                icon={<PiIcon />}
+                href="/concepts/introduction"
+                icon={<BookIcon />}
                 title="Concepts"
               >
                 Learn the fundamental concepts and principles behind Mutuals.

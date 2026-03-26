@@ -1,0 +1,111 @@
+---
+title: PoolFactory
+description: CREATE2 factory for deterministic Pool proxy deployment.
+---
+
+## Overview
+
+`PoolFactory` deploys `Pool` proxy instances at deterministic addresses using CREATE2. Because the proxy bytecode and salt derivation are fully deterministic, the same pool address can be pre-computed — and reserved — before deployment, which is useful for cross-chain deployments and protocol-level bookkeeping.
+
+The factory holds a single immutable `POOL_IMPLEMENTATION` address. All deployed proxies point to this implementation; upgradeability is managed per-pool by the pool owner via UUPS.
+
+```solidity
+import { PoolFactory } from "src/core/PoolFactory.sol";
+```
+
+**Inherits:** `Ownable`
+
+---
+
+## Immutables
+
+```solidity
+address public immutable POOL_IMPLEMENTATION;
+bytes32 private immutable _PROXY_BYTECODE_HASH;
+```
+
+`_PROXY_BYTECODE_HASH` is the keccak256 of the ERC-1967 proxy creation code concatenated with the ABI-encoded implementation address. It is computed once in the constructor and used in all subsequent `computeAddress` calls.
+
+---
+
+## Constructor
+
+```solidity
+constructor(address _poolImplementation, address initialOwner)
+```
+
+Sets `POOL_IMPLEMENTATION` and pre-computes `_PROXY_BYTECODE_HASH`. Reverts with `"Invalid Implementation"` if the implementation address is zero.
+
+---
+
+## Deployment
+
+### `createPool`
+
+```solidity
+function createPool(
+    address registry,
+    address owner,
+    uint256 salt,
+    address[] calldata initialModules,
+    bytes[] calldata initialModuleData,
+    address[] calldata trustedAttesters
+) external returns (address)
+```
+
+Deploys a new pool proxy and initializes it, or returns the existing address if a pool is already deployed at the computed address.
+
+**Steps:**
+
+1. Derives `combinedSalt = getSalt(owner, salt)`.
+2. Computes the target address via `Create2.computeAddress(combinedSalt, _PROXY_BYTECODE_HASH)`.
+3. If `addr.code.length == 0` (not yet deployed):
+- Deploys the proxy with `new ERC1967Proxy{salt: combinedSalt}(POOL_IMPLEMENTATION, "")`.
+- Calls `Pool(payable(addr)).initialize(registry, owner, initialModules, initialModuleData, trustedAttesters)`.
+- Marks the address in `isPool`.
+- Emits `PoolCreated`.
+4. Returns `addr` regardless of whether deployment occurred.
+
+The idempotent short-circuit (step 3's `if` guard) means calling `createPool` with the same parameters twice is safe and returns the existing pool address without reverting or re-initializing.
+
+---
+
+## View / Pure Functions
+
+### `predictPoolAddress`
+
+```solidity
+function predictPoolAddress(address owner, uint256 salt) external view returns (address)
+```
+
+Computes the address a pool would be deployed to for a given `(owner, salt)` pair, without deploying anything. Useful for protocols that need to know a pool's address before it exists (e.g., to pre-approve token transfers or configure other contracts).
+
+### `getSalt`
+
+```solidity
+function getSalt(address owner, uint256 salt) public pure returns (bytes32)
+```
+
+```solidity
+return keccak256(abi.encodePacked(owner, salt));
+```
+
+Combines the owner address and a caller-supplied nonce into the CREATE2 salt. Including `owner` means different owners cannot occupy the same address space with the same `salt` value, preventing address squatting.
+
+---
+
+## State
+
+```solidity
+mapping(address => bool) public isPool;
+```
+
+Set to `true` for every pool address deployed through this factory. Can be used by external contracts to verify that an address is a legitimate protocol pool.
+
+---
+
+## Events
+
+| Event | Description |
+|---|---|
+| `PoolCreated(address pool, address owner, uint256 salt)` | Emitted once per successful pool deployment. |

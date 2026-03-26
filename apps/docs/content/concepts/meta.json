@@ -1,6 +1,24 @@
 {
   "title": "Concepts",
-  "icon": "Pi",
+  "icon": "Book",
   "root": true,
-  "pages": ["overview", "flow-of-funds", "modules", "terminology"]
+  "pages": [
+    "introduction",
+    "overview",
+    "flow-of-funds",
+    "example",
+    "comparison",
+    "---Distribution Modules---",
+    "(modules)/direct-distribution",
+    "(modules)/priority-distribution",
+    "(modules)/vesting-distribution",
+    "(modules)/token-limit-distribution",
+    "(modules)/remainder-distribution",
+    "---Validation Modules---",
+    "(modules)/onchain-mapping-validation",
+    "(modules)/merkle-tree-validation",
+    "---Misc---",
+    "!(modules)",
+    "..."
+  ]
 }

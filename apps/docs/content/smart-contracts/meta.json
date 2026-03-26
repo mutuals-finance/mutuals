@@ -5,9 +5,16 @@
   "pages": [
     "overview",
     "components",
-    "modules",
     "deployments",
     "design-principles",
-    "security"
+    "security",
+    "---Core Contracts---",
+    "pool-factory",
+    "pool",
+    "pool-storage",
+    "module-registry",
+    "---Module System---",
+    "module-interfaces",
+    "modules"
   ]
 }
